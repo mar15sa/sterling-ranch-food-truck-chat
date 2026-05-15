@@ -136,6 +136,16 @@ function formatLinkDomain(url = "") {
   }
 }
 
+function formatCheckedAt(value) {
+  const date = value ? new Date(value) : new Date();
+  if (Number.isNaN(date.getTime())) return "Last checked just now";
+
+  return `Last checked ${new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date)}`;
+}
+
 function normalizeLinkUrl(url = "") {
   try {
     const parsed = new URL(url);
@@ -189,6 +199,7 @@ function addBotResult(data) {
 
   const source = node.querySelector(".source-link");
   source.href = data.sourceUrl;
+  node.querySelector(".checked-at").textContent = formatCheckedAt(data.checkedAt);
 
   if (data.truck) {
     node.querySelector(".truck-card").classList.remove("hidden");
@@ -217,6 +228,8 @@ function addBotResult(data) {
     const list = node.querySelector(".menu-items");
     section.classList.remove("hidden");
     items.forEach((item) => list.append(renderMenuItem(item)));
+  } else if (data.truck) {
+    node.querySelector(".menu-fallback").classList.remove("hidden");
   }
 
   const featuredUrls = new Set(featured.map(([, link]) => normalizeLinkUrl(link.url)));

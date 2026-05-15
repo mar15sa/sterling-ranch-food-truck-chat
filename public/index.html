@@ -55,6 +55,13 @@
           <h2>Menu items found</h2>
           <ul class="menu-items"></ul>
         </div>
+        <div class="menu-fallback hidden">
+          <h2>Menu not readable yet</h2>
+          <p>
+            I found the truck, but could not pull menu items automatically this time.
+            The official and helpful links are the best backup.
+          </p>
+        </div>
         <details class="truck-more-section hidden">
           <summary>More about this truck</summary>
           <div class="truck-more-content">
@@ -64,7 +71,10 @@
             </div>
           </div>
         </details>
-        <a class="source-link" target="_blank" rel="noreferrer">Calendar source</a>
+        <div class="result-meta">
+          <span class="checked-at"></span>
+          <a class="source-link" target="_blank" rel="noreferrer">Calendar source</a>
+        </div>
       </article>
     </template>
 

@@ -881,6 +881,7 @@ function buildAnswer({ question, targetDate, truck, calendar, menu }) {
       friendlyDate,
       truck: null,
       sourceUrl: calendar.sourceUrl,
+      checkedAt: new Date().toISOString(),
       menu,
     };
   }
@@ -890,7 +891,7 @@ function buildAnswer({ question, targetDate, truck, calendar, menu }) {
         .slice(0, 3)
         .map((item) => item.name)
         .join(", ")}.`
-    : " I found likely menu links, but could not safely read menu items from the page.";
+    : " I found the truck, but could not read menu items automatically this time. The links below are the best places to check.";
 
   return {
     text: `For ${friendlyDate}, the listed food truck is ${truck}.${itemText}`,
@@ -898,6 +899,7 @@ function buildAnswer({ question, targetDate, truck, calendar, menu }) {
     friendlyDate,
     truck,
     sourceUrl: calendar.sourceUrl,
+    checkedAt: new Date().toISOString(),
     menu,
     question,
   };
