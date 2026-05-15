@@ -10,6 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
+const MENU_CACHE_VERSION = "links-v2";
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -573,7 +574,7 @@ async function tryWooCommerceMenu(siteUrl) {
 }
 
 async function getMenuForTruck(truckName) {
-  const cacheKey = truckName.toLowerCase();
+  const cacheKey = `${MENU_CACHE_VERSION}:${truckName.toLowerCase()}`;
   const cached = menuCache.get(cacheKey);
   if (cached && Date.now() - cached.savedAt < 1000 * 60 * 30) return cached.data;
 
