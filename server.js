@@ -276,9 +276,7 @@ function getTruckNameTokens(truckName) {
 }
 
 function resultMatchesTruck(result, truckName) {
-  const haystack = normalizeTruckName(
-    `${result.title || ""} ${result.snippet || ""} ${result.url || ""}`
-  ).toLowerCase();
+  const haystack = normalizeTruckName(`${result.title || ""} ${result.url || ""}`).toLowerCase();
   const truckNames = String(truckName)
     .split(/\s*&\s*|\s+\+\s+/)
     .map((name) => name.trim())
