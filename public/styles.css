@@ -92,6 +92,7 @@ h1 {
 }
 
 .messages {
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -385,15 +386,42 @@ a {
 }
 
 @media (max-width: 680px) {
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
   .app-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
     padding: 0;
   }
 
   .chat-panel {
     min-height: 100vh;
     height: 100vh;
+    min-height: 100dvh;
+    height: 100dvh;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
     border: 0;
     border-radius: 0;
+  }
+
+  .quick-actions {
+    grid-row: 2;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+  }
+
+  .messages {
+    grid-row: 3;
+  }
+
+  .composer {
+    grid-row: 4;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 
   .topbar,
@@ -410,10 +438,6 @@ a {
 
   .truck-card {
     grid-template-columns: 1fr;
-  }
-
-  .quick-actions {
-    overflow-x: auto;
   }
 
   .truck-more-section summary {
