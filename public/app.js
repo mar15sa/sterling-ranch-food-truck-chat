@@ -120,6 +120,17 @@ function renderLink(link) {
   return li;
 }
 
+function renderFeaturedLink(label, link) {
+  const li = document.createElement("li");
+  const anchor = document.createElement("a");
+  anchor.href = link.url;
+  anchor.target = "_blank";
+  anchor.rel = "noreferrer";
+  anchor.textContent = `${label}: ${link.title || link.url}`;
+  li.append(anchor);
+  return li;
+}
+
 function addBotResult(data) {
   const node = template.content.firstElementChild.cloneNode(true);
   node.querySelector(".answer-text").textContent = data.text;
@@ -131,6 +142,20 @@ function addBotResult(data) {
     node.querySelector(".truck-card").classList.remove("hidden");
     node.querySelector(".truck-name").textContent = data.truck;
     node.querySelector(".truck-date").textContent = data.friendlyDate;
+  }
+
+  const featuredLinks = data.menu?.featuredLinks || {};
+  const featured = [
+    ["Official website", featuredLinks.official],
+    ["Facebook", featuredLinks.facebook],
+    ["Instagram", featuredLinks.instagram],
+  ].filter(([, link]) => link?.url);
+
+  if (featured.length) {
+    const section = node.querySelector(".featured-links-section");
+    const list = node.querySelector(".featured-links");
+    section.classList.remove("hidden");
+    featured.forEach(([label, link]) => list.append(renderFeaturedLink(label, link)));
   }
 
   const items = data.menu?.items || [];

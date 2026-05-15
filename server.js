@@ -236,32 +236,146 @@ function scoreResult(result) {
   return score;
 }
 
-async function searchMenuLinks(truckName) {
-  const searchName = truckName
+function normalizeTruckName(truckName) {
+  return truckName
     .normalize("NFKD")
     .replace(/[^\w\s&-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-  const query = `${searchName} food truck Colorado menu`;
+}
+
+function isDirectoryOrDeliveryLink(url = "") {
+  return /(facebook|instagram|yelp|tripadvisor|mapquest|fictionbeer|doordash|ubereats|grubhub|findmeglutenfree|bestfoodtrucks|streetfoodfinder|gotruckster|menupix|sagemenu|foodtrucksin)\.com/.test(
+    url.toLowerCase()
+  );
+}
+
+function dedupeLinks(links) {
+  const seen = new Set();
+  return links.filter((link) => {
+    const key = link.url.replace(/\/$/, "").toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+async function searchLinks(query, limit = 5, sortByScore = true) {
   const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
   const html = await fetchText(url);
   const results = [];
   const resultPattern =
     /<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<a[^>]+class="result__snippet"[^>]*>([\s\S]*?)<\/a>/g;
 
+  let rank = 0;
   for (const match of html.matchAll(resultPattern)) {
     const result = {
       title: cleanText(match[2]),
       url: cleanResultUrl(match[1]),
       snippet: cleanText(match[3]),
+      rank,
     };
     results.push({ ...result, score: scoreResult(result) });
+    rank += 1;
   }
 
   return results
     .filter((result) => result.title && result.url)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 5);
+    .sort((a, b) => (sortByScore ? b.score - a.score || a.rank - b.rank : a.rank - b.rank))
+    .slice(0, limit);
+}
+
+async function searchMenuLinks(truckName) {
+  const searchName = normalizeTruckName(truckName);
+  return searchLinks(`${searchName} food truck Colorado menu`, 5);
+}
+
+function findLinkByHost(links, hostPart) {
+  return links.find((link) => {
+    try {
+      return new URL(link.url).host.toLowerCase().includes(hostPart);
+    } catch {
+      return false;
+    }
+  });
+}
+
+function isHomepage(link) {
+  try {
+    const pathParts = new URL(link.url).pathname.split("/").filter(Boolean);
+    return pathParts.length <= 1;
+  } catch {
+    return false;
+  }
+}
+
+function isFacebookProfile(link) {
+  try {
+    const parsed = new URL(link.url);
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    const blocked = new Set([
+      "events",
+      "groups",
+      "marketplace",
+      "pages",
+      "photos",
+      "posts",
+      "reel",
+      "share",
+      "story.php",
+      "videos",
+      "watch",
+    ]);
+    return parsed.host.includes("facebook.com") && parts.length === 1 && !blocked.has(parts[0]);
+  } catch {
+    return false;
+  }
+}
+
+function isInstagramProfile(link) {
+  try {
+    const parsed = new URL(link.url);
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    const blocked = new Set(["explore", "p", "reel", "reels", "stories", "tv"]);
+    return parsed.host.includes("instagram.com") && parts.length === 1 && !blocked.has(parts[0]);
+  } catch {
+    return false;
+  }
+}
+
+async function getFeaturedLinks(truckName) {
+  const searchName = normalizeTruckName(truckName);
+  const [
+    officialResults,
+    facebookSiteResults,
+    facebookGeneralResults,
+    instagramSiteResults,
+    instagramGeneralResults,
+  ] = await Promise.all([
+    searchLinks(`${searchName} food truck Colorado official website`, 8, false),
+    searchLinks(`${searchName} food truck site:facebook.com`, 8, false),
+    searchLinks(`${searchName} cafe Facebook`, 8, false),
+    searchLinks(`${searchName} food truck site:instagram.com`, 8, false),
+    searchLinks(`${searchName} cafe Instagram`, 8, false),
+  ]);
+  const facebookResults = dedupeLinks([...facebookSiteResults, ...facebookGeneralResults]);
+  const instagramResults = dedupeLinks([...instagramSiteResults, ...instagramGeneralResults]);
+
+  const official =
+    officialResults
+      .filter((link) => !isDirectoryOrDeliveryLink(link.url))
+      .sort((a, b) => Number(isHomepage(b)) - Number(isHomepage(a)) || a.rank - b.rank)[0] ||
+    null;
+  const facebook = facebookResults.find(isFacebookProfile) || findLinkByHost(facebookResults, "facebook.com");
+  const instagram =
+    instagramResults.find(isInstagramProfile) || findLinkByHost(instagramResults, "instagram.com");
+
+  return {
+    official: official || null,
+    facebook: facebook || null,
+    instagram: instagram || null,
+    allResults: dedupeLinks([...officialResults, ...facebookResults, ...instagramResults]),
+  };
 }
 
 function hostRoot(url) {
@@ -309,14 +423,17 @@ async function getMenuForTruck(truckName) {
   const cached = menuCache.get(cacheKey);
   if (cached && Date.now() - cached.savedAt < 1000 * 60 * 30) return cached.data;
 
-  const links = await searchMenuLinks(truckName);
+  const featuredLinks = await getFeaturedLinks(truckName);
+  const links = dedupeLinks([
+    ...(featuredLinks.official ? [featuredLinks.official] : []),
+    ...(featuredLinks.facebook ? [featuredLinks.facebook] : []),
+    ...(featuredLinks.instagram ? [featuredLinks.instagram] : []),
+    ...(await searchMenuLinks(truckName)),
+    ...featuredLinks.allResults,
+  ]).slice(0, 8);
   const menuItems = [];
-  const bestOfficialish = links.find((link) => {
-    const url = link.url.toLowerCase();
-    return !/(facebook|instagram|yelp|tripadvisor|mapquest|fictionbeer|doordash|ubereats|grubhub|findmeglutenfree|bestfoodtrucks|streetfoodfinder|gotruckster|menupix|sagemenu|foodtrucksin)\.com/.test(
-      url
-    );
-  });
+  const bestOfficialish =
+    featuredLinks.official || links.find((link) => !isDirectoryOrDeliveryLink(link.url));
 
   if (bestOfficialish) {
     try {
@@ -326,7 +443,15 @@ async function getMenuForTruck(truckName) {
     }
   }
 
-  const data = { links, items: menuItems.slice(0, 10) };
+  const data = {
+    featuredLinks: {
+      official: featuredLinks.official,
+      facebook: featuredLinks.facebook,
+      instagram: featuredLinks.instagram,
+    },
+    links,
+    items: menuItems.slice(0, 10),
+  };
   menuCache.set(cacheKey, { data, savedAt: Date.now() });
   return data;
 }
