@@ -383,7 +383,11 @@ function isFacebookProfile(link) {
       "videos",
       "watch",
     ]);
-    return parsed.host.includes("facebook.com") && parts.length === 1 && !blocked.has(parts[0]);
+    return (
+      parsed.host.includes("facebook.com") &&
+      ((parts.length === 1 && !blocked.has(parts[0])) ||
+        (parts[0] === "people" && parts.length >= 2))
+    );
   } catch {
     return false;
   }
@@ -461,6 +465,82 @@ function hostRoot(url) {
   }
 }
 
+function domainMatchesTruck(link, truckName) {
+  try {
+    const host = normalizeTruckName(new URL(link.url).host.replace(/^www\./, "")).toLowerCase();
+    const truckNames = String(truckName)
+      .split(/\s*&\s*|\s+\+\s+/)
+      .map((name) => name.trim())
+      .filter(Boolean);
+
+    return truckNames.some((name) => {
+      const tokens = getTruckNameTokens(name);
+      return tokens.length > 0 && tokens.every((token) => host.includes(token));
+    });
+  } catch {
+    return false;
+  }
+}
+
+function inferOfficialLink(links, truckName) {
+  const candidates = links.filter(
+    (link) =>
+      link?.url &&
+      !isDirectoryOrDeliveryLink(link.url) &&
+      resultMatchesTruck(link, truckName) &&
+      domainMatchesTruck(link, truckName)
+  );
+
+  const best = candidates.sort(
+    (a, b) => Number(isHomepage(b)) - Number(isHomepage(a)) || (a.rank || 0) - (b.rank || 0)
+  )[0];
+  const root = best ? hostRoot(best.url) : null;
+
+  if (!best || !root) return null;
+
+  return {
+    ...best,
+    title: best.title || root,
+    url: root,
+  };
+}
+
+function absoluteUrl(url, baseUrl) {
+  try {
+    return new URL(url, baseUrl).toString();
+  } catch {
+    return url;
+  }
+}
+
+async function getSocialLinksFromOfficial(officialLink, truckName) {
+  if (!officialLink?.url) return {};
+
+  try {
+    const html = await fetchText(officialLink.url);
+    const links = [...html.matchAll(/href=["']([^"']+)["']/gi)]
+      .map((match, index) => ({
+        title: "",
+        url: absoluteUrl(decodeHtml(match[1]), officialLink.url),
+        snippet: "",
+        rank: index,
+        score: 0,
+      }))
+      .filter((link) => /facebook\.com|instagram\.com/i.test(link.url));
+
+    const facebook = links.find(isFacebookProfile) || findLinkByHost(links, "facebook.com");
+    const instagram = links.find(isInstagramProfile) || findLinkByHost(links, "instagram.com");
+
+    if (facebook) facebook.title = `${truckName} - Facebook`;
+    if (instagram) instagram.title = `${truckName} - Instagram`;
+
+    return { facebook: facebook || null, instagram: instagram || null };
+  } catch (error) {
+    console.warn(`Official social link scan failed for "${truckName}": ${error.message}`);
+    return {};
+  }
+}
+
 function moneyFromWooPrice(prices) {
   if (!prices || !prices.price) return "";
   const amount = Number(prices.price) / 10 ** Number(prices.currency_minor_unit || 2);
@@ -498,17 +578,25 @@ async function getMenuForTruck(truckName) {
   if (cached && Date.now() - cached.savedAt < 1000 * 60 * 30) return cached.data;
 
   const featuredLinks = await getFeaturedLinks(truckName);
+  const menuLinks = await searchMenuLinks(truckName);
+  const official = featuredLinks.official || inferOfficialLink([...menuLinks, ...featuredLinks.allResults], truckName);
+  const socialFromOfficial = official ? await getSocialLinksFromOfficial(official, truckName) : {};
+  const enhancedFeaturedLinks = {
+    official,
+    facebook: featuredLinks.facebook || socialFromOfficial.facebook || null,
+    instagram: featuredLinks.instagram || socialFromOfficial.instagram || null,
+  };
   const links = dedupeLinks([
-    ...(featuredLinks.official ? [featuredLinks.official] : []),
-    ...(featuredLinks.facebook ? [featuredLinks.facebook] : []),
-    ...(featuredLinks.instagram ? [featuredLinks.instagram] : []),
-    ...(await searchMenuLinks(truckName)),
+    ...(enhancedFeaturedLinks.official ? [enhancedFeaturedLinks.official] : []),
+    ...(enhancedFeaturedLinks.facebook ? [enhancedFeaturedLinks.facebook] : []),
+    ...(enhancedFeaturedLinks.instagram ? [enhancedFeaturedLinks.instagram] : []),
+    ...menuLinks,
     ...featuredLinks.allResults,
   ]).slice(0, 8);
   const menuItems = [];
-  if (featuredLinks.official) {
+  if (enhancedFeaturedLinks.official) {
     try {
-      menuItems.push(...(await tryWooCommerceMenu(featuredLinks.official.url)));
+      menuItems.push(...(await tryWooCommerceMenu(enhancedFeaturedLinks.official.url)));
     } catch {
       // Some sites block product APIs. The links are still useful.
     }
@@ -516,9 +604,9 @@ async function getMenuForTruck(truckName) {
 
   const data = {
     featuredLinks: {
-      official: featuredLinks.official,
-      facebook: featuredLinks.facebook,
-      instagram: featuredLinks.instagram,
+      official: enhancedFeaturedLinks.official,
+      facebook: enhancedFeaturedLinks.facebook,
+      instagram: enhancedFeaturedLinks.instagram,
     },
     links,
     items: menuItems.slice(0, 10),
