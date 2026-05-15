@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "links-v2";
+const MENU_CACHE_VERSION = "menus-v3";
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -573,6 +573,105 @@ async function tryWooCommerceMenu(siteUrl) {
   }));
 }
 
+function isPlainPriceLine(line = "") {
+  const match = line.match(/^\$?(\d{1,3})(?:\.(\d{2}))?$/);
+  if (!match) return false;
+
+  const amount = Number(match[1]);
+  return amount > 0 && amount < 100;
+}
+
+function formatPlainPrice(line = "") {
+  const amount = Number(line.replace("$", ""));
+  if (!Number.isFinite(amount)) return "";
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount);
+}
+
+function isMenuStopLine(line = "") {
+  return /^(contact us|contact|about us|our story|savor the flavors|copyright|powered by|this website uses cookies)$/i.test(
+    line.trim()
+  );
+}
+
+function isMenuCategoryLine(line = "") {
+  const trimmed = line.trim();
+  if (/^(menu|appetizers?|desserts?|salads?|sides?|drinks?|beverages?)$/i.test(trimmed)) {
+    return true;
+  }
+
+  if (/^\d+["']?\s+(pizzas?|tacos?|burgers?|sandwiches?)$/i.test(trimmed)) return true;
+  return trimmed.length > 3 && trimmed === trimmed.toUpperCase() && /S$/.test(trimmed);
+}
+
+function isLikelyMenuItemName(line = "") {
+  const trimmed = line.trim();
+  if (trimmed.length < 2 || trimmed.length > 80) return false;
+  if (isMenuStopLine(trimmed) || isMenuCategoryLine(trimmed)) return false;
+  if (/https?:|@|^\d+$|copyright|reserved|cookie/i.test(trimmed)) return false;
+
+  return true;
+}
+
+function menuTextWindow(text) {
+  const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
+  const menuIndex = lines.findIndex((line) => /^menu$/i.test(line));
+  const start = menuIndex === -1 ? 0 : menuIndex + 1;
+  const end = lines.findIndex((line, index) => index > start && isMenuStopLine(line));
+
+  return lines.slice(start, end === -1 ? Math.min(lines.length, start + 180) : end);
+}
+
+async function tryPlainTextMenu(siteUrl) {
+  const html = await fetchText(siteUrl);
+  const lines = menuTextWindow(stripHtml(html));
+  const items = [];
+
+  for (let index = 1; index < lines.length; index += 1) {
+    const priceLine = lines[index];
+    if (!isPlainPriceLine(priceLine)) continue;
+
+    const name = lines[index - 1];
+    if (!isLikelyMenuItemName(name)) continue;
+
+    const descriptionParts = [];
+    for (let next = index + 1; next < lines.length; next += 1) {
+      const line = lines[next];
+      const followingLine = lines[next + 1] || "";
+      const lineAfterFollowing = lines[next + 2] || "";
+
+      if (isMenuStopLine(line) || isPlainPriceLine(line)) break;
+      if (isLikelyMenuItemName(line) && isPlainPriceLine(followingLine)) break;
+      if (isMenuCategoryLine(line)) break;
+
+      descriptionParts.push(line);
+      if (descriptionParts.length >= 2) break;
+    }
+
+    items.push({
+      name: cleanText(name),
+      description: cleanText(descriptionParts.join(" ")),
+      price: formatPlainPrice(priceLine),
+      url: siteUrl,
+    });
+  }
+
+  return dedupeMenuItems(items).slice(0, 10);
+}
+
+function dedupeMenuItems(items) {
+  const seen = new Set();
+  return items.filter((item) => {
+    const key = `${item.name}|${item.price}`.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return item.name;
+  });
+}
+
 async function getMenuForTruck(truckName) {
   const cacheKey = `${MENU_CACHE_VERSION}:${truckName.toLowerCase()}`;
   const cached = menuCache.get(cacheKey);
@@ -600,6 +699,14 @@ async function getMenuForTruck(truckName) {
       menuItems.push(...(await tryWooCommerceMenu(enhancedFeaturedLinks.official.url)));
     } catch {
       // Some sites block product APIs. The links are still useful.
+    }
+
+    if (menuItems.length === 0) {
+      try {
+        menuItems.push(...(await tryPlainTextMenu(enhancedFeaturedLinks.official.url)));
+      } catch {
+        // Many small business sites are hand-built. If parsing fails, keep the links.
+      }
     }
   }
 
