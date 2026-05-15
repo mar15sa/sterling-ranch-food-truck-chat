@@ -244,6 +244,44 @@ function normalizeTruckName(truckName) {
     .trim();
 }
 
+function getTruckNameTokens(truckName) {
+  const genericWords = new Set([
+    "and",
+    "cafe",
+    "co",
+    "colorado",
+    "company",
+    "food",
+    "grill",
+    "llc",
+    "pizza",
+    "the",
+    "truck",
+  ]);
+
+  return normalizeTruckName(truckName)
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word) => word.length > 1 && !genericWords.has(word));
+}
+
+function resultMatchesTruck(result, truckName) {
+  const haystack = normalizeTruckName(
+    `${result.title || ""} ${result.snippet || ""} ${result.url || ""}`
+  ).toLowerCase();
+  const truckNames = String(truckName)
+    .split(/\s*&\s*|\s+\+\s+/)
+    .map((name) => name.trim())
+    .filter(Boolean);
+
+  return truckNames.some((name) => {
+    const tokens = getTruckNameTokens(name);
+    if (tokens.length === 0) return true;
+
+    return tokens.every((token) => haystack.includes(token));
+  });
+}
+
 function isDirectoryOrDeliveryLink(url = "") {
   return /(facebook|instagram|yelp|tripadvisor|mapquest|fictionbeer|doordash|ubereats|grubhub|findmeglutenfree|bestfoodtrucks|streetfoodfinder|gotruckster|menupix|sagemenu|foodtrucksin)\.com/.test(
     url.toLowerCase()
@@ -287,7 +325,9 @@ async function searchLinks(query, limit = 5, sortByScore = true) {
 
 async function searchMenuLinks(truckName) {
   const searchName = normalizeTruckName(truckName);
-  return searchLinks(`${searchName} food truck Colorado menu`, 5);
+  return (await searchLinks(`${searchName} food truck Colorado menu`, 8)).filter((link) =>
+    resultMatchesTruck(link, truckName)
+  );
 }
 
 function findLinkByHost(links, hostPart) {
@@ -361,20 +401,37 @@ async function getFeaturedLinks(truckName) {
   const facebookResults = dedupeLinks([...facebookSiteResults, ...facebookGeneralResults]);
   const instagramResults = dedupeLinks([...instagramSiteResults, ...instagramGeneralResults]);
 
+  const matchingOfficialResults = officialResults.filter((link) =>
+    resultMatchesTruck(link, truckName)
+  );
+  const matchingFacebookResults = facebookResults.filter((link) =>
+    resultMatchesTruck(link, truckName)
+  );
+  const matchingInstagramResults = instagramResults.filter((link) =>
+    resultMatchesTruck(link, truckName)
+  );
+
   const official =
-    officialResults
+    matchingOfficialResults
       .filter((link) => !isDirectoryOrDeliveryLink(link.url))
       .sort((a, b) => Number(isHomepage(b)) - Number(isHomepage(a)) || a.rank - b.rank)[0] ||
     null;
-  const facebook = facebookResults.find(isFacebookProfile) || findLinkByHost(facebookResults, "facebook.com");
+  const facebook =
+    matchingFacebookResults.find(isFacebookProfile) ||
+    findLinkByHost(matchingFacebookResults, "facebook.com");
   const instagram =
-    instagramResults.find(isInstagramProfile) || findLinkByHost(instagramResults, "instagram.com");
+    matchingInstagramResults.find(isInstagramProfile) ||
+    findLinkByHost(matchingInstagramResults, "instagram.com");
 
   return {
     official: official || null,
     facebook: facebook || null,
     instagram: instagram || null,
-    allResults: dedupeLinks([...officialResults, ...facebookResults, ...instagramResults]),
+    allResults: dedupeLinks([
+      ...matchingOfficialResults,
+      ...matchingFacebookResults,
+      ...matchingInstagramResults,
+    ]),
   };
 }
 
