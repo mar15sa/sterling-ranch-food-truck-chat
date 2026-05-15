@@ -73,18 +73,28 @@ function stripHtml(html = "") {
 }
 
 async function fetchText(url) {
-  const response = await fetch(url, {
-    headers: {
-      "user-agent": USER_AGENT,
-      accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    },
-  });
+  let lastError;
 
-  if (!response.ok) {
-    throw new Error(`Could not fetch ${url}: HTTP ${response.status}`);
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          "user-agent": USER_AGENT,
+          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Could not fetch ${url}: HTTP ${response.status}`);
+      }
+
+      return response.text();
+    } catch (error) {
+      lastError = error;
+    }
   }
 
-  return response.text();
+  throw lastError;
 }
 
 function denverToday() {
@@ -323,9 +333,18 @@ async function searchLinks(query, limit = 5, sortByScore = true) {
     .slice(0, limit);
 }
 
+async function safeSearchLinks(query, limit = 5, sortByScore = true) {
+  try {
+    return await searchLinks(query, limit, sortByScore);
+  } catch (error) {
+    console.warn(`Search failed for "${query}": ${error.message}`);
+    return [];
+  }
+}
+
 async function searchMenuLinks(truckName) {
   const searchName = normalizeTruckName(truckName);
-  return (await searchLinks(`${searchName} food truck Colorado menu`, 8)).filter((link) =>
+  return (await safeSearchLinks(`${searchName} food truck Colorado menu`, 8)).filter((link) =>
     resultMatchesTruck(link, truckName)
   );
 }
@@ -392,11 +411,11 @@ async function getFeaturedLinks(truckName) {
     instagramSiteResults,
     instagramGeneralResults,
   ] = await Promise.all([
-    searchLinks(`${searchName} food truck Colorado official website`, 8, false),
-    searchLinks(`${searchName} food truck site:facebook.com`, 8, false),
-    searchLinks(`${searchName} cafe Facebook`, 8, false),
-    searchLinks(`${searchName} food truck site:instagram.com`, 8, false),
-    searchLinks(`${searchName} cafe Instagram`, 8, false),
+    safeSearchLinks(`${searchName} food truck Colorado official website`, 8, false),
+    safeSearchLinks(`${searchName} food truck site:facebook.com`, 8, false),
+    safeSearchLinks(`${searchName} cafe Facebook`, 8, false),
+    safeSearchLinks(`${searchName} food truck site:instagram.com`, 8, false),
+    safeSearchLinks(`${searchName} cafe Instagram`, 8, false),
   ]);
   const facebookResults = dedupeLinks([...facebookSiteResults, ...facebookGeneralResults]);
   const instagramResults = dedupeLinks([...instagramSiteResults, ...instagramGeneralResults]);
