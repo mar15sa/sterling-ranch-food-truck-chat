@@ -150,11 +150,14 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.featured-links-section,
 .menu-section,
 .links-section,
 .truck-more-section {
   margin-top: 16px;
+}
+
+.truck-card .featured-links-section {
+  grid-column: 1 / -1;
 }
 
 .truck-more-section {

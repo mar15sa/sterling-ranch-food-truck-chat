@@ -207,7 +207,6 @@ function addBotResult(data) {
   if (featured.length) {
     const section = node.querySelector(".featured-links-section");
     const list = node.querySelector(".featured-links");
-    moreSection.classList.remove("hidden");
     section.classList.remove("hidden");
     featured.forEach(([label, link]) => list.append(renderFeaturedLink(label, link)));
   }
