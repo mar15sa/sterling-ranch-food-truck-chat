@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: sterling-ranch-food-truck-chat
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start

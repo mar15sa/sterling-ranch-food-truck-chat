@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sterling Ranch Food Truck Chat</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="chat-panel" aria-label="Food truck chat">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Sterling Ranch CAB</p>
+            <h1>Food Truck Chat</h1>
+          </div>
+          <div class="status-pill" id="statusPill">Ready</div>
+        </header>
+
+        <div class="messages" id="messages" aria-live="polite"></div>
+
+        <div class="quick-actions" aria-label="Quick questions">
+          <button type="button" data-question="What food truck is here today?">Today</button>
+          <button type="button" data-question="What food truck is here tomorrow?">Tomorrow</button>
+          <button type="button" data-question="What food truck is here Friday?">Friday</button>
+        </div>
+
+        <form class="composer" id="chatForm">
+          <input
+            id="questionInput"
+            name="question"
+            autocomplete="off"
+            placeholder="Ask about today, tomorrow, May 20..."
+          />
+          <button type="submit" aria-label="Send question">→</button>
+        </form>
+      </section>
+    </main>
+
+    <template id="botResultTemplate">
+      <article class="message bot">
+        <p class="answer-text"></p>
+        <div class="truck-card hidden">
+          <div>
+            <span class="label">Truck</span>
+            <strong class="truck-name"></strong>
+          </div>
+          <div>
+            <span class="label">Date</span>
+            <strong class="truck-date"></strong>
+          </div>
+        </div>
+        <div class="menu-section hidden">
+          <h2>Menu items found</h2>
+          <ul class="menu-items"></ul>
+        </div>
+        <div class="links-section hidden">
+          <h2>Best menu links</h2>
+          <ul class="menu-links"></ul>
+        </div>
+        <a class="source-link" target="_blank" rel="noreferrer">Calendar source</a>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

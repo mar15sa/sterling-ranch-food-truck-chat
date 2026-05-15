@@ -1,0 +1,17 @@
+{
+  "name": "my-community-does-daily-food-trucks",
+  "version": "1.0.0",
+  "description": "A tiny local chat app for checking Sterling Ranch food trucks and menus.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "commonjs"
+}
