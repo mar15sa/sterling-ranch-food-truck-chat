@@ -30,6 +30,13 @@ function scrollToBottom() {
   messages.scrollTop = messages.scrollHeight;
 }
 
+function scrollToMessageStart(message) {
+  messages.scrollTo({
+    top: Math.max(message.offsetTop - 16, 0),
+    behavior: "smooth",
+  });
+}
+
 function addDays(date, days) {
   const next = new Date(date);
   next.setDate(next.getDate() + days);
@@ -123,12 +130,37 @@ function renderLink(link) {
 function renderFeaturedLink(label, link) {
   const li = document.createElement("li");
   const anchor = document.createElement("a");
+  const icon = document.createElement("span");
+  const text = document.createElement("span");
+
   anchor.href = link.url;
   anchor.target = "_blank";
   anchor.rel = "noreferrer";
-  anchor.textContent = `${label}: ${link.title || link.url}`;
+  anchor.className = "link-icon-button";
+  anchor.setAttribute("aria-label", `${label}: ${link.title || link.url}`);
+  anchor.title = `${label}: ${link.title || link.url}`;
+
+  icon.className = `link-icon ${label.toLowerCase().replace(/\s+/g, "-")}`;
+  icon.innerHTML = getLinkIcon(label);
+
+  text.className = "link-icon-text";
+  text.textContent = label;
+
+  anchor.append(icon, text);
   li.append(anchor);
   return li;
+}
+
+function getLinkIcon(label) {
+  if (label === "Facebook") {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.5h2V5h-2.7C10.7 5 9 6.7 9 9.4V12H7v3.5h2V22h4v-6.5h2.8l.5-3.5H13V9.7c0-.8.4-1.2 1-1.2Z"/></svg>';
+  }
+
+  if (label === "Instagram") {
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.2"/><circle cx="16.5" cy="7.5" r="1"/></svg>';
+  }
+
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8M12 4c-2 2.2-3 4.9-3 8s1 5.8 3 8"/></svg>';
 }
 
 function addBotResult(data) {
@@ -175,7 +207,7 @@ function addBotResult(data) {
   }
 
   messages.append(node);
-  scrollToBottom();
+  scrollToMessageStart(node);
 }
 
 async function ask(question) {
