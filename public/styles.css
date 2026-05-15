@@ -152,8 +152,48 @@ h1 {
 
 .featured-links-section,
 .menu-section,
-.links-section {
+.links-section,
+.truck-more-section {
   margin-top: 16px;
+}
+
+.truck-more-section {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.truck-more-section summary {
+  width: fit-content;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(47, 107, 79, 0.24);
+  border-radius: 999px;
+  padding: 0 12px;
+  background: white;
+  color: var(--sage);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 800;
+  list-style: none;
+}
+
+.truck-more-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.truck-more-section summary::after {
+  content: "+";
+  font-weight: 900;
+}
+
+.truck-more-section[open] summary::after {
+  content: "−";
+}
+
+.truck-more-content {
+  margin-top: 10px;
 }
 
 h2 {
@@ -170,6 +210,11 @@ ul {
 li {
   padding: 10px 0;
   border-top: 1px solid var(--line);
+}
+
+.compact-link {
+  display: grid;
+  gap: 3px;
 }
 
 .featured-links {
@@ -252,6 +297,12 @@ li {
   font-size: 0.92rem;
 }
 
+.link-domain {
+  color: var(--muted);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
 a {
   color: var(--sage);
   font-weight: 800;
@@ -263,6 +314,7 @@ a {
 .source-link {
   display: inline-block;
   margin-top: 14px;
+  font-size: 0.9rem;
 }
 
 .quick-actions {
@@ -359,5 +411,9 @@ a {
 
   .quick-actions {
     overflow-x: auto;
+  }
+
+  .truck-more-section summary {
+    max-width: 100%;
   }
 }

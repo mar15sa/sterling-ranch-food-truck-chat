@@ -4,6 +4,7 @@ const input = document.querySelector("#questionInput");
 const statusPill = document.querySelector("#statusPill");
 const template = document.querySelector("#botResultTemplate");
 const quickActions = document.querySelector("#quickActions");
+const MAX_MORE_LINKS = 4;
 
 function setStatus(text) {
   statusPill.textContent = text;
@@ -31,8 +32,9 @@ function scrollToBottom() {
 }
 
 function scrollToMessageStart(message) {
+  const target = message.offsetTop - messages.offsetTop - 12;
   messages.scrollTo({
-    top: Math.max(message.offsetTop - 16, 0),
+    top: Math.max(target, 0),
     behavior: "smooth",
   });
 }
@@ -111,20 +113,38 @@ function renderMenuItem(item) {
 function renderLink(link) {
   const li = document.createElement("li");
   const anchor = document.createElement("a");
+  const meta = document.createElement("span");
+
+  li.className = "compact-link";
   anchor.href = link.url;
   anchor.target = "_blank";
   anchor.rel = "noreferrer";
   anchor.textContent = link.title || link.url;
-  li.append(anchor);
 
-  if (link.snippet) {
-    const snippet = document.createElement("p");
-    snippet.className = "snippet";
-    snippet.textContent = link.snippet;
-    li.append(snippet);
-  }
+  meta.className = "link-domain";
+  meta.textContent = formatLinkDomain(link.url);
 
+  li.append(anchor, meta);
   return li;
+}
+
+function formatLinkDomain(url = "") {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function normalizeLinkUrl(url = "") {
+  try {
+    const parsed = new URL(url);
+    parsed.hash = "";
+    parsed.search = "";
+    return parsed.toString().replace(/\/$/, "").toLowerCase();
+  } catch {
+    return String(url).replace(/\/$/, "").toLowerCase();
+  }
 }
 
 function renderFeaturedLink(label, link) {
@@ -182,10 +202,12 @@ function addBotResult(data) {
     ["Facebook", featuredLinks.facebook],
     ["Instagram", featuredLinks.instagram],
   ].filter(([, link]) => link?.url);
+  const moreSection = node.querySelector(".truck-more-section");
 
   if (featured.length) {
     const section = node.querySelector(".featured-links-section");
     const list = node.querySelector(".featured-links");
+    moreSection.classList.remove("hidden");
     section.classList.remove("hidden");
     featured.forEach(([label, link]) => list.append(renderFeaturedLink(label, link)));
   }
@@ -198,10 +220,15 @@ function addBotResult(data) {
     items.forEach((item) => list.append(renderMenuItem(item)));
   }
 
-  const links = data.menu?.links || [];
+  const featuredUrls = new Set(featured.map(([, link]) => normalizeLinkUrl(link.url)));
+  const links = (data.menu?.links || [])
+    .filter((link) => link?.url && !featuredUrls.has(normalizeLinkUrl(link.url)))
+    .slice(0, MAX_MORE_LINKS);
+
   if (links.length) {
     const section = node.querySelector(".links-section");
     const list = node.querySelector(".menu-links");
+    moreSection.classList.remove("hidden");
     section.classList.remove("hidden");
     links.forEach((link) => list.append(renderLink(link)));
   }
