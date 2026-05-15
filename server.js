@@ -10,7 +10,51 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v3";
+const MENU_CACHE_VERSION = "menus-v4";
+const KNOWN_TRUCK_LINKS = {
+  "d maracuchos": {
+    official: {
+      title: "D Maracuchos - Delivery Venezolan Food in Colorado",
+      url: "https://d-maracuchos.com",
+    },
+    facebook: {
+      title: "D'Maracuchos - Facebook",
+      url: "https://www.facebook.com/people/D-Maracuchos-Cafe/100092150456933/",
+    },
+    instagram: {
+      title: "D'Maracuchos - Instagram",
+      url: "https://instagram.com/dmaracuchoscafe",
+    },
+  },
+  "burning oven pizza": {
+    official: {
+      title: "The Burning Oven",
+      url: "https://theburningoven.com/",
+    },
+    facebook: {
+      title: "The Burning Oven Pizza Trailer - Facebook",
+      url: "https://www.facebook.com/theburningoven",
+    },
+    instagram: {
+      title: "The Burning Oven - Instagram",
+      url: "https://www.instagram.com/theburningovenpizza/",
+    },
+  },
+  "uptown humboldt": {
+    official: {
+      title: "Uptown & Humboldt",
+      url: "https://www.uptownhumboldt.com/",
+    },
+    facebook: {
+      title: "Uptown & Humboldt - Facebook",
+      url: "https://www.facebook.com/uptownandhumboldt/",
+    },
+    instagram: {
+      title: "Uptown & Humboldt - Instagram",
+      url: "https://instagram.com/uptownandhumboldt",
+    },
+  },
+};
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -255,6 +299,18 @@ function normalizeTruckName(truckName) {
     .trim();
 }
 
+function knownTruckLinks(truckName) {
+  const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
+  const links = KNOWN_TRUCK_LINKS[key];
+  if (!links) return {};
+
+  return {
+    official: links.official ? { ...links.official, snippet: "", rank: -10, score: 0 } : null,
+    facebook: links.facebook ? { ...links.facebook, snippet: "", rank: -10, score: 0 } : null,
+    instagram: links.instagram ? { ...links.instagram, snippet: "", rank: -10, score: 0 } : null,
+  };
+}
+
 function getTruckNameTokens(truckName) {
   const genericWords = new Set([
     "and",
@@ -406,6 +462,7 @@ function isInstagramProfile(link) {
 }
 
 async function getFeaturedLinks(truckName) {
+  const knownLinks = knownTruckLinks(truckName);
   const searchName = normalizeTruckName(truckName);
   const [
     officialResults,
@@ -434,14 +491,17 @@ async function getFeaturedLinks(truckName) {
   );
 
   const official =
+    knownLinks.official ||
     matchingOfficialResults
       .filter((link) => !isDirectoryOrDeliveryLink(link.url))
       .sort((a, b) => Number(isHomepage(b)) - Number(isHomepage(a)) || a.rank - b.rank)[0] ||
     null;
   const facebook =
+    knownLinks.facebook ||
     matchingFacebookResults.find(isFacebookProfile) ||
     findLinkByHost(matchingFacebookResults, "facebook.com");
   const instagram =
+    knownLinks.instagram ||
     matchingInstagramResults.find(isInstagramProfile) ||
     findLinkByHost(matchingInstagramResults, "instagram.com");
 
@@ -603,6 +663,7 @@ function isMenuCategoryLine(line = "") {
     return true;
   }
 
+  if (/^(burgers?|gyros?|mini hoagies)$/i.test(trimmed)) return true;
   if (/^\d+["']?\s+(pizzas?|tacos?|burgers?|sandwiches?)$/i.test(trimmed)) return true;
   return trimmed.length > 3 && trimmed === trimmed.toUpperCase() && /S$/.test(trimmed);
 }
@@ -611,55 +672,143 @@ function isLikelyMenuItemName(line = "") {
   const trimmed = line.trim();
   if (trimmed.length < 2 || trimmed.length > 80) return false;
   if (isMenuStopLine(trimmed) || isMenuCategoryLine(trimmed)) return false;
-  if (/https?:|@|^\d+$|copyright|reserved|cookie/i.test(trimmed)) return false;
+  if (/https?:|@|^\$?\d+(?:\.\d{2})?$|copyright|reserved|cookie/i.test(trimmed)) return false;
 
   return true;
 }
 
 function menuTextWindow(text) {
   const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
-  const menuIndex = lines.findIndex((line) => /^menu$/i.test(line));
+  const menuIndex = lines.findIndex((line) => /\bmenu\b/i.test(line));
   const start = menuIndex === -1 ? 0 : menuIndex + 1;
   const end = lines.findIndex((line, index) => index > start && isMenuStopLine(line));
 
   return lines.slice(start, end === -1 ? Math.min(lines.length, start + 180) : end);
 }
 
-async function tryPlainTextMenu(siteUrl) {
-  const html = await fetchText(siteUrl);
-  const lines = menuTextWindow(stripHtml(html));
+function normalizeMenuPriceLines(lines) {
+  const normalized = [];
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (line === "$" && /^\d{1,3}(?:\.\d{2})?$/.test(lines[index + 1] || "")) {
+      normalized.push(`$${lines[index + 1]}`);
+      index += 1;
+    } else {
+      normalized.push(line);
+    }
+  }
+
+  return normalized;
+}
+
+function collectMenuDescription(lines, startIndex, options = {}) {
+  const descriptionParts = [];
+
+  for (let next = startIndex; next < lines.length; next += 1) {
+    const line = lines[next];
+    const followingLine = lines[next + 1] || "";
+
+    if (isMenuStopLine(line) || isPlainPriceLine(line) || isMenuCategoryLine(line)) break;
+    if (
+      !options.allowDescriptionBeforePrice &&
+      isLikelyMenuItemName(line) &&
+      isPlainPriceLine(followingLine)
+    ) {
+      break;
+    }
+    if (isPlainPriceLine(line) && isLikelyMenuItemName(followingLine)) break;
+
+    descriptionParts.push(line);
+    if (descriptionParts.length >= 2) break;
+  }
+
+  return cleanText(descriptionParts.join(" "));
+}
+
+function parsePlainTextMenuItems(text, siteUrl) {
+  const lines = normalizeMenuPriceLines(menuTextWindow(text));
   const items = [];
 
-  for (let index = 1; index < lines.length; index += 1) {
-    const priceLine = lines[index];
-    if (!isPlainPriceLine(priceLine)) continue;
+  for (let index = 0; index < lines.length; index += 1) {
+    if (!isPlainPriceLine(lines[index])) continue;
 
-    const name = lines[index - 1];
-    if (!isLikelyMenuItemName(name)) continue;
+    const previousLine = lines[index - 1] || "";
+    const nextLine = lines[index + 1] || "";
 
-    const descriptionParts = [];
-    for (let next = index + 1; next < lines.length; next += 1) {
-      const line = lines[next];
-      const followingLine = lines[next + 1] || "";
-      const lineAfterFollowing = lines[next + 2] || "";
-
-      if (isMenuStopLine(line) || isPlainPriceLine(line)) break;
-      if (isLikelyMenuItemName(line) && isPlainPriceLine(followingLine)) break;
-      if (isMenuCategoryLine(line)) break;
-
-      descriptionParts.push(line);
-      if (descriptionParts.length >= 2) break;
+    if (
+      isLikelyMenuItemName(previousLine) &&
+      !isPlainPriceLine(lines[index - 2] || "") &&
+      !(isLikelyMenuItemName(lines[index - 2] || "") && isPlainPriceLine(lines[index - 3] || "")) &&
+      !/^\+?\$?\d+/i.test(previousLine)
+    ) {
+      items.push({
+        name: cleanMenuItemName(previousLine),
+        description: collectMenuDescription(lines, index + 1),
+        price: formatPlainPrice(lines[index]),
+        url: siteUrl,
+      });
+      continue;
     }
 
-    items.push({
-      name: cleanText(name),
-      description: cleanText(descriptionParts.join(" ")),
-      price: formatPlainPrice(priceLine),
-      url: siteUrl,
-    });
+    if (isLikelyMenuItemName(nextLine)) {
+      items.push({
+        name: cleanMenuItemName(nextLine),
+        description: collectMenuDescription(lines, index + 2, {
+          allowDescriptionBeforePrice: true,
+        }),
+        price: formatPlainPrice(lines[index]),
+        url: siteUrl,
+      });
+    }
   }
 
   return dedupeMenuItems(items).slice(0, 10);
+}
+
+async function getMenuPageUrls(siteUrl) {
+  const root = hostRoot(siteUrl);
+  if (!root) return [siteUrl];
+
+  const urls = [siteUrl, `${root}/menu`, `${root}/food-truck-menu`];
+
+  try {
+    const html = await fetchText(siteUrl);
+    const menuLinks = [...html.matchAll(/<a[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+      .map((match) => ({
+        url: absoluteUrl(decodeHtml(match[1]), siteUrl),
+        text: cleanText(match[2]),
+      }))
+      .filter((link) => /\bmenu\b/i.test(`${link.url} ${link.text}`))
+      .map((link) => link.url);
+
+    urls.push(...menuLinks);
+  } catch {
+    // Common menu URLs above are still worth trying.
+  }
+
+  return dedupeLinks(urls.map((url) => ({ url }))).map((link) => link.url).slice(0, 5);
+}
+
+async function tryPlainTextMenu(siteUrl) {
+  const menuUrls = await getMenuPageUrls(siteUrl);
+  let bestItems = [];
+
+  for (const menuUrl of menuUrls) {
+    try {
+      const html = await fetchText(menuUrl);
+      const items = parsePlainTextMenuItems(stripHtml(html), menuUrl);
+      if (items.length > bestItems.length) bestItems = items;
+      if (bestItems.length >= 10) break;
+    } catch {
+      // Try the next likely menu URL.
+    }
+  }
+
+  return bestItems.slice(0, 10);
+}
+
+function cleanMenuItemName(line = "") {
+  return cleanText(line).replace(/^\*+/, "").trim();
 }
 
 function dedupeMenuItems(items) {
