@@ -506,12 +506,9 @@ async function getMenuForTruck(truckName) {
     ...featuredLinks.allResults,
   ]).slice(0, 8);
   const menuItems = [];
-  const bestOfficialish =
-    featuredLinks.official || links.find((link) => !isDirectoryOrDeliveryLink(link.url));
-
-  if (bestOfficialish) {
+  if (featuredLinks.official) {
     try {
-      menuItems.push(...(await tryWooCommerceMenu(bestOfficialish.url)));
+      menuItems.push(...(await tryWooCommerceMenu(featuredLinks.official.url)));
     } catch {
       // Some sites block product APIs. The links are still useful.
     }
