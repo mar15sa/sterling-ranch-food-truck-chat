@@ -3,6 +3,7 @@ const form = document.querySelector("#chatForm");
 const input = document.querySelector("#questionInput");
 const statusPill = document.querySelector("#statusPill");
 const template = document.querySelector("#botResultTemplate");
+const quickActions = document.querySelector("#quickActions");
 
 function setStatus(text) {
   statusPill.textContent = text;
@@ -27,6 +28,49 @@ function addPlainBotMessage(text) {
 
 function scrollToBottom() {
   messages.scrollTop = messages.scrollHeight;
+}
+
+function addDays(date, days) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function formatShortDate(date) {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "numeric",
+    day: "numeric",
+  }).format(date);
+}
+
+function formatQuestionDate(date) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}
+
+function buildQuickActions() {
+  const quickDates = [
+    { label: "Today", question: "What food truck is here today?" },
+    { label: "Tomorrow", question: "What food truck is here tomorrow?" },
+    {
+      label: formatShortDate(addDays(new Date(), 2)),
+      question: `What food truck is here ${formatQuestionDate(addDays(new Date(), 2))}?`,
+    },
+  ];
+
+  quickDates.forEach((action) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = action.label;
+    button.addEventListener("click", () => {
+      input.value = "";
+      ask(action.question);
+    });
+    quickActions.append(button);
+  });
 }
 
 function renderMenuItem(item) {
@@ -139,11 +183,5 @@ form.addEventListener("submit", (event) => {
   ask(question);
 });
 
-document.querySelectorAll("[data-question]").forEach((button) => {
-  button.addEventListener("click", () => {
-    input.value = "";
-    ask(button.dataset.question);
-  });
-});
-
+buildQuickActions();
 addPlainBotMessage("Ask me which food truck is here, and I’ll check the Sterling Ranch calendar plus likely menu pages.");
