@@ -20,9 +20,26 @@ Then open:
 http://localhost:3000
 ```
 
+## Live app
+
+Railway is the primary hosted version:
+
+```text
+https://sterling-ranch-food-truck-chat-production.up.railway.app
+```
+
 ## Put it online
 
-The easiest path is GitHub + Render:
+The app can be hosted by Railway or Render.
+
+Railway:
+
+1. Create a new Railway project.
+2. Choose GitHub Repository.
+3. Select `mar15sa/sterling-ranch-food-truck-chat`.
+4. Railway should detect the Node app and deploy it with `npm start`.
+
+Render:
 
 1. Create a GitHub repo for this folder.
 2. Push this project to GitHub.
