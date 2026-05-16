@@ -1206,7 +1206,7 @@ async function getMenuForTruck(truckName) {
     ...menuLinks,
     ...featuredLinks.allResults,
   ]).slice(0, 8);
-  const menuItems = [...(featuredLinks.knownItems || [])];
+  const menuItems = [];
   let menuSourceUrl = "";
 
   if (menuItems.length === 0) {
@@ -1254,6 +1254,11 @@ async function getMenuForTruck(truckName) {
         break;
       }
     }
+  }
+
+  if (menuItems.length === 0 && featuredLinks.knownItems?.length) {
+    menuItems.push(...featuredLinks.knownItems);
+    menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
   }
 
   if (menuSourceUrl) {
