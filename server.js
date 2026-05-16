@@ -81,6 +81,53 @@ const KNOWN_TRUCK_LINKS = {
         url: "https://bigstufffood.com/menu/",
       },
     ],
+    items: [
+      {
+        name: "The Big Stuff Burger",
+        description:
+          "Signature burger served Juicy Lucy style with chipotle cheddar inside, grilled onions, chipotle lime crema, greens, tomato, pork belly, and waffle fries.",
+        price: "",
+      },
+      {
+        name: "The Big Stuff Patty Melt",
+        description:
+          "Burger with green chile braised pork belly, chipotle cheddar, mozzarella, cheddar, and grilled onions on toasted sourdough.",
+        price: "",
+      },
+      {
+        name: "Colorado Bahn Mi",
+        description: "Big Stuff's Colorado comfort-food take on a banh mi.",
+        price: "",
+      },
+      {
+        name: "Danger Mouse",
+        description: "Vegetarian option from the Big Stuff menu.",
+        price: "",
+      },
+      {
+        name: "Colorado Poutine",
+        description:
+          "Crispy waffle fries with Wisconsin cheese curds, vegan green chile, and chipotle lime crema.",
+        price: "",
+      },
+      {
+        name: "Lil' Stuff Sliders",
+        description: "Slider-sized Big Stuff comfort food.",
+        price: "",
+      },
+      {
+        name: "Fried Mac and Cheese",
+        description: "Handmade mac and cheese, breaded and fried, served with choice of dipper.",
+        price: "",
+      },
+      {
+        name: "Chicken Strips",
+        description: "Crunchy fried chicken breast strips served with waffle fries and choice of dipper.",
+        price: "",
+      },
+      { name: "Basket of Crispy Waffle Fries", description: "", price: "" },
+      { name: "Basket of Sweet Potato Fries", description: "", price: "" },
+    ],
   },
   "2-salty sarges": {
     official: {
