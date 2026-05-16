@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v4";
+const MENU_CACHE_VERSION = "menus-v5";
 const KNOWN_TRUCK_LINKS = {
   "d maracuchos": {
     official: {
@@ -53,6 +53,113 @@ const KNOWN_TRUCK_LINKS = {
       title: "Uptown & Humboldt - Instagram",
       url: "https://instagram.com/uptownandhumboldt",
     },
+  },
+  "samos grill": {
+    menu: [
+      {
+        title: "Samos Grill menu - Food Fleet",
+        url: "https://www.foodfleet.com/food-fleet-partners/samos-grill",
+      },
+    ],
+    facebook: {
+      title: "Samos Grill - Facebook",
+      url: "https://www.facebook.com/people/Samos-Grill/100086658823173/",
+    },
+    instagram: {
+      title: "Samos Grill - Instagram",
+      url: "https://www.instagram.com/samosgrill_/",
+    },
+  },
+  "big stuff": {
+    official: {
+      title: "Big Stuff Food",
+      url: "https://bigstufffood.com/",
+    },
+    menu: [
+      {
+        title: "Big Stuff Food menu",
+        url: "https://bigstufffood.com/menu/",
+      },
+    ],
+  },
+  "2-salty sarges": {
+    official: {
+      title: "2 Salty Sarges",
+      url: "https://2saltysarges.com/",
+    },
+    menu: [
+      {
+        title: "2 Salty Sarges menu",
+        url: "https://2saltysarges.com/menu",
+      },
+    ],
+  },
+  "chibby wibbitz": {
+    official: {
+      title: "Chibby Wibbitz Food Truck",
+      url: "https://chibbywibbitz.com/",
+    },
+    menu: [
+      {
+        title: "Chibby Wibbitz menu - Food Truck Connector",
+        url: "https://www.denverfoodtruckcatering.com/food-trucks/chibby-wibbitz-sliderz-n-bitez/",
+      },
+      {
+        title: "Chibby Wibbitz menu - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/chibby-wibbitz-sliderz-and-bitez/menu",
+      },
+    ],
+    items: [
+      {
+        name: "Beef Tacos",
+        description:
+          "Chopped Angus beef, cilantro garlic sauce, salsa, pickled red onions, queso fresco, and fresh cilantro.",
+        price: "$8.00",
+      },
+      {
+        name: "Black Bean Tacos",
+        description:
+          "Black beans, chipotle salsa, cilantro garlic sauce, pickled onion, queso fresco, and fresh cilantro.",
+        price: "$8.00",
+      },
+      {
+        name: "Chibb Jong Un Tot Bowl",
+        description: "Korean pork bulgogi, kimchi, gochujang aioli, onions, and sesame seeds.",
+        price: "$11.00",
+      },
+      {
+        name: "Chicken Dance",
+        description: "Crispy fried boneless chicken thigh, chipotle crema, and pickles.",
+        price: "$11.00",
+      },
+      {
+        name: "Chicken Tacos",
+        description:
+          "Achiote chicken, chipotle salsa, cilantro garlic sauce, pickled onion, queso fresco, and fresh cilantro.",
+        price: "$8.00",
+      },
+      {
+        name: "Ugly Pig Sliders",
+        description: "Hardwood smoked pulled pork, creamy coleslaw, house BBQ sauce, and pickles.",
+        price: "$11.00",
+      },
+      { name: "Fries", description: "", price: "$5.00" },
+      { name: "Just Tots", description: "", price: "$5.00" },
+      { name: "Southern Slaw", description: "", price: "$4.00" },
+      { name: "Key Lime Pie", description: "", price: "$5.00" },
+    ],
+  },
+  "magic kebob": {
+    official: {
+      title: "Magic Kebob",
+      url: "https://www.magickebob.com/",
+    },
+    menu: [
+      {
+        title: "Magic Kebob menu",
+        url: "https://www.magickebob.com/menus",
+      },
+    ],
   },
 };
 
@@ -308,20 +415,31 @@ function knownTruckLinks(truckName) {
     official: links.official ? { ...links.official, snippet: "", rank: -10, score: 0 } : null,
     facebook: links.facebook ? { ...links.facebook, snippet: "", rank: -10, score: 0 } : null,
     instagram: links.instagram ? { ...links.instagram, snippet: "", rank: -10, score: 0 } : null,
+    menu: Array.isArray(links.menu)
+      ? links.menu.map((link, index) => ({
+          ...link,
+          snippet: "",
+          rank: -20 + index,
+          score: 0,
+        }))
+      : [],
+    items: Array.isArray(links.items)
+      ? links.items.map((item) => ({
+          ...item,
+          url: item.url || links.menu?.[0]?.url || links.official?.url || "",
+        }))
+      : [],
   };
 }
 
 function getTruckNameTokens(truckName) {
   const genericWords = new Set([
     "and",
-    "cafe",
     "co",
     "colorado",
     "company",
     "food",
-    "grill",
     "llc",
-    "pizza",
     "the",
     "truck",
   ]);
@@ -333,7 +451,9 @@ function getTruckNameTokens(truckName) {
 }
 
 function resultMatchesTruck(result, truckName) {
-  const haystack = normalizeTruckName(`${result.title || ""} ${result.url || ""}`).toLowerCase();
+  const haystack = normalizeTruckName(`${result.title || ""} ${result.url || ""}`)
+    .toLowerCase()
+    .replace(/[-_]+/g, " ");
   const truckNames = String(truckName)
     .split(/\s*&\s*|\s+\+\s+/)
     .map((name) => name.trim())
@@ -342,13 +462,14 @@ function resultMatchesTruck(result, truckName) {
   return truckNames.some((name) => {
     const tokens = getTruckNameTokens(name);
     if (tokens.length === 0) return true;
+    if (tokens.length <= 2 && !haystack.includes(tokens.join(" "))) return false;
 
     return tokens.every((token) => haystack.includes(token));
   });
 }
 
 function isDirectoryOrDeliveryLink(url = "") {
-  return /(facebook|instagram|yelp|tripadvisor|mapquest|fictionbeer|doordash|ubereats|grubhub|findmeglutenfree|bestfoodtrucks|streetfoodfinder|gotruckster|menupix|sagemenu|foodtrucksin)\.com/.test(
+  return /(facebook|instagram|yelp|tripadvisor|mapquest|fictionbeer|doordash|ubereats|grubhub|seamless|findmeglutenfree|bestfoodtrucks|streetfoodfinder|gotruckster|menupix|sagemenu|foodtrucksin|roaminghunger|foodfleet|zmenu)\.com/.test(
     url.toLowerCase()
   );
 }
@@ -399,9 +520,64 @@ async function safeSearchLinks(query, limit = 5, sortByScore = true) {
 
 async function searchMenuLinks(truckName) {
   const searchName = normalizeTruckName(truckName);
-  return (await safeSearchLinks(`${searchName} food truck Colorado menu`, 8)).filter((link) =>
-    resultMatchesTruck(link, truckName)
-  );
+  const results = await Promise.all([
+    safeSearchLinks(`${searchName} food truck Colorado menu`, 8),
+    safeSearchLinks(`${searchName} sample menu food truck`, 6),
+    safeSearchLinks(`${searchName} food fleet menu`, 6),
+    safeSearchLinks(`${searchName} roaming hunger menu`, 6),
+  ]);
+
+  return dedupeLinks(results.flat())
+    .filter((link) => resultMatchesTruck(link, truckName))
+    .sort((a, b) => scoreMenuSource(b) - scoreMenuSource(a) || (a.rank || 0) - (b.rank || 0))
+    .slice(0, 10);
+}
+
+function scoreMenuSource(link) {
+  const haystack = `${link.title || ""} ${link.url || ""} ${link.snippet || ""}`.toLowerCase();
+  let score = link.score || 0;
+
+  if (haystack.includes("foodfleet.com")) score += 12;
+  if (haystack.includes("sample menu")) score += 10;
+  if (haystack.includes("roaminghunger.com")) score += 8;
+  if (haystack.includes("bestfoodtrucks.com") || haystack.includes("streetfoodfinder.com")) {
+    score += 6;
+  }
+  if (haystack.includes("zmenu.com")) score += 2;
+  if (haystack.includes("doordash.com") || haystack.includes("grubhub.com")) score -= 2;
+  if (haystack.includes("facebook.com") || haystack.includes("instagram.com")) score -= 8;
+
+  return score;
+}
+
+function slugifyTruckName(truckName) {
+  return normalizeTruckName(truckName)
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function generatedMenuCandidateLinks(truckName) {
+  const slug = slugifyTruckName(truckName);
+  if (!slug) return [];
+
+  return [
+    {
+      title: `${truckName} - Food Fleet`,
+      url: `https://www.foodfleet.com/food-fleet-partners/${slug}`,
+      snippet: "",
+      rank: -3,
+      score: 0,
+    },
+    {
+      title: `${truckName} - Roaming Hunger`,
+      url: `https://roaminghunger.com/${slug}/`,
+      snippet: "",
+      rank: -2,
+      score: 0,
+    },
+  ];
 }
 
 function findLinkByHost(links, hostPart) {
@@ -493,7 +669,7 @@ async function getFeaturedLinks(truckName) {
   const official =
     knownLinks.official ||
     matchingOfficialResults
-      .filter((link) => !isDirectoryOrDeliveryLink(link.url))
+      .filter((link) => !isDirectoryOrDeliveryLink(link.url) && domainMatchesTruck(link, truckName))
       .sort((a, b) => Number(isHomepage(b)) - Number(isHomepage(a)) || a.rank - b.rank)[0] ||
     null;
   const facebook =
@@ -509,7 +685,10 @@ async function getFeaturedLinks(truckName) {
     official: official || null,
     facebook: facebook || null,
     instagram: instagram || null,
+    knownMenuLinks: knownLinks.menu || [],
+    knownItems: knownLinks.items || [],
     allResults: dedupeLinks([
+      ...(knownLinks.menu || []),
       ...matchingOfficialResults,
       ...matchingFacebookResults,
       ...matchingInstagramResults,
@@ -652,13 +831,14 @@ function formatPlainPrice(line = "") {
 }
 
 function isMenuStopLine(line = "") {
-  return /^(contact us|contact|about us|our story|savor the flavors|copyright|powered by|this website uses cookies)$/i.test(
+  return /^(contact us|contact|about us|our story|savor the flavors|featured|latest|recent posts|upcoming events|book catering|request a quote|copyright|powered by|this website uses cookies)$/i.test(
     line.trim()
   );
 }
 
 function isMenuCategoryLine(line = "") {
   const trimmed = line.trim();
+  if (/:$/.test(trimmed) || /^[A-Za-z\s]+:\s+/.test(trimmed)) return true;
   if (/^(menu|appetizers?|desserts?|salads?|sides?|drinks?|beverages?)$/i.test(trimmed)) {
     return true;
   }
@@ -679,11 +859,36 @@ function isLikelyMenuItemName(line = "") {
 
 function menuTextWindow(text) {
   const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
-  const menuIndex = lines.findIndex((line) => /\bmenu\b/i.test(line));
+  const menuIndex = findMenuStartIndex(lines);
   const start = menuIndex === -1 ? 0 : menuIndex + 1;
   const end = lines.findIndex((line, index) => index > start && isMenuStopLine(line));
 
   return lines.slice(start, end === -1 ? Math.min(lines.length, start + 180) : end);
+}
+
+function findMenuStartIndex(lines) {
+  const preferred = lines.findIndex((line) =>
+    isStrongMenuHeading(line)
+  );
+  if (preferred !== -1) return preferred;
+
+  return lines.findIndex((line) => {
+    const trimmed = line.trim();
+    if (/^(open|close)\s+menu$/i.test(trimmed)) return false;
+    return /\bmenu\b/i.test(trimmed);
+  });
+}
+
+function isStrongMenuHeading(line = "") {
+  const trimmed = line.trim();
+  if (trimmed.includes("|") || /^(open|close)?\s*menu$/i.test(trimmed)) return false;
+  return /^(sample menu|food truck menu|full menu|our menu|menu items?|.+\s+menu)$/i.test(trimmed);
+}
+
+function isSpecificMenuHeading(line = "") {
+  const trimmed = line.trim();
+  if (trimmed.includes("|") || /^(open|close)\s+menu$/i.test(trimmed)) return false;
+  return /^(sample menu|food truck menu|full menu|our menu|menu items?|.+\s+menu)$/i.test(trimmed);
 }
 
 function normalizeMenuPriceLines(lines) {
@@ -750,6 +955,21 @@ function parsePlainTextMenuItems(text, siteUrl) {
       continue;
     }
 
+    const nameBeforeDescription = lines[index - 2] || "";
+    if (
+      isLikelyMenuItemName(nameBeforeDescription) &&
+      isLikelyMenuDescriptionLine(previousLine) &&
+      !isPlainPriceLine(lines[index - 3] || "")
+    ) {
+      items.push({
+        name: cleanMenuItemName(nameBeforeDescription),
+        description: cleanText(previousLine),
+        price: formatPlainPrice(lines[index]),
+        url: siteUrl,
+      });
+      continue;
+    }
+
     if (isLikelyMenuItemName(nextLine)) {
       items.push({
         name: cleanMenuItemName(nextLine),
@@ -760,6 +980,85 @@ function parsePlainTextMenuItems(text, siteUrl) {
         url: siteUrl,
       });
     }
+  }
+
+  return dedupeMenuItems(items).slice(0, 10);
+}
+
+function isLikelyPricelessMenuItemName(line = "") {
+  const trimmed = line.trim();
+  if (!isLikelyMenuItemName(trimmed)) return false;
+  if (trimmed.length > 56) return false;
+  if (/[.!?]$/.test(trimmed)) return false;
+
+  const words = trimmed.split(/\s+/);
+  if (words.length > 7) return false;
+
+  const titleishWords = words.filter((word) => /^[A-Z0-9&]/.test(word));
+  return titleishWords.length >= Math.max(1, Math.ceil(words.length / 2));
+}
+
+function isLikelyMenuDescriptionLine(line = "") {
+  const trimmed = line.trim();
+  if (!trimmed || isMenuStopLine(trimmed) || isMenuCategoryLine(trimmed)) return false;
+  if (/^[A-Z][a-z]+ \d{1,2}, \d{4}$/.test(trimmed)) return false;
+  if (isPlainPriceLine(trimmed) || /https?:|@|copyright|reserved|cookie/i.test(trimmed)) {
+    return false;
+  }
+
+  return trimmed.split(/\s+/).length >= 4 || /[,.;]/.test(trimmed);
+}
+
+function collectPricelessMenuDescription(lines, startIndex) {
+  const descriptionParts = [];
+
+  for (let index = startIndex; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (
+      isMenuStopLine(line) ||
+      isMenuCategoryLine(line) ||
+      isPlainPriceLine(line) ||
+      isLikelyPricelessMenuItemName(line)
+    ) {
+      break;
+    }
+    if (!isLikelyMenuDescriptionLine(line)) break;
+
+    descriptionParts.push(line);
+    if (descriptionParts.length >= 2) break;
+  }
+
+  return cleanText(descriptionParts.join(" "));
+}
+
+function parsePricelessMenuItems(text, siteUrl) {
+  const lines = menuTextWindow(text);
+  const hasSpecificMenuHeading = text
+    .split("\n")
+    .some((line) => isSpecificMenuHeading(line));
+  const hostSupportsPricelessMenus =
+    /foodfleet\.com|roaminghunger\.com|bestfoodtrucks\.com|streetfoodfinder\.com|denverfoodtruckcatering\.com/i.test(
+      siteUrl
+    );
+
+  if (!hasSpecificMenuHeading && !hostSupportsPricelessMenus) return [];
+
+  const items = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const nextLine = lines[index + 1] || "";
+    if (isMenuStopLine(line)) break;
+    if (!isLikelyPricelessMenuItemName(line) || !isLikelyMenuDescriptionLine(nextLine)) {
+      continue;
+    }
+
+    items.push({
+      name: cleanMenuItemName(line),
+      description: collectPricelessMenuDescription(lines, index + 1),
+      price: "",
+      url: siteUrl,
+    });
   }
 
   return dedupeMenuItems(items).slice(0, 10);
@@ -796,7 +1095,11 @@ async function tryPlainTextMenu(siteUrl) {
   for (const menuUrl of menuUrls) {
     try {
       const html = await fetchText(menuUrl);
-      const items = parsePlainTextMenuItems(stripHtml(html), menuUrl);
+      const text = stripHtml(html);
+      const items = [
+        ...parsePlainTextMenuItems(text, menuUrl),
+        ...parsePricelessMenuItems(text, menuUrl),
+      ];
       if (items.length > bestItems.length) bestItems = items;
       if (bestItems.length >= 10) break;
     } catch {
@@ -805,6 +1108,16 @@ async function tryPlainTextMenu(siteUrl) {
   }
 
   return bestItems.slice(0, 10);
+}
+
+function menuCandidateUrls(links, truckName) {
+  return dedupeLinks(
+    [...generatedMenuCandidateLinks(truckName), ...links]
+      .filter((link) => link?.url && !/facebook\.com|instagram\.com/i.test(link.url))
+      .sort((a, b) => scoreMenuSource(b) - scoreMenuSource(a) || (a.rank || 0) - (b.rank || 0))
+  )
+    .map((link) => link.url)
+    .slice(0, 6);
 }
 
 function cleanMenuItemName(line = "") {
@@ -827,7 +1140,10 @@ async function getMenuForTruck(truckName) {
   if (cached && Date.now() - cached.savedAt < 1000 * 60 * 30) return cached.data;
 
   const featuredLinks = await getFeaturedLinks(truckName);
-  const menuLinks = await searchMenuLinks(truckName);
+  const menuLinks = dedupeLinks([
+    ...(featuredLinks.knownMenuLinks || []),
+    ...(await searchMenuLinks(truckName)),
+  ]);
   const official = featuredLinks.official || inferOfficialLink([...menuLinks, ...featuredLinks.allResults], truckName);
   const socialFromOfficial = official ? await getSocialLinksFromOfficial(official, truckName) : {};
   const enhancedFeaturedLinks = {
@@ -835,28 +1151,68 @@ async function getMenuForTruck(truckName) {
     facebook: featuredLinks.facebook || socialFromOfficial.facebook || null,
     instagram: featuredLinks.instagram || socialFromOfficial.instagram || null,
   };
-  const links = dedupeLinks([
+  let links = dedupeLinks([
     ...(enhancedFeaturedLinks.official ? [enhancedFeaturedLinks.official] : []),
     ...(enhancedFeaturedLinks.facebook ? [enhancedFeaturedLinks.facebook] : []),
     ...(enhancedFeaturedLinks.instagram ? [enhancedFeaturedLinks.instagram] : []),
     ...menuLinks,
     ...featuredLinks.allResults,
   ]).slice(0, 8);
-  const menuItems = [];
+  const menuItems = [...(featuredLinks.knownItems || [])];
+  let menuSourceUrl = "";
+
+  if (menuItems.length === 0) {
+    for (const knownMenuLink of featuredLinks.knownMenuLinks || []) {
+      try {
+        menuItems.push(...(await tryPlainTextMenu(knownMenuLink.url)));
+      } catch {
+        // Keep trying the next menu source.
+      }
+      if (menuItems.length > 0) {
+        menuSourceUrl = knownMenuLink.url;
+        break;
+      }
+    }
+  }
+
   if (enhancedFeaturedLinks.official) {
-    try {
-      menuItems.push(...(await tryWooCommerceMenu(enhancedFeaturedLinks.official.url)));
-    } catch {
-      // Some sites block product APIs. The links are still useful.
+    if (menuItems.length === 0) {
+      try {
+        menuItems.push(...(await tryWooCommerceMenu(enhancedFeaturedLinks.official.url)));
+      } catch {
+        // Some sites block product APIs. The links are still useful.
+      }
     }
 
     if (menuItems.length === 0) {
       try {
         menuItems.push(...(await tryPlainTextMenu(enhancedFeaturedLinks.official.url)));
+        if (menuItems.length > 0) menuSourceUrl = enhancedFeaturedLinks.official.url;
       } catch {
         // Many small business sites are hand-built. If parsing fails, keep the links.
       }
     }
+  }
+
+  if (menuItems.length === 0) {
+    for (const menuUrl of menuCandidateUrls(links, truckName)) {
+      try {
+        menuItems.push(...(await tryPlainTextMenu(menuUrl)));
+      } catch {
+        // Keep trying other likely menu sources.
+      }
+      if (menuItems.length > 0) {
+        menuSourceUrl = menuUrl;
+        break;
+      }
+    }
+  }
+
+  if (menuSourceUrl) {
+    links = dedupeLinks([
+      { title: `${truckName} menu source`, url: menuSourceUrl, snippet: "", rank: -1, score: 0 },
+      ...links,
+    ]).slice(0, 8);
   }
 
   const data = {
