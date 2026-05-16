@@ -6,6 +6,11 @@ const template = document.querySelector("#botResultTemplate");
 const quickActions = document.querySelector("#quickActions");
 const MAX_MORE_LINKS = 4;
 
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", name, params);
+}
+
 function setStatus(text) {
   statusPill.textContent = text;
 }
@@ -76,7 +81,10 @@ function buildQuickActions() {
     button.textContent = action.label;
     button.addEventListener("click", () => {
       input.value = "";
-      ask(action.question);
+      trackEvent("quick_question_click", {
+        label: action.label,
+      });
+      ask(action.question, "quick");
     });
     quickActions.append(button);
   });
@@ -249,8 +257,11 @@ function addBotResult(data) {
   scrollToMessageStart(node);
 }
 
-async function ask(question) {
+async function ask(question, source = "typed") {
   addUserMessage(question);
+  trackEvent("question_submitted", {
+    source,
+  });
   setStatus("Checking");
   const thinking = addPlainBotMessage("Checking the calendar and menu pages...");
 
@@ -264,9 +275,20 @@ async function ask(question) {
 
     thinking.remove();
     addBotResult(data);
+    trackEvent("menu_lookup_result", {
+      source,
+      date: data.date || "unknown",
+      truck: data.truck || "none",
+      has_truck: Boolean(data.truck),
+      has_menu_items: Boolean(data.menu?.items?.length),
+      item_count: data.menu?.items?.length || 0,
+    });
     setStatus("Ready");
   } catch (error) {
     thinking.textContent = `I ran into a lookup problem: ${error.message}`;
+    trackEvent("menu_lookup_error", {
+      source,
+    });
     setStatus("Issue");
   }
 }
@@ -276,7 +298,7 @@ form.addEventListener("submit", (event) => {
   const question = input.value.trim();
   if (!question) return;
   input.value = "";
-  ask(question);
+  ask(question, "typed");
 });
 
 buildQuickActions();
