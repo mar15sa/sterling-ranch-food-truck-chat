@@ -50,6 +50,13 @@ function addDays(date, days) {
   return next;
 }
 
+function formatIsoDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 function formatShortDate(date) {
   return new Intl.DateTimeFormat("en-US", {
     weekday: "short",
@@ -65,13 +72,68 @@ function formatQuestionDate(date) {
   }).format(date);
 }
 
+function parseAskedDate(question) {
+  const text = String(question || "").toLowerCase();
+  const today = new Date();
+
+  if (/\btomorrow\b/.test(text)) return formatIsoDate(addDays(today, 1));
+  if (/\byesterday\b/.test(text)) return formatIsoDate(addDays(today, -1));
+  if (/\btoday\b/.test(text)) return formatIsoDate(today);
+
+  const iso = text.match(/\b(20\d{2})-(\d{1,2})-(\d{1,2})\b/);
+  if (iso) return `${iso[1]}-${iso[2].padStart(2, "0")}-${iso[3].padStart(2, "0")}`;
+
+  const slash = text.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/);
+  if (slash) {
+    let year = slash[3] ? Number(slash[3]) : today.getFullYear();
+    if (year < 100) year += 2000;
+    return `${year}-${slash[1].padStart(2, "0")}-${slash[2].padStart(2, "0")}`;
+  }
+
+  const monthNames =
+    "january february march april may june july august september october november december";
+  const monthMatch = text.match(
+    new RegExp(`\\b(${monthNames.split(" ").join("|")})\\s+(\\d{1,2})(?:,?\\s+(20\\d{2}))?\\b`)
+  );
+  if (monthMatch) {
+    const month = monthNames.split(" ").indexOf(monthMatch[1]) + 1;
+    const year = monthMatch[3] ? Number(monthMatch[3]) : today.getFullYear();
+    return `${year}-${String(month).padStart(2, "0")}-${monthMatch[2].padStart(2, "0")}`;
+  }
+
+  const weekdays = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+  const wantedDay = weekdays.findIndex((day) => new RegExp(`\\b${day}\\b`).test(text));
+  if (wantedDay !== -1) {
+    const currentDay = today.getDay();
+    let offset = (wantedDay - currentDay + 7) % 7;
+    if (offset === 0 && /\bnext\b/.test(text)) offset = 7;
+    return formatIsoDate(addDays(today, offset));
+  }
+
+  return "";
+}
+
 function buildQuickActions() {
+  const today = new Date();
   const quickDates = [
-    { label: "Today", question: "What food truck is here today?" },
-    { label: "Tomorrow", question: "What food truck is here tomorrow?" },
+    { label: "Today", question: "What food truck is here today?", date: formatIsoDate(today) },
     {
-      label: formatShortDate(addDays(new Date(), 2)),
-      question: `What food truck is here ${formatQuestionDate(addDays(new Date(), 2))}?`,
+      label: "Tomorrow",
+      question: "What food truck is here tomorrow?",
+      date: formatIsoDate(addDays(today, 1)),
+    },
+    {
+      label: formatShortDate(addDays(today, 2)),
+      question: `What food truck is here ${formatQuestionDate(addDays(today, 2))}?`,
+      date: formatIsoDate(addDays(today, 2)),
     },
   ];
 
@@ -84,9 +146,15 @@ function buildQuickActions() {
       trackEvent("quick_question_click", {
         label: action.label,
       });
-      ask(action.question, "quick");
+      ask(action.question, "quick", action.date);
     });
     quickActions.append(button);
+  });
+}
+
+function warmUpcomingDates() {
+  fetch("/api/warmup?days=8").catch(() => {
+    // Warming is optional. Normal lookups still work if this request fails.
   });
 }
 
@@ -257,7 +325,7 @@ function addBotResult(data) {
   scrollToMessageStart(node);
 }
 
-async function ask(question, source = "typed") {
+async function ask(question, source = "typed", date = "") {
   addUserMessage(question);
   trackEvent("question_submitted", {
     source,
@@ -266,7 +334,10 @@ async function ask(question, source = "typed") {
   const thinking = addPlainBotMessage("Checking the calendar and menu pages...");
 
   try {
-    const response = await fetch(`/api/ask?q=${encodeURIComponent(question)}`);
+    const params = new URLSearchParams({ q: question });
+    const resolvedDate = date || parseAskedDate(question);
+    if (resolvedDate) params.set("date", resolvedDate);
+    const response = await fetch(`/api/ask?${params.toString()}`);
     const data = await response.json();
 
     if (!response.ok) {
@@ -302,4 +373,5 @@ form.addEventListener("submit", (event) => {
 });
 
 buildQuickActions();
+warmUpcomingDates();
 addPlainBotMessage("Ask me which food truck is here, and I’ll check the Sterling Ranch calendar plus likely menu pages.");

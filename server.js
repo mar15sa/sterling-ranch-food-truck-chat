@@ -11,6 +11,9 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
 const MENU_CACHE_VERSION = "menus-v5";
+const FETCH_TIMEOUT_MS = 8000;
+const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
+const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
 const KNOWN_TRUCK_LINKS = {
   "d maracuchos": {
     official: {
@@ -221,6 +224,10 @@ const mimeTypes = {
 
 const calendarCache = new Map();
 const menuCache = new Map();
+const answerCache = new Map();
+const menuLookupPromises = new Map();
+let warmupPromise = null;
+let lastWarmupStartedAt = 0;
 
 function sendJson(res, status, data) {
   const body = JSON.stringify(data, null, 2);
@@ -276,8 +283,12 @@ async function fetchText(url) {
   let lastError;
 
   for (let attempt = 1; attempt <= 2; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
     try {
       const response = await fetch(url, {
+        signal: controller.signal,
         headers: {
           "user-agent": USER_AGENT,
           accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -288,9 +299,11 @@ async function fetchText(url) {
         throw new Error(`Could not fetch ${url}: HTTP ${response.status}`);
       }
 
-      return response.text();
+      return await response.text();
     } catch (error) {
       lastError = error;
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
@@ -381,6 +394,12 @@ function parseAskedDate(question) {
   }
 
   return today;
+}
+
+function parseIsoDateParam(value) {
+  const match = String(value || "").match(/^(20\d{2})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+  return makeLocalDate(Number(match[1]), Number(match[2]), Number(match[3]));
 }
 
 async function getScheduleForMonth(year, month, day = 1) {
@@ -1186,99 +1205,108 @@ async function getMenuForTruck(truckName) {
   const cacheKey = `${MENU_CACHE_VERSION}:${truckName.toLowerCase()}`;
   const cached = menuCache.get(cacheKey);
   if (cached && Date.now() - cached.savedAt < 1000 * 60 * 30) return cached.data;
+  if (menuLookupPromises.has(cacheKey)) return menuLookupPromises.get(cacheKey);
 
-  const featuredLinks = await getFeaturedLinks(truckName);
-  const menuLinks = dedupeLinks([
-    ...(featuredLinks.knownMenuLinks || []),
-    ...(await searchMenuLinks(truckName)),
-  ]);
-  const official = featuredLinks.official || inferOfficialLink([...menuLinks, ...featuredLinks.allResults], truckName);
-  const socialFromOfficial = official ? await getSocialLinksFromOfficial(official, truckName) : {};
-  const enhancedFeaturedLinks = {
-    official,
-    facebook: featuredLinks.facebook || socialFromOfficial.facebook || null,
-    instagram: featuredLinks.instagram || socialFromOfficial.instagram || null,
-  };
-  let links = dedupeLinks([
-    ...(enhancedFeaturedLinks.official ? [enhancedFeaturedLinks.official] : []),
-    ...(enhancedFeaturedLinks.facebook ? [enhancedFeaturedLinks.facebook] : []),
-    ...(enhancedFeaturedLinks.instagram ? [enhancedFeaturedLinks.instagram] : []),
-    ...menuLinks,
-    ...featuredLinks.allResults,
-  ]).slice(0, 8);
-  const menuItems = [];
-  let menuSourceUrl = "";
-
-  if (menuItems.length === 0) {
-    for (const knownMenuLink of featuredLinks.knownMenuLinks || []) {
-      try {
-        menuItems.push(...(await tryPlainTextMenu(knownMenuLink.url)));
-      } catch {
-        // Keep trying the next menu source.
-      }
-      if (menuItems.length > 0) {
-        menuSourceUrl = knownMenuLink.url;
-        break;
-      }
-    }
-  }
-
-  if (enhancedFeaturedLinks.official) {
-    if (menuItems.length === 0) {
-      try {
-        menuItems.push(...(await tryWooCommerceMenu(enhancedFeaturedLinks.official.url)));
-      } catch {
-        // Some sites block product APIs. The links are still useful.
-      }
-    }
-
-    if (menuItems.length === 0) {
-      try {
-        menuItems.push(...(await tryPlainTextMenu(enhancedFeaturedLinks.official.url)));
-        if (menuItems.length > 0) menuSourceUrl = enhancedFeaturedLinks.official.url;
-      } catch {
-        // Many small business sites are hand-built. If parsing fails, keep the links.
-      }
-    }
-  }
-
-  if (menuItems.length === 0) {
-    for (const menuUrl of menuCandidateUrls(links, truckName)) {
-      try {
-        menuItems.push(...(await tryPlainTextMenu(menuUrl)));
-      } catch {
-        // Keep trying other likely menu sources.
-      }
-      if (menuItems.length > 0) {
-        menuSourceUrl = menuUrl;
-        break;
-      }
-    }
-  }
-
-  if (menuItems.length === 0 && featuredLinks.knownItems?.length) {
-    menuItems.push(...featuredLinks.knownItems);
-    menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
-  }
-
-  if (menuSourceUrl) {
-    links = dedupeLinks([
-      { title: `${truckName} menu source`, url: menuSourceUrl, snippet: "", rank: -1, score: 0 },
-      ...links,
+  const lookup = (async () => {
+    const featuredLinks = await getFeaturedLinks(truckName);
+    const menuLinks = dedupeLinks([
+      ...(featuredLinks.knownMenuLinks || []),
+      ...(await searchMenuLinks(truckName)),
+    ]);
+    const official =
+      featuredLinks.official || inferOfficialLink([...menuLinks, ...featuredLinks.allResults], truckName);
+    const socialFromOfficial = official ? await getSocialLinksFromOfficial(official, truckName) : {};
+    const enhancedFeaturedLinks = {
+      official,
+      facebook: featuredLinks.facebook || socialFromOfficial.facebook || null,
+      instagram: featuredLinks.instagram || socialFromOfficial.instagram || null,
+    };
+    let links = dedupeLinks([
+      ...(enhancedFeaturedLinks.official ? [enhancedFeaturedLinks.official] : []),
+      ...(enhancedFeaturedLinks.facebook ? [enhancedFeaturedLinks.facebook] : []),
+      ...(enhancedFeaturedLinks.instagram ? [enhancedFeaturedLinks.instagram] : []),
+      ...menuLinks,
+      ...featuredLinks.allResults,
     ]).slice(0, 8);
-  }
+    const menuItems = [];
+    let menuSourceUrl = "";
 
-  const data = {
-    featuredLinks: {
-      official: enhancedFeaturedLinks.official,
-      facebook: enhancedFeaturedLinks.facebook,
-      instagram: enhancedFeaturedLinks.instagram,
-    },
-    links,
-    items: menuItems.slice(0, 10),
-  };
-  menuCache.set(cacheKey, { data, savedAt: Date.now() });
-  return data;
+    if (menuItems.length === 0) {
+      for (const knownMenuLink of featuredLinks.knownMenuLinks || []) {
+        try {
+          menuItems.push(...(await tryPlainTextMenu(knownMenuLink.url)));
+        } catch {
+          // Keep trying the next menu source.
+        }
+        if (menuItems.length > 0) {
+          menuSourceUrl = knownMenuLink.url;
+          break;
+        }
+      }
+    }
+
+    if (enhancedFeaturedLinks.official) {
+      if (menuItems.length === 0) {
+        try {
+          menuItems.push(...(await tryWooCommerceMenu(enhancedFeaturedLinks.official.url)));
+        } catch {
+          // Some sites block product APIs. The links are still useful.
+        }
+      }
+
+      if (menuItems.length === 0) {
+        try {
+          menuItems.push(...(await tryPlainTextMenu(enhancedFeaturedLinks.official.url)));
+          if (menuItems.length > 0) menuSourceUrl = enhancedFeaturedLinks.official.url;
+        } catch {
+          // Many small business sites are hand-built. If parsing fails, keep the links.
+        }
+      }
+    }
+
+    if (menuItems.length === 0) {
+      for (const menuUrl of menuCandidateUrls(links, truckName)) {
+        try {
+          menuItems.push(...(await tryPlainTextMenu(menuUrl)));
+        } catch {
+          // Keep trying other likely menu sources.
+        }
+        if (menuItems.length > 0) {
+          menuSourceUrl = menuUrl;
+          break;
+        }
+      }
+    }
+
+    if (menuItems.length === 0 && featuredLinks.knownItems?.length) {
+      menuItems.push(...featuredLinks.knownItems);
+      menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
+    }
+
+    if (menuSourceUrl) {
+      links = dedupeLinks([
+        { title: `${truckName} menu source`, url: menuSourceUrl, snippet: "", rank: -1, score: 0 },
+        ...links,
+      ]).slice(0, 8);
+    }
+
+    const data = {
+      featuredLinks: {
+        official: enhancedFeaturedLinks.official,
+        facebook: enhancedFeaturedLinks.facebook,
+        instagram: enhancedFeaturedLinks.instagram,
+      },
+      links,
+      items: menuItems.slice(0, 10),
+    };
+    menuCache.set(cacheKey, { data, savedAt: Date.now() });
+    return data;
+  })().finally(() => {
+    menuLookupPromises.delete(cacheKey);
+  });
+
+  menuLookupPromises.set(cacheKey, lookup);
+  return lookup;
 }
 
 function buildAnswer({ question, targetDate, truck, calendar, menu }) {
@@ -1314,16 +1342,28 @@ function buildAnswer({ question, targetDate, truck, calendar, menu }) {
   };
 }
 
-async function handleAsk(req, res, url) {
-  const question = url.searchParams.get("q") || "";
-  const targetDate = parseAskedDate(question);
+async function getAnswerForDate(question, targetDate) {
+  const dateKey = formatIso(targetDate);
+  const cached = answerCache.get(dateKey);
+  if (cached && Date.now() - cached.savedAt < ANSWER_CACHE_TTL_MS) {
+    return { ...cached.data, question };
+  }
+
   const year = targetDate.getUTCFullYear();
   const month = targetDate.getUTCMonth() + 1;
   const day = targetDate.getUTCDate();
   const calendar = await getScheduleForMonth(year, month, day);
-  const truck = calendar.schedule[formatIso(targetDate)] || "";
+  const truck = calendar.schedule[dateKey] || "";
   const menu = truck ? await getMenuForTruck(truck) : { links: [], items: [] };
-  sendJson(res, 200, buildAnswer({ question, targetDate, truck, calendar, menu }));
+  const data = buildAnswer({ question, targetDate, truck, calendar, menu });
+  answerCache.set(dateKey, { data, savedAt: Date.now() });
+  return data;
+}
+
+async function handleAsk(req, res, url) {
+  const question = url.searchParams.get("q") || "";
+  const targetDate = parseIsoDateParam(url.searchParams.get("date")) || parseAskedDate(question);
+  sendJson(res, 200, await getAnswerForDate(question, targetDate));
 }
 
 async function handleSchedule(req, res, url) {
@@ -1332,6 +1372,41 @@ async function handleSchedule(req, res, url) {
   const month = Number(url.searchParams.get("month")) || today.getUTCMonth() + 1;
   const calendar = await getScheduleForMonth(year, month);
   sendJson(res, 200, calendar);
+}
+
+function startWarmup(days = 8) {
+  const now = Date.now();
+  if (warmupPromise || now - lastWarmupStartedAt < WARMUP_INTERVAL_MS) return false;
+
+  lastWarmupStartedAt = now;
+  warmupPromise = warmUpcomingDates(days)
+    .catch((error) => {
+      console.warn(`Warmup failed: ${error.message}`);
+    })
+    .finally(() => {
+      warmupPromise = null;
+    });
+  return true;
+}
+
+async function warmUpcomingDates(days) {
+  const today = denverToday();
+  const dates = Array.from({ length: days }, (_, index) => addDays(today, index));
+
+  for (const date of dates) {
+    try {
+      await getAnswerForDate("warmup", date);
+    } catch (error) {
+      console.warn(`Warmup failed for ${formatIso(date)}: ${error.message}`);
+    }
+  }
+}
+
+async function handleWarmup(req, res, url) {
+  const requestedDays = Number(url.searchParams.get("days")) || 8;
+  const days = Math.max(1, Math.min(requestedDays, 10));
+  const started = startWarmup(days);
+  sendJson(res, 202, { warming: Boolean(warmupPromise), started });
 }
 
 function serveStatic(req, res, url) {
@@ -1365,6 +1440,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/schedule") {
       await handleSchedule(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/warmup") {
+      await handleWarmup(req, res, url);
       return;
     }
 
