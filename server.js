@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v5";
+const MENU_CACHE_VERSION = "menus-v6";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -72,6 +72,46 @@ const KNOWN_TRUCK_LINKS = {
       title: "Samos Grill - Instagram",
       url: "https://www.instagram.com/samosgrill_/",
     },
+  },
+  "tacotento mas": {
+    official: {
+      title: "Tacontento & Mas",
+      url: "https://tacontentomasco.com/",
+    },
+    facebook: {
+      title: "Tacontento & Mas - Facebook",
+      url: "https://www.facebook.com/profile.php?id=100085291719553",
+    },
+    instagram: {
+      title: "Tacontento & Mas - Instagram",
+      url: "https://www.instagram.com/tacontento_y_mas/",
+    },
+    menu: [
+      {
+        title: "Tacontento & Mas menu",
+        url: "https://tacontentomasco.com/tacontento--mas/locations/",
+      },
+    ],
+  },
+  "tacontento mas": {
+    official: {
+      title: "Tacontento & Mas",
+      url: "https://tacontentomasco.com/",
+    },
+    facebook: {
+      title: "Tacontento & Mas - Facebook",
+      url: "https://www.facebook.com/profile.php?id=100085291719553",
+    },
+    instagram: {
+      title: "Tacontento & Mas - Instagram",
+      url: "https://www.instagram.com/tacontento_y_mas/",
+    },
+    menu: [
+      {
+        title: "Tacontento & Mas menu",
+        url: "https://tacontentomasco.com/tacontento--mas/locations/",
+      },
+    ],
   },
   "big stuff": {
     official: {
@@ -898,7 +938,7 @@ function formatPlainPrice(line = "") {
 }
 
 function isMenuStopLine(line = "") {
-  return /^(contact us|contact|about us|our story|savor the flavors|featured|latest|recent posts|upcoming events|book catering|request a quote|copyright|powered by|this website uses cookies)$/i.test(
+  return /^(find a location|hours|hours may vary by location|contact us|contact|about us|our story|savor the flavors|featured|latest|recent posts|upcoming events|book catering|request a quote|copyright|powered by|this website uses cookies)$/i.test(
     line.trim()
   );
 }
@@ -939,6 +979,9 @@ function findMenuStartIndex(lines) {
   );
   if (preferred !== -1) return preferred;
 
+  const popularItems = lines.findIndex((line) => /^popular items$/i.test(line.trim()));
+  if (popularItems !== -1) return popularItems;
+
   return lines.findIndex((line) => {
     const trimmed = line.trim();
     if (/^(open|close)\s+menu$/i.test(trimmed)) return false;
@@ -949,13 +992,13 @@ function findMenuStartIndex(lines) {
 function isStrongMenuHeading(line = "") {
   const trimmed = line.trim();
   if (trimmed.includes("|") || /^(open|close)?\s*menu$/i.test(trimmed)) return false;
-  return /^(sample menu|food truck menu|full menu|our menu|menu items?|.+\s+menu)$/i.test(trimmed);
+  return /^(sample menu|food truck menu|full menu|our menu|menu items?|popular items|.+\s+menu)$/i.test(trimmed);
 }
 
 function isSpecificMenuHeading(line = "") {
   const trimmed = line.trim();
   if (trimmed.includes("|") || /^(open|close)\s+menu$/i.test(trimmed)) return false;
-  return /^(sample menu|food truck menu|full menu|our menu|menu items?|.+\s+menu)$/i.test(trimmed);
+  return /^(sample menu|food truck menu|full menu|our menu|menu items?|popular items|.+\s+menu)$/i.test(trimmed);
 }
 
 function normalizeMenuPriceLines(lines) {
@@ -1047,6 +1090,29 @@ function parsePlainTextMenuItems(text, siteUrl) {
         url: siteUrl,
       });
     }
+  }
+
+  return dedupeMenuItems(items).slice(0, 10);
+}
+
+function parseStructuredHtmlMenuItems(html, siteUrl) {
+  const items = [];
+  const itemPattern =
+    /<div[^>]+role=["']listitem["'][\s\S]*?<h4[^>]*>[\s\S]*?<div[^>]*>([\s\S]*?)<\/div>[\s\S]*?<div[^>]+class=["'][^"']*\bprice\b[^"']*["'][^>]*>([\s\S]*?)<\/div>[\s\S]*?<\/h4>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+
+  for (const match of html.matchAll(itemPattern)) {
+    const name = cleanMenuItemName(stripHtml(match[1]));
+    const price = cleanText(stripHtml(match[2]));
+    const description = cleanText(stripHtml(match[3]));
+
+    if (!name || !isLikelyMenuItemName(name) || !isPlainPriceLine(price)) continue;
+
+    items.push({
+      name,
+      description,
+      price: formatPlainPrice(price),
+      url: siteUrl,
+    });
   }
 
   return dedupeMenuItems(items).slice(0, 10);
@@ -1163,10 +1229,10 @@ async function tryPlainTextMenu(siteUrl) {
     try {
       const html = await fetchText(menuUrl);
       const text = stripHtml(html);
-      const items = [
-        ...parsePlainTextMenuItems(text, menuUrl),
-        ...parsePricelessMenuItems(text, menuUrl),
-      ];
+      const structuredItems = parseStructuredHtmlMenuItems(html, menuUrl);
+      const items = structuredItems.length
+        ? structuredItems
+        : [...parsePlainTextMenuItems(text, menuUrl), ...parsePricelessMenuItems(text, menuUrl)];
       if (items.length > bestItems.length) bestItems = items;
       if (bestItems.length >= 10) break;
     } catch {
