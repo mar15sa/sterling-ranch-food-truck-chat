@@ -1748,7 +1748,13 @@ function serveStatic(req, res, url) {
     }
 
     const type = mimeTypes[path.extname(filePath)] || "application/octet-stream";
-    res.writeHead(200, { "content-type": type });
+    res.writeHead(200, {
+      "content-type": type,
+      "content-length": data.length,
+      "cache-control": requested.includes("social-preview")
+        ? "public, max-age=86400"
+        : "public, max-age=300",
+    });
     res.end(data);
   });
 }
