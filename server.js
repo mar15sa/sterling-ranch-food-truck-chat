@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v6";
+const MENU_CACHE_VERSION = "menus-v7";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -111,6 +111,219 @@ const KNOWN_TRUCK_LINKS = {
         title: "Tacontento & Mas menu",
         url: "https://tacontentomasco.com/tacontento--mas/locations/",
       },
+    ],
+  },
+  "lucky dawg": {
+    official: {
+      title: "Lucky Dawg",
+      url: "https://luckydawg.food/",
+    },
+    facebook: {
+      title: "Lucky Dawg - Facebook",
+      url: "https://www.facebook.com/people/Lucky-Dawg/61570031293937/",
+    },
+    instagram: {
+      title: "Lucky Dawg - Instagram",
+      url: "https://www.instagram.com/lucky_dawg2025/",
+    },
+    menu: [
+      {
+        title: "Lucky Dawg menu",
+        url: "https://luckydawg.food/",
+      },
+      {
+        title: "Lucky Dawg menu - Toast",
+        url: "https://www.toasttab.com/local/order/technology-services-5280-llc-9214-wiltshire-dr",
+      },
+    ],
+    items: [
+      {
+        name: "Top Dawg",
+        description:
+          "Chicago style Vienna beef dog topped with sport peppers, green relish, onions, tomatoes, mustard, and a dill pickle spear.",
+        price: "",
+      },
+      {
+        name: "Denver Dawg",
+        description: "A Denver-style dog with green chili, sour cream, onions, and jalapeno.",
+        price: "",
+      },
+      {
+        name: "Uptown Dawg",
+        description: "A New York style dog with sweet and sour onion sauce, sauerkraut, and mustard.",
+        price: "",
+      },
+      {
+        name: "Chili Dawg",
+        description: "All-beef dog topped with beef chili, chopped red onions, and shredded cheddar.",
+        price: "",
+      },
+    ],
+  },
+  "philly on the go": {
+    official: {
+      title: "Philly On The Go",
+      url: "https://phillyonthego.square.site/",
+    },
+    facebook: {
+      title: "Philly On The Go - Facebook",
+      url: "https://www.facebook.com/PhillyOnTheGo",
+    },
+    instagram: {
+      title: "Philly On The Go - Instagram",
+      url: "https://www.instagram.com/phillyonthego/",
+    },
+    menu: [
+      {
+        title: "Philly On The Go menu - Roaming Hunger",
+        url: "https://roaminghunger.com/philly-on-the-go/",
+      },
+    ],
+    items: [
+      {
+        name: "Pepper Cheese Steak",
+        description: "Steak, cheese, onion, and green peppers.",
+        price: "",
+      },
+      {
+        name: "Works Cheese Steak",
+        description: "Steak, cheese, onions, green peppers, and mushrooms.",
+        price: "",
+      },
+      {
+        name: "Chicken Cheese Steak",
+        description: "Chicken, cheese, and onions.",
+        price: "",
+      },
+      {
+        name: "Mushroom Cheese Steak",
+        description: "Mushrooms, green peppers, yellow banana peppers, onions, and sweet n hot peppers.",
+        price: "",
+      },
+      {
+        name: "Original Cheese Steak",
+        description: "Classic Philly cheesesteak.",
+        price: "",
+      },
+    ],
+  },
+  "rolling italian": {
+    official: {
+      title: "The Rolling Italian",
+      url: "https://rollingitalianonline.square.site/",
+    },
+    facebook: {
+      title: "The Rolling Italian - Facebook",
+      url: "https://www.facebook.com/therollingitalian",
+    },
+    menu: [
+      {
+        title: "The Rolling Italian menu - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/the-rolling-italian/menu",
+      },
+      {
+        title: "The Rolling Italian menu - StreetFoodFinder",
+        url: "https://streetfoodfinder.com/RollingItalian",
+      },
+    ],
+    items: [
+      { name: "Baked Ziti", description: "Pasta with ricotta, mozzarella, and Italian sauce.", price: "" },
+      { name: "Fettuccine Alfredo", description: "Pasta with homemade alfredo cream sauce.", price: "" },
+      { name: "Rolling Chicken Parmigiana", description: "Breaded chicken baked with mozzarella.", price: "" },
+      { name: "Rolling Eggplant Parmigiana", description: "Breaded eggplant baked with mozzarella.", price: "" },
+      { name: "Spaghetti & Meatballs", description: "Pasta with homemade meatballs and sauce.", price: "" },
+    ],
+  },
+  "the rolling italian": {
+    official: {
+      title: "The Rolling Italian",
+      url: "https://rollingitalianonline.square.site/",
+    },
+    facebook: {
+      title: "The Rolling Italian - Facebook",
+      url: "https://www.facebook.com/therollingitalian",
+    },
+    menu: [
+      {
+        title: "The Rolling Italian menu - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/the-rolling-italian/menu",
+      },
+      {
+        title: "The Rolling Italian menu - StreetFoodFinder",
+        url: "https://streetfoodfinder.com/RollingItalian",
+      },
+    ],
+    items: [
+      { name: "Baked Ziti", description: "Pasta with ricotta, mozzarella, and Italian sauce.", price: "" },
+      { name: "Fettuccine Alfredo", description: "Pasta with homemade alfredo cream sauce.", price: "" },
+      { name: "Rolling Chicken Parmigiana", description: "Breaded chicken baked with mozzarella.", price: "" },
+      { name: "Rolling Eggplant Parmigiana", description: "Breaded eggplant baked with mozzarella.", price: "" },
+      { name: "Spaghetti & Meatballs", description: "Pasta with homemade meatballs and sauce.", price: "" },
+    ],
+  },
+  "cirque kitchen": {
+    official: {
+      title: "Cirque Kitchen",
+      url: "https://www.cirquekitchen.com/",
+    },
+    instagram: {
+      title: "Cirque Kitchen - Instagram",
+      url: "https://www.instagram.com/cirquekitchen/",
+    },
+    menu: [
+      {
+        title: "Cirque Kitchen menu",
+        url: "https://www.cirquekitchen.com/denver-food-truck-menu",
+      },
+    ],
+    items: [
+      { name: "Fried Chicken Sandwich", description: "Cirque Kitchen's elevated fried chicken sandwich.", price: "" },
+      { name: "Beef Bowl", description: "A flavorful beef bowl from their rotating street food menu.", price: "" },
+      { name: "Tater Tots", description: "Deep-fried mashed potato balls.", price: "" },
+      { name: "Burger", description: "A rotating burger option from the Cirque Kitchen truck.", price: "" },
+      { name: "Wings", description: "Crispy wings from the rotating menu.", price: "" },
+    ],
+  },
+  "lucky bird": {
+    official: {
+      title: "Lucky Bird",
+      url: "https://luckybirdco.com/food-truck",
+    },
+    menu: [
+      {
+        title: "Lucky Bird food truck ordering menu",
+        url: "https://order.toasttab.com/online/luckybirdfoodtruck",
+      },
+    ],
+    items: [
+      { name: "Lucky Tenders", description: "Hand-breaded chicken tenders with honey mustard.", price: "$11.50" },
+      { name: "Asian Tenders", description: "Chicken tenders with sweet and spicy Asian sauce.", price: "$12.50" },
+      { name: "Buffalo Blue Tenders", description: "Chicken tenders with buffalo sauce and blue cheese.", price: "$12.50" },
+      { name: "Big Bird", description: "Crispy chicken sandwich with mustard slaw, cheddar, and tomato.", price: "$12.50" },
+      { name: "Spicy Bird", description: "Crispy chicken sandwich with gochujang butter and house pickles.", price: "$11.50" },
+    ],
+  },
+  "isan thai": {
+    facebook: {
+      title: "Isan Thai Food Truck - Facebook",
+      url: "https://www.facebook.com/IsanThaiFoodTruck",
+    },
+    instagram: {
+      title: "Isan Thai Food Truck - Instagram",
+      url: "https://www.instagram.com/isanthaillc/",
+    },
+    menu: [
+      {
+        title: "Isan Thai Food Truck menu - MenuPix",
+        url: "https://www.menupix.com/denver/restaurants/32249768/Isan-Thai-Food-Truck-Lakewood-CO",
+      },
+    ],
+    items: [
+      { name: "Pad Thai", description: "Rice noodles with egg, bean sprouts, peanut, and scallion in tamarind sauce.", price: "$15.95" },
+      { name: "Red Curry", description: "Red curry paste in coconut milk with vegetables and Thai basil.", price: "$16.95" },
+      { name: "Fresh Roll", description: "Vegetables and protein wrapped in rice paper with peanut sauce.", price: "$6.95" },
+      { name: "Potsticker", description: "Pan-fried dumplings with pork and vegetables.", price: "$7.95" },
+      { name: "Krab Rangoon", description: "Cream cheese and whitefish wrapped in crispy wonton.", price: "$6.95" },
     ],
   },
   "big stuff": {
@@ -248,6 +461,26 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Magic Kebob menu",
         url: "https://www.magickebob.com/menus",
+      },
+    ],
+  },
+  "wheels on fire pizza": {
+    official: {
+      title: "Wheels on Fire Pizza",
+      url: "https://www.wheelsonfirepizza.com/",
+    },
+    facebook: {
+      title: "Wheels on Fire Pizza - Facebook",
+      url: "https://www.facebook.com/wheelsonfirepizzatruck",
+    },
+    instagram: {
+      title: "Wheels on Fire Pizza - Instagram",
+      url: "https://www.instagram.com/wheelsonfiretruck/",
+    },
+    menu: [
+      {
+        title: "Wheels on Fire Pizza menu - City Flavor",
+        url: "https://auth.cityflavor.com/truck/wheels-on-fire-pizza-truck/",
       },
     ],
   },
@@ -938,7 +1171,7 @@ function formatPlainPrice(line = "") {
 }
 
 function isMenuStopLine(line = "") {
-  return /^(find a location|hours|hours may vary by location|contact us|contact|about us|our story|savor the flavors|featured|latest|recent posts|upcoming events|book catering|request a quote|copyright|powered by|this website uses cookies)$/i.test(
+  return /^(find a location|hours|hours may vary by location|about|contact us|contact|about us|our story|savor the flavors|featured|latest|recent posts|upcoming events|book catering|request a quote|copyright|powered by|this website uses cookies)$/i.test(
     line.trim()
   );
 }
@@ -959,7 +1192,9 @@ function isLikelyMenuItemName(line = "") {
   const trimmed = line.trim();
   if (trimmed.length < 2 || trimmed.length > 80) return false;
   if (isMenuStopLine(trimmed) || isMenuCategoryLine(trimmed)) return false;
-  if (/https?:|@|^\$?\d+(?:\.\d{2})?$|copyright|reserved|cookie/i.test(trimmed)) return false;
+  if (/https?:|@|^\$?\d+(?:\.\d{2})?$|&times;|loading|failed to load image|copyright|reserved|cookie/i.test(trimmed)) {
+    return false;
+  }
 
   return true;
 }
@@ -1099,6 +1334,8 @@ function parseStructuredHtmlMenuItems(html, siteUrl) {
   const items = [];
   const itemPattern =
     /<div[^>]+role=["']listitem["'][\s\S]*?<h4[^>]*>[\s\S]*?<div[^>]*>([\s\S]*?)<\/div>[\s\S]*?<div[^>]+class=["'][^"']*\bprice\b[^"']*["'][^>]*>([\s\S]*?)<\/div>[\s\S]*?<\/h4>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+  const cardPattern =
+    /<div[^>]+class=["'][^"']*\btext-start\b[^"']*\bp-3\b[^"']*\bborder\b[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*<\/div>/gi;
 
   for (const match of html.matchAll(itemPattern)) {
     const name = cleanMenuItemName(stripHtml(match[1]));
@@ -1111,6 +1348,26 @@ function parseStructuredHtmlMenuItems(html, siteUrl) {
       name,
       description,
       price: formatPlainPrice(price),
+      url: siteUrl,
+    });
+  }
+
+  for (const match of html.matchAll(cardPattern)) {
+    const cardHtml = match[1];
+    const nameMatch = cardHtml.match(/<h[3-6][^>]*>([\s\S]*?)<\/h[3-6]>/i);
+    const descriptionMatch = cardHtml.match(
+      /<div[^>]+class=["'][^"']*\bdescription\b[^"']*["'][^>]*>[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i
+    );
+    const name = cleanMenuItemName(stripHtml(nameMatch?.[1] || ""));
+    const description = cleanText(stripHtml(descriptionMatch?.[1] || ""));
+
+    if (!name || !description || !isLikelyMenuItemName(name)) continue;
+    if (isMenuCategoryLine(name) || /^(submit|book|request|view|log in|sign in)/i.test(name)) continue;
+
+    items.push({
+      name,
+      description,
+      price: "",
       url: siteUrl,
     });
   }
