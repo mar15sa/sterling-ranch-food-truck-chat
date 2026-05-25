@@ -2,7 +2,9 @@ const SITE_URL =
   process.env.SITE_URL || "https://sterling-ranch-food-truck-chat-production.up.railway.app";
 const DAYS_TO_CHECK = Number(process.env.DAYS_TO_CHECK || 8);
 const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 15000);
-const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 2);
+const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 5);
+const SITE_READY_ATTEMPTS = Number(process.env.SITE_READY_ATTEMPTS || 6);
+const SITE_READY_DELAY_MS = Number(process.env.SITE_READY_DELAY_MS || 10000);
 
 function makeLocalDate(year, month, day) {
   return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
@@ -85,22 +87,41 @@ async function fetchJson(path) {
 }
 
 async function assertLiveSiteReachable() {
-  try {
-    const response = await fetchWithRetry("/", {
-      headers: {
-        accept: "text/html",
-        "user-agent": "SterlingRanchFoodTruckHealthCheck/1.0",
-      },
-    });
+  let lastError;
 
-    if (!response.ok) {
-      throw new Error(`${response.status} ${response.statusText}`);
+  for (let attempt = 1; attempt <= SITE_READY_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetchWithRetry("/", {
+        headers: {
+          accept: "text/html",
+          "user-agent": "SterlingRanchFoodTruckHealthCheck/1.0",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+
+      return;
+    } catch (error) {
+      lastError = error;
+
+      if (attempt < SITE_READY_ATTEMPTS) {
+        console.warn(
+          `Live site reachability check failed on attempt ${attempt}/${SITE_READY_ATTEMPTS}; retrying in ${Math.round(
+            SITE_READY_DELAY_MS / 1000
+          )}s. ${error.message}`
+        );
+        await sleep(SITE_READY_DELAY_MS);
+      }
     }
-  } catch (error) {
-    throw new Error(
-      `Cannot reach live site ${SITE_URL}. Check that this runner has outbound internet access and that SITE_URL is correct. ${error.message}`
-    );
   }
+
+  throw new Error(
+    `Live site stayed unreachable after ${SITE_READY_ATTEMPTS} reachability attempts: ${SITE_URL}. Last error: ${
+      lastError?.message || "unknown error"
+    }`
+  );
 }
 
 async function main() {
