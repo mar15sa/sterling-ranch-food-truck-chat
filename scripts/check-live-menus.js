@@ -1,5 +1,8 @@
-const SITE_URL = process.env.SITE_URL || "https://sterlingranchsociety.com";
+const SITE_URL =
+  process.env.SITE_URL || "https://sterling-ranch-food-truck-chat-production.up.railway.app";
 const DAYS_TO_CHECK = Number(process.env.DAYS_TO_CHECK || 8);
+const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 15000);
+const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 2);
 
 function makeLocalDate(year, month, day) {
   return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
@@ -26,8 +29,48 @@ function formatIso(date) {
   return date.toISOString().slice(0, 10);
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+function describeFetchError(error) {
+  if (error?.name === "AbortError" || error?.name === "TimeoutError") {
+    return `timed out after ${FETCH_TIMEOUT_MS}ms`;
+  }
+
+  return error?.message || String(error);
+}
+
+async function fetchWithRetry(path, options = {}) {
+  const url = new URL(path, SITE_URL);
+  let lastError;
+
+  for (let attempt = 0; attempt <= FETCH_RETRIES; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      return await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+    } catch (error) {
+      lastError = error;
+      if (attempt < FETCH_RETRIES) {
+        await sleep(500 * (attempt + 1));
+      }
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  throw new Error(`${url.toString()} could not be reached: ${describeFetchError(lastError)}`);
+}
+
 async function fetchJson(path) {
-  const response = await fetch(new URL(path, SITE_URL), {
+  const response = await fetchWithRetry(path, {
     headers: {
       accept: "application/json",
       "user-agent": "SterlingRanchFoodTruckHealthCheck/1.0",
@@ -41,7 +84,28 @@ async function fetchJson(path) {
   return response.json();
 }
 
+async function assertLiveSiteReachable() {
+  try {
+    const response = await fetchWithRetry("/", {
+      headers: {
+        accept: "text/html",
+        "user-agent": "SterlingRanchFoodTruckHealthCheck/1.0",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+  } catch (error) {
+    throw new Error(
+      `Cannot reach live site ${SITE_URL}. Check that this runner has outbound internet access and that SITE_URL is correct. ${error.message}`
+    );
+  }
+}
+
 async function main() {
+  await assertLiveSiteReachable();
+
   const today = denverToday();
   const failures = [];
 

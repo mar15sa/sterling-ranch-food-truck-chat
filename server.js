@@ -92,6 +92,33 @@ const KNOWN_TRUCK_LINKS = {
         url: "https://tacontentomasco.com/tacontento--mas/locations/",
       },
     ],
+    items: [
+      {
+        name: "Quesadilla",
+        description: "Comes with lettuce, tomatoes, sour cream, and guacamole.",
+        price: "$16.65",
+      },
+      {
+        name: "Super Nachos",
+        description: "Beans, nacho cheese, pico de gallo, jalapenos, guacamole, crema, and your choice of meat.",
+        price: "$16.65",
+      },
+      {
+        name: "Asada Fries",
+        description: "Nacho cheese, pico de gallo, sour cream, guacamole, and jalapenos.",
+        price: "$16.65",
+      },
+      {
+        name: "Desayuno Chapin",
+        description: "Eggs fried, plantains, sausage or chorizo, black beans, sour cream, queso fresco, and house tomato sauce.",
+        price: "$17.69",
+      },
+      {
+        name: "Huevos Rancheros",
+        description: "Two eggs smothered with house pork green chile, served with papas con chorizo.",
+        price: "$16.65",
+      },
+    ],
   },
   "tacontento mas": {
     official: {
@@ -110,6 +137,33 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Tacontento & Mas menu",
         url: "https://tacontentomasco.com/tacontento--mas/locations/",
+      },
+    ],
+    items: [
+      {
+        name: "Quesadilla",
+        description: "Comes with lettuce, tomatoes, sour cream, and guacamole.",
+        price: "$16.65",
+      },
+      {
+        name: "Super Nachos",
+        description: "Beans, nacho cheese, pico de gallo, jalapenos, guacamole, crema, and your choice of meat.",
+        price: "$16.65",
+      },
+      {
+        name: "Asada Fries",
+        description: "Nacho cheese, pico de gallo, sour cream, guacamole, and jalapenos.",
+        price: "$16.65",
+      },
+      {
+        name: "Desayuno Chapin",
+        description: "Eggs fried, plantains, sausage or chorizo, black beans, sour cream, queso fresco, and house tomato sauce.",
+        price: "$17.69",
+      },
+      {
+        name: "Huevos Rancheros",
+        description: "Two eggs smothered with house pork green chile, served with papas con chorizo.",
+        price: "$16.65",
       },
     ],
   },
@@ -385,6 +439,92 @@ const KNOWN_TRUCK_LINKS = {
       { name: "Basket of Sweet Potato Fries", description: "", price: "" },
     ],
   },
+  "big belly bros bbq": {
+    official: {
+      title: "Big Belly Brothers BBQ",
+      url: "https://www.bigbellybrothersbbq.com/",
+    },
+    instagram: {
+      title: "Big Belly Brothers BBQ - Instagram",
+      url: "https://www.instagram.com/bigbellybrothersbbq/",
+    },
+    menu: [
+      {
+        title: "Big Belly Brothers BBQ trailer menu",
+        url: "https://www.bigbellybrothersbbq.com/trailer-menu",
+      },
+    ],
+    items: [
+      {
+        name: "Big Belly Sandwich",
+        description: "Sliced brisket topped with BBQ pork.",
+        price: "",
+      },
+      {
+        name: "Beef Brisket Burnt Ends",
+        description: "Slow-smoked burnt ends caramelized in honey BBQ sauce.",
+        price: "",
+      },
+      {
+        name: "Brisket Quesadilla",
+        description: "Shredded colby jack cheese, smoked brisket, and BBQ sauce.",
+        price: "",
+      },
+      {
+        name: "Brisket Loaded Fries",
+        description: "Seasoned waffle fries topped with shredded colby jack cheese, shredded brisket, and white queso.",
+        price: "",
+      },
+      {
+        name: "Smoked Wings",
+        description: "Smoked wings tossed in BBQ, garlic parm, or buffalo sauce.",
+        price: "",
+      },
+    ],
+  },
+  "big belly bro s bbq": {
+    official: {
+      title: "Big Belly Brothers BBQ",
+      url: "https://www.bigbellybrothersbbq.com/",
+    },
+    instagram: {
+      title: "Big Belly Brothers BBQ - Instagram",
+      url: "https://www.instagram.com/bigbellybrothersbbq/",
+    },
+    menu: [
+      {
+        title: "Big Belly Brothers BBQ trailer menu",
+        url: "https://www.bigbellybrothersbbq.com/trailer-menu",
+      },
+    ],
+    items: [
+      {
+        name: "Big Belly Sandwich",
+        description: "Sliced brisket topped with BBQ pork.",
+        price: "",
+      },
+      {
+        name: "Beef Brisket Burnt Ends",
+        description: "Slow-smoked burnt ends caramelized in honey BBQ sauce.",
+        price: "",
+      },
+      {
+        name: "Brisket Quesadilla",
+        description: "Shredded colby jack cheese, smoked brisket, and BBQ sauce.",
+        price: "",
+      },
+      {
+        name: "Brisket Loaded Fries",
+        description: "Seasoned waffle fries topped with shredded colby jack cheese, shredded brisket, and white queso.",
+        price: "",
+      },
+      {
+        name: "Smoked Wings",
+        description: "Smoked wings tossed in BBQ, garlic parm, or buffalo sauce.",
+        price: "",
+      },
+    ],
+  },
   "2-salty sarges": {
     official: {
       title: "2 Salty Sarges",
@@ -481,6 +621,33 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Wheels on Fire Pizza menu - City Flavor",
         url: "https://auth.cityflavor.com/truck/wheels-on-fire-pizza-truck/",
+      },
+    ],
+    items: [
+      {
+        name: "Formaggio",
+        description: "Red sauce, shredded mozzarella, and pecorino cheese.",
+        price: "",
+      },
+      {
+        name: "Bianca",
+        description: "Garlic-infused olive oil, house herbed ricotta, shredded mozzarella, and fresh rosemary.",
+        price: "",
+      },
+      {
+        name: "Margherita",
+        description: "Red sauce, fresh mozzarella pearls, cherry tomatoes, and fresh basil.",
+        price: "",
+      },
+      {
+        name: "Big Bad Wolf",
+        description: "Red sauce, shredded mozzarella, sausage, bacon, and smoked ham.",
+        price: "",
+      },
+      {
+        name: "Mile High",
+        description: "Red sauce, shredded mozzarella, sausage, roasted red peppers, mushrooms, and jalapenos.",
+        price: "",
       },
     ],
   },
