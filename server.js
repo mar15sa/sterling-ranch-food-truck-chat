@@ -214,6 +214,92 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "loma bonita": {
+    instagram: {
+      title: "Loma Bonita Kitchen - Instagram",
+      url: "https://www.instagram.com/loma.bonitakitchen/",
+    },
+    menu: [
+      {
+        title: "Loma Bonita Kitchen feature - Westword",
+        url: "https://www.westword.com/food-drink/family-recipes-are-key-for-denver-food-truck-loma-bonita-kitchen-25518815/",
+      },
+      {
+        title: "Loma Bonita Kitchen event menu note - KUVO",
+        url: "https://www.kuvo.org/latv",
+      },
+    ],
+    items: [
+      {
+        name: "Birria",
+        description: "Slow-cooked birria based on the owner's family recipe from Oaxaca.",
+        price: "",
+      },
+      {
+        name: "Al Pastor Tacos",
+        description: "Traditional al pastor shaved from the spit with local spices and chili.",
+        price: "",
+      },
+      {
+        name: "Carne Asada",
+        description: "Grilled carne asada from the truck's expanding street-food menu.",
+        price: "",
+      },
+      {
+        name: "Carnitas",
+        description: "Tender carnitas cooked in fat until flavorful and crisp at the edges.",
+        price: "",
+      },
+      {
+        name: "Cali Dog",
+        description: "Bacon-wrapped hot dog with grilled onions, peppers, and Cheetos dust.",
+        price: "",
+      },
+    ],
+  },
+  "loma bonita kitchen": {
+    instagram: {
+      title: "Loma Bonita Kitchen - Instagram",
+      url: "https://www.instagram.com/loma.bonitakitchen/",
+    },
+    menu: [
+      {
+        title: "Loma Bonita Kitchen feature - Westword",
+        url: "https://www.westword.com/food-drink/family-recipes-are-key-for-denver-food-truck-loma-bonita-kitchen-25518815/",
+      },
+      {
+        title: "Loma Bonita Kitchen event menu note - KUVO",
+        url: "https://www.kuvo.org/latv",
+      },
+    ],
+    items: [
+      {
+        name: "Birria",
+        description: "Slow-cooked birria based on the owner's family recipe from Oaxaca.",
+        price: "",
+      },
+      {
+        name: "Al Pastor Tacos",
+        description: "Traditional al pastor shaved from the spit with local spices and chili.",
+        price: "",
+      },
+      {
+        name: "Carne Asada",
+        description: "Grilled carne asada from the truck's expanding street-food menu.",
+        price: "",
+      },
+      {
+        name: "Carnitas",
+        description: "Tender carnitas cooked in fat until flavorful and crisp at the edges.",
+        price: "",
+      },
+      {
+        name: "Cali Dog",
+        description: "Bacon-wrapped hot dog with grilled onions, peppers, and Cheetos dust.",
+        price: "",
+      },
+    ],
+  },
   "philly on the go": {
     official: {
       title: "Philly On The Go",
