@@ -73,6 +73,56 @@ const KNOWN_TRUCK_LINKS = {
       url: "https://www.instagram.com/samosgrill_/",
     },
   },
+  "saucy chops": {
+    official: {
+      title: "Saucy Chops Food Truck & Catering",
+      url: "https://www.saucychops5280.com/",
+    },
+    instagram: {
+      title: "Saucy Chops - Instagram",
+      url: "https://www.instagram.com/saucychops5280/",
+    },
+    menu: [
+      {
+        title: "Saucy Chops menu",
+        url: "https://www.saucychops5280.com/",
+      },
+      {
+        title: "Saucy Chops menu - Roaming Hunger",
+        url: "https://roaminghunger.com/saucy-chops/",
+      },
+    ],
+    items: [
+      {
+        name: "The Dirty Bird",
+        description:
+          "Nashville hot fried chicken sandwich with mayo, lettuce, and pickles on a toasted bun.",
+        price: "",
+      },
+      {
+        name: "Smoky Porky Sliders",
+        description:
+          "Two BBQ pulled pork sliders with mustard-vinaigrette slaw and Korean-style cucumbers.",
+        price: "",
+      },
+      {
+        name: "Saucy Frys",
+        description:
+          "G Chili Peppa Steppa smothered fries with cheese, onion, cilantro, and cotija.",
+        price: "",
+      },
+      {
+        name: "Elote",
+        description: "Mexican street corn with mayo, cilantro, cotija, spices, and lime.",
+        price: "",
+      },
+      {
+        name: "Bowl of G Chili",
+        description: "Green chili topped with cheese, onion, cilantro, and cotija.",
+        price: "",
+      },
+    ],
+  },
   "tacotento mas": {
     official: {
       title: "Tacontento & Mas",

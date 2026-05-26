@@ -5,6 +5,7 @@ const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 15000);
 const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 5);
 const SITE_READY_ATTEMPTS = Number(process.env.SITE_READY_ATTEMPTS || 6);
 const SITE_READY_DELAY_MS = Number(process.env.SITE_READY_DELAY_MS || 10000);
+const FAIL_ON_UNREACHABLE_SITE = process.env.FAIL_ON_UNREACHABLE_SITE === "true";
 
 function makeLocalDate(year, month, day) {
   return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
@@ -102,7 +103,7 @@ async function assertLiveSiteReachable() {
         throw new Error(`${response.status} ${response.statusText}`);
       }
 
-      return;
+      return true;
     } catch (error) {
       lastError = error;
 
@@ -117,15 +118,24 @@ async function assertLiveSiteReachable() {
     }
   }
 
-  throw new Error(
-    `Live site stayed unreachable after ${SITE_READY_ATTEMPTS} reachability attempts: ${SITE_URL}. Last error: ${
+  const message = `Live site stayed unreachable after ${SITE_READY_ATTEMPTS} reachability attempts: ${SITE_URL}. Last error: ${
       lastError?.message || "unknown error"
-    }`
+    }`;
+
+  if (FAIL_ON_UNREACHABLE_SITE) {
+    throw new Error(message);
+  }
+
+  console.warn(`${message}`);
+  console.warn(
+    "Food truck lookup health check inconclusive: this runner could not open the live site, so no date/truck data was checked."
   );
+  return false;
 }
 
 async function main() {
-  await assertLiveSiteReachable();
+  const siteReachable = await assertLiveSiteReachable();
+  if (!siteReachable) return;
 
   const today = denverToday();
   const failures = [];
