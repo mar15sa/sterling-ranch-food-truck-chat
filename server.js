@@ -1502,6 +1502,25 @@ function isLikelyMenuItemName(line = "") {
   return true;
 }
 
+function isJunkMenuItem(item = {}) {
+  const text = `${item.name || ""} ${item.description || ""}`.toLowerCase();
+  const source = `${item.url || ""}`.toLowerCase();
+
+  if (
+    /\b(food trucks near|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
+      text
+    )
+  ) {
+    return true;
+  }
+
+  return source.includes("streetfoodfinder.com/menu");
+}
+
+function usableMenuItems(items = []) {
+  return dedupeMenuItems(items.filter((item) => item?.name && !isJunkMenuItem(item))).slice(0, 10);
+}
+
 function menuTextWindow(text) {
   const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
   const menuIndex = findMenuStartIndex(lines);
@@ -1630,7 +1649,7 @@ function parsePlainTextMenuItems(text, siteUrl) {
     }
   }
 
-  return dedupeMenuItems(items).slice(0, 10);
+  return usableMenuItems(items);
 }
 
 function parseStructuredHtmlMenuItems(html, siteUrl) {
@@ -1675,7 +1694,7 @@ function parseStructuredHtmlMenuItems(html, siteUrl) {
     });
   }
 
-  return dedupeMenuItems(items).slice(0, 10);
+  return usableMenuItems(items);
 }
 
 function isLikelyPricelessMenuItemName(line = "") {
@@ -1754,7 +1773,7 @@ function parsePricelessMenuItems(text, siteUrl) {
     });
   }
 
-  return dedupeMenuItems(items).slice(0, 10);
+  return usableMenuItems(items);
 }
 
 async function getMenuPageUrls(siteUrl) {
@@ -1793,14 +1812,15 @@ async function tryPlainTextMenu(siteUrl) {
       const items = structuredItems.length
         ? structuredItems
         : [...parsePlainTextMenuItems(text, menuUrl), ...parsePricelessMenuItems(text, menuUrl)];
-      if (items.length > bestItems.length) bestItems = items;
+      const cleanItems = usableMenuItems(items);
+      if (cleanItems.length > bestItems.length) bestItems = cleanItems;
       if (bestItems.length >= 10) break;
     } catch {
       // Try the next likely menu URL.
     }
   }
 
-  return bestItems.slice(0, 10);
+  return usableMenuItems(bestItems);
 }
 
 function menuCandidateUrls(links, truckName) {
@@ -1905,6 +1925,15 @@ async function getMenuForTruck(truckName) {
     }
 
     if (menuItems.length === 0 && featuredLinks.knownItems?.length) {
+      menuItems.push(...featuredLinks.knownItems);
+      menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
+    }
+
+    if (
+      featuredLinks.knownItems?.length &&
+      menuItems.length < Math.min(3, featuredLinks.knownItems.length)
+    ) {
+      menuItems.length = 0;
       menuItems.push(...featuredLinks.knownItems);
       menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
     }

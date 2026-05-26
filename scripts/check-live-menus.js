@@ -87,6 +87,21 @@ async function fetchJson(path) {
   return response.json();
 }
 
+function isJunkMenuItem(item = {}) {
+  const text = `${item.name || ""} ${item.description || ""}`.toLowerCase();
+  const source = `${item.url || ""}`.toLowerCase();
+
+  if (
+    /\b(food trucks near|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
+      text
+    )
+  ) {
+    return true;
+  }
+
+  return source.includes("streetfoodfinder.com/menu");
+}
+
 async function assertLiveSiteReachable() {
   let lastError;
 
@@ -149,13 +164,15 @@ async function main() {
     const featured = data.menu?.featuredLinks || {};
     const hasFeaturedLink = Boolean(featured.official || featured.facebook || featured.instagram);
     const hasMenuItems = Boolean(data.menu?.items?.length);
+    const junkItems = (data.menu?.items || []).filter(isJunkMenuItem);
 
-    if (!hasFeaturedLink || !hasMenuItems) {
+    if (!hasFeaturedLink || !hasMenuItems || junkItems.length) {
       failures.push({
         date,
         truck: data.truck,
         hasFeaturedLink,
         itemCount: data.menu?.items?.length || 0,
+        junkItems: junkItems.map((item) => item.name).join(", "),
       });
     }
   }
@@ -164,7 +181,9 @@ async function main() {
     console.error("Food truck lookup health check failed:");
     failures.forEach((failure) => {
       console.error(
-        `- ${failure.date} ${failure.truck}: featured link=${failure.hasFeaturedLink}, menu items=${failure.itemCount}`
+        `- ${failure.date} ${failure.truck}: featured link=${failure.hasFeaturedLink}, menu items=${failure.itemCount}${
+          failure.junkItems ? `, junk items=${failure.junkItems}` : ""
+        }`
       );
     });
     process.exitCode = 1;
