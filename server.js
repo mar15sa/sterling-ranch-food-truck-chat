@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v8";
+const MENU_CACHE_VERSION = "menus-v9";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -550,12 +550,6 @@ const KNOWN_TRUCK_LINKS = {
       title: "Isan Thai Food Truck - Instagram",
       url: "https://www.instagram.com/isanthaillc/",
     },
-    menu: [
-      {
-        title: "Isan Thai Food Truck menu - MenuPix",
-        url: "https://www.menupix.com/denver/restaurants/32249768/Isan-Thai-Food-Truck-Lakewood-CO",
-      },
-    ],
     items: [
       { name: "Pad Thai", description: "Rice noodles with egg, bean sprouts, peanut, and scallion in tamarind sauce.", price: "$15.95" },
       { name: "Red Curry", description: "Red curry paste in coconut milk with vegetables and Thai basil.", price: "$16.95" },
@@ -1555,14 +1549,14 @@ function isJunkMenuItem(item = {}) {
   const source = `${item.url || ""}`.toLowerCase();
 
   if (
-    /\b(food trucks near|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
       text
     )
   ) {
     return true;
   }
 
-  return source.includes("streetfoodfinder.com/menu");
+  return source.includes("streetfoodfinder.com/menu") || source.includes("menupix.com");
 }
 
 function usableMenuItems(items = []) {

@@ -92,14 +92,14 @@ function isJunkMenuItem(item = {}) {
   const source = `${item.url || ""}`.toLowerCase();
 
   if (
-    /\b(food trucks near|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
       text
     )
   ) {
     return true;
   }
 
-  return source.includes("streetfoodfinder.com/menu");
+  return source.includes("streetfoodfinder.com/menu") || source.includes("menupix.com");
 }
 
 async function assertLiveSiteReachable() {
