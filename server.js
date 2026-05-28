@@ -709,60 +709,6 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
-  "berliner haus": {
-    official: {
-      title: "Berliner Haus Denver",
-      url: "https://www.berlinerhausdenver.com/",
-    },
-    instagram: {
-      title: "Berliner Haus - Instagram",
-      url: "https://www.instagram.com/coberlinerhaus/",
-    },
-    menu: [
-      {
-        title: "Berliner Haus menu notes - DiningOut Denver",
-        url: "https://diningout.com/denver/berliner-haus-brings-authentic-german-doner-kebabs-to-avanti-denver/",
-      },
-      {
-        title: "Berliner Haus menu notes - Westword",
-        url: "https://www.westword.com/food-drink/berliner-haus-delivers-german-street-food-to-denver-24295877/",
-      },
-    ],
-    items: [
-      {
-        name: "Doner Kebab Sandwich",
-        description:
-          "Berlin-style sandwich with rotisserie beef and lamb, chicken, or falafel, fresh vegetable salad, and garlic or red chili sauce.",
-        price: "",
-      },
-      {
-        name: "Doner Box",
-        description:
-          "A plate-style box with doner components, offered as rice, salad, or loaded fries.",
-        price: "",
-      },
-      {
-        name: "Loaded Fries",
-        description: "Fries topped with doner kebab.",
-        price: "",
-      },
-      {
-        name: "Fries with Feta",
-        description: "Fries served with feta.",
-        price: "",
-      },
-      {
-        name: "Falafel and Hummus",
-        description: "A vegan-friendly falafel and hummus option.",
-        price: "",
-      },
-      {
-        name: "Baklava",
-        description: "Freshly made baklava.",
-        price: "",
-      },
-    ],
-  },
   "2-salty sarges": {
     official: {
       title: "2 Salty Sarges",
