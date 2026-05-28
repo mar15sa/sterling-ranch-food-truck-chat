@@ -6,6 +6,17 @@ const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 5);
 const SITE_READY_ATTEMPTS = Number(process.env.SITE_READY_ATTEMPTS || 6);
 const SITE_READY_DELAY_MS = Number(process.env.SITE_READY_DELAY_MS || 10000);
 const FAIL_ON_UNREACHABLE_SITE = process.env.FAIL_ON_UNREACHABLE_SITE === "true";
+const JUNK_MENU_ITEM_FIXTURES = [
+  { name: "Food Trucks, Ice Cream, Yogurt", description: "", url: "https://www.menupix.com/example" },
+  { name: "Best of Denver", description: "", url: "https://www.menupix.com/example" },
+  { name: "Food Trucks in Denver", description: "", url: "https://www.menupix.com/example" },
+  { name: "Recent Reviews", description: "1.", url: "https://www.menupix.com/example" },
+  {
+    name: "Pho Evergreen Bar & Grill",
+    description: "I love pho it's amazing I also love the atmosphere phil is a great worker...",
+    url: "https://www.menupix.com/example",
+  },
+];
 
 function makeLocalDate(year, month, day) {
   return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
@@ -102,6 +113,16 @@ function isJunkMenuItem(item = {}) {
   return source.includes("streetfoodfinder.com/menu") || source.includes("menupix.com");
 }
 
+function assertJunkMenuFilterCatchesKnownBadItems() {
+  const missedItems = JUNK_MENU_ITEM_FIXTURES.filter((item) => !isJunkMenuItem(item));
+
+  if (missedItems.length) {
+    throw new Error(
+      `Junk menu filter missed known bad item(s): ${missedItems.map((item) => item.name).join(", ")}`
+    );
+  }
+}
+
 async function assertLiveSiteReachable() {
   let lastError;
 
@@ -149,6 +170,8 @@ async function assertLiveSiteReachable() {
 }
 
 async function main() {
+  assertJunkMenuFilterCatchesKnownBadItems();
+
   const siteReachable = await assertLiveSiteReachable();
   if (!siteReachable) return;
 
