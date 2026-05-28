@@ -10,11 +10,59 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v7";
+const MENU_CACHE_VERSION = "menus-v8";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
 const KNOWN_TRUCK_LINKS = {
+  "berliner haus": {
+    official: {
+      title: "CO Berliner Haus",
+      url: "https://www.co-berliner-haus.com/",
+    },
+    instagram: {
+      title: "CO Berliner Haus - Instagram",
+      url: "https://www.instagram.com/coberlinerhaus/",
+    },
+    menu: [
+      {
+        title: "CO Berliner Haus menu",
+        url: "https://www.co-berliner-haus.com/menu",
+      },
+      {
+        title: "Berliner Haus menu - Roaming Hunger",
+        url: "https://roaminghunger.com/berliner-haus/",
+      },
+      {
+        title: "Berliner Haus ordering menu - Toast",
+        url: "https://www.toasttab.com/local/order/berliner-haus-denver-3200-north-pecos-street",
+      },
+    ],
+    items: [
+      {
+        name: "Berliner Doner Kebab",
+        description: "Signature doner kebab packed with authentic flavors and fresh ingredients.",
+        price: "",
+      },
+      {
+        name: "Chicken Doner",
+        description:
+          "Chicken doner kebab with salad mix on pide bread and a choice of white garlic sauce, red chili sauce, or both.",
+        price: "$14.00",
+      },
+      {
+        name: "Doner Rice Box",
+        description:
+          "Rice topped with chicken, falafel, or beef and lamb doner, plus feta cheese, salad mix, and sauces.",
+        price: "$14.00",
+      },
+      {
+        name: "Doner Platter",
+        description: "A deconstructed doner kebab served with larger portions.",
+        price: "$16.00",
+      },
+    ],
+  },
   "d maracuchos": {
     official: {
       title: "D Maracuchos - Delivery Venezolan Food in Colorado",
@@ -657,6 +705,60 @@ const KNOWN_TRUCK_LINKS = {
       {
         name: "Smoked Wings",
         description: "Smoked wings tossed in BBQ, garlic parm, or buffalo sauce.",
+        price: "",
+      },
+    ],
+  },
+  "berliner haus": {
+    official: {
+      title: "Berliner Haus Denver",
+      url: "https://www.berlinerhausdenver.com/",
+    },
+    instagram: {
+      title: "Berliner Haus - Instagram",
+      url: "https://www.instagram.com/coberlinerhaus/",
+    },
+    menu: [
+      {
+        title: "Berliner Haus menu notes - DiningOut Denver",
+        url: "https://diningout.com/denver/berliner-haus-brings-authentic-german-doner-kebabs-to-avanti-denver/",
+      },
+      {
+        title: "Berliner Haus menu notes - Westword",
+        url: "https://www.westword.com/food-drink/berliner-haus-delivers-german-street-food-to-denver-24295877/",
+      },
+    ],
+    items: [
+      {
+        name: "Doner Kebab Sandwich",
+        description:
+          "Berlin-style sandwich with rotisserie beef and lamb, chicken, or falafel, fresh vegetable salad, and garlic or red chili sauce.",
+        price: "",
+      },
+      {
+        name: "Doner Box",
+        description:
+          "A plate-style box with doner components, offered as rice, salad, or loaded fries.",
+        price: "",
+      },
+      {
+        name: "Loaded Fries",
+        description: "Fries topped with doner kebab.",
+        price: "",
+      },
+      {
+        name: "Fries with Feta",
+        description: "Fries served with feta.",
+        price: "",
+      },
+      {
+        name: "Falafel and Hummus",
+        description: "A vegan-friendly falafel and hummus option.",
+        price: "",
+      },
+      {
+        name: "Baklava",
+        description: "Freshly made baklava.",
         price: "",
       },
     ],
