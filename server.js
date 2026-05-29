@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v9";
+const MENU_CACHE_VERSION = "menus-v10";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -825,6 +825,49 @@ const KNOWN_TRUCK_LINKS = {
       {
         name: "Mile High",
         description: "Red sauce, shredded mozzarella, sausage, roasted red peppers, mushrooms, and jalapenos.",
+        price: "",
+      },
+    ],
+  },
+  "tula s tapas": {
+    official: {
+      title: "Tula's Tapas",
+      url: "https://www.tulastapas.com/",
+    },
+    menu: [
+      {
+        title: "Tula's Tapas food truck menu",
+        url: "https://www.tulastapas.com/catering-packages/the-food-truck",
+      },
+    ],
+    items: [
+      {
+        name: "Tula's Tots",
+        description: "Crispy tater tots topped with tinga sauce, Greek yogurt, and scallions.",
+        price: "",
+      },
+      {
+        name: "Confit Wings",
+        description:
+          "Crispy wings slow braised and flash fried, tossed in Tula's dry rub and served with ranch.",
+        price: "",
+      },
+      {
+        name: "Coccoli",
+        description:
+          "Fried dough pillows with Greek yogurt, torn prosciutto, and balsamic reduction over chopped romaine.",
+        price: "",
+      },
+      {
+        name: "The Cono",
+        description:
+          "Grill-pressed Cubano with mojo pork, ham, pepperoni, Swiss, habanero pickles, mustard, and lime aioli.",
+        price: "",
+      },
+      {
+        name: "The Wilber",
+        description:
+          "Smoked pork belly gyro on flat bread with greens, cucumber, tomato, white beans, avocado, and ranch.",
         price: "",
       },
     ],
