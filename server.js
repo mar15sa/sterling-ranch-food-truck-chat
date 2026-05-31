@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v10";
+const MENU_CACHE_VERSION = "menus-v11";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -1605,7 +1605,7 @@ function isMenuStopLine(line = "") {
 function isMenuCategoryLine(line = "") {
   const trimmed = line.trim();
   if (/:$/.test(trimmed) || /^[A-Za-z\s]+:\s+/.test(trimmed)) return true;
-  if (/^(menu|appetizers?|desserts?|salads?|sides?|drinks?|beverages?)$/i.test(trimmed)) {
+  if (/^(menu|main|appetizers?|desserts?|salads?|sides?|drinks?|beverages?)$/i.test(trimmed)) {
     return true;
   }
 
@@ -1628,9 +1628,14 @@ function isLikelyMenuItemName(line = "") {
 function isJunkMenuItem(item = {}) {
   const text = `${item.name || ""} ${item.description || ""}`.toLowerCase();
   const source = `${item.url || ""}`.toLowerCase();
+  const name = `${item.name || ""}`.trim().toLowerCase();
+
+  if (/^(main|see more food|past catering events)$/i.test(name)) {
+    return true;
+  }
 
   if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate)\b/i.test(
       text
     )
   ) {

@@ -16,6 +16,14 @@ const JUNK_MENU_ITEM_FIXTURES = [
     description: "I love pho it's amazing I also love the atmosphere phil is a great worker...",
     url: "https://www.menupix.com/example",
   },
+  { name: "SEE MORE FOOD", description: "ELEVATE YOUR TASTE BUDS!", url: "https://www.saucychops5280.com/" },
+  {
+    name: "Past Catering Events",
+    description: "event organizers have booked Berliner Haus",
+    url: "https://roaminghunger.com/berliner-haus/",
+  },
+  { name: "Boulder, CO", description: "+ attendees Corporate", url: "https://roaminghunger.com/berliner-haus/" },
+  { name: "Main", description: "", url: "https://roaminghunger.com/berliner-haus/" },
 ];
 
 function makeLocalDate(year, month, day) {
@@ -101,9 +109,14 @@ async function fetchJson(path) {
 function isJunkMenuItem(item = {}) {
   const text = `${item.name || ""} ${item.description || ""}`.toLowerCase();
   const source = `${item.url || ""}`.toLowerCase();
+  const name = `${item.name || ""}`.trim().toLowerCase();
+
+  if (/^(main|see more food|past catering events)$/i.test(name)) {
+    return true;
+  }
 
   if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate)\b/i.test(
       text
     )
   ) {
