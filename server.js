@@ -121,6 +121,44 @@ const KNOWN_TRUCK_LINKS = {
       url: "https://www.instagram.com/samosgrill_/",
     },
   },
+  "shugg s bbq": {
+    facebook: {
+      title: "Shuggs BBQ - Facebook",
+      url: "https://www.facebook.com/Shuggsbbq.co/",
+    },
+    menu: [
+      {
+        title: "Shuggs BBQ - FoodTrucksIn",
+        url: "https://www.foodtrucksin.com/shuggs-bbq",
+      },
+      {
+        title: "Shuggs BBQ - City Flavor",
+        url: "https://www.cityflavor.com/truck/shuggs-bbq/",
+      },
+    ],
+    items: [
+      {
+        name: "Ribs",
+        description: "BBQ ribs listed by the truck's owner-verified FoodTrucksIn profile.",
+        price: "",
+      },
+      {
+        name: "Brisket",
+        description: "Smoked brisket listed by the truck's owner-verified FoodTrucksIn profile.",
+        price: "",
+      },
+      {
+        name: "Loaded Pulled Pork BBQ Sliders",
+        description: "Pulled pork BBQ sliders listed by the truck's owner-verified FoodTrucksIn profile.",
+        price: "",
+      },
+      {
+        name: "Homemade Sides",
+        description: "Homemade sides mentioned in a River North Brewery food-truck event listing.",
+        price: "",
+      },
+    ],
+  },
   "saucy chops": {
     official: {
       title: "Saucy Chops Food Truck & Catering",
