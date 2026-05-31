@@ -23,7 +23,16 @@ const JUNK_MENU_ITEM_FIXTURES = [
     url: "https://roaminghunger.com/berliner-haus/",
   },
   { name: "Boulder, CO", description: "+ attendees Corporate", url: "https://roaminghunger.com/berliner-haus/" },
+  { name: "Boulder, CO", description: "+ attendees Meet", url: "https://roaminghunger.com/berliner-haus/" },
   { name: "Main", description: "", url: "https://roaminghunger.com/berliner-haus/" },
+  {
+    name: "Berliner Haus",
+    description: "3200 N Pecos St Kitchen 103, Denver, CO 80211, USA",
+    url: "https://hello.food/restaurants/colorado/berliner-haus",
+  },
+  { name: "(4.7/5)", description: "Visitors' reviews on Berliner Haus /", url: "https://example.com" },
+  { name: "Request content removal", description: "Burak Beldek 3 months ago on Google", url: "https://example.com" },
+  { name: "All reviews", description: "+1 720-446-9178 Open now", url: "https://example.com" },
 ];
 
 function makeLocalDate(year, month, day) {
@@ -115,8 +124,16 @@ function isJunkMenuItem(item = {}) {
     return true;
   }
 
+  if (/^[a-z .'-]+,\s*[a-z]{2}$/i.test(name) && /\b(attendees?|meet|corporate|event organizers?)\b/i.test(text)) {
+    return true;
+  }
+
+  if (/\b\d+\s+.+,\s*[a-z .'-]+,\s*[a-z]{2}\s+\d{5}\b/i.test(text)) {
+    return true;
+  }
+
   if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now)\b/i.test(
       text
     )
   ) {

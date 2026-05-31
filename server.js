@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v11";
+const MENU_CACHE_VERSION = "menus-v12";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -1618,6 +1618,10 @@ function isLikelyMenuItemName(line = "") {
   const trimmed = line.trim();
   if (trimmed.length < 2 || trimmed.length > 80) return false;
   if (isMenuStopLine(trimmed) || isMenuCategoryLine(trimmed)) return false;
+  if (/^\(?\d(?:\.\d)?\/5\)?$/i.test(trimmed)) return false;
+  if (/^(request content removal|all reviews?|google|less)$/i.test(trimmed)) return false;
+  if (/^\d{1,2}\s*(?:am|pm)\s*-\s*\d{1,2}\s*(?:am|pm)$/i.test(trimmed)) return false;
+  if (/^\d+\s+.+\b(?:st|street|ave|avenue|rd|road|dr|drive|kitchen)\b/i.test(trimmed)) return false;
   if (/https?:|@|^\$?\d+(?:\.\d{2})?$|&times;|loading|failed to load image|copyright|reserved|cookie/i.test(trimmed)) {
     return false;
   }
@@ -1634,8 +1638,16 @@ function isJunkMenuItem(item = {}) {
     return true;
   }
 
+  if (/^[a-z .'-]+,\s*[a-z]{2}$/i.test(name) && /\b(attendees?|meet|corporate|event organizers?)\b/i.test(text)) {
+    return true;
+  }
+
+  if (/\b\d+\s+.+,\s*[a-z .'-]+,\s*[a-z]{2}\s+\d{5}\b/i.test(text)) {
+    return true;
+  }
+
   if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now)\b/i.test(
       text
     )
   ) {
