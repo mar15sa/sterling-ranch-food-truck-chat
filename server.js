@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v12";
+const MENU_CACHE_VERSION = "menus-v13";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -817,6 +817,55 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Magic Kebob menu",
         url: "https://www.magickebob.com/menus",
+      },
+    ],
+  },
+  "turkish chef": {
+    official: {
+      title: "Turkish Chef on Wheels",
+      url: "https://www.turkishchefonwheels.com/",
+    },
+    menu: [
+      {
+        title: "Turkish Chef on Wheels menu - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/turkish-chef-on-wheels/menu",
+      },
+      {
+        title: "Turkish Chef on Wheels menu - Denver Food Truck Association",
+        url: "https://denfta.org/turkish-chef-on-wheels",
+      },
+      {
+        title: "Turkish Chef on Wheels menu - Food Truck Connector",
+        url: "https://www.denverfoodtruckcatering.com/food-trucks/turkish-chef-on-wheels/menu/",
+      },
+    ],
+    items: [
+      {
+        name: "Chicken Shish Kebab Skewers",
+        description:
+          "Grilled yogurt-marinated chicken breast cubes served in a wrap or with salad and rice, plus sigara borek.",
+        price: "",
+      },
+      {
+        name: "Grilled Turkish Adana Kebab",
+        description:
+          "Char-grilled lamb and beef seasoned with Turkish spices, served in a wrap or on a plate with rice, salad, and sigara boregi.",
+        price: "",
+      },
+      {
+        name: "Kisir",
+        description: "Turkish bulgur salad with tomato, scallions, parsley, and spices.",
+        price: "",
+      },
+      {
+        name: "Sigara Borek",
+        description: "Turkish cigar-shaped savory pastry with feta cheese and parsley in phyllo dough.",
+        price: "",
+      },
+      {
+        name: "Baklava with Pistachio",
+        description: "Imported Turkish baklava with pistachios.",
+        price: "",
       },
     ],
   },
