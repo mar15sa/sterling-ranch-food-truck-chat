@@ -91,6 +91,53 @@ const KNOWN_TRUCK_LINKS = {
       url: "https://www.instagram.com/theburningovenpizza/",
     },
   },
+  "bohemian wurst": {
+    official: {
+      title: "Bohemian Wurst",
+      url: "https://www.bohemianwurst.com/",
+    },
+    facebook: {
+      title: "Bohemian Wurst - Facebook",
+      url: "https://facebook.com/bohemianwurst/",
+    },
+    instagram: {
+      title: "Bohemian Wurst - Instagram",
+      url: "https://instagram.com/bohemianwurst",
+    },
+    menu: [
+      {
+        title: "Bohemian Wurst menu",
+        url: "https://www.bohemianwurst.com/menu-1",
+      },
+    ],
+    items: [
+      {
+        name: "Warm Giant Pretzel",
+        description: "Soft Bavarian pretzel, buttered and salted, with optional homemade cheese sauce.",
+        price: "$12.00",
+      },
+      {
+        name: "Pierogies",
+        description: "Homemade potato and cheese dumplings served with sour cream.",
+        price: "$12.00",
+      },
+      {
+        name: "The Bratwurst",
+        description: "Smoked pork and beef bratwurst served with homemade sauerkraut and signature sauce.",
+        price: "$16.00",
+      },
+      {
+        name: "Colorado Wurst",
+        description: "Elk, jalapeno, and cheddar bratwurst served with cheese and jalapenos.",
+        price: "$16.00",
+      },
+      {
+        name: "Vienna Double Dog",
+        description: "Two beef and pork frankfurters served with homemade pepper-pickle relish and signature sauce.",
+        price: "$16.00",
+      },
+    ],
+  },
   "uptown humboldt": {
     official: {
       title: "Uptown & Humboldt",
