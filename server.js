@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v13";
+const MENU_CACHE_VERSION = "menus-v14";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -135,6 +135,107 @@ const KNOWN_TRUCK_LINKS = {
         name: "Vienna Double Dog",
         description: "Two beef and pork frankfurters served with homemade pepper-pickle relish and signature sauce.",
         price: "$16.00",
+      },
+    ],
+  },
+  "krazy thai": {
+    official: {
+      title: "Krazy Thai",
+      url: "https://www.krazythaifood.com/",
+    },
+    menu: [
+      {
+        title: "Krazy Thai menu",
+        url: "https://www.krazythaifood.com/menu/menu",
+      },
+    ],
+    items: [
+      {
+        name: "Pad Thai Noodles",
+        description: "Rice noodles with chicken, egg, bean sprouts, green onions, and crushed peanuts.",
+        price: "$14.00",
+      },
+      {
+        name: "Thai Fried Rice",
+        description: "Fried rice with chicken, egg, broccoli, onions, and carrots.",
+        price: "$14.00",
+      },
+      {
+        name: "Drunken Noodles",
+        description: "Wide rice noodles with chicken, onions, carrots, broccoli, bean sprouts, and basil.",
+        price: "$14.00",
+      },
+      {
+        name: "Crab Cheese Wontons",
+        description: "Six fried crab cheese wontons with signature house dipping sauce.",
+        price: "$7.00",
+      },
+      {
+        name: "Thai Iced Tea",
+        description: "",
+        price: "$4.00",
+      },
+    ],
+  },
+  "colorado chile co kona ice": {
+    official: {
+      title: "Colorado Chile Company",
+      url: "https://www.coloradochileco.com/",
+    },
+    menu: [
+      {
+        title: "Colorado Chile Company menu",
+        url: "https://www.coloradochileco.com/",
+      },
+      {
+        title: "Kona Ice cup-size menu",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+    ],
+    items: [
+      {
+        name: "Korean BBQ Totchos",
+        description: "Colorado Chile Company menu item featuring Pueblo green chiles.",
+        price: "",
+      },
+      {
+        name: "Jalapeno Bacon Burger",
+        description: "Colorado Chile Company menu item featuring Pueblo green chiles.",
+        price: "",
+      },
+      {
+        name: "Shaved Elk Brisket Sandwich",
+        description: "Colorado Chile Company sandwich featuring lean elk and Pueblo green chiles.",
+        price: "",
+      },
+      {
+        name: "Bison Asada Wrap",
+        description: "Colorado Chile Company wrap featuring lean bison and Pueblo green chiles.",
+        price: "",
+      },
+      {
+        name: "Kona Ice Klassic",
+        description: "12-ounce shaved ice cup; sugar-free flavors are available upon request.",
+        price: "$4.00",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+      {
+        name: "Kona Ice King",
+        description: "16-ounce shaved ice cup; sugar-free flavors are available upon request.",
+        price: "$5.00",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+      {
+        name: "Kona Ice Color Changing Cup",
+        description: "17-ounce shaved ice cup; sugar-free flavors are available upon request.",
+        price: "$6.00",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+      {
+        name: "Kona Ice Kowabunga",
+        description: "22-ounce shaved ice cup; sugar-free flavors are available upon request.",
+        price: "$7.00",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
       },
     ],
   },
