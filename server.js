@@ -14,6 +14,12 @@ const MENU_CACHE_VERSION = "menus-v14";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
+const LOCAL_EVENT_OVERRIDES = {
+  "2026-06-06": {
+    location: "Prospect Park",
+    trucks: ["Uptown & Humboldt", "Woodhill Small Batch BBQ", "Repicci's Italian Ice"],
+  },
+};
 const KNOWN_TRUCK_LINKS = {
   "berliner haus": {
     official: {
@@ -252,6 +258,171 @@ const KNOWN_TRUCK_LINKS = {
       title: "Uptown & Humboldt - Instagram",
       url: "https://instagram.com/uptownandhumboldt",
     },
+    menu: [
+      {
+        title: "Uptown & Humboldt food truck menu",
+        url: "https://www.uptownhumboldt.com/Menus",
+      },
+      {
+        title: "Uptown & Humboldt menu - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/uptown-humboldt/menu",
+      },
+    ],
+    items: [
+      {
+        name: "Uptown & Humboldt - American Burger",
+        description:
+          "Brioche bun, cheddar cheese, tomato, microgreens, pickled onions, and G's Fry Sauce.",
+        price: "$14.00",
+      },
+      {
+        name: "Uptown & Humboldt - Berlin Burger",
+        description:
+          "Pretzel bun with mozzarella, sauteed cabbage, microgreens, tomato, ground seed mustard, pickled onions, crushed kettle chips, and G's Fry Sauce.",
+        price: "$10.00",
+      },
+      {
+        name: "Uptown & Humboldt - Falafel Gyro",
+        description:
+          "Vegetarian gyro with lettuce, tomato, cucumber, feta, pickled onions, harissa, and tzatziki.",
+        price: "$10.00",
+      },
+      {
+        name: "Uptown & Humboldt - Lamb Gyro",
+        description:
+          "Lamb gyro with lettuce, tomato, cucumber, pickled onions, feta, and garlic cilantro aioli.",
+        price: "$10.00",
+      },
+    ],
+  },
+  "woodhill small batch bbq": {
+    preferKnownItems: true,
+    official: {
+      title: "Woodhill Small Batch BBQ",
+      url: "https://woodhillbbq.com/",
+    },
+    menu: [
+      {
+        title: "Woodhill Small Batch BBQ menu",
+        url: "https://woodhillbbq.com/menu/",
+      },
+    ],
+    items: [
+      {
+        name: "Woodhill BBQ - Brisket Sandwich",
+        description: "Smoked brisket sandwich from Woodhill's sandwich menu.",
+        price: "$14.79",
+      },
+      {
+        name: "Woodhill BBQ - Pulled Pork Sandwich",
+        description: "Pulled pork sandwich; cole slaw can be added on top.",
+        price: "$12.99",
+      },
+      {
+        name: "Woodhill BBQ - One Meat + One Side Plate",
+        description: "Choice of brisket, pork, sausage, chicken, or ribs with one side.",
+        price: "$16.49",
+      },
+      {
+        name: "Woodhill BBQ - Smoked Mac n Meat",
+        description: "Smoked mac and cheese bowl topped with brisket, pork, sausage, or chicken.",
+        price: "$15.99",
+      },
+    ],
+  },
+  "repicci s italian ice": {
+    preferKnownItems: true,
+    official: {
+      title: "Repicci's Real Italian Ice",
+      url: "https://www.italianice.com/",
+    },
+    instagram: {
+      title: "Repicci's - Instagram",
+      url: "https://www.instagram.com/repiccis/",
+    },
+    menu: [
+      {
+        title: "Repicci's Real Italian menu",
+        url: "https://www.italianice.com/menu",
+      },
+      {
+        title: "Repicci's Italian Ice & Gelato of Denver menu",
+        url: "https://www.denverfoodtruckcatering.com/food-trucks/repiccis-italian-ice-%26-gelato-of-denver/menu/",
+      },
+    ],
+    items: [
+      {
+        name: "Repicci's - Italian Ice",
+        description: "Fruit-flavored Italian ice; daily flavors may vary by location.",
+        price: "",
+      },
+      {
+        name: "Repicci's - Gelato",
+        description: "Gelato flavors such as vanilla bean, dark chocolate, salted caramel, and coconut.",
+        price: "",
+      },
+      {
+        name: "Repicci's - Gelati",
+        description: "A blend of Italian ice and gelato with mix-and-match flavors.",
+        price: "",
+      },
+      {
+        name: "Repicci's - Strawberry Lemonade Combo",
+        description: "Recommended Italian ice combination of lemon and strawberry.",
+        price: "",
+      },
+    ],
+  },
+  "sizzle dirty pop": {
+    preferKnownItems: true,
+    official: {
+      title: "Sizzle Food Truck",
+      url: "https://sizzlefoodtruck.com/",
+    },
+    menu: [
+      {
+        title: "Sizzle Food Truck menu",
+        url: "https://sizzlefoodtruck.com/menu",
+      },
+      {
+        title: "Dirty Pop menu",
+        url: "https://www.visitdirtypop.com/",
+      },
+      {
+        title: "Sizzle Food Truck - Denver Food Truck Connector",
+        url: "https://www.denverfoodtruckcatering.com/food-trucks/sizzle-food-truck/",
+      },
+    ],
+    items: [
+      {
+        name: "Sizzle - Pork Carnitas Quesadilla",
+        description:
+          "Pork carnitas quesadilla with mozzarella, cheddar jack, flour tortilla, and seasoned fries.",
+        price: "$13.39",
+      },
+      {
+        name: "Sizzle - Samurai Jasmine Rice Plate",
+        description:
+          "Five-spice teriyaki salmon or chicken with coconut rice, vegetables, Thai aioli, and sesame seeds.",
+        price: "$18.09",
+      },
+      {
+        name: "Sizzle - Rodeo Burger with Seasoned Fries",
+        description:
+          "Angus beef burger with BBQ sauce, cheddar jack, herb mayo, honey bacon, vegetables, and crispy shallots.",
+        price: "$15.99",
+      },
+      {
+        name: "Dirty Pop - The Dirty Pop",
+        description: "Coke with coconut, vanilla, and coconut cream.",
+        price: "",
+      },
+      {
+        name: "Dirty Pop - Salted Pretzel Bites",
+        description: "Buttery warm salted pretzel bites; cheese dipping sauce available.",
+        price: "$3.99+",
+      },
+    ],
   },
   "samos grill": {
     menu: [
@@ -1323,7 +1494,22 @@ async function getScheduleForMonth(year, month, day = 1) {
     schedule[formatIso(date)] = truck;
   }
 
-  const data = { schedule, sourceUrl: url.toString(), fetchedAt: new Date().toISOString() };
+  const localEvents = {};
+  for (const [dateKey, event] of Object.entries(LOCAL_EVENT_OVERRIDES)) {
+    const eventDate = parseIsoDateParam(dateKey);
+    if (!eventDate) continue;
+    if (eventDate.getUTCFullYear() !== year || eventDate.getUTCMonth() + 1 !== month) continue;
+
+    localEvents[dateKey] = event;
+    schedule[dateKey] = event.trucks.join(", ");
+  }
+
+  const data = {
+    schedule,
+    localEvents,
+    sourceUrl: url.toString(),
+    fetchedAt: new Date().toISOString(),
+  };
   calendarCache.set(cacheKey, { data, savedAt: Date.now() });
   return data;
 }
@@ -1378,6 +1564,7 @@ function knownTruckLinks(truckName) {
     official: links.official ? { ...links.official, snippet: "", rank: -10, score: 0 } : null,
     facebook: links.facebook ? { ...links.facebook, snippet: "", rank: -10, score: 0 } : null,
     instagram: links.instagram ? { ...links.instagram, snippet: "", rank: -10, score: 0 } : null,
+    preferKnownItems: Boolean(links.preferKnownItems),
     menu: Array.isArray(links.menu)
       ? links.menu.map((link, index) => ({
           ...link,
@@ -1650,6 +1837,7 @@ async function getFeaturedLinks(truckName) {
     instagram: instagram || null,
     knownMenuLinks: knownLinks.menu || [],
     knownItems: knownLinks.items || [],
+    preferKnownItems: knownLinks.preferKnownItems || false,
     allResults: dedupeLinks([
       ...(knownLinks.menu || []),
       ...matchingOfficialResults,
@@ -2163,7 +2351,7 @@ async function tryPlainTextMenu(siteUrl) {
 function menuCandidateUrls(links, truckName) {
   return dedupeLinks(
     [...generatedMenuCandidateLinks(truckName), ...links]
-      .filter((link) => link?.url && !/facebook\.com|instagram\.com/i.test(link.url))
+      .filter((link) => link?.url && !/facebook\.com|instagram\.com|sagemenu\.com/i.test(link.url))
       .sort((a, b) => scoreMenuSource(b) - scoreMenuSource(a) || (a.rank || 0) - (b.rank || 0))
   )
     .map((link) => link.url)
@@ -2261,6 +2449,12 @@ async function getMenuForTruck(truckName) {
       }
     }
 
+    if (featuredLinks.preferKnownItems && featuredLinks.knownItems?.length) {
+      menuItems.length = 0;
+      menuItems.push(...featuredLinks.knownItems);
+      menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
+    }
+
     if (menuItems.length === 0 && featuredLinks.knownItems?.length) {
       menuItems.push(...featuredLinks.knownItems);
       menuSourceUrl = featuredLinks.knownItems[0].url || menuSourceUrl;
@@ -2301,7 +2495,20 @@ async function getMenuForTruck(truckName) {
   return lookup;
 }
 
-function buildAnswer({ question, targetDate, truck, calendar, menu }) {
+async function getMenuForTruckGroup(truckNames) {
+  const menus = await Promise.all(truckNames.map((truckName) => getMenuForTruck(truckName)));
+  const official = menus.map((menu) => menu.featuredLinks?.official).find(Boolean) || null;
+  const facebook = menus.map((menu) => menu.featuredLinks?.facebook).find(Boolean) || null;
+  const instagram = menus.map((menu) => menu.featuredLinks?.instagram).find(Boolean) || null;
+
+  return {
+    featuredLinks: { official, facebook, instagram },
+    links: dedupeLinks(menus.flatMap((menu) => menu.links || [])).slice(0, 12),
+    items: menus.flatMap((menu) => (menu.items || []).slice(0, 4)).slice(0, 12),
+  };
+}
+
+function buildAnswer({ question, targetDate, truck, calendar, menu, localEvent = null }) {
   const friendlyDate = formatFriendly(targetDate);
   if (!truck) {
     return {
@@ -2315,18 +2522,25 @@ function buildAnswer({ question, targetDate, truck, calendar, menu }) {
     };
   }
 
+  const truckNames = localEvent?.trucks?.length ? localEvent.trucks : [truck];
+  const locationText = localEvent?.location ? ` at ${localEvent.location}` : "";
   const itemText = menu.items.length
     ? ` I found menu items like ${menu.items
         .slice(0, 3)
         .map((item) => item.name)
         .join(", ")}.`
     : " I found the truck, but could not read menu items automatically this time. The links below are the best places to check.";
+  const truckText =
+    truckNames.length > 1
+      ? `the listed food trucks are ${truckNames.join(", ")}`
+      : `the listed food truck is ${truckNames[0]}`;
 
   return {
-    text: `For ${friendlyDate}, the listed food truck is ${truck}.${itemText}`,
+    text: `For ${friendlyDate}, ${truckText}${locationText}.${itemText}`,
     date: formatIso(targetDate),
     friendlyDate,
-    truck,
+    truck: localEvent?.trucks?.length ? localEvent.trucks.join(", ") : truck,
+    location: localEvent?.location || "",
     sourceUrl: calendar.sourceUrl,
     checkedAt: new Date().toISOString(),
     menu,
@@ -2345,9 +2559,14 @@ async function getAnswerForDate(question, targetDate) {
   const month = targetDate.getUTCMonth() + 1;
   const day = targetDate.getUTCDate();
   const calendar = await getScheduleForMonth(year, month, day);
+  const localEvent = calendar.localEvents?.[dateKey] || null;
   const truck = calendar.schedule[dateKey] || "";
-  const menu = truck ? await getMenuForTruck(truck) : { links: [], items: [] };
-  const data = buildAnswer({ question, targetDate, truck, calendar, menu });
+  const menu = localEvent?.trucks?.length
+    ? await getMenuForTruckGroup(localEvent.trucks)
+    : truck
+      ? await getMenuForTruck(truck)
+      : { links: [], items: [] };
+  const data = buildAnswer({ question, targetDate, truck, calendar, menu, localEvent });
   answerCache.set(dateKey, { data, savedAt: Date.now() });
   return data;
 }
