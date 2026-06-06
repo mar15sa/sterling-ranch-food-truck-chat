@@ -1501,7 +1501,6 @@ async function getScheduleForMonth(year, month, day = 1) {
     if (eventDate.getUTCFullYear() !== year || eventDate.getUTCMonth() + 1 !== month) continue;
 
     localEvents[dateKey] = event;
-    schedule[dateKey] = event.trucks.join(", ");
   }
 
   const data = {
@@ -2495,22 +2494,15 @@ async function getMenuForTruck(truckName) {
   return lookup;
 }
 
-async function getMenuForTruckGroup(truckNames) {
-  const menus = await Promise.all(truckNames.map((truckName) => getMenuForTruck(truckName)));
-  const official = menus.map((menu) => menu.featuredLinks?.official).find(Boolean) || null;
-  const facebook = menus.map((menu) => menu.featuredLinks?.facebook).find(Boolean) || null;
-  const instagram = menus.map((menu) => menu.featuredLinks?.instagram).find(Boolean) || null;
-
-  return {
-    featuredLinks: { official, facebook, instagram },
-    links: dedupeLinks(menus.flatMap((menu) => menu.links || [])).slice(0, 12),
-    items: menus.flatMap((menu) => (menu.items || []).slice(0, 4)).slice(0, 12),
-  };
+function formatTruckList(truckNames) {
+  if (truckNames.length <= 1) return truckNames[0] || "";
+  if (truckNames.length === 2) return truckNames.join(" and ");
+  return `${truckNames.slice(0, -1).join(", ")}, and ${truckNames.at(-1)}`;
 }
 
-function buildAnswer({ question, targetDate, truck, calendar, menu, localEvent = null }) {
+function buildAnswer({ question, targetDate, truck, calendar, menu, truckListings = [] }) {
   const friendlyDate = formatFriendly(targetDate);
-  if (!truck) {
+  if (!truckListings.length) {
     return {
       text: `I could not find a listed food truck for ${friendlyDate}. The calendar might not have that date posted yet.`,
       date: formatIso(targetDate),
@@ -2522,8 +2514,9 @@ function buildAnswer({ question, targetDate, truck, calendar, menu, localEvent =
     };
   }
 
-  const truckNames = localEvent?.trucks?.length ? localEvent.trucks : [truck];
-  const locationText = localEvent?.location ? ` at ${localEvent.location}` : "";
+  const truckNames = truckListings.map((listing) =>
+    listing.location ? `${listing.name} at ${listing.location}` : listing.name
+  );
   const itemText = menu.items.length
     ? ` I found menu items like ${menu.items
         .slice(0, 3)
@@ -2532,15 +2525,16 @@ function buildAnswer({ question, targetDate, truck, calendar, menu, localEvent =
     : " I found the truck, but could not read menu items automatically this time. The links below are the best places to check.";
   const truckText =
     truckNames.length > 1
-      ? `the listed food trucks are ${truckNames.join(", ")}`
+      ? `the listed food trucks are ${formatTruckList(truckNames)}`
       : `the listed food truck is ${truckNames[0]}`;
 
   return {
-    text: `For ${friendlyDate}, ${truckText}${locationText}.${itemText}`,
+    text: `For ${friendlyDate}, ${truckText}.${itemText}`,
     date: formatIso(targetDate),
     friendlyDate,
-    truck: localEvent?.trucks?.length ? localEvent.trucks.join(", ") : truck,
-    location: localEvent?.location || "",
+    truck,
+    trucks: truckListings,
+    location: truckListings[0]?.location || "",
     sourceUrl: calendar.sourceUrl,
     checkedAt: new Date().toISOString(),
     menu,
@@ -2561,12 +2555,30 @@ async function getAnswerForDate(question, targetDate) {
   const calendar = await getScheduleForMonth(year, month, day);
   const localEvent = calendar.localEvents?.[dateKey] || null;
   const truck = calendar.schedule[dateKey] || "";
-  const menu = localEvent?.trucks?.length
-    ? await getMenuForTruckGroup(localEvent.trucks)
-    : truck
-      ? await getMenuForTruck(truck)
-      : { links: [], items: [] };
-  const data = buildAnswer({ question, targetDate, truck, calendar, menu, localEvent });
+  const baseTruckNames = truck ? [truck] : [];
+  const localTruckListings = (localEvent?.trucks || []).map((name) => ({
+    name,
+    location: localEvent.location || "",
+  }));
+  const listingInputs = [
+    ...baseTruckNames.map((name) => ({ name, location: "" })),
+    ...localTruckListings,
+  ];
+  const menus = await Promise.all(
+    listingInputs.map(async (listing) => ({
+      ...listing,
+      menu: await getMenuForTruck(listing.name),
+    }))
+  );
+  const menu = menus[0]?.menu || { links: [], items: [] };
+  const data = buildAnswer({
+    question,
+    targetDate,
+    truck,
+    calendar,
+    menu,
+    truckListings: menus,
+  });
   answerCache.set(dateKey, { data, savedAt: Date.now() });
   return data;
 }

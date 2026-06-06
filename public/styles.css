@@ -130,6 +130,16 @@ h1 {
   margin: 12px 0;
 }
 
+.truck-listing {
+  border-top: 1px solid var(--line);
+  margin-top: 18px;
+  padding-top: 14px;
+}
+
+.truck-listing:first-of-type {
+  border-top: 0;
+}
+
 .truck-card > div {
   min-width: 0;
   padding: 12px;

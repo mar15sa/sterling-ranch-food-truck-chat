@@ -269,6 +269,98 @@ function getLinkIcon(label) {
   return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2 2.2 3 4.9 3 8s-1 5.8-3 8M12 4c-2 2.2-3 4.9-3 8s1 5.8 3 8"/></svg>';
 }
 
+function renderTruckListing(listing, friendlyDate) {
+  const section = document.createElement("section");
+  const truckCard = document.createElement("div");
+  const truckBox = document.createElement("div");
+  const dateBox = document.createElement("div");
+  const featuredBox = document.createElement("div");
+  const truckLabel = document.createElement("span");
+  const truckName = document.createElement("strong");
+  const dateLabel = document.createElement("span");
+  const dateText = document.createElement("strong");
+  const featuredLabel = document.createElement("span");
+  const featuredList = document.createElement("ul");
+
+  section.className = "truck-listing";
+  truckCard.className = "truck-card";
+  truckLabel.className = "label";
+  truckLabel.textContent = listing.location ? `Truck - ${listing.location}` : "Truck";
+  truckName.textContent = listing.name;
+  truckBox.append(truckLabel, truckName);
+
+  dateLabel.className = "label";
+  dateLabel.textContent = "Date";
+  dateText.textContent = friendlyDate;
+  dateBox.append(dateLabel, dateText);
+  truckCard.append(truckBox, dateBox);
+
+  const featuredLinks = listing.menu?.featuredLinks || {};
+  const featured = [
+    ["Official website", featuredLinks.official],
+    ["Facebook", featuredLinks.facebook],
+    ["Instagram", featuredLinks.instagram],
+  ].filter(([, link]) => link?.url);
+
+  if (featured.length) {
+    featuredBox.className = "featured-links-section";
+    featuredLabel.className = "label";
+    featuredLabel.textContent = "Links";
+    featuredList.className = "featured-links";
+    featured.forEach(([label, link]) => featuredList.append(renderFeaturedLink(label, link)));
+    featuredBox.append(featuredLabel, featuredList);
+    truckCard.append(featuredBox);
+  }
+
+  section.append(truckCard);
+
+  const items = listing.menu?.items || [];
+  if (items.length) {
+    const menuSection = document.createElement("div");
+    const heading = document.createElement("h2");
+    const list = document.createElement("ul");
+    menuSection.className = "menu-section";
+    heading.textContent = "Menu items found";
+    list.className = "menu-items";
+    items.forEach((item) => list.append(renderMenuItem(item)));
+    menuSection.append(heading, list);
+    section.append(menuSection);
+  } else {
+    const fallback = document.createElement("div");
+    fallback.className = "menu-fallback";
+    fallback.innerHTML =
+      "<h2>Menu not readable yet</h2><p>I found the truck, but could not pull menu items automatically this time. The official and helpful links are the best backup.</p>";
+    section.append(fallback);
+  }
+
+  const featuredUrls = new Set(featured.map(([, link]) => normalizeLinkUrl(link.url)));
+  const links = (listing.menu?.links || [])
+    .filter((link) => link?.url && !featuredUrls.has(normalizeLinkUrl(link.url)))
+    .slice(0, MAX_MORE_LINKS);
+
+  if (links.length) {
+    const details = document.createElement("details");
+    const summary = document.createElement("summary");
+    const content = document.createElement("div");
+    const linksSection = document.createElement("div");
+    const heading = document.createElement("h2");
+    const list = document.createElement("ul");
+    details.className = "truck-more-section";
+    summary.textContent = "More about this truck";
+    content.className = "truck-more-content";
+    linksSection.className = "links-section";
+    heading.textContent = "Other helpful links";
+    list.className = "menu-links";
+    links.forEach((link) => list.append(renderLink(link)));
+    linksSection.append(heading, list);
+    content.append(linksSection);
+    details.append(summary, content);
+    section.append(details);
+  }
+
+  return section;
+}
+
 function addBotResult(data) {
   const node = template.content.firstElementChild.cloneNode(true);
   node.querySelector(".answer-text").textContent = data.text;
@@ -276,6 +368,17 @@ function addBotResult(data) {
   const source = node.querySelector(".source-link");
   source.href = data.sourceUrl;
   node.querySelector(".checked-at").textContent = formatCheckedAt(data.checkedAt);
+
+  const truckListings = data.trucks || [];
+  if (truckListings.length) {
+    const meta = node.querySelector(".result-meta");
+    truckListings.forEach((listing) => {
+      node.insertBefore(renderTruckListing(listing, data.friendlyDate), meta);
+    });
+    messages.append(node);
+    scrollToMessageStart(node);
+    return;
+  }
 
   if (data.truck) {
     node.querySelector(".truck-card").classList.remove("hidden");
