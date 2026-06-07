@@ -46,7 +46,7 @@ input {
   height: min(820px, calc(100vh - 56px));
   min-height: 620px;
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto 1fr auto auto auto;
   background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(47, 107, 79, 0.18);
   border-radius: 8px;
@@ -375,11 +375,17 @@ a {
   background: var(--sage-soft);
 }
 
+.quick-actions button[aria-pressed="true"] {
+  border-color: var(--sage);
+  background: var(--sage);
+  color: white;
+}
+
 .composer {
   display: grid;
   grid-template-columns: 1fr 52px;
   gap: 10px;
-  padding: 0 24px 24px;
+  padding: 0 24px 14px;
 }
 
 .composer input {
@@ -413,6 +419,42 @@ a {
   filter: brightness(0.96);
 }
 
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 24px 18px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.feedback-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.feedback-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid rgba(47, 107, 79, 0.24);
+  border-radius: 999px;
+  padding: 0 12px;
+  background: white;
+  text-decoration: none;
+}
+
+.feedback-links a:hover,
+.feedback-links a:focus-visible {
+  background: var(--sage-soft);
+}
+
+.maker-link {
+  white-space: nowrap;
+}
+
 .hidden {
   display: none;
 }
@@ -435,7 +477,7 @@ a {
     height: 100vh;
     min-height: 100dvh;
     height: 100dvh;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
     border: 0;
     border-radius: 0;
   }
@@ -453,13 +495,20 @@ a {
 
   .composer {
     grid-row: 4;
-    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    padding-bottom: 12px;
+  }
+
+  .app-footer {
+    grid-row: 5;
+    align-items: flex-end;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
 
   .topbar,
   .messages,
   .quick-actions,
-  .composer {
+  .composer,
+  .app-footer {
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -474,5 +523,10 @@ a {
 
   .truck-more-section summary {
     max-width: 100%;
+  }
+
+  .maker-link {
+    text-align: right;
+    white-space: normal;
   }
 }

@@ -124,7 +124,12 @@ function parseAskedDate(question) {
 function buildQuickActions() {
   const today = new Date();
   const quickDates = [
-    { label: "Today", question: "What food truck is here today?", date: formatIsoDate(today) },
+    {
+      label: "Today",
+      question: "What food truck is here today?",
+      date: formatIsoDate(today),
+      selected: true,
+    },
     {
       label: "Tomorrow",
       question: "What food truck is here tomorrow?",
@@ -141,8 +146,12 @@ function buildQuickActions() {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = action.label;
+    button.setAttribute("aria-pressed", String(Boolean(action.selected)));
     button.addEventListener("click", () => {
       input.value = "";
+      quickActions.querySelectorAll("button").forEach((quickButton) => {
+        quickButton.setAttribute("aria-pressed", String(quickButton === button));
+      });
       trackEvent("quick_question_click", {
         label: action.label,
       });
@@ -428,8 +437,8 @@ function addBotResult(data) {
   scrollToMessageStart(node);
 }
 
-async function ask(question, source = "typed", date = "") {
-  addUserMessage(question);
+async function ask(question, source = "typed", date = "", showUserMessage = true) {
+  if (showUserMessage) addUserMessage(question);
   trackEvent("question_submitted", {
     source,
   });
@@ -486,5 +495,14 @@ form.addEventListener("submit", (event) => {
 });
 
 buildQuickActions();
-warmUpcomingDates();
 addPlainBotMessage("Ask me which food truck is here, and I’ll check the Sterling Ranch calendar plus likely menu pages.");
+document.querySelectorAll("[data-feedback-type]").forEach((link) => {
+  link.addEventListener("click", () => {
+    trackEvent("feedback_link_click", {
+      feedback_type: link.dataset.feedbackType,
+    });
+  });
+});
+ask("What food truck is here today?", "default", formatIsoDate(new Date()), false).finally(
+  warmUpcomingDates
+);
