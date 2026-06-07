@@ -424,6 +424,50 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "cooking with a crown": {
+    preferKnownItems: true,
+    official: {
+      title: "Cooking With A Crown",
+      url: "https://cookingwithacrown.square.site/",
+    },
+    menu: [
+      {
+        title: "Cooking With A Crown menu",
+        url: "https://cookingwithacrown.square.site/",
+      },
+      {
+        title: "Cooking With A Crown - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/cooking-with-a-crown",
+      },
+    ],
+    items: [
+      {
+        name: "Birria Tacos (4)",
+        description: "Four beef birria tacos with cheese, onions, cilantro, and consomme.",
+        price: "$15.00",
+      },
+      {
+        name: "Birria Quesadilla",
+        description: "Large birria quesadilla with cheese, onions, cilantro, and consomme.",
+        price: "$15.00",
+      },
+      {
+        name: "Birria Nachos",
+        description: "Nachos loaded with queso, birria, cheese, onion, and cilantro.",
+        price: "$20.00",
+      },
+      {
+        name: "Birria Burrito",
+        description: "Birria burrito from the truck's featured menu.",
+        price: "$15.00",
+      },
+      {
+        name: "Cinnamon Roll",
+        description: "Homemade cinnamon roll with brown butter cream cheese frosting.",
+        price: "$6.00",
+      },
+    ],
+  },
   "samos grill": {
     menu: [
       {

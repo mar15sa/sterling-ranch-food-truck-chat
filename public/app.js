@@ -441,10 +441,19 @@ async function ask(question, source = "typed", date = "") {
     const resolvedDate = date || parseAskedDate(question);
     if (resolvedDate) params.set("date", resolvedDate);
     const response = await fetch(`/api/ask?${params.toString()}`);
-    const data = await response.json();
+    const responseText = await response.text();
+    let data;
+
+    try {
+      data = JSON.parse(responseText);
+    } catch {
+      throw new Error("The food truck service is temporarily unavailable. Please try again in a minute.");
+    }
 
     if (!response.ok) {
-      throw new Error(data.detail || data.error || "Request failed");
+      throw new Error(
+        data.error || "The food truck service is temporarily unavailable. Please try again in a minute."
+      );
     }
 
     thinking.remove();
@@ -459,11 +468,12 @@ async function ask(question, source = "typed", date = "") {
     });
     setStatus("Ready");
   } catch (error) {
-    thinking.textContent = `I ran into a lookup problem: ${error.message}`;
+    thinking.textContent =
+      error.message || "The food truck service is temporarily unavailable. Please try again in a minute.";
     trackEvent("menu_lookup_error", {
       source,
     });
-    setStatus("Issue");
+    setStatus("Try again");
   }
 }
 
