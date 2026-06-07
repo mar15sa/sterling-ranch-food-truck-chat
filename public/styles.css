@@ -466,9 +466,13 @@ a {
 }
 
 .settings-menu summary svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
 }
 
 .feedback-links {
@@ -525,7 +529,6 @@ a {
   width: 22px;
   height: 22px;
   flex: 0 0 auto;
-  border-radius: 5px;
 }
 
 .hidden {
