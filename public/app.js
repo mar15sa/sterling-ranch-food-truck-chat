@@ -503,6 +503,6 @@ document.querySelectorAll("[data-feedback-type]").forEach((link) => {
     });
   });
 });
-ask("What food truck is here today?", "default", formatIsoDate(new Date()), false).finally(
+ask("What food truck is here today?", "default", formatIsoDate(new Date())).finally(
   warmUpcomingDates
 );
