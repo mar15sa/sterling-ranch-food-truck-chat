@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://sterlingranchsociety.com/social-preview-v2.png" />
     <meta name="twitter:image:alt" content="Sterling Ranch Food Truck Chat preview" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=20260607-mobile-composer-v2" />
+    <link rel="stylesheet" href="/styles.css?v=20260607-settings-footer" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -68,26 +68,38 @@
         </form>
 
         <footer class="app-footer">
-          <nav class="feedback-links" aria-label="Feedback">
-            <a
-              href="https://github.com/mar15sa/sterling-ranch-food-truck-chat/issues/new?labels=bug&amp;title=Bug%3A%20&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AWhat%20date%20or%20food%20truck%20were%20you%20checking%3F"
-              target="_blank"
-              rel="noreferrer"
-              data-feedback-type="bug"
-            >Report a bug</a>
-            <a
-              href="https://github.com/mar15sa/sterling-ranch-food-truck-chat/issues/new?labels=enhancement&amp;title=Feature%20request%3A%20&amp;body=What%20would%20you%20like%20the%20app%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F"
-              target="_blank"
-              rel="noreferrer"
-              data-feedback-type="feature"
-            >Request a feature</a>
-          </nav>
+          <details class="settings-menu" id="settingsMenu">
+            <summary aria-label="Settings">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm9 3.5-.08-1.03-2.06-.78a7.3 7.3 0 0 0-.56-1.35l.91-2-1.46-1.46-2 .91a7.3 7.3 0 0 0-1.35-.56L13.62 3h-2.06l-.78 2.06a7.3 7.3 0 0 0-1.35.56l-2-.91-1.46 1.46.91 2a7.3 7.3 0 0 0-.56 1.35L4.26 11.3v2.06l2.06.78c.14.47.33.92.56 1.35l-.91 2 1.46 1.46 2-.91c.43.23.88.42 1.35.56l.78 2.06h2.06l.78-2.06c.47-.14.92-.33 1.35-.56l2 .91 1.46-1.46-.91-2c.23-.43.42-.88.56-1.35l2.06-.78L21 12Z"
+                />
+              </svg>
+            </summary>
+            <nav class="feedback-links" aria-label="Feedback">
+              <a
+                href="https://github.com/mar15sa/sterling-ranch-food-truck-chat/issues/new?labels=bug&amp;title=Bug%3A%20&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AWhat%20date%20or%20food%20truck%20were%20you%20checking%3F"
+                target="_blank"
+                rel="noreferrer"
+                data-feedback-type="bug"
+              >Report a bug</a>
+              <a
+                href="https://github.com/mar15sa/sterling-ranch-food-truck-chat/issues/new?labels=enhancement&amp;title=Feature%20request%3A%20&amp;body=What%20would%20you%20like%20the%20app%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F"
+                target="_blank"
+                rel="noreferrer"
+                data-feedback-type="feature"
+              >Request a feature</a>
+            </nav>
+          </details>
           <a
             class="maker-link"
             href="https://ideakitchen.ai/"
             target="_blank"
             rel="noreferrer"
-          >Made by Idea Kitchen</a>
+          >
+            <img src="/idea-kitchen-icon.svg" alt="" />
+            <span>Made by Idea Kitchen</span>
+          </a>
         </footer>
       </section>
     </main>
@@ -136,6 +148,6 @@
       </article>
     </template>
 
-    <script src="/app.js?v=20260607-feedback-refine"></script>
+    <script src="/app.js?v=20260607-settings-footer"></script>
   </body>
 </html>

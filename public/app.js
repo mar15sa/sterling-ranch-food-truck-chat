@@ -503,6 +503,18 @@ document.querySelectorAll("[data-feedback-type]").forEach((link) => {
     });
   });
 });
+const settingsMenu = document.querySelector("#settingsMenu");
+document.addEventListener("click", (event) => {
+  if (settingsMenu?.open && !settingsMenu.contains(event.target)) {
+    settingsMenu.removeAttribute("open");
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && settingsMenu?.open) {
+    settingsMenu.removeAttribute("open");
+    settingsMenu.querySelector("summary")?.focus();
+  }
+});
 ask("What food truck is here today?", "default", formatIsoDate(new Date())).finally(
   warmUpcomingDates
 );
