@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v15";
+const MENU_CACHE_VERSION = "menus-v16";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -1324,18 +1324,14 @@ const KNOWN_TRUCK_LINKS = {
   },
   "los chamacos": {
     preferKnownItems: true,
-    official: {
-      title: "El Chamaco's Taco Dealer - Castle Rock business directory",
-      url: "https://www.crgov.com/BusinessDirectoryii.aspx?lngNewPage=0&ysnShowAll=1",
-    },
     facebook: {
       title: "El Chamaco's Taco Dealer - Facebook",
       url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
     },
     menu: [
       {
-        title: "El Chamaco's menu notes - Restaurantji",
-        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+        title: "El Chamaco's menu photo - Facebook",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
         title: "El Chamaco's listing - MenuPix",
@@ -1344,51 +1340,78 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Street Tacos",
-        description: "Local menu listings name street tacos as a customer favorite.",
+        name: "Tacos",
+        description:
+          "Order of 4 tacos or single tacos on corn tortillas with onions and cilantro.",
         price: "",
-        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Al Pastor Tacos",
-        description: "Taco option mentioned in local reviews of the food truck.",
+        name: "Tacos al Carbon",
+        description: "Steak or pollo a la parrilla tacos with onion, tomato, and cilantro.",
         price: "",
-        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Shrimp Tacos",
-        description: "Taco option mentioned in local reviews of the food truck.",
+        name: "Tacos al Pastor",
+        description: "Tender marinated pork tacos with onion, cilantro, and pineapple.",
         price: "",
-        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Burrito",
-        description: "Local menu listings name burritos as a customer favorite.",
+        name: "Tacos de Camaron",
+        description:
+          "Grilled shrimp tacos with a special sauce, lettuce, tomato, cucumber, avocado slices, and shredded cheese.",
         price: "",
-        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Chicken Quesadilla",
-        description: "Quesadilla option mentioned in local reviews of the food truck.",
+        name: "Burritos",
+        description:
+          "Burritos smothered with green chile or queso dip, refried beans, and rice.",
         price: "",
-        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Tortas",
+        description:
+          "Mexican sandwich with meat options such as chicken, ground beef, pork, or shredded beef.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Torta Loca",
+        description:
+          "Special torta with steak, pollo a la parrilla, tongue, and al pastor.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Quesadillas",
+        description:
+          "Quesadillas with chicken, ground beef, pork, shredded beef, steak, pollo a la parrilla, or camaron.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Taco Salad",
+        description:
+          "With lettuce, shredded cheese, sour cream, guacamole, and refried beans.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
     ],
   },
   "el chamacos": {
     preferKnownItems: true,
-    official: {
-      title: "El Chamaco's Taco Dealer - Castle Rock business directory",
-      url: "https://www.crgov.com/BusinessDirectoryii.aspx?lngNewPage=0&ysnShowAll=1",
-    },
     facebook: {
       title: "El Chamaco's Taco Dealer - Facebook",
       url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
     },
     menu: [
       {
-        title: "El Chamaco's menu notes - Restaurantji",
-        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+        title: "El Chamaco's menu photo - Facebook",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
         title: "El Chamaco's listing - MenuPix",
@@ -1397,34 +1420,65 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Street Tacos",
-        description: "Local menu listings name street tacos as a customer favorite.",
+        name: "Tacos",
+        description:
+          "Order of 4 tacos or single tacos on corn tortillas with onions and cilantro.",
         price: "",
-        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Al Pastor Tacos",
-        description: "Taco option mentioned in local reviews of the food truck.",
+        name: "Tacos al Carbon",
+        description: "Steak or pollo a la parrilla tacos with onion, tomato, and cilantro.",
         price: "",
-        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Shrimp Tacos",
-        description: "Taco option mentioned in local reviews of the food truck.",
+        name: "Tacos al Pastor",
+        description: "Tender marinated pork tacos with onion, cilantro, and pineapple.",
         price: "",
-        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Burrito",
-        description: "Local menu listings name burritos as a customer favorite.",
+        name: "Tacos de Camaron",
+        description:
+          "Grilled shrimp tacos with a special sauce, lettuce, tomato, cucumber, avocado slices, and shredded cheese.",
         price: "",
-        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
       {
-        name: "Chicken Quesadilla",
-        description: "Quesadilla option mentioned in local reviews of the food truck.",
+        name: "Burritos",
+        description:
+          "Burritos smothered with green chile or queso dip, refried beans, and rice.",
         price: "",
-        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Tortas",
+        description:
+          "Mexican sandwich with meat options such as chicken, ground beef, pork, or shredded beef.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Torta Loca",
+        description:
+          "Special torta with steak, pollo a la parrilla, tongue, and al pastor.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Quesadillas",
+        description:
+          "Quesadillas with chicken, ground beef, pork, shredded beef, steak, pollo a la parrilla, or camaron.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+      },
+      {
+        name: "Taco Salad",
+        description:
+          "With lettuce, shredded cheese, sour cream, guacamole, and refried beans.",
+        price: "",
+        url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
       },
     ],
   },
