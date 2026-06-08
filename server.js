@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v14";
+const MENU_CACHE_VERSION = "menus-v15";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -1319,6 +1319,112 @@ const KNOWN_TRUCK_LINKS = {
         description:
           "Smoked pork belly gyro on flat bread with greens, cucumber, tomato, white beans, avocado, and ranch.",
         price: "",
+      },
+    ],
+  },
+  "los chamacos": {
+    preferKnownItems: true,
+    official: {
+      title: "El Chamaco's Taco Dealer - Castle Rock business directory",
+      url: "https://www.crgov.com/BusinessDirectoryii.aspx?lngNewPage=0&ysnShowAll=1",
+    },
+    facebook: {
+      title: "El Chamaco's Taco Dealer - Facebook",
+      url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+    },
+    menu: [
+      {
+        title: "El Chamaco's menu notes - Restaurantji",
+        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+      },
+      {
+        title: "El Chamaco's listing - MenuPix",
+        url: "https://www.menupix.com/colorado/restaurants/32074682/El-Chamacos-Castle-Rock-CO",
+      },
+    ],
+    items: [
+      {
+        name: "Street Tacos",
+        description: "Local menu listings name street tacos as a customer favorite.",
+        price: "",
+        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+      },
+      {
+        name: "Al Pastor Tacos",
+        description: "Taco option mentioned in local reviews of the food truck.",
+        price: "",
+        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+      },
+      {
+        name: "Shrimp Tacos",
+        description: "Taco option mentioned in local reviews of the food truck.",
+        price: "",
+        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+      },
+      {
+        name: "Burrito",
+        description: "Local menu listings name burritos as a customer favorite.",
+        price: "",
+        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+      },
+      {
+        name: "Chicken Quesadilla",
+        description: "Quesadilla option mentioned in local reviews of the food truck.",
+        price: "",
+        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+      },
+    ],
+  },
+  "el chamacos": {
+    preferKnownItems: true,
+    official: {
+      title: "El Chamaco's Taco Dealer - Castle Rock business directory",
+      url: "https://www.crgov.com/BusinessDirectoryii.aspx?lngNewPage=0&ysnShowAll=1",
+    },
+    facebook: {
+      title: "El Chamaco's Taco Dealer - Facebook",
+      url: "https://www.facebook.com/p/El-chamacos-taco-dealer-my-legacy-100057675699460/",
+    },
+    menu: [
+      {
+        title: "El Chamaco's menu notes - Restaurantji",
+        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+      },
+      {
+        title: "El Chamaco's listing - MenuPix",
+        url: "https://www.menupix.com/colorado/restaurants/32074682/El-Chamacos-Castle-Rock-CO",
+      },
+    ],
+    items: [
+      {
+        name: "Street Tacos",
+        description: "Local menu listings name street tacos as a customer favorite.",
+        price: "",
+        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+      },
+      {
+        name: "Al Pastor Tacos",
+        description: "Taco option mentioned in local reviews of the food truck.",
+        price: "",
+        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+      },
+      {
+        name: "Shrimp Tacos",
+        description: "Taco option mentioned in local reviews of the food truck.",
+        price: "",
+        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
+      },
+      {
+        name: "Burrito",
+        description: "Local menu listings name burritos as a customer favorite.",
+        price: "",
+        url: "https://www.restaurantji.com/co/castle-rock/tacos/",
+      },
+      {
+        name: "Chicken Quesadilla",
+        description: "Quesadilla option mentioned in local reviews of the food truck.",
+        price: "",
+        url: "https://www.mapquest.com/us/colorado/el-chamacos-427405432",
       },
     ],
   },
