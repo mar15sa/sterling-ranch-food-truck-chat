@@ -2222,7 +2222,11 @@ function isJunkMenuItem(item = {}) {
   const source = `${item.url || ""}`.toLowerCase();
   const name = `${item.name || ""}`.trim().toLowerCase();
 
-  if (/^(main|see more food|past catering events)$/i.test(name)) {
+  if (/^(main|meet|see more food|past catering events)$/i.test(name)) {
+    return true;
+  }
+
+  if (/\bwhat is your favorite dish on the menu\b/i.test(text)) {
     return true;
   }
 

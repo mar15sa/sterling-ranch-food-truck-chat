@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check public/app.js",
+    "check": "node --check server.js && node --check public/app.js && node scripts/check-live-menus.js --fixtures-only",
     "check:live": "node scripts/check-live-menus.js"
   },
   "keywords": [],

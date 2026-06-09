@@ -25,6 +25,12 @@ const JUNK_MENU_ITEM_FIXTURES = [
   { name: "Boulder, CO", description: "+ attendees Corporate", url: "https://roaminghunger.com/berliner-haus/" },
   { name: "Boulder, CO", description: "+ attendees Meet", url: "https://roaminghunger.com/berliner-haus/" },
   { name: "Main", description: "", url: "https://roaminghunger.com/berliner-haus/" },
+  { name: "Meet", description: "", url: "https://www.bohemianwurst.com/menu-1" },
+  {
+    name: "Zdenek Srom & Angelie Timm",
+    description: "What is your favorite dish on the menu? Giant Pretzel and Bier Cheese!",
+    url: "https://www.bohemianwurst.com/menu-1",
+  },
   {
     name: "Berliner Haus",
     description: "3200 N Pecos St Kitchen 103, Denver, CO 80211, USA",
@@ -120,7 +126,11 @@ function isJunkMenuItem(item = {}) {
   const source = `${item.url || ""}`.toLowerCase();
   const name = `${item.name || ""}`.trim().toLowerCase();
 
-  if (/^(main|see more food|past catering events)$/i.test(name)) {
+  if (/^(main|meet|see more food|past catering events)$/i.test(name)) {
+    return true;
+  }
+
+  if (/\bwhat is your favorite dish on the menu\b/i.test(text)) {
     return true;
   }
 
@@ -201,6 +211,11 @@ async function assertLiveSiteReachable() {
 
 async function main() {
   assertJunkMenuFilterCatchesKnownBadItems();
+
+  if (process.argv.includes("--fixtures-only")) {
+    console.log("Junk menu filter fixtures passed.");
+    return;
+  }
 
   const siteReachable = await assertLiveSiteReachable();
   if (!siteReachable) return;
