@@ -183,7 +183,7 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
-  "colorado chile co kona ice": {
+  "colorado chile co": {
     official: {
       title: "Colorado Chile Company",
       url: "https://www.coloradochileco.com/",
@@ -192,10 +192,6 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Colorado Chile Company menu",
         url: "https://www.coloradochileco.com/",
-      },
-      {
-        title: "Kona Ice cup-size menu",
-        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
       },
     ],
     items: [
@@ -219,6 +215,28 @@ const KNOWN_TRUCK_LINKS = {
         description: "Colorado Chile Company wrap featuring lean bison and Pueblo green chiles.",
         price: "",
       },
+    ],
+  },
+  "kona ice": {
+    official: {
+      title: "Kona Ice",
+      url: "https://www.kona-ice.com/",
+    },
+    facebook: {
+      title: "Kona Ice - Facebook",
+      url: "https://www.facebook.com/konaiceexperience/",
+    },
+    instagram: {
+      title: "Kona Ice - Instagram",
+      url: "https://www.instagram.com/konaice/",
+    },
+    menu: [
+      {
+        title: "Kona Ice cup-size menu",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+    ],
+    items: [
       {
         name: "Kona Ice Klassic",
         description: "12-ounce shaved ice cup; sugar-free flavors are available upon request.",
@@ -1785,6 +1803,26 @@ function knownTruckLinks(truckName) {
   };
 }
 
+function hasKnownTruckData(truckName) {
+  const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
+  return Boolean(KNOWN_TRUCK_LINKS[key]);
+}
+
+function splitListedTruckNames(truckName) {
+  const normalized = normalizeTruckName(truckName);
+  if (!normalized) return [];
+
+  const parts = normalized
+    .split(/\s+(?:&|\+|and)\s+/i)
+    .map((name) => name.trim())
+    .filter(Boolean);
+
+  if (parts.length < 2) return [normalized];
+
+  const allPartsHaveKnownData = parts.every(hasKnownTruckData);
+  return allPartsHaveKnownData ? parts : [normalized];
+}
+
 function getTruckNameTokens(truckName) {
   const genericWords = new Set([
     "and",
@@ -2763,17 +2801,27 @@ async function getAnswerForDate(question, targetDate) {
   const calendar = await getScheduleForMonth(year, month, day);
   const localEvent = calendar.localEvents?.[dateKey] || null;
   const truck = calendar.schedule[dateKey] || "";
-  const baseTruckNames = truck ? [truck] : [];
-  const localTruckListings = (localEvent?.trucks || []).map((name) => ({
-    name,
-    location: localEvent.location || "",
-  }));
+  const baseTruckNames = truck ? splitListedTruckNames(truck) : [];
+  const localTruckListings = (localEvent?.trucks || []).flatMap((name) =>
+    splitListedTruckNames(name).map((splitName) => ({
+      name: splitName,
+      location: localEvent.location || "",
+    }))
+  );
   const listingInputs = [
     ...baseTruckNames.map((name) => ({ name, location: "" })),
     ...localTruckListings,
   ];
+  const uniqueListingInputs = [];
+  const seenListings = new Set();
+  for (const listing of listingInputs) {
+    const key = `${normalizeTruckName(listing.name).toLowerCase()}|${listing.location}`;
+    if (seenListings.has(key)) continue;
+    seenListings.add(key);
+    uniqueListingInputs.push(listing);
+  }
   const menus = await Promise.all(
-    listingInputs.map(async (listing) => ({
+    uniqueListingInputs.map(async (listing) => ({
       ...listing,
       menu: await getMenuForTruck(listing.name),
     }))
