@@ -391,7 +391,7 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
-  "sizzle dirty pop": {
+  "sizzle": {
     preferKnownItems: true,
     official: {
       title: "Sizzle Food Truck",
@@ -401,10 +401,6 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Sizzle Food Truck menu",
         url: "https://sizzlefoodtruck.com/menu",
-      },
-      {
-        title: "Dirty Pop menu",
-        url: "https://www.visitdirtypop.com/",
       },
       {
         title: "Sizzle Food Truck - Denver Food Truck Connector",
@@ -430,6 +426,21 @@ const KNOWN_TRUCK_LINKS = {
           "Angus beef burger with BBQ sauce, cheddar jack, herb mayo, honey bacon, vegetables, and crispy shallots.",
         price: "$15.99",
       },
+    ],
+  },
+  "dirty pop": {
+    preferKnownItems: true,
+    official: {
+      title: "Dirty Pop",
+      url: "https://www.visitdirtypop.com/",
+    },
+    menu: [
+      {
+        title: "Dirty Pop menu",
+        url: "https://www.visitdirtypop.com/",
+      },
+    ],
+    items: [
       {
         name: "Dirty Pop - The Dirty Pop",
         description: "Coke with coconut, vanilla, and coconut cream.",
@@ -1811,16 +1822,16 @@ function hasKnownTruckData(truckName) {
 function splitListedTruckNames(truckName) {
   const normalized = normalizeTruckName(truckName);
   if (!normalized) return [];
+  if (hasKnownTruckData(normalized)) return [normalized];
 
   const parts = normalized
-    .split(/\s+(?:&|\+|and)\s+/i)
+    .split(/\s+(?:&|\+)\s+/)
     .map((name) => name.trim())
     .filter(Boolean);
 
   if (parts.length < 2) return [normalized];
 
-  const allPartsHaveKnownData = parts.every(hasKnownTruckData);
-  return allPartsHaveKnownData ? parts : [normalized];
+  return parts;
 }
 
 function getTruckNameTokens(truckName) {
