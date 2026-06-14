@@ -1308,6 +1308,55 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "hatchet wood fire": {
+    preferKnownItems: true,
+    facebook: {
+      title: "The Hatchet Wood Fire Kitchen - Facebook",
+      url: "https://www.facebook.com/thehatchetwoodfirekitchen/",
+    },
+    menu: [
+      {
+        title: "The Hatchet Wood Fire Kitchen ordering menu - Toast",
+        url: "https://order.toasttab.com/online/grange-hall-stall-5",
+      },
+      {
+        title: "The Hatchet Wood Fire Kitchen - Restaurant Guru",
+        url: "https://restaurantguru.com/The-Hatchet-Wood-Fire-Kitchen-Greenwood-Village/menu",
+      },
+      {
+        title: "Hatchet Wood Fire Pizza at Sterling Ranch",
+        url: "https://paradeofhomesdenver.com/event/food-trucks-at-the-sterling-center-hatchet-wood-fire-pizza/",
+      },
+    ],
+    items: [
+      {
+        name: "Build Your Own Pizza",
+        description:
+          "Build-your-own pie with shredded mozzarella and up to four selected toppings.",
+        price: "",
+        url: "https://order.toasttab.com/online/grange-hall-stall-5/item-build-your-own-pizza_617ba1a1-80b5-44dc-8112-31e7f685c377",
+      },
+      {
+        name: "Pepperoni",
+        description: "Red sauce, mozzarella, and pepperoni.",
+        price: "",
+        url: "https://order.toasttab.com/online/grange-hall-stall-5/item-pepperoni_563dc326-15dd-4c64-9398-7a4fecec70f1",
+      },
+      {
+        name: "Rigatoni Margherita",
+        description:
+          "Red sauce, fresh mozzarella, tomatoes, Parmesan, fresh basil, and rigatoni baked to order.",
+        price: "",
+        url: "https://order.toasttab.com/online/grange-hall-stall-5/item-rigatoni-margherita_d261b4fb-2507-4e2c-9487-2da1b48bc857b",
+      },
+      {
+        name: "Sausage, Egg and Cheese Pizza",
+        description: "Garlic EVOO, mozzarella, sausage, egg, and cheddar.",
+        price: "",
+        url: "https://order.toasttab.com/online/grange-hall-stall-5/item-sausage-egg-and-cheese-pizza_47ad65c2-02b0-42e3-8197-93f7c8d1adac",
+      },
+    ],
+  },
   "tula s tapas": {
     official: {
       title: "Tula's Tapas",
