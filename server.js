@@ -10,7 +10,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v16";
+const MENU_CACHE_VERSION = "menus-v17";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -82,6 +82,43 @@ const KNOWN_TRUCK_LINKS = {
       title: "D'Maracuchos - Instagram",
       url: "https://instagram.com/dmaracuchoscafe",
     },
+  },
+  "el cubanaso": {
+    facebook: {
+      title: "El cubanaso food truck - Facebook",
+      url: "https://www.facebook.com/profile.php?id=61572263861803",
+    },
+    menu: [
+      {
+        title: "El Cubanaso menu - Roaming Hunger",
+        url: "https://roaminghunger.com/el-cubanaso/",
+      },
+    ],
+    items: [
+      {
+        name: "Cuban bowl",
+        description:
+          "White rice and black beans plus Garlic shrimp or pork or Angus beef or chicken, pico de gallo, guacamole, sour cream and cilantro ahioli.",
+        price: "",
+      },
+      {
+        name: "Tony Montana Sandwich",
+        description:
+          "Cuban marinate Pork, Angus beef, chicken, ham and Swiss cheese with mustard, cuban dressing and Pickles.",
+        price: "",
+      },
+      {
+        name: "Cuban Sandwich",
+        description:
+          "Cuban marinate Pork, ham, Swiss cheese with mustard, cuban dressing and Pickles , come with potatoes sticks chips.",
+        price: "",
+      },
+      {
+        name: "Cuban moho pork Taqueria",
+        description: "Cuban marinate pork with cheese, pico, guacamole and sour cream, limes.",
+        price: "",
+      },
+    ],
   },
   "burning oven pizza": {
     official: {
