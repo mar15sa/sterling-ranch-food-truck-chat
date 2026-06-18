@@ -192,13 +192,40 @@ function sourceMeta(source) {
   return [source.chapter, source.article].filter(Boolean).join(" · ");
 }
 
+function textFragmentPhrase(text) {
+  const clean = String(text || "")
+    .replace(/\s+/g, " ")
+    .replace(/\.\.\.$/, "")
+    .trim();
+  if (!clean || clean.length < 16) return "";
+  if (clean.length <= 140) return clean;
+
+  const firstSentence = clean.match(/^.{16,140}?[.!?](?=\s|$)/);
+  return (firstSentence ? firstSentence[0] : clean.slice(0, 140)).trim();
+}
+
+function sourceHref(source) {
+  const href = source.sourceUrl || "";
+  const phrase = textFragmentPhrase(source.jumpText || source.excerpt || "");
+  if (!href || !phrase) return href;
+
+  try {
+    const parsed = new URL(href, window.location.href);
+    if (!/\.?municode\.com$/i.test(parsed.hostname)) return href;
+    parsed.hash = `:~:text=${encodeURIComponent(phrase)}`;
+    return parsed.toString();
+  } catch {
+    return href;
+  }
+}
+
 function renderSourceItem(source) {
   const item = document.createElement("li");
   item.className = "rules-source-item";
 
   const link = document.createElement("a");
   link.className = "rules-source-title";
-  link.href = source.sourceUrl;
+  link.href = sourceHref(source);
   link.target = "_blank";
   link.rel = "noreferrer";
   link.textContent = source.title || "Rulebook section";

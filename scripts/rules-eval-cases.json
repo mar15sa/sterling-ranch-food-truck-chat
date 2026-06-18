@@ -110,6 +110,17 @@
     "answerIncludesAll": ["2026", "$14.17"]
   },
   {
+    "question": "How much are trash and streetlight fees?",
+    "expectedFirstAny": ["2026 CAB service fees"],
+    "answerIncludesAll": ["$14.17", "$9.90"]
+  },
+  {
+    "question": "What fees do residents pay?",
+    "expectedFirstAny": ["2026 water, sanitary sewer, and stormwater"],
+    "expectedAny": ["2026 CAB service fees"],
+    "answerIncludesAll": ["$50.20", "$44.95", "$9.90", "$14.17"]
+  },
+  {
     "question": "What happens if I get a violation?",
     "expectedFirstAny": ["due process and imposition of fines"],
     "answerIncludesAll": ["$100", "$250", "$500"]

@@ -19,6 +19,11 @@ const MENU_CACHE_VERSION = "menus-v18";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
+const RULES_ASK_RATE_WINDOW_MS =
+  Number(process.env.RULES_ASK_RATE_WINDOW_MS) || 1000 * 60;
+const RULES_ASK_RATE_MAX = Number(process.env.RULES_ASK_RATE_MAX) || 30;
+const RULES_QUESTION_MAX_CHARS =
+  Number(process.env.RULES_QUESTION_MAX_CHARS) || 500;
 const LOCAL_EVENT_OVERRIDES = {
   "2026-06-06": {
     location: "Prospect Park",
@@ -1651,16 +1656,18 @@ const mimeTypes = {
 const calendarCache = new Map();
 const menuCache = new Map();
 const answerCache = new Map();
+const rulesAskRateLimits = new Map();
 const menuLookupPromises = new Map();
 let warmupPromise = null;
 let lastWarmupStartedAt = 0;
 let rulesRefreshPromise = null;
 
-function sendJson(res, status, data) {
+function sendJson(res, status, data, extraHeaders = {}) {
   const body = JSON.stringify(data, null, 2);
   res.writeHead(status, {
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-store",
+    ...extraHeaders,
   });
   res.end(body);
 }
@@ -1700,6 +1707,45 @@ async function readJsonBody(req) {
   } catch {
     return {};
   }
+}
+
+function clientKeyForRateLimit(req) {
+  const forwarded = String(req.headers["x-forwarded-for"] || "")
+    .split(",")[0]
+    .trim();
+  return forwarded || req.socket?.remoteAddress || "unknown";
+}
+
+function cleanupRulesAskRateLimits(now) {
+  if (rulesAskRateLimits.size < 1000) return;
+  for (const [key, bucket] of rulesAskRateLimits.entries()) {
+    if (now - bucket.startedAt > RULES_ASK_RATE_WINDOW_MS) {
+      rulesAskRateLimits.delete(key);
+    }
+  }
+}
+
+function checkRulesAskRateLimit(req) {
+  const now = Date.now();
+  const key = clientKeyForRateLimit(req);
+  const current = rulesAskRateLimits.get(key);
+  const bucket =
+    current && now - current.startedAt <= RULES_ASK_RATE_WINDOW_MS
+      ? current
+      : { startedAt: now, count: 0 };
+
+  bucket.count += 1;
+  rulesAskRateLimits.set(key, bucket);
+  cleanupRulesAskRateLimits(now);
+
+  if (bucket.count <= RULES_ASK_RATE_MAX) {
+    return { allowed: true, retryAfterSeconds: 0 };
+  }
+
+  return {
+    allowed: false,
+    retryAfterSeconds: Math.max(1, Math.ceil((bucket.startedAt + RULES_ASK_RATE_WINDOW_MS - now) / 1000)),
+  };
 }
 
 function decodeHtml(input = "") {
@@ -3084,20 +3130,37 @@ async function maybeRefreshRulesInBackground(status) {
 }
 
 async function getRulesQuestion(req, url) {
-  if (req.method === "GET") return url.searchParams.get("q") || "";
-  if (req.method !== "POST") return "";
-
   const body = await readJsonBody(req);
   return body.question || body.q || "";
 }
 
 async function handleRulesAsk(req, res, url) {
-  if (req.method !== "GET" && req.method !== "POST") {
-    sendJson(res, 405, { error: "Use GET or POST for rules questions." });
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST for rules questions." });
+    return;
+  }
+
+  const limit = checkRulesAskRateLimit(req);
+  if (!limit.allowed) {
+    sendJson(
+      res,
+      429,
+      {
+        error: "Too many rules questions in a short time. Please wait a moment and try again.",
+      },
+      { "retry-after": String(limit.retryAfterSeconds) }
+    );
     return;
   }
 
   const question = await getRulesQuestion(req, url);
+  if (String(question || "").length > RULES_QUESTION_MAX_CHARS) {
+    sendJson(res, 400, {
+      error: `Please keep rules questions under ${RULES_QUESTION_MAX_CHARS} characters.`,
+    });
+    return;
+  }
+
   let status = await getRulesIndexStatus();
 
   if (!status.exists && process.env.RULES_AUTO_REFRESH !== "false") {
