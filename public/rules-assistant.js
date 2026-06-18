@@ -404,6 +404,6 @@ statusToggle.addEventListener("click", () => {
 });
 
 addBotText(
-  "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer in plain words, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
+  "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
 );
 loadStatus();

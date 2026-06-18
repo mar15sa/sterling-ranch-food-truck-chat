@@ -53,7 +53,7 @@ This project includes a `render.yaml` file, which is a small hosting recipe Rend
 
 ## Notes
 
-- No paid API key is needed.
+- No paid API key is needed for the food truck chat. (The rules assistant works without one too, but can optionally use a Claude API key for plain-English answers — see below.)
 - The app reads public web pages live, so results depend on what the truck and search pages make available.
 - Some menus are on Facebook, Instagram, DoorDash, or other sites that may block automatic reading. In those cases, the app still gives you the best menu links it found.
 
@@ -70,6 +70,18 @@ It uses a local searchable index built from the public Sterling Ranch CAB Rules 
 ```powershell
 npm run ingest:rules
 ```
+
+### Plain-English answers (optional)
+
+By default, answers are assembled directly from the matching rule sections. If an `ANTHROPIC_API_KEY` is set, the assistant uses Claude to rewrite those same sections into a plain-English answer. Claude only rephrases the sections the search already found — it is instructed to use nothing else and never to invent rules, numbers, or fees — and every answer still links the exact source sections. If the key is missing, or a request errors, times out, or is declined, the assistant automatically falls back to the built-in answer, so it never hard-fails.
+
+Environment variables:
+
+- `ANTHROPIC_API_KEY` — enables Claude-written answers. Without it, the built-in answers are used.
+- `RULES_LLM_MODEL` — which model to use. Defaults to `claude-haiku-4-5` (lowest cost, well-suited to this). Use `claude-sonnet-4-6` or `claude-opus-4-8` for more nuance.
+- `RULES_LLM_MAX_TOKENS` (default `600`) and `RULES_LLM_TIMEOUT_MS` (default `15000`) — optional tuning.
+
+Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
 
 The server also has an admin refresh endpoint:
 
