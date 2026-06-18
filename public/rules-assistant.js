@@ -287,8 +287,7 @@ function updateStatus(status) {
     headline = "Rulebook index may be out of date";
     state = "warn";
   } else {
-    const checked = formatDateShort(status.lastFetchedAt);
-    headline = checked ? `Rulebook ready · checked ${checked}` : "Rulebook ready";
+    headline = "Rulebook ready";
     state = "ok";
   }
   statusHeadline.textContent = headline;
