@@ -5,6 +5,11 @@
     "answerIncludesAny": ["150 square feet"]
   },
   {
+    "question": "Can I build a shed in my backyard?",
+    "expectedFirstAny": ["Sec. 21-22"],
+    "answerIncludesAll": ["DRC approval", "150 square feet", "underground", "screening"]
+  },
+  {
     "question": "Do I need approval for solar panels?",
     "expectedFirstAny": ["Sec. 21-22"],
     "answerIncludesAny": ["DRC approval"]
