@@ -7,6 +7,10 @@ const {
   createRulesIndex,
   getRulesIndexStatus,
 } = require("./lib/rules-assistant");
+const {
+  alertRulesRefreshFailed,
+  recordRulesRateLimitBlocked,
+} = require("./lib/rules-alerts");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -1753,6 +1757,8 @@ function checkRulesAskRateLimit(req) {
     return { allowed: true, retryAfterSeconds: 0 };
   }
 
+  recordRulesRateLimitBlocked({ clientKey: key, count: bucket.count });
+
   return {
     allowed: false,
     retryAfterSeconds: Math.max(1, Math.ceil((bucket.startedAt + RULES_ASK_RATE_WINDOW_MS - now) / 1000)),
@@ -3121,6 +3127,7 @@ function startRulesRefresh(reason = "manual") {
   rulesRefreshPromise = createRulesIndex({ reason })
     .catch((error) => {
       console.warn(`Rules source refresh failed: ${error.message}`);
+      alertRulesRefreshFailed(error, { reason });
       throw error;
     })
     .finally(() => {

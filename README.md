@@ -80,6 +80,8 @@ Environment variables:
 - `ANTHROPIC_API_KEY` — enables Claude-written answers. Without it, the built-in answers are used.
 - `RULES_LLM_MODEL` — which model to use. Defaults to `claude-haiku-4-5` (lowest cost, well-suited to this). Use `claude-sonnet-4-6` or `claude-opus-4-8` for more nuance.
 - `RULES_LLM_MAX_TOKENS` (default `600`) and `RULES_LLM_TIMEOUT_MS` (default `15000`) — optional tuning.
+- `RULES_ALERT_WEBHOOK_URL` — optional webhook for runtime alerts. When set, the server alerts if rules questions hit repeated rate-limit blocks, the rulebook refresh fails, or LLM rewrites are rejected often. Without it, those alerts are still written to server logs.
+- `RULES_ABUSE_ALERT_THRESHOLD` (default `10`), `RULES_LLM_REJECTION_ALERT_THRESHOLD` (default `5`), `RULES_ALERT_WINDOW_MS` (default `300000`), and `RULES_ALERT_COOLDOWN_MS` (default `900000`) — optional alert tuning.
 
 Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
 
