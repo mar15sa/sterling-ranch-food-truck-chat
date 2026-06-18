@@ -7,11 +7,13 @@
   {
     "question": "Can I build a shed in my backyard?",
     "expectedFirstAny": ["Sec. 21-22"],
+    "expectedAny": ["Backyard Utility Sheds One-Sheet"],
     "answerIncludesAll": ["DRC approval", "150 square feet", "underground", "screening"]
   },
   {
     "question": "Do I need approval for solar panels?",
     "expectedFirstAny": ["Sec. 21-22"],
+    "expectedAny": ["Solar Panels One-Sheet"],
     "answerIncludesAny": ["DRC approval"]
   },
   {
@@ -27,6 +29,7 @@
   {
     "question": "Can I put up a fence?",
     "expectedFirstAny": ["Sec. 21-23"],
+    "expectedAny": ["Standard 3 Rail Fencing One-Sheet"],
     "answerIncludesAny": ["DRC approval"]
   },
   {

@@ -24,6 +24,10 @@ const RULES_ASK_RATE_WINDOW_MS =
 const RULES_ASK_RATE_MAX = Number(process.env.RULES_ASK_RATE_MAX) || 30;
 const RULES_QUESTION_MAX_CHARS =
   Number(process.env.RULES_QUESTION_MAX_CHARS) || 500;
+const RULES_REFRESH_CHECK_INTERVAL_MS =
+  Number(process.env.RULES_REFRESH_CHECK_INTERVAL_MS) || 1000 * 60 * 60;
+const RULES_REFRESH_START_DELAY_MS =
+  Number(process.env.RULES_REFRESH_START_DELAY_MS) || 1000 * 30;
 const LOCAL_EVENT_OVERRIDES = {
   "2026-06-06": {
     location: "Prospect Park",
@@ -3119,14 +3123,44 @@ function startRulesRefresh(reason = "manual") {
   return rulesRefreshPromise;
 }
 
-async function maybeRefreshRulesInBackground(status) {
+async function maybeRefreshRulesInBackground(status, reason = "auto") {
   if (process.env.RULES_AUTO_REFRESH === "false") return false;
   if (rulesRefreshPromise || (status.exists && !status.isStale)) return false;
 
-  startRulesRefresh("auto").catch(() => {
+  startRulesRefresh(reason).catch(() => {
     // The status endpoint still returns the last known source if refresh fails.
   });
   return true;
+}
+
+async function checkRulesSourceFreshness(reason = "scheduled") {
+  try {
+    const status = await getRulesIndexStatus();
+    await maybeRefreshRulesInBackground(status, reason);
+  } catch (error) {
+    console.warn(`Rules source freshness check failed: ${error.message}`);
+  }
+}
+
+function scheduleRulesRefreshChecks() {
+  if (
+    process.env.RULES_AUTO_REFRESH === "false" ||
+    process.env.RULES_SCHEDULED_REFRESH === "false"
+  ) {
+    return;
+  }
+
+  const firstCheck = setTimeout(
+    () => checkRulesSourceFreshness("scheduled-startup"),
+    RULES_REFRESH_START_DELAY_MS
+  );
+  firstCheck.unref?.();
+
+  const interval = setInterval(
+    () => checkRulesSourceFreshness("scheduled"),
+    RULES_REFRESH_CHECK_INTERVAL_MS
+  );
+  interval.unref?.();
 }
 
 async function getRulesQuestion(req, url) {
@@ -3298,4 +3332,5 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, HOST, () => {
   console.log(`Food truck chat is running on ${HOST}:${PORT}`);
+  scheduleRulesRefreshChecks();
 });

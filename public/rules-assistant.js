@@ -21,6 +21,8 @@ const PUBLIC_SOURCE_NAME = "Sterling Ranch CAB Rules and Regulations";
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let conversationStarted = false;
+let statusPollTimer = null;
+let statusPollAttempts = 0;
 
 function formatDateTime(value) {
   if (!value) return "Not available";
@@ -266,6 +268,7 @@ function addAnswer(data) {
 
   rulesMessages.append(node);
   updateStatus(data.sourceStatus || {});
+  followRefreshingStatus(data.sourceStatus || {});
   scrollToMessageStart(node);
 }
 
@@ -274,7 +277,11 @@ function updateStatus(status) {
   if (!status) return;
 
   statusSource.textContent = PUBLIC_SOURCE_NAME;
-  statusChecked.textContent = formatDateTime(status.lastFetchedAt);
+  const lastChecked = formatDateTime(status.lastFetchedAt);
+  statusChecked.textContent =
+    status.refreshing && lastChecked !== "Not available"
+      ? `Checking now; last successful check ${lastChecked}`
+      : lastChecked;
   statusOnlineDate.textContent = formatDateTime(status.onlineUpdateDate);
   statusCodified.textContent = status.codifiedThrough || "Not available";
 
@@ -308,11 +315,31 @@ function updateStatus(status) {
   statusNote.hidden = notes.length === 0;
 }
 
+function scheduleStatusPoll() {
+  if (statusPollTimer || statusPollAttempts >= 12) return;
+
+  statusPollTimer = window.setTimeout(() => {
+    statusPollTimer = null;
+    statusPollAttempts += 1;
+    loadStatus();
+  }, 5000);
+}
+
+function followRefreshingStatus(status) {
+  if (status?.refreshing || status?.refreshStarted) {
+    scheduleStatusPoll();
+    return;
+  }
+
+  statusPollAttempts = 0;
+}
+
 async function loadStatus() {
   try {
     const response = await fetch("/api/rules/status");
     const data = await response.json();
     updateStatus(data);
+    followRefreshingStatus(data);
   } catch {
     statusHeadline.textContent = "Could not check the source just now";
     statusDot.dataset.state = "warn";
