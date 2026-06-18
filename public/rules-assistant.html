@@ -23,20 +23,36 @@
       content="Ask plain-English questions about the Sterling Ranch CAB Rules and Regulations, with links to the source sections."
     />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/rules-assistant.css?v=20260618-redesign8" />
+    <link rel="stylesheet" href="/rules-assistant.css?v=20260618-redesign9" />
   </head>
   <body class="rules-page">
     <div class="rules-app">
       <header class="rules-header">
         <div class="rules-header-inner">
           <div class="rules-brand">
-            <div class="rules-brand-kicker">
-              <span class="rules-mark">
-                <img src="/rules-icon.svg" alt="" />
-              </span>
+            <span class="rules-mark">
+              <img src="/rules-icon.svg" alt="" />
+            </span>
+            <div class="rules-brand-text">
               <p class="rules-eyebrow">Sterling Ranch Society</p>
+              <h1>Rules Assistant</h1>
+              <div class="rules-statusbar">
+                <span class="rules-status-dot" id="statusDot" data-state="busy" aria-hidden="true"></span>
+                <span class="rules-status-headline" id="statusHeadline">Checking the source&hellip;</span>
+                <button
+                  type="button"
+                  class="rules-status-toggle"
+                  id="statusToggle"
+                  aria-expanded="false"
+                  aria-controls="statusDetail"
+                >
+                  <span>Source details</span>
+                  <svg class="rules-status-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <h1>Rules Assistant</h1>
           </div>
           <a
             class="rules-source-link"
@@ -56,20 +72,6 @@
               />
             </svg>
           </a>
-        </div>
-
-        <div class="rules-statusbar">
-          <span class="rules-status-dot" id="statusDot" data-state="busy" aria-hidden="true"></span>
-          <span class="rules-status-headline" id="statusHeadline">Checking the source&hellip;</span>
-          <button
-            type="button"
-            class="rules-status-toggle"
-            id="statusToggle"
-            aria-expanded="false"
-            aria-controls="statusDetail"
-          >
-            Source details
-          </button>
         </div>
 
         <dl class="rules-status-detail" id="statusDetail" hidden>
@@ -106,7 +108,7 @@
         <div class="rules-dock-inner">
           <div class="rules-starters" id="rulesStarters" aria-label="Example questions">
             <button type="button">Can I build a shed in my backyard?</button>
-            <button type="button">Do I need approval to change my home&rsquo;s exterior?</button>
+            <button type="button">What is the holiday lighting season?</button>
             <button type="button">What are the landscaping and yard rules?</button>
             <button type="button">What fees do residents pay?</button>
             <button type="button">What are the rules for parks and open spaces?</button>
