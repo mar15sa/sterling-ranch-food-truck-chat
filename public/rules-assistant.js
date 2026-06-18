@@ -295,7 +295,6 @@ function updateStatus(status) {
   statusDot.dataset.state = state;
 
   const notes = [];
-  if (status.codifiedThrough) notes.push(`Codified through ${status.codifiedThrough}.`);
   if (status.refreshing) notes.push("Refreshing the rulebook index now.");
   if (status.isStale) notes.push("The local rulebook index may be stale.");
   if (Array.isArray(status.warnings)) {
