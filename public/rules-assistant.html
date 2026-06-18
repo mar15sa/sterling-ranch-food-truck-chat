@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sterling Ranch Rules Assistant</title>
+    <meta
+      name="description"
+      content="An unofficial helper for searching the Sterling Ranch CAB Rules and Regulations."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sterling Ranch Society" />
+    <meta property="og:title" content="Sterling Ranch Rules Assistant" />
+    <meta
+      property="og:description"
+      content="Ask plain-English questions about the Sterling Ranch CAB Rules and Regulations, with links to the source sections."
+    />
+    <meta property="og:url" content="https://sterlingranchsociety.com/rules-assistant" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sterling Ranch Rules Assistant" />
+    <meta
+      name="twitter:description"
+      content="Ask plain-English questions about the Sterling Ranch CAB Rules and Regulations, with links to the source sections."
+    />
+    <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/rules-assistant.css?v=20260618-redesign6" />
+  </head>
+  <body class="rules-page">
+    <div class="rules-app">
+      <header class="rules-header">
+        <div class="rules-header-inner">
+          <div class="rules-brand">
+            <div class="rules-brand-kicker">
+              <span class="rules-mark">
+                <img src="/rules-icon.svg" alt="" />
+              </span>
+              <p class="rules-eyebrow">Sterling Ranch Society</p>
+            </div>
+            <h1>Rules Assistant</h1>
+            <p class="rules-subtitle">
+              Not sure what&rsquo;s allowed before you build a shed, repaint, or redo your yard? Ask in
+              plain words and get a clear answer, with a link to the exact rule.
+            </p>
+          </div>
+          <a
+            class="rules-source-link"
+            href="https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>Official rulebook</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M14 4h6v6m0-6L10 14M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div class="rules-statusbar">
+          <span class="rules-status-dot" id="statusDot" data-state="busy" aria-hidden="true"></span>
+          <span class="rules-status-headline" id="statusHeadline">Checking the source&hellip;</span>
+          <button
+            type="button"
+            class="rules-status-toggle"
+            id="statusToggle"
+            aria-expanded="false"
+            aria-controls="statusDetail"
+          >
+            Source details
+          </button>
+        </div>
+
+        <dl class="rules-status-detail" id="statusDetail" hidden>
+          <div>
+            <dt>Source</dt>
+            <dd id="statusSource">Sterling Ranch CAB Rules and Regulations</dd>
+          </div>
+          <div>
+            <dt>Last checked</dt>
+            <dd id="statusChecked">&mdash;</dd>
+          </div>
+          <div>
+            <dt>Latest online update</dt>
+            <dd id="statusOnlineDate">&mdash;</dd>
+          </div>
+          <div>
+            <dt>Codified through</dt>
+            <dd id="statusCodified">&mdash;</dd>
+          </div>
+          <p class="rules-status-note" id="statusNote" hidden></p>
+        </dl>
+      </header>
+
+      <main class="rules-conversation" id="rulesScroll">
+        <div
+          class="rules-thread"
+          id="rulesMessages"
+          aria-live="polite"
+          aria-label="Conversation with the rules assistant"
+        ></div>
+      </main>
+
+      <div class="rules-dock" id="rulesDock">
+        <div class="rules-dock-inner">
+          <div class="rules-starters" id="rulesStarters" aria-label="Example questions">
+            <button type="button">Can I build a shed in my backyard?</button>
+            <button type="button">Do I need approval to change my home&rsquo;s exterior?</button>
+            <button type="button">What are the landscaping and yard rules?</button>
+            <button type="button">What fees do residents pay?</button>
+            <button type="button">What are the rules for parks and open spaces?</button>
+          </div>
+
+          <button
+            type="button"
+            class="rules-starters-toggle"
+            id="startersToggle"
+            aria-expanded="false"
+          >
+            Show example questions
+          </button>
+
+          <form class="rules-composer" id="rulesForm">
+            <label class="rules-visually-hidden" for="rulesQuestion">
+              Ask a question about the Sterling Ranch rules
+            </label>
+            <textarea
+              id="rulesQuestion"
+              name="question"
+              rows="1"
+              autocomplete="off"
+              placeholder="Ask about sheds, exterior changes, landscaping, or fees&hellip;"
+            ></textarea>
+            <button type="submit" class="rules-send" id="rulesSend" aria-label="Send question">
+              <svg class="rules-send-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path
+                  d="M4 11h12.2l-4.6-4.6L13 5l7 7-7 7-1.4-1.4 4.6-4.6H4z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span class="rules-send-spinner" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <p class="rules-hint">
+            <kbd>Enter</kbd> to send &middot; <kbd>Shift</kbd> + <kbd>Enter</kbd> for a new line
+          </p>
+        </div>
+      </div>
+
+      <footer class="rules-footer">
+        Sterling Ranch Society is an independent community resource. This unofficial helper is not
+        legal advice and is not affiliated with or endorsed by the Sterling Ranch Community Authority
+        Board or the rulebook publisher. Always confirm important decisions with the official
+        rulebook or the CAB.
+      </footer>
+    </div>
+
+    <template id="rulesAnswerTemplate">
+      <article class="rules-message rules-message-bot">
+        <div class="rules-answer"></div>
+        <details class="rules-sources" open>
+          <summary>
+            <svg class="rules-sources-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M7 4h7l4 4v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13 4v5h5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="rules-sources-label">Sources</span>
+            <span class="rules-sources-count"></span>
+            <svg class="rules-sources-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="m6 9 6 6 6-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </summary>
+          <ul></ul>
+        </details>
+      </article>
+    </template>
+
+    <script src="/rules-assistant.js?v=20260618-redesign6"></script>
+  </body>
+</html>

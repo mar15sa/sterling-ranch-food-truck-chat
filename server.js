@@ -2,6 +2,11 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const { URL } = require("node:url");
+const {
+  answerRulesQuestion,
+  createRulesIndex,
+  getRulesIndexStatus,
+} = require("./lib/rules-assistant");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -1614,6 +1619,7 @@ const answerCache = new Map();
 const menuLookupPromises = new Map();
 let warmupPromise = null;
 let lastWarmupStartedAt = 0;
+let rulesRefreshPromise = null;
 
 function sendJson(res, status, data) {
   const body = JSON.stringify(data, null, 2);
@@ -1627,6 +1633,38 @@ function sendJson(res, status, data) {
 function sendText(res, status, text, type = "text/plain; charset=utf-8") {
   res.writeHead(status, { "content-type": type });
   res.end(text);
+}
+
+function readRequestBody(req, maxBytes = 20000) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let total = 0;
+
+    req.on("data", (chunk) => {
+      total += chunk.length;
+      if (total > maxBytes) {
+        reject(new Error("Request body is too large."));
+        req.destroy();
+        return;
+      }
+      chunks.push(chunk);
+    });
+
+    req.on("end", () => {
+      resolve(Buffer.concat(chunks).toString("utf8"));
+    });
+    req.on("error", reject);
+  });
+}
+
+async function readJsonBody(req) {
+  const body = await readRequestBody(req);
+  if (!body.trim()) return {};
+  try {
+    return JSON.parse(body);
+  } catch {
+    return {};
+  }
 }
 
 function decodeHtml(input = "") {
@@ -2985,8 +3023,109 @@ async function handleWarmup(req, res, url) {
   sendJson(res, 202, { warming: Boolean(warmupPromise), started });
 }
 
+function startRulesRefresh(reason = "manual") {
+  if (rulesRefreshPromise) return rulesRefreshPromise;
+
+  rulesRefreshPromise = createRulesIndex({ reason })
+    .catch((error) => {
+      console.warn(`Rules source refresh failed: ${error.message}`);
+      throw error;
+    })
+    .finally(() => {
+      rulesRefreshPromise = null;
+    });
+
+  return rulesRefreshPromise;
+}
+
+async function maybeRefreshRulesInBackground(status) {
+  if (process.env.RULES_AUTO_REFRESH === "false") return false;
+  if (rulesRefreshPromise || (status.exists && !status.isStale)) return false;
+
+  startRulesRefresh("auto").catch(() => {
+    // The status endpoint still returns the last known source if refresh fails.
+  });
+  return true;
+}
+
+async function getRulesQuestion(req, url) {
+  if (req.method === "GET") return url.searchParams.get("q") || "";
+  if (req.method !== "POST") return "";
+
+  const body = await readJsonBody(req);
+  return body.question || body.q || "";
+}
+
+async function handleRulesAsk(req, res, url) {
+  if (req.method !== "GET" && req.method !== "POST") {
+    sendJson(res, 405, { error: "Use GET or POST for rules questions." });
+    return;
+  }
+
+  const question = await getRulesQuestion(req, url);
+  let status = await getRulesIndexStatus();
+
+  if (!status.exists && process.env.RULES_AUTO_REFRESH !== "false") {
+    try {
+      await startRulesRefresh("missing-index");
+      status = await getRulesIndexStatus();
+    } catch {
+      // The answer will explain that the local index is unavailable.
+    }
+  } else {
+    await maybeRefreshRulesInBackground(status);
+  }
+
+  const answer = await answerRulesQuestion(question);
+  answer.sourceStatus = {
+    ...answer.sourceStatus,
+    refreshing: Boolean(rulesRefreshPromise),
+  };
+  sendJson(res, 200, answer);
+}
+
+async function handleRulesStatus(req, res) {
+  const status = await getRulesIndexStatus();
+  const refreshStarted = await maybeRefreshRulesInBackground(status);
+  sendJson(res, 200, {
+    ...status,
+    refreshing: Boolean(rulesRefreshPromise),
+    refreshStarted,
+  });
+}
+
+async function handleRulesRefresh(req, res, url) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST to refresh the rules source." });
+    return;
+  }
+
+  const configuredToken = process.env.RULES_REFRESH_TOKEN || "";
+  const providedToken =
+    req.headers["x-refresh-token"] || url.searchParams.get("token") || "";
+
+  if (!configuredToken || providedToken !== configuredToken) {
+    sendJson(res, 403, {
+      error:
+        "Manual source refresh is disabled until RULES_REFRESH_TOKEN is set and provided.",
+    });
+    return;
+  }
+
+  await startRulesRefresh("manual");
+  const status = await getRulesIndexStatus();
+  sendJson(res, 200, {
+    ...status,
+    refreshing: false,
+  });
+}
+
 function serveStatic(req, res, url) {
-  const requested = url.pathname === "/" ? "/index.html" : url.pathname;
+  const pageAliases = {
+    "/rules-assistant": "/rules-assistant.html",
+    "/rules-assistant/": "/rules-assistant.html",
+  };
+  const requested = url.pathname === "/" ? "/index.html" : pageAliases[url.pathname] || url.pathname;
   const filePath = path.normalize(path.join(PUBLIC_DIR, requested));
 
   if (!filePath.startsWith(PUBLIC_DIR)) {
@@ -3001,12 +3140,16 @@ function serveStatic(req, res, url) {
     }
 
     const type = mimeTypes[path.extname(filePath)] || "application/octet-stream";
+    const cacheControl = path.extname(filePath) === ".html"
+      ? "no-store"
+      : requested.includes("social-preview")
+        ? "public, max-age=86400"
+        : "public, max-age=300";
+
     res.writeHead(200, {
       "content-type": type,
       "content-length": data.length,
-      "cache-control": requested.includes("social-preview")
-        ? "public, max-age=86400"
-        : "public, max-age=300",
+      "cache-control": cacheControl,
     });
     res.end(data);
   });
@@ -3030,11 +3173,26 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (url.pathname === "/api/rules/ask") {
+      await handleRulesAsk(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/rules/status") {
+      await handleRulesStatus(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/rules/refresh") {
+      await handleRulesRefresh(req, res, url);
+      return;
+    }
+
     serveStatic(req, res, url);
   } catch (error) {
     console.error(error);
     sendJson(res, 500, {
-      error: "Something went wrong while checking the truck/menu.",
+      error: "Something went wrong while checking this request.",
       detail: error.message,
     });
   }

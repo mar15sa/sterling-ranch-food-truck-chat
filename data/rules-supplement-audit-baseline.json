@@ -1,0 +1,13 @@
+{
+  "monitorFromDocumentCenterId": 2801,
+  "lastFullScan": {
+    "candidateCountBeforeReview": 0,
+    "foundDocumentCount": 1538,
+    "range": "1-2800",
+    "scannedAt": "2026-06-18"
+  },
+  "notes": [
+    "The monitor starts after the last broad scan so future CAB Document Center uploads are not missed.",
+    "Existing candidates at or below this ID have been reviewed and accounted for in data/rules-supplements.json."
+  ]
+}

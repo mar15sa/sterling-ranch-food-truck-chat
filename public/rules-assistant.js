@@ -1,0 +1,409 @@
+const rulesScroll = document.querySelector("#rulesScroll");
+const rulesMessages = document.querySelector("#rulesMessages");
+const rulesForm = document.querySelector("#rulesForm");
+const rulesQuestion = document.querySelector("#rulesQuestion");
+const rulesSend = document.querySelector("#rulesSend");
+const rulesTemplate = document.querySelector("#rulesAnswerTemplate");
+const rulesStarters = document.querySelector("#rulesStarters");
+const rulesDock = document.querySelector("#rulesDock");
+const startersToggle = document.querySelector("#startersToggle");
+const statusDot = document.querySelector("#statusDot");
+const statusHeadline = document.querySelector("#statusHeadline");
+const statusToggle = document.querySelector("#statusToggle");
+const statusDetail = document.querySelector("#statusDetail");
+const statusSource = document.querySelector("#statusSource");
+const statusChecked = document.querySelector("#statusChecked");
+const statusOnlineDate = document.querySelector("#statusOnlineDate");
+const statusCodified = document.querySelector("#statusCodified");
+const statusNote = document.querySelector("#statusNote");
+
+const PUBLIC_SOURCE_NAME = "Sterling Ranch CAB Rules and Regulations";
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let conversationStarted = false;
+
+function formatDateTime(value) {
+  if (!value) return "Not available";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not available";
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+}
+
+function formatDateShort(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);
+}
+
+/* ---------- Scrolling ---------- */
+function scrollToBottom() {
+  rulesScroll.scrollTo({
+    top: rulesScroll.scrollHeight,
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
+}
+
+function scrollToMessageStart(message) {
+  const top =
+    message.getBoundingClientRect().top -
+    rulesScroll.getBoundingClientRect().top +
+    rulesScroll.scrollTop -
+    16;
+  rulesScroll.scrollTo({
+    top: Math.max(top, 0),
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
+}
+
+/* ---------- Messages ---------- */
+function addUserMessage(text) {
+  const message = document.createElement("div");
+  message.className = "rules-message rules-message-user";
+  message.textContent = text;
+  rulesMessages.append(message);
+  scrollToBottom();
+}
+
+function addBotText(text) {
+  const message = document.createElement("article");
+  message.className = "rules-message rules-message-bot";
+  const answer = document.createElement("div");
+  answer.className = "rules-answer";
+  renderAnswerInto(answer, text);
+  message.append(answer);
+  rulesMessages.append(message);
+  return message;
+}
+
+function addThinking() {
+  const message = document.createElement("article");
+  message.className = "rules-message rules-message-bot";
+  const typing = document.createElement("div");
+  typing.className = "rules-typing";
+  typing.setAttribute("aria-label", "Searching the rulebook");
+  typing.append(
+    document.createElement("span"),
+    document.createElement("span"),
+    document.createElement("span")
+  );
+  message.append(typing);
+  rulesMessages.append(message);
+  scrollToBottom();
+  return message;
+}
+
+/* ---------- Answer formatting ----------
+   The API returns plain text shaped like:
+     Short answer: ...
+     What I found:
+     - Section title: excerpt
+     Before you act: ...
+   Render those cues as structured, readable blocks. */
+function renderAnswerInto(container, text) {
+  container.replaceChildren();
+  const lines = String(text || "").split(/\r?\n/);
+  let list = null;
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) {
+      list = null;
+      continue;
+    }
+
+    const bullet = line.match(/^[-•]\s+(.*)$/);
+    if (bullet) {
+      if (!list) {
+        list = document.createElement("ul");
+        list.className = "rules-answer-list";
+        container.append(list);
+      }
+      list.append(renderBullet(bullet[1]));
+      continue;
+    }
+    list = null;
+
+    const labeled = line.match(/^(Short answer|Before you act|What I found)\s*:\s*(.*)$/i);
+    if (labeled) {
+      container.append(renderLabeled(labeled[1].toLowerCase(), labeled[2]));
+      continue;
+    }
+
+    const paragraph = document.createElement("p");
+    paragraph.className = "rules-answer-p";
+    paragraph.textContent = line;
+    container.append(paragraph);
+  }
+
+  if (!container.childNodes.length) {
+    const paragraph = document.createElement("p");
+    paragraph.className = "rules-answer-p";
+    paragraph.textContent = String(text || "");
+    container.append(paragraph);
+  }
+}
+
+function renderBullet(body) {
+  const item = document.createElement("li");
+  const split = body.indexOf(": ");
+  if (split > 0 && split < 90) {
+    const name = document.createElement("strong");
+    name.textContent = body.slice(0, split);
+    item.append(name, document.createTextNode(": " + body.slice(split + 2)));
+  } else {
+    item.textContent = body;
+  }
+  return item;
+}
+
+function renderLabeled(key, rest) {
+  if (key === "short answer") {
+    const lead = document.createElement("p");
+    lead.className = "rules-answer-lead";
+    const tag = document.createElement("span");
+    tag.className = "rules-answer-tag";
+    tag.textContent = "Short answer";
+    lead.append(tag, document.createTextNode(rest));
+    return lead;
+  }
+
+  if (key === "before you act") {
+    const note = document.createElement("p");
+    note.className = "rules-callout";
+    const tag = document.createElement("span");
+    tag.className = "rules-callout-tag";
+    tag.textContent = "Before you act";
+    note.append(tag, document.createTextNode(rest));
+    return note;
+  }
+
+  const subhead = document.createElement("p");
+  subhead.className = "rules-answer-subhead";
+  subhead.textContent = rest || "What I found";
+  return subhead;
+}
+
+/* ---------- Sources ---------- */
+function sourceMeta(source) {
+  return [source.chapter, source.article].filter(Boolean).join(" · ");
+}
+
+function renderSourceItem(source) {
+  const item = document.createElement("li");
+  item.className = "rules-source-item";
+
+  const link = document.createElement("a");
+  link.className = "rules-source-title";
+  link.href = source.sourceUrl;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = source.title || "Rulebook section";
+  item.append(link);
+
+  const meta = sourceMeta(source);
+  if (meta) {
+    const metaEl = document.createElement("div");
+    metaEl.className = "rules-source-meta";
+    metaEl.textContent = meta;
+    item.append(metaEl);
+  }
+
+  if (source.excerpt) {
+    const excerpt = document.createElement("p");
+    excerpt.className = "rules-source-excerpt";
+    excerpt.textContent = source.excerpt;
+    item.append(excerpt);
+  }
+
+  return item;
+}
+
+function addAnswer(data) {
+  const node = rulesTemplate.content.firstElementChild.cloneNode(true);
+  const sources = Array.isArray(data.sources) ? data.sources : [];
+
+  renderAnswerInto(node.querySelector(".rules-answer"), data.answer || "");
+
+  const details = node.querySelector(".rules-sources");
+  if (sources.length) {
+    node.querySelector(".rules-sources-count").textContent = `(${sources.length})`;
+    const list = details.querySelector("ul");
+    sources.forEach((source) => list.append(renderSourceItem(source)));
+  } else {
+    details.remove();
+  }
+
+  rulesMessages.append(node);
+  updateStatus(data.sourceStatus || {});
+  scrollToMessageStart(node);
+}
+
+/* ---------- Source status ---------- */
+function updateStatus(status) {
+  if (!status) return;
+
+  statusSource.textContent = PUBLIC_SOURCE_NAME;
+  statusChecked.textContent = formatDateTime(status.lastFetchedAt);
+  statusOnlineDate.textContent = formatDateTime(status.onlineUpdateDate);
+  statusCodified.textContent = status.codifiedThrough || "Not available";
+
+  let headline;
+  let state;
+  if (status.refreshing) {
+    headline = "Refreshing the rulebook index…";
+    state = "busy";
+  } else if (status.isStale) {
+    headline = "Rulebook index may be out of date";
+    state = "warn";
+  } else {
+    const checked = formatDateShort(status.lastFetchedAt);
+    headline = checked ? `Rulebook ready · checked ${checked}` : "Rulebook ready";
+    state = "ok";
+  }
+  statusHeadline.textContent = headline;
+  statusDot.dataset.state = state;
+
+  const notes = [];
+  if (status.codifiedThrough) notes.push(`Codified through ${status.codifiedThrough}.`);
+  if (status.refreshing) notes.push("Refreshing the rulebook index now.");
+  if (status.isStale) notes.push("The local rulebook index may be stale.");
+  if (Array.isArray(status.warnings)) {
+    const sourcePlatformPattern = new RegExp(`\\b${["Muni", "code"].join("")}\\b`, "g");
+    status.warnings
+      .map((warning) =>
+        String(warning).replace(sourcePlatformPattern, "the official online source")
+      )
+      .forEach((warning) => notes.push(warning));
+  }
+  statusNote.textContent = notes.join(" ");
+  statusNote.hidden = notes.length === 0;
+}
+
+async function loadStatus() {
+  try {
+    const response = await fetch("/api/rules/status");
+    const data = await response.json();
+    updateStatus(data);
+  } catch {
+    statusHeadline.textContent = "Could not check the source just now";
+    statusDot.dataset.state = "warn";
+    statusChecked.textContent = "Could not check";
+    statusOnlineDate.textContent = "Could not check";
+  }
+}
+
+/* ---------- Asking ---------- */
+function setLoading(isLoading) {
+  rulesSend.disabled = isLoading;
+  rulesSend.classList.toggle("is-loading", isLoading);
+}
+
+async function askRules(question) {
+  startConversation();
+  addUserMessage(question);
+  const thinking = addThinking();
+  setLoading(true);
+
+  try {
+    const response = await fetch("/api/rules/ask", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ question }),
+    });
+    const text = await response.text();
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("The rules assistant is temporarily unavailable.");
+    }
+
+    if (!response.ok) {
+      throw new Error(data.error || "The rules assistant is temporarily unavailable.");
+    }
+
+    thinking.remove();
+    addAnswer(data);
+  } catch (error) {
+    const answer = document.createElement("div");
+    answer.className = "rules-answer";
+    renderAnswerInto(
+      answer,
+      error.message || "The rules assistant is temporarily unavailable."
+    );
+    thinking.replaceChildren(answer);
+    scrollToMessageStart(thinking);
+  } finally {
+    setLoading(false);
+  }
+}
+
+/* ---------- Composer behavior ---------- */
+function autoGrow() {
+  rulesQuestion.style.height = "auto";
+  const next = Math.min(rulesQuestion.scrollHeight, 160);
+  rulesQuestion.style.height = `${next}px`;
+  rulesQuestion.style.overflowY = rulesQuestion.scrollHeight > 160 ? "auto" : "hidden";
+}
+
+function resetComposer() {
+  rulesQuestion.value = "";
+  rulesQuestion.style.height = "";
+  rulesQuestion.style.overflowY = "";
+  rulesQuestion.focus();
+}
+
+function startConversation() {
+  if (conversationStarted) return;
+  conversationStarted = true;
+  rulesDock.classList.add("has-conversation");
+  rulesDock.classList.remove("starters-open");
+  startersToggle.setAttribute("aria-expanded", "false");
+  startersToggle.textContent = "Show example questions";
+}
+
+rulesForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (rulesSend.disabled) return;
+  const question = rulesQuestion.value.trim();
+  if (!question) return;
+  resetComposer();
+  askRules(question);
+});
+
+rulesQuestion.addEventListener("input", autoGrow);
+
+rulesQuestion.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    rulesForm.requestSubmit();
+  }
+});
+
+rulesStarters.addEventListener("click", (event) => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  askRules(button.textContent.trim());
+});
+
+startersToggle.addEventListener("click", () => {
+  const open = rulesDock.classList.toggle("starters-open");
+  startersToggle.setAttribute("aria-expanded", String(open));
+  startersToggle.textContent = open ? "Hide example questions" : "Show example questions";
+});
+
+statusToggle.addEventListener("click", () => {
+  const open = statusDetail.hasAttribute("hidden");
+  statusDetail.toggleAttribute("hidden", !open);
+  statusToggle.setAttribute("aria-expanded", String(open));
+});
+
+addBotText(
+  "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer in plain words, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
+);
+loadStatus();
