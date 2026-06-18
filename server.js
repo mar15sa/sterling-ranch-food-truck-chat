@@ -15,7 +15,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v17";
+const MENU_CACHE_VERSION = "menus-v18";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -364,6 +364,41 @@ const KNOWN_TRUCK_LINKS = {
     menu: [
       {
         title: "Woodhill Small Batch BBQ menu",
+        url: "https://woodhillbbq.com/menu/",
+      },
+    ],
+    items: [
+      {
+        name: "Woodhill BBQ - Brisket Sandwich",
+        description: "Smoked brisket sandwich from Woodhill's sandwich menu.",
+        price: "$14.79",
+      },
+      {
+        name: "Woodhill BBQ - Pulled Pork Sandwich",
+        description: "Pulled pork sandwich; cole slaw can be added on top.",
+        price: "$12.99",
+      },
+      {
+        name: "Woodhill BBQ - One Meat + One Side Plate",
+        description: "Choice of brisket, pork, sausage, chicken, or ribs with one side.",
+        price: "$16.49",
+      },
+      {
+        name: "Woodhill BBQ - Smoked Mac n Meat",
+        description: "Smoked mac and cheese bowl topped with brisket, pork, sausage, or chicken.",
+        price: "$15.99",
+      },
+    ],
+  },
+  "woodhill bbq": {
+    preferKnownItems: true,
+    official: {
+      title: "Woodhill BBQ",
+      url: "https://woodhillbbq.com/",
+    },
+    menu: [
+      {
+        title: "Woodhill BBQ menu",
         url: "https://woodhillbbq.com/menu/",
       },
     ],
