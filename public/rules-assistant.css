@@ -851,18 +851,28 @@ kbd {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
+  .rules-app {
+    height: 100svh;
+  }
+
   .rules-header-inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
+    padding-block: 12px;
   }
 
   .rules-source-link {
     align-self: flex-start;
+    padding-block: 6px;
   }
 
   .rules-header h1 {
     font-size: 1.4rem;
+  }
+
+  .rules-subtitle {
+    display: none;
   }
 
   .rules-header-inner,
@@ -873,8 +883,48 @@ kbd {
     padding-inline: 16px;
   }
 
+  .rules-thread {
+    gap: 12px;
+    padding-block: 16px;
+  }
+
   .rules-message-bot {
     padding: 16px 17px;
+  }
+
+  .rules-dock {
+    max-height: 56svh;
+    overflow-y: auto;
+  }
+
+  .rules-dock-inner {
+    padding-block: 8px;
+  }
+
+  .rules-starters {
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  .rules-dock.is-composing .rules-starters,
+  .rules-dock.is-composing .rules-starters-toggle,
+  .rules-dock.is-composing + .rules-footer,
+  .rules-hint {
+    display: none;
+  }
+
+  .rules-composer textarea {
+    max-height: 104px;
+  }
+
+  .rules-footer {
+    padding-block: 6px calc(7px + env(safe-area-inset-bottom, 0px));
+    font-size: 0.68rem;
+  }
+
+  .rules-disclaimer {
+    flex-basis: 100%;
   }
 }
 

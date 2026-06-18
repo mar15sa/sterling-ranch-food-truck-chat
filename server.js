@@ -11,6 +11,7 @@ const {
   alertRulesRefreshFailed,
   recordRulesRateLimitBlocked,
 } = require("./lib/rules-alerts");
+const { logRulesQuestion } = require("./lib/rules-question-log");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -3223,6 +3224,7 @@ async function handleRulesAsk(req, res, url) {
   }
 
   const answer = await answerRulesQuestion(question);
+  logRulesQuestion(question, answer, req);
   answer.sourceStatus = {
     ...answer.sourceStatus,
     refreshing: Boolean(rulesRefreshPromise),

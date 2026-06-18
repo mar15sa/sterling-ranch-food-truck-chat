@@ -24,6 +24,16 @@ let conversationStarted = false;
 let statusPollTimer = null;
 let statusPollAttempts = 0;
 
+function cleanQuestionForAnalytics(question) {
+  return String(question || "")
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, "[email]")
+    .replace(/\b(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b/g, "[phone]")
+    .replace(/\b\d{5,}\b/g, "[number]")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 100);
+}
+
 function trackEvent(name, params = {}) {
   if (typeof window.gtag !== "function") return;
   window.gtag("event", name, {
@@ -367,7 +377,10 @@ async function askRules(question) {
   addUserMessage(question);
   const thinking = addThinking();
   setLoading(true);
-  trackEvent("rules_question_submitted");
+  trackEvent("rules_question_submitted", {
+    question_text: cleanQuestionForAnalytics(question),
+    question_length: question.length,
+  });
 
   try {
     const response = await fetch("/api/rules/ask", {
@@ -444,6 +457,16 @@ rulesForm.addEventListener("submit", (event) => {
 });
 
 rulesQuestion.addEventListener("input", autoGrow);
+
+rulesQuestion.addEventListener("focus", () => {
+  rulesDock.classList.add("is-composing");
+});
+
+rulesQuestion.addEventListener("blur", () => {
+  if (!rulesQuestion.value.trim()) {
+    rulesDock.classList.remove("is-composing");
+  }
+});
 
 rulesQuestion.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && !event.shiftKey) {
