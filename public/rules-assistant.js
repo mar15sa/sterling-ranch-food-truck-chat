@@ -429,6 +429,25 @@ statusToggle.addEventListener("click", () => {
   statusToggle.setAttribute("aria-expanded", String(open));
 });
 
+function closeStatusDetail() {
+  if (statusDetail.hasAttribute("hidden")) return;
+  statusDetail.setAttribute("hidden", "");
+  statusToggle.setAttribute("aria-expanded", "false");
+}
+
+document.addEventListener("click", (event) => {
+  if (statusDetail.hasAttribute("hidden")) return;
+  if (statusToggle.contains(event.target) || statusDetail.contains(event.target)) return;
+  closeStatusDetail();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !statusDetail.hasAttribute("hidden")) {
+    closeStatusDetail();
+    statusToggle.focus();
+  }
+});
+
 addBotText(
   "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
 );

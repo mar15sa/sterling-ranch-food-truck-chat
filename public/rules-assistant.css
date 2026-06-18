@@ -84,8 +84,6 @@ kbd {
 }
 
 .rules-header-inner,
-.rules-statusbar,
-.rules-status-detail,
 .rules-thread,
 .rules-dock-inner,
 .rules-footer {
@@ -272,13 +270,40 @@ kbd {
   outline-offset: 1px;
 }
 
+.rules-status-source {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
 .rules-status-detail {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 30;
+  width: max-content;
+  max-width: min(330px, 86vw);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 11px 22px;
+  gap: 12px;
   margin: 0;
-  padding: 12px 24px 14px;
-  border-top: 1px solid var(--rules-line-soft);
+  padding: 15px 17px;
+  border: 1px solid var(--rules-line);
+  border-radius: 12px;
+  background: var(--rules-panel);
+  box-shadow: 0 1px 2px rgba(31, 40, 33, 0.05), 0 18px 40px rgba(31, 40, 33, 0.13);
+}
+
+.rules-status-detail::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 18px;
+  width: 9px;
+  height: 9px;
+  background: var(--rules-panel);
+  border-left: 1px solid var(--rules-line);
+  border-top: 1px solid var(--rules-line);
+  transform: rotate(45deg);
 }
 
 .rules-status-detail[hidden] {

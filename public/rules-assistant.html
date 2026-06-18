@@ -23,7 +23,7 @@
       content="Ask plain-English questions about the Sterling Ranch CAB Rules and Regulations, with links to the source sections."
     />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/rules-assistant.css?v=20260618-redesign9" />
+    <link rel="stylesheet" href="/rules-assistant.css?v=20260618-redesign10" />
   </head>
   <body class="rules-page">
     <div class="rules-app">
@@ -39,18 +39,39 @@
               <div class="rules-statusbar">
                 <span class="rules-status-dot" id="statusDot" data-state="busy" aria-hidden="true"></span>
                 <span class="rules-status-headline" id="statusHeadline">Checking the source&hellip;</span>
-                <button
-                  type="button"
-                  class="rules-status-toggle"
-                  id="statusToggle"
-                  aria-expanded="false"
-                  aria-controls="statusDetail"
-                >
-                  <span>Source details</span>
-                  <svg class="rules-status-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </button>
+                <span class="rules-status-source">
+                  <button
+                    type="button"
+                    class="rules-status-toggle"
+                    id="statusToggle"
+                    aria-expanded="false"
+                    aria-controls="statusDetail"
+                  >
+                    <span>Source details</span>
+                    <svg class="rules-status-chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                  <dl class="rules-status-detail" id="statusDetail" hidden>
+                    <div>
+                      <dt>Source</dt>
+                      <dd id="statusSource">Sterling Ranch CAB Rules and Regulations</dd>
+                    </div>
+                    <div>
+                      <dt>Last checked</dt>
+                      <dd id="statusChecked">&mdash;</dd>
+                    </div>
+                    <div>
+                      <dt>Latest online update</dt>
+                      <dd id="statusOnlineDate">&mdash;</dd>
+                    </div>
+                    <div>
+                      <dt>Codified through</dt>
+                      <dd id="statusCodified">&mdash;</dd>
+                    </div>
+                    <p class="rules-status-note" id="statusNote" hidden></p>
+                  </dl>
+                </span>
               </div>
             </div>
           </div>
@@ -74,25 +95,6 @@
           </a>
         </div>
 
-        <dl class="rules-status-detail" id="statusDetail" hidden>
-          <div>
-            <dt>Source</dt>
-            <dd id="statusSource">Sterling Ranch CAB Rules and Regulations</dd>
-          </div>
-          <div>
-            <dt>Last checked</dt>
-            <dd id="statusChecked">&mdash;</dd>
-          </div>
-          <div>
-            <dt>Latest online update</dt>
-            <dd id="statusOnlineDate">&mdash;</dd>
-          </div>
-          <div>
-            <dt>Codified through</dt>
-            <dd id="statusCodified">&mdash;</dd>
-          </div>
-          <p class="rules-status-note" id="statusNote" hidden></p>
-        </dl>
       </header>
 
       <main class="rules-conversation" id="rulesScroll">
@@ -209,6 +211,6 @@
       </article>
     </template>
 
-    <script src="/rules-assistant.js?v=20260618-redesign8"></script>
+    <script src="/rules-assistant.js?v=20260618-redesign10"></script>
   </body>
 </html>
