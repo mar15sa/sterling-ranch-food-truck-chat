@@ -1656,6 +1656,12 @@ const mimeTypes = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
 };
+const SECURITY_HEADERS = {
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "camera=(), microphone=(), geolocation=()",
+  "x-frame-options": "SAMEORIGIN",
+};
 
 const calendarCache = new Map();
 const menuCache = new Map();
@@ -1669,6 +1675,7 @@ let rulesRefreshPromise = null;
 function sendJson(res, status, data, extraHeaders = {}) {
   const body = JSON.stringify(data, null, 2);
   res.writeHead(status, {
+    ...SECURITY_HEADERS,
     "content-type": "application/json; charset=utf-8",
     "cache-control": "no-store",
     ...extraHeaders,
@@ -1677,7 +1684,7 @@ function sendJson(res, status, data, extraHeaders = {}) {
 }
 
 function sendText(res, status, text, type = "text/plain; charset=utf-8") {
-  res.writeHead(status, { "content-type": type });
+  res.writeHead(status, { ...SECURITY_HEADERS, "content-type": type });
   res.end(text);
 }
 
@@ -3279,6 +3286,7 @@ function serveStatic(req, res, url) {
         : "public, max-age=300";
 
     res.writeHead(200, {
+      ...SECURITY_HEADERS,
       "content-type": type,
       "content-length": data.length,
       "cache-control": cacheControl,
