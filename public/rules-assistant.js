@@ -24,6 +24,14 @@ let conversationStarted = false;
 let statusPollTimer = null;
 let statusPollAttempts = 0;
 
+function trackEvent(name, params = {}) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", name, {
+    app_area: "rules_assistant",
+    ...params,
+  });
+}
+
 function formatDateTime(value) {
   if (!value) return "Not available";
   const date = new Date(value);
@@ -359,6 +367,7 @@ async function askRules(question) {
   addUserMessage(question);
   const thinking = addThinking();
   setLoading(true);
+  trackEvent("rules_question_submitted");
 
   try {
     const response = await fetch("/api/rules/ask", {
@@ -381,7 +390,13 @@ async function askRules(question) {
 
     thinking.remove();
     addAnswer(data);
+    trackEvent("rules_answer_received", {
+      answer_mode: data.answerMode || "deterministic",
+      can_answer: Boolean(data.confidence?.canAnswer),
+      source_count: Array.isArray(data.sources) ? data.sources.length : 0,
+    });
   } catch (error) {
+    trackEvent("rules_answer_error");
     const answer = document.createElement("div");
     answer.className = "rules-answer";
     renderAnswerInto(
@@ -440,6 +455,7 @@ rulesQuestion.addEventListener("keydown", (event) => {
 rulesStarters.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
+  trackEvent("rules_starter_clicked");
   askRules(button.textContent.trim());
 });
 
