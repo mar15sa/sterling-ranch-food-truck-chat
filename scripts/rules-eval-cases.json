@@ -62,7 +62,12 @@
   {
     "question": "Can I put a trampoline in my backyard?",
     "expectedFirstAny": ["Sec. 21-22"],
-    "answerIncludesAny": ["Trampolines require DRC approval"]
+    "answerIncludesAll": ["Trampolines require DRC approval", "five feet", "screened"]
+  },
+  {
+    "question": "Can I install a swimming pool in my backyard?",
+    "expectedFirstAny": ["Sec. 21-22"],
+    "answerIncludesAll": ["In-ground pools require DRC approval", "Aboveground pools"]
   },
   {
     "question": "Can I install a swimming pool?",
