@@ -804,12 +804,11 @@ kbd {
 /* ---------- Footer ---------- */
 .rules-footer {
   display: flex;
-  width: min(1280px, 100%);
   align-items: center;
   justify-content: space-between;
   gap: 6px 18px;
   flex-wrap: wrap;
-  padding: 8px 24px 11px;
+  padding: 8px 24px 28px;
   color: var(--rules-faint);
   font-size: 0.72rem;
   line-height: 1.4;
