@@ -815,40 +815,9 @@ kbd {
 }
 
 .rules-disclaimer {
+  margin: 0;
   flex: 1 1 340px;
   min-width: 0;
-}
-
-.rules-disclaimer summary {
-  display: none;
-  align-items: center;
-  gap: 6px;
-  list-style: none;
-  cursor: pointer;
-}
-
-.rules-disclaimer summary::-webkit-details-marker {
-  display: none;
-}
-
-.rules-disclaimer summary::after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: rotate(45deg);
-  margin-top: -3px;
-  opacity: 0.7;
-}
-
-.rules-disclaimer[open] summary::after {
-  transform: rotate(-135deg);
-  margin-top: 2px;
-}
-
-.rules-disclaimer p {
-  margin: 0;
 }
 
 .rules-maker-link {
@@ -955,15 +924,7 @@ kbd {
   }
 
   .rules-disclaimer {
-    flex: 0 1 auto;
-  }
-
-  .rules-disclaimer summary {
-    display: inline-flex;
-  }
-
-  .rules-disclaimer[open] p {
-    margin-top: 6px;
+    flex-basis: 100%;
   }
 
   .rules-status-source {
