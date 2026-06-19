@@ -804,7 +804,7 @@ kbd {
 /* ---------- Footer ---------- */
 .rules-footer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 6px 18px;
   flex-wrap: wrap;
@@ -815,9 +815,41 @@ kbd {
 }
 
 .rules-disclaimer {
-  margin: 0;
-  flex: 1 1 340px;
+  flex: 1 1 320px;
   min-width: 0;
+}
+
+.rules-disclaimer summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.rules-disclaimer summary::-webkit-details-marker {
+  display: none;
+}
+
+.rules-disclaimer summary::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-top: -3px;
+  opacity: 0.7;
+}
+
+.rules-disclaimer[open] summary::after {
+  transform: rotate(-135deg);
+  margin-top: 2px;
+}
+
+.rules-disclaimer p {
+  margin: 8px 0 0;
+  max-width: 72ch;
 }
 
 .rules-maker-link {
