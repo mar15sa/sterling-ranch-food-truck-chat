@@ -852,7 +852,13 @@ kbd {
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
   .rules-app {
-    height: 100svh;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .rules-conversation {
+    flex: 1 0 auto;
+    overflow: visible;
   }
 
   .rules-header-inner {

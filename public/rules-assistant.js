@@ -60,23 +60,34 @@ function formatDateShort(value) {
 }
 
 /* ---------- Scrolling ---------- */
+function conversationScrolls() {
+  return rulesScroll.scrollHeight > rulesScroll.clientHeight + 2;
+}
+
 function scrollToBottom() {
-  rulesScroll.scrollTo({
-    top: rulesScroll.scrollHeight,
-    behavior: reduceMotion ? "auto" : "smooth",
-  });
+  const behavior = reduceMotion ? "auto" : "smooth";
+  if (conversationScrolls()) {
+    rulesScroll.scrollTo({ top: rulesScroll.scrollHeight, behavior });
+  } else {
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior });
+  }
 }
 
 function scrollToMessageStart(message) {
-  const top =
-    message.getBoundingClientRect().top -
-    rulesScroll.getBoundingClientRect().top +
-    rulesScroll.scrollTop -
-    16;
-  rulesScroll.scrollTo({
-    top: Math.max(top, 0),
-    behavior: reduceMotion ? "auto" : "smooth",
-  });
+  const behavior = reduceMotion ? "auto" : "smooth";
+  if (conversationScrolls()) {
+    const top =
+      message.getBoundingClientRect().top -
+      rulesScroll.getBoundingClientRect().top +
+      rulesScroll.scrollTop -
+      16;
+    rulesScroll.scrollTo({ top: Math.max(top, 0), behavior });
+  } else {
+    const header = document.querySelector(".rules-header");
+    const offset = (header ? header.offsetHeight : 0) + 12;
+    const top = message.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(top, 0), behavior });
+  }
 }
 
 /* ---------- Messages ---------- */
