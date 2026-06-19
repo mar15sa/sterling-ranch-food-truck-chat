@@ -834,6 +834,7 @@ kbd {
 
 .rules-disclaimer summary::after {
   content: "";
+  flex: 0 0 auto;
   width: 6px;
   height: 6px;
   border-right: 1.5px solid currentColor;
@@ -841,6 +842,10 @@ kbd {
   transform: rotate(45deg);
   margin-top: -3px;
   opacity: 0.7;
+}
+
+.rules-disclaimer summary span {
+  min-width: 0;
 }
 
 .rules-disclaimer[open] summary::after {
@@ -925,12 +930,32 @@ kbd {
   }
 
   .rules-dock {
+    flex: 0 0 auto;
     max-height: 56svh;
     overflow-y: auto;
   }
 
   .rules-dock-inner {
     padding-block: 8px;
+  }
+
+  .rules-dock.has-conversation .rules-dock-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rules-dock.has-conversation .rules-composer {
+    order: 1;
+  }
+
+  .rules-dock.has-conversation .rules-starters-toggle {
+    order: 2;
+    margin: 8px 0 0;
+  }
+
+  .rules-dock.has-conversation .rules-starters {
+    order: 3;
+    margin: 8px 0 0;
   }
 
   .rules-starters {
@@ -951,16 +976,31 @@ kbd {
   }
 
   .rules-footer {
+    flex-wrap: nowrap;
+    gap: 6px;
     padding-block: 6px calc(7px + env(safe-area-inset-bottom, 0px));
     font-size: 0.68rem;
   }
 
   .rules-disclaimer {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .rules-disclaimer summary {
-    display: inline-flex;
+    display: flex;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  .rules-disclaimer summary span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rules-maker-link {
+    flex: 0 0 auto;
   }
 
   .rules-disclaimer:not([open]) p {
