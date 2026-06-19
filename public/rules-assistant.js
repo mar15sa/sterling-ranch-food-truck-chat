@@ -524,6 +524,20 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// Full disclaimer on desktop; collapsed on mobile. Only flip when crossing the
+// breakpoint so a user's manual expand on mobile isn't undone by every resize.
+const disclaimerEl = document.querySelector(".rules-disclaimer");
+let disclaimerIsDesktop = null;
+function syncDisclaimerForViewport() {
+  if (!disclaimerEl) return;
+  const isDesktop = window.innerWidth > 720;
+  if (isDesktop === disclaimerIsDesktop) return;
+  disclaimerIsDesktop = isDesktop;
+  disclaimerEl.open = isDesktop;
+}
+syncDisclaimerForViewport();
+window.addEventListener("resize", syncDisclaimerForViewport);
+
 addBotText(
   "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
 );

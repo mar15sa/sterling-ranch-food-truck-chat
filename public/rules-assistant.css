@@ -820,7 +820,7 @@ kbd {
 }
 
 .rules-disclaimer summary {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 6px;
   list-style: none;
@@ -962,7 +962,26 @@ kbd {
   }
 
   .rules-disclaimer {
-    flex-basis: 100%;
+    flex: 0 1 auto;
+  }
+
+  .rules-disclaimer summary {
+    display: inline-flex;
+  }
+
+  .rules-status-source {
+    position: static;
+  }
+
+  .rules-status-detail {
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: none;
+  }
+
+  .rules-status-detail::before {
+    display: none;
   }
 }
 
