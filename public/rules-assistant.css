@@ -804,7 +804,7 @@ kbd {
 /* ---------- Footer ---------- */
 .rules-footer {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 6px 18px;
   flex-wrap: wrap;
@@ -815,7 +815,7 @@ kbd {
 }
 
 .rules-disclaimer {
-  flex: 1 1 320px;
+  flex: 1 1 340px;
   min-width: 0;
 }
 
@@ -848,8 +848,7 @@ kbd {
 }
 
 .rules-disclaimer p {
-  margin: 8px 0 0;
-  max-width: 72ch;
+  margin: 0;
 }
 
 .rules-maker-link {
@@ -961,6 +960,10 @@ kbd {
 
   .rules-disclaimer summary {
     display: inline-flex;
+  }
+
+  .rules-disclaimer[open] p {
+    margin-top: 6px;
   }
 
   .rules-status-source {
