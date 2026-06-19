@@ -804,6 +804,7 @@ kbd {
 /* ---------- Footer ---------- */
 .rules-footer {
   display: flex;
+  width: min(1280px, 100%);
   align-items: center;
   justify-content: space-between;
   gap: 6px 18px;
