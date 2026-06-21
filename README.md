@@ -120,3 +120,5 @@ npm run supplements:monitor
 ```
 
 The monitor starts after the last reviewed Document Center ID in `data/rules-supplement-audit-baseline.json`. GitHub also runs this monitor daily and fails the workflow if a new candidate appears.
+
+Known supplements live in `data/rules-supplements.json`. Each current supplement should list the sections or topics it replaces and the required coverage phrases that must be present in the local summary. `npm run check` runs `scripts/check-rule-supplements.js`, so a supplement that omits an important topic from its official PDF will fail the build instead of silently shipping.

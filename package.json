@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check lib/rules-alerts.js && node --check lib/rules-question-log.js && node --check lib/rules-assistant.js && node --check lib/rules-grounding.js && node --check public/app.js && node --check public/rules-assistant.js && node --check scripts/ingest-rules.js && node --check scripts/eval-rules.js && node --check scripts/audit-rule-supplements.js && node scripts/check-live-menus.js --fixtures-only && node scripts/eval-rules.js",
+    "check": "node --check server.js && node --check lib/rules-alerts.js && node --check lib/rules-question-log.js && node --check lib/rules-assistant.js && node --check lib/rules-grounding.js && node --check public/app.js && node --check public/rules-assistant.js && node --check scripts/ingest-rules.js && node --check scripts/eval-rules.js && node --check scripts/audit-rule-supplements.js && node --check scripts/check-rule-supplements.js && node scripts/check-rule-supplements.js && node scripts/check-live-menus.js --fixtures-only && node scripts/eval-rules.js",
     "check:live": "node scripts/check-live-menus.js",
     "eval:rules": "node scripts/eval-rules.js",
     "ingest:rules": "node scripts/ingest-rules.js",

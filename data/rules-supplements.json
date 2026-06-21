@@ -13,13 +13,29 @@
       "Sec. 21-22(b)(56). - Lighting"
     ],
     "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1880/Approved-Exterior-Lighting-Policies-21-22b56-5-17-24?bidId=",
-    "sourceName": "Sterling Ranch Community Authority Board Updated Exterior Lighting Policy",
+    "sourceName": "Sterling Ranch Community Authority Board Resolution No. 2024-05-04",
     "approvedDate": "2024-05-17",
     "effectiveDate": "2024-05-17",
     "effectiveYear": 2024,
     "documentCenterIds": ["1880", "1893"],
-    "sourcePriority": 240,
-    "text": "Sterling Ranch Community Authority Board Updated Exterior Lighting Policy. Approved May 17, 2024. Sec. 21-22(b)(56), Lighting. Seasonal decorative lighting may include hardwired traditional soffit installed lighting, hardwired track eave/rake lighting, or temporary string lighting installed for the approved seasonal period. Seasonal decorative lighting should be installed or operated in a manner that does not create any light trespass beyond the property boundaries or glare onto surrounding properties. If using temporary string lighting, use low-wattage string lights; LED preferred. Seasonal decorative lighting may be of various colors and patterns and is permitted to blink, flash, chase, or strobe. Install and energize seasonal decorative lighting during the following approved seasonal lighting periods: From June 18 to July 7 and from October 1 through January 31. Outside of these approved seasonal lighting periods, all temporary string lighting and light installation clips are required to be removed, and all hardwired soffit installed lighting and hardwired track eave/rake lighting must be returned to the settings allowed in Section B above. At the sole discretion of the CAB, removal dates for seasonal decorative lighting may be extended due to extreme weather conditions or other factors. During this time lighting may not be energized. All holiday lighting must be turned off by 10:00 p.m."
+    "sourcePriority": 260,
+    "replacesSection": "Sec. 21-22(b)(56), Lighting",
+    "replacesSections": ["21-22(b)(56)"],
+    "supersedesConflictingPhrases": [
+      "Exterior eave/rake lighting systems such as Gemstone, Jellyfish, or other similar companies/products are not permitted",
+      "Install and energize holiday lighting from October 15 through January 25"
+    ],
+    "requiredCoveragePhrases": [
+      "amends and replaces Sec. 21-22(b)(56)",
+      "DRC approval is required to modify or add exterior lighting",
+      "Under-eave lighting must consist of hardwired fixtures",
+      "Gemstone and Jellyfish systems are the approved systems",
+      "Other similar companies or products are not permitted unless added to the approved list",
+      "Install and energize seasonal decorative lighting during the following approved seasonal lighting periods",
+      "All holiday lighting must be turned off by 10:00 p.m.",
+      "Security lighting must be directed at the ground and house"
+    ],
+    "text": "Resolution No. 2024-05-04, adopted May 17, 2024, amends and replaces Sec. 21-22(b)(56), Lighting, effective immediately. DRC approval is required to modify or add exterior lighting, including motion detector spotlights, security lighting, landscape lighting, architectural accent lighting, decorative lighting, ballasted fixtures, and additional lighting at doors or windows. Cut sheets must be submitted to the Design Review Committee for each type of fixture proposed. All exterior lighting must comply with the Rules and Douglas County Dark Skies guidelines. Exterior lighting must be fully shielded, directed downward, warm white with a color temperature of 3,000 Kelvin or less, and may be re-evaluated if it creates nuisance or complaints. Under-eave lighting provides architectural accent lighting. Canned lighting installed into front porch soffits or ceilings is included. Under-eave lighting must consist of hardwired fixtures installed into the soffit or hardwired track eave/rake lighting systems such as Jellyfish or Gemstone. Gemstone and Jellyfish systems are the approved systems. Other similar companies or products are not permitted unless added to the approved list of dark sky-compliant lighting systems. Under-eave lighting may be installed on the front of the home using logical termination points from the front to the sides; elevations showing termination points must be submitted with the application; termination points may not extend further than the wing fence. Under-eave lighting may be installed on the rear of the home if it backs up to open space, subject to DRC approval and case-by-case review. Corner lots can install under-eave lighting on the side of the home that abuts the street, subject to DRC approval and case-by-case review. Under-eave lighting shall not be used as security lighting. Hardwired canned lighting installed into the soffit or ceiling of the front porch shall light only the front porch and not extend beyond that area. Under-eave hardwired track eave/rake lighting systems or hardwired canned lighting can be installed under a roofed cover above a rear deck or rear patio, subject to DRC approval and case-by-case review, if the light cone does not cause glare to adjacent properties or onto the street and the light is warm, with a color temperature of 3,000 Kelvin or less. During non-holiday lighting periods, under-eave lighting must be warm white, static, and must not strobe, flash, pulse, chase, or use patterns outside approved architectural accent lighting. A homeowner may install traditional under-eave lighting, or use track lighting systems in a static pattern to accent the home architecturally. All under-eave lighting must be turned off by 10:00 p.m. Decorative lighting must consist of cafe, globe, or lit rope style lights; LED string lights, holiday-decoration-style string lights, and other forms of lighting are not allowed as decorative lighting. Rear decorative lighting does not require DRC approval if located under a roofed cover above a rear deck or patio, if the light cone does not cause glare, and if it is warm white with a color temperature of 3,000 Kelvin or less. Landscape lighting must be low-level, downward-facing, warm white, and no taller than 36 inches for permitted solar in-ground lighting; no more than eight such fixtures are permitted in the front yard. Seasonal decorative lighting may include hardwired traditional soffit installed lighting, hardwired track eave/rake lighting, or temporary string lighting installed for the approved seasonal period. Seasonal decorative lighting should not create light trespass beyond property boundaries or glare onto surrounding properties. Temporary string lighting should use low-wattage lights; LED preferred. Seasonal decorative lighting may use colors and patterns and may blink, flash, chase, or strobe. Install and energize seasonal decorative lighting during the following approved seasonal lighting periods: from June 18 to July 7 and from October 1 through January 31. Outside those periods, temporary string lighting and clips must be removed, and hardwired traditional soffit installed lighting and hardwired track eave/rake lighting must be returned to the settings allowed in the under-eave lighting section. The CAB may extend removal dates due to extreme weather or other factors, but lighting may not be energized during that time. All holiday lighting must be turned off by 10:00 p.m. Security lighting must be directed at the ground and house, must stay within property boundaries, must not cause glare to other properties, cannot be on 24/7 except for the front of the home facing the public street, and must be photocell-controlled and motion-activated so it cannot stay on longer than five minutes once activated. Security lighting may be installed on the rear of the home if it backs up to open space, but is not permitted in the rear if the open space is a designated wildlife corridor."
   },
   {
     "id": "supplement-code-amendments-2024-11-22::1",
@@ -41,6 +57,15 @@
     "effectiveYear": 2024,
     "documentCenterIds": ["1978", "2411"],
     "sourcePriority": 245,
+    "autoSupersedeSections": false,
+    "replacesSections": ["21-22(b)(101)", "21-22(b)(63)", "1-34(b)", "21-22(b)(37)", "21-22(b)(38)"],
+    "requiredCoveragePhrases": [
+      "Section 21-22(b)(101), Trash Containers",
+      "Section 21-22(b)(63), Outdoor Decorative Objects",
+      "Section 1-34(b), Signs; Flags",
+      "Section 21-22(b)(37) and (38), Flags and flag holders/flagpoles",
+      "DRC approval is required for freestanding flagpoles"
+    ],
     "text": "Resolution No. 2024-11-02, adopted November 22, 2024, amends the CAB Code effective immediately. Section 21-22(b)(101), Trash Containers: Trash shall not be stored or allowed to accumulate on any property except within appropriate containers, which shall be properly stored in an enclosed structure, the garage, or appropriately screened from view behind the wing fence. Section 21-22(b)(63), Outdoor Decorative Objects: Rear yard DRC approval is not required for yard or lawn ornamentation in the rear yard when ornamentation does not exceed three feet in height; DRC approval is required over three feet. Front yard DRC approval is not required for yard or lawn ornamentation only when there are no more than three ornaments, items are placed on the ground, items do not exceed 12 inches in height or width, and items are integrated into the landscape design; DRC approval is required for front-yard ornaments that do not meet those provisions. Section 1-34(b), Signs; Flags: An Owner may display flags or political signage, subject to restrictions. No flag shall be prohibited or regulated on the basis of subject matter, message, or content, except that flags bearing commercial messages are prohibited. No flag shall exceed four feet by six feet. Section 21-22(b)(37) and (38), Flags and flag holders/flagpoles: The only flags allowed to be displayed on the front of the home are the United States flag, the Colorado flag, and certain permitted military service flags. Bracket flag holders on the home do not require DRC approval if the size is commensurate with the permitted flag. DRC approval is required for freestanding flagpoles and separate nighttime illumination of a flag."
   },
   {
@@ -62,6 +87,14 @@
     "effectiveYear": 2024,
     "documentCenterIds": ["1979"],
     "sourcePriority": 250,
+    "currentForTopics": ["due-process", "fines", "violations", "enforcement"],
+    "requiredCoveragePhrases": [
+      "A warning letter advises the respondent",
+      "First Notice of Violation, 30 days to correct, $100.00",
+      "Nuisance violations fine schedule",
+      "Owners are responsible for actions of tenants and guests",
+      "CAB shall not foreclose on a lien that arises from amounts owed as a result of a covenant violation"
+    ],
     "text": "Resolution 2024-11-03, Policy Governing Due Process and Imposition of Fines, adopted November 22, 2024. A proceeding may be initiated by complaint to or by the Community Standards Committee, or by CAB staff inspection. A warning letter advises the respondent of the complaint, the believed violation, and action needed within a specified time. If a violation is not cured not later than ten days after the warning letter or another stated date, or if a repetitious violation recurs within six months, CAB sends a Notice of Violation. The Notice of Violation must include the details, cure action, possible fines, the right to be heard orally or in writing by the Community Standards Committee at least fifteen days after notice, and the process to request a hearing. Continuous or repetitious violations fine schedule: Warning Letter $0.00; First Notice of Violation, 30 days to correct, $100.00; Second Notice of Violation, 14 days to correct, $250.00; Third Notice of Violation, 14 days to correct, $500.00; Continuing Violation $10.00 per day until cured. Nuisance violations fine schedule: Warning Letter $0.00; First Notice of Violation, 30 days to correct, $25.00; Second Notice of Violation, 14 days to correct, $50.00; Third Notice of Violation, 14 days to correct, $100.00; Continuing Violation $10.00 per day until cured. Owners are responsible for actions of tenants and guests. Fines may become a lien, but CAB shall not foreclose on a lien that arises from amounts owed as a result of a covenant violation or failure to comply with a Document."
   },
   {
@@ -83,6 +116,12 @@
     "effectiveYear": 2024,
     "documentCenterIds": ["1980"],
     "sourcePriority": 220,
+    "currentForTopics": ["dispute-resolution"],
+    "requiredCoveragePhrases": [
+      "provide a more efficient means of resolving disputes or claims",
+      "Article 10 of the Master Declaration",
+      "as further set forth in the Code"
+    ],
     "text": "Resolution 2024-11-04, Policy Regarding Dispute Resolution, adopted November 22, 2024. Purpose: to provide a more efficient means of resolving disputes or claims involving either CAB and/or CAB's governing documents and to reduce costs and fees associated with dispute resolution. Dispute Resolution Procedures: CAB and Owners shall each follow the dispute resolution procedures set forth in Article 10 of the Master Declaration of Covenants, Conditions and Restrictions for Sterling Ranch Planned Development, recorded September 28, 2015 at Reception No. 2015069869, and as further set forth in the Code."
   },
   {
@@ -104,6 +143,14 @@
     "effectiveYear": 2025,
     "documentCenterIds": ["2615"],
     "sourcePriority": 255,
+    "currentForTopics": ["delinquent-fees", "late-fees", "collections", "water-disconnect", "liens", "payment-plans"],
+    "requiredCoveragePhrases": [
+      "supersedes prior collection policies",
+      "Courtesy past due notification",
+      "Disconnect Notice or Lien Notice",
+      "Payment plans may be authorized for up to six months",
+      "Delinquent Account Late Fee 10% of delinquent amount not to exceed $15.00"
+    ],
     "text": "Resolution No. 2025-06-01 establishes an amended and restated collection process for delinquent utility, monthly, and covenant enforcement fees and supersedes prior collection policies. Fees are delinquent when unpaid by their due date. Courtesy past due notification: three days after invoice due date by text, email, or automated phone call. Delinquent Account Late Fee: if not paid within seven calendar days after due date, a late fee is charged. Late Notice Letter: if unpaid on the 15th calendar day after due date, Provider sends a Late Notice Letter and charges a Late Notice Letter Fee. Disconnect Notice or Lien Notice: if unpaid on the 10th day of the month following invoice due date, Provider sends a Disconnect Notice Letter for delinquent Utility Fees or a Lien Notice Letter for delinquent Monthly Fees, by certified mail, and charges the applicable fee. Utility disconnect notice says failure to pay by the last Wednesday of the month will result in CAB disconnecting water service that day and describes hearing rights under Sections 29-41 or 29-42. Lien notice says failure to pay Monthly Fees by the last Wednesday of the month will result in CAB filing a notice of lien. Payment plans may be authorized for up to six months if the delinquent amount does not exceed $2,500; the General Manager may authorize longer terms or larger amounts. Exhibit A fees: Delinquent Account Late Fee 10% of delinquent amount not to exceed $15.00; Late Notice Letter Fee $5.00; Disconnect Notice/Lien Notice $25.00; 48 Hour Shut Off Notice Fee $50.00; Disconnect Fee $150.00; Reconnect Fee 8:00 a.m. to 3:00 p.m. $150.00; Reconnect Fee 3:00 p.m. to 9:00 p.m. $500.00; 9:00 p.m. to 8:00 a.m. unavailable; Statement of Lien Filing Fee $250.00; Release of Statement of Lien Fee $100.00; Payment Plan Administration Fee $45.00 plus $10.00 per month; Returned Deposit Fee $20.00."
   },
   {
@@ -125,6 +172,15 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2473"],
     "sourcePriority": 275,
+    "replacesSections": ["13-174", "13-175", "13-176", "13-177", "13-178"],
+    "requiredCoveragePhrases": [
+      "All prior rates, fees, or charges adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A",
+      "Table 13-174 Water Service Base Rates",
+      "Table 13-175 Indoor Water Consumption Fee",
+      "Table 13-176 Outdoor Water Consumption Fee",
+      "Table 13-177 Sanitary Sewer Fees",
+      "Table 13-178 Stormwater Fees"
+    ],
     "text": "Resolution No. 2025-11-03 adopts water, sanitary sewer, and stormwater rates, fees, and charges effective January 1, 2026. All prior rates, fees, or charges adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A. Table 13-174 Water Service Base Rates: monthly fee for residential single family detached, single family attached/duplex, townhomes, and multifamily/apartments individually metered is $50.20 for 5/8 inch meter; dual indoor and outdoor meter per unit 3/4 inch tap is $74.95; per apartment/unit fee charged to each master meter is $15.45. Table 13-175 Indoor Water Consumption Fee: Tier 1 less than 100% AWC $9.70 per 1,000 gallons; Tier 2 100% to 120% AWC $11.70; Tier 3 greater than 120% AWC $18.55. Table 13-176 Outdoor Water Consumption Fee: Tier 1 annual water allotment less than 100% $11.65 per 1,000 gallons; Tier 2 100% to 120% $18.25; Tier 3 120% to 140% $24.80; Tier 4 greater than 140% $30.55; Tier 5 construction water $16.60. Table 13-177 Sanitary Sewer Fees: monthly base fee for residential single family detached, single family attached/duplex, townhomes, and individually metered multifamily/apartments is $44.95; sewer fee per 1,000 gallons of indoor water use is $12.50 for residential units and $13.20 for nonresidential. Table 13-178 Stormwater Fees: monthly charge single family detached $18.80; single family attached/duplex $17.50; townhomes $17.50; individually metered multifamily/apartments $17.50; nonresidential $45.40; public schools n/a."
   },
   {
@@ -146,6 +202,16 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2472"],
     "sourcePriority": 280,
+    "replacesSections": ["13-124", "13-3"],
+    "requiredCoveragePhrases": [
+      "All prior tap fees, service charges, and facility fees adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A",
+      "Table 13-124 Tap Fees",
+      "Dominion Water Resource Fee per unit",
+      "Water Infrastructure Fee total water infrastructure fees",
+      "Sewer Tap total fees",
+      "Stormwater Tap residential per unit",
+      "Section 13-3 Facilities Fees"
+    ],
     "text": "Resolution No. 2025-11-04 adopts tap and facility fees effective January 1, 2026. All prior tap fees, service charges, and facility fees adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A. Table 13-124 Tap Fees: Dominion Water Resource Fee per unit: residential multifamily/apartments indoor meter only $6,150.00; single family attached/duplex $9,310.00; townhomes $9,310.00; single family detached lot size less than 5,000 SF $9,870.00; single family detached lot size greater than 5,000 SF $12,960.00; nonresidential/commercial per single family equivalent $17,450.00; nonresidential irrigation per acre foot $53,360.00. Water Infrastructure Fee total water infrastructure fees: single family detached $27,430.00; single family attached/duplex $18,420.00; townhomes $18,420.00; individually metered multifamily/apartments $18,420.00; nonresidential indoor water tap per EQR $27,430.00. Sewer Tap total fees: single family detached $12,485.00; single family attached/duplex $8,360.00; townhomes $8,360.00; individually metered multifamily/apartments $8,360.00. Stormwater Tap residential per unit: single family detached $6,080.00; single family attached/duplex $6,080.00; townhomes $6,080.00; multifamily/apartments $6,080.00. Section 13-3 Facilities Fees: single family detached lot size less than 5,000 SF $12,395.00; single family detached lot size greater than 5,000 SF $12,395.00; single family attached duplex $12,395.00; townhomes more than 2 units $10,880.00; multifamily for sale $10,880.00; multifamily for rent $10,880.00."
   },
   {
@@ -167,6 +233,14 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2474"],
     "sourcePriority": 270,
+    "replacesSections": ["13-179", "13-25", "13-73", "13-74", "13-48"],
+    "requiredCoveragePhrases": [
+      "Exhibit A 2026 CAB Service Fees",
+      "Table 13.179 Streetlight and Section 13.25 Trash Fees",
+      "Section 13.73 Shared Driveway and Section 13.74 Alley Load Maintenance",
+      "Table 13-48 Disclosure Fees",
+      "Builder Floor Plan Review $5,000.00"
+    ],
     "text": "Resolution No. 2025-11-02 modifies certain CAB fees and charges for 2026. Exhibit A 2026 CAB Service Fees says the following portions of the Code of Rules shall be updated effective January 1, 2026. Table 13.179 Streetlight and Section 13.25 Trash Fees: Streetlight monthly charge residential single family $9.90, townhomes $9.90, multifamily/apartments $9.90. Trash monthly charge residential single family $14.17, townhomes $14.17, multifamily/apartments separate contract $0.00. Section 13.73 Shared Driveway and Section 13.74 Alley Load Maintenance: shared driveways $33.25 monthly; alley load homes $26.25 monthly. Table 13-48 Disclosure Fees: New Home Status Letter Bundle $225.00; Resale Status Letter Bundle $500.00; rush packages $75.00; Resale Status Letter Only $175.00; Refinance Demand $125.00; Standard Questionnaire $75.00; questionnaire rush packages $25.00; Add-on Custom Questionnaire $40.00; Hard Copy $45.00; USB $30.00; Builder Floor Plan Review $5,000.00."
   },
   {

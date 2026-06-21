@@ -43,14 +43,45 @@
     "answerIncludesAny": ["garage", "wing fence"]
   },
   {
+    "question": "Can I put yard ornaments in my front yard?",
+    "expectedFirstAny": ["2024 CAB Code amendments"],
+    "answerIncludesAll": ["no more than three", "12 inches"]
+  },
+  {
     "question": "Can I put up a political sign?",
     "expectedFirstAny": ["2024 CAB Code amendments"],
     "answerIncludesAny": ["commercial-message"]
   },
   {
+    "question": "What flags can I fly?",
+    "expectedFirstAny": ["2024 CAB Code amendments"],
+    "answerIncludesAll": ["United States flag", "Colorado flag", "DRC approval"]
+  },
+  {
     "question": "Can I install holiday lights?",
     "expectedFirstAny": ["Sec. 21-22"],
     "answerIncludesAny": ["June 18", "October 1"]
+  },
+  {
+    "question": "When can I put up holiday lights?",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["June 18", "October 1", "January 31"]
+  },
+  {
+    "question": "Are under eave lighting allowed?",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["Gemstone", "Jellyfish", "DRC approval", "10:00 p.m."]
+  },
+  {
+    "question": "Are jellyfish or gemstone lights allowed?",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["Gemstone", "Jellyfish", "approved systems", "DRC approval"],
+    "answerExcludesAny": ["No, jellyfish and gemstone lights are not allowed"]
+  },
+  {
+    "question": "Are permanent holiday lights allowed?",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["DRC approval", "approved systems", "10:00 p.m."]
   },
   {
     "question": "What is the holiday lighting season?",
