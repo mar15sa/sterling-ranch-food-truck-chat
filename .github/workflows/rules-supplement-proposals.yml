@@ -1,0 +1,54 @@
+name: Rules supplement proposal
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 14 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  propose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate proposal files for new official CAB docs
+        run: npm run supplements:propose
+
+      - name: Run checks
+        run: npm run check
+
+      - name: Create review pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/rules-supplement-proposals; then
+            echo "No proposal changes to submit."
+            exit 0
+          fi
+
+          branch="automation/rules-supplement-proposals-${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add data/rules-supplement-proposals
+          git commit -m "Propose new rules supplement review"
+          git push origin "$branch"
+          gh pr create \
+            --title "Review new CAB rule supplement candidate" \
+            --body "A new official CAB document looks rule-related. This PR contains extracted text and proposed section mappings for human review before it is added to the live rules assistant." \
+            --base main \
+            --head "$branch"

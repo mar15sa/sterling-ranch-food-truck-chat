@@ -121,4 +121,24 @@ npm run supplements:monitor
 
 The monitor starts after the last reviewed Document Center ID in `data/rules-supplement-audit-baseline.json`. GitHub also runs this monitor daily and fails the workflow if a new candidate appears.
 
-Known supplements live in `data/rules-supplements.json`. Each current supplement should list the sections or topics it replaces and the required coverage phrases that must be present in the local summary. `npm run check` runs `scripts/check-rule-supplements.js`, so a supplement that omits an important topic from its official PDF will fail the build instead of silently shipping.
+Known supplements live in `data/rules-supplements.json`. Each current supplement should list the sections or topics it replaces, its effective date, and the required coverage phrases that must be present in the official text.
+
+The full extracted text for those supplements lives in `data/rules-supplement-sections.json`. To rebuild it from the official PDFs, run:
+
+```powershell
+npm run supplements:build-sections
+```
+
+Those extracted records are split into searchable chunks and keep structured metadata like `effectiveDate`, `approvedDate`, `replacesSections`, `parentSupplementId`, and text hashes. The assistant searches those official chunks before falling back to the shorter human-maintained summaries, so newer supplement language can override older codified rulebook text.
+
+The search now combines keyword matching, date-aware supplement priority, and local semantic matching for wording variations. For example, a resident can ask about "permanent roofline lights" or "trim lights" and still reach the under-eave/eave-rake lighting supplement without us needing to hand-code every possible phrase.
+
+The LLM rewrite step treats the resident question as untrusted text, only receives the selected source excerpts, and is checked before display. The grounding check verifies section references, numbers, dates/times, and key proper nouns against the cited sources; if the rewrite drops required facts or adds unsupported details, the server falls back to the deterministic answer.
+
+For new official documents, run:
+
+```powershell
+npm run supplements:propose
+```
+
+That command checks the Document Center for newer candidates, downloads/extracts likely PDFs, proposes section mappings, and writes review files under `data/rules-supplement-proposals/`. GitHub also runs `.github/workflows/rules-supplement-proposals.yml` daily; when it finds proposal files, it opens a review PR instead of silently changing the live answer logic. `npm run check` runs `scripts/check-rule-supplements.js`, so a supplement that lacks extracted official text or omits an important topic will fail the build instead of silently shipping.

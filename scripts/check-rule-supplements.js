@@ -2,6 +2,12 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 
 const SUPPLEMENTS_PATH = path.join(__dirname, "..", "data", "rules-supplements.json");
+const SUPPLEMENT_SECTIONS_PATH = path.join(
+  __dirname,
+  "..",
+  "data",
+  "rules-supplement-sections.json"
+);
 
 function normalize(value) {
   return String(value || "")
@@ -10,7 +16,19 @@ function normalize(value) {
     .trim();
 }
 
-function hasCoveragePhrase(document, phrase) {
+async function readJson(filePath, fallback) {
+  try {
+    return JSON.parse(await fs.readFile(filePath, "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") return fallback;
+    throw error;
+  }
+}
+
+function hasCoveragePhrase(document, sections, phrase) {
+  const matchingSections = sections.filter(
+    (section) => section.parentSupplementId === document.id
+  );
   const haystack = normalize(
     [
       document.title,
@@ -18,6 +36,7 @@ function hasCoveragePhrase(document, phrase) {
       document.article,
       document.sourceName,
       document.text,
+      ...matchingSections.map((section) => section.text),
     ]
       .filter(Boolean)
       .join(" ")
@@ -30,11 +49,15 @@ function listIsPopulated(value) {
 }
 
 async function main() {
-  const supplements = JSON.parse(await fs.readFile(SUPPLEMENTS_PATH, "utf8"));
+  const supplements = await readJson(SUPPLEMENTS_PATH, []);
+  const sections = await readJson(SUPPLEMENT_SECTIONS_PATH, []);
   const failures = [];
 
   if (!Array.isArray(supplements)) {
     throw new Error("data/rules-supplements.json must be an array.");
+  }
+  if (!Array.isArray(sections)) {
+    throw new Error("data/rules-supplement-sections.json must be an array.");
   }
 
   for (const document of supplements) {
@@ -51,6 +74,20 @@ async function main() {
 
     if (!isCurrent) continue;
 
+    const matchingSections = sections.filter(
+      (section) => section.parentSupplementId === document.id && section.searchable !== false
+    );
+    if (!matchingSections.length) {
+      failures.push(`${label}: missing official extracted supplement section chunks.`);
+    }
+
+    const officialPdfSections = matchingSections.filter(
+      (section) => section.extractionStatus === "official-pdf"
+    );
+    if (!officialPdfSections.length) {
+      failures.push(`${label}: no supplement section chunk has official-pdf extractionStatus.`);
+    }
+
     if (!listIsPopulated(document.replacesSections) && !listIsPopulated(document.currentForTopics)) {
       failures.push(
         `${label}: current supplements must declare replacesSections or currentForTopics.`
@@ -63,7 +100,7 @@ async function main() {
     }
 
     for (const phrase of document.requiredCoveragePhrases) {
-      if (!hasCoveragePhrase(document, phrase)) {
+      if (!hasCoveragePhrase(document, sections, phrase)) {
         failures.push(`${label}: missing required coverage phrase "${phrase}".`);
       }
     }

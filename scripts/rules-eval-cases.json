@@ -84,6 +84,16 @@
     "answerIncludesAll": ["DRC approval", "approved systems", "10:00 p.m."]
   },
   {
+    "question": "Can I install permanent roofline lights?",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["Gemstone", "Jellyfish", "DRC approval"]
+  },
+  {
+    "question": "Can I get trim lights on my house?",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["approved systems", "DRC approval"]
+  },
+  {
     "question": "What is the holiday lighting season?",
     "expectedFirstAny": ["Updated exterior lighting policy"],
     "answerIncludesAny": ["June 18", "October 1"]
