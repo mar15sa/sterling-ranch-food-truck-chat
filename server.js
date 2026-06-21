@@ -20,7 +20,7 @@ const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v18";
+const MENU_CACHE_VERSION = "menus-v19";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -135,6 +135,96 @@ const KNOWN_TRUCK_LINKS = {
       {
         name: "Cuban moho pork Taqueria",
         description: "Cuban marinate pork with cheese, pico, guacamole and sour cream, limes.",
+        price: "",
+      },
+    ],
+  },
+  "muy loco": {
+    official: {
+      title: "Muy Loco Tacos",
+      url: "http://www.muylocotacos.com/",
+    },
+    instagram: {
+      title: "Muy Loco Tacos - Instagram",
+      url: "https://www.instagram.com/muylocofoodtruck/",
+    },
+    menu: [
+      {
+        title: "Muy Loco Tacos menu - Roaming Hunger",
+        url: "https://roaminghunger.com/muy-loco-tacos/",
+      },
+      {
+        title: "Muy Loco Tacos",
+        url: "http://www.muylocotacos.com/",
+      },
+    ],
+    items: [
+      {
+        name: "Muy Loco Tacos - Street Tacos",
+        description:
+          "Six-inch street tacos on soft corn tortillas with options including chicken, beef, pork, chorizo, or veggie mix.",
+        price: "",
+      },
+      {
+        name: "Muy Loco Tacos - Taco Salad",
+        description:
+          "Choice of meat in a crispy fried corn tortilla bowl with mixed greens, Colby Jack cheese, black beans, corn, tomato, avocado, pico, and sour cream or crema.",
+        price: "",
+      },
+      {
+        name: "Muy Loco Tacos - Ro's Fancy Nachos",
+        description:
+          "Fried corn tortilla bowl with refried beans, pork marinated in red chili, Colby Jack cheese, lettuce, and tomato.",
+        price: "",
+      },
+      {
+        name: "Muy Loco Tacos - Elotes",
+        description: "Mexican street corn listed by Muy Loco Tacos' official site.",
+        price: "",
+      },
+    ],
+  },
+  "muy loco tacos": {
+    official: {
+      title: "Muy Loco Tacos",
+      url: "http://www.muylocotacos.com/",
+    },
+    instagram: {
+      title: "Muy Loco Tacos - Instagram",
+      url: "https://www.instagram.com/muylocofoodtruck/",
+    },
+    menu: [
+      {
+        title: "Muy Loco Tacos menu - Roaming Hunger",
+        url: "https://roaminghunger.com/muy-loco-tacos/",
+      },
+      {
+        title: "Muy Loco Tacos",
+        url: "http://www.muylocotacos.com/",
+      },
+    ],
+    items: [
+      {
+        name: "Muy Loco Tacos - Street Tacos",
+        description:
+          "Six-inch street tacos on soft corn tortillas with options including chicken, beef, pork, chorizo, or veggie mix.",
+        price: "",
+      },
+      {
+        name: "Muy Loco Tacos - Taco Salad",
+        description:
+          "Choice of meat in a crispy fried corn tortilla bowl with mixed greens, Colby Jack cheese, black beans, corn, tomato, avocado, pico, and sour cream or crema.",
+        price: "",
+      },
+      {
+        name: "Muy Loco Tacos - Ro's Fancy Nachos",
+        description:
+          "Fried corn tortilla bowl with refried beans, pork marinated in red chili, Colby Jack cheese, lettuce, and tomato.",
+        price: "",
+      },
+      {
+        name: "Muy Loco Tacos - Elotes",
+        description: "Mexican street corn listed by Muy Loco Tacos' official site.",
         price: "",
       },
     ],
@@ -3351,3 +3441,4 @@ server.listen(PORT, HOST, () => {
   console.log(`Food truck chat is running on ${HOST}:${PORT}`);
   scheduleRulesRefreshChecks();
 });
+
