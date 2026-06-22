@@ -211,6 +211,11 @@
     "expectedFirstAny": ["Sec. 21-22"]
   },
   {
+    "question": "Do I need permission to replant a dead tree?",
+    "expectedAny": ["Sec. 9-146", "Sec. 21-22"],
+    "answerIncludesAll": ["dead trees must be replaced", "two-inch caliper", "DRC approval"]
+  },
+  {
     "question": "Can I install a hot tub?",
     "expectedAny": ["Sec. 9-147", "Sec. 21-22"]
   },
