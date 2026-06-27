@@ -18,11 +18,13 @@ const HOST = process.env.HOST || "0.0.0.0";
 const PUBLIC_DIR = path.join(__dirname, "public");
 const STERLING_EVENT_ID = 6150;
 const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
+const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
 const MENU_CACHE_VERSION = "menus-v19";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
+const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
 const RULES_ASK_RATE_WINDOW_MS =
   Number(process.env.RULES_ASK_RATE_WINDOW_MS) || 1000 * 60;
@@ -37,6 +39,45 @@ const LOCAL_EVENT_OVERRIDES = {
   "2026-06-06": {
     location: "Prospect Park",
     trucks: ["Uptown & Humboldt", "Woodhill Small Batch BBQ", "Repicci's Italian Ice"],
+  },
+};
+const POOL_STATUS_DETAILS = {
+  green: {
+    state: "open",
+    colorName: "Green",
+    headline: "Open",
+    summary: "The pool is currently open for homeowners and guests.",
+    residentAction: "Normal entry rules still apply, including guest passes and capacity limits.",
+  },
+  yellow: {
+    state: "temporarily-closed",
+    colorName: "Yellow",
+    headline: "Temporarily closed",
+    summary:
+      "The pool is temporarily closed for weather or maintenance. Staff are in the building and may reopen when conditions allow.",
+    residentAction: "Check again before heading over.",
+  },
+  red: {
+    state: "closed",
+    colorName: "Red",
+    headline: "Closed for the day",
+    summary: "The pool is closed for the day with no access for homeowners or guests.",
+    residentAction: "Plan for another day unless the official CAB page changes.",
+  },
+  purple: {
+    state: "event-only",
+    colorName: "Purple",
+    headline: "Event access only",
+    summary:
+      "The pool is open only for people registered for the event currently happening.",
+    residentAction: "Visit the community calendar for event details and registration.",
+  },
+  blue: {
+    state: "at-capacity",
+    colorName: "Blue",
+    headline: "Open, but at capacity",
+    summary: "The pool is open but full. To enter, you will need to join the waitlist.",
+    residentAction: "Use the official CAB link for the waitlist or the latest entry instructions.",
   },
 };
 const KNOWN_TRUCK_LINKS = {
@@ -1766,6 +1807,8 @@ const menuLookupPromises = new Map();
 let warmupPromise = null;
 let lastWarmupStartedAt = 0;
 let rulesRefreshPromise = null;
+let poolStatusCache = null;
+let poolStatusPromise = null;
 
 function sendJson(res, status, data, extraHeaders = {}) {
   const body = JSON.stringify(data, null, 2);
@@ -2467,6 +2510,94 @@ function absoluteUrl(url, baseUrl) {
   } catch {
     return url;
   }
+}
+
+function getHtmlAttribute(markup, attributeName) {
+  const pattern = new RegExp(`${attributeName}\\s*=\\s*(["\\'])([\\s\\S]*?)\\1`, "i");
+  const match = String(markup || "").match(pattern);
+  return match ? decodeHtml(match[2]).trim() : "";
+}
+
+function findPoolStatusLink(html) {
+  const linkPattern =
+    /<a\b[^>]*class=["'][^"']*\bwidgetGraphicLinksLink\b[^"']*["'][^>]*>[\s\S]*?<\/a>/gi;
+  const links = [...String(html || "").matchAll(linkPattern)].map((match) => match[0]);
+  return links.find((link) => /\b(green|yellow|red|purple|blue)\s+light\b/i.test(link)) || "";
+}
+
+function parsePoolStatus(html) {
+  const linkMarkup = findPoolStatusLink(html);
+  if (!linkMarkup) return null;
+
+  const imageMarkup = linkMarkup.match(/<img\b[^>]*>/i)?.[0] || "";
+  const label =
+    getHtmlAttribute(linkMarkup, "aria-label") ||
+    getHtmlAttribute(imageMarkup, "alt") ||
+    getHtmlAttribute(imageMarkup, "title");
+  const color = label.match(/\b(green|yellow|red|purple|blue)\b/i)?.[1]?.toLowerCase();
+  const detail = POOL_STATUS_DETAILS[color];
+
+  if (!detail) return null;
+
+  const actionUrl = absoluteUrl(getHtmlAttribute(linkMarkup, "href") || POOL_STATUS_URL, POOL_STATUS_URL);
+  const imageUrl = getHtmlAttribute(imageMarkup, "src");
+
+  return {
+    ...detail,
+    color,
+    officialColorLabel: `${detail.colorName} Light`,
+    detectedLabel: label || `${detail.colorName} Light`,
+    sourceName: "Sterling Ranch CAB pool page",
+    sourceUrl: POOL_STATUS_URL,
+    actionUrl,
+    imageUrl: imageUrl ? absoluteUrl(imageUrl, POOL_STATUS_URL) : "",
+    checkedAt: new Date().toISOString(),
+  };
+}
+
+async function getPoolStatus(options = {}) {
+  const force = Boolean(options.force);
+  const now = Date.now();
+
+  if (
+    !force &&
+    poolStatusCache &&
+    now - poolStatusCache.savedAt < POOL_STATUS_CACHE_TTL_MS
+  ) {
+    return { ...poolStatusCache.data, cached: true };
+  }
+
+  if (!force && poolStatusPromise) return poolStatusPromise;
+
+  poolStatusPromise = (async () => {
+    const html = await fetchText(POOL_STATUS_URL);
+    const parsed = parsePoolStatus(html);
+
+    if (!parsed) {
+      throw new Error("The CAB pool status button was not found on the source page.");
+    }
+
+    const data = { ...parsed, cached: false, stale: false };
+    poolStatusCache = { data, savedAt: Date.now() };
+    return data;
+  })()
+    .catch((error) => {
+      if (poolStatusCache) {
+        return {
+          ...poolStatusCache.data,
+          cached: true,
+          stale: true,
+          error: "Could not refresh the CAB status just now.",
+        };
+      }
+
+      throw error;
+    })
+    .finally(() => {
+      poolStatusPromise = null;
+    });
+
+  return poolStatusPromise;
 }
 
 async function getSocialLinksFromOfficial(officialLink, truckName) {
@@ -3212,6 +3343,31 @@ async function handleWarmup(req, res, url) {
   sendJson(res, 202, { warming: Boolean(warmupPromise), started });
 }
 
+async function handlePoolStatus(req, res, url) {
+  if (req.method !== "GET") {
+    sendJson(res, 405, { error: "Use GET for pool status." });
+    return;
+  }
+
+  try {
+    const status = await getPoolStatus({ force: url.searchParams.get("refresh") === "1" });
+    sendJson(res, 200, status);
+  } catch (error) {
+    sendJson(res, 502, {
+      state: "unknown",
+      colorName: "Unknown",
+      headline: "Status unavailable",
+      summary: "The official CAB pool status could not be checked right now.",
+      residentAction: "Open the official CAB pool page for the latest information.",
+      sourceName: "Sterling Ranch CAB pool page",
+      sourceUrl: POOL_STATUS_URL,
+      actionUrl: POOL_STATUS_URL,
+      checkedAt: new Date().toISOString(),
+      error: error.message,
+    });
+  }
+}
+
 function startRulesRefresh(reason = "manual") {
   if (rulesRefreshPromise) return rulesRefreshPromise;
 
@@ -3362,6 +3518,10 @@ function serveStatic(req, res, url) {
   const pageAliases = {
     "/rules-assistant": "/rules-assistant.html",
     "/rules-assistant/": "/rules-assistant.html",
+    "/pool": "/pool.html",
+    "/pool/": "/pool.html",
+    "/pool-status": "/pool.html",
+    "/pool-status/": "/pool.html",
   };
   const requested = url.pathname === "/" ? "/index.html" : pageAliases[url.pathname] || url.pathname;
   const filePath = path.normalize(path.join(PUBLIC_DIR, requested));
@@ -3409,6 +3569,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/warmup") {
       await handleWarmup(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/pool/status") {
+      await handlePoolStatus(req, res, url);
       return;
     }
 

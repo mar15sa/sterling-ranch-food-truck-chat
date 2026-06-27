@@ -57,6 +57,20 @@ This project includes a `render.yaml` file, which is a small hosting recipe Rend
 - The app reads public web pages live, so results depend on what the truck and search pages make available.
 - Some menus are on Facebook, Instagram, DoorDash, or other sites that may block automatic reading. In those cases, the app still gives you the best menu links it found.
 
+## Sterling Ranch Pool Status
+
+The pool status page lives at:
+
+```text
+/pool
+```
+
+It reads the public CAB pool page and translates the active status light into plain text, so residents do not have to rely on color alone. The API endpoint is:
+
+```text
+/api/pool/status
+```
+
 ## Sterling Ranch Rules Assistant
 
 The separate rules page lives at:
