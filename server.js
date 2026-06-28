@@ -21,7 +21,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v19";
+const MENU_CACHE_VERSION = "menus-v20";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -283,6 +283,34 @@ const KNOWN_TRUCK_LINKS = {
       title: "The Burning Oven - Instagram",
       url: "https://www.instagram.com/theburningovenpizza/",
     },
+    menu: [
+      {
+        title: "The Burning Oven menu",
+        url: "https://theburningoven.com/",
+      },
+    ],
+    items: [
+      {
+        name: "The Burning Oven - Garlic knots",
+        description: "Garlic knots with pesto, parmesan and ranch dressing or spicy honey.",
+        price: "$8.00",
+      },
+      {
+        name: "The Burning Oven - Margherita",
+        description: "Wood-fired pizza with tomato sauce, fresh mozzarella and basil.",
+        price: "$14.00",
+      },
+      {
+        name: "The Burning Oven - Pepperoni",
+        description: "Wood-fired pizza with tomato sauce, mozzarella and pepperoni.",
+        price: "$14.00",
+      },
+      {
+        name: "The Burning Oven - Meat Lover",
+        description: "Wood-fired pizza with tomato sauce, mozzarella, pepperoni, ham, sausage and bacon.",
+        price: "$18.00",
+      },
+    ],
   },
   "bohemian wurst": {
     official: {
@@ -2145,7 +2173,7 @@ function normalizeTruckName(truckName) {
 
 function knownTruckLinks(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
-  const links = KNOWN_TRUCK_LINKS[key];
+  const links = KNOWN_TRUCK_LINKS[key] || (key.startsWith("the ") ? KNOWN_TRUCK_LINKS[key.slice(4)] : null);
   if (!links) return {};
 
   return {
@@ -2172,7 +2200,12 @@ function knownTruckLinks(truckName) {
 
 function hasKnownTruckData(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
-  return Boolean(KNOWN_TRUCK_LINKS[key]);
+  return Boolean(KNOWN_TRUCK_LINKS[key] || (key.startsWith("the ") && KNOWN_TRUCK_LINKS[key.slice(4)]));
+}
+
+function isNonTruckCalendarTitle(truckName) {
+  const key = normalizeTruckName(truckName).toLowerCase();
+  return /\b(event|concert|movie|market|festival|parade|fireworks)\b/.test(key);
 }
 
 function splitListedTruckNames(truckName) {
@@ -3255,7 +3288,8 @@ async function getAnswerForDate(question, targetDate) {
   const day = targetDate.getUTCDate();
   const calendar = await getScheduleForMonth(year, month, day);
   const localEvent = calendar.localEvents?.[dateKey] || null;
-  const truck = calendar.schedule[dateKey] || "";
+  const calendarTruck = calendar.schedule[dateKey] || "";
+  const truck = calendarTruck && !isNonTruckCalendarTitle(calendarTruck) ? calendarTruck : "";
   const baseTruckNames = truck ? splitListedTruckNames(truck) : [];
   const localTruckListings = (localEvent?.trucks || []).flatMap((name) =>
     splitListedTruckNames(name).map((splitName) => ({
