@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v23";
+const MENU_CACHE_VERSION = "menus-v24";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -1929,6 +1929,45 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "billys beefy burgers": {
+    preferKnownItems: true,
+    official: {
+      title: "Billy's Beefy Burgers",
+      url: "https://www.billysbeefyburgers.com/",
+    },
+    menu: [
+      {
+        title: "Billy's Beefy Burgers menu",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+    ],
+    items: [
+      {
+        name: "Billy's Beefy Burgers - Hamburger",
+        description: "Quarter-pound hamburger with onions and pickles.",
+        price: "$6.25",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+      {
+        name: "Billy's Beefy Burgers - Cheeseburger",
+        description: "Quarter-pound cheeseburger with onions and pickles.",
+        price: "$6.75",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+      {
+        name: "Billy's Beefy Burgers - Cheesesteak",
+        description: "Cheesesteak with bell peppers, onions, and provolone.",
+        price: "$9.00",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+      {
+        name: "Billy's Beefy Burgers - Pulled Pork Sandwich",
+        description: "Pulled pork sandwich with American cheese.",
+        price: "$7.50",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+    ],
+  },
   tacotento: {
     preferKnownItems: true,
     official: {
@@ -2080,6 +2119,7 @@ const KNOWN_TRUCK_LINKS = {
   },
 };
 
+KNOWN_TRUCK_LINKS["billy s beefy burgers"] = KNOWN_TRUCK_LINKS["billys beefy burgers"];
 KNOWN_TRUCK_LINKS.tacontento = KNOWN_TRUCK_LINKS.tacotento;
 KNOWN_TRUCK_LINKS["tacontento hippops"] = KNOWN_TRUCK_LINKS["tacotento hippops"];
 
@@ -2357,6 +2397,108 @@ function parseIsoDateParam(value) {
   return makeLocalDate(Number(match[1]), Number(match[2]), Number(match[3]));
 }
 
+function buildCalendarUrl(params = {}) {
+  const url = new URL(CALENDAR_BASE);
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(key, String(value));
+  }
+  url.searchParams.set("calType", "0");
+  return url;
+}
+
+function eventMatchTokens(value = "") {
+  const ignored = new Set(["and", "the", "event", "events", "celebration", "concert"]);
+  return normalizeTruckName(value)
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .split(/\s+/)
+    .filter((token) => token.length > 2 && !ignored.has(token));
+}
+
+function eventTitleMatches(calendarTitle, eventTitle) {
+  const wanted = eventMatchTokens(calendarTitle);
+  const candidate = new Set(eventMatchTokens(eventTitle));
+  if (!wanted.length || !candidate.size) return false;
+  const matches = wanted.filter((token) => candidate.has(token)).length;
+  return matches >= Math.min(2, wanted.length);
+}
+
+function parseCalendarEventLinks(html, targetDay, calendarTitle) {
+  const candidates = [];
+  const seen = new Set();
+  const pattern = /<span[^>]+itemprop="name"[^>]*>([\s\S]*?)<\/span>[\s\S]{0,2500}?href="([^"]*Calendar\.aspx\?EID=(\d+)[^"]*)"/gi;
+
+  for (const match of html.matchAll(pattern)) {
+    const title = cleanText(match[1]);
+    const href = decodeHtml(match[2]);
+    const eventId = match[3];
+    const url = new URL(href.startsWith("/") ? href : `/${href}`, CALENDAR_BASE);
+    const day = Number(url.searchParams.get("day") || 0);
+    if (targetDay && day && day !== targetDay) continue;
+    if (!eventTitleMatches(calendarTitle, title)) continue;
+    if (seen.has(eventId)) continue;
+    seen.add(eventId);
+    candidates.push({ title, url: url.toString() });
+  }
+
+  return candidates;
+}
+
+function splitEventVendorList(value = "") {
+  return value
+    .replace(/\bfrom\s+\d\s*[-–].*$/i, "")
+    .replace(/\bat\s+Prospect\s+Park.*$/i, "")
+    .replace(/\bor\s+/gi, ", ")
+    .split(/\s*,\s*/)
+    .map((name) => cleanText(name).replace(/^(and|get)\s+/i, "").trim())
+    .filter((name) => name.length > 2 && !/^(food trucks?|sweet treats?|drink garden)$/i.test(name));
+}
+
+function extractEventTruckNames(html) {
+  const text = stripHtml(html).replace(/\n+/g, " ").replace(/\s+/g, " ").trim();
+  const vendorGroups = [];
+  const patterns = [
+    /\bfood trucks?\s*[-:]\s*(.+?)(?:\s+Drink Garden\b|\s+Kid Activities\b|\s+Map\b|\.|$)/i,
+    /\bgreat food from\s+(.+?)(?:,?\s+get sweet treats from\b|\s+and grab\b|\s+Map\b|\.|$)/i,
+    /\bsweet treats from\s+(.+?)(?:\s+and grab\b|\s+Map\b|\.|$)/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match?.[1]) vendorGroups.push(...splitEventVendorList(match[1]));
+  }
+
+  const seen = new Set();
+  return vendorGroups.filter((name) => {
+    const key = normalizeTruckName(name).toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+async function getEventTruckListings(calendarTitle, targetDate) {
+  const year = targetDate.getUTCFullYear();
+  const month = targetDate.getUTCMonth() + 1;
+  const day = targetDate.getUTCDate();
+  const dayUrl = buildCalendarUrl({ month, year, day });
+  const dayHtml = await fetchText(dayUrl.toString());
+  const candidates = parseCalendarEventLinks(dayHtml, day, calendarTitle);
+
+  for (const candidate of candidates) {
+    try {
+      const detailHtml = await fetchText(candidate.url);
+      const trucks = extractEventTruckNames(detailHtml);
+      if (trucks.length) {
+        return trucks.map((name) => ({ name, location: "Prospect Park" }));
+      }
+    } catch (error) {
+      console.warn(`Event detail scan failed for "${candidate.title}": ${error.message}`);
+    }
+  }
+
+  return [];
+}
 async function getScheduleForMonth(year, month, day = 1) {
   const cacheKey = `${year}-${month}`;
   const cached = calendarCache.get(cacheKey);
@@ -3528,8 +3670,15 @@ async function getAnswerForDate(question, targetDate) {
   const calendar = await getScheduleForMonth(year, month, day);
   const localEvent = calendar.localEvents?.[dateKey] || null;
   const calendarTruck = calendar.schedule[dateKey] || "";
-  const truck = calendarTruck && !isNonTruckCalendarTitle(calendarTruck) ? calendarTruck : "";
-  const baseTruckNames = truck ? splitListedTruckNames(truck) : [];
+  const eventTruckListings =
+    calendarTruck && isNonTruckCalendarTitle(calendarTruck)
+      ? await getEventTruckListings(calendarTruck, targetDate)
+      : [];
+  const truck =
+    calendarTruck && !isNonTruckCalendarTitle(calendarTruck)
+      ? calendarTruck
+      : formatTruckList(eventTruckListings.map((listing) => listing.name));
+  const baseTruckNames = calendarTruck && !isNonTruckCalendarTitle(calendarTruck) ? splitListedTruckNames(truck) : [];
   const localTruckListings = (localEvent?.trucks || []).flatMap((name) =>
     splitListedTruckNames(name).map((splitName) => ({
       name: splitName,
@@ -3538,6 +3687,7 @@ async function getAnswerForDate(question, targetDate) {
   );
   const listingInputs = [
     ...baseTruckNames.map((name) => ({ name, location: "" })),
+    ...eventTruckListings,
     ...localTruckListings,
   ];
   const uniqueListingInputs = [];
