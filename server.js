@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v24";
+const MENU_CACHE_VERSION = "menus-v25";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -3493,6 +3493,35 @@ async function getMenuForTruck(truckName) {
   if (menuLookupPromises.has(cacheKey)) return menuLookupPromises.get(cacheKey);
 
   const lookup = (async () => {
+    const knownLinks = knownTruckLinks(truckName);
+    const knownFeaturedLinks = {
+      official: knownLinks.official || null,
+      facebook: knownLinks.facebook || null,
+      instagram: knownLinks.instagram || null,
+    };
+    if (
+      knownLinks.items?.length &&
+      (knownFeaturedLinks.official || knownFeaturedLinks.facebook || knownFeaturedLinks.instagram)
+    ) {
+      const menuSourceUrl = knownLinks.items[0].url || knownLinks.menu?.[0]?.url || "";
+      const links = dedupeLinks([
+        ...(knownFeaturedLinks.official ? [knownFeaturedLinks.official] : []),
+        ...(knownFeaturedLinks.facebook ? [knownFeaturedLinks.facebook] : []),
+        ...(knownFeaturedLinks.instagram ? [knownFeaturedLinks.instagram] : []),
+        ...(menuSourceUrl
+          ? [{ title: `${truckName} menu source`, url: menuSourceUrl, snippet: "", rank: -1, score: 0 }]
+          : []),
+        ...(knownLinks.menu || []),
+      ]).slice(0, 8);
+      const data = {
+        featuredLinks: knownFeaturedLinks,
+        links,
+        items: knownLinks.items.slice(0, 10),
+      };
+      menuCache.set(cacheKey, { data, savedAt: Date.now() });
+      return data;
+    }
+
     const featuredLinks = await getFeaturedLinks(truckName);
     const menuLinks = dedupeLinks([
       ...(featuredLinks.knownMenuLinks || []),
