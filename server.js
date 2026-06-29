@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v21";
+const MENU_CACHE_VERSION = "menus-v22";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -188,7 +188,7 @@ const KNOWN_TRUCK_LINKS = {
     },
     instagram: {
       title: "Muy Loco Tacos - Instagram",
-      url: "https://www.instagram.com/muylocofoodtruck/",
+      url: "https://www.instagram.com/muylocotacos/",
     },
     menu: [
       {
@@ -203,27 +203,85 @@ const KNOWN_TRUCK_LINKS = {
     preferKnownItems: true,
     items: [
       {
-        name: "Muy Loco Tacos - Street Tacos",
-        description:
-          "Six-inch street tacos on soft corn tortillas with options including chicken, beef, pork, chorizo, or veggie mix.",
-        price: "",
+        name: "Chicken Taco",
+        description: "Corn tortilla with chicken, Cotija, crema, Pico De Gallo, and cilantro.",
+        price: "$15/$6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
       {
-        name: "Muy Loco Tacos - Taco Salad",
-        description:
-          "Choice of meat in a crispy fried corn tortilla bowl with mixed greens, Colby Jack cheese, black beans, corn, tomato, avocado, pico, and sour cream or crema.",
-        price: "",
+        name: "Beef Taco",
+        description: "Corn tortilla with ground beef, Colby Jack, Salsa Verde, lettuce, and Pico De Gallo.",
+        price: "$15/$6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
       {
-        name: "Muy Loco Tacos - Ro's Fancy Nachos",
+        name: "Veggie Taco",
         description:
-          "Fried corn tortilla bowl with refried beans, pork marinated in red chili, Colby Jack cheese, lettuce, and tomato.",
-        price: "",
+          "Corn tortilla with black beans and roasted veggies, topped with Cotija, crema, and cilantro.",
+        price: "$15/$6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
       {
-        name: "Muy Loco Tacos - Elotes",
-        description: "Mexican street corn listed by Muy Loco Tacos' official site.",
-        price: "",
+        name: "Elote Pelota",
+        description: "Mexican street corn croquette topped with crema, Cotija, cilantro, and lime. Four per order.",
+        price: "$9",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Jalapeno Poppers",
+        description: "Stuffed with cream cheese and served with Verde Ranch. Four per order.",
+        price: "$8",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Chips and Salsa",
+        description: "Chips with Salsa Verde and Red Salsa.",
+        price: "$7",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Chips and Guac",
+        description: "Chips with guacamole.",
+        price: "$8",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Chips and Queso",
+        description: "Chips with queso. Add jalapenos and cilantro for $1 or any meat for $3.",
+        price: "$10",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Tostadas",
+        description:
+          "Flat crispy corn tortilla with refried beans, Colby Jack cheese, lettuce, Pico De Gallo, and crema.",
+        price: "3 for $15/$6 each",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Nacho Libre",
+        description:
+          "Fried corn tortilla chips, refried beans, queso cheese, choice of meat or veggie, Colby Jack, lettuce, and Pico De Gallo.",
+        price: "$14",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Kids Quesadilla",
+        description: "Shredded Colby Jack quesadilla with optional beans, meat, or additional toppings.",
+        price: "$6",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Kids Loco Taco",
+        description: "Two tacos with either chicken or beef, topped with cheese.",
+        price: "$10",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Churros",
+        description: "Churros from the Muy Loco desserts menu.",
+        price: "2 for $6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
     ],
   },
@@ -234,7 +292,7 @@ const KNOWN_TRUCK_LINKS = {
     },
     instagram: {
       title: "Muy Loco Tacos - Instagram",
-      url: "https://www.instagram.com/muylocofoodtruck/",
+      url: "https://www.instagram.com/muylocotacos/",
     },
     menu: [
       {
@@ -249,27 +307,85 @@ const KNOWN_TRUCK_LINKS = {
     preferKnownItems: true,
     items: [
       {
-        name: "Muy Loco Tacos - Street Tacos",
-        description:
-          "Six-inch street tacos on soft corn tortillas with options including chicken, beef, pork, chorizo, or veggie mix.",
-        price: "",
+        name: "Chicken Taco",
+        description: "Corn tortilla with chicken, Cotija, crema, Pico De Gallo, and cilantro.",
+        price: "$15/$6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
       {
-        name: "Muy Loco Tacos - Taco Salad",
-        description:
-          "Choice of meat in a crispy fried corn tortilla bowl with mixed greens, Colby Jack cheese, black beans, corn, tomato, avocado, pico, and sour cream or crema.",
-        price: "",
+        name: "Beef Taco",
+        description: "Corn tortilla with ground beef, Colby Jack, Salsa Verde, lettuce, and Pico De Gallo.",
+        price: "$15/$6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
       {
-        name: "Muy Loco Tacos - Ro's Fancy Nachos",
+        name: "Veggie Taco",
         description:
-          "Fried corn tortilla bowl with refried beans, pork marinated in red chili, Colby Jack cheese, lettuce, and tomato.",
-        price: "",
+          "Corn tortilla with black beans and roasted veggies, topped with Cotija, crema, and cilantro.",
+        price: "$15/$6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
       {
-        name: "Muy Loco Tacos - Elotes",
-        description: "Mexican street corn listed by Muy Loco Tacos' official site.",
-        price: "",
+        name: "Elote Pelota",
+        description: "Mexican street corn croquette topped with crema, Cotija, cilantro, and lime. Four per order.",
+        price: "$9",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Jalapeno Poppers",
+        description: "Stuffed with cream cheese and served with Verde Ranch. Four per order.",
+        price: "$8",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Chips and Salsa",
+        description: "Chips with Salsa Verde and Red Salsa.",
+        price: "$7",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Chips and Guac",
+        description: "Chips with guacamole.",
+        price: "$8",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Chips and Queso",
+        description: "Chips with queso. Add jalapenos and cilantro for $1 or any meat for $3.",
+        price: "$10",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Tostadas",
+        description:
+          "Flat crispy corn tortilla with refried beans, Colby Jack cheese, lettuce, Pico De Gallo, and crema.",
+        price: "3 for $15/$6 each",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Nacho Libre",
+        description:
+          "Fried corn tortilla chips, refried beans, queso cheese, choice of meat or veggie, Colby Jack, lettuce, and Pico De Gallo.",
+        price: "$14",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Kids Quesadilla",
+        description: "Shredded Colby Jack quesadilla with optional beans, meat, or additional toppings.",
+        price: "$6",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Kids Loco Taco",
+        description: "Two tacos with either chicken or beef, topped with cheese.",
+        price: "$10",
+        url: "https://www.instagram.com/muylocotacos/",
+      },
+      {
+        name: "Churros",
+        description: "Churros from the Muy Loco desserts menu.",
+        price: "2 for $6",
+        url: "https://www.instagram.com/muylocotacos/",
       },
     ],
   },
