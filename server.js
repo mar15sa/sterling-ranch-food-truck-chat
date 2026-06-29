@@ -572,25 +572,25 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Kona Ice Klassic",
+        name: "Klassic",
         description: "12-ounce shaved ice cup; sugar-free flavors are available upon request.",
         price: "$4.00",
         url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
       },
       {
-        name: "Kona Ice King",
+        name: "King",
         description: "16-ounce shaved ice cup; sugar-free flavors are available upon request.",
         price: "$5.00",
         url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
       },
       {
-        name: "Kona Ice Color Changing Cup",
+        name: "Color Changing Cup",
         description: "17-ounce shaved ice cup; sugar-free flavors are available upon request.",
         price: "$6.00",
         url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
       },
       {
-        name: "Kona Ice Kowabunga",
+        name: "Kowabunga",
         description: "22-ounce shaved ice cup; sugar-free flavors are available upon request.",
         price: "$7.00",
         url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
@@ -739,22 +739,22 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Repicci's - Italian Ice",
+        name: "Italian Ice",
         description: "Fruit-flavored Italian ice; daily flavors may vary by location.",
         price: "",
       },
       {
-        name: "Repicci's - Gelato",
+        name: "Gelato",
         description: "Gelato flavors such as vanilla bean, dark chocolate, salted caramel, and coconut.",
         price: "",
       },
       {
-        name: "Repicci's - Gelati",
+        name: "Gelati",
         description: "A blend of Italian ice and gelato with mix-and-match flavors.",
         price: "",
       },
       {
-        name: "Repicci's - Strawberry Lemonade Combo",
+        name: "Strawberry Lemonade Combo",
         description: "Recommended Italian ice combination of lemon and strawberry.",
         price: "",
       },
@@ -811,12 +811,12 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Dirty Pop - The Dirty Pop",
+        name: "The Dirty Pop",
         description: "Coke with coconut, vanilla, and coconut cream.",
         price: "",
       },
       {
-        name: "Dirty Pop - Salted Pretzel Bites",
+        name: "Salted Pretzel Bites",
         description: "Buttery warm salted pretzel bites; cheese dipping sauce available.",
         price: "$3.99+",
       },
@@ -1943,25 +1943,25 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Billy's Beefy Burgers - Hamburger",
+        name: "Hamburger",
         description: "Quarter-pound hamburger with onions and pickles.",
         price: "$6.25",
         url: "https://www.billysbeefyburgers.com/menu",
       },
       {
-        name: "Billy's Beefy Burgers - Cheeseburger",
+        name: "Cheeseburger",
         description: "Quarter-pound cheeseburger with onions and pickles.",
         price: "$6.75",
         url: "https://www.billysbeefyburgers.com/menu",
       },
       {
-        name: "Billy's Beefy Burgers - Cheesesteak",
+        name: "Cheesesteak",
         description: "Cheesesteak with bell peppers, onions, and provolone.",
         price: "$9.00",
         url: "https://www.billysbeefyburgers.com/menu",
       },
       {
-        name: "Billy's Beefy Burgers - Pulled Pork Sandwich",
+        name: "Pulled Pork Sandwich",
         description: "Pulled pork sandwich with American cheese.",
         price: "$7.50",
         url: "https://www.billysbeefyburgers.com/menu",
