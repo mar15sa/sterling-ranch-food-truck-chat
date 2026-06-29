@@ -3967,7 +3967,18 @@ async function handleRulesRefresh(req, res, url) {
 }
 
 function serveStatic(req, res, url) {
+  if (url.pathname === "/" && url.searchParams.has("date")) {
+    res.writeHead(302, {
+      ...SECURITY_HEADERS,
+      location: "/food-truck" + url.search,
+      "cache-control": "no-store",
+    });
+    res.end();
+    return;
+  }
   const pageAliases = {
+    "/food-truck": "/food-truck.html",
+    "/food-truck/": "/food-truck.html",
     "/rules-assistant": "/rules-assistant.html",
     "/rules-assistant/": "/rules-assistant.html",
     "/pool": "/pool.html",
