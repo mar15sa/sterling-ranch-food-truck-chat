@@ -2,6 +2,7 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const { URL } = require("node:url");
+const { isJunkMenuItem } = require("./lib/menu-quality");
 const {
   answerRulesQuestion,
   createRulesIndex,
@@ -2743,38 +2744,6 @@ function isLikelyMenuItemName(line = "") {
   }
 
   return true;
-}
-
-function isJunkMenuItem(item = {}) {
-  const text = `${item.name || ""} ${item.description || ""}`.toLowerCase();
-  const source = `${item.url || ""}`.toLowerCase();
-  const name = `${item.name || ""}`.trim().toLowerCase();
-
-  if (/^(main|meet|see more food|past catering events)$/i.test(name)) {
-    return true;
-  }
-
-  if (/\bwhat is your favorite dish on the menu\b/i.test(text)) {
-    return true;
-  }
-
-  if (/^[a-z .'-]+,\s*[a-z]{2}$/i.test(name) && /\b(attendees?|meet|corporate|event organizers?)\b/i.test(text)) {
-    return true;
-  }
-
-  if (/\b\d+\s+.+,\s*[a-z .'-]+,\s*[a-z]{2}\s+\d{5}\b/i.test(text)) {
-    return true;
-  }
-
-  if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now|years of experience|mission statement|unparalleled customer service|outdoor seating|offers takeout|ultimate street food adventure)\b/i.test(
-      text
-    )
-  ) {
-    return true;
-  }
-
-  return source.includes("streetfoodfinder.com/menu") || source.includes("menupix.com");
 }
 
 function usableMenuItems(items = []) {

@@ -1,3 +1,5 @@
+const { assertMenuQualityFixtures, describeMenuQuality, isJunkMenuItem } = require("../lib/menu-quality");
+
 const SITE_URL =
   process.env.SITE_URL || "https://sterling-ranch-food-truck-chat-production.up.railway.app";
 const DAYS_TO_CHECK = Number(process.env.DAYS_TO_CHECK || 8);
@@ -6,56 +8,6 @@ const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 5);
 const SITE_READY_ATTEMPTS = Number(process.env.SITE_READY_ATTEMPTS || 6);
 const SITE_READY_DELAY_MS = Number(process.env.SITE_READY_DELAY_MS || 10000);
 const FAIL_ON_UNREACHABLE_SITE = process.env.FAIL_ON_UNREACHABLE_SITE === "true";
-const JUNK_MENU_ITEM_FIXTURES = [
-  { name: "Food Trucks, Ice Cream, Yogurt", description: "", url: "https://www.menupix.com/example" },
-  { name: "Best of Denver", description: "", url: "https://www.menupix.com/example" },
-  { name: "Food Trucks in Denver", description: "", url: "https://www.menupix.com/example" },
-  { name: "Recent Reviews", description: "1.", url: "https://www.menupix.com/example" },
-  {
-    name: "Pho Evergreen Bar & Grill",
-    description: "I love pho it's amazing I also love the atmosphere phil is a great worker...",
-    url: "https://www.menupix.com/example",
-  },
-  { name: "SEE MORE FOOD", description: "ELEVATE YOUR TASTE BUDS!", url: "https://www.saucychops5280.com/" },
-  {
-    name: "Past Catering Events",
-    description: "event organizers have booked Berliner Haus",
-    url: "https://roaminghunger.com/berliner-haus/",
-  },
-  { name: "Boulder, CO", description: "+ attendees Corporate", url: "https://roaminghunger.com/berliner-haus/" },
-  { name: "Boulder, CO", description: "+ attendees Meet", url: "https://roaminghunger.com/berliner-haus/" },
-  { name: "Main", description: "", url: "https://roaminghunger.com/berliner-haus/" },
-  { name: "Meet", description: "", url: "https://www.bohemianwurst.com/menu-1" },
-  {
-    name: "Zdenek Srom & Angelie Timm",
-    description: "What is your favorite dish on the menu? Giant Pretzel and Bier Cheese!",
-    url: "https://www.bohemianwurst.com/menu-1",
-  },
-  {
-    name: "Berliner Haus",
-    description: "3200 N Pecos St Kitchen 103, Denver, CO 80211, USA",
-    url: "https://hello.food/restaurants/colorado/berliner-haus",
-  },
-  { name: "(4.7/5)", description: "Visitors' reviews on Berliner Haus /", url: "https://example.com" },
-  { name: "Request content removal", description: "Burak Beldek 3 months ago on Google", url: "https://example.com" },
-  { name: "All reviews", description: "+1 720-446-9178 Open now", url: "https://example.com" },
-  {
-    name: "Years of Experience",
-    description: "Days a Week Availability FEATURED MENU",
-    url: "http://www.muylocotacos.com/",
-  },
-  {
-    name: "MISSION STATEMENT",
-    description: "Our mission is to deliver an unforgettable culinary adventure.",
-    url: "http://www.muylocotacos.com/",
-  },
-  {
-    name: "UNPARALLELED CUSTOMER SERVICE",
-    description: "We pride ourselves on delivering exceptional service.",
-    url: "http://www.muylocotacos.com/",
-  },
-];
-
 function makeLocalDate(year, month, day) {
   return new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
 }
@@ -136,48 +88,6 @@ async function fetchJson(path) {
   return response.json();
 }
 
-function isJunkMenuItem(item = {}) {
-  const text = `${item.name || ""} ${item.description || ""}`.toLowerCase();
-  const source = `${item.url || ""}`.toLowerCase();
-  const name = `${item.name || ""}`.trim().toLowerCase();
-
-  if (/^(main|meet|see more food|past catering events)$/i.test(name)) {
-    return true;
-  }
-
-  if (/\bwhat is your favorite dish on the menu\b/i.test(text)) {
-    return true;
-  }
-
-  if (/^[a-z .'-]+,\s*[a-z]{2}$/i.test(name) && /\b(attendees?|meet|corporate|event organizers?)\b/i.test(text)) {
-    return true;
-  }
-
-  if (/\b\d+\s+.+,\s*[a-z .'-]+,\s*[a-z]{2}\s+\d{5}\b/i.test(text)) {
-    return true;
-  }
-
-  if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now|years of experience|mission statement|unparalleled customer service|outdoor seating|offers takeout|ultimate street food adventure)\b/i.test(
-      text
-    )
-  ) {
-    return true;
-  }
-
-  return source.includes("streetfoodfinder.com/menu") || source.includes("menupix.com");
-}
-
-function assertJunkMenuFilterCatchesKnownBadItems() {
-  const missedItems = JUNK_MENU_ITEM_FIXTURES.filter((item) => !isJunkMenuItem(item));
-
-  if (missedItems.length) {
-    throw new Error(
-      `Junk menu filter missed known bad item(s): ${missedItems.map((item) => item.name).join(", ")}`
-    );
-  }
-}
-
 async function assertLiveSiteReachable() {
   let lastError;
 
@@ -225,10 +135,10 @@ async function assertLiveSiteReachable() {
 }
 
 async function main() {
-  assertJunkMenuFilterCatchesKnownBadItems();
+  assertMenuQualityFixtures();
 
   if (process.argv.includes("--fixtures-only")) {
-    console.log("Junk menu filter fixtures passed.");
+    console.log("Menu quality fixtures passed.");
     return;
   }
 
@@ -246,16 +156,19 @@ async function main() {
 
     const featured = data.menu?.featuredLinks || {};
     const hasFeaturedLink = Boolean(featured.official || featured.facebook || featured.instagram);
-    const hasMenuItems = Boolean(data.menu?.items?.length);
-    const junkItems = (data.menu?.items || []).filter(isJunkMenuItem);
+    const items = data.menu?.items || [];
+    const hasMenuItems = Boolean(items.length);
+    const junkItems = items.filter(isJunkMenuItem);
+    const menuQualityIssue = hasMenuItems ? describeMenuQuality(items) : "";
 
-    if (!hasFeaturedLink || !hasMenuItems || junkItems.length) {
+    if (!hasFeaturedLink || !hasMenuItems || junkItems.length || menuQualityIssue) {
       failures.push({
         date,
         truck: data.truck,
         hasFeaturedLink,
-        itemCount: data.menu?.items?.length || 0,
+        itemCount: items.length,
         junkItems: junkItems.map((item) => item.name).join(", "),
+        menuQualityIssue,
       });
     }
   }
@@ -266,6 +179,8 @@ async function main() {
       console.error(
         `- ${failure.date} ${failure.truck}: featured link=${failure.hasFeaturedLink}, menu items=${failure.itemCount}${
           failure.junkItems ? `, junk items=${failure.junkItems}` : ""
+        }${
+          failure.menuQualityIssue ? `, menu quality=${failure.menuQualityIssue}` : ""
         }`
       );
     });
