@@ -21,7 +21,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v20";
+const MENU_CACHE_VERSION = "menus-v21";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -199,6 +199,7 @@ const KNOWN_TRUCK_LINKS = {
         url: "http://www.muylocotacos.com/",
       },
     ],
+    preferKnownItems: true,
     items: [
       {
         name: "Muy Loco Tacos - Street Tacos",
@@ -244,6 +245,7 @@ const KNOWN_TRUCK_LINKS = {
         url: "http://www.muylocotacos.com/",
       },
     ],
+    preferKnownItems: true,
     items: [
       {
         name: "Muy Loco Tacos - Street Tacos",
@@ -2765,7 +2767,7 @@ function isJunkMenuItem(item = {}) {
   }
 
   if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now|years of experience|mission statement|unparalleled customer service|outdoor seating|offers takeout|ultimate street food adventure)\b/i.test(
       text
     )
   ) {

@@ -39,6 +39,21 @@ const JUNK_MENU_ITEM_FIXTURES = [
   { name: "(4.7/5)", description: "Visitors' reviews on Berliner Haus /", url: "https://example.com" },
   { name: "Request content removal", description: "Burak Beldek 3 months ago on Google", url: "https://example.com" },
   { name: "All reviews", description: "+1 720-446-9178 Open now", url: "https://example.com" },
+  {
+    name: "Years of Experience",
+    description: "Days a Week Availability FEATURED MENU",
+    url: "http://www.muylocotacos.com/",
+  },
+  {
+    name: "MISSION STATEMENT",
+    description: "Our mission is to deliver an unforgettable culinary adventure.",
+    url: "http://www.muylocotacos.com/",
+  },
+  {
+    name: "UNPARALLELED CUSTOMER SERVICE",
+    description: "We pride ourselves on delivering exceptional service.",
+    url: "http://www.muylocotacos.com/",
+  },
 ];
 
 function makeLocalDate(year, month, day) {
@@ -143,7 +158,7 @@ function isJunkMenuItem(item = {}) {
   }
 
   if (
-    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now)\b/i.test(
+    /\b(food trucks near|food trucks, ice cream|best of denver|food trucks in denver|recent reviews|sign up|get the streetfoodfinder app|streetfoodfinder app|more about this truck|united states|see more food|elevate your taste buds|past catering events|event organizers have booked|attendees corporate|attendees meet|visitors' reviews|request content removal|all reviews|open now|years of experience|mission statement|unparalleled customer service|outdoor seating|offers takeout|ultimate street food adventure)\b/i.test(
       text
     )
   ) {
