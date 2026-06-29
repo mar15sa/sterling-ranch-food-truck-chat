@@ -57,6 +57,10 @@ function formatIsoDate(date) {
   return `${year}-${month}-${day}`;
 }
 
+function getInitialDateFromUrl() {
+  const date = new URLSearchParams(window.location.search).get("date") || "";
+  return /^20\d{2}-\d{2}-\d{2}$/.test(date) ? date : "";
+}
 function formatShortDate(date) {
   return new Intl.DateTimeFormat("en-US", {
     weekday: "short",
@@ -515,6 +519,9 @@ document.addEventListener("keydown", (event) => {
     settingsMenu.querySelector("summary")?.focus();
   }
 });
-ask("What food truck is here today?", "default", formatIsoDate(new Date())).finally(
-  warmUpcomingDates
-);
+const initialDate = getInitialDateFromUrl();
+ask(
+  initialDate ? `What food truck is here on ${initialDate}?` : "What food truck is here today?",
+  initialDate ? "calendar-link" : "default",
+  initialDate || formatIsoDate(new Date())
+).finally(warmUpcomingDates);
