@@ -8,6 +8,7 @@
   --green: #2f7d68;
   --blue: #3267a8;
   --gold: #b7791f;
+  --red: #a83f39;
   --shadow: 0 20px 60px rgba(31, 41, 51, 0.12);
 }
 
@@ -73,7 +74,7 @@ h1 {
 
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-top: 18px;
 }
@@ -127,6 +128,10 @@ h1 {
 }
 
 .tool-card:nth-child(3) .tool-icon {
+  background: var(--red);
+}
+
+.tool-card:nth-child(4) .tool-icon {
   background: var(--gold);
 }
 
