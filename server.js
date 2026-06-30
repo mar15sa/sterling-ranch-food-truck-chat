@@ -2265,7 +2265,12 @@ function stripHtml(html = "") {
     html
       .replace(/<script[\s\S]*?<\/script>/gi, "\n")
       .replace(/<style[\s\S]*?<\/style>/gi, "\n")
-      .replace(/<[^>]+>/g, "\n")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<\/sup\s*>/gi, "")
+      .replace(/<sup\b[^>]*>/gi, "")
+      .replace(/<\/(p|div|li|tr|h[1-6]|section|article|table)>/gi, "\n")
+      .replace(/<(p|div|li|tr|h[1-6]|section|article|table)\b[^>]*>/gi, "\n")
+      .replace(/<[^>]+>/g, " ")
   )
     .replace(/\r/g, "")
     .split("\n")
@@ -2520,6 +2525,8 @@ async function getScheduleForMonth(year, month, day = 1) {
     const eventMonth = Number(match[1]);
     const eventDay = Number(match[2]);
     const truck = match[3].replace(/\s+/g, " ").trim();
+    if (!isPlausibleCalendarTruckName(truck)) continue;
+
     const date = makeLocalDate(year, eventMonth, eventDay);
     schedule[formatIso(date)] = truck;
   }
@@ -2619,6 +2626,13 @@ function hasKnownTruckData(truckName) {
 function isNonTruckCalendarTitle(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase();
   return /\b(event|concert|movie|market|festival|parade|fireworks)\b/.test(key);
+}
+
+function isPlausibleCalendarTruckName(truckName) {
+  const key = normalizeTruckName(truckName).toLowerCase();
+  if (!key || /^\d+$/.test(key)) return false;
+  if (/^(st|nd|rd|th)$/.test(key)) return false;
+  return /[a-z]/i.test(key);
 }
 
 function splitListedTruckNames(truckName) {

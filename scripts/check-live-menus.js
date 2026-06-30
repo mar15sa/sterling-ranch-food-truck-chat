@@ -3,6 +3,7 @@ const { assertMenuQualityFixtures, describeMenuQuality, isJunkMenuItem } = requi
 const SITE_URL =
   process.env.SITE_URL || "https://sterling-ranch-food-truck-chat-production.up.railway.app";
 const DAYS_TO_CHECK = Number(process.env.DAYS_TO_CHECK || 8);
+const TRUCK_NAME_SANITY_DAYS = Number(process.env.TRUCK_NAME_SANITY_DAYS || 45);
 const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 15000);
 const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 5);
 const SITE_READY_ATTEMPTS = Number(process.env.SITE_READY_ATTEMPTS || 6);
@@ -31,6 +32,21 @@ function addDays(date, days) {
 
 function formatIso(date) {
   return date.toISOString().slice(0, 10);
+}
+
+function normalizeTruckName(truckName = "") {
+  return String(truckName)
+    .normalize("NFKD")
+    .replace(/[^\w\s&-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isImplausibleTruckName(truckName = "") {
+  const normalized = normalizeTruckName(truckName).toLowerCase();
+  if (!normalized || /^\d+$/.test(normalized)) return true;
+  if (/^(st|nd|rd|th)$/.test(normalized)) return true;
+  return !/[a-z]/i.test(normalized);
 }
 
 function sleep(ms) {
@@ -148,11 +164,46 @@ async function main() {
   const today = denverToday();
   const failures = [];
 
+  const scheduleByMonth = new Map();
+  for (let index = 0; index < TRUCK_NAME_SANITY_DAYS; index += 1) {
+    const targetDate = addDays(today, index);
+    const date = formatIso(targetDate);
+    const year = targetDate.getUTCFullYear();
+    const month = targetDate.getUTCMonth() + 1;
+    const monthKey = `${year}-${month}`;
+
+    if (!scheduleByMonth.has(monthKey)) {
+      scheduleByMonth.set(monthKey, await fetchJson(`/api/schedule?year=${year}&month=${month}`));
+    }
+
+    const truck = scheduleByMonth.get(monthKey).schedule?.[date];
+    if (truck && isImplausibleTruckName(truck)) {
+      failures.push({
+        date,
+        truck,
+        hasFeaturedLink: false,
+        itemCount: 0,
+        truckNameIssue: "implausible truck name",
+      });
+    }
+  }
+
   for (let index = 0; index < DAYS_TO_CHECK; index += 1) {
     const date = formatIso(addDays(today, index));
     const data = await fetchJson(`/api/ask?date=${date}&q=health-check`);
 
     if (!data.truck) continue;
+
+    if (isImplausibleTruckName(data.truck)) {
+      failures.push({
+        date,
+        truck: data.truck,
+        hasFeaturedLink: false,
+        itemCount: data.menu?.items?.length || 0,
+        truckNameIssue: "implausible truck name",
+      });
+      continue;
+    }
 
     const featured = data.menu?.featuredLinks || {};
     const hasFeaturedLink = Boolean(featured.official || featured.facebook || featured.instagram);
@@ -178,6 +229,8 @@ async function main() {
     failures.forEach((failure) => {
       console.error(
         `- ${failure.date} ${failure.truck}: featured link=${failure.hasFeaturedLink}, menu items=${failure.itemCount}${
+          failure.truckNameIssue ? `, truck name=${failure.truckNameIssue}` : ""
+        }${
           failure.junkItems ? `, junk items=${failure.junkItems}` : ""
         }${
           failure.menuQualityIssue ? `, menu quality=${failure.menuQualityIssue}` : ""
