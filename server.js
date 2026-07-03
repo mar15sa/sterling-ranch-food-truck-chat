@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v25";
+const MENU_CACHE_VERSION = "menus-v26";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -2117,11 +2117,81 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "isan thai lucky dawg kona ice firepit friday": {
+    preferKnownItems: true,
+    official: {
+      title: "Lucky Dawg",
+      url: "https://luckydawg.food/",
+    },
+    facebook: {
+      title: "Isan Thai Food Truck - Facebook",
+      url: "https://www.facebook.com/IsanThaiFoodTruck",
+    },
+    instagram: {
+      title: "Kona Ice - Instagram",
+      url: "https://www.instagram.com/konaice/",
+    },
+    menu: [
+      {
+        title: "Lucky Dawg menu - Toast",
+        url: "https://www.toasttab.com/local/order/technology-services-5280-llc-9214-wiltshire-dr",
+      },
+      {
+        title: "Kona Ice cup-size menu",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+      {
+        title: "Isan Thai Food Truck - Instagram",
+        url: "https://www.instagram.com/isanthaillc/",
+      },
+    ],
+    items: [
+      {
+        name: "Isan Thai - Pad Thai",
+        description: "Rice noodles with egg, bean sprouts, peanut, and scallion in tamarind sauce.",
+        price: "$15.95",
+        url: "https://www.instagram.com/isanthaillc/",
+      },
+      {
+        name: "Isan Thai - Red Curry",
+        description: "Red curry paste in coconut milk with vegetables and Thai basil.",
+        price: "$16.95",
+        url: "https://www.instagram.com/isanthaillc/",
+      },
+      {
+        name: "Lucky Dawg - Top Dawg",
+        description:
+          "Chicago style all-beef Vienna dog topped with relish, pickles, tomatoes, onions, mustard, and dill pickle spears.",
+        price: "$10.00",
+        url: "https://www.toasttab.com/local/order/technology-services-5280-llc-9214-wiltshire-dr",
+      },
+      {
+        name: "Lucky Dawg - Denver Dawg",
+        description: "Denver-style dog topped with green chili, sour cream, onions, and jalapeno.",
+        price: "$10.00",
+        url: "https://www.toasttab.com/local/order/technology-services-5280-llc-9214-wiltshire-dr",
+      },
+      {
+        name: "Kona Ice - Klassic",
+        description: "12-ounce shaved ice cup; sugar-free flavors are available upon request.",
+        price: "$4.00",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+      {
+        name: "Kona Ice - King",
+        description: "16-ounce shaved ice cup; sugar-free flavors are available upon request.",
+        price: "$5.00",
+        url: "https://www.kona-ice.com/wp-content/uploads/2024/07/Menu-Kona-cup-sizes.pdf",
+      },
+    ],
+  },
 };
 
 KNOWN_TRUCK_LINKS["billy s beefy burgers"] = KNOWN_TRUCK_LINKS["billys beefy burgers"];
 KNOWN_TRUCK_LINKS.tacontento = KNOWN_TRUCK_LINKS.tacotento;
 KNOWN_TRUCK_LINKS["tacontento hippops"] = KNOWN_TRUCK_LINKS["tacotento hippops"];
+KNOWN_TRUCK_LINKS["isan thai lucky dawg kona ice"] =
+  KNOWN_TRUCK_LINKS["isan thai lucky dawg kona ice firepit friday"];
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
