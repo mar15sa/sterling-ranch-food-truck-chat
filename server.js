@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v26";
+const MENU_CACHE_VERSION = "menus-v27";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -143,6 +143,46 @@ const KNOWN_TRUCK_LINKS = {
       title: "D'Maracuchos - Instagram",
       url: "https://instagram.com/dmaracuchoscafe",
     },
+  },
+  "2nd son kitchen": {
+    official: {
+      title: "2nd Son Kitchen",
+      url: "https://www.2ndsonkitchen.com/",
+    },
+    facebook: {
+      title: "2nd Son Kitchen - Facebook",
+      url: "https://www.facebook.com/2ndsonkitchen",
+    },
+    instagram: {
+      title: "Second Son Kitchen - Instagram",
+      url: "https://www.instagram.com/2ndsonkitchen/",
+    },
+    menu: [
+      {
+        title: "2nd Son Kitchen online menu",
+        url: "https://www.2ndsonkitchen.com/shop/online-menu/L2DZITZSEQP25DVYDL727BT5",
+      },
+      {
+        title: "2nd Son Kitchen order page",
+        url: "https://www.2ndsonkitchen.com/s/order",
+      },
+    ],
+    items: [
+      {
+        name: "Scratch-Made Comfort Food",
+        description:
+          "The truck describes itself as a Denver-based food truck serving scratch-made comfort food.",
+        price: "",
+        url: "https://www.instagram.com/2ndsonkitchen/",
+      },
+      {
+        name: "Rotating Comfort Food Menu",
+        description:
+          "The official Square site lists an online menu for 2nd Son Kitchen; items may rotate by event.",
+        price: "",
+        url: "https://www.2ndsonkitchen.com/shop/online-menu/L2DZITZSEQP25DVYDL727BT5",
+      },
+    ],
   },
   "el cubanaso": {
     facebook: {
