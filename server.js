@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v27";
+const MENU_CACHE_VERSION = "menus-v28";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -2008,6 +2008,47 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "billy s gourmet hot dogs": {
+    preferKnownItems: true,
+    official: {
+      title: "Billy's Beefy Burgers",
+      url: "https://www.billysbeefyburgers.com/",
+    },
+    menu: [
+      {
+        title: "Billy's Beefy Burgers menu",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+    ],
+    items: [
+      {
+        name: "1/4lb Hot Dog",
+        description:
+          "Hot dog with optional jalapenos, sauerkraut, onions, or nacho cheese.",
+        price: "$6.00",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+      {
+        name: "1/4lb Smoked Brat",
+        description: "Smoked brat with optional jalapenos, sauerkraut, or onions.",
+        price: "$6.50",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+      {
+        name: "Hamburger",
+        description: "Quarter-pound hamburger with onions and pickles.",
+        price: "$6.25",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+      {
+        name: "Cheeseburger",
+        description: "Quarter-pound cheeseburger with onions and pickles.",
+        price: "$6.75",
+        url: "https://www.billysbeefyburgers.com/menu",
+      },
+    ],
+  },
+
   tacotento: {
     preferKnownItems: true,
     official: {
