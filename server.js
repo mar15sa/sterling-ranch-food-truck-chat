@@ -221,6 +221,61 @@ const KNOWN_TRUCK_LINKS = {
       },
     ],
   },
+  "el tragon": {
+    preferKnownItems: true,
+    instagram: {
+      title: "El Tragon - Instagram",
+      url: "https://www.instagram.com/eltragoncolorado/",
+    },
+    menu: [
+      {
+        title: "El Tragon food truck listing - Bruz Beers",
+        url: "https://bruzbeers.com/food-trucks/el-tragon/",
+      },
+      {
+        title: "El Tragon menu photos - Restaurantji",
+        url: "https://www.restaurantji.com/co/highlands-ranch/el-tragon-/",
+      },
+    ],
+    items: [
+      {
+        name: "Carne Asada",
+        description: "Mexican street-food classic cooked over mesquite charcoal.",
+        price: "",
+        url: "https://bruzbeers.com/food-trucks/el-tragon/",
+      },
+      {
+        name: "Al Pastor",
+        description: "Mesquite-charcoal Mexican street-food classic.",
+        price: "",
+        url: "https://bruzbeers.com/food-trucks/el-tragon/",
+      },
+      {
+        name: "Quesadillas",
+        description: "Made-fresh Mexican street-food option from El Tragon's truck listing.",
+        price: "",
+        url: "https://bruzbeers.com/food-trucks/el-tragon/",
+      },
+      {
+        name: "Burritos",
+        description: "Made-fresh burritos from El Tragon's Mexican street-food menu.",
+        price: "",
+        url: "https://bruzbeers.com/food-trucks/el-tragon/",
+      },
+      {
+        name: "Taco Yaqui",
+        description: "A customer-highlighted regional Mexican taco smoked in mesquite wood.",
+        price: "",
+        url: "https://www.restaurantji.com/co/highlands-ranch/el-tragon-/",
+      },
+      {
+        name: "Breakfast Burrito",
+        description: "A fresh, balanced breakfast burrito highlighted by customers.",
+        price: "",
+        url: "https://www.restaurantji.com/co/highlands-ranch/el-tragon-/",
+      },
+    ],
+  },
   "muy loco": {
     official: {
       title: "Muy Loco Tacos",
