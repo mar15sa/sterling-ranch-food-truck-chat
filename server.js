@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v28";
+const MENU_CACHE_VERSION = "menus-v29";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -40,6 +40,10 @@ const LOCAL_EVENT_OVERRIDES = {
   "2026-06-06": {
     location: "Prospect Park",
     trucks: ["Uptown & Humboldt", "Woodhill Small Batch BBQ", "Repicci's Italian Ice"],
+  },
+  "2026-08-05": {
+    location: "Prospect Park",
+    trucks: ["Cousins Maine Lobster", "Muy Loco Tacos", "Kona Ice"],
   },
 };
 const POOL_STATUS_DETAILS = {
@@ -273,6 +277,58 @@ const KNOWN_TRUCK_LINKS = {
         description: "A fresh, balanced breakfast burrito highlighted by customers.",
         price: "",
         url: "https://www.restaurantji.com/co/highlands-ranch/el-tragon-/",
+      },
+    ],
+  },
+  "cousins maine lobster": {
+    official: {
+      title: "Cousins Maine Lobster Denver",
+      url: "https://www.cousinsmainelobster.com/locations/denver-co",
+    },
+    instagram: {
+      title: "Cousins Maine Lobster - Instagram",
+      url: "https://www.instagram.com/cousinsmainelobster/",
+    },
+    menu: [
+      {
+        title: "Cousins Maine Lobster menu",
+        url: "https://www.cousinsmainelobster.com/",
+      },
+    ],
+    preferKnownItems: true,
+    items: [
+      {
+        name: "Maine Roll",
+        description:
+          "Maine lobster served chilled with mayo on a New England roll, with a lemon wedge.",
+        price: "",
+        url: "https://www.cousinsmainelobster.com/",
+      },
+      {
+        name: "Connecticut Roll",
+        description:
+          "Maine lobster served warm with butter and lemon on a New England roll.",
+        price: "",
+        url: "https://www.cousinsmainelobster.com/",
+      },
+      {
+        name: "Lobster Bisque",
+        description: "Classic lobster bisque; Cousins notes its soups are gluten-free.",
+        price: "",
+        url: "https://www.cousinsmainelobster.com/",
+      },
+      {
+        name: "New England Clam Chowder",
+        description: "New England clam chowder available as a soup option.",
+        price: "",
+        url: "https://www.cousinsmainelobster.com/",
+      },
+      {
+        name: "Lobster Tail & Tots",
+        description:
+          "A 4-5 ounce lobster tail served with drawn butter and tater tots.",
+        price: "",
+        url: "https://www.cousinsmainelobster.com/",
       },
     ],
   },
@@ -3918,17 +3974,22 @@ async function getAnswerForDate(question, targetDate) {
   const day = targetDate.getUTCDate();
   const calendar = await getScheduleForMonth(year, month, day);
   const localEvent = calendar.localEvents?.[dateKey] || null;
+  const localTruckNames = localEvent?.trucks || [];
   const calendarTruck = calendar.schedule[dateKey] || "";
   const eventTruckListings =
-    calendarTruck && isNonTruckCalendarTitle(calendarTruck)
+    !localTruckNames.length && calendarTruck && isNonTruckCalendarTitle(calendarTruck)
       ? await getEventTruckListings(calendarTruck, targetDate)
       : [];
-  const truck =
-    calendarTruck && !isNonTruckCalendarTitle(calendarTruck)
+  const truck = localTruckNames.length
+    ? formatTruckList(localTruckNames)
+    : calendarTruck && !isNonTruckCalendarTitle(calendarTruck)
       ? calendarTruck
       : formatTruckList(eventTruckListings.map((listing) => listing.name));
-  const baseTruckNames = calendarTruck && !isNonTruckCalendarTitle(calendarTruck) ? splitListedTruckNames(truck) : [];
-  const localTruckListings = (localEvent?.trucks || []).flatMap((name) =>
+  const baseTruckNames =
+    !localTruckNames.length && calendarTruck && !isNonTruckCalendarTitle(calendarTruck)
+      ? splitListedTruckNames(truck)
+      : [];
+  const localTruckListings = localTruckNames.flatMap((name) =>
     splitListedTruckNames(name).map((splitName) => ({
       name: splitName,
       location: localEvent.location || "",
