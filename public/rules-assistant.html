@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://sterlingranchsociety.com/rules-social-preview.png" />
     <meta name="twitter:image:alt" content="Sterling Ranch Rules Assistant" />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/rules-assistant.css?v=20260619-mobile-footer6" />
+    <link rel="stylesheet" href="/rules-assistant.css?v=20260731-answer-sharing2" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -197,6 +197,18 @@
 
     <template id="rulesAnswerTemplate">
       <article class="rules-message rules-message-bot">
+        <div class="rules-answer-actions">
+          <span class="rules-answer-actions-label">Rulebook response</span>
+          <button type="button" class="rules-share-button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="18" cy="5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="6" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="19" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+              <path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span class="rules-share-label">Share this answer</span>
+          </button>
+        </div>
         <div class="rules-answer"></div>
         <details class="rules-sources" open>
           <summary>
@@ -234,6 +246,6 @@
       </article>
     </template>
 
-    <script src="/rules-assistant.js?v=20260618-mobile-log4"></script>
+    <script src="/rules-assistant.js?v=20260731-answer-sharing"></script>
   </body>
 </html>

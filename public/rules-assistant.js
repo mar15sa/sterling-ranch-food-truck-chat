@@ -280,11 +280,78 @@ function renderSourceItem(source) {
   return item;
 }
 
-function addAnswer(data) {
+function sharedAnswerUrl(question) {
+  const url = new URL("/rules-assistant", window.location.origin);
+  url.searchParams.set("q", question);
+  return url.toString();
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const helper = document.createElement("textarea");
+  helper.value = text;
+  helper.setAttribute("readonly", "");
+  helper.style.position = "fixed";
+  helper.style.opacity = "0";
+  document.body.append(helper);
+  helper.select();
+  const copied = document.execCommand("copy");
+  helper.remove();
+  if (!copied) throw new Error("Could not copy the link.");
+}
+
+function setShareButtonMessage(button, message, state = "") {
+  button.querySelector(".rules-share-label").textContent = message;
+  if (state) button.dataset.state = state;
+  else delete button.dataset.state;
+}
+
+async function shareAnswer(button, question) {
+  const url = sharedAnswerUrl(question);
+  button.disabled = true;
+
+  try {
+    if (typeof navigator.share === "function") {
+      await navigator.share({
+        title: "Sterling Ranch Rules Assistant",
+        text: `Rulebook answer: ${question}`,
+        url,
+      });
+      trackEvent("rules_answer_shared", { share_method: "share_menu" });
+      setShareButtonMessage(button, "Shared", "success");
+    } else {
+      await copyText(url);
+      trackEvent("rules_answer_shared", { share_method: "copied_link" });
+      setShareButtonMessage(button, "Link copied", "success");
+    }
+  } catch (error) {
+    if (error?.name === "AbortError") return;
+
+    try {
+      await copyText(url);
+      trackEvent("rules_answer_shared", { share_method: "copied_link" });
+      setShareButtonMessage(button, "Link copied", "success");
+    } catch {
+      setShareButtonMessage(button, "Couldn’t share — try again");
+    }
+  } finally {
+    button.disabled = false;
+    window.setTimeout(() => setShareButtonMessage(button, "Share this answer"), 2400);
+  }
+}
+
+function addAnswer(data, question) {
   const node = rulesTemplate.content.firstElementChild.cloneNode(true);
   const sources = Array.isArray(data.sources) ? data.sources : [];
 
   renderAnswerInto(node.querySelector(".rules-answer"), data.answer || "");
+
+  const shareButton = node.querySelector(".rules-share-button");
+  shareButton.addEventListener("click", () => shareAnswer(shareButton, question));
 
   const details = node.querySelector(".rules-sources");
   if (sources.length) {
@@ -383,7 +450,7 @@ function setLoading(isLoading) {
   rulesSend.classList.toggle("is-loading", isLoading);
 }
 
-async function askRules(question) {
+async function askRules(question, source = "typed") {
   startConversation();
   addUserMessage(question);
   const thinking = addThinking();
@@ -391,6 +458,7 @@ async function askRules(question) {
   trackEvent("rules_question_submitted", {
     question_text: cleanQuestionForAnalytics(question),
     question_length: question.length,
+    question_source: source,
   });
 
   try {
@@ -413,7 +481,7 @@ async function askRules(question) {
     }
 
     thinking.remove();
-    addAnswer(data);
+    addAnswer(data, question);
     trackEvent("rules_answer_received", {
       answer_mode: data.answerMode || "deterministic",
       can_answer: Boolean(data.confidence?.canAnswer),
@@ -490,7 +558,7 @@ rulesStarters.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
   trackEvent("rules_starter_clicked");
-  askRules(button.textContent.trim());
+  askRules(button.textContent.trim(), "example");
 });
 
 startersToggle.addEventListener("click", () => {
@@ -538,7 +606,13 @@ function syncDisclaimerForViewport() {
 syncDisclaimerForViewport();
 window.addEventListener("resize", syncDisclaimerForViewport);
 
-addBotText(
-  "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
-);
 loadStatus();
+
+const sharedQuestion = new URLSearchParams(window.location.search).get("q")?.trim() || "";
+if (sharedQuestion) {
+  askRules(sharedQuestion, "shared_link");
+} else {
+  addBotText(
+    "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
+  );
+}

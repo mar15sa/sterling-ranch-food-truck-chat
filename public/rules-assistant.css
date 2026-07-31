@@ -472,6 +472,68 @@ kbd {
   color: var(--rules-clay);
 }
 
+/* ---------- Answer sharing ---------- */
+.rules-answer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rules-line-soft);
+}
+
+.rules-answer-actions-label {
+  color: var(--rules-faint);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rules-share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  border: 1px solid var(--rules-line);
+  border-radius: var(--rules-radius-sm);
+  padding: 8px 12px;
+  background: var(--rules-panel);
+  color: var(--rules-forest);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.rules-share-button:hover {
+  border-color: var(--rules-forest);
+  background: var(--rules-forest-soft);
+}
+
+.rules-share-button:focus-visible {
+  outline: 2px solid var(--rules-forest);
+  outline-offset: 2px;
+}
+
+.rules-share-button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.rules-share-button[data-state="success"] {
+  border-color: var(--rules-forest);
+  background: var(--rules-forest-soft);
+}
+
+.rules-share-button svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
 /* ---------- Inline sources ---------- */
 .rules-sources {
   margin-top: 18px;
@@ -1034,6 +1096,7 @@ kbd {
   .rules-sources-chevron,
   .rules-source-link,
   .rules-starters button,
+  .rules-share-button,
   .rules-send {
     animation: none !important;
     transition: none !important;
