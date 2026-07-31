@@ -117,10 +117,26 @@ async function fetchUrlWithRetry(url, options = {}, retries = FETCH_RETRIES) {
   throw new Error(`${url} could not be reached: ${describeFetchError(lastError)}`);
 }
 
+function extractHtmlText(html = "", tagName) {
+  const match = String(html).match(new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, "i"));
+  return match ? match[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "";
+}
+
 function isLikelyErrorPage(text = "") {
-  const sample = text.slice(0, 200000).toLowerCase();
-  return /\b(404|page not found|not found|nothing found|error page|server error|site is unavailable|domain has expired)\b/.test(
-    sample
+  const title = extractHtmlText(text, "title").toLowerCase();
+  const h1 = extractHtmlText(text, "h1").toLowerCase();
+  const bodyStart = String(text)
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 500)
+    .toLowerCase();
+  const highSignal = [title, h1, bodyStart].join(" | ");
+
+  return /\b(404|page not found|nothing found|error page|server error|site is unavailable|domain has expired)\b/.test(
+    highSignal
   );
 }
 
@@ -267,13 +283,29 @@ async function main() {
     }
 
     const truck = scheduleByMonth.get(monthKey).schedule?.[date];
-    if (truck && isImplausibleTruckName(truck)) {
+    if (!truck) continue;
+
+    if (isImplausibleTruckName(truck)) {
       failures.push({
         date,
         truck,
         hasFeaturedLink: false,
         itemCount: 0,
         truckNameIssue: "implausible truck name",
+      });
+      continue;
+    }
+
+    const data = await fetchJson(`/api/ask?date=${date}&q=health-check`);
+    const featured = data.menu?.featuredLinks || {};
+    const officialLinkIssues = await verifyListedLinks([featured.official]);
+    if (officialLinkIssues.length) {
+      failures.push({
+        date,
+        truck: data.truck || truck,
+        hasFeaturedLink: Boolean(featured.official || featured.facebook || featured.instagram),
+        itemCount: data.menu?.items?.length || 0,
+        linkValidationIssue: officialLinkIssues.join("; "),
       });
     }
   }
@@ -301,15 +333,8 @@ async function main() {
     const hasMenuItems = Boolean(items.length);
     const junkItems = items.filter(isJunkMenuItem);
     const menuQualityIssue = hasMenuItems ? describeMenuQuality(items) : "";
-    const linkValidationIssues = await verifyListedLinks([featured.official]);
 
-    if (
-      !hasFeaturedLink ||
-      !hasMenuItems ||
-      junkItems.length ||
-      menuQualityIssue ||
-      linkValidationIssues.length
-    ) {
+    if (!hasFeaturedLink || !hasMenuItems || junkItems.length || menuQualityIssue) {
       failures.push({
         date,
         truck: data.truck,
@@ -317,7 +342,6 @@ async function main() {
         itemCount: items.length,
         junkItems: junkItems.map((item) => item.name).join(", "),
         menuQualityIssue,
-        linkValidationIssue: linkValidationIssues.join("; "),
       });
     }
   }
