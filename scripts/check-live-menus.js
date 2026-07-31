@@ -6,6 +6,7 @@ const DAYS_TO_CHECK = Number(process.env.DAYS_TO_CHECK || 8);
 const TRUCK_NAME_SANITY_DAYS = Number(process.env.TRUCK_NAME_SANITY_DAYS || 45);
 const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 15000);
 const FETCH_RETRIES = Number(process.env.FETCH_RETRIES || 5);
+const LINK_FETCH_RETRIES = Number(process.env.LINK_FETCH_RETRIES || 2);
 const SITE_READY_ATTEMPTS = Number(process.env.SITE_READY_ATTEMPTS || 6);
 const SITE_READY_DELAY_MS = Number(process.env.SITE_READY_DELAY_MS || 10000);
 const FAIL_ON_UNREACHABLE_SITE = process.env.FAIL_ON_UNREACHABLE_SITE === "true";
@@ -60,7 +61,9 @@ function describeFetchError(error) {
     return `timed out after ${FETCH_TIMEOUT_MS}ms`;
   }
 
-  return error?.message || String(error);
+  const cause = error?.cause;
+  const causeDetails = [cause?.code, cause?.message].filter(Boolean).join(": ");
+  return causeDetails || error?.message || String(error);
 }
 
 async function fetchWithRetry(path, options = {}) {
@@ -87,6 +90,93 @@ async function fetchWithRetry(path, options = {}) {
   }
 
   throw new Error(`${url.toString()} could not be reached: ${describeFetchError(lastError)}`);
+}
+
+async function fetchUrlWithRetry(url, options = {}, retries = FETCH_RETRIES) {
+  let lastError;
+
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      return await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+    } catch (error) {
+      lastError = error;
+      if (attempt < retries) {
+        await sleep(500 * (attempt + 1));
+      }
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  throw new Error(`${url} could not be reached: ${describeFetchError(lastError)}`);
+}
+
+function isLikelyErrorPage(text = "") {
+  const sample = text.slice(0, 200000).toLowerCase();
+  return /\b(404|page not found|not found|nothing found|error page|server error|site is unavailable|domain has expired)\b/.test(
+    sample
+  );
+}
+
+function shouldVerifyListedLink(link) {
+  return Boolean(link?.url && /^https?:\/\//i.test(link.url));
+}
+
+async function verifyListedLink(link) {
+  const response = await fetchUrlWithRetry(
+    link.url,
+    {
+      headers: {
+        accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "user-agent": "SterlingRanchFoodTruckHealthCheck/1.0",
+      },
+      redirect: "follow",
+    },
+    LINK_FETCH_RETRIES
+  );
+
+  if (!response.ok) {
+    return `${link.title || link.url} returned HTTP ${response.status}`;
+  }
+
+  const contentType = response.headers.get("content-type") || "";
+  if (/text\/html|text\/plain|application\/xhtml\+xml/i.test(contentType)) {
+    const text = await response.text();
+    if (isLikelyErrorPage(text)) {
+      return `${link.title || link.url} appears to be an error page`;
+    }
+  }
+
+  return "";
+}
+
+async function verifyListedLinks(links) {
+  const uniqueLinks = [];
+  const seen = new Set();
+
+  for (const link of links) {
+    if (!shouldVerifyListedLink(link) || seen.has(link.url)) continue;
+    seen.add(link.url);
+    uniqueLinks.push(link);
+  }
+
+  const issues = [];
+  for (const link of uniqueLinks) {
+    try {
+      const issue = await verifyListedLink(link);
+      if (issue) issues.push(issue);
+    } catch (error) {
+      issues.push(`${link.title || link.url} could not be verified: ${error.message}`);
+    }
+  }
+
+  return issues;
 }
 
 async function fetchJson(path) {
@@ -211,8 +301,15 @@ async function main() {
     const hasMenuItems = Boolean(items.length);
     const junkItems = items.filter(isJunkMenuItem);
     const menuQualityIssue = hasMenuItems ? describeMenuQuality(items) : "";
+    const linkValidationIssues = await verifyListedLinks([featured.official]);
 
-    if (!hasFeaturedLink || !hasMenuItems || junkItems.length || menuQualityIssue) {
+    if (
+      !hasFeaturedLink ||
+      !hasMenuItems ||
+      junkItems.length ||
+      menuQualityIssue ||
+      linkValidationIssues.length
+    ) {
       failures.push({
         date,
         truck: data.truck,
@@ -220,6 +317,7 @@ async function main() {
         itemCount: items.length,
         junkItems: junkItems.map((item) => item.name).join(", "),
         menuQualityIssue,
+        linkValidationIssue: linkValidationIssues.join("; "),
       });
     }
   }
@@ -234,6 +332,8 @@ async function main() {
           failure.junkItems ? `, junk items=${failure.junkItems}` : ""
         }${
           failure.menuQualityIssue ? `, menu quality=${failure.menuQualityIssue}` : ""
+        }${
+          failure.linkValidationIssue ? `, link validation=${failure.linkValidationIssue}` : ""
         }`
       );
     });

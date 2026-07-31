@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v30";
+const MENU_CACHE_VERSION = "menus-v31";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -1185,7 +1185,7 @@ const KNOWN_TRUCK_LINKS = {
   "tacotento mas": {
     official: {
       title: "Tacontento & Mas",
-      url: "https://tacontentomasco.com/",
+      url: "http://tacontentomasco.com/",
     },
     facebook: {
       title: "Tacontento & Mas - Facebook",
@@ -1198,7 +1198,7 @@ const KNOWN_TRUCK_LINKS = {
     menu: [
       {
         title: "Tacontento & Mas menu",
-        url: "https://tacontentomasco.com/tacontento--mas/locations/",
+        url: "http://tacontentomasco.com/tacontento--mas/locations/",
       },
     ],
     items: [
@@ -1232,7 +1232,7 @@ const KNOWN_TRUCK_LINKS = {
   "tacontento mas": {
     official: {
       title: "Tacontento & Mas",
-      url: "https://tacontentomasco.com/",
+      url: "http://tacontentomasco.com/",
     },
     facebook: {
       title: "Tacontento & Mas - Facebook",
@@ -1245,7 +1245,7 @@ const KNOWN_TRUCK_LINKS = {
     menu: [
       {
         title: "Tacontento & Mas menu",
-        url: "https://tacontentomasco.com/tacontento--mas/locations/",
+        url: "http://tacontentomasco.com/tacontento--mas/locations/",
       },
     ],
     items: [
@@ -2225,7 +2225,7 @@ const KNOWN_TRUCK_LINKS = {
     preferKnownItems: true,
     official: {
       title: "Tacontento & Mas",
-      url: "https://tacontentomasco.com/",
+      url: "http://tacontentomasco.com/",
     },
     facebook: {
       title: "Tacontento & mas - Facebook",
@@ -2234,7 +2234,7 @@ const KNOWN_TRUCK_LINKS = {
     menu: [
       {
         title: "Tacontento & Mas menu",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         title: "Tacontento menu",
@@ -2246,25 +2246,25 @@ const KNOWN_TRUCK_LINKS = {
         name: "Tacontento & Mas - Quesadilla",
         description: "Quesadilla with lettuce, tomatoes, sour cream, and guacamole.",
         price: "$13.65",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         name: "Tacontento & Mas - Super Nachos",
         description: "Beans, nacho cheese, pico de gallo, jalapenos, guacamole, crema, and choice of meat.",
         price: "$13.65",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         name: "Tacontento & Mas - Chilaquiles",
         description: "Fried tortillas with tomatillo sauce, queso fresco, onions, sour cream, and eggs.",
         price: "$13.65",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         name: "Tacontento & Mas - Chuchitos",
         description: "Small Guatemalan tamales from the Cocina Guatemalteca menu.",
         price: "$4.99",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
     ],
   },
@@ -2323,7 +2323,7 @@ const KNOWN_TRUCK_LINKS = {
     preferKnownItems: true,
     official: {
       title: "Tacontento & Mas",
-      url: "https://tacontentomasco.com/",
+      url: "http://tacontentomasco.com/",
     },
     facebook: {
       title: "HipPOPs Denver - Facebook",
@@ -2332,7 +2332,7 @@ const KNOWN_TRUCK_LINKS = {
     menu: [
       {
         title: "Tacontento & Mas menu",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         title: "HipPOPs Denver menu",
@@ -2348,13 +2348,13 @@ const KNOWN_TRUCK_LINKS = {
         name: "Tacontento & Mas - Quesadilla",
         description: "Quesadilla with lettuce, tomatoes, sour cream, and guacamole.",
         price: "$13.65",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         name: "Tacontento & Mas - Super Nachos",
         description: "Beans, nacho cheese, pico de gallo, jalapenos, guacamole, crema, and choice of meat.",
         price: "$13.65",
-        url: "https://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
+        url: "http://tacontentomasco.com/tacontento--mas/menu/3054-W-Mississippi-Ave/",
       },
       {
         name: "HipPOPs - Gelato Pops",
