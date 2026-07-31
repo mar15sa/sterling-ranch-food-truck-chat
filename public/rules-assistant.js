@@ -288,8 +288,13 @@ function sharedAnswerUrl(question) {
 
 async function copyText(text) {
   if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // Some browsers expose the Clipboard API but block it. Use the older
+      // copy path below so residents still get a one-tap experience.
+    }
   }
 
   const helper = document.createElement("textarea");
@@ -310,37 +315,19 @@ function setShareButtonMessage(button, message, state = "") {
   else delete button.dataset.state;
 }
 
-async function shareAnswer(button, question) {
+async function copyAnswerLink(button, question) {
   const url = sharedAnswerUrl(question);
   button.disabled = true;
 
   try {
-    if (typeof navigator.share === "function") {
-      await navigator.share({
-        title: "Sterling Ranch Rules Assistant",
-        text: `Rulebook answer: ${question}`,
-        url,
-      });
-      trackEvent("rules_answer_shared", { share_method: "share_menu" });
-      setShareButtonMessage(button, "Shared", "success");
-    } else {
-      await copyText(url);
-      trackEvent("rules_answer_shared", { share_method: "copied_link" });
-      setShareButtonMessage(button, "Link copied", "success");
-    }
-  } catch (error) {
-    if (error?.name === "AbortError") return;
-
-    try {
-      await copyText(url);
-      trackEvent("rules_answer_shared", { share_method: "copied_link" });
-      setShareButtonMessage(button, "Link copied", "success");
-    } catch {
-      setShareButtonMessage(button, "Couldn’t share — try again");
-    }
+    await copyText(url);
+    trackEvent("rules_answer_shared", { share_method: "copied_link" });
+    setShareButtonMessage(button, "Link copied", "success");
+  } catch {
+    setShareButtonMessage(button, "Couldn’t copy — try again");
   } finally {
     button.disabled = false;
-    window.setTimeout(() => setShareButtonMessage(button, "Share this answer"), 2400);
+    window.setTimeout(() => setShareButtonMessage(button, "Copy answer link"), 2400);
   }
 }
 
@@ -351,7 +338,7 @@ function addAnswer(data, question) {
   renderAnswerInto(node.querySelector(".rules-answer"), data.answer || "");
 
   const shareButton = node.querySelector(".rules-share-button");
-  shareButton.addEventListener("click", () => shareAnswer(shareButton, question));
+  shareButton.addEventListener("click", () => copyAnswerLink(shareButton, question));
 
   const details = node.querySelector(".rules-sources");
   if (sources.length) {
