@@ -22,7 +22,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v31";
+const MENU_CACHE_VERSION = "menus-v32";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -282,10 +282,14 @@ const KNOWN_TRUCK_LINKS = {
   },
   "empanadas peru": {
     official: {
-      title: "Empanadas Peru Flavors",
-      url: "https://empanadasperuflavors.com/",
+      title: "Good Luck Club food truck lineup - DiningOut",
+      url: "https://diningout.com/denver/good-luck-club-denver/",
     },
     menu: [
+      {
+        title: "Empanadas Peru Flavors",
+        url: "https://empanadasperuflavors.com/",
+      },
       {
         title: "Empanadas Peru Flavors sabores",
         url: "https://empanadasperuflavors.com/sabores/",
@@ -293,6 +297,10 @@ const KNOWN_TRUCK_LINKS = {
       {
         title: "Empanadas Peru Flavors pedidos",
         url: "https://empanadasperuflavors.com/pedidos/",
+      },
+      {
+        title: "Empanadas Peru Flavors DoorDash menu",
+        url: "https://www.doordash.com/store/35693987",
       },
     ],
     preferKnownItems: true,
@@ -338,6 +346,72 @@ const KNOWN_TRUCK_LINKS = {
           "Sweet empanada filled with apple cooked with cinnamon, clove, and brown sugar.",
         price: "$6.00",
         url: "https://empanadasperuflavors.com/sabores/",
+      },
+    ],
+  },
+  "abbiocco italian": {
+    official: {
+      title: "Abbiocco Italian Street Food",
+      url: "https://www.abbioccofoodtruck.com/",
+    },
+    facebook: {
+      title: "Abbiocco Italian Street Food - Facebook",
+      url: "https://m.facebook.com/61558937515814/",
+    },
+    instagram: {
+      title: "Abbiocco Italian Street Food - Instagram",
+      url: "https://www.instagram.com/abbioccoitalian/",
+    },
+    menu: [
+      {
+        title: "Abbiocco Italian Street Food menu",
+        url: "https://www.abbioccofoodtruck.com/menu",
+      },
+      {
+        title: "Abbiocco Italian Street Food listing - Colorado Tap House",
+        url: "https://www.coloradotaphouse.com/trucks-calendar/abbiocco-italian-street-food-tk9ak-3bh5d-xlz5n-4a94e-8nkhc",
+      },
+    ],
+    preferKnownItems: true,
+    items: [
+      {
+        name: "Petto di Manzo",
+        description:
+          "Toasted garlic rolls with melted mozzarella over roasted brisket, served with pesto.",
+        price: "$14.00",
+        url: "https://www.abbioccofoodtruck.com/menu",
+      },
+      {
+        name: "Polpette Sliders",
+        description: "Three Italian meatball sliders with marinara, melted mozzarella, and Parmesan.",
+        price: "$12.00",
+        url: "https://www.abbioccofoodtruck.com/menu",
+      },
+      {
+        name: "Mozzarella Sticks",
+        description: "Italian breaded mozzarella sticks served with marinara.",
+        price: "$11.00",
+        url: "https://www.abbioccofoodtruck.com/menu",
+      },
+      {
+        name: "Pollo Parmigiana",
+        description:
+          "Lightly breaded chicken breast with mozzarella, jalapeno pesto aioli, and marinara sauce.",
+        price: "$17.00",
+        url: "https://www.abbioccofoodtruck.com/menu",
+      },
+      {
+        name: "Abbiocco Panino",
+        description: "Three Italian meatballs with marinara sauce and melted mozzarella.",
+        price: "$17.00",
+        url: "https://www.abbioccofoodtruck.com/menu",
+      },
+      {
+        name: "Ciabatta Caprese",
+        description:
+          "Fresh mozzarella, basil, olive oil, tomatoes, roasted jalapeno creamy pesto, and balsamic glaze.",
+        price: "$17.00",
+        url: "https://www.abbioccofoodtruck.com/menu",
       },
     ],
   },
