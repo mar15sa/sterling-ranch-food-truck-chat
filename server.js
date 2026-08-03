@@ -3022,12 +3022,21 @@ function hasKnownTruckData(truckName) {
 
 function isNonTruckCalendarTitle(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase();
-  return /\b(event|concert|movie|market|festival|parade|fireworks)\b/.test(key);
+  return (
+    isPlaceholderCalendarTruckName(truckName) ||
+    /\b(event|concert|movie|market|festival|parade|fireworks)\b/.test(key)
+  );
+}
+
+function isPlaceholderCalendarTruckName(truckName) {
+  const key = normalizeTruckName(truckName).toLowerCase();
+  return /^(tbd|tba|to be determined|to be announced|open|none|n\/?a)$/.test(key);
 }
 
 function isPlausibleCalendarTruckName(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase();
   if (!key || /^\d+$/.test(key)) return false;
+  if (isPlaceholderCalendarTruckName(key)) return false;
   if (/^(st|nd|rd|th)$/.test(key)) return false;
   return /[a-z]/i.test(key);
 }
