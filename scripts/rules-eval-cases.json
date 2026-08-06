@@ -6,12 +6,19 @@
   },
   {
     "question": "Can I build a shed in my backyard?",
+    "variants": [
+      "Do storage sheds in rear yards need approval?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Backyard Utility Sheds One-Sheet"],
     "answerIncludesAll": ["DRC approval", "150 square feet", "underground", "screening"]
   },
   {
     "question": "screen privacy",
+    "variants": [
+      "privacy screens in the backyard",
+      "Can I add landscape screens for backyard privacy?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Landscape Screens One-Sheet"],
     "answerIncludesAll": ["DRC approval", "rear or side yard", "five feet", "six feet", "eight feet", "30 percent"]
@@ -24,6 +31,9 @@
   },
   {
     "question": "Do I need approval for solar panels?",
+    "variants": [
+      "Are rooftop solar panels subject to design review?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Solar Panels One-Sheet"],
     "answerIncludesAny": ["DRC approval"]
@@ -40,17 +50,26 @@
   },
   {
     "question": "Can I put up a fence?",
+    "variants": [
+      "Do I need permission to change my backyard fencing?"
+    ],
     "expectedFirstAny": ["Sec. 21-23"],
     "expectedAny": ["Standard 3 Rail Fencing One-Sheet"],
     "answerIncludesAny": ["DRC approval"]
   },
   {
     "question": "Can I park an RV in my driveway?",
+    "variants": [
+      "How long may a motor home stay in my driveway?"
+    ],
     "expectedFirstAny": ["Sec. 1-37"],
     "answerIncludesAny": ["72 consecutive hours"]
   },
   {
     "question": "Where can I store trash cans?",
+    "variants": [
+      "Where must garbage containers be stored?"
+    ],
     "expectedFirstAny": ["2024 CAB Code amendments"],
     "answerIncludesAny": ["garage", "wing fence"]
   },
@@ -76,11 +95,17 @@
   },
   {
     "question": "When can I put up holiday lights?",
+    "variants": [
+      "What dates are Christmas lights permitted?"
+    ],
     "expectedFirstAny": ["Updated exterior lighting policy"],
     "answerIncludesAll": ["June 18", "October 1", "January 31"]
   },
   {
     "question": "Are under eave lighting allowed?",
+    "variants": [
+      "Do permanent soffit lights need approval?"
+    ],
     "expectedFirstAny": ["Updated exterior lighting policy"],
     "answerIncludesAll": ["Gemstone", "Jellyfish", "DRC approval", "10:00 p.m."]
   },
@@ -117,11 +142,17 @@
   },
   {
     "question": "Can I put a trampoline in my backyard?",
+    "variants": [
+      "What are the backyard trampoline setback rules?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"],
     "answerIncludesAll": ["Trampolines require DRC approval", "five feet", "screened"]
   },
   {
     "question": "Can I install a swimming pool in my backyard?",
+    "variants": [
+      "Are aboveground pools permitted in a rear yard?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"],
     "answerIncludesAll": ["In-ground pools require DRC approval", "Aboveground pools"]
   },
@@ -132,8 +163,11 @@
   },
   {
     "question": "Do I need DRC approval to paint my house?",
-    "expectedAny": ["Sec. 21-21"],
-    "answerIncludesAny": ["Exterior changes"]
+    "variants": [
+      "Does repainting the outside of my house require approval?"
+    ],
+    "expectedAny": ["Sec. 21-22"],
+    "answerIncludesAll": ["DRC approval", "same colors", "touch-ups"]
   },
   {
     "question": "Can I build a deck?",
@@ -142,10 +176,16 @@
   },
   {
     "question": "Are basketball hoops allowed?",
+    "variants": [
+      "May I put a basketball hoop by my driveway?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"]
   },
   {
     "question": "Can I have a dog run?",
+    "variants": [
+      "Does a backyard dog run require approval?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"]
   },
   {
@@ -158,6 +198,9 @@
   },
   {
     "question": "What are the watering restrictions?",
+    "variants": [
+      "When am I allowed to water my lawn?"
+    ],
     "expectedFirstAny": ["Sec. 13-105"]
   },
   {
@@ -220,19 +263,31 @@
   },
   {
     "question": "Can I plant a vegetable garden?",
+    "variants": [
+      "Can raised vegetable beds go in a side yard?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"]
   },
   {
     "question": "Do I need permission to replant a dead tree?",
+    "variants": [
+      "Do I have to replace a dead tree in the tree lawn?"
+    ],
     "expectedAny": ["Sec. 9-146", "Sec. 21-22"],
     "answerIncludesAll": ["dead trees must be replaced", "two-inch caliper", "DRC approval"]
   },
   {
     "question": "Can I install a hot tub?",
+    "variants": [
+      "What approval and setbacks apply to a backyard spa?"
+    ],
     "expectedAny": ["Sec. 9-147", "Sec. 21-22"]
   },
   {
     "question": "Can I have a fire pit?",
+    "variants": [
+      "Can I use a wood-burning chimenea in my rear yard?"
+    ],
     "expectedFirstAny": ["Sec. 21-22"]
   },
   {

@@ -10,6 +10,7 @@ const {
 } = require("./lib/rules-assistant");
 const {
   alertRulesRefreshFailed,
+  recordRulesLowConfidence,
   recordRulesRateLimitBlocked,
 } = require("./lib/rules-alerts");
 const { logRulesQuestion } = require("./lib/rules-question-log");
@@ -4348,6 +4349,12 @@ async function handleRulesAsk(req, res, url) {
 
   const answer = await answerRulesQuestion(question);
   logRulesQuestion(question, answer, req);
+  if (answer?.confidence?.canAnswer === false) {
+    recordRulesLowConfidence({
+      reason: answer.confidence.reason,
+      topSource: answer.sources?.[0]?.title || "",
+    });
+  }
   answer.sourceStatus = {
     ...answer.sourceStatus,
     refreshing: Boolean(rulesRefreshPromise),

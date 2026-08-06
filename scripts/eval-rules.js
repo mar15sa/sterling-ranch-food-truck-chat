@@ -1,7 +1,7 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 
-const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerRulesQuestion, loadRulesIndex } = require("../lib/rules-assistant");
 const { groundednessIssues: sharedGroundednessIssues } = require("../lib/rules-grounding");
 
 const CASES_PATH = path.join(__dirname, "rules-eval-cases.json");
@@ -45,9 +45,34 @@ function formatSources(sources) {
 async function main() {
   const raw = await fs.readFile(CASES_PATH, "utf8");
   const cases = JSON.parse(raw);
+  const index = await loadRulesIndex();
+  const topicDocuments = (index?.documents || []).filter((document) => document.isInlineTopic);
+  const topicIds = new Set(topicDocuments.map((document) => document.nodeId));
+  const requiredTopics = ["9", "37", "48", "54", "64", "89", "99"];
+  const missingTopics = requiredTopics.filter(
+    (number) => !topicDocuments.some((document) => new RegExp(`\\(b\\)\\(${number}\\)`).test(document.title || ""))
+  );
+  if (topicIds.size < 100 || missingTopics.length) {
+    throw new Error(
+      `Inline topic-card check failed: found ${topicIds.size}; missing required topics: ${missingTopics.join(", ") || "none"}.`
+    );
+  }
+
+  const expandedCases = cases.flatMap((testCase) => {
+    const questions = [
+      testCase.question,
+      ...(Array.isArray(testCase.variants) ? testCase.variants : []),
+    ];
+
+    return [...new Set(questions.filter(Boolean))].map((question) => ({
+      ...testCase,
+      question,
+      primaryQuestion: testCase.question,
+    }));
+  });
   const failures = [];
 
-  for (const testCase of cases) {
+  for (const testCase of expandedCases) {
     const result = await answerRulesQuestion(testCase.question);
     const refused = isRefusal(result);
 
@@ -171,7 +196,13 @@ async function main() {
   }
 
   if (failures.length) {
-    console.error(`Rules assistant eval failed: ${failures.length}/${cases.length} cases failed.`);
+    console.error(
+      "Rules assistant eval failed: " +
+        failures.length +
+        "/" +
+        expandedCases.length +
+        " question variants failed."
+    );
     failures.forEach((failure, index) => {
       console.error(`\n${index + 1}. ${failure.question}`);
       console.error(`Issue: ${failure.issue}`);
@@ -182,7 +213,17 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Rules assistant eval passed: ${cases.length}/${cases.length} cases.`);
+  console.log(
+    "Rules assistant eval passed: " +
+      expandedCases.length +
+      "/" +
+      expandedCases.length +
+      " question variants across " +
+      cases.length +
+      " rule cases and " +
+      topicIds.size +
+      " indexed topic cards."
+  );
 }
 
 main().catch((error) => {

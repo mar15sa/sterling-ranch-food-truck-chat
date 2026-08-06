@@ -99,7 +99,7 @@ Environment variables:
 - `RULES_ALERT_EMAIL_TO` — optional comma-separated recipient list for email alerts.
 - `RULES_ALERT_EMAIL_FROM` — required if email alerts are enabled. Use a verified Resend sender, for example `Sterling Ranch Society <alerts@yourdomain.com>`.
 - `RULES_ALERT_EMAIL_SUBJECT_PREFIX` (default `Sterling Ranch Rules Assistant alert`) — optional email subject prefix.
-- `RULES_ABUSE_ALERT_THRESHOLD` (default `10`), `RULES_LLM_REJECTION_ALERT_THRESHOLD` (default `5`), `RULES_ALERT_WINDOW_MS` (default `300000`), and `RULES_ALERT_COOLDOWN_MS` (default `900000`) — optional alert tuning.
+- `RULES_ABUSE_ALERT_THRESHOLD` (default `10`), `RULES_LLM_REJECTION_ALERT_THRESHOLD` (default `5`), `RULES_LOW_CONFIDENCE_ALERT_THRESHOLD` (default `5`), `RULES_ALERT_WINDOW_MS` (default `300000`), and `RULES_ALERT_COOLDOWN_MS` (default `900000`) — optional alert tuning.
 - `RULES_QUESTION_LOG_WEBHOOK_URL` — optional webhook that receives each rules question after the assistant answers.
 - `RULES_QUESTION_NOTION_TOKEN` or `NOTION_API_KEY` — optional Notion integration token for logging rules questions directly to a Notion database.
 - `RULES_QUESTION_NOTION_DATABASE_ID` — required when using direct Notion logging.
