@@ -94,18 +94,20 @@ Environment variables:
 - `ANTHROPIC_API_KEY` — enables Claude-written answers. Without it, the built-in answers are used.
 - `RULES_LLM_MODEL` — which model to use. Defaults to `claude-haiku-4-5` (lowest cost, well-suited to this). Use `claude-sonnet-4-6` or `claude-opus-4-8` for more nuance.
 - `RULES_LLM_MAX_TOKENS` (default `600`) and `RULES_LLM_TIMEOUT_MS` (default `15000`) — optional tuning.
-- `RULES_ALERT_WEBHOOK_URL` — optional webhook for runtime alerts. When set, the server alerts if rules questions hit repeated rate-limit blocks, the rulebook refresh fails, or LLM rewrites are rejected often. Without it, those alerts are still written to server logs.
+- `RULES_ALERT_WEBHOOK_URL` — optional webhook for runtime alerts. When set, the server alerts when an answer is uncertain, rules questions hit repeated rate-limit blocks, the rulebook refresh fails, or LLM rewrites are rejected often. Without it, those alerts are still written to server logs.
 - `RULES_ALERT_RESEND_API_KEY` or `RESEND_API_KEY` — optional Resend API key for sending runtime alerts by email.
 - `RULES_ALERT_EMAIL_TO` — optional comma-separated recipient list for email alerts.
 - `RULES_ALERT_EMAIL_FROM` — required if email alerts are enabled. Use a verified Resend sender, for example `Sterling Ranch Society <alerts@yourdomain.com>`.
 - `RULES_ALERT_EMAIL_SUBJECT_PREFIX` (default `Sterling Ranch Rules Assistant alert`) — optional email subject prefix.
-- `RULES_ABUSE_ALERT_THRESHOLD` (default `10`), `RULES_LLM_REJECTION_ALERT_THRESHOLD` (default `5`), `RULES_LOW_CONFIDENCE_ALERT_THRESHOLD` (default `5`), `RULES_ALERT_WINDOW_MS` (default `300000`), and `RULES_ALERT_COOLDOWN_MS` (default `900000`) — optional alert tuning.
+- `RULES_ABUSE_ALERT_THRESHOLD` (default `10`), `RULES_LLM_REJECTION_ALERT_THRESHOLD` (default `5`), `RULES_LOW_CONFIDENCE_ALERT_THRESHOLD` (default `1`), `RULES_LOW_CONFIDENCE_ALERT_COOLDOWN_MS` (default `86400000`, or 24 hours), `RULES_ALERT_WINDOW_MS` (default `300000`), and `RULES_ALERT_COOLDOWN_MS` (default `900000`) — optional alert tuning.
 - `RULES_QUESTION_LOG_WEBHOOK_URL` — optional webhook that receives each rules question after the assistant answers.
 - `RULES_QUESTION_NOTION_TOKEN` or `NOTION_API_KEY` — optional Notion integration token for logging rules questions directly to a Notion database.
 - `RULES_QUESTION_NOTION_DATABASE_ID` — required when using direct Notion logging.
 - `RULES_QUESTION_NOTION_TITLE_PROPERTY` (default `Question`), `RULES_QUESTION_NOTION_ASKED_AT_PROPERTY` (default `Asked at`), `RULES_QUESTION_NOTION_ANSWER_MODE_PROPERTY` (default `Answer mode`), `RULES_QUESTION_NOTION_CAN_ANSWER_PROPERTY` (default `Can answer`), and `RULES_QUESTION_NOTION_SOURCE_COUNT_PROPERTY` (default `Source count`) — optional Notion property-name overrides.
 
 Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
+
+The scheduled `Rules answer quality monitor` GitHub workflow runs the full local rules evaluation and a live production smoke test every day. If either check fails, it opens or updates a GitHub issue with a review checklist. When the checks pass again, the workflow comments on and closes that issue automatically. Every uncertain production answer is also written to the server log with the sanitized question, reason, and closest source so it can be researched and added as a permanent regression case. The first occurrence of each distinct uncertain question can alert immediately; repeats of that same question are quiet for 24 hours.
 
 The server also has an admin refresh endpoint:
 

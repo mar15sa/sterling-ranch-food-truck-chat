@@ -13,7 +13,7 @@ const {
   recordRulesLowConfidence,
   recordRulesRateLimitBlocked,
 } = require("./lib/rules-alerts");
-const { logRulesQuestion } = require("./lib/rules-question-log");
+const { cleanQuestionForLog, logRulesQuestion } = require("./lib/rules-question-log");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -4351,6 +4351,7 @@ async function handleRulesAsk(req, res, url) {
   logRulesQuestion(question, answer, req);
   if (answer?.confidence?.canAnswer === false) {
     recordRulesLowConfidence({
+      question: cleanQuestionForLog(question),
       reason: answer.confidence.reason,
       topSource: answer.sources?.[0]?.title || "",
     });
