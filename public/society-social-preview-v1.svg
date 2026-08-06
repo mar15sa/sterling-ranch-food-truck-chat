@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Sterling Ranch Society</title>
+  <desc id="description">Resident tools, all in one place: food trucks, community calendar, rules, and pool status.</desc>
+
+  <rect width="1200" height="630" fill="#eef5f2" />
+  <circle cx="1110" cy="45" r="220" fill="#dbece6" />
+  <circle cx="85" cy="660" r="190" fill="#e6efe1" />
+
+  <rect x="72" y="64" width="1056" height="502" rx="26" fill="#ffffff" />
+  <rect x="72" y="64" width="10" height="502" rx="5" fill="#2f7d68" />
+
+  <text x="130" y="135" fill="#2f7d68" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="3">STERLING RANCH SOCIETY</text>
+  <text x="128" y="245" fill="#1f2933" font-family="Segoe UI, Arial, sans-serif" font-size="70" font-weight="750">Resident tools,</text>
+  <text x="128" y="326" fill="#1f2933" font-family="Segoe UI, Arial, sans-serif" font-size="70" font-weight="750">all in one place</text>
+  <text x="130" y="379" fill="#65737e" font-family="Segoe UI, Arial, sans-serif" font-size="28">Quick community answers and links for Sterling Ranch residents.</text>
+
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="700">
+    <g transform="translate(130 425)">
+      <circle cx="27" cy="27" r="27" fill="#2f7d68" />
+      <text x="27" y="35" fill="#ffffff" font-size="18" text-anchor="middle">FT</text>
+      <text x="70" y="36" fill="#1f2933" font-size="23">Food trucks</text>
+    </g>
+
+    <g transform="translate(380 425)">
+      <circle cx="27" cy="27" r="27" fill="#3267a8" />
+      <text x="27" y="35" fill="#ffffff" font-size="18" text-anchor="middle">GC</text>
+      <text x="70" y="36" fill="#1f2933" font-size="23">Calendar</text>
+    </g>
+
+    <g transform="translate(610 425)">
+      <circle cx="27" cy="27" r="27" fill="#a83f39" />
+      <text x="27" y="35" fill="#ffffff" font-size="18" text-anchor="middle">RA</text>
+      <text x="70" y="36" fill="#1f2933" font-size="23">Rules</text>
+    </g>
+
+    <g transform="translate(800 425)">
+      <circle cx="27" cy="27" r="27" fill="#b7791f" />
+      <text x="27" y="35" fill="#ffffff" font-size="18" text-anchor="middle">PS</text>
+      <text x="70" y="36" fill="#1f2933" font-size="23">Pool status</text>
+    </g>
+  </g>
+
+  <text x="130" y="530" fill="#65737e" font-family="Segoe UI, Arial, sans-serif" font-size="23">sterlingranchsociety.com</text>
+</svg>
