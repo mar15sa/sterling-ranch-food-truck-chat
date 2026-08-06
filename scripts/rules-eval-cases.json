@@ -11,6 +11,18 @@
     "answerIncludesAll": ["DRC approval", "150 square feet", "underground", "screening"]
   },
   {
+    "question": "screen privacy",
+    "expectedFirstAny": ["Sec. 21-22"],
+    "expectedAny": ["Landscape Screens One-Sheet"],
+    "answerIncludesAll": ["DRC approval", "rear or side yard", "five feet", "six feet", "eight feet", "30 percent"]
+  },
+  {
+    "question": "What is the rule on privacy screens in your backyard?",
+    "expectedFirstAny": ["Sec. 21-22"],
+    "expectedAny": ["Landscape Screens One-Sheet"],
+    "answerIncludesAll": ["DRC approval", "freestanding", "outside easements", "no more than three", "Vinyl is not allowed"]
+  },
+  {
     "question": "Do I need approval for solar panels?",
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Solar Panels One-Sheet"],
