@@ -23,7 +23,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v32";
+const MENU_CACHE_VERSION = "menus-v33";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -1856,6 +1856,84 @@ const KNOWN_TRUCK_LINKS = {
       { name: "Key Lime Pie", description: "", price: "$5.00" },
     ],
   },
+  "batter bar": {
+    official: {
+      title: "The Batter Bar",
+      url: "https://thebatterbarco.com/",
+    },
+    menu: [
+      {
+        title: "The Batter Bar stand menu",
+        url: "https://thebatterbarco.com/",
+      },
+    ],
+    items: [
+      {
+        name: "Mini Cookie Cups",
+        description: "Bite-sized cookie cups ready for toppings.",
+        price: "",
+      },
+      {
+        name: "Brownie Bites",
+        description: "Bite-sized brownies served in a bowl for loading on toppings.",
+        price: "",
+      },
+      {
+        name: "Cake Pops",
+        description: "Grab-and-go cake pops from the dessert cart.",
+        price: "",
+      },
+      {
+        name: "Cake Cans",
+        description: "Grab-and-go cake cans from the dessert cart.",
+        price: "",
+      },
+      {
+        name: "Chocolate Covered Oreos",
+        description: "Chocolate-covered Oreo treats from the dessert cart.",
+        price: "",
+      },
+    ],
+  },
+  "batter bars": {
+    official: {
+      title: "The Batter Bar",
+      url: "https://thebatterbarco.com/",
+    },
+    menu: [
+      {
+        title: "The Batter Bar stand menu",
+        url: "https://thebatterbarco.com/",
+      },
+    ],
+    items: [
+      {
+        name: "Mini Cookie Cups",
+        description: "Bite-sized cookie cups ready for toppings.",
+        price: "",
+      },
+      {
+        name: "Brownie Bites",
+        description: "Bite-sized brownies served in a bowl for loading on toppings.",
+        price: "",
+      },
+      {
+        name: "Cake Pops",
+        description: "Grab-and-go cake pops from the dessert cart.",
+        price: "",
+      },
+      {
+        name: "Cake Cans",
+        description: "Grab-and-go cake cans from the dessert cart.",
+        price: "",
+      },
+      {
+        name: "Chocolate Covered Oreos",
+        description: "Chocolate-covered Oreo treats from the dessert cart.",
+        price: "",
+      },
+    ],
+  },
   "magic kebob": {
     official: {
       title: "Magic Kebob",
@@ -3043,14 +3121,15 @@ function isPlausibleCalendarTruckName(truckName) {
 }
 
 function splitListedTruckNames(truckName) {
-  const normalized = normalizeTruckName(truckName);
+  const withoutEventLabel = String(truckName).replace(/\([^)]*\)/g, " ");
+  const normalized = normalizeTruckName(withoutEventLabel);
   if (!normalized) return [];
   if (hasKnownTruckData(normalized)) return [normalized];
 
-  const parts = normalized
-    .split(/\s+(?:&|\+)\s+/)
-    .map((name) => name.trim())
-    .filter(Boolean);
+  const parts = withoutEventLabel
+    .split(/\s*(?:,|&|\+)\s*/)
+    .map((name) => normalizeTruckName(name))
+    .filter((name) => name && !isPlaceholderCalendarTruckName(name));
 
   if (parts.length < 2) return [normalized];
 
