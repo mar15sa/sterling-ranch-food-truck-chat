@@ -14,6 +14,10 @@ const {
   recordRulesRateLimitBlocked,
 } = require("./lib/rules-alerts");
 const { cleanQuestionForLog, logRulesQuestion } = require("./lib/rules-question-log");
+const {
+  normalizeTruckName,
+  splitListedTruckNames: splitTruckNames,
+} = require("./lib/truck-names");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -3059,14 +3063,6 @@ function scoreResult(result) {
   return score;
 }
 
-function normalizeTruckName(truckName) {
-  return truckName
-    .normalize("NFKD")
-    .replace(/[^\w\s&-]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function knownTruckLinks(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
   const links = KNOWN_TRUCK_LINKS[key] || (key.startsWith("the ") ? KNOWN_TRUCK_LINKS[key.slice(4)] : null);
@@ -3121,19 +3117,14 @@ function isPlausibleCalendarTruckName(truckName) {
 }
 
 function splitListedTruckNames(truckName) {
-  const withoutEventLabel = String(truckName).replace(/\([^)]*\)/g, " ");
-  const normalized = normalizeTruckName(withoutEventLabel);
-  if (!normalized) return [];
-  if (hasKnownTruckData(normalized)) return [normalized];
+  const singleTruckNamesWithJoiners = Object.values(KNOWN_TRUCK_LINKS)
+    .map((links) => links.official?.title || "")
+    .filter((name) => /[&+]/.test(name));
 
-  const parts = withoutEventLabel
-    .split(/\s*(?:,|&|\+)\s*/)
-    .map((name) => normalizeTruckName(name))
-    .filter((name) => name && !isPlaceholderCalendarTruckName(name));
-
-  if (parts.length < 2) return [normalized];
-
-  return parts;
+  return splitTruckNames(truckName, {
+    hasKnownTruckData,
+    singleTruckNamesWithJoiners,
+  }).filter((name) => !isPlaceholderCalendarTruckName(name));
 }
 
 function getTruckNameTokens(truckName) {
