@@ -27,7 +27,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v33";
+const MENU_CACHE_VERSION = "menus-v34";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -140,10 +140,6 @@ const KNOWN_TRUCK_LINKS = {
     ],
   },
   "d maracuchos": {
-    official: {
-      title: "D Maracuchos - Delivery Venezolan Food in Colorado",
-      url: "https://d-maracuchos.com",
-    },
     facebook: {
       title: "D'Maracuchos - Facebook",
       url: "https://www.facebook.com/people/D-Maracuchos-Cafe/100092150456933/",
@@ -152,6 +148,48 @@ const KNOWN_TRUCK_LINKS = {
       title: "D'Maracuchos - Instagram",
       url: "https://instagram.com/dmaracuchoscafe",
     },
+    menu: [
+      {
+        title: "D Maracuchos shop",
+        url: "https://d-maracuchos.com/shop/",
+      },
+      {
+        title: "D Maracuchos homepage menu",
+        url: "https://d-maracuchos.com/",
+      },
+    ],
+    items: [
+      {
+        name: "Arepa La Catira",
+        description: "Shredded chicken, cheese, and homemade sauce in a Venezuelan arepa.",
+        price: "$15.00",
+        url: "https://d-maracuchos.com/shop/",
+      },
+      {
+        name: "Arepa La Pelua",
+        description: "Shredded beef, cheese, and homemade sauce in a Venezuelan arepa.",
+        price: "$15.00",
+        url: "https://d-maracuchos.com/shop/",
+      },
+      {
+        name: "Cachapa + Chicken",
+        description: "Venezuelan sweet-corn cachapa served with chicken.",
+        price: "$17.00",
+        url: "https://d-maracuchos.com/shop/",
+      },
+      {
+        name: "Cheese Empanada",
+        description: "Gluten-free Venezuelan cheese empanada.",
+        price: "$6.00",
+        url: "https://d-maracuchos.com/shop/",
+      },
+      {
+        name: "Domino Arepa",
+        description: "Black beans, cheese, and homemade sauce in a Venezuelan arepa.",
+        price: "$13.00",
+        url: "https://d-maracuchos.com/shop/",
+      },
+    ],
   },
   "2nd son kitchen": {
     official: {
@@ -1208,6 +1246,58 @@ const KNOWN_TRUCK_LINKS = {
         name: "Homemade Sides",
         description: "Homemade sides mentioned in a River North Brewery food-truck event listing.",
         price: "",
+      },
+    ],
+  },
+  "ba-nom a-nom": {
+    official: {
+      title: "Ba-Nom-a-Nom",
+      url: "https://banomanom.com/",
+    },
+    instagram: {
+      title: "Ba-Nom-a-Nom - Instagram",
+      url: "https://www.instagram.com/banomanom/",
+    },
+    menu: [
+      {
+        title: "Ba-Nom-a-Nom menu",
+        url: "https://banomanom.com/our-menu",
+      },
+      {
+        title: "Ba-Nom-a-Nom - Denver Food Truck Association",
+        url: "https://denfta.org/ba-nom-a-nom",
+      },
+    ],
+    items: [
+      {
+        name: "100% Pure Mango",
+        description: "Soft-serve frozen fruit flavor listed on the Ba-Nom-a-Nom menu.",
+        price: "",
+        url: "https://denfta.org/ba-nom-a-nom",
+      },
+      {
+        name: "100% Pure Pineapple",
+        description: "Soft-serve frozen fruit flavor listed on the Ba-Nom-a-Nom menu.",
+        price: "",
+        url: "https://denfta.org/ba-nom-a-nom",
+      },
+      {
+        name: "Strawberry Mango Banana",
+        description: "Rotating fruit soft-serve blend listed on the Ba-Nom-a-Nom menu.",
+        price: "",
+        url: "https://denfta.org/ba-nom-a-nom",
+      },
+      {
+        name: "Mango Pineapple Banana",
+        description: "Rotating fruit soft-serve blend listed on the Ba-Nom-a-Nom menu.",
+        price: "",
+        url: "https://denfta.org/ba-nom-a-nom",
+      },
+      {
+        name: "Chocolate Chips",
+        description: "Optional topping listed on the Ba-Nom-a-Nom menu.",
+        price: "",
+        url: "https://denfta.org/ba-nom-a-nom",
       },
     ],
   },
@@ -2598,6 +2688,7 @@ const KNOWN_TRUCK_LINKS = {
 };
 
 KNOWN_TRUCK_LINKS["billy s beefy burgers"] = KNOWN_TRUCK_LINKS["billys beefy burgers"];
+KNOWN_TRUCK_LINKS["shuggs bbq"] = KNOWN_TRUCK_LINKS["shugg s bbq"];
 KNOWN_TRUCK_LINKS.tacontento = KNOWN_TRUCK_LINKS.tacotento;
 KNOWN_TRUCK_LINKS["tacontento hippops"] = KNOWN_TRUCK_LINKS["tacotento hippops"];
 KNOWN_TRUCK_LINKS["isan thai lucky dawg kona ice"] =
