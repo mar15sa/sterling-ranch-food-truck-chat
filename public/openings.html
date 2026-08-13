@@ -12,10 +12,9 @@
     <meta property="og:url" content="https://sterlingranchsociety.com/openings" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://unpkg.com" />
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynhFwA7Ggq+ZXhORZOSkW9V8uQpM=" crossorigin="" />
-    <link rel="stylesheet" href="/openings.css?v=20260813-v1" />
+    <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=1.9.4" />
+    <link rel="stylesheet" href="/openings.css?v=20260813-v3" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -38,12 +37,7 @@
         <div class="hero-copy">
           <p class="eyebrow">The 80125-area opening tracker</p>
           <h1>Know what’s coming before the sign goes up.</h1>
-          <p class="hero-lede">New restaurants, shops, coffee, entertainment, and everyday services across Douglas County plus nearby places within a 20-mile straight-line radius of ZIP 80125—each tied to the evidence behind it.</p>
-          <div class="trust-row">
-            <span><i class="pulse" aria-hidden="true"></i> Sources checked daily</span>
-            <span>Human verified</span>
-            <span>No paywall</span>
-          </div>
+          <p class="hero-lede">New restaurants, shops, coffee, entertainment, and everyday services across Douglas County plus nearby places within a 20-mile straight-line radius of ZIP 80125.</p>
         </div>
         <div class="hero-panel" aria-label="Tracker summary">
           <p class="hero-panel-label">On the radar</p>
@@ -143,17 +137,6 @@
         <div id="source-list" class="source-list"></div>
       </section>
 
-      <section class="method" aria-labelledby="method-title">
-        <div>
-          <p class="eyebrow">Trust, made visible</p>
-          <h2 id="method-title">A rumor can be useful. It just shouldn’t wear a “confirmed” badge.</h2>
-        </div>
-        <ol>
-          <li><span>1</span><div><strong>Detect</strong><p>The radar notices a new name, permit, plan, announcement, or construction update.</p></div></li>
-          <li><span>2</span><div><strong>Verify</strong><p>We confirm it with an official record, the business itself, or two credible independent sources.</p></div></li>
-          <li><span>3</span><div><strong>Track</strong><p>The listing keeps its evidence, status, and last-checked date as the opening gets closer.</p></div></li>
-        </ol>
-      </section>
     </main>
 
     <footer>
@@ -194,7 +177,7 @@
       </article>
     </template>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="/openings.js?v=20260813-v2" defer></script>
+    <script src="/vendor/leaflet/leaflet.js?v=1.9.4"></script>
+    <script src="/openings.js?v=20260813-v3" defer></script>
   </body>
 </html>

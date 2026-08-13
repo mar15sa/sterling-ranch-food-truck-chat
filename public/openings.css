@@ -111,10 +111,6 @@ h1 {
   font-size: clamp(1.04rem, 1.6vw, 1.25rem);
   line-height: 1.6;
 }
-.trust-row { display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--forest); font-size: .82rem; font-weight: 700; }
-.trust-row span { display: inline-flex; align-items: center; gap: 8px; }
-.trust-row span + span::before { content: "·"; color: #a9b5ae; margin-right: 10px; }
-.pulse { width: 8px; height: 8px; border-radius: 50%; background: #39a779; box-shadow: 0 0 0 5px rgba(57,167,121,.13); }
 .hero-panel {
   padding: 28px;
   border-radius: 4px;
@@ -140,13 +136,13 @@ h1 {
 .stats strong { font-family: "Newsreader", Georgia, serif; color: var(--forest); font-size: 2rem; }
 .stats span { color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 
-.tracker, .sources-section, .method {
+.tracker, .sources-section {
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
 }
 .tracker { padding: 86px 0 96px; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
-.section-heading h2, .method h2, .radar h2 { margin: 0; font-size: clamp(2.25rem, 4vw, 4rem); line-height: 1; letter-spacing: -.025em; }
+.section-heading h2, .radar h2 { margin: 0; font-size: clamp(2.25rem, 4vw, 4rem); line-height: 1; letter-spacing: -.025em; }
 .view-switch { display: flex; padding: 4px; border-radius: 999px; background: #e9ece6; }
 .view-switch button { border: 0; border-radius: 999px; background: transparent; color: var(--muted); padding: 9px 17px; font-size: .82rem; font-weight: 700; }
 .view-switch button.active { background: white; color: var(--forest); box-shadow: 0 2px 10px rgba(0,0,0,.08); }
@@ -274,14 +270,6 @@ h1 {
 .source-item p { margin: 4px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.4; }
 .source-item a { color: var(--forest); font-size: .73rem; font-weight: 700; }
 
-.method { display: grid; grid-template-columns: .9fr 1.1fr; gap: 90px; padding: 100px 0; }
-.method ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
-.method li { display: grid; grid-template-columns: 42px 1fr; gap: 20px; padding: 25px 0; border-top: 1px solid var(--line); }
-.method li:last-child { border-bottom: 1px solid var(--line); }
-.method li > span { display: grid; place-items: center; width: 35px; height: 35px; border-radius: 50%; background: var(--sage); color: var(--forest); font-weight: 700; }
-.method strong { font-family: "Newsreader", serif; font-size: 1.35rem; }
-.method li p { margin: 5px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
-
 footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 42px max(20px, calc((100vw - 1180px) / 2)); border-top: 1px solid var(--line); background: white; }
 footer p { margin: 4px 0 0; color: var(--muted); font-size: .8rem; }
 
@@ -313,16 +301,14 @@ dialog::backdrop { background: rgba(9,31,23,.7); backdrop-filter: blur(3px); }
   .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .radar { grid-template-columns: 1fr; }
   .radar-status { min-height: 430px; }
-  .method { grid-template-columns: 1fr; gap: 45px; }
 }
 
 @media (max-width: 620px) {
-  .site-header, .hero, .tracker, .sources-section, .method { width: min(100% - 24px, 1180px); }
+  .site-header, .hero, .tracker, .sources-section { width: min(100% - 24px, 1180px); }
   .site-header { padding-top: 16px; }
   .brand small { display: none; }
   .hero { margin-top: 12px; padding-bottom: 42px; }
   h1 { font-size: clamp(3.25rem, 16vw, 5rem); }
-  .trust-row span + span::before { display: none; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stats div:nth-child(2) { border-right: 0; }
   .stats div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
@@ -337,7 +323,6 @@ dialog::backdrop { background: rgba(9,31,23,.7); backdrop-filter: blur(3px); }
   .radar-status { min-height: 350px; }
   .radar-orbit { width: 330px; height: 330px; }
   .source-list { grid-template-columns: 1fr; }
-  .method { padding: 70px 0; }
   footer { align-items: start; flex-direction: column; }
   .form-row { grid-template-columns: 1fr; }
   #tip-form { padding: 24px 18px; }

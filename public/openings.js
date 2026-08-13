@@ -80,7 +80,7 @@ function fillSelect(select, values) {
 
 function renderSummary(catalog) {
   setText("#hero-count", catalog.total);
-  setText("#hero-update", `Catalog checked ${formatDate(catalog.updatedAt)}. Every listing keeps its evidence.`);
+  setText("#hero-update", `Catalog checked ${formatDate(catalog.updatedAt)}.`);
   setText("#stat-coming", catalog.stats.coming);
   setText("#stat-soon", catalog.stats.openingSoon);
   setText("#stat-open", catalog.stats.open);

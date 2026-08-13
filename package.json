@@ -24,6 +24,7 @@
   },
   "type": "commonjs",
   "dependencies": {
+    "leaflet": "^1.9.4",
     "pdf-parse": "^2.4.5"
   }
 }
