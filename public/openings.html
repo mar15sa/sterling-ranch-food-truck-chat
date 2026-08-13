@@ -14,7 +14,7 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
     <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=1.9.4" />
-    <link rel="stylesheet" href="/openings.css?v=20260813-v5" />
+    <link rel="stylesheet" href="/openings.css?v=20260813-v6" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -103,7 +103,7 @@
         <div id="list-view" class="card-grid" aria-live="polite"></div>
         <div id="map-view" class="map-panel" hidden>
           <div id="openings-map" aria-label="Map of openings within the Douglas County and 80125-area coverage zone"></div>
-          <p class="map-note">Each marker represents one listing. Marker locations are approximate; open the listing for its published address and source links.</p>
+          <p class="map-note">Each marker represents one listing and is placed from its published address or project location. Open a marker to see whether its position is exact or approximate.</p>
         </div>
         <div id="empty-state" class="empty-state" hidden>
           <h3 id="empty-title">No matches yet</h3>
@@ -181,6 +181,6 @@
     </template>
 
     <script src="/vendor/leaflet/leaflet.js?v=1.9.4"></script>
-    <script src="/openings.js?v=20260813-v5" defer></script>
+    <script src="/openings.js?v=20260813-v6" defer></script>
   </body>
 </html>

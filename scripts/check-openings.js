@@ -16,6 +16,14 @@ for (const item of raw.items || []) {
     if (!item[field]) errors.push(`${item.id || "Unknown item"} is missing ${field}.`);
   }
   if (!Array.isArray(item.sources) || !item.sources.length) errors.push(`${item.id} has no evidence source.`);
+  const lat = Number(item.coordinates?.lat);
+  const lng = Number(item.coordinates?.lng);
+  if (!Number.isFinite(lat) || lat < 39.1 || lat > 39.75 || !Number.isFinite(lng) || lng < -105.25 || lng > -104.6) {
+    errors.push(`${item.id} is missing a valid local map coordinate.`);
+  }
+  if (!["address", "approximate"].includes(item.coordinates?.precision)) {
+    errors.push(`${item.id} is missing a map precision label.`);
+  }
   for (const source of item.sources || []) {
     try {
       const url = new URL(source.url);

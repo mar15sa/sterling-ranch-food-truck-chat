@@ -3,20 +3,38 @@
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
   "updatedAt": "2026-08-13T16:45:00-06:00",
   "communities": [
-    { "name": "Castle Pines" },
-    { "name": "Castle Rock" },
-    { "name": "Franktown" },
-    { "name": "Highlands Ranch" },
-    { "name": "Larkspur" },
-    { "name": "Littleton" },
-    { "name": "Lone Tree" },
-    { "name": "Parker" },
+    {
+      "name": "Castle Pines"
+    },
+    {
+      "name": "Castle Rock"
+    },
+    {
+      "name": "Franktown"
+    },
+    {
+      "name": "Highlands Ranch"
+    },
+    {
+      "name": "Larkspur"
+    },
+    {
+      "name": "Littleton"
+    },
+    {
+      "name": "Lone Tree"
+    },
+    {
+      "name": "Parker"
+    },
     {
       "name": "Roxborough",
       "emptyTitle": "No named Roxborough openings verified yet",
       "emptyMessage": "Roxborough is covered by the radar. We are checking Douglas County planning records and Roxborough Marketplace leasing updates, but have not found a new store or restaurant with a verifiable name and opening plan yet."
     },
-    { "name": "Sedalia" },
+    {
+      "name": "Sedalia"
+    },
     {
       "name": "Sterling Ranch",
       "emptyTitle": "No additional named Sterling Ranch openings verified yet",
@@ -37,9 +55,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Douglas County building permit 23-21414", "url": "https://apps.douglas.co.us/building/services/Default.aspx?PossePresentation=PermitDetails&PosseObjectId=90725511" },
-        { "label": "Valvoline location", "url": "https://store.vioc.com/co/littleton/8367-n-rampart-range-rd" }
-      ]
+        {
+          "label": "Douglas County building permit 23-21414",
+          "url": "https://apps.douglas.co.us/building/services/Default.aspx?PossePresentation=PermitDetails&PosseObjectId=90725511"
+        },
+        {
+          "label": "Valvoline location",
+          "url": "https://store.vioc.com/co/littleton/8367-n-rampart-range-rd"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.484193,
+        "lng": -105.073732,
+        "precision": "address",
+        "geocodedFrom": "8367 N. Rampart Range Road, Littleton, CO"
+      }
     },
     {
       "id": "zebulon-regional-sports-complex-sterling-ranch",
@@ -54,9 +84,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Douglas County project update", "url": "https://www.douglas.co.us/event/special-business-meeting-15/" },
-        { "label": "Douglas County concept plan", "url": "https://www.douglas.co.us/documents/zebulon-sport-concept_2025-03-17.pdf" }
-      ]
+        {
+          "label": "Douglas County project update",
+          "url": "https://www.douglas.co.us/event/special-business-meeting-15/"
+        },
+        {
+          "label": "Douglas County concept plan",
+          "url": "https://www.douglas.co.us/documents/zebulon-sport-concept_2025-03-17.pdf"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.483392,
+        "lng": -105.039947,
+        "precision": "approximate",
+        "geocodedFrom": "Waterton Road east of Sterling Ranch, Littleton, CO"
+      }
     },
     {
       "id": "gold-crown-field-house-castle-rock",
@@ -70,7 +112,18 @@
       "summary": "A planned 75,000-square-foot youth field house will include six basketball courts convertible to twelve volleyball courts.",
       "verifiedAt": "2026-08-05",
       "confidence": "official",
-      "sources": [{ "label": "DougCo Social and county funding record", "url": "https://dougcosocial.com/news/gold-crown-foundation-field-house-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social and county funding record",
+          "url": "https://dougcosocial.com/news/gold-crown-foundation-field-house-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.314167,
+        "lng": -104.887754,
+        "precision": "approximate",
+        "geocodedFrom": "Dawson Trails, Castle Rock, CO"
+      }
     },
     {
       "id": "fierce45-castle-rock",
@@ -84,7 +137,18 @@
       "summary": "The Pilates-inspired studio opened its first Castle Rock location.",
       "verifiedAt": "2026-08-04",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/fierce45-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/fierce45-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.410078,
+        "lng": -104.869722,
+        "precision": "address",
+        "geocodedFrom": "658 Genoa Way, Castle Rock, CO"
+      }
     },
     {
       "id": "gque-bbq-parker",
@@ -98,7 +162,18 @@
       "summary": "The Colorado barbecue restaurant is taking over the former Freddy’s space in Crown Point Center.",
       "verifiedAt": "2026-08-02",
       "confidence": "reported",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/gque-bbq-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/gque-bbq-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.557204,
+        "lng": -104.77635,
+        "precision": "address",
+        "geocodedFrom": "18424 Cottonwood Drive, Parker, CO"
+      }
     },
     {
       "id": "shake-shack-parker",
@@ -112,7 +187,18 @@
       "summary": "Parker’s first Shake Shack opened in the former Wendy’s location.",
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/shake-shack-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/shake-shack-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.549566,
+        "lng": -104.773812,
+        "precision": "address",
+        "geocodedFrom": "9185 Crown Crest Boulevard, Parker, CO"
+      }
     },
     {
       "id": "jp-cocina-cantina-parker",
@@ -126,7 +212,18 @@
       "summary": "Temporary signage and a related state business registration point to a Mexican cantina in the former Wild Goose Saloon space, but ownership and an opening plan are not yet public.",
       "verifiedAt": "2026-08-13",
       "confidence": "reported",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.513684,
+        "lng": -104.762932,
+        "precision": "address",
+        "geocodedFrom": "11160 South Pikes Peak Drive, Parker, CO"
+      }
     },
     {
       "id": "rugby-scott-parker",
@@ -140,7 +237,18 @@
       "summary": "The American Wagyu and Black Angus butcher shop is now open downtown.",
       "verifiedAt": "2026-07-25",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/rugby-scott-parker-butcher-shop" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/rugby-scott-parker-butcher-shop"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.518244,
+        "lng": -104.761992,
+        "precision": "address",
+        "geocodedFrom": "19590 Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "salady-parker",
@@ -154,7 +262,18 @@
       "summary": "South Korea’s largest salad chain has signage up for a Parker location.",
       "verifiedAt": "2026-07-24",
       "confidence": "reported",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/salady-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/salady-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.538952,
+        "lng": -104.768387,
+        "precision": "address",
+        "geocodedFrom": "9700 South Parker Road, Parker, CO"
+      }
     },
     {
       "id": "hot-spot-studios-castle-rock",
@@ -168,7 +287,18 @@
       "summary": "Colorado’s first location of the walk-in creative project studio is now open.",
       "verifiedAt": "2026-07-28",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/the-hot-spot-studios-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/the-hot-spot-studios-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.375367,
+        "lng": -104.859911,
+        "precision": "approximate",
+        "geocodedFrom": "Castle Rock, CO"
+      }
     },
     {
       "id": "izumi-sushi-castle-rock",
@@ -182,7 +312,18 @@
       "summary": "The Japanese restaurant opened downtown with sushi and a full menu.",
       "verifiedAt": "2026-06-27",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/izumi-sushi-now-open-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social firsthand visit",
+          "url": "https://dougcosocial.com/news/izumi-sushi-now-open-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.37249,
+        "lng": -104.855593,
+        "precision": "approximate",
+        "geocodedFrom": "Third Street, Castle Rock, CO"
+      }
     },
     {
       "id": "riot-bbq-sedalia",
@@ -196,7 +337,18 @@
       "summary": "Riot BBQ became the exclusive kitchen partner at Wide Open Saloon.",
       "verifiedAt": "2026-06-27",
       "confidence": "business-confirmed",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/riot-bbq-wide-open-saloon-sedalia" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/riot-bbq-wide-open-saloon-sedalia"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.436969,
+        "lng": -104.962367,
+        "precision": "approximate",
+        "geocodedFrom": "Sedalia, CO"
+      }
     },
     {
       "id": "griddled-castle-rock",
@@ -210,7 +362,18 @@
       "summary": "The Outlets restaurant serves sweet and savory crêpes and pressed paninis.",
       "verifiedAt": "2026-06-27",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/griddled-crepes-paninis-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social firsthand visit",
+          "url": "https://dougcosocial.com/news/griddled-crepes-paninis-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.413637,
+        "lng": -104.872729,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Suite 175, Castle Rock, CO"
+      }
     },
     {
       "id": "starbird-chicken-castle-rock",
@@ -224,7 +387,18 @@
       "summary": "The fast-casual chicken restaurant is open at the Promenade.",
       "verifiedAt": "2026-06-27",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/starbird-chicken-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social firsthand visit",
+          "url": "https://dougcosocial.com/news/starbird-chicken-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.418528,
+        "lng": -104.876058,
+        "precision": "approximate",
+        "geocodedFrom": "Promenade at Castle Rock, Castle Rock, CO"
+      }
     },
     {
       "id": "bar-hummingbird-castle-rock",
@@ -238,7 +412,18 @@
       "summary": "The 21-and-over upscale cocktail bar is open at the Promenade.",
       "verifiedAt": "2026-06-27",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/bar-hummingbird-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social firsthand visit",
+          "url": "https://dougcosocial.com/news/bar-hummingbird-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.418528,
+        "lng": -104.876058,
+        "precision": "approximate",
+        "geocodedFrom": "Promenade at Castle Rock, Castle Rock, CO"
+      }
     },
     {
       "id": "badger-bloom-boba-castle-rock",
@@ -252,7 +437,18 @@
       "summary": "The locally owned boba shop is open at the Outlets.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/badger-bloom-boba-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/badger-bloom-boba-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.413868,
+        "lng": -104.872634,
+        "precision": "approximate",
+        "geocodedFrom": "Outlets at Castle Rock, Castle Rock, CO"
+      }
     },
     {
       "id": "legends-coffee-parker",
@@ -266,7 +462,18 @@
       "summary": "The family-run specialty coffee shop is open on Mainstreet with breakfast and pastries.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/legends-coffee-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/legends-coffee-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.518357,
+        "lng": -104.761667,
+        "precision": "approximate",
+        "geocodedFrom": "Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "marvins-place-parker",
@@ -280,7 +487,18 @@
       "summary": "The no-Wi-Fi café serves coffee and pastries from Poulette at The Juniper.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/marvins-place-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/marvins-place-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.518357,
+        "lng": -104.761667,
+        "precision": "approximate",
+        "geocodedFrom": "The Juniper, Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "egg-harbor-cafe-highlands-ranch",
@@ -295,9 +513,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Egg Harbor Cafe Highlands Ranch", "url": "https://eggharbor.cafe/highlandsranch" },
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news/egg-harbor-cafe-highlands-ranch" }
-      ]
+        {
+          "label": "Egg Harbor Cafe Highlands Ranch",
+          "url": "https://eggharbor.cafe/highlandsranch"
+        },
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/egg-harbor-cafe-highlands-ranch"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.542467,
+        "lng": -104.938384,
+        "precision": "address",
+        "geocodedFrom": "9579 S. University Boulevard, Lot 3B, Highlands Ranch, CO"
+      }
     },
     {
       "id": "tazikis-highlands-ranch",
@@ -312,9 +542,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Taziki’s Highlands Ranch", "url": "https://www.tazikis.com/location/highlands-ranch" },
-        { "label": "Taziki’s opening announcement", "url": "https://www.tazikisfranchising.com/updates/tazikis-mediterranean-caf-opens-in-highlands-ranch-now-serving-the-denver-market-with-two-locations" }
-      ]
+        {
+          "label": "Taziki’s Highlands Ranch",
+          "url": "https://www.tazikis.com/location/highlands-ranch"
+        },
+        {
+          "label": "Taziki’s opening announcement",
+          "url": "https://www.tazikisfranchising.com/updates/tazikis-mediterranean-caf-opens-in-highlands-ranch-now-serving-the-denver-market-with-two-locations"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.546056,
+        "lng": -105.004285,
+        "precision": "address",
+        "geocodedFrom": "1601 Mayberry Drive, Suite 101, Highlands Ranch, CO"
+      }
     },
     {
       "id": "graze-craze-highlands-ranch",
@@ -329,9 +571,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Graze Craze Highlands Ranch", "url": "https://www.grazecraze.com/locations/highlands-ranch-co/gift" },
-        { "label": "What Now Denver construction report", "url": "https://whatnow.com/denver/restaurants/graze-craze-plating-up-new-highlands-ranch-location/" }
-      ]
+        {
+          "label": "Graze Craze Highlands Ranch",
+          "url": "https://www.grazecraze.com/locations/highlands-ranch-co/gift"
+        },
+        {
+          "label": "What Now Denver construction report",
+          "url": "https://whatnow.com/denver/restaurants/graze-craze-plating-up-new-highlands-ranch-location/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.56471,
+        "lng": -104.957588,
+        "precision": "address",
+        "geocodedFrom": "2670 E. County Line Road, Suite I, Highlands Ranch, CO"
+      }
     },
     {
       "id": "old-blinking-light-highlands-ranch",
@@ -346,9 +600,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "confirmed",
       "sources": [
-        { "label": "Old Blinking Light", "url": "https://oldblinkinglight.com/party" },
-        { "label": "South Denver Guide reopening report", "url": "https://www.southdenverguide.com/new-restaurant-openings-denver/" }
-      ]
+        {
+          "label": "Old Blinking Light",
+          "url": "https://oldblinkinglight.com/party"
+        },
+        {
+          "label": "South Denver Guide reopening report",
+          "url": "https://www.southdenverguide.com/new-restaurant-openings-denver/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.547423,
+        "lng": -104.999355,
+        "precision": "address",
+        "geocodedFrom": "9344 Dorchester Street, Highlands Ranch, CO"
+      }
     },
     {
       "id": "high-country-quilts-highlands-ranch",
@@ -363,9 +629,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "High Country Quilts locations", "url": "https://hcquilts.com/pages/contact" },
-        { "label": "BERNINA grand-opening announcement", "url": "https://www.prweb.com/releases/bernina-dealer-high-country-quilts-sewing--vacuum-expands-with-new-highlands-ranch-location-302738943.html" }
-      ]
+        {
+          "label": "High Country Quilts locations",
+          "url": "https://hcquilts.com/pages/contact"
+        },
+        {
+          "label": "BERNINA grand-opening announcement",
+          "url": "https://www.prweb.com/releases/bernina-dealer-high-country-quilts-sewing--vacuum-expands-with-new-highlands-ranch-location-302738943.html"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.565258,
+        "lng": -104.916905,
+        "precision": "address",
+        "geocodedFrom": "6148 E. County Line Road, Suite B, Highlands Ranch, CO"
+      }
     },
     {
       "id": "southpark-pickleball-highlands-ranch",
@@ -380,9 +658,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Highlands Ranch Metro District facility page", "url": "https://www.highlandsranch.org/Home/Components/FacilityDirectory/FacilityDirectory/84/343" },
-        { "label": "Highlands Ranch 2026 community events", "url": "https://www.highlandsranch.org/news-events/community-events" }
-      ]
+        {
+          "label": "Highlands Ranch Metro District facility page",
+          "url": "https://www.highlandsranch.org/Home/Components/FacilityDirectory/FacilityDirectory/84/343"
+        },
+        {
+          "label": "Highlands Ranch 2026 community events",
+          "url": "https://www.highlandsranch.org/news-events/community-events"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.565327,
+        "lng": -104.989577,
+        "precision": "address",
+        "geocodedFrom": "400 W. County Line Road, Highlands Ranch, CO"
+      }
     },
     {
       "id": "poulette-bakeshop-parker",
@@ -396,7 +686,18 @@
       "summary": "The James Beard-nominated bakery moved to a new Mainstreet home at The Juniper.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/poulette-bakeshop-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/poulette-bakeshop-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.517666,
+        "lng": -104.758704,
+        "precision": "address",
+        "geocodedFrom": "19865 Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "playa-bowls-parker",
@@ -410,7 +711,18 @@
       "summary": "The açaí bowl, smoothie, and juice shop is open at The Juniper.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/playa-bowls-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/playa-bowls-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.517666,
+        "lng": -104.758704,
+        "precision": "address",
+        "geocodedFrom": "19865 Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "par-club-castle-rock",
@@ -424,7 +736,18 @@
       "summary": "The golf simulator venue opened with six bays, a full bar, and leagues.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/par-club-castle-rock" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/par-club-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.375367,
+        "lng": -104.859911,
+        "precision": "approximate",
+        "geocodedFrom": "Castle Rock, CO"
+      }
     },
     {
       "id": "black-rock-coffee-auburn-hills",
@@ -438,7 +761,18 @@
       "summary": "A drive-thru Black Rock location opened at Jordan Road and Mainstreet.",
       "verifiedAt": "2026-08-13",
       "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/black-rock-coffee-parker" }]
+      "sources": [
+        {
+          "label": "DougCo Social",
+          "url": "https://dougcosocial.com/news/black-rock-coffee-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.514998,
+        "lng": -104.79351,
+        "precision": "approximate",
+        "geocodedFrom": "Jordan Road and Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "costco-dawson-trails",
@@ -453,9 +787,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Town of Castle Rock", "url": "https://www.crgov.com/FAQ.aspx?QID=722" },
-        { "label": "Castle Rock staff update", "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F" }
-      ]
+        {
+          "label": "Town of Castle Rock",
+          "url": "https://www.crgov.com/FAQ.aspx?QID=722"
+        },
+        {
+          "label": "Castle Rock staff update",
+          "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.338467,
+        "lng": -104.873285,
+        "precision": "approximate",
+        "geocodedFrom": "Crystal Valley Parkway and I-25, Castle Rock, CO"
+      }
     },
     {
       "id": "king-soopers-dawson-trails",
@@ -470,8 +816,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Town of Castle Rock site plan", "url": "https://www.crgov.com/DocumentCenter/View/51236/-King-Soopers-Dawson-Trails-Site-Plan-PDF?bidId=" }
-      ]
+        {
+          "label": "Town of Castle Rock site plan",
+          "url": "https://www.crgov.com/DocumentCenter/View/51236/-King-Soopers-Dawson-Trails-Site-Plan-PDF?bidId="
+        }
+      ],
+      "coordinates": {
+        "lat": 39.314167,
+        "lng": -104.887754,
+        "precision": "approximate",
+        "geocodedFrom": "Dawson Trails, Castle Rock, CO"
+      }
     },
     {
       "id": "chicken-salad-chick-castle-rock",
@@ -486,8 +841,17 @@
       "verifiedAt": "2026-07-02",
       "confidence": "reported",
       "sources": [
-        { "label": "Chicken Salad Chick construction announcement", "url": "https://dougcosocial.com/news/chicken-salad-chick-castle-rock" }
-      ]
+        {
+          "label": "Chicken Salad Chick construction announcement",
+          "url": "https://dougcosocial.com/news/chicken-salad-chick-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.392313,
+        "lng": -104.908407,
+        "precision": "approximate",
+        "geocodedFrom": "The Meadows, Castle Rock, CO"
+      }
     },
     {
       "id": "whataburger-promenade-castle-rock",
@@ -502,8 +866,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Castle Rock development record", "url": "https://maps.crgov.com/hyperlinks/External/IYBY/HTML/SDP25-0026/index.html" }
-      ]
+        {
+          "label": "Castle Rock development record",
+          "url": "https://maps.crgov.com/hyperlinks/External/IYBY/HTML/SDP25-0026/index.html"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.418528,
+        "lng": -104.876058,
+        "precision": "approximate",
+        "geocodedFrom": "Promenade at Castle Rock, Castle Rock, CO"
+      }
     },
     {
       "id": "dunkin-founders-marketplace",
@@ -518,8 +891,17 @@
       "verifiedAt": "2026-03-01",
       "confidence": "official",
       "sources": [
-        { "label": "Castle Rock staff update", "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F" }
-      ]
+        {
+          "label": "Castle Rock staff update",
+          "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.375396,
+        "lng": -104.827378,
+        "precision": "approximate",
+        "geocodedFrom": "Founders Marketplace, Castle Rock, CO"
+      }
     },
     {
       "id": "champagne-velvet-castle-rock",
@@ -534,8 +916,17 @@
       "verifiedAt": "2026-07-06",
       "confidence": "firsthand",
       "sources": [
-        { "label": "Champagne Velvet opening-day report", "url": "https://dougcosocial.com/news/champagne-velvet-proper-kitchen-bar-castle-rock" }
-      ]
+        {
+          "label": "Champagne Velvet opening-day report",
+          "url": "https://dougcosocial.com/news/champagne-velvet-proper-kitchen-bar-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.402508,
+        "lng": -104.887688,
+        "precision": "address",
+        "geocodedFrom": "2355 Mercantile Street, Castle Rock, CO"
+      }
     },
     {
       "id": "cask-and-trotter-parker",
@@ -550,8 +941,17 @@
       "verifiedAt": "2026-06-27",
       "confidence": "permits",
       "sources": [
-        { "label": "DougCo Social permit reporting", "url": "https://dougcosocial.com/news/cask-and-trotter-parker" }
-      ]
+        {
+          "label": "DougCo Social permit reporting",
+          "url": "https://dougcosocial.com/news/cask-and-trotter-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.517815,
+        "lng": -104.759099,
+        "precision": "address",
+        "geocodedFrom": "19865 Mainstreet, Unit 150, Parker, CO"
+      }
     },
     {
       "id": "cerebral-brewing-parker",
@@ -566,8 +966,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "reported",
       "sources": [
-        { "label": "Westword interview with the owner", "url": "https://www.westword.com/food-drink/denver-brewery-to-open-fourth-taproom-in-parker-40888798/" }
-      ]
+        {
+          "label": "Westword interview with the owner",
+          "url": "https://www.westword.com/food-drink/denver-brewery-to-open-fourth-taproom-in-parker-40888798/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.518271,
+        "lng": -104.756391,
+        "precision": "address",
+        "geocodedFrom": "20117 East Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "pick-n-tap-parker",
@@ -582,9 +991,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Town of Parker project narrative", "url": "https://prkc-trk.aspgov.com/eTRAKiT/viewAttachment.aspx?ActivityNo=SP25-176&Group=PROJECT&key=ECO%3A25122210463421" },
-        { "label": "DougCo Social status report", "url": "https://dougcosocial.com/news/pick-n-tap-parker" }
-      ]
+        {
+          "label": "Town of Parker project narrative",
+          "url": "https://prkc-trk.aspgov.com/eTRAKiT/viewAttachment.aspx?ActivityNo=SP25-176&Group=PROJECT&key=ECO%3A25122210463421"
+        },
+        {
+          "label": "DougCo Social status report",
+          "url": "https://dougcosocial.com/news/pick-n-tap-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.503205,
+        "lng": -104.813793,
+        "precision": "address",
+        "geocodedFrom": "11735 Disha Drive, Parker, CO"
+      }
     },
     {
       "id": "peaky-peak-parker",
@@ -599,8 +1020,17 @@
       "verifiedAt": "2026-07-03",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "Peaky Peak expansion announcement", "url": "https://dougcosocial.com/news/peaky-peak-coffee-charcuterie-denver-expansion" }
-      ]
+        {
+          "label": "Peaky Peak expansion announcement",
+          "url": "https://dougcosocial.com/news/peaky-peak-coffee-charcuterie-denver-expansion"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.518357,
+        "lng": -104.761667,
+        "precision": "approximate",
+        "geocodedFrom": "Mainstreet, Parker, CO"
+      }
     },
     {
       "id": "black-rock-coffee-stroh",
@@ -615,8 +1045,17 @@
       "verifiedAt": "2026-06-30",
       "confidence": "firsthand",
       "sources": [
-        { "label": "Black Rock Stroh Road opening report", "url": "https://dougcosocial.com/news/black-rock-coffee-parker-stroh" }
-      ]
+        {
+          "label": "Black Rock Stroh Road opening report",
+          "url": "https://dougcosocial.com/news/black-rock-coffee-parker-stroh"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.478089,
+        "lng": -104.757282,
+        "precision": "address",
+        "geocodedFrom": "6940 Stroh Road, Parker, CO"
+      }
     },
     {
       "id": "emagine-parker",
@@ -631,8 +1070,17 @@
       "verifiedAt": "2026-07-26",
       "confidence": "firsthand",
       "sources": [
-        { "label": "Emagine Parker grand-opening report", "url": "https://dougcosocial.com/news/emagine-parker-grand-opening" }
-      ]
+        {
+          "label": "Emagine Parker grand-opening report",
+          "url": "https://dougcosocial.com/news/emagine-parker-grand-opening"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.520209,
+        "lng": -104.772585,
+        "precision": "address",
+        "geocodedFrom": "18625 Stage Run Road, Parker, CO"
+      }
     },
     {
       "id": "dutch-bros-lone-tree",
@@ -647,8 +1095,17 @@
       "verifiedAt": "2026-08-07",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project_status/approved/" }
-      ]
+        {
+          "label": "City of Lone Tree",
+          "url": "https://cityoflonetree.com/project_status/approved/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.560048,
+        "lng": -104.903904,
+        "precision": "approximate",
+        "geocodedFrom": "Between 7430 and 7350 Park Meadows Drive, Lone Tree, CO"
+      }
     },
     {
       "id": "lone-tree-village-king-soopers",
@@ -663,8 +1120,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree groundbreaking update", "url": "https://cityoflonetree.com/breaking-ground-on-lone-tree-village/" }
-      ]
+        {
+          "label": "City of Lone Tree groundbreaking update",
+          "url": "https://cityoflonetree.com/breaking-ground-on-lone-tree-village/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.529271,
+        "lng": -104.87442,
+        "precision": "approximate",
+        "geocodedFrom": "RidgeGate Parkway, Lone Tree, CO"
+      }
     },
     {
       "id": "capital-grille-lone-tree",
@@ -679,10 +1145,25 @@
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project/the-capital-grille/" },
-        { "label": "Capital Grille reservations and hours", "url": "https://www.opentable.com/r/the-capital-grille-lone-tree" },
-        { "label": "Opening-date report", "url": "https://www.denvergazette.com/2026/03/09/the-capital-grille-steakhouse-opens-lone-tree-location-1/" }
-      ]
+        {
+          "label": "City of Lone Tree",
+          "url": "https://cityoflonetree.com/project/the-capital-grille/"
+        },
+        {
+          "label": "Capital Grille reservations and hours",
+          "url": "https://www.opentable.com/r/the-capital-grille-lone-tree"
+        },
+        {
+          "label": "Opening-date report",
+          "url": "https://www.denvergazette.com/2026/03/09/the-capital-grille-steakhouse-opens-lone-tree-location-1/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.565521,
+        "lng": -104.883733,
+        "precision": "address",
+        "geocodedFrom": "9067 Westview Road, Lone Tree, CO"
+      }
     },
     {
       "id": "groove-cafe-lone-tree",
@@ -697,8 +1178,17 @@
       "verifiedAt": "2026-07-16",
       "confidence": "firsthand",
       "sources": [
-        { "label": "The Groove opening report", "url": "https://dougcosocial.com/news/the-groove-cafe-lyric-ridgegate-lone-tree" }
-      ]
+        {
+          "label": "The Groove opening report",
+          "url": "https://dougcosocial.com/news/the-groove-cafe-lyric-ridgegate-lone-tree"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.517832,
+        "lng": -104.854642,
+        "precision": "address",
+        "geocodedFrom": "10930 Lyric Street, Lone Tree, CO"
+      }
     },
     {
       "id": "seven-brew-castle-pines",
@@ -713,8 +1203,17 @@
       "verifiedAt": "2026-07-16",
       "confidence": "official",
       "sources": [
-        { "label": "Castle Pines announcement: 7 Brew construction", "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=A%207%20Brew%20Coffee%20is%20currently%20under%20construction" }
-      ]
+        {
+          "label": "Castle Pines announcement: 7 Brew construction",
+          "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=A%207%20Brew%20Coffee%20is%20currently%20under%20construction"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.471731,
+        "lng": -104.874427,
+        "precision": "approximate",
+        "geocodedFrom": "Near Wendy’s off Castle Pines Parkway, Castle Pines, CO"
+      }
     },
     {
       "id": "castilla-italiano-castle-pines",
@@ -722,15 +1221,24 @@
       "category": "Restaurant",
       "community": "Castle Pines",
       "area": "Village Square",
-      "address": "Former Pino’s location, Castle Pines, CO",
+      "address": "361 Village Square Lane, Suite 130, Castle Pines, CO 80108",
       "status": "opening-soon",
       "openingWindow": "Expected late summer 2026",
       "summary": "The restaurant is renovating the former Pino’s location and expects to open later this summer.",
       "verifiedAt": "2026-07-14",
       "confidence": "official",
       "sources": [
-        { "label": "Castle Pines announcement: Castilla Italiano", "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=Yes%2C%20Castilla%20Italiano%20is%20expected%20to%20open" }
-      ]
+        {
+          "label": "Castle Pines announcement: Castilla Italiano",
+          "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=Yes%2C%20Castilla%20Italiano%20is%20expected%20to%20open"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.470507,
+        "lng": -104.880047,
+        "precision": "address",
+        "geocodedFrom": "361 Village Square Lane, Suite 130, Castle Pines, CO 80108"
+      }
     },
     {
       "id": "life-time-castle-pines",
@@ -745,8 +1253,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "Life Time", "url": "https://www.lifetime.life/locations/co/castle-pines.html" }
-      ]
+        {
+          "label": "Life Time",
+          "url": "https://www.lifetime.life/locations/co/castle-pines.html"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.47164,
+        "lng": -104.894852,
+        "precision": "approximate",
+        "geocodedFrom": "Castle Pines, CO"
+      }
     },
     {
       "id": "magic-manor-sedalia",
@@ -761,8 +1278,17 @@
       "verifiedAt": "2026-07-01",
       "confidence": "firsthand",
       "sources": [
-        { "label": "Magic Manor opening announcement", "url": "https://dougcosocial.com/news/magic-manor-theatre-of-dreams-sedalia" }
-      ]
+        {
+          "label": "Magic Manor opening announcement",
+          "url": "https://dougcosocial.com/news/magic-manor-theatre-of-dreams-sedalia"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.436969,
+        "lng": -104.962367,
+        "precision": "approximate",
+        "geocodedFrom": "Sedalia, CO"
+      }
     },
     {
       "id": "jacks-modern-steakhouse-lone-tree",
@@ -777,10 +1303,25 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree project page", "url": "https://cityoflonetree.com/project/jacks-restaurant/" },
-        { "label": "City of Lone Tree opening report", "url": "https://cityoflonetree.com/wp-content/uploads/2026/03/Timberlines-Feb2026-iss117_finalweb.pdf" },
-        { "label": "Reopening report", "url": "https://dougcosocial.com/news/jacks-modern-steakhouse-lone-tree" }
-      ]
+        {
+          "label": "City of Lone Tree project page",
+          "url": "https://cityoflonetree.com/project/jacks-restaurant/"
+        },
+        {
+          "label": "City of Lone Tree opening report",
+          "url": "https://cityoflonetree.com/wp-content/uploads/2026/03/Timberlines-Feb2026-iss117_finalweb.pdf"
+        },
+        {
+          "label": "Reopening report",
+          "url": "https://dougcosocial.com/news/jacks-modern-steakhouse-lone-tree"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.556048,
+        "lng": -104.882703,
+        "precision": "address",
+        "geocodedFrom": "9155 Park Meadows Drive, Lone Tree, CO 80124"
+      }
     },
     {
       "id": "the-tox-lone-tree",
@@ -795,8 +1336,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree grand-opening report", "url": "https://cityoflonetree.com/wp-content/uploads/2026/03/Timberlines-Feb2026-iss117_finalweb.pdf" }
-      ]
+        {
+          "label": "City of Lone Tree grand-opening report",
+          "url": "https://cityoflonetree.com/wp-content/uploads/2026/03/Timberlines-Feb2026-iss117_finalweb.pdf"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.561764,
+        "lng": -104.89905,
+        "precision": "address",
+        "geocodedFrom": "7600 Park Meadows Drive, Unit 1100, Lone Tree, CO 80124"
+      }
     },
     {
       "id": "truck-yard-lone-tree",
@@ -811,8 +1361,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree proposal update", "url": "https://cityoflonetree.com/truck-yard-set-to-transform-former-treo-site/" }
-      ]
+        {
+          "label": "City of Lone Tree proposal update",
+          "url": "https://cityoflonetree.com/truck-yard-set-to-transform-former-treo-site/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.553894,
+        "lng": -104.884421,
+        "precision": "address",
+        "geocodedFrom": "9070 Maximus Drive, Lone Tree, CO 80124"
+      }
     },
     {
       "id": "high-note-park-lone-tree",
@@ -827,8 +1386,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree project page", "url": "https://cityoflonetree.com/highnotepark/" }
-      ]
+        {
+          "label": "City of Lone Tree project page",
+          "url": "https://cityoflonetree.com/highnotepark/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.523,
+        "lng": -104.867495,
+        "precision": "approximate",
+        "geocodedFrom": "Happy Canyon Creek near I-25 and RidgeGate Parkway, Lone Tree, CO"
+      }
     },
     {
       "id": "rivian-park-meadows",
@@ -843,8 +1411,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Park Meadows listing: Rivian coming soon", "url": "https://www.parkmeadows.com/en/directory/#:~:text=Rivian,Coming%20Soon" }
-      ]
+        {
+          "label": "Park Meadows listing: Rivian coming soon",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Rivian,Coming%20Soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
     },
     {
       "id": "faherty-park-meadows",
@@ -859,8 +1436,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Park Meadows listing: Faherty coming soon", "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Coming%20Soon" }
-      ]
+        {
+          "label": "Park Meadows listing: Faherty coming soon",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Coming%20Soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
     },
     {
       "id": "columbia-park-meadows",
@@ -875,8 +1461,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Park Meadows listing: Columbia coming soon", "url": "https://www.parkmeadows.com/en/directory/#:~:text=Columbia,Coming%20Soon" }
-      ]
+        {
+          "label": "Park Meadows listing: Columbia coming soon",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Columbia,Coming%20Soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
     },
     {
       "id": "lazy-dog-castle-rock",
@@ -891,9 +1486,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Lazy Dog Castle Rock announcement", "url": "https://www.lazydogrestaurants.com/locations/castle-rock-co" },
-        { "label": "Castle Rock development update", "url": "https://myemail.constantcontact.com/subject.html?aid=f67ENjj096k&soid=1139362075676" }
-      ]
+        {
+          "label": "Lazy Dog Castle Rock announcement",
+          "url": "https://www.lazydogrestaurants.com/locations/castle-rock-co"
+        },
+        {
+          "label": "Castle Rock development update",
+          "url": "https://myemail.constantcontact.com/subject.html?aid=f67ENjj096k&soid=1139362075676"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.417661,
+        "lng": -104.87858,
+        "precision": "address",
+        "geocodedFrom": "5949 Alpine Vista Circle, Castle Rock, CO 80108"
+      }
     },
     {
       "id": "thai-wow-castle-rock",
@@ -908,9 +1515,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "Thai Wow official site", "url": "https://www.thaiwowco.com/" },
-        { "label": "DougCo Social build tracker", "url": "https://dougcosocial.com/whats-being-built-douglas-county" }
-      ]
+        {
+          "label": "Thai Wow official site",
+          "url": "https://www.thaiwowco.com/"
+        },
+        {
+          "label": "DougCo Social build tracker",
+          "url": "https://dougcosocial.com/whats-being-built-douglas-county"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.363135,
+        "lng": -104.859702,
+        "precision": "address",
+        "geocodedFrom": "794 S. Perry Street, Castle Rock, CO 80104"
+      }
     },
     {
       "id": "lost-canyon-ranch-castle-rock",
@@ -925,9 +1544,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Town of Castle Rock opening announcement", "url": "https://www.crgov.com/m/newsflash/home/detail/2641" },
-        { "label": "Lost Canyon Ranch visitor page", "url": "https://www.crgov.com/lostcanyonranch" }
-      ]
+        {
+          "label": "Town of Castle Rock opening announcement",
+          "url": "https://www.crgov.com/m/newsflash/home/detail/2641"
+        },
+        {
+          "label": "Lost Canyon Ranch visitor page",
+          "url": "https://www.crgov.com/lostcanyonranch"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.354349,
+        "lng": -104.776403,
+        "precision": "address",
+        "geocodedFrom": "6581 Lost Canyon Ranch Road, Castle Rock, CO 80104"
+      }
     },
     {
       "id": "havn-hot-pilates-littleton",
@@ -942,9 +1573,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Visit Littleton business listing", "url": "https://visitlittleton.org/partner/havn-hot-pilates/" },
-        { "label": "City of Littleton 2026 openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
-      ]
+        {
+          "label": "Visit Littleton business listing",
+          "url": "https://visitlittleton.org/partner/havn-hot-pilates/"
+        },
+        {
+          "label": "City of Littleton 2026 openings roundup",
+          "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.608601,
+        "lng": -105.036971,
+        "precision": "address",
+        "geocodedFrom": "5950 S. Platte Canyon Road, Suite A2, Littleton, CO 80123"
+      }
     },
     {
       "id": "hibachi-v-express-littleton",
@@ -959,9 +1602,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Visit Littleton business listing", "url": "https://visitlittleton.org/partner/hibachi-v-express/" },
-        { "label": "City of Littleton 2026 openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
-      ]
+        {
+          "label": "Visit Littleton business listing",
+          "url": "https://visitlittleton.org/partner/hibachi-v-express/"
+        },
+        {
+          "label": "City of Littleton 2026 openings roundup",
+          "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.571493,
+        "lng": -104.989015,
+        "precision": "address",
+        "geocodedFrom": "7961B S. Broadway, Littleton, CO 80122"
+      }
     },
     {
       "id": "honnibrook-mead-cottage-littleton",
@@ -976,9 +1631,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Visit Littleton business listing", "url": "https://visitlittleton.org/partner/honnibrook-mead-cottage/" },
-        { "label": "Visit Littleton opening feature", "url": "https://visitlittleton.org/littleton-co-wine-scene/" }
-      ]
+        {
+          "label": "Visit Littleton business listing",
+          "url": "https://visitlittleton.org/partner/honnibrook-mead-cottage/"
+        },
+        {
+          "label": "Visit Littleton opening feature",
+          "url": "https://visitlittleton.org/littleton-co-wine-scene/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.612642,
+        "lng": -105.020298,
+        "precision": "address",
+        "geocodedFrom": "5757 S. Rapp Street, Littleton, CO 80120"
+      }
     },
     {
       "id": "costco-mineral-place-littleton",
@@ -993,9 +1660,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Littleton development record", "url": "https://data.littletongov.org/pal.php?project=SIP24-0001" },
-        { "label": "City of Littleton 2026 development roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
-      ]
+        {
+          "label": "City of Littleton development record",
+          "url": "https://data.littletongov.org/pal.php?project=SIP24-0001"
+        },
+        {
+          "label": "City of Littleton 2026 development roundup",
+          "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.571834,
+        "lng": -104.997509,
+        "precision": "address",
+        "geocodedFrom": "700 W. Mineral Avenue, Littleton, CO 80120"
+      }
     },
     {
       "id": "ruby-jane-littleton",
@@ -1010,9 +1689,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "Ruby Jane locations", "url": "https://rubyjane.com/pages/locations-hours" },
-        { "label": "Downtown Littleton business listing", "url": "https://littletondda.org/business/ruby-jane-boutique/" }
-      ]
+        {
+          "label": "Ruby Jane locations",
+          "url": "https://rubyjane.com/pages/locations-hours"
+        },
+        {
+          "label": "Downtown Littleton business listing",
+          "url": "https://littletondda.org/business/ruby-jane-boutique/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.613517,
+        "lng": -105.017571,
+        "precision": "address",
+        "geocodedFrom": "2510 W. Main Street, Littleton, CO 80120"
+      }
     },
     {
       "id": "snarfs-bowles-littleton",
@@ -1027,9 +1718,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "Snarf’s Littleton location", "url": "https://www.eatsnarfs.com/littleton-bowles-santa-fe" },
-        { "label": "City of Littleton openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
-      ]
+        {
+          "label": "Snarf’s Littleton location",
+          "url": "https://www.eatsnarfs.com/littleton-bowles-santa-fe"
+        },
+        {
+          "label": "City of Littleton openings roundup",
+          "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.612772,
+        "lng": -105.020354,
+        "precision": "address",
+        "geocodedFrom": "2700 W. Bowles Avenue, Suite B, Littleton, CO 80120"
+      }
     },
     {
       "id": "diamond-reserve-littleton",
@@ -1044,9 +1747,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Downtown Littleton business listing", "url": "https://littletondda.org/business/the-diamond-reserve-littleton/" },
-        { "label": "Downtown Littleton grand-opening event", "url": "https://littletondda.org/events/list/?tribe-bar-date=2026-03-30" }
-      ]
+        {
+          "label": "Downtown Littleton business listing",
+          "url": "https://littletondda.org/business/the-diamond-reserve-littleton/"
+        },
+        {
+          "label": "Downtown Littleton grand-opening event",
+          "url": "https://littletondda.org/events/list/?tribe-bar-date=2026-03-30"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.613897,
+        "lng": -105.018065,
+        "precision": "address",
+        "geocodedFrom": "2569 W. Main Street, Littleton, CO 80120"
+      }
     },
     {
       "id": "rhonda-allison-littleton",
@@ -1061,9 +1776,21 @@
       "verifiedAt": "2026-08-13",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "RA Skin Studio", "url": "https://ra.skin/pages/studio" },
-        { "label": "City of Littleton openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
-      ]
+        {
+          "label": "RA Skin Studio",
+          "url": "https://ra.skin/pages/studio"
+        },
+        {
+          "label": "City of Littleton openings roundup",
+          "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.616447,
+        "lng": -105.015695,
+        "precision": "address",
+        "geocodedFrom": "5524 S. Prince Street, Littleton, CO 80127"
+      }
     },
     {
       "id": "seven-brew-littleton",
@@ -1078,8 +1805,17 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Littleton openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
-      ]
+        {
+          "label": "City of Littleton openings roundup",
+          "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.573701,
+        "lng": -105.012001,
+        "precision": "approximate",
+        "geocodedFrom": "West Mineral Avenue, Littleton, CO"
+      }
     }
   ]
 }

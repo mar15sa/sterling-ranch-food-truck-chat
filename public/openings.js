@@ -25,19 +25,6 @@ const EVIDENCE_LABELS = {
   reported: "Credible reporting",
 };
 
-const COMMUNITY_COORDS = {
-  "Castle Rock": [39.3722, -104.8561],
-  Parker: [39.5186, -104.7614],
-  "Lone Tree": [39.5362, -104.882],
-  "Castle Pines": [39.458, -104.896],
-  Sedalia: [39.4367, -104.959],
-  "Highlands Ranch": [39.5539, -104.9694],
-  Littleton: [39.6133, -105.0166],
-  "Sterling Ranch": [39.4758, -105.0057],
-  Roxborough: [39.4708, -105.0783],
-  Larkspur: [39.2286, -104.8872],
-};
-
 const MAP_STATUS_COLORS = {
   "opening-soon": "#c7792e",
   "under-construction": "#8d5b3d",
@@ -78,6 +65,15 @@ function formatDate(value) {
 function setText(selector, value) {
   const element = document.querySelector(selector);
   if (element) element.textContent = value;
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function fillSelect(select, values) {
@@ -225,16 +221,19 @@ function renderMap() {
   if (state.markerLayer) state.markerLayer.remove();
   state.markerLayer = L.layerGroup().addTo(state.map);
   const bounds = [];
+  const coordinateCounts = new Map();
   for (const item of state.items) {
-    const communityItems = state.catalog.items.filter((candidate) => candidate.community === item.community);
-    const index = communityItems.findIndex((candidate) => candidate.id === item.id);
-    const base = COMMUNITY_COORDS[item.community];
-    if (!base) continue;
-    const angle = index * 2.399963;
-    const radius = index === 0 ? 0 : .0045 + Math.sqrt(index) * .0027;
+    const lat = Number(item.coordinates?.lat);
+    const lng = Number(item.coordinates?.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+    const key = `${lat.toFixed(5)},${lng.toFixed(5)}`;
+    const overlapIndex = coordinateCounts.get(key) || 0;
+    coordinateCounts.set(key, overlapIndex + 1);
+    const angle = overlapIndex * 2.399963;
+    const radius = overlapIndex === 0 ? 0 : .00016 * Math.ceil(overlapIndex / 5);
     const coords = [
-      base[0] + Math.cos(angle) * radius,
-      base[1] + Math.sin(angle) * radius * 1.25,
+      lat + Math.cos(angle) * radius,
+      lng + Math.sin(angle) * radius * 1.25,
     ];
     bounds.push(coords);
     const marker = L.circleMarker(coords, {
@@ -244,10 +243,17 @@ function renderMap() {
       fillColor: MAP_STATUS_COLORS[item.status] || "#174b3a",
       fillOpacity: .95,
     });
+    const precision = item.coordinates.precision === "address" ? "Address location" : "Approximate project location";
+    const source = item.sources?.[0];
+    const sourceLink = source
+      ? `<a class="popup-source" href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">View evidence ↗</a>`
+      : "";
     marker.bindPopup(
-      `<strong>${item.name}</strong>` +
-      `<span>${item.community} · ${item.area}</span>` +
-      `<span class="popup-status">${STATUS_LABELS[item.status] || item.status}</span>`
+      `<strong>${escapeHtml(item.name)}</strong>` +
+      `<span>${escapeHtml(item.community)} · ${escapeHtml(item.area)}</span>` +
+      `<span class="popup-status">${escapeHtml(STATUS_LABELS[item.status] || item.status)}</span>` +
+      `<span class="popup-precision">${precision}</span>` +
+      sourceLink
     );
     marker.addTo(state.markerLayer);
   }

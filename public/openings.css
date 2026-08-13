@@ -236,6 +236,8 @@ h1 {
 .leaflet-popup-content strong { display: block; color: var(--forest); font-size: 1rem; }
 .leaflet-popup-content span { display: block; margin-top: 3px; color: var(--muted); }
 .leaflet-popup-content .popup-status { color: var(--forest); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.leaflet-popup-content .popup-precision { color: #7c8981; font-size: .7rem; }
+.leaflet-popup-content .popup-source { display: inline-block; margin-top: 8px; color: var(--forest); font-size: .74rem; font-weight: 700; }
 .empty-state { padding: 70px 20px; border: 1px dashed #bfc8c0; text-align: center; }
 .empty-state h3 { margin: 0; font-family: "Newsreader", serif; font-size: 2rem; }
 .empty-state p { color: var(--muted); }
