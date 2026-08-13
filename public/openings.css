@@ -269,6 +269,7 @@ h1 {
 .source-dot.ok { background: #39a779; }
 .source-dot.changed { background: var(--gold); }
 .source-dot.error { background: #ba4a3d; }
+.source-dot.manual-review { background: #5d7f9b; }
 .source-item strong { display: block; font-size: .88rem; }
 .source-item p { margin: 4px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.4; }
 .source-item a { color: var(--forest); font-size: .73rem; font-weight: 700; }

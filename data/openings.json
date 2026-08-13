@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County, Colorado",
-  "updatedAt": "2026-08-13T14:30:00-06:00",
+  "updatedAt": "2026-08-13T16:15:00-06:00",
   "communities": [
     { "name": "Castle Pines" },
     { "name": "Castle Rock" },
@@ -23,6 +23,23 @@
     }
   ],
   "items": [
+    {
+      "id": "valvoline-roxborough",
+      "name": "Valvoline Instant Oil Change",
+      "category": "Everyday services",
+      "community": "Roxborough",
+      "area": "Roxborough Marketplace",
+      "address": "8367 N. Rampart Range Road, Littleton, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "Valvoline replaced the former Sonic property. County records show the new commercial building received its certificate of occupancy in July 2025; related sign work continued afterward.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Douglas County building permit 23-21414", "url": "https://apps.douglas.co.us/building/services/Default.aspx?PossePresentation=PermitDetails&PosseObjectId=90725511" },
+        { "label": "Valvoline location", "url": "https://store.vioc.com/co/littleton/8367-n-rampart-range-rd" }
+      ]
+    },
     {
       "id": "zebulon-regional-sports-complex-sterling-ranch",
       "name": "Zebulon Regional Sports Complex",

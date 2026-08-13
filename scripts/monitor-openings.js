@@ -14,7 +14,9 @@ const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 const SIGNAL_WORDS = [
   "restaurant", "cafe", "café", "coffee", "bakery", "brewery", "taproom", "bar ",
   "market", "grocery", "retail", "store", "fitness", "salon", "spa", "theater",
-  "cinema", "opening", "coming soon", "under construction", "tenant", "commercial"
+  "cinema", "opening", "coming soon", "under construction", "tenant", "commercial",
+  "building permit", "site plan", "tenant finish", "certificate of occupancy", "inspection",
+  "liquor license", "new license", "ownership transfer", "drive-thru", "drive through"
 ];
 
 function readJson(filePath, fallback) {
@@ -111,6 +113,17 @@ function extractStructuredLeads(rawText, source, contentType) {
 }
 
 async function checkSource(source, previous) {
+  if (source.monitorMode === "manual") {
+    return {
+      status: "manual-review",
+      checkedAt: null,
+      changedAt: previous?.changedAt || null,
+      fingerprint: previous?.fingerprint || null,
+      signals: previous?.signals || [],
+      structuredLeads: previous?.structuredLeads || [],
+      newSignals: [],
+    };
+  }
   const checkedAt = new Date().toISOString();
   try {
     const response = await fetch(source.url, {
@@ -175,7 +188,9 @@ function buildReport(config, state, previousState) {
     "# Douglas County openings radar",
     "",
     `Scan completed: ${state.lastRunAt}`,
-    `Sources checked: ${config.sources.length}`,
+    `Sources tracked: ${config.sources.length}`,
+    `Automatically checked: ${config.sources.filter((source) => source.monitorMode !== "manual").length}`,
+    `Manual research lookups: ${config.sources.filter((source) => source.monitorMode === "manual").length}`,
     `Changed: ${changed.length}`,
     `Errors: ${errors.length}`,
     `New structured leads: ${firstRun ? 0 : newLeads.length}`,

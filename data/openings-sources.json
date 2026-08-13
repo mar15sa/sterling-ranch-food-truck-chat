@@ -74,6 +74,62 @@
       "notes": "Planning applications for Highlands Ranch, Sterling Ranch, Roxborough, Sedalia, and other unincorporated areas."
     },
     {
+      "id": "douglas-county-recent-projects",
+      "name": "Douglas County newly filed planning projects",
+      "community": "Unincorporated Douglas County",
+      "kind": "official",
+      "url": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
+      "cadence": "daily",
+      "notes": "Newly opened planning cases, including commercial site plans, use changes, and named restaurant proposals."
+    },
+    {
+      "id": "douglas-county-building-records",
+      "name": "Douglas County building permits and inspections",
+      "community": "Unincorporated Douglas County",
+      "kind": "official-verification",
+      "url": "https://apps.douglas.co.us/building/services/Default.aspx?PosseObjectId=16634210&PossePresentation=Help",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "Address-level permits, inspections, and certificates of occupancy used to distinguish construction from an actual opening."
+    },
+    {
+      "id": "douglas-county-agendas",
+      "name": "Douglas County public meetings and agenda items",
+      "community": "Unincorporated Douglas County",
+      "kind": "official",
+      "url": "https://douglascounty.legistar.com/Calendar.aspx",
+      "cadence": "daily",
+      "notes": "Commission, planning, and liquor-license agendas that can identify businesses before opening announcements."
+    },
+    {
+      "id": "douglas-county-public-notices",
+      "name": "Douglas County public notices",
+      "community": "Unincorporated Douglas County",
+      "kind": "official",
+      "url": "https://publicnotices.douglasco.gov/",
+      "cadence": "daily",
+      "notes": "Public hearing and licensing notices that may name applicants and locations early."
+    },
+    {
+      "id": "douglas-county-liquor-licenses",
+      "name": "Douglas County liquor licensing",
+      "community": "Unincorporated Douglas County",
+      "kind": "official",
+      "url": "https://www.douglasco.gov/planning/liquor-licensing/",
+      "cadence": "daily",
+      "notes": "New licenses and ownership transfers often reveal restaurants, bars, and entertainment venues before opening."
+    },
+    {
+      "id": "douglas-county-food-inspections",
+      "name": "Douglas County food-establishment inspections",
+      "community": "Countywide",
+      "kind": "official-verification",
+      "url": "https://www.douglasco.gov/health-department/inspections-retail-food-establishments/",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "Health inspection records provide strong evidence that a restaurant is preparing to open or has begun operating."
+    },
+    {
       "id": "sterling-ranch-cab-news",
       "name": "Sterling Ranch CAB news and agendas",
       "community": "Sterling Ranch",
@@ -81,6 +137,15 @@
       "url": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
       "cadence": "daily",
       "notes": "Community announcements, construction updates, and local openings."
+    },
+    {
+      "id": "sterling-ranch-cab-agendas",
+      "name": "Sterling Ranch CAB and construction agendas",
+      "community": "Sterling Ranch",
+      "kind": "official",
+      "url": "https://sterlingranchcab.com/AgendaCenter",
+      "cadence": "daily",
+      "notes": "Board and construction-committee packets can surface infrastructure and commercial activity before newsletters."
     },
     {
       "id": "roxborough-marketplace-leasing",
@@ -98,7 +163,8 @@
       "kind": "official",
       "url": "https://www.townoflarkspur.org/meetings/recent",
       "cadence": "daily",
-      "notes": "Planning Commission and Town Council agendas, packets, and minutes."
+      "monitorMode": "manual",
+      "notes": "Planning Commission and Town Council agendas, packets, and minutes; reviewed manually because the town blocks automated requests."
     },
     {
       "id": "dougco-social",

@@ -202,8 +202,9 @@ async function loadCatalog() {
 }
 
 function renderSources(data) {
-  const responding = data.total - data.errors;
-  setText("#source-healthy", `${responding}/${data.total}`);
+  const automated = data.automated ?? data.total;
+  const responding = automated - data.errors;
+  setText("#source-healthy", `${responding}/${automated}`);
   setText("#source-checked", data.lastRunAt ? `Last scan ${formatDate(data.lastRunAt)}` : "First automatic scan is queued");
   els.sourceList.replaceChildren(...data.sources.map((source) => {
     const item = document.createElement("article");
@@ -214,7 +215,8 @@ function renderSources(data) {
     const name = document.createElement("strong");
     name.textContent = source.name;
     const note = document.createElement("p");
-    note.textContent = `${source.community} · ${source.notes}`;
+    const coverage = source.monitorMode === "manual" ? "Manual verification" : source.community;
+    note.textContent = `${coverage} · ${source.notes}`;
     copy.append(name, note);
     const link = document.createElement("a");
     link.href = source.url;
