@@ -130,6 +130,25 @@
       "notes": "Health inspection records provide strong evidence that a restaurant is preparing to open or has begun operating."
     },
     {
+      "id": "highlands-ranch-news-projects",
+      "name": "Highlands Ranch news, projects, and community openings",
+      "community": "Highlands Ranch",
+      "kind": "official",
+      "url": "https://www.highlandsranch.org/news-events",
+      "cadence": "daily",
+      "notes": "Metro District news, project updates, facilities, and grand-opening announcements."
+    },
+    {
+      "id": "highlands-ranch-commercial-review",
+      "name": "Highlands Ranch commercial improvement review",
+      "community": "Highlands Ranch",
+      "kind": "official-verification",
+      "url": "https://hrcaonline.org/property-owners/commercial",
+      "cadence": "monthly",
+      "monitorMode": "manual",
+      "notes": "Exterior improvement and signage review can identify tenant work and coming-soon signs before a public opening announcement."
+    },
+    {
       "id": "sterling-ranch-cab-news",
       "name": "Sterling Ranch CAB news and agendas",
       "community": "Sterling Ranch",

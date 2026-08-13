@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County, Colorado",
-  "updatedAt": "2026-08-13T16:15:00-06:00",
+  "updatedAt": "2026-08-13T16:45:00-06:00",
   "communities": [
     { "name": "Castle Pines" },
     { "name": "Castle Rock" },
@@ -286,14 +286,102 @@
       "name": "Egg Harbor Cafe",
       "category": "Restaurant",
       "community": "Highlands Ranch",
-      "area": "Highlands Ranch",
-      "address": "Highlands Ranch, CO",
+      "area": "University Boulevard",
+      "address": "9579 S. University Boulevard, Lot 3B, Highlands Ranch, CO",
       "status": "open",
-      "openingWindow": "Opened 2026",
+      "openingWindow": "Opened March 2026",
       "summary": "The family-owned breakfast, brunch, and lunch restaurant opened its first Colorado location.",
       "verifiedAt": "2026-08-13",
-      "confidence": "firsthand",
-      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/egg-harbor-cafe-highlands-ranch" }]
+      "confidence": "official",
+      "sources": [
+        { "label": "Egg Harbor Cafe Highlands Ranch", "url": "https://eggharbor.cafe/highlandsranch" },
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news/egg-harbor-cafe-highlands-ranch" }
+      ]
+    },
+    {
+      "id": "tazikis-highlands-ranch",
+      "name": "Taziki’s Mediterranean Cafe",
+      "category": "Restaurant",
+      "community": "Highlands Ranch",
+      "area": "Highlands Ranch Town Center",
+      "address": "1601 Mayberry Drive, Suite 101, Highlands Ranch, CO",
+      "status": "open",
+      "openingWindow": "Grand opening January 2026",
+      "summary": "The Mediterranean fast-casual restaurant opened in late December 2025 and held its Highlands Ranch grand opening in January.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Taziki’s Highlands Ranch", "url": "https://www.tazikis.com/location/highlands-ranch" },
+        { "label": "Taziki’s opening announcement", "url": "https://www.tazikisfranchising.com/updates/tazikis-mediterranean-caf-opens-in-highlands-ranch-now-serving-the-denver-market-with-two-locations" }
+      ]
+    },
+    {
+      "id": "graze-craze-highlands-ranch",
+      "name": "Graze Craze",
+      "category": "Restaurant",
+      "community": "Highlands Ranch",
+      "area": "Promenade at Highlands Ranch",
+      "address": "2670 E. County Line Road, Suite I, Highlands Ranch, CO",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The charcuterie-board and catering shop is open for pickup and delivery after being under construction this spring.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Graze Craze Highlands Ranch", "url": "https://www.grazecraze.com/locations/highlands-ranch-co/gift" },
+        { "label": "What Now Denver construction report", "url": "https://whatnow.com/denver/restaurants/graze-craze-plating-up-new-highlands-ranch-location/" }
+      ]
+    },
+    {
+      "id": "old-blinking-light-highlands-ranch",
+      "name": "Old Blinking Light",
+      "category": "Restaurant",
+      "community": "Highlands Ranch",
+      "area": "Highlands Ranch Town Center",
+      "address": "9344 Dorchester Street, Highlands Ranch, CO",
+      "status": "open",
+      "openingWindow": "Reopened April 2026",
+      "summary": "The longtime restaurant reopened with new ownership, a refreshed dining room, an updated menu, and a new cocktail program.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "confirmed",
+      "sources": [
+        { "label": "Old Blinking Light", "url": "https://oldblinkinglight.com/party" },
+        { "label": "South Denver Guide reopening report", "url": "https://www.southdenverguide.com/new-restaurant-openings-denver/" }
+      ]
+    },
+    {
+      "id": "high-country-quilts-highlands-ranch",
+      "name": "High Country Quilts, Sewing & Vacuum",
+      "category": "Shopping",
+      "community": "Highlands Ranch",
+      "area": "County Line Road",
+      "address": "6148 E. County Line Road, Suite B, Highlands Ranch, CO",
+      "status": "open",
+      "openingWindow": "Opened April 2026",
+      "summary": "The Colorado Springs sewing and quilting retailer opened its second store in Highlands Ranch, with classes, machines, fabric, and repair services.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "High Country Quilts locations", "url": "https://hcquilts.com/pages/contact" },
+        { "label": "BERNINA grand-opening announcement", "url": "https://www.prweb.com/releases/bernina-dealer-high-country-quilts-sewing--vacuum-expands-with-new-highlands-ranch-location-302738943.html" }
+      ]
+    },
+    {
+      "id": "southpark-pickleball-highlands-ranch",
+      "name": "Southpark Pickleball Complex",
+      "category": "Recreation",
+      "community": "Highlands Ranch",
+      "area": "Broadway and County Line Road",
+      "address": "400 W. County Line Road, Highlands Ranch, CO",
+      "status": "open",
+      "openingWindow": "Opened January 2026",
+      "summary": "The new $13 million complex opened with 19 lighted outdoor courts, shade structures, restrooms, and 147 parking spaces.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Highlands Ranch Metro District facility page", "url": "https://www.highlandsranch.org/Home/Components/FacilityDirectory/FacilityDirectory/84/343" },
+        { "label": "Highlands Ranch 2026 community events", "url": "https://www.highlandsranch.org/news-events/community-events" }
+      ]
     },
     {
       "id": "poulette-bakeshop-parker",
