@@ -111,29 +111,6 @@ h1 {
   border-color: rgba(47, 125, 104, 0.32);
 }
 
-.tool-card.openings-card {
-  grid-column: 1 / -1;
-  min-height: 168px;
-  background: #173f32;
-  border-color: #173f32;
-  color: #ffffff;
-}
-
-.tool-card.openings-card .tool-icon {
-  background: #e46f50;
-}
-
-.tool-card.openings-card .tool-copy,
-.tool-card.openings-card .tool-arrow {
-  color: #c9ddd5;
-}
-
-.tool-card.openings-card:hover,
-.tool-card.openings-card:focus-visible {
-  border-color: #2f7d68;
-  box-shadow: 0 20px 60px rgba(23, 63, 50, 0.24);
-}
-
 .tool-icon {
   display: grid;
   place-items: center;
@@ -146,15 +123,15 @@ h1 {
   font-weight: 850;
 }
 
-.tool-card:nth-child(3) .tool-icon {
+.tool-card:nth-child(2) .tool-icon {
   background: var(--blue);
 }
 
-.tool-card:nth-child(4) .tool-icon {
+.tool-card:nth-child(3) .tool-icon {
   background: var(--red);
 }
 
-.tool-card:nth-child(5) .tool-icon {
+.tool-card:nth-child(4) .tool-icon {
   background: var(--gold);
 }
 
