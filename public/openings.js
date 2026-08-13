@@ -38,6 +38,17 @@ const COMMUNITY_COORDS = {
   Larkspur: [39.2286, -104.8872],
 };
 
+const MAP_STATUS_COLORS = {
+  "opening-soon": "#c7792e",
+  "under-construction": "#8d5b3d",
+  confirmed: "#2e6f84",
+  approved: "#5f6fa8",
+  proposed: "#7a6b82",
+  open: "#247456",
+  paused: "#777777",
+  closed: "#555555",
+};
+
 const els = {
   list: document.querySelector("#list-view"),
   mapPanel: document.querySelector("#map-view"),
@@ -164,27 +175,31 @@ function renderMap() {
   }
   if (state.markerLayer) state.markerLayer.remove();
   state.markerLayer = L.layerGroup().addTo(state.map);
-  const groups = new Map();
-  for (const item of state.items) {
-    if (!groups.has(item.community)) groups.set(item.community, []);
-    groups.get(item.community).push(item);
-  }
   const bounds = [];
-  for (const [community, items] of groups) {
-    const coords = COMMUNITY_COORDS[community];
-    if (!coords) continue;
+  for (const item of state.items) {
+    const communityItems = state.catalog.items.filter((candidate) => candidate.community === item.community);
+    const index = communityItems.findIndex((candidate) => candidate.id === item.id);
+    const base = COMMUNITY_COORDS[item.community];
+    if (!base) continue;
+    const angle = index * 2.399963;
+    const radius = index === 0 ? 0 : .0045 + Math.sqrt(index) * .0027;
+    const coords = [
+      base[0] + Math.cos(angle) * radius,
+      base[1] + Math.sin(angle) * radius * 1.25,
+    ];
     bounds.push(coords);
     const marker = L.circleMarker(coords, {
-      radius: Math.min(19, 9 + items.length),
+      radius: 7,
       color: "#ffffff",
-      weight: 3,
-      fillColor: "#174b3a",
+      weight: 2,
+      fillColor: MAP_STATUS_COLORS[item.status] || "#174b3a",
       fillOpacity: .95,
     });
-    marker.bindPopup(`<strong>${community}</strong><span>${items.length} ${items.length === 1 ? "listing" : "listings"}</span>`);
-    marker.on("click", () => {
-      els.community.value = community;
-    });
+    marker.bindPopup(
+      `<strong>${item.name}</strong>` +
+      `<span>${item.community} · ${item.area}</span>` +
+      `<span class="popup-status">${STATUS_LABELS[item.status] || item.status}</span>`
+    );
     marker.addTo(state.markerLayer);
   }
   setTimeout(() => {
@@ -290,6 +305,7 @@ document.querySelectorAll("[data-view]").forEach((button) => {
       candidate.setAttribute("aria-pressed", String(active));
     });
     renderItems();
+    document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
 document.querySelectorAll("[data-open-tip]").forEach((button) => button.addEventListener("click", openTip));

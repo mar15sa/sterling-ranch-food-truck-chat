@@ -23,6 +23,9 @@ for (const item of raw.items || []) {
     } catch {
       errors.push(`${item.id} has an invalid source URL.`);
     }
+    if (source.url === "https://dougcosocial.com/news") {
+      errors.push(`${item.id} links to the general news page instead of its specific evidence.`);
+    }
   }
 }
 

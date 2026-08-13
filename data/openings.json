@@ -486,7 +486,7 @@
       "verifiedAt": "2026-07-02",
       "confidence": "reported",
       "sources": [
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+        { "label": "Chicken Salad Chick construction announcement", "url": "https://dougcosocial.com/news/chicken-salad-chick-castle-rock" }
       ]
     },
     {
@@ -534,7 +534,7 @@
       "verifiedAt": "2026-07-06",
       "confidence": "firsthand",
       "sources": [
-        { "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news" }
+        { "label": "Champagne Velvet opening-day report", "url": "https://dougcosocial.com/news/champagne-velvet-proper-kitchen-bar-castle-rock" }
       ]
     },
     {
@@ -599,7 +599,7 @@
       "verifiedAt": "2026-07-03",
       "confidence": "business-confirmed",
       "sources": [
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+        { "label": "Peaky Peak expansion announcement", "url": "https://dougcosocial.com/news/peaky-peak-coffee-charcuterie-denver-expansion" }
       ]
     },
     {
@@ -615,7 +615,7 @@
       "verifiedAt": "2026-06-30",
       "confidence": "firsthand",
       "sources": [
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+        { "label": "Black Rock Stroh Road opening report", "url": "https://dougcosocial.com/news/black-rock-coffee-parker-stroh" }
       ]
     },
     {
@@ -631,7 +631,7 @@
       "verifiedAt": "2026-07-26",
       "confidence": "firsthand",
       "sources": [
-        { "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news" }
+        { "label": "Emagine Parker grand-opening report", "url": "https://dougcosocial.com/news/emagine-parker-grand-opening" }
       ]
     },
     {
@@ -697,7 +697,7 @@
       "verifiedAt": "2026-07-16",
       "confidence": "firsthand",
       "sources": [
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+        { "label": "The Groove opening report", "url": "https://dougcosocial.com/news/the-groove-cafe-lyric-ridgegate-lone-tree" }
       ]
     },
     {
@@ -713,7 +713,7 @@
       "verifiedAt": "2026-07-16",
       "confidence": "official",
       "sources": [
-        { "label": "City of Castle Pines", "url": "https://www.castlepinesco.gov/rumor-has-it/" }
+        { "label": "Castle Pines announcement: 7 Brew construction", "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=A%207%20Brew%20Coffee%20is%20currently%20under%20construction" }
       ]
     },
     {
@@ -729,7 +729,7 @@
       "verifiedAt": "2026-07-14",
       "confidence": "official",
       "sources": [
-        { "label": "City of Castle Pines", "url": "https://www.castlepinesco.gov/rumor-has-it/" }
+        { "label": "Castle Pines announcement: Castilla Italiano", "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=Yes%2C%20Castilla%20Italiano%20is%20expected%20to%20open" }
       ]
     },
     {
@@ -761,7 +761,7 @@
       "verifiedAt": "2026-07-01",
       "confidence": "firsthand",
       "sources": [
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+        { "label": "Magic Manor opening announcement", "url": "https://dougcosocial.com/news/magic-manor-theatre-of-dreams-sedalia" }
       ]
     },
     {
@@ -843,7 +843,7 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Park Meadows directory", "url": "https://www.parkmeadows.com/en/directory/" }
+        { "label": "Park Meadows listing: Rivian coming soon", "url": "https://www.parkmeadows.com/en/directory/#:~:text=Rivian,Coming%20Soon" }
       ]
     },
     {
@@ -859,7 +859,7 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Park Meadows directory", "url": "https://www.parkmeadows.com/en/directory/" }
+        { "label": "Park Meadows listing: Faherty coming soon", "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Coming%20Soon" }
       ]
     },
     {
@@ -875,7 +875,7 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Park Meadows directory", "url": "https://www.parkmeadows.com/en/directory/" }
+        { "label": "Park Meadows listing: Columbia coming soon", "url": "https://www.parkmeadows.com/en/directory/#:~:text=Columbia,Coming%20Soon" }
       ]
     },
     {
@@ -891,7 +891,7 @@
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "Lazy Dog locations", "url": "https://lazydogrestaurants.com/pages/locations" },
+        { "label": "Lazy Dog Castle Rock announcement", "url": "https://www.lazydogrestaurants.com/locations/castle-rock-co" },
         { "label": "Castle Rock development update", "url": "https://myemail.constantcontact.com/subject.html?aid=f67ENjj096k&soid=1139362075676" }
       ]
     },
