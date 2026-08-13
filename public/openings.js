@@ -102,10 +102,12 @@ function renderSummary(catalog) {
 
 function cardFor(item) {
   const card = els.template.content.firstElementChild.cloneNode(true);
+  card.dataset.status = item.status;
+  card.querySelector(".card-icon").textContent = item.category.slice(0, 1).toUpperCase();
   const status = card.querySelector(".status-badge");
   status.textContent = STATUS_LABELS[item.status] || item.status;
   status.classList.add(`status-${item.status}`);
-  card.querySelector(".verified-date").textContent = `Checked ${formatDate(item.verifiedAt)}`;
+  card.querySelector(".verified-date").textContent = `Verified ${formatDate(item.verifiedAt)}`;
   card.querySelector(".card-place").textContent = `${item.community} · ${item.area}`;
   card.querySelector("h3").textContent = item.name;
   card.querySelector(".opening-window").textContent = item.openingWindow;
@@ -148,9 +150,56 @@ function filteredItems() {
   });
 }
 
+function sortItems(items) {
+  const statusOrder = {
+    "opening-soon": 0,
+    "under-construction": 1,
+    confirmed: 2,
+    approved: 3,
+    proposed: 4,
+    open: 5,
+    paused: 6,
+    closed: 7,
+  };
+  return [...items].sort((a, b) => {
+    const statusDifference = (statusOrder[a.status] ?? 99) - (statusOrder[b.status] ?? 99);
+    if (statusDifference) return statusDifference;
+    const dateDifference = String(b.verifiedAt || "").localeCompare(String(a.verifiedAt || ""));
+    return dateDifference || a.name.localeCompare(b.name);
+  });
+}
+
+function listSection(title, items) {
+  const section = document.createElement("section");
+  section.className = "opening-group";
+  const heading = document.createElement("div");
+  heading.className = "opening-group-heading";
+  const name = document.createElement("h3");
+  name.textContent = title;
+  const count = document.createElement("span");
+  count.textContent = `${items.length} ${items.length === 1 ? "place" : "places"}`;
+  heading.append(name, count);
+  const rows = document.createElement("div");
+  rows.className = "opening-rows";
+  rows.append(...items.map(cardFor));
+  section.append(heading, rows);
+  return section;
+}
+
+function renderList() {
+  const upcoming = state.items.filter((item) => item.status !== "open" && item.status !== "closed");
+  const recentlyOpen = state.items.filter((item) => item.status === "open");
+  const other = state.items.filter((item) => !upcoming.includes(item) && !recentlyOpen.includes(item));
+  const groups = [];
+  if (upcoming.length) groups.push(listSection("Coming up", upcoming));
+  if (recentlyOpen.length) groups.push(listSection("Recently opened", recentlyOpen));
+  if (other.length) groups.push(listSection("Other updates", other));
+  els.list.replaceChildren(...groups);
+}
+
 function renderItems() {
-  state.items = filteredItems();
-  els.list.replaceChildren(...state.items.map(cardFor));
+  state.items = sortItems(filteredItems());
+  renderList();
   const active = Object.values(currentFilters()).some((value) => value && value !== "all");
   els.clear.hidden = !active;
   els.resultCount.textContent = `${state.items.length} ${state.items.length === 1 ? "place" : "places"} shown`;

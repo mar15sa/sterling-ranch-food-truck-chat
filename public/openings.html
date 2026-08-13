@@ -14,7 +14,7 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
     <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=1.9.4" />
-    <link rel="stylesheet" href="/openings.css?v=20260813-v4" />
+    <link rel="stylesheet" href="/openings.css?v=20260813-v5" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -27,7 +27,7 @@
     <header class="site-header">
       <a class="brand" href="/">
         <span class="brand-mark" aria-hidden="true">SR</span>
-        <span><strong>Sterling Ranch Society</strong><small>Douglas County + nearby openings</small></span>
+        <span><strong>Sterling Ranch Society</strong><small>Douglas County openings</small></span>
       </a>
       <button class="tip-button" type="button" data-open-tip>Share a tip</button>
     </header>
@@ -35,8 +35,9 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <h1>Know what’s coming before the sign goes up.</h1>
-          <p class="hero-lede">New restaurants, shops, coffee, entertainment, and everyday services across Douglas County.</p>
+          <p class="eyebrow">The local pulse</p>
+          <h1>What’s new around here?</h1>
+          <p class="hero-lede">The latest verified restaurant, shop, coffee, entertainment, and service openings across Douglas County.</p>
         </div>
         <div class="hero-panel" aria-label="Tracker summary">
           <p class="hero-panel-label">On the radar</p>
@@ -57,8 +58,8 @@
       <section class="tracker" aria-labelledby="tracker-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Explore the tracker</p>
-            <h2 id="tracker-title">Every verified opening we know about</h2>
+            <p class="eyebrow">Latest verified updates</p>
+            <h2 id="tracker-title">What’s opening near you</h2>
           </div>
           <div class="view-switch" role="group" aria-label="Choose list or map view">
             <button class="active" type="button" data-view="list" aria-pressed="true">List</button>
@@ -166,17 +167,20 @@
 
     <template id="opening-card-template">
       <article class="opening-card">
+        <div class="card-icon" aria-hidden="true"></div>
+        <div class="card-content">
+          <p class="card-place"></p>
+          <h3></h3>
+          <p class="opening-window"></p>
+          <p class="card-summary"></p>
+          <div class="evidence-row"><span class="evidence-badge"></span><span class="category"></span></div>
+        </div>
         <div class="card-top"><span class="status-badge"></span><span class="verified-date"></span></div>
-        <p class="card-place"></p>
-        <h3></h3>
-        <p class="opening-window"></p>
-        <p class="card-summary"></p>
-        <div class="evidence-row"><span class="evidence-badge"></span><span class="category"></span></div>
         <details><summary>Evidence and location <span>+</span></summary><div class="details-body"><p class="address"></p><div class="source-links"></div></div></details>
       </article>
     </template>
 
     <script src="/vendor/leaflet/leaflet.js?v=1.9.4"></script>
-    <script src="/openings.js?v=20260813-v4" defer></script>
+    <script src="/openings.js?v=20260813-v5" defer></script>
   </body>
 </html>
