@@ -1,0 +1,454 @@
+{
+  "version": 1,
+  "lastRunAt": "2026-08-13T16:52:41.333Z",
+  "sources": {
+    "castle-rock-development": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.446Z",
+      "changedAt": null,
+      "fingerprint": "cbcf673245193e69ded5fec7e8e6ef18eb9bd6eba3a18687293e9c8716aff1ff",
+      "finalUrl": "https://www.crgov.com/1907/Development-Activity",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "The pace of development within Castle Rock has generally corresponded with economic cycles, as revealed in the charts on this page. Over the past 25 years, an average of about 780 single-family homes and 150 multifamily units have been constructed each year within the Town. Over the past seven years, an average of about 325,000 square feet of nonresidential space has been constructed annually."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "castle-rock-agendas": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.527Z",
+      "changedAt": null,
+      "fingerprint": "ba0fbb4f4db66b2f27002521680f5fe0094260a6e0ac497c8e9ef11483b2c84b",
+      "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "parker-planning": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.529Z",
+      "changedAt": null,
+      "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
+      "finalUrl": "https://www.parkerco.gov/Planning",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "&amp;amp;amp;lt;span class=\"fr-mk\" style=\"display: none;\"&amp;amp;amp;gt;&amp;amp;amp;amp;amp;nbsp;&amp;amp;amp;lt;/span&amp;amp;amp;gt;"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "parker-economic-development": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.531Z",
+      "changedAt": null,
+      "fingerprint": "698d121769465bd2d44287e3fa49df3ddac965dea5db2034e0dfa9edf66babef",
+      "finalUrl": "https://www.parkered.com/",
+      "contentType": "text/html;charset=utf-8",
+      "signals": [
+        "Find available industrial and commercial property in Parker, Colorado.",
+        "Owner at West Main Taproom + grill"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "lone-tree-projects": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.533Z",
+      "changedAt": null,
+      "fingerprint": "0202e72b4881cb4c0a4260ada79cb2d0bf5fc3262d3d450205ada9d305b67eda",
+      "finalUrl": "https://cityoflonetree.com/projects/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Parks, Trails, Open Space"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "castle-pines-development": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.535Z",
+      "changedAt": null,
+      "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
+      "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "CP Commercial, LLC Lawsuit"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "castle-pines-rumors": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.536Z",
+      "changedAt": null,
+      "fingerprint": "abef7df19e072bfc429686fbea3bec2d128ed6d88ab11b12f2219873e53af366",
+      "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "CP Commercial, LLC Lawsuit",
+        "A 7 Brew Coffee is currently under construction. The latest information about development activity around Castle Pines is available at CastlePinesCO.gov/DevelopmentActivity.",
+        "When is the new storage facility opening?",
+        "Is there a new restaurant going into the old Pino’s location?",
+        "Yes, Castilla Italiano is expected to open in the former Pino’s location. The restaurant’s owners have indicated that they plan to be open for business later this summer, following the completion of extensive renovation work.",
+        "What is happening with the open space in front of the skyline ridge neighborhood? On chase lane and Kenzie circle? Rumored that the city owns it and they will build a school there. What about a pool and community center for the neighborhood?",
+        "The owners of the former Safeway site are currently seeking a tenant to fill the vacant site. Safeway previously had a multi-year lease in place for the property. However, that lease was terminated last year. Following that lease termination, the property owner entered into an agreement with a private fitness facility known as Engage: A Total Wellness Community . However, that agreement is no longer in place.",
+        "The property owner is actively searching for a new tenant to fill the space. We'll share information on a new tenant when available.",
+        "To support development, the City works with property and business owners to process land use applications in accordance with the City's codes and Comprehensive Plan . However, while the City may help support the development process, we do not choose or dictate the individual businesses or tenants.",
+        "Property owner is willing to have a commercially zoned area developed",
+        "It’s ultimately up to the property owner to connect with potential businesses to fill commercial zones, as the City cannot force a landowner to develop their property. \\",
+        "Is the area behind my house zoned for open space?",
+        "More details are available at https://www.castlepinesco.gov/cp-commercial-llc-lawsuit/ .",
+        "I’ve heard through the grapevine there are discussions of residents that live in the timberline neighborhood getting access to the lifetime fitness center pools because the planned space for our neighborhood amenities is now protected by the state due to elk migration. Is this true?",
+        "To cover the costs of managing and maintaining stormwater infrastructure, residents and commercial property owners pay an annual stormwater utility fee. This annual fee provides dedicated funding for the City's management of stormwater system infrastructure."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-projects": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.537Z",
+      "changedAt": null,
+      "fingerprint": "7cb7fc4620444d1d9437eb34f39229e44cf3325f72e5a24a79e80f54d4e5d52f",
+      "finalUrl": "https://www.douglasco.gov/planning/development-project-records-online/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Parks, Trails, Historic Resources and Open Space Fund",
+        "Open Space Properties & Trails",
+        "Commercial Forms",
+        "Commercial Property",
+        "Spark DC",
+        "Restaurant Inspections",
+        "by Webolutions Digital Marketing Agency"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "larkspur-planning": {
+      "status": "error",
+      "checkedAt": "2026-08-13T16:52:40.539Z",
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "newSignals": [],
+      "error": "HTTP 403"
+    },
+    "dougco-social": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.541Z",
+      "changedAt": null,
+      "fingerprint": "ddd7153acfd179221029c1bf974ca84c3066c4c2dbd2eb51dce4a60ff0264f2d",
+      "finalUrl": "https://dougcosocial.com/news",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Douglas County News — Openings & Closings | DougCo Social DougCo Social",
+        "New openings, closings, development, and community updates from Castle Rock, Parker, Highlands Ranch, Lone Tree, Castle Pines, and across Douglas County — first-person coverage you won&#x27;t find anywhere else.",
+        "Egg Harbor Cafe Is Coming to Belleview Station in Denver",
+        "The family-owned breakfast brand that opened in Highlands Ranch this spring is expanding — a second Colorado location is coming to Belleview Station in southeast Denver, looking like a September opening.",
+        "Douglas County approved $7.5 million toward a 75,000-square-foot Gold Crown youth field house in Castle Rock&#x27;s Dawson Trails — six basketball courts, a dozen volleyball courts, and an early-2028 opening.",
+        "105 West Brewing&#x27;s all-inclusive Castle Rock Beer Fest Under the Stars returns Saturday, Sept 12, 2026, 4–9pm at the Philip S. Miller Park Amphitheater — 25+ Colorado breweries, 7+ food trucks, unlimited tastings, and live music. It sells out; no door sales.",
+        "The 24th Annual Taste of Douglas County returns Thursday, Aug 20, 2026, 5–8pm — an indoor, air-conditioned evening of food samples from dozens of area restaurants, drinks, and live entertainment at the Douglas County Events Center in Castle Rock. $10 in advance, $20 at the door.",
+        "GQue BBQ Coming to Parker — Taking Over the Former Freddy&#x27;s Space",
+        "GQue BBQ, Colorado&#x27;s championship-BBQ chain, is coming to Parker&#x27;s Crown Point Center at 18424 Cottonwood Dr — the former Freddy&#x27;s Frozen Custard & Steakburgers space. A Town of Parker permit describes the remodel. No opening date yet.",
+        "Shake Shack Opening in Parker August 12 — In the Former Wendy&#x27;s Spot",
+        "Shake Shack is opening its first Parker location at 9185 Crown Crest Blvd on Wednesday, August 12, 2026 — in the space that formerly housed a Wendy&#x27;s. Here&#x27;s what we know.",
+        "A 31-acre, $400 million mixed-use district is under construction on Castle Rock&#x27;s west side — a sports center, a hotel, six restaurants, and hundreds of homes, from the same developer behind Riverwalk downtown.",
+        "Signage for the former Wild Goose Saloon space at 11160 S Pikes Peak Dr in Parker now reads JP Cocina & Cantina, a Mexican cantina — a shift from the JP&#x27;s Sports Bar name announced earlier in 2026. Ownership, menu and opening date are not yet confirmed.",
+        "Salady — billed as South Korea&#x27;s largest salad franchise, with 300-plus stores — is coming to Parker at 9700 S Parker Rd, in the Parker Gateway Marketplace next to Einstein Bros Bagels, as the Korean chain expands across the U.S. The exterior sign is up, and staff on site say the store is targeting an August 2026 opening.",
+        "A new permanent sculpture called Big Drive — a bull, cow, and calf standing about 11 feet tall and 20 feet wide — is being installed at Castle Rock&#x27;s Rock Park Open Space, where the Town&#x27;s Western Heritage Cattle Drive begins each summer. Here&#x27;s the story, the artists behind it, and the July 22 dedication.",
+        "Lost Canyon Ranch Open Space: I Hiked Every Open Trail. Here&#x27;s the Guide.",
+        "Castle Rock&#x27;s Lost Canyon Ranch Open Space opened July 13, 2026. I hiked all 10 miles over two days. Here is every open trail with real distance, elevation and shade, both trailheads, what is still closed, and what to know before you go. No dogs.",
+        "Pick N Tap: Indoor Pickleball, Golf, and a Restaurant Are Coming to Parker",
+        "The Town of Parker has approved Pick N Tap, a 19,960-square-foot restaurant with indoor pickleball courts and golf simulators at 11735 Disha Drive. Construction is expected to start soon.",
+        "The Southern fast-casual chain Chicken Salad Chick is finally underway in Castle Rock&#x27;s Meadows neighborhood, near the movie theater and across from the hospitals. Dirt is moving on a location with a patio and drive-thru; an opening date hasn&#x27;t been announced yet.",
+        "After 23 years in Castle Rock, world-championship magicians Carol Massie and Joe Givan have reopened as the Magic Manor — an intimate 90-seat magic theatre and event venue inside a historic 1908 Victorian property in Sedalia, the former Gabriel&#x27;s Italian Restaurant.",
+        "24 Hour Fitness South Parker Closed for Renovation — Reopens July 11",
+        "The South Parker Super-Sport club at 11445 Twenty Mile Rd is temporarily closed for a targeted renovation and set to reopen July 11, 2026 — the same renovation 24 Hour Fitness just completed at its Castle Rock club. Expect the basketball court swapped out for an expanded free-weight area and turf zone, plus new equipment.",
+        "Black Rock Coffee Bar Now Open at Parker Road & Stroh Road",
+        "Black Rock Coffee Bar is now open at 6940 Stroh Rd (Parker Road & Stroh Road), opening Tuesday, June 30, 2026 — its third Parker location and 19th in Colorado, with a week of grand-opening specials.",
+        "Inside Emagine Parker: Opening Date, Photos & Prices",
+        "We toured Emagine Parker — Colorado&#x27;s first Emagine theater, inside the former AMC Twenty Mile 10 — the night before it opened. Here&#x27;s what it&#x27;s actually like inside, with photos: 10 auditoriums, two EMX large-format screens, heated recliners, cuddle chairs, ticket prices, a full Colorado bar, and Little Dot Pizza.",
+        "The Groove Café Now Open at Lyric at RidgeGate in Lone Tree",
+        "The Groove — the new neighborhood hub at the Lyric at RidgeGate community in Lone Tree — is now open at 10930 Lyric Street, with a café serving coffee, breakfast, lunch, and dinner alongside a restaurant, welcome center, fitness area, and pool.",
+        "Denver-based Cerebral Brewing is opening its fourth taproom at 20117 East Mainstreet in downtown Parker. A 4,200-square-foot space inside the East Main development, with a roughly 2,000-square-foot patio, opens summer 2027.",
+        "Peaky Peak Coffee & Charcuterie — Lone Tree Concept Expanding to Denver and Parker",
+        "Peaky Peak Coffee & Charcuterie — Quy and Tracy Nguyen&#x27;s Vietnamese-coffee-meets-charcuterie concept in Lone Tree — is expanding, with a second location in Denver&#x27;s Golden Triangle and a third now confirmed for Parker&#x27;s Mainstreet.",
+        "24 Hour Fitness Castle Rock Reopens After Renovation — May 27 Soft Opening",
+        "The Castle Rock Super-Sport club at 5745 New Abbey Ln reopens Wednesday, May 27 after a targeted renovation: 50 pieces of new equipment, an expanded Zone, new flooring and paint, and the new Reformer24 private Pilates studio. Here are the soft-opening details, presale pricing, and what&#x27;s already in the club.",
+        "Champagne Velvet Proper Kitchen & Bar Castle Rock — What We Tried, Menu, and What to Know",
+        "Champagne Velvet Proper Kitchen & Bar opened Sunday, May 17, 2026 at 2355 Mercantile St in Castle Rock — the rebrand of the former I.C. Brewhouse, named for Upland Brewing&#x27;s 1902 &#x27;Million Dollar Flavor&#x27; pilsner. We went for lunch on opening day. Here&#x27;s what we tried, the full menu, and what to know before you go.",
+        "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff",
+        "Starbird Chicken&#x27;s Castle Rock location opens Monday, April 27, 5–9pm at the Promenade. Soft opening notes, menu highlights, hours, and patio details.",
+        "Lone Tree is building High Note Regional Park in the Lyric neighborhood. Phase 1 includes playgrounds, a dog park, sports fields, and a beer garden. Opening 2027.",
+        "Bar Hummingbird Castle Rock — Menu, Hours, and What We Tried"
+      ],
+      "structuredLeads": [
+        {
+          "id": "dougco-social-gold-crown-field-house-coming-to-castle-rock-s-dawson-trails",
+          "headline": "Gold Crown Field House Coming to Castle Rock's Dawson Trails",
+          "url": "https://dougcosocial.com/news/gold-crown-foundation-field-house-castle-rock",
+          "observedDate": "2026-08-05",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-fierce45-a-westword-best-of-denver-pilates-studio-opens-in-castle-rock",
+          "headline": "Fierce45, a Westword 'Best of Denver' Pilates Studio, Opens in Castle Rock",
+          "url": "https://dougcosocial.com/news/fierce45-castle-rock",
+          "observedDate": "2026-08-04",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-gque-bbq-coming-to-parker-taking-over-the-former-freddy-s-space",
+          "headline": "GQue BBQ Coming to Parker — Taking Over the Former Freddy's Space",
+          "url": "https://dougcosocial.com/news/gque-bbq-parker",
+          "observedDate": "2026-08-02",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-shake-shack-opening-in-parker-august-12-in-the-former-wendy-s-spot",
+          "headline": "Shake Shack Opening in Parker August 12 — In the Former Wendy's Spot",
+          "url": "https://dougcosocial.com/news/shake-shack-parker",
+          "observedDate": "2026-08-02",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-the-brickyard-castle-rock-s-400-million-new-neighborhood",
+          "headline": "The Brickyard: Castle Rock's $400 Million New Neighborhood",
+          "url": "https://dougcosocial.com/news/the-brickyard-castle-rock",
+          "observedDate": "2026-08-02",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-jp-cocina-cantina-replacing-wild-goose-saloon-in-parker",
+          "headline": "JP Cocina & Cantina Replacing Wild Goose Saloon in Parker",
+          "url": "https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker",
+          "observedDate": "2026-07-24",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-rugby-scott-opens-a-butcher-shop-on-parker-s-mainstreet",
+          "headline": "Rugby Scott Opens a Butcher Shop on Parker's Mainstreet",
+          "url": "https://dougcosocial.com/news/rugby-scott-parker-butcher-shop",
+          "observedDate": "2026-07-25",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-salady-a-korean-salad-chain-is-coming-to-parker",
+          "headline": "Salady, a Korean Salad Chain, Is Coming to Parker",
+          "url": "https://dougcosocial.com/news/salady-parker",
+          "observedDate": "2026-07-24",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-the-hot-spot-studios-colorado-s-first-now-open-in-castle-rock",
+          "headline": "The Hot Spot Studios: Colorado's First, Now Open in Castle Rock",
+          "url": "https://dougcosocial.com/news/the-hot-spot-studios-castle-rock",
+          "observedDate": "2026-07-28",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-pick-n-tap-indoor-pickleball-golf-and-a-restaurant-are-coming-to-parker",
+          "headline": "Pick N Tap: Indoor Pickleball, Golf, and a Restaurant Are Coming to Parker",
+          "url": "https://dougcosocial.com/news/pick-n-tap-parker",
+          "observedDate": "2026-07-09",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-chicken-salad-chick-is-coming-to-castle-rock-and-construction-has-started",
+          "headline": "Chicken Salad Chick Is Coming to Castle Rock — and Construction Has Started",
+          "url": "https://dougcosocial.com/news/chicken-salad-chick-castle-rock",
+          "observedDate": "2026-07-01",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-theatre-of-dreams-reopens-in-sedalia-as-the-magic-manor",
+          "headline": "Theatre of Dreams Reopens in Sedalia as the Magic Manor",
+          "url": "https://dougcosocial.com/news/magic-manor-theatre-of-dreams-sedalia",
+          "observedDate": "2026-07-01",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-24-hour-fitness-south-parker-closed-for-renovation-reopens-july-11",
+          "headline": "24 Hour Fitness South Parker Closed for Renovation — Reopens July 11",
+          "url": "https://dougcosocial.com/news/24-hour-fitness-south-parker-renovation",
+          "observedDate": "2026-07-10",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-black-rock-coffee-bar-now-open-at-parker-road-stroh-road",
+          "headline": "Black Rock Coffee Bar Now Open at Parker Road & Stroh Road",
+          "url": "https://dougcosocial.com/news/black-rock-coffee-parker-stroh",
+          "observedDate": "2026-06-30",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-inside-emagine-parker-opening-date-photos-prices",
+          "headline": "Inside Emagine Parker: Opening Date, Photos & Prices",
+          "url": "https://dougcosocial.com/news/emagine-parker-grand-opening",
+          "observedDate": "2026-07-26",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-the-groove-caf-now-open-at-lyric-at-ridgegate-in-lone-tree",
+          "headline": "The Groove Café Now Open at Lyric at RidgeGate in Lone Tree",
+          "url": "https://dougcosocial.com/news/the-groove-cafe-lyric-ridgegate-lone-tree",
+          "observedDate": "2026-07-16",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-cerebral-brewing-coming-to-downtown-parker-targeting-summer-2027",
+          "headline": "Cerebral Brewing Coming to Downtown Parker — Targeting Summer 2027",
+          "url": "https://dougcosocial.com/news/cerebral-brewing-parker-taproom",
+          "observedDate": "2026-06-04",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-peaky-peak-coffee-charcuterie-lone-tree-concept-expanding-to-denver-and-parker",
+          "headline": "Peaky Peak Coffee & Charcuterie — Lone Tree Concept Expanding to Denver and Parker",
+          "url": "https://dougcosocial.com/news/peaky-peak-coffee-charcuterie-denver-expansion",
+          "observedDate": "2026-07-03",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-24-hour-fitness-castle-rock-reopens-after-renovation-may-27-soft-opening",
+          "headline": "24 Hour Fitness Castle Rock Reopens After Renovation — May 27 Soft Opening",
+          "url": "https://dougcosocial.com/news/24-hour-fitness-castle-rock-renovation",
+          "observedDate": "2026-07-06",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-champagne-velvet-proper-kitchen-bar-castle-rock-what-we-tried-menu-and-what-to-know",
+          "headline": "Champagne Velvet Proper Kitchen & Bar Castle Rock — What We Tried, Menu, and What to Know",
+          "url": "https://dougcosocial.com/news/champagne-velvet-proper-kitchen-bar-castle-rock",
+          "observedDate": "2026-06-27",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-hideaway-bar-grill-in-castle-rock-hit-by-two-fires-in-two-days-how-to-help-the-staff",
+          "headline": "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff",
+          "url": "https://dougcosocial.com/news/hideaway-bar-grill-fire-castle-rock",
+          "observedDate": "2026-06-27",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-riot-bbq-takes-over-wide-open-saloon-kitchen-in-sedalia",
+          "headline": "Riot BBQ Takes Over Wide Open Saloon Kitchen in Sedalia",
+          "url": "https://dougcosocial.com/news/riot-bbq-wide-open-saloon-sedalia",
+          "observedDate": "2026-06-27",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-a-new-trail-will-connect-downtown-castle-rock-to-philip-s-miller-park",
+          "headline": "A New Trail Will Connect Downtown Castle Rock to Philip S. Miller Park",
+          "url": "https://dougcosocial.com/news/industrial-tributary-trail-castle-rock",
+          "observedDate": "2026-04-27",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
+        {
+          "id": "dougco-social-free-rideshare-is-officially-coming-to-castle-rock",
+          "headline": "Free Rideshare Is Officially Coming to Castle Rock",
+          "url": "https://dougcosocial.com/news/link-on-demand-castle-rock",
+          "observedDate": "2026-04-27",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        }
+      ],
+      "newSignals": []
+    },
+    "discover-dougco": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.543Z",
+      "changedAt": null,
+      "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
+      "finalUrl": "https://discoverdougco.com/news",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Restaurants",
+        "Openings, closings, and what&#x27;s changing across Douglas County.",
+        "Openings",
+        "Opening Jul 29, 2026",
+        "Opening Jul 22, 2026",
+        "Edition three of the weekly tracker: Lost Canyon Ranch opens as Castle Rock&#x27;s biggest open-space purchase ever, the Wild Goose building&#x27;s banner changes its story, a pottery studio and a public café most people think is private, plus honest updates on Cask & Trotter and the Hideaway.",
+        "Opening Jul 14, 2026",
+        "New in Douglas County: Parker Gets a Serious Movie Theater, a Butcher, and the Answer to the Wild Goose Question",
+        "Edition two of the weekly tracker: Emagine&#x27;s ten-screen Colorado debut, a fifth-generation butcher on Mainstreet, Sedalia&#x27;s new magic house, JP&#x27;s Sports Bar taking the Wild Goose building, Life Time&#x27;s outsized Castle Pines bet, and the quiet end of a Park Meadows original.",
+        "Opening Jul 6, 2026",
+        "The first edition of our weekly openings-and-closings tracker: seven new spots across the county, what&#x27;s coming to the Outlets, the 2027 Costco reality check, and the Castle Rock institution on a closure clock.",
+        "Nine months in: how The Sportsbook Bar & Grill changed the Mainstreet Parker sports-bar math.",
+        "A follow-up to last year&#x27;s opening. The big LED wall, the never-frozen burgers, the kitchen that runs to midnight on weekends, and the gap on Mainstreet it actually filled.",
+        "Five ticketed national acts from June 26 to August 29 at the Philip S. Miller Park Amphitheater, plus a separate free Thursday series the regulars actually plan around. Tickets are already on sale.",
+        "Opening May 1, 2026",
+        "The Sportsbook Bar & Grill is open at 18951 Mainstreet in Parker. Mainstreet&#x27;s sports-bar gap is now closed.",
+        "The Colorado-rooted sports bar chain (LoDo, Highlands Ranch, Colorado Springs) opened its Parker location in mid-August 2025 at 18951 Mainstreet, Unit C. Late-night kitchen, a late-2am close most nights, and a bar that fills on Broncos Sundays.",
+        "May 5 is a Tuesday in 2026, which makes it one of the easiest Cinco de Mayos to actually plan around. The four restaurants below are the ones we&#x27;d send you to, ranked by what they do best on a high-volume Mexican holiday.",
+        "Opening Apr 30, 2026",
+        "Lazy Dog Restaurant & Bar is coming to Castle Rock Promenade. The HR location&#x27;s success is the bet.",
+        "The California chain that runs the Highlands Ranch lodge-themed dog patio is building a Castle Rock location at 5949 Alpine Vista Circle in the Promenade development. Opening date not yet confirmed for 2026. The Castle Rock Promenade restaurant cluster keeps growing.",
+        "Pam Briere&#x27;s Italian concept opened January 7, 2025. Hand-pulled pasta, wood-fired pizza, a short-rib ravioli that locals have started ordering by name. Sixteen months in, Ovest Via has graduated from \"new restaurant\" to \"the answer when somebody asks where to eat in Parker.\"",
+        "Starbird Chicken opens at the Castle Rock Promenade. The Mexican-restaurant block just got a chicken concept three doors down.",
+        "The premium fast-casual chicken chain opened its second Colorado location at 6360 Promenade Parkway on Monday, April 27. It sits in the same block as Savina&#x27;s Mexican Kitchen and Los Dos Potrillos Castle Rock, and signals what this stretch of Promenade is becoming: a five-storefront restaurant cluster on the south side of town.",
+        "Your guide to the best restaurants, outdoor adventures, events, and hidden gems across Douglas County, Colorado.",
+        "Coffee Shops"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "what-now-denver": {
+      "status": "ok",
+      "checkedAt": "2026-08-13T16:52:40.544Z",
+      "changedAt": "2026-08-13T16:52:19.004Z",
+      "fingerprint": "a283669f7ee1408c06050c6045c0d4956fe3d392bd165b4b1678fb45f8e719a1",
+      "finalUrl": "https://whatnow.com/denver/restaurants/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Latest Denver Restaurants News | WhatNow Denver",
+        "Restaurants",
+        "Promote your restaurant to over 12 million readers with our Editorial Trade Program.",
+        "Connect with restaurant leaders & industry experts at our events.",
+        "Discover upcoming restaurant openings up to 6 months before anyone else.",
+        "Restaurants Retail Real Estate -->",
+        "Restaurants ▾",
+        "Restaurants Retail Real Estate",
+        "The Coastal Service Bringing New Seafood Bar to Denver Tech Center",
+        "Mosaic Chai House Plans New North Denver Coffee Shop",
+        "G-Que BBQ Breaks Ground on New Parker Restaurant",
+        "Jet’s Pizza Coming Soon to Colorado Springs",
+        "Barcelona Wine Bar Plans New Denver Tech Center Location",
+        "Kiki’s Health Cafe to Open Second Location in Morrison",
+        "King of Wings Team Plans Two New Wheat Ridge Restaurants",
+        "Boka Restaurant Group Plans Three New Cherry Creek Concepts",
+        "What Now connects leading organizations across the restaurant, retail, and real estate industries nationwide, empowering you to grow, expand, and thrive in local markets.",
+        "Something opening or closing in your neighborhood? Drop us a note:",
+        "Pre-Opening Checklist",
+        "Our Partner Guide outlines every step in opening a restaurant — from concept creation to securing a lease to hiring your team, and everything in between.",
+        "Something opening or closing in your ‘hood? Drop us a Note: [email protected]"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    }
+  }
+}

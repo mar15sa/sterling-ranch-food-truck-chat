@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "castle-rock-development",
+      "name": "Castle Rock development activity",
+      "community": "Castle Rock",
+      "kind": "official",
+      "url": "https://www.crgov.com/1907/Development-Activity",
+      "cadence": "daily",
+      "notes": "Development highlights, monthly reports, maps, and public notices."
+    },
+    {
+      "id": "castle-rock-agendas",
+      "name": "Castle Rock public meetings",
+      "community": "Castle Rock",
+      "kind": "official",
+      "url": "https://castlerock-co.legistar.com/Calendar.aspx",
+      "cadence": "daily",
+      "notes": "Town Council and commission packets often surface projects before construction."
+    },
+    {
+      "id": "parker-planning",
+      "name": "Parker planning and development",
+      "community": "Parker",
+      "kind": "official",
+      "url": "https://www.parkerco.gov/Planning",
+      "cadence": "daily",
+      "notes": "Development-review resources, permits, and the Development Tour map."
+    },
+    {
+      "id": "parker-economic-development",
+      "name": "Parker Economic Development",
+      "community": "Parker",
+      "kind": "official",
+      "url": "https://www.parkered.com/",
+      "cadence": "daily",
+      "notes": "Business announcements and major commercial projects."
+    },
+    {
+      "id": "lone-tree-projects",
+      "name": "Lone Tree development projects",
+      "community": "Lone Tree",
+      "kind": "official",
+      "url": "https://cityoflonetree.com/projects/",
+      "cadence": "daily",
+      "notes": "Project feed with approval and construction statuses."
+    },
+    {
+      "id": "castle-pines-development",
+      "name": "Castle Pines development activity",
+      "community": "Castle Pines",
+      "kind": "official",
+      "url": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
+      "cadence": "daily",
+      "notes": "Current land-use and commercial-development activity."
+    },
+    {
+      "id": "castle-pines-rumors",
+      "name": "Castle Pines Rumor Has It",
+      "community": "Castle Pines",
+      "kind": "official",
+      "url": "https://www.castlepinesco.gov/rumor-has-it/",
+      "cadence": "daily",
+      "notes": "City-confirmed answers about rumored businesses and openings."
+    },
+    {
+      "id": "douglas-county-projects",
+      "name": "Douglas County Project Records Online",
+      "community": "Unincorporated Douglas County",
+      "kind": "official",
+      "url": "https://www.douglas.co.us/planning/development-project-records-online/",
+      "cadence": "daily",
+      "notes": "Planning applications for Highlands Ranch, Sterling Ranch, Roxborough, Sedalia, and other unincorporated areas."
+    },
+    {
+      "id": "larkspur-planning",
+      "name": "Larkspur planning meetings",
+      "community": "Larkspur",
+      "kind": "official",
+      "url": "https://www.townoflarkspur.org/meetings/recent",
+      "cadence": "daily",
+      "notes": "Planning Commission and Town Council agendas, packets, and minutes."
+    },
+    {
+      "id": "dougco-social",
+      "name": "DougCo Social openings and local updates",
+      "community": "Countywide",
+      "kind": "local-reporting",
+      "url": "https://dougcosocial.com/news",
+      "cadence": "daily",
+      "notes": "On-the-ground reporting, permits, social accounts, and firsthand visits."
+    },
+    {
+      "id": "discover-dougco",
+      "name": "Discover DougCo tracker",
+      "community": "Countywide",
+      "kind": "local-reporting",
+      "url": "https://discoverdougco.com/news",
+      "cadence": "daily",
+      "notes": "Local opening and development roundup."
+    },
+    {
+      "id": "what-now-denver",
+      "name": "What Now Denver restaurant news",
+      "community": "Countywide",
+      "kind": "trade-reporting",
+      "url": "https://whatnow.com/denver/restaurants/",
+      "cadence": "daily",
+      "notes": "Restaurant lease, permit, and ownership reporting."
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+name: Douglas County openings radar
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 13 * * *"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Restore the previous radar snapshot
+        uses: actions/cache/restore@v4
+        with:
+          path: data/openings-monitor-state.json
+          key: openings-radar-${{ github.run_id }}
+          restore-keys: openings-radar-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scan every configured source
+        id: radar
+        run: npm run openings:monitor
+
+      - name: Save the current radar snapshot
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/openings-monitor-state.json
+          key: openings-radar-${{ github.run_id }}
+
+      - name: Open or update the review issue
+        if: steps.radar.outputs.changed != '0' || steps.radar.outputs.errors != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const title = 'Opening radar: leads ready for review';
+            const body = fs.readFileSync('data/openings-monitor-report.md', 'utf8');
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const existing = issues.find(issue => issue.title === title && !issue.pull_request);
+            if (existing) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+            }

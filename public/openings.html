@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>What’s Opening in Douglas County | Sterling Ranch Society</title>
+    <meta name="description" content="A source-backed tracker for new restaurants, stores, coffee shops, entertainment, and services across Douglas County, Colorado." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sterling Ranch Society" />
+    <meta property="og:title" content="What’s Opening in Douglas County" />
+    <meta property="og:description" content="Confirmed openings, construction updates, expected dates, and the sources behind every listing." />
+    <meta property="og:url" content="https://sterlingranchsociety.com/openings" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://tile.openstreetmap.org" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3ynhFwA7Ggq+ZXhORZOSkW9V8uQpM=" crossorigin="" />
+    <link rel="stylesheet" href="/openings.css?v=20260813-v1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-GSHC10SK92");
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">SR</span>
+        <span><strong>Sterling Ranch Society</strong><small>Douglas County openings</small></span>
+      </a>
+      <button class="tip-button" type="button" data-open-tip>Share a tip</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">The countywide opening tracker</p>
+          <h1>Know what’s coming before the sign goes up.</h1>
+          <p class="hero-lede">New restaurants, shops, coffee, entertainment, and everyday services across Douglas County—each tied to the evidence behind it.</p>
+          <div class="trust-row">
+            <span><i class="pulse" aria-hidden="true"></i> Sources checked daily</span>
+            <span>Human verified</span>
+            <span>No paywall</span>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="Tracker summary">
+          <p class="hero-panel-label">On the radar</p>
+          <strong id="hero-count">—</strong>
+          <span>verified places</span>
+          <div class="hero-panel-rule"></div>
+          <p id="hero-update">Loading the latest update…</p>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Opening tracker statistics">
+        <div><strong id="stat-coming">—</strong><span>still coming</span></div>
+        <div><strong id="stat-soon">—</strong><span>opening soon</span></div>
+        <div><strong id="stat-open">—</strong><span>recently open</span></div>
+        <div><strong id="stat-communities">—</strong><span>communities</span></div>
+      </section>
+
+      <section class="tracker" aria-labelledby="tracker-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Explore the tracker</p>
+            <h2 id="tracker-title">Every verified opening we know about</h2>
+          </div>
+          <div class="view-switch" role="group" aria-label="Choose list or map view">
+            <button class="active" type="button" data-view="list" aria-pressed="true">List</button>
+            <button type="button" data-view="map" aria-pressed="false">Map</button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <label class="search-field">
+            <span class="sr-only">Search openings</span>
+            <span aria-hidden="true">⌕</span>
+            <input id="search" type="search" placeholder="Search a business or neighborhood" autocomplete="off" />
+          </label>
+          <label>
+            <span class="sr-only">Community</span>
+            <select id="community-filter"><option value="all">All communities</option></select>
+          </label>
+          <label>
+            <span class="sr-only">Category</span>
+            <select id="category-filter"><option value="all">All types</option></select>
+          </label>
+          <label>
+            <span class="sr-only">Status</span>
+            <select id="status-filter">
+              <option value="all">Every status</option>
+              <option value="opening-soon">Opening soon</option>
+              <option value="under-construction">Under construction</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="approved">Approved</option>
+              <option value="proposed">Proposed</option>
+              <option value="open">Recently open</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="result-line">
+          <p id="result-count" aria-live="polite">Loading openings…</p>
+          <button id="clear-filters" class="text-button" type="button" hidden>Clear filters</button>
+        </div>
+
+        <div id="list-view" class="card-grid" aria-live="polite"></div>
+        <div id="map-view" class="map-panel" hidden>
+          <div id="openings-map" aria-label="Map of Douglas County openings"></div>
+          <p class="map-note">Markers group listings by community. Open any listing for its exact address and source links.</p>
+        </div>
+        <div id="empty-state" class="empty-state" hidden>
+          <h3>No matches yet</h3>
+          <p>Try removing a filter—or share a tip if we missed something.</p>
+          <button type="button" data-open-tip>Share what you know</button>
+        </div>
+      </section>
+
+      <section class="radar" aria-labelledby="radar-title">
+        <div class="radar-intro">
+          <p class="eyebrow light">How we stay ahead</p>
+          <h2 id="radar-title">The opening radar never clocks out.</h2>
+          <p>It watches official development pages, permits, project feeds, local reporting, and business announcements every day. A page change becomes a lead—not a fact—until it passes verification.</p>
+          <button class="radar-button" id="show-sources" type="button">See every source we monitor</button>
+        </div>
+        <div class="radar-status">
+          <div class="radar-orbit" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+          <div class="radar-numbers">
+            <strong id="source-healthy">—</strong>
+            <span>sources responding</span>
+            <small id="source-checked">Waiting for the first scan</small>
+          </div>
+        </div>
+      </section>
+
+      <section id="source-section" class="sources-section" hidden aria-labelledby="source-title">
+        <div class="section-heading compact">
+          <div><p class="eyebrow">Source coverage</p><h2 id="source-title">What the radar checks</h2></div>
+          <button class="text-button" id="hide-sources" type="button">Hide</button>
+        </div>
+        <div id="source-list" class="source-list"></div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div>
+          <p class="eyebrow">Trust, made visible</p>
+          <h2 id="method-title">A rumor can be useful. It just shouldn’t wear a “confirmed” badge.</h2>
+        </div>
+        <ol>
+          <li><span>1</span><div><strong>Detect</strong><p>The radar notices a new name, permit, plan, announcement, or construction update.</p></div></li>
+          <li><span>2</span><div><strong>Verify</strong><p>We confirm it with an official record, the business itself, or two credible independent sources.</p></div></li>
+          <li><span>3</span><div><strong>Track</strong><p>The listing keeps its evidence, status, and last-checked date as the opening gets closer.</p></div></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>Sterling Ranch Society</strong><p>Useful local tools, made for neighbors.</p></div>
+      <button type="button" data-open-tip>Missing a business? Tell us.</button>
+    </footer>
+
+    <dialog id="tip-dialog">
+      <form id="tip-form" method="dialog">
+        <div class="dialog-head">
+          <div><p class="eyebrow">Help the radar</p><h2>Share an opening tip</h2></div>
+          <button class="dialog-close" type="button" data-close-tip aria-label="Close">×</button>
+        </div>
+        <p class="dialog-copy">A sign, permit, social post, or firsthand conversation can all help. We’ll verify the tip before publishing it.</p>
+        <label>Business name <input name="businessName" required maxlength="160" /></label>
+        <div class="form-row">
+          <label>Community <input name="community" placeholder="Parker, Castle Rock…" maxlength="80" /></label>
+          <label>Location <input name="location" placeholder="Shopping center or cross streets" maxlength="240" /></label>
+        </div>
+        <label>Source link <input name="sourceUrl" type="url" placeholder="https://" maxlength="500" /></label>
+        <label>What do you know? <textarea name="details" rows="4" maxlength="1200"></textarea></label>
+        <label>Your email or social handle <span>(optional)</span><input name="contact" maxlength="200" /></label>
+        <input class="honey" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <p id="tip-message" class="tip-message" role="status"></p>
+        <button class="submit-tip" type="submit">Send tip for verification</button>
+      </form>
+    </dialog>
+
+    <template id="opening-card-template">
+      <article class="opening-card">
+        <div class="card-top"><span class="status-badge"></span><span class="verified-date"></span></div>
+        <p class="card-place"></p>
+        <h3></h3>
+        <p class="opening-window"></p>
+        <p class="card-summary"></p>
+        <div class="evidence-row"><span class="evidence-badge"></span><span class="category"></span></div>
+        <details><summary>Evidence and location <span>+</span></summary><div class="details-body"><p class="address"></p><div class="source-links"></div></div></details>
+      </article>
+    </template>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="/openings.js?v=20260813-v1" defer></script>
+  </body>
+</html>

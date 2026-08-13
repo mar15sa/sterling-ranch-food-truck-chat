@@ -1,6 +1,7 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
+const { spawn } = require("node:child_process");
 const { URL } = require("node:url");
 const { isJunkMenuItem } = require("./lib/menu-quality");
 const {
@@ -18,6 +19,11 @@ const {
   normalizeTruckName,
   splitListedTruckNames: splitTruckNames,
 } = require("./lib/truck-names");
+const {
+  getOpeningsCatalog,
+  getOpeningsSourceStatus,
+  submitOpeningTip,
+} = require("./lib/openings");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -41,6 +47,10 @@ const RULES_REFRESH_CHECK_INTERVAL_MS =
   Number(process.env.RULES_REFRESH_CHECK_INTERVAL_MS) || 1000 * 60 * 60;
 const RULES_REFRESH_START_DELAY_MS =
   Number(process.env.RULES_REFRESH_START_DELAY_MS) || 1000 * 30;
+const OPENINGS_MONITOR_INTERVAL_MS =
+  Number(process.env.OPENINGS_MONITOR_INTERVAL_MS) || 1000 * 60 * 60 * 24;
+const OPENINGS_MONITOR_START_DELAY_MS =
+  Number(process.env.OPENINGS_MONITOR_START_DELAY_MS) || 1000 * 60;
 const LOCAL_EVENT_OVERRIDES = {
   "2026-06-06": {
     location: "Prospect Park",
@@ -4560,6 +4570,60 @@ async function handleRulesRefresh(req, res, url) {
   });
 }
 
+function runOpeningsRadar() {
+  if (process.env.OPENINGS_AUTO_MONITOR === "false") return;
+  const child = spawn(process.execPath, [path.join(__dirname, "scripts", "monitor-openings.js"), "--write-state"], {
+    cwd: __dirname,
+    stdio: ["ignore", "ignore", "pipe"],
+    windowsHide: true,
+  });
+  let errors = "";
+  child.stderr.on("data", (chunk) => { errors += chunk.toString(); });
+  child.on("error", (error) => console.warn(`Openings radar could not start: ${error.message}`));
+  child.on("exit", (code) => {
+    if (code !== 0) console.warn(`Openings radar finished with code ${code}: ${errors.slice(0, 500)}`);
+  });
+}
+
+function scheduleOpeningsRadar() {
+  if (process.env.OPENINGS_AUTO_MONITOR === "false") return;
+  const firstScan = setTimeout(runOpeningsRadar, OPENINGS_MONITOR_START_DELAY_MS);
+  firstScan.unref?.();
+  const interval = setInterval(runOpeningsRadar, OPENINGS_MONITOR_INTERVAL_MS);
+  interval.unref?.();
+}
+
+async function handleOpenings(req, res, url) {
+  if (req.method !== "GET") {
+    sendJson(res, 405, { error: "Use GET to view openings." });
+    return;
+  }
+  sendJson(res, 200, getOpeningsCatalog({
+    query: url.searchParams.get("q") || "",
+    community: url.searchParams.get("community") || "all",
+    category: url.searchParams.get("category") || "all",
+    status: url.searchParams.get("status") || "all",
+    sort: url.searchParams.get("sort") || "status",
+  }));
+}
+
+async function handleOpeningSources(req, res) {
+  if (req.method !== "GET") {
+    sendJson(res, 405, { error: "Use GET to view source status." });
+    return;
+  }
+  sendJson(res, 200, getOpeningsSourceStatus());
+}
+
+async function handleOpeningTips(req, res) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST to submit an opening tip." });
+    return;
+  }
+  const result = await submitOpeningTip(await readJsonBody(req));
+  sendJson(res, result.accepted ? 202 : result.status || 400, result);
+}
+
 function serveStatic(req, res, url) {
   if (url.pathname === "/" && url.searchParams.has("date")) {
     res.writeHead(302, {
@@ -4579,6 +4643,8 @@ function serveStatic(req, res, url) {
     "/pool/": "/pool.html",
     "/pool-status": "/pool.html",
     "/pool-status/": "/pool.html",
+    "/openings": "/openings.html",
+    "/openings/": "/openings.html",
   };
   const requested = url.pathname === "/" ? "/index.html" : pageAliases[url.pathname] || url.pathname;
   const filePath = path.normalize(path.join(PUBLIC_DIR, requested));
@@ -4649,6 +4715,21 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (url.pathname === "/api/openings") {
+      await handleOpenings(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/openings/sources") {
+      await handleOpeningSources(req, res);
+      return;
+    }
+
+    if (url.pathname === "/api/openings/tips") {
+      await handleOpeningTips(req, res);
+      return;
+    }
+
     serveStatic(req, res, url);
   } catch (error) {
     console.error(error);
@@ -4662,5 +4743,6 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, HOST, () => {
   console.log(`Food truck chat is running on ${HOST}:${PORT}`);
   scheduleRulesRefreshChecks();
+  scheduleOpeningsRadar();
 });
 

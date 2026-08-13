@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check lib/menu-quality.js && node --check lib/rules-alerts.js && node --check lib/rules-question-log.js && node --check lib/rules-assistant.js && node --check lib/rules-grounding.js && node --check lib/truck-names.js && node --check public/app.js && node --check public/pool.js && node --check public/rules-assistant.js && node --check scripts/ingest-rules.js && node --check scripts/eval-rules.js && node --check scripts/audit-rule-supplements.js && node --check scripts/check-rule-supplements.js && node --check scripts/build-rule-supplement-sections.js && node --check scripts/propose-rule-supplements.js && node scripts/check-truck-names.js && node scripts/check-rule-supplements.js && node scripts/check-live-menus.js --fixtures-only && node scripts/eval-rules.js",
+    "check": "node --check server.js && node --check lib/menu-quality.js && node --check lib/rules-alerts.js && node --check lib/rules-question-log.js && node --check lib/rules-assistant.js && node --check lib/rules-grounding.js && node --check lib/truck-names.js && node --check lib/openings.js && node --check public/app.js && node --check public/pool.js && node --check public/rules-assistant.js && node --check public/openings.js && node --check scripts/monitor-openings.js && node --check scripts/check-openings.js && node --check scripts/ingest-rules.js && node --check scripts/eval-rules.js && node --check scripts/audit-rule-supplements.js && node --check scripts/check-rule-supplements.js && node --check scripts/build-rule-supplement-sections.js && node --check scripts/propose-rule-supplements.js && node scripts/check-openings.js && node scripts/check-truck-names.js && node scripts/check-rule-supplements.js && node scripts/check-live-menus.js --fixtures-only && node scripts/eval-rules.js",
     "check:live": "node scripts/check-live-menus.js",
     "rules:monitor:live": "node scripts/check-live-rules.js",
     "eval:rules": "node scripts/eval-rules.js",
@@ -13,7 +13,8 @@
     "supplements:audit": "node scripts/audit-rule-supplements.js --from 1 --to 2800",
     "supplements:monitor": "node scripts/audit-rule-supplements.js --from-baseline --lookahead 600 --fail-on-candidates",
     "supplements:build-sections": "node scripts/build-rule-supplement-sections.js",
-    "supplements:propose": "node scripts/propose-rule-supplements.js --from-baseline --lookahead 600"
+    "supplements:propose": "node scripts/propose-rule-supplements.js --from-baseline --lookahead 600",
+    "openings:monitor": "node scripts/monitor-openings.js --write-state"
   },
   "keywords": [],
   "author": "",

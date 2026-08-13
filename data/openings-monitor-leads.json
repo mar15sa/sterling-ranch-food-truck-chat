@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-08-13T16:52:41.333Z",
+  "leads": [
+    {
+      "id": "dougco-social-the-brickyard-castle-rock-s-400-million-new-neighborhood",
+      "headline": "The Brickyard: Castle Rock's $400 Million New Neighborhood",
+      "url": "https://dougcosocial.com/news/the-brickyard-castle-rock",
+      "observedDate": "2026-08-02",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-pick-n-tap-indoor-pickleball-golf-and-a-restaurant-are-coming-to-parker",
+      "headline": "Pick N Tap: Indoor Pickleball, Golf, and a Restaurant Are Coming to Parker",
+      "url": "https://dougcosocial.com/news/pick-n-tap-parker",
+      "observedDate": "2026-07-09",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-24-hour-fitness-south-parker-closed-for-renovation-reopens-july-11",
+      "headline": "24 Hour Fitness South Parker Closed for Renovation — Reopens July 11",
+      "url": "https://dougcosocial.com/news/24-hour-fitness-south-parker-renovation",
+      "observedDate": "2026-07-10",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-24-hour-fitness-castle-rock-reopens-after-renovation-may-27-soft-opening",
+      "headline": "24 Hour Fitness Castle Rock Reopens After Renovation — May 27 Soft Opening",
+      "url": "https://dougcosocial.com/news/24-hour-fitness-castle-rock-renovation",
+      "observedDate": "2026-07-06",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-hideaway-bar-grill-in-castle-rock-hit-by-two-fires-in-two-days-how-to-help-the-staff",
+      "headline": "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff",
+      "url": "https://dougcosocial.com/news/hideaway-bar-grill-fire-castle-rock",
+      "observedDate": "2026-06-27",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-a-new-trail-will-connect-downtown-castle-rock-to-philip-s-miller-park",
+      "headline": "A New Trail Will Connect Downtown Castle Rock to Philip S. Miller Park",
+      "url": "https://dougcosocial.com/news/industrial-tributary-trail-castle-rock",
+      "observedDate": "2026-04-27",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-free-rideshare-is-officially-coming-to-castle-rock",
+      "headline": "Free Rideshare Is Officially Coming to Castle Rock",
+      "url": "https://dougcosocial.com/news/link-on-demand-castle-rock",
+      "observedDate": "2026-04-27",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    }
+  ]
+}

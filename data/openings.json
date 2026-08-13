@@ -1,0 +1,623 @@
+{
+  "version": 1,
+  "scope": "Douglas County, Colorado",
+  "updatedAt": "2026-08-13T10:45:00-06:00",
+  "items": [
+    {
+      "id": "gold-crown-field-house-castle-rock",
+      "name": "Gold Crown Field House",
+      "category": "Fitness & wellness",
+      "community": "Castle Rock",
+      "area": "Dawson Trails",
+      "address": "Dawson Trails, Castle Rock, CO",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "A planned 75,000-square-foot youth field house will include six basketball courts convertible to twelve volleyball courts.",
+      "verifiedAt": "2026-08-05",
+      "confidence": "official",
+      "sources": [{ "label": "DougCo Social and county funding record", "url": "https://dougcosocial.com/news/gold-crown-foundation-field-house-castle-rock" }]
+    },
+    {
+      "id": "fierce45-castle-rock",
+      "name": "Fierce45",
+      "category": "Fitness & wellness",
+      "community": "Castle Rock",
+      "area": "Genoa Way",
+      "address": "658 Genoa Way, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Opened August 2026",
+      "summary": "The Pilates-inspired studio opened its first Castle Rock location.",
+      "verifiedAt": "2026-08-04",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/fierce45-castle-rock" }]
+    },
+    {
+      "id": "gque-bbq-parker",
+      "name": "GQue BBQ",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "Crown Point Center",
+      "address": "18424 Cottonwood Drive, Parker, CO",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "The Colorado barbecue restaurant is taking over the former Freddy’s space in Crown Point Center.",
+      "verifiedAt": "2026-08-02",
+      "confidence": "reported",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/gque-bbq-parker" }]
+    },
+    {
+      "id": "shake-shack-parker",
+      "name": "Shake Shack",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "Crown Point",
+      "address": "9185 Crown Crest Boulevard, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened August 12, 2026",
+      "summary": "Parker’s first Shake Shack opened in the former Wendy’s location.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/shake-shack-parker" }]
+    },
+    {
+      "id": "jp-cocina-cantina-parker",
+      "name": "JP Cocina & Cantina",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "Downtown Parker",
+      "address": "11160 South Pikes Peak Drive, Parker, CO",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "A Mexican cantina is taking over the former Wild Goose Saloon space.",
+      "verifiedAt": "2026-07-24",
+      "confidence": "reported",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker" }]
+    },
+    {
+      "id": "rugby-scott-parker",
+      "name": "Rugby Scott",
+      "category": "Grocery & retail",
+      "community": "Parker",
+      "area": "Mainstreet",
+      "address": "19590 Mainstreet, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened July 2026",
+      "summary": "The American Wagyu and Black Angus butcher shop is now open downtown.",
+      "verifiedAt": "2026-07-25",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/rugby-scott-parker-butcher-shop" }]
+    },
+    {
+      "id": "salady-parker",
+      "name": "Salady",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "Parker Road",
+      "address": "9700 South Parker Road, Parker, CO",
+      "status": "opening-soon",
+      "openingWindow": "Targeting August 2026",
+      "summary": "South Korea’s largest salad chain has signage up for a Parker location.",
+      "verifiedAt": "2026-07-24",
+      "confidence": "reported",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/salady-parker" }]
+    },
+    {
+      "id": "hot-spot-studios-castle-rock",
+      "name": "The Hot Spot Studios",
+      "category": "Entertainment & restaurant",
+      "community": "Castle Rock",
+      "area": "Castle Rock",
+      "address": "Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Opened July 2026",
+      "summary": "Colorado’s first location of the walk-in creative project studio is now open.",
+      "verifiedAt": "2026-07-28",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/the-hot-spot-studios-castle-rock" }]
+    },
+    {
+      "id": "izumi-sushi-castle-rock",
+      "name": "Izumi Sushi",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Downtown Castle Rock",
+      "address": "Third Street, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Opened May 11, 2026",
+      "summary": "The Japanese restaurant opened downtown with sushi and a full menu.",
+      "verifiedAt": "2026-06-27",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/izumi-sushi-now-open-castle-rock" }]
+    },
+    {
+      "id": "riot-bbq-sedalia",
+      "name": "Riot BBQ at Wide Open Saloon",
+      "category": "Restaurant",
+      "community": "Sedalia",
+      "area": "Wide Open Saloon",
+      "address": "Sedalia, CO",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "Riot BBQ became the exclusive kitchen partner at Wide Open Saloon.",
+      "verifiedAt": "2026-06-27",
+      "confidence": "business-confirmed",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/riot-bbq-wide-open-saloon-sedalia" }]
+    },
+    {
+      "id": "griddled-castle-rock",
+      "name": "Griddled Crêpes & Paninis",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Suite 175, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The Outlets restaurant serves sweet and savory crêpes and pressed paninis.",
+      "verifiedAt": "2026-06-27",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/griddled-crepes-paninis-castle-rock" }]
+    },
+    {
+      "id": "starbird-chicken-castle-rock",
+      "name": "Starbird Chicken",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Promenade at Castle Rock",
+      "address": "Promenade at Castle Rock, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The fast-casual chicken restaurant is open at the Promenade.",
+      "verifiedAt": "2026-06-27",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/starbird-chicken-castle-rock" }]
+    },
+    {
+      "id": "bar-hummingbird-castle-rock",
+      "name": "Bar Hummingbird",
+      "category": "Brewery & bar",
+      "community": "Castle Rock",
+      "area": "Promenade at Castle Rock",
+      "address": "Promenade at Castle Rock, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The 21-and-over upscale cocktail bar is open at the Promenade.",
+      "verifiedAt": "2026-06-27",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news/bar-hummingbird-castle-rock" }]
+    },
+    {
+      "id": "badger-bloom-boba-castle-rock",
+      "name": "Badger & Bloom Boba",
+      "category": "Coffee & bakery",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "Outlets at Castle Rock, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The locally owned boba shop is open at the Outlets.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/badger-bloom-boba-castle-rock" }]
+    },
+    {
+      "id": "legends-coffee-parker",
+      "name": "Legends Coffee",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "Mainstreet",
+      "address": "Mainstreet, Parker, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The family-run specialty coffee shop is open on Mainstreet with breakfast and pastries.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/legends-coffee-parker" }]
+    },
+    {
+      "id": "marvins-place-parker",
+      "name": "Marvin’s Place",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "The Juniper on Mainstreet",
+      "address": "The Juniper, Mainstreet, Parker, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The no-Wi-Fi café serves coffee and pastries from Poulette at The Juniper.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/marvins-place-parker" }]
+    },
+    {
+      "id": "egg-harbor-cafe-highlands-ranch",
+      "name": "Egg Harbor Cafe",
+      "category": "Restaurant",
+      "community": "Highlands Ranch",
+      "area": "Highlands Ranch",
+      "address": "Highlands Ranch, CO",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The family-owned breakfast, brunch, and lunch restaurant opened its first Colorado location.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/egg-harbor-cafe-highlands-ranch" }]
+    },
+    {
+      "id": "poulette-bakeshop-parker",
+      "name": "Poulette Bakeshop",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "The Juniper on Mainstreet",
+      "address": "19865 Mainstreet, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The James Beard-nominated bakery moved to a new Mainstreet home at The Juniper.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/poulette-bakeshop-parker" }]
+    },
+    {
+      "id": "playa-bowls-parker",
+      "name": "Playa Bowls",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "The Juniper on Mainstreet",
+      "address": "19865 Mainstreet, Parker, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The açaí bowl, smoothie, and juice shop is open at The Juniper.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/playa-bowls-parker" }]
+    },
+    {
+      "id": "par-club-castle-rock",
+      "name": "Par Club",
+      "category": "Entertainment & restaurant",
+      "community": "Castle Rock",
+      "area": "Castle Rock",
+      "address": "Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The golf simulator venue opened with six bays, a full bar, and leagues.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/par-club-castle-rock" }]
+    },
+    {
+      "id": "black-rock-coffee-auburn-hills",
+      "name": "Black Rock Coffee Bar",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "Auburn Hills",
+      "address": "Jordan Road and Mainstreet, Parker, CO",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "A drive-thru Black Rock location opened at Jordan Road and Mainstreet.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "firsthand",
+      "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/black-rock-coffee-parker" }]
+    },
+    {
+      "id": "costco-dawson-trails",
+      "name": "Costco",
+      "category": "Grocery & retail",
+      "community": "Castle Rock",
+      "area": "Dawson Trails",
+      "address": "Crystal Valley Parkway and I-25, Castle Rock, CO",
+      "status": "under-construction",
+      "openingWindow": "Expected 2027",
+      "summary": "The warehouse is planned as an early anchor for Dawson Trails near the new Crystal Valley interchange.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Town of Castle Rock", "url": "https://www.crgov.com/FAQ.aspx?QID=722" },
+        { "label": "Castle Rock staff update", "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F" }
+      ]
+    },
+    {
+      "id": "king-soopers-dawson-trails",
+      "name": "King Soopers",
+      "category": "Grocery & retail",
+      "community": "Castle Rock",
+      "area": "Dawson Trails",
+      "address": "Dawson Trails, Castle Rock, CO",
+      "status": "confirmed",
+      "openingWindow": "Timing not announced",
+      "summary": "A full-service King Soopers has been identified for the Dawson Trails commercial district.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "reported",
+      "sources": [
+        { "label": "Dawson Trails commercial report", "url": "https://coloradoteam.com/dawson-trails-commercial-lineup-takes-shape-as-2027-opening-nears/" }
+      ]
+    },
+    {
+      "id": "chicken-salad-chick-castle-rock",
+      "name": "Chicken Salad Chick",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "The Meadows",
+      "address": "The Meadows, Castle Rock, CO",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "Construction is underway on a location with a patio and drive-thru near the movie theater and hospitals.",
+      "verifiedAt": "2026-07-02",
+      "confidence": "reported",
+      "sources": [
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "whataburger-promenade-castle-rock",
+      "name": "Whataburger",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Promenade at Castle Rock",
+      "address": "Promenade at Castle Rock, Castle Rock, CO",
+      "status": "approved",
+      "openingWindow": "Opening date not announced",
+      "summary": "Plans call for a 3,380-square-foot fast-food restaurant in the Promenade.",
+      "verifiedAt": "2026-03-11",
+      "confidence": "official",
+      "sources": [
+        { "label": "Castle Rock development record", "url": "https://maps.crgov.com/hyperlinks/External/IYBY/HTML/SDP25-0026/index.html" }
+      ]
+    },
+    {
+      "id": "dunkin-founders-marketplace",
+      "name": "Dunkin’",
+      "category": "Coffee & bakery",
+      "community": "Castle Rock",
+      "area": "Founders Marketplace",
+      "address": "Founders Marketplace, Castle Rock, CO",
+      "status": "approved",
+      "openingWindow": "Opening date not announced",
+      "summary": "A site plan has been approved for a new restaurant at Founders Marketplace.",
+      "verifiedAt": "2026-03-01",
+      "confidence": "official",
+      "sources": [
+        { "label": "Castle Rock staff update", "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F" }
+      ]
+    },
+    {
+      "id": "champagne-velvet-castle-rock",
+      "name": "Champagne Velvet Proper Kitchen & Bar",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "The Meadows",
+      "address": "2355 Mercantile Street, Castle Rock, CO",
+      "status": "open",
+      "openingWindow": "Opened May 17, 2026",
+      "summary": "The restaurant opened in the former I.C. Brewhouse space.",
+      "verifiedAt": "2026-07-06",
+      "confidence": "firsthand",
+      "sources": [
+        { "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "cask-and-trotter-parker",
+      "name": "Cask & Trotter",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "The Juniper on Mainstreet",
+      "address": "19865 Mainstreet, Unit 150, Parker, CO",
+      "status": "opening-soon",
+      "openingWindow": "Targeting August 2026",
+      "summary": "A 5,000-square-foot seasonal restaurant from the owner of Wolf Peach is in its final buildout.",
+      "verifiedAt": "2026-06-27",
+      "confidence": "permits",
+      "sources": [
+        { "label": "DougCo Social permit reporting", "url": "https://dougcosocial.com/news/cask-and-trotter-parker" }
+      ]
+    },
+    {
+      "id": "cerebral-brewing-parker",
+      "name": "Cerebral Brewing",
+      "category": "Brewery & bar",
+      "community": "Parker",
+      "area": "East Main",
+      "address": "20117 East Mainstreet, Parker, CO",
+      "status": "confirmed",
+      "openingWindow": "Targeting summer 2027",
+      "summary": "The Denver brewery plans a 4,200-square-foot taproom and patio in the East Main development.",
+      "verifiedAt": "2026-07-16",
+      "confidence": "reported",
+      "sources": [
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" },
+        { "label": "Axios Douglas County", "url": "https://www.axios.com/local/douglas/2026/05/11/cerebral-brewing-instagram-parker-expansion" }
+      ]
+    },
+    {
+      "id": "pick-n-tap-parker",
+      "name": "Pick N Tap Co.",
+      "category": "Entertainment & restaurant",
+      "community": "Parker",
+      "area": "Parker",
+      "address": "Parker, CO",
+      "status": "approved",
+      "openingWindow": "Opening date not announced",
+      "summary": "A restaurant and entertainment concept combining indoor pickleball, golf simulators, and a taproom.",
+      "verifiedAt": "2026-07-08",
+      "confidence": "reported",
+      "sources": [
+        { "label": "What Now Denver", "url": "https://whatnow.com/denver/restaurants/pick-n-tap-co-bringing-restaurant-and-indoor-pickleball-concept-to-parker/" }
+      ]
+    },
+    {
+      "id": "peaky-peak-parker",
+      "name": "Peaky Peak Coffee & Charcuterie",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "Mainstreet",
+      "address": "Mainstreet, Parker, CO",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "The Lone Tree Vietnamese coffee and charcuterie concept has confirmed a Parker location.",
+      "verifiedAt": "2026-07-03",
+      "confidence": "business-confirmed",
+      "sources": [
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "black-rock-coffee-stroh",
+      "name": "Black Rock Coffee Bar",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "Parker Road & Stroh Road",
+      "address": "6940 Stroh Road, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened June 30, 2026",
+      "summary": "The coffee bar opened its third Parker location at Parker and Stroh roads.",
+      "verifiedAt": "2026-06-30",
+      "confidence": "firsthand",
+      "sources": [
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "emagine-parker",
+      "name": "Emagine Parker",
+      "category": "Entertainment & restaurant",
+      "community": "Parker",
+      "area": "Twenty Mile Road",
+      "address": "18625 Stage Run Road, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened July 2026",
+      "summary": "The renovated cinema opened with ten auditoriums, a Colorado bar, and Little Dot Pizza.",
+      "verifiedAt": "2026-07-26",
+      "confidence": "firsthand",
+      "sources": [
+        { "label": "DougCo Social firsthand visit", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "dutch-bros-lone-tree",
+      "name": "Dutch Bros Coffee",
+      "category": "Coffee & bakery",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "Between 7430 and 7350 Park Meadows Drive, Lone Tree, CO",
+      "status": "approved",
+      "openingWindow": "Opening date not announced",
+      "summary": "Lone Tree approved development applications for a new Dutch Bros near Quebec Street and Park Meadows Drive.",
+      "verifiedAt": "2026-08-07",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project_status/approved/" }
+      ]
+    },
+    {
+      "id": "lone-tree-village-king-soopers",
+      "name": "King Soopers Marketplace",
+      "category": "Grocery & retail",
+      "community": "Lone Tree",
+      "area": "Lone Tree Village at RidgeGate",
+      "address": "RidgeGate Parkway, Lone Tree, CO",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "The planned commercial center includes a grocery store, retail buildings, restaurants, and a gas station.",
+      "verifiedAt": "2026-07-23",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project_status/active-construction/" }
+      ]
+    },
+    {
+      "id": "capital-grille-lone-tree",
+      "name": "The Capital Grille",
+      "category": "Restaurant",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "9067 Westview Road, Lone Tree, CO",
+      "status": "opening-soon",
+      "openingWindow": "Opening date not announced",
+      "summary": "The city marks the new 8,897-square-foot restaurant development as complete at the former Red Lobster site.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project_status/complete/" }
+      ]
+    },
+    {
+      "id": "groove-cafe-lone-tree",
+      "name": "The Groove Café",
+      "category": "Restaurant",
+      "community": "Lone Tree",
+      "area": "Lyric at RidgeGate",
+      "address": "10930 Lyric Street, Lone Tree, CO",
+      "status": "open",
+      "openingWindow": "Opened July 2026",
+      "summary": "The neighborhood café serves coffee, breakfast, lunch, and dinner inside Lyric’s amenity center.",
+      "verifiedAt": "2026-07-16",
+      "confidence": "firsthand",
+      "sources": [
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "seven-brew-castle-pines",
+      "name": "7 Brew Coffee",
+      "category": "Coffee & bakery",
+      "community": "Castle Pines",
+      "area": "Castle Pines Parkway",
+      "address": "Near Wendy’s off Castle Pines Parkway, Castle Pines, CO",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "The city confirms that the new building under construction near Wendy’s is a 7 Brew Coffee.",
+      "verifiedAt": "2026-07-16",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Castle Pines", "url": "https://www.castlepinesco.gov/rumor-has-it/" }
+      ]
+    },
+    {
+      "id": "castilla-italiano-castle-pines",
+      "name": "Castilla Italiano",
+      "category": "Restaurant",
+      "community": "Castle Pines",
+      "area": "Village Square",
+      "address": "Former Pino’s location, Castle Pines, CO",
+      "status": "opening-soon",
+      "openingWindow": "Expected late summer 2026",
+      "summary": "The restaurant is renovating the former Pino’s location and expects to open later this summer.",
+      "verifiedAt": "2026-07-14",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Castle Pines", "url": "https://www.castlepinesco.gov/rumor-has-it/" }
+      ]
+    },
+    {
+      "id": "life-time-castle-pines",
+      "name": "Life Time",
+      "category": "Fitness & wellness",
+      "community": "Castle Pines",
+      "area": "The Canyons",
+      "address": "Castle Pines, CO",
+      "status": "under-construction",
+      "openingWindow": "Expected later in 2026",
+      "summary": "The athletic-country-club operator has told the city it expects to open later this year.",
+      "verifiedAt": "2026-04-07",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Castle Pines", "url": "https://www.castlepinesco.gov/rumor-has-it/" }
+      ]
+    },
+    {
+      "id": "magic-manor-sedalia",
+      "name": "Magic Manor",
+      "category": "Entertainment & restaurant",
+      "community": "Sedalia",
+      "area": "Historic Sedalia",
+      "address": "Sedalia, CO",
+      "status": "open",
+      "openingWindow": "Opened July 1, 2026",
+      "summary": "The Theatre of Dreams reopened as an intimate magic theater and event venue in the former Gabriel’s building.",
+      "verifiedAt": "2026-07-01",
+      "confidence": "firsthand",
+      "sources": [
+        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+      ]
+    }
+  ]
+}

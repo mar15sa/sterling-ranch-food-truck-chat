@@ -71,6 +71,26 @@ It reads the public CAB pool page and translates the active status light into pl
 /api/pool/status
 ```
 
+## Douglas County Openings Tracker
+
+The countywide openings tracker lives at:
+
+```text
+/openings
+```
+
+It publishes an evidence-backed, filterable catalog of restaurants, stores, coffee shops, entertainment, fitness, and other resident-facing businesses across Douglas County. There is no fixed listing limit; `data/openings.json` is the growing catalog.
+
+The tracker also includes an automatic source radar. It watches the configured official and local sources in `data/openings-sources.json`, fingerprints the useful page content, and isolates new opening-related signals for review. Run a scan manually with:
+
+```powershell
+npm run openings:monitor
+```
+
+The production server schedules the radar daily, and the `Douglas County openings radar` GitHub workflow provides a second daily check. When a monitored source changes or fails, the workflow opens or updates one review issue rather than publishing an unverified lead automatically.
+
+Opening tips are accepted at `POST /api/openings/tips`. Set `OPENINGS_TIP_WEBHOOK_URL` in hosting to send them to a durable review inbox; without it, local development writes them to the gitignored `data/openings-tips.ndjson` file. `OPENINGS_AUTO_MONITOR=false` disables the server-side schedule if the GitHub schedule should be the only scanner.
+
 ## Sterling Ranch Rules Assistant
 
 The separate rules page lives at:
