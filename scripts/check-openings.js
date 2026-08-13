@@ -30,6 +30,11 @@ if (catalog.total !== raw.items.length || catalog.items.length !== raw.items.len
   errors.push("The unfiltered API did not return the full catalog; listings must never be capped.");
 }
 if (sources.total < 10) errors.push("The radar has fewer than 10 configured source channels.");
+for (const community of ["Sterling Ranch", "Roxborough"]) {
+  if (!catalog.filters.communities.includes(community)) {
+    errors.push(`${community} is missing from community coverage.`);
+  }
+}
 
 if (errors.length) {
   console.error(errors.join("\n"));

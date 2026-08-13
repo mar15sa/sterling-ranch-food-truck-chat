@@ -1,8 +1,45 @@
 {
   "version": 1,
   "scope": "Douglas County, Colorado",
-  "updatedAt": "2026-08-13T10:45:00-06:00",
+  "updatedAt": "2026-08-13T14:30:00-06:00",
+  "communities": [
+    { "name": "Castle Pines" },
+    { "name": "Castle Rock" },
+    { "name": "Franktown" },
+    { "name": "Highlands Ranch" },
+    { "name": "Larkspur" },
+    { "name": "Lone Tree" },
+    { "name": "Parker" },
+    {
+      "name": "Roxborough",
+      "emptyTitle": "No named Roxborough openings verified yet",
+      "emptyMessage": "Roxborough is covered by the radar. We are checking Douglas County planning records and Roxborough Marketplace leasing updates, but have not found a new store or restaurant with a verifiable name and opening plan yet."
+    },
+    { "name": "Sedalia" },
+    {
+      "name": "Sterling Ranch",
+      "emptyTitle": "No additional named Sterling Ranch openings verified yet",
+      "emptyMessage": "Sterling Ranch is covered by the radar. The area has major future commercial plans, but unnamed retail space is not counted as a store or restaurant opening."
+    }
+  ],
   "items": [
+    {
+      "id": "zebulon-regional-sports-complex-sterling-ranch",
+      "name": "Zebulon Regional Sports Complex",
+      "category": "Entertainment & restaurant",
+      "community": "Sterling Ranch",
+      "area": "Waterton Road",
+      "address": "Waterton Road east of Sterling Ranch, Littleton, CO",
+      "status": "proposed",
+      "openingWindow": "Opening date not announced",
+      "summary": "Douglas County is advancing the regional sports complex. Concept plans reserve future restaurant and retail space, but no tenants have been named and the plan may change.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Douglas County project update", "url": "https://www.douglas.co.us/event/special-business-meeting-15/" },
+        { "label": "Douglas County concept plan", "url": "https://www.douglas.co.us/documents/zebulon-sport-concept_2025-03-17.pdf" }
+      ]
+    },
     {
       "id": "gold-crown-field-house-castle-rock",
       "name": "Gold Crown Field House",
@@ -66,10 +103,10 @@
       "community": "Parker",
       "area": "Downtown Parker",
       "address": "11160 South Pikes Peak Drive, Parker, CO",
-      "status": "confirmed",
+      "status": "proposed",
       "openingWindow": "Opening date not announced",
-      "summary": "A Mexican cantina is taking over the former Wild Goose Saloon space.",
-      "verifiedAt": "2026-07-24",
+      "summary": "Temporary signage and a related state business registration point to a Mexican cantina in the former Wild Goose Saloon space, but ownership and an opening plan are not yet public.",
+      "verifiedAt": "2026-08-13",
       "confidence": "reported",
       "sources": [{ "label": "DougCo Social", "url": "https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker" }]
     },
@@ -304,9 +341,9 @@
       "community": "Castle Rock",
       "area": "Dawson Trails",
       "address": "Crystal Valley Parkway and I-25, Castle Rock, CO",
-      "status": "under-construction",
+      "status": "approved",
       "openingWindow": "Expected 2027",
-      "summary": "The warehouse is planned as an early anchor for Dawson Trails near the new Crystal Valley interchange.",
+      "summary": "The approved warehouse is planned as an early anchor for Dawson Trails near the new Crystal Valley interchange. Town records do not yet verify vertical construction.",
       "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
@@ -321,13 +358,13 @@
       "community": "Castle Rock",
       "area": "Dawson Trails",
       "address": "Dawson Trails, Castle Rock, CO",
-      "status": "confirmed",
-      "openingWindow": "Timing not announced",
-      "summary": "A full-service King Soopers has been identified for the Dawson Trails commercial district.",
+      "status": "proposed",
+      "openingWindow": "Targeting 2027",
+      "summary": "A site plan is under review for a full-service King Soopers in the Dawson Trails commercial district.",
       "verifiedAt": "2026-08-13",
-      "confidence": "reported",
+      "confidence": "official",
       "sources": [
-        { "label": "Dawson Trails commercial report", "url": "https://coloradoteam.com/dawson-trails-commercial-lineup-takes-shape-as-2027-opening-nears/" }
+        { "label": "Town of Castle Rock site plan", "url": "https://www.crgov.com/DocumentCenter/View/51236/-King-Soopers-Dawson-Trails-Site-Plan-PDF?bidId=" }
       ]
     },
     {
@@ -353,10 +390,10 @@
       "community": "Castle Rock",
       "area": "Promenade at Castle Rock",
       "address": "Promenade at Castle Rock, Castle Rock, CO",
-      "status": "approved",
+      "status": "proposed",
       "openingWindow": "Opening date not announced",
-      "summary": "Plans call for a 3,380-square-foot fast-food restaurant in the Promenade.",
-      "verifiedAt": "2026-03-11",
+      "summary": "A site plan under Town review calls for a 3,380-square-foot fast-food restaurant in the Promenade.",
+      "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
         { "label": "Castle Rock development record", "url": "https://maps.crgov.com/hyperlinks/External/IYBY/HTML/SDP25-0026/index.html" }
@@ -418,13 +455,12 @@
       "area": "East Main",
       "address": "20117 East Mainstreet, Parker, CO",
       "status": "confirmed",
-      "openingWindow": "Targeting summer 2027",
+      "openingWindow": "Expected mid-2027",
       "summary": "The Denver brewery plans a 4,200-square-foot taproom and patio in the East Main development.",
-      "verifiedAt": "2026-07-16",
+      "verifiedAt": "2026-08-13",
       "confidence": "reported",
       "sources": [
-        { "label": "DougCo Social", "url": "https://dougcosocial.com/news" },
-        { "label": "Axios Douglas County", "url": "https://www.axios.com/local/douglas/2026/05/11/cerebral-brewing-instagram-parker-expansion" }
+        { "label": "Westword interview with the owner", "url": "https://www.westword.com/food-drink/denver-brewery-to-open-fourth-taproom-in-parker-40888798/" }
       ]
     },
     {
@@ -433,14 +469,15 @@
       "category": "Entertainment & restaurant",
       "community": "Parker",
       "area": "Parker",
-      "address": "Parker, CO",
+      "address": "11735 Disha Drive, Parker, CO",
       "status": "approved",
       "openingWindow": "Opening date not announced",
       "summary": "A restaurant and entertainment concept combining indoor pickleball, golf simulators, and a taproom.",
-      "verifiedAt": "2026-07-08",
-      "confidence": "reported",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
       "sources": [
-        { "label": "What Now Denver", "url": "https://whatnow.com/denver/restaurants/pick-n-tap-co-bringing-restaurant-and-indoor-pickleball-concept-to-parker/" }
+        { "label": "Town of Parker project narrative", "url": "https://prkc-trk.aspgov.com/eTRAKiT/viewAttachment.aspx?ActivityNo=SP25-176&Group=PROJECT&key=ECO%3A25122210463421" },
+        { "label": "DougCo Social status report", "url": "https://dougcosocial.com/news/pick-n-tap-parker" }
       ]
     },
     {
@@ -517,10 +554,10 @@
       "status": "under-construction",
       "openingWindow": "Opening date not announced",
       "summary": "The planned commercial center includes a grocery store, retail buildings, restaurants, and a gas station.",
-      "verifiedAt": "2026-07-23",
+      "verifiedAt": "2026-08-13",
       "confidence": "official",
       "sources": [
-        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project_status/active-construction/" }
+        { "label": "City of Lone Tree groundbreaking update", "url": "https://cityoflonetree.com/breaking-ground-on-lone-tree-village/" }
       ]
     },
     {
@@ -530,13 +567,15 @@
       "community": "Lone Tree",
       "area": "Park Meadows",
       "address": "9067 Westview Road, Lone Tree, CO",
-      "status": "opening-soon",
-      "openingWindow": "Opening date not announced",
-      "summary": "The city marks the new 8,897-square-foot restaurant development as complete at the former Red Lobster site.",
+      "status": "open",
+      "openingWindow": "Opened March 15, 2026",
+      "summary": "The steakhouse is open in a new 8,897-square-foot building at the former Red Lobster site.",
       "verifiedAt": "2026-08-13",
-      "confidence": "official",
+      "confidence": "business-confirmed",
       "sources": [
-        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project_status/complete/" }
+        { "label": "City of Lone Tree", "url": "https://cityoflonetree.com/project/the-capital-grille/" },
+        { "label": "Capital Grille reservations and hours", "url": "https://www.opentable.com/r/the-capital-grille-lone-tree" },
+        { "label": "Opening-date report", "url": "https://www.denvergazette.com/2026/03/09/the-capital-grille-steakhouse-opens-lone-tree-location-1/" }
       ]
     },
     {
@@ -595,12 +634,12 @@
       "area": "The Canyons",
       "address": "Castle Pines, CO",
       "status": "under-construction",
-      "openingWindow": "Expected later in 2026",
-      "summary": "The athletic-country-club operator has told the city it expects to open later this year.",
-      "verifiedAt": "2026-04-07",
-      "confidence": "official",
+      "openingWindow": "Expected fall 2026",
+      "summary": "Life Time says its new 102,000-square-foot athletic country club will arrive this fall.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
       "sources": [
-        { "label": "City of Castle Pines", "url": "https://www.castlepinesco.gov/rumor-has-it/" }
+        { "label": "Life Time", "url": "https://www.lifetime.life/locations/co/castle-pines.html" }
       ]
     },
     {

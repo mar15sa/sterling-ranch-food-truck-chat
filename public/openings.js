@@ -41,6 +41,8 @@ const els = {
   list: document.querySelector("#list-view"),
   mapPanel: document.querySelector("#map-view"),
   empty: document.querySelector("#empty-state"),
+  emptyTitle: document.querySelector("#empty-title"),
+  emptyMessage: document.querySelector("#empty-message"),
   search: document.querySelector("#search"),
   community: document.querySelector("#community-filter"),
   category: document.querySelector("#category-filter"),
@@ -140,6 +142,10 @@ function renderItems() {
   const active = Object.values(currentFilters()).some((value) => value && value !== "all");
   els.clear.hidden = !active;
   els.resultCount.textContent = `${state.items.length} ${state.items.length === 1 ? "place" : "places"} shown`;
+  const selectedCommunity = currentFilters().community;
+  const coverage = state.catalog.communityCoverage?.[selectedCommunity];
+  els.emptyTitle.textContent = coverage?.emptyTitle || "No matches yet";
+  els.emptyMessage.textContent = coverage?.emptyMessage || "Try removing a filter—or share a tip if we missed something.";
   els.empty.hidden = state.items.length > 0;
   els.list.hidden = state.view !== "list" || state.items.length === 0;
   els.mapPanel.hidden = state.view !== "map" || state.items.length === 0;

@@ -74,6 +74,24 @@
       "notes": "Planning applications for Highlands Ranch, Sterling Ranch, Roxborough, Sedalia, and other unincorporated areas."
     },
     {
+      "id": "sterling-ranch-cab-news",
+      "name": "Sterling Ranch CAB news and agendas",
+      "community": "Sterling Ranch",
+      "kind": "official",
+      "url": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
+      "cadence": "daily",
+      "notes": "Community announcements, construction updates, and local openings."
+    },
+    {
+      "id": "roxborough-marketplace-leasing",
+      "name": "Roxborough Marketplace leasing",
+      "community": "Roxborough",
+      "kind": "property-owner",
+      "url": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
+      "cadence": "daily",
+      "notes": "The shopping center owner’s tenant and availability updates."
+    },
+    {
       "id": "larkspur-planning",
       "name": "Larkspur planning meetings",
       "community": "Larkspur",
