@@ -71,7 +71,7 @@ It reads the public CAB pool page and translates the active status light into pl
 /api/pool/status
 ```
 
-## Douglas County Openings Tracker
+## Douglas County + 80125-area Openings Tracker
 
 The countywide openings tracker lives at:
 
@@ -79,7 +79,7 @@ The countywide openings tracker lives at:
 /openings
 ```
 
-It publishes an evidence-backed, filterable catalog of restaurants, stores, coffee shops, entertainment, fitness, and other resident-facing businesses across Douglas County. There is no fixed listing limit; `data/openings.json` is the growing catalog.
+It publishes an evidence-backed, filterable catalog of restaurants, stores, coffee shops, entertainment, fitness, and other resident-facing businesses across Douglas County plus nearby locations within a 20-mile straight-line radius of ZIP 80125. There is no fixed listing limit; `data/openings.json` is the growing catalog.
 
 The tracker also includes an automatic source radar. It watches the configured official and local sources in `data/openings-sources.json`, fingerprints the useful page content, and isolates new opening-related signals for review. Run a scan manually with:
 

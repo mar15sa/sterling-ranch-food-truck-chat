@@ -32,6 +32,7 @@ const COMMUNITY_COORDS = {
   "Castle Pines": [39.458, -104.896],
   Sedalia: [39.4367, -104.959],
   "Highlands Ranch": [39.5539, -104.9694],
+  Littleton: [39.6133, -105.0166],
   "Sterling Ranch": [39.4758, -105.0057],
   Roxborough: [39.4708, -105.0783],
   Larkspur: [39.2286, -104.8872],
@@ -155,7 +156,7 @@ function renderItems() {
 function renderMap() {
   if (!window.L) return;
   if (!state.map) {
-    state.map = L.map("openings-map", { scrollWheelZoom: false }).setView([39.42, -104.9], 10);
+    state.map = L.map("openings-map", { scrollWheelZoom: false }).setView([39.48, -104.96], 10);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',

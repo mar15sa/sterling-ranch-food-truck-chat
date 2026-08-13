@@ -35,6 +35,9 @@ for (const community of ["Sterling Ranch", "Roxborough"]) {
     errors.push(`${community} is missing from community coverage.`);
   }
 }
+if (!String(catalog.scope).includes("20 miles") || !catalog.filters.communities.includes("Littleton")) {
+  errors.push("The 80125-area coverage scope or Littleton community is missing.");
+}
 
 if (errors.length) {
   console.error(errors.join("\n"));

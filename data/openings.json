@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "scope": "Douglas County, Colorado",
+  "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
   "updatedAt": "2026-08-13T16:45:00-06:00",
   "communities": [
     { "name": "Castle Pines" },
@@ -8,6 +8,7 @@
     { "name": "Franktown" },
     { "name": "Highlands Ranch" },
     { "name": "Larkspur" },
+    { "name": "Littleton" },
     { "name": "Lone Tree" },
     { "name": "Parker" },
     {
@@ -761,6 +762,323 @@
       "confidence": "firsthand",
       "sources": [
         { "label": "DougCo Social", "url": "https://dougcosocial.com/news" }
+      ]
+    },
+    {
+      "id": "jacks-modern-steakhouse-lone-tree",
+      "name": "Jack’s Modern Steakhouse",
+      "category": "Restaurant",
+      "community": "Lone Tree",
+      "area": "Entertainment District",
+      "address": "9155 Park Meadows Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Reopened April 28, 2026",
+      "summary": "The two-story steakhouse opened in January, temporarily closed after a fire, and reopened in April.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree project page", "url": "https://cityoflonetree.com/project/jacks-restaurant/" },
+        { "label": "City of Lone Tree opening report", "url": "https://cityoflonetree.com/wp-content/uploads/2026/03/Timberlines-Feb2026-iss117_finalweb.pdf" },
+        { "label": "Reopening report", "url": "https://dougcosocial.com/news/jacks-modern-steakhouse-lone-tree" }
+      ]
+    },
+    {
+      "id": "the-tox-lone-tree",
+      "name": "The Tox Lone Tree",
+      "category": "Fitness & wellness",
+      "community": "Lone Tree",
+      "area": "Park Meadows Drive",
+      "address": "7600 Park Meadows Drive, Unit 1100, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The body-sculpting and lymphatic-drainage wellness studio is now open.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree grand-opening report", "url": "https://cityoflonetree.com/wp-content/uploads/2026/03/Timberlines-Feb2026-iss117_finalweb.pdf" }
+      ]
+    },
+    {
+      "id": "truck-yard-lone-tree",
+      "name": "Truck Yard",
+      "category": "Entertainment & restaurant",
+      "community": "Lone Tree",
+      "area": "Entertainment District",
+      "address": "9070 Maximus Drive, Lone Tree, CO 80124",
+      "status": "proposed",
+      "openingWindow": "Opening date not announced",
+      "summary": "Lone Tree has a purchase agreement for an indoor-outdoor restaurant and entertainment venue, but the sale and site plan are not final.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree proposal update", "url": "https://cityoflonetree.com/truck-yard-set-to-transform-former-treo-site/" }
+      ]
+    },
+    {
+      "id": "high-note-park-lone-tree",
+      "name": "High Note Regional Park",
+      "category": "Recreation",
+      "community": "Lone Tree",
+      "area": "RidgeGate",
+      "address": "Happy Canyon Creek near I-25 and RidgeGate Parkway, Lone Tree, CO",
+      "status": "under-construction",
+      "openingWindow": "Expected 2027",
+      "summary": "The regional park is being built with sports fields, trails, play areas, a beer garden, and space for food trucks.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Lone Tree project page", "url": "https://cityoflonetree.com/highnotepark/" }
+      ]
+    },
+    {
+      "id": "rivian-park-meadows",
+      "name": "Rivian",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon",
+      "summary": "Park Meadows officially lists the electric-vehicle showroom as coming soon.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Park Meadows directory", "url": "https://www.parkmeadows.com/en/directory/" }
+      ]
+    },
+    {
+      "id": "faherty-park-meadows",
+      "name": "Faherty",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon",
+      "summary": "Park Meadows officially lists the clothing retailer as coming soon on Level 2.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Park Meadows directory", "url": "https://www.parkmeadows.com/en/directory/" }
+      ]
+    },
+    {
+      "id": "columbia-park-meadows",
+      "name": "Columbia Sportswear",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon",
+      "summary": "Park Meadows officially lists a new Columbia store as coming soon on Level 2.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Park Meadows directory", "url": "https://www.parkmeadows.com/en/directory/" }
+      ]
+    },
+    {
+      "id": "lazy-dog-castle-rock",
+      "name": "Lazy Dog Restaurant & Bar",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Promenade at Castle Rock",
+      "address": "5949 Alpine Vista Circle, Castle Rock, CO 80108",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "The dog-friendly casual restaurant is building its first Castle Rock location; no reliable opening date has been announced.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Lazy Dog locations", "url": "https://lazydogrestaurants.com/pages/locations" },
+        { "label": "Castle Rock development update", "url": "https://myemail.constantcontact.com/subject.html?aid=f67ENjj096k&soid=1139362075676" }
+      ]
+    },
+    {
+      "id": "thai-wow-castle-rock",
+      "name": "Thai Wow",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Perry Street",
+      "address": "794 S. Perry Street, Castle Rock, CO 80104",
+      "status": "under-construction",
+      "openingWindow": "Targeting fall 2026",
+      "summary": "The restaurant’s own site confirms a Castle Rock location is coming soon; local reporting says the owners are targeting fall.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        { "label": "Thai Wow official site", "url": "https://www.thaiwowco.com/" },
+        { "label": "DougCo Social build tracker", "url": "https://dougcosocial.com/whats-being-built-douglas-county" }
+      ]
+    },
+    {
+      "id": "lost-canyon-ranch-castle-rock",
+      "name": "Lost Canyon Ranch Open Space",
+      "category": "Recreation",
+      "community": "Castle Rock",
+      "area": "Lost Canyon Ranch",
+      "address": "6581 Lost Canyon Ranch Road, Castle Rock, CO 80104",
+      "status": "open",
+      "openingWindow": "Opened July 13, 2026",
+      "summary": "The 681-acre open space opened its first phase with 10 miles of trails; additional trail work continues this summer.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Town of Castle Rock opening announcement", "url": "https://www.crgov.com/m/newsflash/home/detail/2641" },
+        { "label": "Lost Canyon Ranch visitor page", "url": "https://www.crgov.com/lostcanyonranch" }
+      ]
+    },
+    {
+      "id": "havn-hot-pilates-littleton",
+      "name": "HAVN Hot Pilates",
+      "category": "Fitness & wellness",
+      "community": "Littleton",
+      "area": "Platte Canyon Road",
+      "address": "5950 S. Platte Canyon Road, Suite A2, Littleton, CO 80123",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The heated mat Pilates and strength studio is one of Littleton’s newest fitness businesses.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Visit Littleton business listing", "url": "https://visitlittleton.org/partner/havn-hot-pilates/" },
+        { "label": "City of Littleton 2026 openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
+      ]
+    },
+    {
+      "id": "hibachi-v-express-littleton",
+      "name": "Hibachi V Express",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "South Broadway",
+      "address": "7961B S. Broadway, Littleton, CO 80122",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The fast-casual Japanese grill opened in a former pierogi shop and serves hibachi meals and appetizers.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Visit Littleton business listing", "url": "https://visitlittleton.org/partner/hibachi-v-express/" },
+        { "label": "City of Littleton 2026 openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
+      ]
+    },
+    {
+      "id": "honnibrook-mead-cottage-littleton",
+      "name": "Honnibrook Mead Cottage",
+      "category": "Brewery & bar",
+      "community": "Littleton",
+      "area": "Downtown Littleton",
+      "address": "5757 S. Rapp Street, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened 2025",
+      "summary": "The Castle Rock meadery opened a tasting cottage in Downtown Littleton with rotating honey-based wines.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Visit Littleton business listing", "url": "https://visitlittleton.org/partner/honnibrook-mead-cottage/" },
+        { "label": "Visit Littleton opening feature", "url": "https://visitlittleton.org/littleton-co-wine-scene/" }
+      ]
+    },
+    {
+      "id": "costco-mineral-place-littleton",
+      "name": "Costco Wholesale",
+      "category": "Grocery & retail",
+      "community": "Littleton",
+      "area": "Mineral Place",
+      "address": "700 W. Mineral Avenue, Littleton, CO 80120",
+      "status": "under-construction",
+      "openingWindow": "Projected 2026",
+      "summary": "A new Costco warehouse and fuel station is approved and under construction as an anchor of Mineral Place.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Littleton development record", "url": "https://data.littletongov.org/pal.php?project=SIP24-0001" },
+        { "label": "City of Littleton 2026 development roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
+      ]
+    },
+    {
+      "id": "ruby-jane-littleton",
+      "name": "Ruby Jane Boutique",
+      "category": "Shopping",
+      "community": "Littleton",
+      "area": "Downtown Littleton",
+      "address": "2510 W. Main Street, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened 2025",
+      "summary": "The Colorado fashion and home décor retailer opened a Downtown Littleton location.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        { "label": "Ruby Jane locations", "url": "https://rubyjane.com/pages/locations-hours" },
+        { "label": "Downtown Littleton business listing", "url": "https://littletondda.org/business/ruby-jane-boutique/" }
+      ]
+    },
+    {
+      "id": "snarfs-bowles-littleton",
+      "name": "Snarf’s Sandwiches",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Bowles Avenue",
+      "address": "2700 W. Bowles Avenue, Suite B, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened 2025",
+      "summary": "The Colorado sandwich chain opened a Littleton location near the South Platte River.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        { "label": "Snarf’s Littleton location", "url": "https://www.eatsnarfs.com/littleton-bowles-santa-fe" },
+        { "label": "City of Littleton openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
+      ]
+    },
+    {
+      "id": "diamond-reserve-littleton",
+      "name": "The Diamond Reserve",
+      "category": "Shopping",
+      "community": "Littleton",
+      "area": "Downtown Littleton",
+      "address": "2569 W. Main Street, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened March 2026",
+      "summary": "The appointment-based diamond and fine-jewelry showroom opened on Main Street.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "Downtown Littleton business listing", "url": "https://littletondda.org/business/the-diamond-reserve-littleton/" },
+        { "label": "Downtown Littleton grand-opening event", "url": "https://littletondda.org/events/list/?tribe-bar-date=2026-03-30" }
+      ]
+    },
+    {
+      "id": "rhonda-allison-littleton",
+      "name": "RA Skin Studio by Rhonda Allison",
+      "category": "Fitness & wellness",
+      "community": "Littleton",
+      "area": "South Prince Street",
+      "address": "5524 S. Prince Street, Littleton, CO 80127",
+      "status": "open",
+      "openingWindow": "Opened 2026",
+      "summary": "The professional skincare brand’s studio is now operating in Littleton.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        { "label": "RA Skin Studio", "url": "https://ra.skin/pages/studio" },
+        { "label": "City of Littleton openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
+      ]
+    },
+    {
+      "id": "seven-brew-littleton",
+      "name": "7 Brew Coffee",
+      "category": "Coffee & bakery",
+      "community": "Littleton",
+      "area": "West Mineral Avenue",
+      "address": "West Mineral Avenue, Littleton, CO",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "Littleton’s official 2026 business roundup confirms a 7 Brew drive-thru is coming to West Mineral Avenue; a street number has not been published.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        { "label": "City of Littleton openings roundup", "url": "https://visitlittleton.org/whats-new-in-littleton-2026/" }
       ]
     }
   ]

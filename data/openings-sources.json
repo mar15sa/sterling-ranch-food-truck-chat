@@ -211,6 +211,51 @@
       "url": "https://whatnow.com/denver/restaurants/",
       "cadence": "daily",
       "notes": "Restaurant lease, permit, and ownership reporting."
+    },
+    {
+      "id": "littleton-development-activity",
+      "name": "City of Littleton development activity",
+      "community": "Littleton",
+      "kind": "official",
+      "url": "https://data.littletongov.org/pal.php",
+      "cadence": "daily",
+      "notes": "Named commercial proposals, approvals, construction records, and project documents inside the 20-mile radius."
+    },
+    {
+      "id": "visit-littleton-new-businesses",
+      "name": "Visit Littleton openings and business directory",
+      "community": "Littleton",
+      "kind": "official",
+      "url": "https://visitlittleton.org/whats-new-in-littleton-2026/",
+      "cadence": "daily",
+      "notes": "City-backed roundup of businesses that opened, moved, or are officially coming soon."
+    },
+    {
+      "id": "park-meadows-directory",
+      "name": "Park Meadows tenant directory",
+      "community": "Lone Tree",
+      "kind": "property-owner",
+      "url": "https://www.parkmeadows.com/en/directory/",
+      "cadence": "daily",
+      "notes": "The mall’s live directory labels new tenants as coming soon or now open."
+    },
+    {
+      "id": "hogback-post",
+      "name": "Hogback Post local development reporting",
+      "community": "Southwest metro",
+      "kind": "local-reporting",
+      "url": "https://www.hogbackpost.com/",
+      "cadence": "daily",
+      "notes": "Hyperlocal reporting for Roxborough, Ken Caryl, Morrison, and the southwest edge of the radius."
+    },
+    {
+      "id": "littleton-downtown-directory",
+      "name": "Downtown Littleton business directory",
+      "community": "Littleton",
+      "kind": "business-district",
+      "url": "https://littletondda.org/",
+      "cadence": "daily",
+      "notes": "Downtown business listings, welcome announcements, and grand-opening events."
     }
   ]
 }
