@@ -10,11 +10,18 @@
     <meta property="og:title" content="What’s Opening in Douglas County" />
     <meta property="og:description" content="Confirmed openings, construction updates, expected dates, and the sources behind every listing." />
     <meta property="og:url" content="https://sterlingranchsociety.com/openings" />
+    <meta property="og:image" content="https://sterlingranchsociety.com/openings-social-preview.png" />
+    <meta property="og:image:secure_url" content="https://sterlingranchsociety.com/openings-social-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="What’s Opening in Douglas County — restaurants, shops and local places, verified by Sterling Ranch Society." />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="twitter:image" content="https://sterlingranchsociety.com/openings-social-preview.png" />
+    <link rel="icon" href="/openings-icon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
     <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=1.9.4" />
-    <link rel="stylesheet" href="/openings.css?v=20260813-v7" />
+    <link rel="stylesheet" href="/openings.css?v=20260813-v8" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -49,22 +56,21 @@
       </section>
 
       <section class="stats" aria-label="Opening tracker statistics">
-        <div><strong id="stat-coming">—</strong><span>still coming</span></div>
-        <div><strong id="stat-soon">—</strong><span>opening soon</span></div>
-        <div><strong id="stat-open">—</strong><span>recently open</span></div>
-        <div><strong id="stat-communities">—</strong><span>communities watched</span></div>
+        <button type="button" data-quick-status="coming" aria-pressed="false"><strong id="stat-coming">—</strong><span>still coming</span></button>
+        <button type="button" data-quick-status="opening-soon" aria-pressed="false"><strong id="stat-soon">—</strong><span>opening soon</span></button>
+        <button type="button" data-quick-status="open" aria-pressed="false"><strong id="stat-open">—</strong><span>recently open</span></button>
       </section>
 
       <section class="tracker" aria-labelledby="tracker-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Latest verified updates</p>
             <h2 id="tracker-title">What’s opening near you</h2>
           </div>
-          <div class="view-switch" role="group" aria-label="Choose list or map view">
-            <button class="active" type="button" data-view="list" aria-pressed="true">List</button>
-            <button type="button" data-view="map" aria-pressed="false">Map</button>
-          </div>
+        </div>
+
+        <div id="map-view" class="map-panel">
+          <div id="openings-map" aria-label="Map of openings within the Douglas County and 80125-area coverage zone"></div>
+          <p class="map-note">Each marker represents one listing and is placed from its published address or project location. Pinch to zoom; two-finger scrolling continues down the page.</p>
         </div>
 
         <div class="filter-bar">
@@ -106,10 +112,6 @@
           <span id="page-status" aria-live="polite"></span>
           <button id="page-next" type="button">Next</button>
         </nav>
-        <div id="map-view" class="map-panel" hidden>
-          <div id="openings-map" aria-label="Map of openings within the Douglas County and 80125-area coverage zone"></div>
-          <p class="map-note">Each marker represents one listing and is placed from its published address or project location. Open a marker to see whether its position is exact or approximate.</p>
-        </div>
         <div id="empty-state" class="empty-state" hidden>
           <h3 id="empty-title">No matches yet</h3>
           <p id="empty-message">Try removing a filter—or share a tip if we missed something.</p>
@@ -136,7 +138,7 @@
           <label>Community <input name="community" placeholder="Parker, Castle Rock…" maxlength="80" /></label>
           <label>Location <input name="location" placeholder="Shopping center or cross streets" maxlength="240" /></label>
         </div>
-        <label>Source link <input name="sourceUrl" type="url" placeholder="https://" maxlength="500" /></label>
+        <label>Source link <input name="sourceUrl" type="text" inputmode="url" placeholder="example.com/post" maxlength="500" /></label>
         <label>What do you know? <textarea name="details" rows="4" maxlength="1200"></textarea></label>
         <label>Your email or social handle <span>(optional)</span><input name="contact" maxlength="200" /></label>
         <input class="honey" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
@@ -160,6 +162,6 @@
     </template>
 
     <script src="/vendor/leaflet/leaflet.js?v=1.9.4"></script>
-    <script src="/openings.js?v=20260813-v7" defer></script>
+    <script src="/openings.js?v=20260813-v8" defer></script>
   </body>
 </html>

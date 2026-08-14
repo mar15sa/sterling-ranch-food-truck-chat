@@ -1,7 +1,7 @@
 const state = {
   catalog: null,
   items: [],
-  view: "list",
+  quickStatus: "all",
   map: null,
   markerLayer: null,
   page: 1,
@@ -95,7 +95,6 @@ function renderSummary(catalog) {
   setText("#stat-coming", catalog.stats.coming);
   setText("#stat-soon", catalog.stats.openingSoon);
   setText("#stat-open", catalog.stats.open);
-  setText("#stat-communities", catalog.stats.communities);
   fillSelect(els.community, catalog.filters.communities);
   fillSelect(els.category, catalog.filters.categories);
 }
@@ -132,6 +131,7 @@ function currentFilters() {
     community: els.community.value,
     category: els.category.value,
     status: els.status.value,
+    quickStatus: state.quickStatus,
   };
 }
 
@@ -141,6 +141,8 @@ function filteredItems() {
     if (filters.community !== "all" && item.community !== filters.community) return false;
     if (filters.category !== "all" && item.category !== filters.category) return false;
     if (filters.status !== "all" && item.status !== filters.status) return false;
+    if (filters.quickStatus === "coming" && ["open", "closed"].includes(item.status)) return false;
+    if (["opening-soon", "open"].includes(filters.quickStatus) && item.status !== filters.quickStatus) return false;
     if (!filters.query) return true;
     return [item.name, item.community, item.area, item.category, item.summary]
       .join(" ")
@@ -198,7 +200,7 @@ function renderList() {
   if (recentlyOpen.length) groups.push(listSection("Recently opened", recentlyOpen));
   if (other.length) groups.push(listSection("Other updates", other));
   els.list.replaceChildren(...groups);
-  els.pager.hidden = state.view !== "list" || state.items.length <= state.pageSize;
+  els.pager.hidden = state.items.length <= state.pageSize;
   els.pagePrevious.disabled = state.page === 1;
   els.pageNext.disabled = state.page === pageCount;
   els.pageStatus.textContent = `Page ${state.page} of ${pageCount}`;
@@ -215,20 +217,30 @@ function renderItems() {
   els.emptyTitle.textContent = coverage?.emptyTitle || "No matches yet";
   els.emptyMessage.textContent = coverage?.emptyMessage || "Try removing a filter—or share a tip if we missed something.";
   els.empty.hidden = state.items.length > 0;
-  els.list.hidden = state.view !== "list" || state.items.length === 0;
-  els.mapPanel.hidden = state.view !== "map" || state.items.length === 0;
-  if (state.view === "map" && state.items.length) renderMap();
+  els.list.hidden = state.items.length === 0;
+  els.mapPanel.hidden = state.items.length === 0;
+  if (state.items.length) renderMap();
 }
 
 function renderMap() {
   if (!window.L) return;
   if (!state.map) {
-    state.map = L.map("openings-map", { scrollWheelZoom: true }).setView([39.48, -104.96], 10);
+    state.map = L.map("openings-map", { scrollWheelZoom: false }).setView([39.48, -104.96], 10);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(state.map);
-    document.querySelector("#openings-map").addEventListener("wheel", (event) => event.preventDefault(), { passive: false });
+    let lastPinchZoom = 0;
+    document.querySelector("#openings-map").addEventListener("wheel", (event) => {
+      if (!event.ctrlKey) return;
+      event.preventDefault();
+      const now = Date.now();
+      if (now - lastPinchZoom < 120) return;
+      lastPinchZoom = now;
+      const change = event.deltaY < 0 ? 1 : -1;
+      const nextZoom = Math.max(state.map.getMinZoom(), Math.min(state.map.getMaxZoom(), state.map.getZoom() + change));
+      state.map.setZoom(nextZoom);
+    }, { passive: false });
   }
   if (state.markerLayer) state.markerLayer.remove();
   state.markerLayer = L.layerGroup().addTo(state.map);
@@ -296,6 +308,7 @@ async function submitTip(event) {
   els.tipMessage.textContent = "Sending…";
   try {
     const body = Object.fromEntries(new FormData(els.tipForm).entries());
+    body.sourceUrl = normalizeSourceUrl(body.sourceUrl);
     const response = await fetch("/api/openings/tips", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -316,8 +329,18 @@ async function submitTip(event) {
   }
 }
 
+function normalizeSourceUrl(value) {
+  const sourceUrl = String(value || "").trim();
+  if (!sourceUrl || /^[a-z][a-z\d+.-]*:\/\//i.test(sourceUrl)) return sourceUrl;
+  return `https://${sourceUrl}`;
+}
+
 for (const input of [els.search, els.community, els.category, els.status]) {
   input.addEventListener(input === els.search ? "input" : "change", () => {
+    if (input === els.status) {
+      state.quickStatus = "all";
+      document.querySelectorAll("[data-quick-status]").forEach((button) => button.setAttribute("aria-pressed", "false"));
+    }
     state.page = 1;
     renderItems();
   });
@@ -327,6 +350,8 @@ els.clear.addEventListener("click", () => {
   els.community.value = "all";
   els.category.value = "all";
   els.status.value = "all";
+  state.quickStatus = "all";
+  document.querySelectorAll("[data-quick-status]").forEach((button) => button.setAttribute("aria-pressed", "false"));
   state.page = 1;
   renderItems();
 });
@@ -340,13 +365,13 @@ els.pageNext.addEventListener("click", () => {
   renderItems();
   document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
-document.querySelectorAll("[data-view]").forEach((button) => {
+document.querySelectorAll("[data-quick-status]").forEach((button) => {
   button.addEventListener("click", () => {
-    state.view = button.dataset.view;
-    document.querySelectorAll("[data-view]").forEach((candidate) => {
-      const active = candidate === button;
-      candidate.classList.toggle("active", active);
-      candidate.setAttribute("aria-pressed", String(active));
+    state.quickStatus = state.quickStatus === button.dataset.quickStatus ? "all" : button.dataset.quickStatus;
+    els.status.value = "all";
+    state.page = 1;
+    document.querySelectorAll("[data-quick-status]").forEach((candidate) => {
+      candidate.setAttribute("aria-pressed", String(candidate.dataset.quickStatus === state.quickStatus));
     });
     renderItems();
     document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
