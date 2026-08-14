@@ -191,20 +191,23 @@ h1 {
 .opening-group-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .opening-group-heading h3 { margin: 0; font-family: "Newsreader", Georgia, serif; font-size: 1.75rem; font-weight: 600; }
 .opening-group-heading span { color: var(--muted); font-size: .78rem; }
-.opening-rows { border-top: 1px solid var(--line); }
+.opening-rows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .opening-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(150px, auto);
-  gap: 14px 18px;
-  align-items: start;
-  padding: 20px 6px 0;
-  border-bottom: 1px solid var(--line);
-  background: transparent;
-  transition: background 160ms ease;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(280px, 1fr) auto;
+  gap: 18px;
+  min-height: 470px;
+  padding: 24px 24px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  overflow: hidden;
+  transition: transform 160ms ease, box-shadow 160ms ease;
 }
-.opening-card:hover { background: #f5f7f2; }
-.card-content { min-width: 0; }
-.card-top { display: grid; justify-items: end; gap: 8px; }
+.opening-card:hover { transform: translateY(-2px); box-shadow: 0 14px 35px rgba(23,37,31,.08); }
+.card-content { grid-column: 1; grid-row: 2; display: flex; min-width: 0; flex-direction: column; }
+.card-top { grid-column: 1; grid-row: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .status-badge, .evidence-badge {
   display: inline-flex;
   align-items: center;
@@ -225,10 +228,10 @@ h1 {
 .opening-card h3 { margin: 0; font-family: "Newsreader", Georgia, serif; font-size: 1.48rem; line-height: 1.08; }
 .opening-window { margin: 5px 0 0; color: var(--forest); font-size: .86rem; font-weight: 700; }
 .card-summary { margin: 8px 0; color: var(--muted); font-size: .84rem; line-height: 1.48; }
-.evidence-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-bottom: 4px; }
+.evidence-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; padding: 18px 0 4px; }
 .evidence-badge { background: #eef1ed; color: #45564d; }
 .category { color: #79877f; font-size: .72rem; }
-.opening-card details { grid-column: 1 / -1; border-top: 1px solid #e8ebe6; }
+.opening-card details { grid-column: 1; grid-row: 3; margin-inline: -24px; padding-inline: 24px; border-top: 1px solid #e8ebe6; }
 .opening-card summary { display: flex; align-items: center; justify-content: space-between; padding: 11px 0 13px; color: var(--forest); font-size: .77rem; font-weight: 700; list-style: none; cursor: pointer; }
 .opening-card summary::-webkit-details-marker { display: none; }
 .opening-card details[open] summary span { transform: rotate(45deg); }
@@ -323,6 +326,7 @@ dialog::backdrop { background: rgba(9,31,23,.7); backdrop-filter: blur(3px); }
   .hero-panel p:last-child { grid-column: 1 / -1; }
   .filter-bar { grid-template-columns: 1fr 1fr; }
   .search-field { grid-column: 1 / -1; }
+  .opening-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .radar { grid-template-columns: 1fr; }
   .radar-status { min-height: 430px; }
 }
@@ -343,9 +347,11 @@ dialog::backdrop { background: rgba(9,31,23,.7); backdrop-filter: blur(3px); }
   .filter-bar label { flex: 0 0 auto; }
   .filter-bar .search-field { flex-basis: 250px; }
   .filter-bar select { width: auto; min-width: 145px; }
-  .opening-card { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-top: 17px; }
-  .card-top { grid-column: 1; grid-row: 2; display: flex; justify-items: initial; align-items: center; justify-content: space-between; }
-  .opening-card details { grid-column: 1; }
+  .opening-rows { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .opening-card { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; min-height: 0; gap: 12px; padding: 17px 16px 0; }
+  .card-top { grid-column: 1; grid-row: 1; display: flex; justify-items: initial; align-items: center; justify-content: space-between; }
+  .card-content { grid-column: 1; grid-row: 2; }
+  .opening-card details { grid-column: 1; grid-row: 3; margin-inline: -16px; padding-inline: 16px; }
   .opening-card h3 { font-size: 1.32rem; }
   .card-summary { display: none; }
   .evidence-row { margin-top: 8px; }
