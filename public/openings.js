@@ -60,6 +60,23 @@ const els = {
   tipMessage: document.querySelector("#tip-message"),
 };
 
+function trackEvent(name, parameters = {}) {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", name, {
+    tracker: "douglas_county_openings",
+    ...parameters,
+  });
+}
+
+function itemEventParameters(item) {
+  return {
+    item_name: item.name,
+    community: item.community,
+    category: item.category,
+    opening_status: item.status,
+  };
+}
+
 function formatDate(value) {
   if (!value) return "Not yet scanned";
   return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" })
@@ -120,8 +137,20 @@ function cardFor(item) {
     link.target = "_blank";
     link.rel = "noreferrer";
     link.textContent = `${source.label} ↗`;
+    link.addEventListener("click", () => {
+      trackEvent("openings_source_click", {
+        ...itemEventParameters(item),
+        source_label: source.label,
+        source_location: "listing_card",
+      });
+    });
     sourceLinks.append(link);
   }
+  const details = card.querySelector("details");
+  details.addEventListener("toggle", () => {
+    if (!details.open) return;
+    trackEvent("openings_listing_details", itemEventParameters(item));
+  });
   return card;
 }
 
@@ -279,6 +308,20 @@ function renderMap() {
       `<span class="popup-precision">${precision}</span>` +
       sourceLink
     );
+    marker.on("click", () => {
+      trackEvent("openings_map_marker", itemEventParameters(item));
+    });
+    marker.on("popupopen", (event) => {
+      const popupSource = event.popup.getElement()?.querySelector(".popup-source");
+      if (!popupSource || !source) return;
+      popupSource.addEventListener("click", () => {
+        trackEvent("openings_source_click", {
+          ...itemEventParameters(item),
+          source_label: source.label,
+          source_location: "map_popup",
+        });
+      }, { once: true });
+    });
     marker.addTo(state.markerLayer);
   }
   setTimeout(() => {
@@ -296,8 +339,17 @@ async function loadCatalog() {
   renderItems();
 }
 
-function openTip() {
+function openTip(event) {
   els.tipMessage.textContent = "";
+  const trigger = event?.currentTarget;
+  const triggerLocation = trigger?.closest("header")
+    ? "header"
+    : trigger?.closest("footer")
+      ? "footer"
+      : trigger?.closest("#empty-state")
+        ? "empty_state"
+        : "unknown";
+  trackEvent("openings_tip_open", { trigger_location: triggerLocation });
   if (typeof els.dialog.showModal === "function") els.dialog.showModal();
 }
 
@@ -317,11 +369,23 @@ async function submitTip(event) {
     const result = await response.json();
     els.tipMessage.textContent = result.message || "Thanks for the tip.";
     if (response.ok) {
+      trackEvent("openings_tip_submit", {
+        has_community: Boolean(body.community),
+        has_location: Boolean(body.location),
+        has_source_url: Boolean(body.sourceUrl),
+        has_contact: Boolean(body.contact),
+      });
       els.tipForm.reset();
       button.textContent = "Tip received ✓";
       setTimeout(() => els.dialog.close(), 1500);
+    } else {
+      trackEvent("openings_tip_error", {
+        error_type: "server_response",
+        status_code: response.status,
+      });
     }
   } catch {
+    trackEvent("openings_tip_error");
     els.tipMessage.textContent = "We couldn’t send that tip. Please try again in a moment.";
   } finally {
     button.disabled = false;
@@ -335,6 +399,7 @@ function normalizeSourceUrl(value) {
   return `https://${sourceUrl}`;
 }
 
+let searchEventTimer;
 for (const input of [els.search, els.community, els.category, els.status]) {
   input.addEventListener(input === els.search ? "input" : "change", () => {
     if (input === els.status) {
@@ -343,6 +408,23 @@ for (const input of [els.search, els.community, els.category, els.status]) {
     }
     state.page = 1;
     renderItems();
+    if (input === els.search) {
+      clearTimeout(searchEventTimer);
+      searchEventTimer = setTimeout(() => {
+        const searchTerm = els.search.value.trim();
+        if (searchTerm.length < 2) return;
+        trackEvent("openings_search", {
+          search_term: searchTerm,
+          results_count: state.items.length,
+        });
+      }, 700);
+    } else {
+      trackEvent("openings_filter_changed", {
+        filter_name: input.id.replace("-filter", ""),
+        filter_value: input.value,
+        results_count: state.items.length,
+      });
+    }
   });
 }
 els.clear.addEventListener("click", () => {
@@ -354,15 +436,18 @@ els.clear.addEventListener("click", () => {
   document.querySelectorAll("[data-quick-status]").forEach((button) => button.setAttribute("aria-pressed", "false"));
   state.page = 1;
   renderItems();
+  trackEvent("openings_filters_cleared", { results_count: state.items.length });
 });
 els.pagePrevious.addEventListener("click", () => {
   state.page -= 1;
   renderItems();
+  trackEvent("openings_page_changed", { page_number: state.page, direction: "previous" });
   document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 els.pageNext.addEventListener("click", () => {
   state.page += 1;
   renderItems();
+  trackEvent("openings_page_changed", { page_number: state.page, direction: "next" });
   document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 document.querySelectorAll("[data-quick-status]").forEach((button) => {
@@ -374,6 +459,10 @@ document.querySelectorAll("[data-quick-status]").forEach((button) => {
       candidate.setAttribute("aria-pressed", String(candidate.dataset.quickStatus === state.quickStatus));
     });
     renderItems();
+    trackEvent("openings_quick_filter", {
+      filter_value: state.quickStatus,
+      results_count: state.items.length,
+    });
     document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
