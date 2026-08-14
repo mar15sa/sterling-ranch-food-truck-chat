@@ -118,8 +118,7 @@ h1 {
 }
 
 .tool-card.openings .tool-icon {
-  background: var(--coral);
-  font-size: 0.7rem;
+  background: transparent;
 }
 
 .tool-icon {
@@ -127,23 +126,26 @@ h1 {
   place-items: center;
   width: 48px;
   height: 48px;
-  border-radius: 50%;
-  background: var(--green);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 850;
+  border-radius: 14px;
+  background: transparent;
+  overflow: hidden;
 }
 
-.tool-card:nth-child(3) .tool-icon {
-  background: var(--blue);
+.tool-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.tool-card:nth-child(4) .tool-icon {
-  background: var(--red);
-}
-
-.tool-card:nth-child(5) .tool-icon {
+.tool-icon.pool-symbol {
   background: var(--gold);
+}
+
+.tool-icon.pool-symbol img {
+  width: 30px;
+  height: 30px;
+  filter: invert(1);
 }
 
 .tool-content {
