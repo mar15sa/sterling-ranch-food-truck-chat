@@ -71,6 +71,7 @@
       "kind": "official",
       "url": "https://www.douglas.co.us/planning/development-project-records-online/",
       "cadence": "daily",
+      "monitorMode": "manual",
       "notes": "Planning applications for Highlands Ranch, Sterling Ranch, Roxborough, Sedalia, and other unincorporated areas."
     },
     {
@@ -117,6 +118,7 @@
       "kind": "official",
       "url": "https://www.douglasco.gov/planning/liquor-licensing/",
       "cadence": "daily",
+      "monitorMode": "manual",
       "notes": "New licenses and ownership transfers often reveal restaurants, bars, and entertainment venues before opening."
     },
     {
@@ -219,6 +221,7 @@
       "kind": "trade-reporting",
       "url": "https://whatnow.com/denver/restaurants/",
       "cadence": "daily",
+      "monitorMode": "manual",
       "notes": "Restaurant lease, permit, and ownership reporting."
     },
     {
@@ -311,6 +314,7 @@
       "kind": "official",
       "url": "https://www.douglas.co.us/documents/",
       "cadence": "daily",
+      "monitorMode": "manual",
       "notes": "Recurring county activity reports can reveal ribbon cuttings, certificates, signs, and public projects that are absent from planning feeds."
     },
     {

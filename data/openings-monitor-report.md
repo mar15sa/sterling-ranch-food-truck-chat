@@ -1,9 +1,9 @@
 # Douglas County openings radar
 
-Scan completed: 2026-08-14T18:15:42.720Z
+Scan completed: 2026-08-14T19:49:04.428Z
 Sources tracked: 36
-Automatically checked: 30
-Manual research lookups: 6
+Automatically checked: 26
+Manual research lookups: 10
 Changed: 0
 Errors: 0
 New structured leads: 0
