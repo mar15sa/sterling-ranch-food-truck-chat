@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-13T21:17:52-06:00",
+  "updatedAt": "2026-08-14T12:14:54-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2185,6 +2185,89 @@
         "lng": -104.873654,
         "precision": "address",
         "geocodedFrom": "5050 Factory Shops Boulevard, Suite 615, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "ziggis-coffee-ken-caryl",
+      "name": "Ziggi's Coffee",
+      "category": "Coffee",
+      "community": "Littleton",
+      "area": "Ken Caryl",
+      "address": "8020 S. Sangre de Cristo Road, Littleton, CO 80127",
+      "status": "opening-soon",
+      "openingWindow": "Grand-opening week begins August 18, 2026",
+      "summary": "Ziggi's is opening a new cafe and drive-thru beside the Marketplace at Ken Caryl, with official grand-opening events scheduled for August 18–22.",
+      "verifiedAt": "2026-08-14",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Ziggi's official Littleton location and grand-opening schedule",
+          "url": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.570521,
+        "lng": -105.113099,
+        "precision": "address",
+        "geocodedFrom": "8020 S. Sangre de Cristo Road, Littleton, CO 80127"
+      }
+    },
+    {
+      "id": "nanus-kitchen-littleton",
+      "name": "Nanu's Kitchen",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Jefferson Marketplace",
+      "address": "8174 S. Kipling Parkway, Suite B110, Littleton, CO 80127",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The new Indian restaurant is serving customers at Jefferson Marketplace with current hours and online ordering available through its official site.",
+      "verifiedAt": "2026-08-14",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Nanu's Kitchen official website, hours, and ordering",
+          "url": "https://nanuskitchen.com/"
+        },
+        {
+          "label": "Jefferson County liquor-license approval",
+          "url": "https://pub-jeffco.escribemeetings.com/Meeting.aspx?Agenda=PostMinutes&Id=7c938418-5cd4-4c6d-bb8e-6adc99b63a1a&lang=English"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.568089,
+        "lng": -105.108252,
+        "precision": "address",
+        "geocodedFrom": "8174 S. Kipling Parkway, Suite B110, Littleton, CO 80127"
+      }
+    },
+    {
+      "id": "ken-caryl-kabob-littleton",
+      "name": "Ken Caryl Kabob",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Ken Caryl",
+      "address": "12652 W. Ken Caryl Avenue, Unit A, Littleton, CO 80127",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The new Indian, Mediterranean, and Nepalese restaurant is open daily in Ken Caryl with reservations and online ordering available.",
+      "verifiedAt": "2026-08-14",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Ken Caryl Kabob official website, hours, and reservations",
+          "url": "https://kencarylkabob.com/"
+        },
+        {
+          "label": "Ken Caryl Kabob official online ordering",
+          "url": "https://www.toasttab.com/local/order/ken-caryl-kabob"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.578984,
+        "lng": -105.139308,
+        "precision": "address",
+        "geocodedFrom": "12652 W. Ken Caryl Avenue, Unit A, Littleton, CO 80127"
       }
     },
     {
