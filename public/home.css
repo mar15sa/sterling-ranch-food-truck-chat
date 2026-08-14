@@ -9,6 +9,7 @@
   --blue: #3267a8;
   --gold: #b7791f;
   --red: #a83f39;
+  --coral: #c75f46;
   --shadow: 0 20px 60px rgba(31, 41, 51, 0.12);
 }
 
@@ -111,6 +112,18 @@ h1 {
   border-color: rgba(47, 125, 104, 0.32);
 }
 
+.tool-card.openings {
+  grid-column: 1 / -1;
+  min-height: 132px;
+  background: #fff8f5;
+  border-color: rgba(199, 95, 70, 0.32);
+}
+
+.tool-card.openings .tool-icon {
+  background: var(--coral);
+  font-size: 0.7rem;
+}
+
 .tool-icon {
   display: grid;
   place-items: center;
@@ -123,15 +136,15 @@ h1 {
   font-weight: 850;
 }
 
-.tool-card:nth-child(2) .tool-icon {
+.tool-card:nth-child(3) .tool-icon {
   background: var(--blue);
 }
 
-.tool-card:nth-child(3) .tool-icon {
+.tool-card:nth-child(4) .tool-icon {
   background: var(--red);
 }
 
-.tool-card:nth-child(4) .tool-icon {
+.tool-card:nth-child(5) .tool-icon {
   background: var(--gold);
 }
 
