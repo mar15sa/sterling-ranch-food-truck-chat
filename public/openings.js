@@ -4,6 +4,8 @@ const state = {
   view: "list",
   map: null,
   markerLayer: null,
+  page: 1,
+  pageSize: 15,
 };
 
 const STATUS_LABELS = {
@@ -48,12 +50,14 @@ const els = {
   status: document.querySelector("#status-filter"),
   resultCount: document.querySelector("#result-count"),
   clear: document.querySelector("#clear-filters"),
+  pager: document.querySelector("#list-pager"),
+  pagePrevious: document.querySelector("#page-previous"),
+  pageNext: document.querySelector("#page-next"),
+  pageStatus: document.querySelector("#page-status"),
   template: document.querySelector("#opening-card-template"),
   dialog: document.querySelector("#tip-dialog"),
   tipForm: document.querySelector("#tip-form"),
   tipMessage: document.querySelector("#tip-message"),
-  sourceSection: document.querySelector("#source-section"),
-  sourceList: document.querySelector("#source-list"),
 };
 
 function formatDate(value) {
@@ -99,7 +103,6 @@ function renderSummary(catalog) {
 function cardFor(item) {
   const card = els.template.content.firstElementChild.cloneNode(true);
   card.dataset.status = item.status;
-  card.querySelector(".card-icon").textContent = item.category.slice(0, 1).toUpperCase();
   const status = card.querySelector(".status-badge");
   status.textContent = STATUS_LABELS[item.status] || item.status;
   status.classList.add(`status-${item.status}`);
@@ -183,14 +186,22 @@ function listSection(title, items) {
 }
 
 function renderList() {
-  const upcoming = state.items.filter((item) => item.status !== "open" && item.status !== "closed");
-  const recentlyOpen = state.items.filter((item) => item.status === "open");
-  const other = state.items.filter((item) => !upcoming.includes(item) && !recentlyOpen.includes(item));
+  const pageCount = Math.max(1, Math.ceil(state.items.length / state.pageSize));
+  state.page = Math.min(state.page, pageCount);
+  const start = (state.page - 1) * state.pageSize;
+  const pageItems = state.items.slice(start, start + state.pageSize);
+  const upcoming = pageItems.filter((item) => item.status !== "open" && item.status !== "closed");
+  const recentlyOpen = pageItems.filter((item) => item.status === "open");
+  const other = pageItems.filter((item) => !upcoming.includes(item) && !recentlyOpen.includes(item));
   const groups = [];
   if (upcoming.length) groups.push(listSection("Coming up", upcoming));
   if (recentlyOpen.length) groups.push(listSection("Recently opened", recentlyOpen));
   if (other.length) groups.push(listSection("Other updates", other));
   els.list.replaceChildren(...groups);
+  els.pager.hidden = state.view !== "list" || state.items.length <= state.pageSize;
+  els.pagePrevious.disabled = state.page === 1;
+  els.pageNext.disabled = state.page === pageCount;
+  els.pageStatus.textContent = `Page ${state.page} of ${pageCount}`;
 }
 
 function renderItems() {
@@ -212,11 +223,12 @@ function renderItems() {
 function renderMap() {
   if (!window.L) return;
   if (!state.map) {
-    state.map = L.map("openings-map", { scrollWheelZoom: false }).setView([39.48, -104.96], 10);
+    state.map = L.map("openings-map", { scrollWheelZoom: true }).setView([39.48, -104.96], 10);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(state.map);
+    document.querySelector("#openings-map").addEventListener("wheel", (event) => event.preventDefault(), { passive: false });
   }
   if (state.markerLayer) state.markerLayer.remove();
   state.markerLayer = L.layerGroup().addTo(state.map);
@@ -272,43 +284,6 @@ async function loadCatalog() {
   renderItems();
 }
 
-function renderSources(data) {
-  const automated = data.automated ?? data.total;
-  const responding = automated - data.errors;
-  setText("#source-healthy", `${responding}/${automated}`);
-  setText("#source-checked", data.lastRunAt ? `Last scan ${formatDate(data.lastRunAt)}` : "First automatic scan is queued");
-  els.sourceList.replaceChildren(...data.sources.map((source) => {
-    const item = document.createElement("article");
-    item.className = "source-item";
-    const dot = document.createElement("span");
-    dot.className = `source-dot ${source.status}`;
-    const copy = document.createElement("div");
-    const name = document.createElement("strong");
-    name.textContent = source.name;
-    const note = document.createElement("p");
-    const coverage = source.monitorMode === "manual" ? "Manual verification" : source.community;
-    note.textContent = `${coverage} · ${source.notes}`;
-    copy.append(name, note);
-    const link = document.createElement("a");
-    link.href = source.url;
-    link.target = "_blank";
-    link.rel = "noreferrer";
-    link.textContent = "Open ↗";
-    item.append(dot, copy, link);
-    return item;
-  }));
-}
-
-async function loadSources() {
-  try {
-    const response = await fetch("/api/openings/sources");
-    if (!response.ok) throw new Error();
-    renderSources(await response.json());
-  } catch {
-    setText("#source-checked", "Source status unavailable");
-  }
-}
-
 function openTip() {
   els.tipMessage.textContent = "";
   if (typeof els.dialog.showModal === "function") els.dialog.showModal();
@@ -342,14 +317,28 @@ async function submitTip(event) {
 }
 
 for (const input of [els.search, els.community, els.category, els.status]) {
-  input.addEventListener(input === els.search ? "input" : "change", renderItems);
+  input.addEventListener(input === els.search ? "input" : "change", () => {
+    state.page = 1;
+    renderItems();
+  });
 }
 els.clear.addEventListener("click", () => {
   els.search.value = "";
   els.community.value = "all";
   els.category.value = "all";
   els.status.value = "all";
+  state.page = 1;
   renderItems();
+});
+els.pagePrevious.addEventListener("click", () => {
+  state.page -= 1;
+  renderItems();
+  document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+els.pageNext.addEventListener("click", () => {
+  state.page += 1;
+  renderItems();
+  document.querySelector(".tracker")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 document.querySelectorAll("[data-view]").forEach((button) => {
   button.addEventListener("click", () => {
@@ -367,12 +356,6 @@ document.querySelectorAll("[data-open-tip]").forEach((button) => button.addEvent
 document.querySelector("[data-close-tip]").addEventListener("click", () => els.dialog.close());
 els.dialog.addEventListener("click", (event) => { if (event.target === els.dialog) els.dialog.close(); });
 els.tipForm.addEventListener("submit", submitTip);
-document.querySelector("#show-sources").addEventListener("click", () => {
-  els.sourceSection.hidden = false;
-  els.sourceSection.scrollIntoView({ behavior: "smooth", block: "start" });
-});
-document.querySelector("#hide-sources").addEventListener("click", () => { els.sourceSection.hidden = true; });
-
-Promise.all([loadCatalog(), loadSources()]).catch((error) => {
+loadCatalog().catch((error) => {
   els.resultCount.textContent = error.message;
 });

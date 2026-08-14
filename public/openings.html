@@ -14,7 +14,7 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
     <link rel="stylesheet" href="/vendor/leaflet/leaflet.css?v=1.9.4" />
-    <link rel="stylesheet" href="/openings.css?v=20260813-v6" />
+    <link rel="stylesheet" href="/openings.css?v=20260813-v7" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSHC10SK92"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -101,6 +101,11 @@
         </div>
 
         <div id="list-view" class="card-grid" aria-live="polite"></div>
+        <nav id="list-pager" class="list-pager" aria-label="Openings pages" hidden>
+          <button id="page-previous" type="button">Previous</button>
+          <span id="page-status" aria-live="polite"></span>
+          <button id="page-next" type="button">Next</button>
+        </nav>
         <div id="map-view" class="map-panel" hidden>
           <div id="openings-map" aria-label="Map of openings within the Douglas County and 80125-area coverage zone"></div>
           <p class="map-note">Each marker represents one listing and is placed from its published address or project location. Open a marker to see whether its position is exact or approximate.</p>
@@ -110,31 +115,6 @@
           <p id="empty-message">Try removing a filter—or share a tip if we missed something.</p>
           <button type="button" data-open-tip>Share what you know</button>
         </div>
-      </section>
-
-      <section class="radar" aria-labelledby="radar-title">
-        <div class="radar-intro">
-          <p class="eyebrow light">How we stay ahead</p>
-          <h2 id="radar-title">The opening radar never clocks out.</h2>
-          <p>It watches official development pages, permits, project feeds, local reporting, and business announcements every day. A page change becomes a lead—not a fact—until it passes verification.</p>
-          <button class="radar-button" id="show-sources" type="button">See every source we monitor</button>
-        </div>
-        <div class="radar-status">
-          <div class="radar-orbit" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
-          <div class="radar-numbers">
-            <strong id="source-healthy">—</strong>
-            <span>sources responding</span>
-            <small id="source-checked">Waiting for the first scan</small>
-          </div>
-        </div>
-      </section>
-
-      <section id="source-section" class="sources-section" hidden aria-labelledby="source-title">
-        <div class="section-heading compact">
-          <div><p class="eyebrow">Source coverage</p><h2 id="source-title">What the radar checks</h2></div>
-          <button class="text-button" id="hide-sources" type="button">Hide</button>
-        </div>
-        <div id="source-list" class="source-list"></div>
       </section>
 
     </main>
@@ -167,7 +147,6 @@
 
     <template id="opening-card-template">
       <article class="opening-card">
-        <div class="card-icon" aria-hidden="true"></div>
         <div class="card-content">
           <p class="card-place"></p>
           <h3></h3>
@@ -181,6 +160,6 @@
     </template>
 
     <script src="/vendor/leaflet/leaflet.js?v=1.9.4"></script>
-    <script src="/openings.js?v=20260813-v6" defer></script>
+    <script src="/openings.js?v=20260813-v7" defer></script>
   </body>
 </html>

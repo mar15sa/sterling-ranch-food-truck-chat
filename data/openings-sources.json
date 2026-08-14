@@ -256,6 +256,42 @@
       "url": "https://littletondda.org/",
       "cadence": "daily",
       "notes": "Downtown business listings, welcome announcements, and grand-opening events."
+    },
+    {
+      "id": "lone-tree-timberlines",
+      "name": "Lone Tree Timberlines business openings",
+      "community": "Lone Tree",
+      "kind": "official",
+      "url": "https://cityoflonetree.com/communications/timberlines/",
+      "cadence": "daily",
+      "notes": "The city’s magazine and newsletter publish ribbon cuttings, grand openings, and quiet additions that do not appear in development-project feeds."
+    },
+    {
+      "id": "colorado-liquor-license-lists",
+      "name": "Colorado recently approved liquor licenses",
+      "community": "Countywide",
+      "kind": "official",
+      "url": "https://sbg.colorado.gov/liquor-license-lists",
+      "cadence": "daily",
+      "notes": "State license approvals expose new restaurant and bar names, legal operators, and exact addresses before or near opening."
+    },
+    {
+      "id": "westword-openings-closings",
+      "name": "Westword restaurant openings and closings",
+      "community": "Denver metro",
+      "kind": "local-reporting",
+      "url": "https://www.westword.com/tag/openings-closings/",
+      "cadence": "daily",
+      "notes": "Weekly metro-area rollups catch soft openings and low-profile restaurant launches that local development feeds miss."
+    },
+    {
+      "id": "castle-rock-outlets-directory",
+      "name": "Outlets at Castle Rock store directory",
+      "community": "Castle Rock",
+      "kind": "property-owner",
+      "url": "https://www.outletsatcastlerock.com/",
+      "cadence": "daily",
+      "notes": "Tenant listings and store pages reveal outlet retailers opening, relocating, or expanding."
     }
   ]
 }

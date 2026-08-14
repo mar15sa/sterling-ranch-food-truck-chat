@@ -1216,8 +1216,8 @@
       }
     },
     {
-      "id": "castilla-italiano-castle-pines",
-      "name": "Castilla Italiano",
+      "id": "castello-italiano-castle-pines",
+      "name": "Castello Italiano",
       "category": "Restaurant",
       "community": "Castle Pines",
       "area": "Village Square",
@@ -1229,8 +1229,12 @@
       "confidence": "official",
       "sources": [
         {
-          "label": "Castle Pines announcement: Castilla Italiano",
+          "label": "Castle Pines announcement: Castello Italiano",
           "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=Yes%2C%20Castilla%20Italiano%20is%20expected%20to%20open"
+        },
+        {
+          "label": "Colorado approved liquor license: Castello Italiano",
+          "url": "https://sbg.colorado.gov/sites/sbg/files/documents/Recently_Approved_Liquor_Licenses_September_2025.pdf"
         }
       ],
       "coordinates": {
@@ -1815,6 +1819,222 @@
         "lng": -105.012001,
         "precision": "approximate",
         "geocodedFrom": "West Mineral Avenue, Littleton, CO"
+      }
+    },
+    {
+      "id": "serenitea-spa-tea-lounge-lone-tree",
+      "name": "Serenitea Spa & Tea Lounge",
+      "category": "Fitness & wellness",
+      "community": "Lone Tree",
+      "area": "Park Meadows Avenue",
+      "address": "9447 Park Meadows Avenue, Units B & C, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The woman- and Asian-owned spa pairs massage, head-spa, reflexology, and facial services with Chinese tea and fresh fruit juices.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Serenitea official website and location",
+          "url": "https://mutaoserenitea.com/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.554947,
+        "lng": -104.879497,
+        "precision": "address",
+        "geocodedFrom": "9447 Park Meadows Avenue, Units B & C, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "angry-pizza-park-meadows",
+      "name": "Angry Pizza",
+      "category": "Restaurant",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8515 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Opened July 2026",
+      "summary": "The pizza restaurant is now open at Park Meadows, taking over the former Nil’s Deli space.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "Westword weekly restaurant openings",
+          "url": "https://www.westword.com/food-drink/every-restaurant-opening-and-closing-denver-new-gennaros-tenant-40914879/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.563017,
+        "lng": -104.875871,
+        "precision": "address",
+        "geocodedFrom": "8515 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "bodybar-pilates-highlands-ranch",
+      "name": "BODYBAR Pilates",
+      "category": "Fitness & wellness",
+      "community": "Highlands Ranch",
+      "area": "South Broadway",
+      "address": "9265 South Broadway, Suite 100, Highlands Ranch, CO 80129",
+      "status": "under-construction",
+      "openingWindow": "Targeting fall 2026",
+      "summary": "The reformer Pilates studio is preparing its Highlands Ranch location and is enrolling founding members ahead of opening.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "BODYBAR official Colorado locations",
+          "url": "https://bodybarpilates.com/locations-list/?state=CO"
+        },
+        {
+          "label": "Douglas County development tracker",
+          "url": "https://dougcosocial.com/whats-being-built-douglas-county"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.547271,
+        "lng": -104.993951,
+        "precision": "address",
+        "geocodedFrom": "9265 South Broadway, Suite 100, Highlands Ranch, CO 80129"
+      }
+    },
+    {
+      "id": "nova-glow-studio-parker",
+      "name": "Nova Glow Studio",
+      "category": "Fitness & wellness",
+      "community": "Parker",
+      "area": "The Juniper on Mainstreet",
+      "address": "19865 Mainstreet, Suite 110, Parker, CO 80138",
+      "status": "opening-soon",
+      "openingWindow": "Targeting late August 2026",
+      "summary": "The boutique Pilates and wellness studio is in pre-launch with reformer and mat classes plus infrared and red-light services.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Nova Glow official pre-launch page",
+          "url": "https://www.novaglowstudios.com/contact"
+        },
+        {
+          "label": "Douglas County development tracker",
+          "url": "https://dougcosocial.com/whats-being-built-douglas-county"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.51745,
+        "lng": -104.758609,
+        "precision": "address",
+        "geocodedFrom": "19865 Mainstreet, Suite 110, Parker, CO 80138"
+      }
+    },
+    {
+      "id": "pilates-addiction-castle-rock",
+      "name": "Pilates Addiction",
+      "category": "Fitness & wellness",
+      "community": "Castle Rock",
+      "area": "Downtown Castle Rock",
+      "address": "333 Perry Street, Castle Rock, CO 80104",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "The reformer Pilates studio is building out a downtown Castle Rock location and accepting VIP-list registrations before opening.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Pilates Addiction official Castle Rock page",
+          "url": "https://pilatesaddiction.com/presale/castle-rock"
+        },
+        {
+          "label": "Castle Rock design review record",
+          "url": "https://castlerock-co.legistar.com/View.ashx?GUID=4D18C9CB-6C2D-4334-9C75-942317F6808A&ID=1337727&M=PA"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.372948,
+        "lng": -104.85912,
+        "precision": "address",
+        "geocodedFrom": "333 Perry Street, Castle Rock, CO 80104"
+      }
+    },
+    {
+      "id": "stio-castle-rock-outlets",
+      "name": "Stio Mountain Studio",
+      "category": "Retail",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Space 150, Castle Rock, CO 80108",
+      "status": "open",
+      "openingWindow": "Opened spring 2026",
+      "summary": "The Jackson, Wyoming outdoor-apparel brand opened its fifth Colorado store at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Stio official Castle Rock store",
+          "url": "https://www.stio.com/pages/castle-rock-store"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.413955,
+        "lng": -104.872146,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Space 150, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "aerie-castle-rock-outlets",
+      "name": "Aerie",
+      "category": "Retail",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Suite 615, Castle Rock, CO 80108",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "Aerie is now operating an outlet location at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Aerie official Castle Rock store page",
+          "url": "https://storelocations.ae.com/us/co/castle-rock/02565-5050-factory-shops-blvd.html"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.415548,
+        "lng": -104.873654,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Suite 615, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "kold-prairie-mead-parker",
+      "name": "Kold Prairie Mead",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "East Main",
+      "address": "East Mainstreet development, Parker, CO 80138",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "The Elizabeth-based small-batch meadery plans a western-style mead bar in Parker’s East Main development.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "Kold Prairie Mead official website",
+          "url": "https://koldprairiemead.com/"
+        },
+        {
+          "label": "Parker location report",
+          "url": "https://dougcosocial.com/directory/parker/kold-prairie-mead-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.517723,
+        "lng": -104.743252,
+        "precision": "approximate",
+        "geocodedFrom": "East Mainstreet development, Parker, CO 80138"
       }
     }
   ]
