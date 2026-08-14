@@ -89,7 +89,7 @@ npm run openings:monitor
 
 The production server schedules the radar daily, and the `Douglas County openings radar` GitHub workflow provides a second daily check. When a monitored source changes or fails, the workflow opens or updates one review issue rather than publishing an unverified lead automatically.
 
-Opening tips are accepted at `POST /api/openings/tips`. Set `OPENINGS_TIP_WEBHOOK_URL` in hosting to send them to a durable review inbox; without it, local development writes them to the gitignored `data/openings-tips.ndjson` file. `OPENINGS_AUTO_MONITOR=false` disables the server-side schedule if the GitHub schedule should be the only scanner.
+Opening tips are accepted at `POST /api/openings/tips`. Set `OPENINGS_TIP_WEBHOOK_URL` in hosting to send them to a durable review inbox, or configure `OPENINGS_TIP_EMAIL_TO`, `OPENINGS_TIP_EMAIL_FROM`, and `OPENINGS_TIP_RESEND_API_KEY` (the shared Resend/rules-alert settings also work) to receive them by email. Local development falls back to the gitignored `data/openings-tips.ndjson` file; production returns a visible error instead of silently saving a tip to temporary storage when no durable inbox is configured. `OPENINGS_AUTO_MONITOR=false` disables the server-side schedule if the GitHub schedule should be the only scanner.
 
 ## Sterling Ranch Rules Assistant
 

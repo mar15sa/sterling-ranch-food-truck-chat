@@ -167,6 +167,15 @@
       "notes": "Board and construction-committee packets can surface infrastructure and commercial activity before newsletters."
     },
     {
+      "id": "sterling-ranch-developer-news",
+      "name": "Sterling Ranch news, events, and town-life directory",
+      "community": "Sterling Ranch",
+      "kind": "official",
+      "url": "https://sterlingranch.com/happenings/",
+      "cadence": "daily",
+      "notes": "Developer announcements and current place pages catch new amenities, businesses, markets, and community openings."
+    },
+    {
       "id": "roxborough-marketplace-leasing",
       "name": "Roxborough Marketplace leasing",
       "community": "Roxborough",
@@ -219,6 +228,7 @@
       "kind": "official",
       "url": "https://data.littletongov.org/pal.php",
       "cadence": "daily",
+      "monitorMode": "manual",
       "notes": "Named commercial proposals, approvals, construction records, and project documents inside the 20-mile radius."
     },
     {
@@ -255,6 +265,7 @@
       "kind": "business-district",
       "url": "https://littletondda.org/",
       "cadence": "daily",
+      "monitorMode": "manual",
       "notes": "Downtown business listings, welcome announcements, and grand-opening events."
     },
     {
@@ -292,6 +303,33 @@
       "url": "https://www.outletsatcastlerock.com/",
       "cadence": "daily",
       "notes": "Tenant listings and store pages reveal outlet retailers opening, relocating, or expanding."
+    },
+    {
+      "id": "douglas-county-manager-reports",
+      "name": "Douglas County manager reports",
+      "community": "Countywide",
+      "kind": "official",
+      "url": "https://www.douglas.co.us/documents/",
+      "cadence": "daily",
+      "notes": "Recurring county activity reports can reveal ribbon cuttings, certificates, signs, and public projects that are absent from planning feeds."
+    },
+    {
+      "id": "parker-chamber-ribbon-cuttings",
+      "name": "Parker Chamber ribbon cuttings",
+      "community": "Parker",
+      "kind": "business-district",
+      "url": "https://business.parkerchamber.com/events/calendarcatgid/6",
+      "cadence": "daily",
+      "notes": "Ribbon-cutting events help catch small businesses that open without a planning announcement."
+    },
+    {
+      "id": "castle-rock-chamber-ribbon-cuttings",
+      "name": "Castle Rock Chamber ribbon cuttings",
+      "community": "Castle Rock",
+      "kind": "business-district",
+      "url": "https://business.castlerock.org/events/calendar",
+      "cadence": "daily",
+      "notes": "Grand-opening and ribbon-cutting events provide opening dates for local stores, restaurants, and services."
     }
   ]
 }

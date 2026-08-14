@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-08-13T16:52:41.333Z",
+  "generatedAt": "2026-08-14T03:19:13.364Z",
   "leads": [
+    {
+      "id": "dougco-social-castle-pines-is-getting-a-wave-of-new-pickleball-courts",
+      "headline": "Castle Pines Is Getting a Wave of New Pickleball Courts",
+      "url": "https://dougcosocial.com/news/castle-pines-pickleball-the-canyons-life-time",
+      "observedDate": "2026-08-13",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
     {
       "id": "dougco-social-the-brickyard-castle-rock-s-400-million-new-neighborhood",
       "headline": "The Brickyard: Castle Rock's $400 Million New Neighborhood",
       "url": "https://dougcosocial.com/news/the-brickyard-castle-rock",
       "observedDate": "2026-08-02",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
-    {
-      "id": "dougco-social-pick-n-tap-indoor-pickleball-golf-and-a-restaurant-are-coming-to-parker",
-      "headline": "Pick N Tap: Indoor Pickleball, Golf, and a Restaurant Are Coming to Parker",
-      "url": "https://dougcosocial.com/news/pick-n-tap-parker",
-      "observedDate": "2026-07-09",
       "sourceId": "dougco-social",
       "sourceName": "DougCo Social openings and local updates"
     },

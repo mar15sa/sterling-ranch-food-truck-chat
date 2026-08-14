@@ -54,16 +54,10 @@ button { cursor: pointer; }
   text-decoration: none;
 }
 .brand-mark {
-  display: grid;
-  place-items: center;
   width: 42px;
   height: 42px;
-  border-radius: 50%;
-  background: var(--forest);
-  color: white;
-  font-size: .76rem;
-  font-weight: 700;
-  letter-spacing: .04em;
+  border-radius: 11px;
+  box-shadow: 0 5px 14px rgba(23, 75, 58, .14);
 }
 .brand > span:last-child { display: grid; gap: 1px; }
 .brand strong { font-size: .98rem; }

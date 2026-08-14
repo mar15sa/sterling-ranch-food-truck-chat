@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-13T16:45:00-06:00",
+  "updatedAt": "2026-08-13T21:17:52-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -98,6 +98,35 @@
         "lng": -105.039947,
         "precision": "approximate",
         "geocodedFrom": "Waterton Road east of Sterling Ranch, Littleton, CO"
+      }
+    },
+    {
+      "id": "ranch-social-sterling-ranch",
+      "name": "Ranch Social",
+      "category": "Coffee, bar & market",
+      "community": "Sterling Ranch",
+      "area": "Sterling Center",
+      "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+      "status": "open",
+      "openingWindow": "Opened April 10, 2026",
+      "summary": "Sterling Ranch opened its coffee house, tap room, wine and cocktail bar, and sundries market inside Sterling Center.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Ranch Social official grand-opening event",
+          "url": "https://sterlingranchcab.com/Calendar.aspx?EID=6327"
+        },
+        {
+          "label": "Sterling Ranch official Ranch Social page",
+          "url": "https://sterlingranch.com/town-life/sterling-center/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.506824,
+        "lng": -105.037492,
+        "precision": "address",
+        "geocodedFrom": "8155 Piney River Avenue, Sterling Ranch, CO 80125"
       }
     },
     {
@@ -1468,6 +1497,156 @@
         {
           "label": "Park Meadows listing: Columbia coming soon",
           "url": "https://www.parkmeadows.com/en/directory/#:~:text=Columbia,Coming%20Soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "att-park-meadows",
+      "name": "AT&T",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon",
+      "summary": "Park Meadows officially lists a new AT&T location as coming soon.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Park Meadows listing: AT&T coming soon",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=AT%26T,Coming%20Soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "arhaus-park-meadows",
+      "name": "Arhaus",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Now open",
+      "summary": "Park Meadows currently labels the home-furnishings store as now open on Level 1 near The Vistas.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Park Meadows listing: Arhaus now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Arhaus,Now%20Open"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "drip-oils-park-meadows",
+      "name": "Drip Oils",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Now open",
+      "summary": "Park Meadows currently labels the specialty oils retailer as now open.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Park Meadows listing: Drip Oils now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Drip%20Oils,Now%20Open"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "lululemon-park-meadows",
+      "name": "lululemon",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Now open",
+      "summary": "Park Meadows currently labels the Level 2 lululemon location near Macy's as now open.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Park Meadows listing: lululemon now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=lululemon,Now%20Open"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "monty-nuss-photography-park-meadows",
+      "name": "Monty Nuss Photography",
+      "category": "Everyday services",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Now open",
+      "summary": "Park Meadows currently labels Monty Nuss Photography as now open.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Park Meadows listing: Monty Nuss Photography now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Monty%20Nuss%20Photography,Now%20Open"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.562133,
+        "lng": -104.875012,
+        "precision": "address",
+        "geocodedFrom": "8401 Park Meadows Center Drive, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "zales-park-meadows",
+      "name": "Zales",
+      "category": "Shopping",
+      "community": "Lone Tree",
+      "area": "Park Meadows",
+      "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
+      "status": "open",
+      "openingWindow": "Now open",
+      "summary": "Park Meadows currently labels the Level 2 jewelry store near Forever 21 as now open.",
+      "verifiedAt": "2026-08-13",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Park Meadows listing: Zales now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Zales,Now%20Open"
         }
       ],
       "coordinates": {

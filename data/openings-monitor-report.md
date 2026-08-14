@@ -1,19 +1,12 @@
 # Douglas County openings radar
 
-Scan completed: 2026-08-13T16:52:41.333Z
-Sources checked: 12
+Scan completed: 2026-08-14T03:19:13.364Z
+Sources tracked: 36
+Automatically checked: 30
+Manual research lookups: 6
 Changed: 0
-Errors: 1
+Errors: 0
 New structured leads: 0
-
-## Leads no longer present
-
-- [Egg Harbor Cafe Is Coming to Belleview Station in Denver](https://dougcosocial.com/news/egg-harbor-cafe-belleview-station-denver) — may have moved off the source feed
-- [Lost Canyon Ranch Open Space: I Hiked Every Open Trail. Here's the Guide.](https://dougcosocial.com/news/lost-canyon-ranch-open-space-castle-rock) — may have moved off the source feed
-
-## Sources needing attention
-
-- Larkspur planning meetings: HTTP 403
 
 ## Review rule
 

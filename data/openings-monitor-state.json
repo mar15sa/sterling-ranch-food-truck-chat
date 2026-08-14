@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-13T16:52:41.333Z",
+  "lastRunAt": "2026-08-14T03:19:13.364Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.446Z",
-      "changedAt": null,
-      "fingerprint": "cbcf673245193e69ded5fec7e8e6ef18eb9bd6eba3a18687293e9c8716aff1ff",
+      "checkedAt": "2026-08-14T03:19:11.511Z",
+      "changedAt": "2026-08-14T03:18:37.911Z",
+      "fingerprint": "1352d75cb3d6610b6c0b1b4fa6ea9b8ced82f2a8c4ce8bdd39495d65935ea553",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -17,23 +17,26 @@
     },
     "castle-rock-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.527Z",
-      "changedAt": null,
-      "fingerprint": "ba0fbb4f4db66b2f27002521680f5fe0094260a6e0ac497c8e9ef11483b2c84b",
+      "checkedAt": "2026-08-14T03:19:11.647Z",
+      "changedAt": "2026-08-14T03:18:38.060Z",
+      "fingerprint": "453f0ab75731b6d4863497832cbe3ebbebdbca5b20a3c98c8c4f4ca3e722c6d8",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
-      "signals": [],
+      "signals": [
+        "Liquor License Authority"
+      ],
       "structuredLeads": [],
       "newSignals": []
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.529Z",
+      "checkedAt": "2026-08-14T03:19:11.651Z",
       "changedAt": null,
       "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
       "finalUrl": "https://www.parkerco.gov/Planning",
       "contentType": "text/html; charset=utf-8",
       "signals": [
+        "Development Review is responsible for processing Land Use Applications such as requests for annexation, rezoning, site plans and subdivision plats. This area also reviews Sign Permits , Temporary Use Permits, Home Based Occupation applications and requests for variances from the Land Development Ordinance .",
         "&amp;amp;amp;lt;span class=\"fr-mk\" style=\"display: none;\"&amp;amp;amp;gt;&amp;amp;amp;amp;amp;nbsp;&amp;amp;amp;lt;/span&amp;amp;amp;gt;"
       ],
       "structuredLeads": [],
@@ -41,7 +44,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.531Z",
+      "checkedAt": "2026-08-14T03:19:11.653Z",
       "changedAt": null,
       "fingerprint": "698d121769465bd2d44287e3fa49df3ddac965dea5db2034e0dfa9edf66babef",
       "finalUrl": "https://www.parkered.com/",
@@ -55,7 +58,7 @@
     },
     "lone-tree-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.533Z",
+      "checkedAt": "2026-08-14T03:19:11.656Z",
       "changedAt": null,
       "fingerprint": "0202e72b4881cb4c0a4260ada79cb2d0bf5fc3262d3d450205ada9d305b67eda",
       "finalUrl": "https://cityoflonetree.com/projects/",
@@ -68,26 +71,35 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.535Z",
+      "checkedAt": "2026-08-14T03:19:11.659Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
-        "CP Commercial, LLC Lawsuit"
+        "Building Permits",
+        "Liquor License",
+        "Liquor License Renewal",
+        "CP Commercial, LLC Lawsuit",
+        "Building Inspections",
+        "Responsible for the implementation and enforcement of building codes and standards, building permit services, and building inspections."
       ],
       "structuredLeads": [],
       "newSignals": []
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.536Z",
+      "checkedAt": "2026-08-14T03:19:11.662Z",
       "changedAt": null,
       "fingerprint": "abef7df19e072bfc429686fbea3bec2d128ed6d88ab11b12f2219873e53af366",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
+        "Building Permits",
+        "Liquor License",
+        "Liquor License Renewal",
         "CP Commercial, LLC Lawsuit",
+        "Building Inspections",
         "A 7 Brew Coffee is currently under construction. The latest information about development activity around Castle Pines is available at CastlePinesCO.gov/DevelopmentActivity.",
         "When is the new storage facility opening?",
         "Is there a new restaurant going into the old Pino’s location?",
@@ -108,7 +120,7 @@
     },
     "douglas-county-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.537Z",
+      "checkedAt": "2026-08-14T03:19:11.664Z",
       "changedAt": null,
       "fingerprint": "7cb7fc4620444d1d9437eb34f39229e44cf3325f72e5a24a79e80f54d4e5d52f",
       "finalUrl": "https://www.douglasco.gov/planning/development-project-records-online/",
@@ -119,33 +131,232 @@
         "Commercial Forms",
         "Commercial Property",
         "Spark DC",
+        "Building Permits",
         "Restaurant Inspections",
+        "Child Care Center Inspections",
+        "Septic System Inspections",
         "by Webolutions Digital Marketing Agency"
       ],
       "structuredLeads": [],
       "newSignals": []
     },
-    "larkspur-planning": {
-      "status": "error",
-      "checkedAt": "2026-08-13T16:52:40.539Z",
+    "douglas-county-recent-projects": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.667Z",
+      "changedAt": null,
+      "fingerprint": "9541f5d7d516a96056f260ccd2a4b67ae608b959c446f29760ff333eb9c22afd",
+      "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-building-records": {
+      "status": "manual-review",
+      "checkedAt": null,
       "changedAt": null,
       "fingerprint": null,
       "signals": [],
-      "newSignals": [],
-      "error": "HTTP 403"
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-agendas": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.670Z",
+      "changedAt": null,
+      "fingerprint": "0060fd2a6c160a6ab489172cfd29c3e82eda1473611aee76c285220068e94d47",
+      "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Douglas County Open Space Advisory Committee (COSAC)"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-public-notices": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.673Z",
+      "changedAt": null,
+      "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
+      "finalUrl": "https://publicnotices.douglasco.gov/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "by Webolutions Digital Marketing Agency"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-liquor-licenses": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.675Z",
+      "changedAt": null,
+      "fingerprint": "ccf46a05d98711fcf77bfca8ac3369ddfaafbd2f1fe2687a6f9b62b7dd5048dd",
+      "finalUrl": "https://www.douglasco.gov/planning/liquor-licensing/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Parks, Trails, Historic Resources and Open Space Fund",
+        "Open Space Properties & Trails",
+        "Commercial Forms",
+        "Commercial Property",
+        "Spark DC",
+        "Building Permits",
+        "Restaurant Inspections",
+        "Child Care Center Inspections",
+        "Septic System Inspections",
+        "Any business serving alcohol in Douglas County is required to have license approval by the Local Liquor Licensing Authority . This includes new licenses, renewals, transfers and report of changes per the Colorado Liquor Code. Douglas County also approves all local tastings and special event permits. Fees vary based on the type of license needed.",
+        "License holders are responsible for complying with all laws, rules and regulations . Random compliance checks and inspections are performed by the Douglas County Sheriff’s Office and the Colorado Department of Revenue, Liquor Enforcement Division.",
+        "Upcoming Liquor License Meetings",
+        "New Liquor Licenses",
+        "Renewing a Liquor License",
+        "Liquor License Application or 3.2% percent Beer License Application form with all required attachments. Once Douglas County staff determines the application to be complete, it is sent to the State during the 30-day waiting period.",
+        "Transfer of a Liquor License",
+        "Any entity wishing to obtain an existing liquor license must complete a transfer of ownership. Transfers of ownership require both State and local approval but do not require a public hearing before the Local Liquor Licensing Authority. An applicant may also request a temporary permit for the period during which the transfer is being reviewed. Fees do apply.",
+        "Liquor License Report of Changes",
+        "Liquor License Special Event Permit",
+        "Liquor License Tasting Permit Requirements",
+        "Douglas County approves all local Tastings Permits. Retail liquor stores may conduct up to 104 tastings per year with dates that run concurrently with its license. No more than four tastings can be held in one week between the hours of 11 a.m. and 7 p.m. Any changes must be provided to Douglas County at least 72 hours in advance. Fees do apply.",
+        "by Webolutions Digital Marketing Agency"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-food-inspections": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "highlands-ranch-news-projects": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.677Z",
+      "changedAt": null,
+      "fingerprint": "a0095ba701b9a3e627a0316f1b9f5c16f7a9e74bb1b537818b46990776119417",
+      "finalUrl": "https://www.highlandsranch.org/news-events",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Open Space & Trails Community Gardens",
+        "Open Space Information Center",
+        "Outdoor Fitness Court",
+        "Transparency Elections",
+        "Financial Transparency",
+        "Open Space Information Center Coyotes",
+        "Free Fitness in the Park",
+        "Prairie dog population currently exceeds carrying capacity in one open space location"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "highlands-ranch-commercial-review": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "sterling-ranch-cab-news": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.679Z",
+      "changedAt": null,
+      "fingerprint": "78d0c1de85136fd681223fa642ac0ac1a51305cf1284fbb21e9148c4ef8468fb",
+      "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Sterling Ranch News 7-24-2026: Sterling Ranch Days events, updates on Titan & Santa Fe interchange, new website coming soon, updates on schools and DougCo fair & rodeo.",
+        "Sterling Ranch News 7-10-2026: Stars & Stripes photos, pie-eating contest, new pool construction begins, pickleball survey, water-wise news story, Sterling Ranch Days info, new app and website coming soon.",
+        "Sterling Ranch News 4-10-2026 : Ranch Social grand opening, EVOC expansion, DWSD water plan survey, upcoming facility closures, reminder about Ranch Social, Waterton Road roundabouts, school updates, Parkvale opening, more.",
+        "Sterling Ranch News 4-3-2026: Water update - no drought restrictions, Easter hours and closures, Spring Sterling Ranch Living magazine, Zebulon update, Ranch Social grand opening, new neighborhood watch, more.",
+        "Sterling Ranch News 3-27-2026 : Zebulon update, Landscape Expo, Milkshake & new calf Rocky Road, Prospect Village Neighborhood Watch, Water FAQs, Ranch Social grand opening event, reminder to supervise children, roundabout updates, John Adams Academy info night, Parkvale new model home, custom home lots for sale, 250/150 photo info.",
+        "Sterling Ranch News 2-20-2026: Calving season and Baby Milkshake poll, 3000 homes milestone, roundabout safety article, disaster preparedness, Agora Market, local event.",
+        "Sterling Ranch News 2-13-2026: Agora Market now open at Sterling Center, roundabout safety article, citizen disaster preparedness workshops.",
+        "Sterling Ranch News 12-26-2025: DCSD school update, winter watering, holiday market photos.",
+        "Sterling Ranch News 12-12-2025 : New library, holiday mugs and market, new roundabout, lights out at 10 p.m.",
+        "Sterling Ranch News 11-7-2025: Cattle drive photos and recap, elementary school time capsule event, holiday market call for vendors, Colorado Gives Day, notice of public meeting.",
+        "Sterling Ranch News 10-10-2025: Sterling Ranch Living magazine, Atlas/Salta and Living the Dream open during construction, Holiday Market update, Cattle Drive info, elementary school update.",
+        "Sterling Ranch News 10-3-2025: Fall Festival, Sterling Center construction update, call for holiday market vendors, Ranch Hands program, landscape class.",
+        "Sterling Ranch News: 8-8-2025 : Sterling Ranch Days events, Sterling Center closure dates, Traffic flow map, wildfire and emergency planning, Xcel town hall presentation, Prospect Park playground opening, pickleball courts reservations details.",
+        "Sterling Ranch News 8-1-2025: Pickleball courts now open, Prospect Park playground grand opening, Sterling Center closure dates, Xcel Town Hall info, Zebulon update.",
+        "Sterling Ranch News 6-20-2025 : Open space mowing and maintenance, wildlife updates, 4th of July event, elementary school updates.",
+        "Sterling Ranch News 6-6-2025 : Weather and event updates, pickleball court progress, RV and commercial vehicle parking rules change.",
+        "Sterling Ranch News 5-23-2025 : Pool opening and clubhouse info, Prospect Park update, new art installation.",
+        "Sterling Ranch News 5-9-2025 : Prospect Park updates, Overlook pool opening dates and membership info, Milkshake in the news, spring landscape tips, Highway 85 updates.",
+        "Sterling Ranch News 03-21-2025 : Meet the candidates, fitness room updates, Prospect Park construction, school updates",
+        "Sterling Ranch News 01-24-2025: Milkshake contest, planning for spring landscaping, Rave clinic opening"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "sterling-ranch-cab-agendas": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.681Z",
+      "changedAt": null,
+      "fingerprint": "7c09728c2ab87653d7e9b37f909840670c81313d53319d6f3ceeffa26547c733",
+      "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "sterling-ranch-developer-news": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.683Z",
+      "changedAt": null,
+      "fingerprint": "ad24106cb1d8c237148f838a2d6f679c0fdee16b63aaf4b2a9b86a1cd2746787",
+      "finalUrl": "https://sterlingranch.com/happenings/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "A lot goes into building a Colorado town from the ground up, so there’s a lot of news to share — including milestones, model openings and more. Even more goes on around our Colorado town, thanks to Kelsey, our full-time Lifestyle Director’s prolific party planning. Here’s what’s happening at Sterling Ranch.",
+        "Farmer’s Market",
+        "Join us for the very first Sterling Ranch Farmers Market! Explore a vibrant collection of&hellip;",
+        "I'm interested in Commercial",
+        "Sterling Ranch is a growing, evolving community. Pricing, plans, specifications, amenities, zoned uses, retail, apartment locations, designs and landscaping are subject to change without notice and are not guarantees. See full disclaimers ."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "roxborough-marketplace-leasing": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.687Z",
+      "changedAt": null,
+      "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
+      "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Retail Space for Lease in Littleton, CO | Roxborough Marketplace | PECO",
+        "Contact Leasing Roxborough Marketplace",
+        "Major Tenants: Safeway, Starbucks, Domino&#x27;s Pizza, Great Clips",
+        "Site Plan",
+        "Phillips Edison & Company, Inc. (“PECO”) is one of the nation&#x27;s largest owners and operators of grocery-anchored shopping centers.",
+        "Roxborough Marketplace"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "larkspur-planning": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
     },
     "dougco-social": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.541Z",
-      "changedAt": null,
-      "fingerprint": "ddd7153acfd179221029c1bf974ca84c3066c4c2dbd2eb51dce4a60ff0264f2d",
+      "checkedAt": "2026-08-14T03:19:11.689Z",
+      "changedAt": "2026-08-14T03:18:38.099Z",
+      "fingerprint": "9002a7e6ba45ded038535d5b3ca36205bf3a800dc8d77eda2548d6e4735ef3ee",
       "finalUrl": "https://dougcosocial.com/news",
       "contentType": "text/html; charset=utf-8",
       "signals": [
         "Douglas County News — Openings & Closings | DougCo Social DougCo Social",
         "New openings, closings, development, and community updates from Castle Rock, Parker, Highlands Ranch, Lone Tree, Castle Pines, and across Douglas County — first-person coverage you won&#x27;t find anywhere else.",
         "Egg Harbor Cafe Is Coming to Belleview Station in Denver",
-        "The family-owned breakfast brand that opened in Highlands Ranch this spring is expanding — a second Colorado location is coming to Belleview Station in southeast Denver, looking like a September opening.",
+        "The family-owned breakfast brand that opened in Highlands Ranch this spring is expanding — a second Colorado location is coming to Belleview Station in southeast Denver, looking like a third-week-of-September opening (recently pushed back).",
         "Douglas County approved $7.5 million toward a 75,000-square-foot Gold Crown youth field house in Castle Rock&#x27;s Dawson Trails — six basketball courts, a dozen volleyball courts, and an early-2028 opening.",
         "105 West Brewing&#x27;s all-inclusive Castle Rock Beer Fest Under the Stars returns Saturday, Sept 12, 2026, 4–9pm at the Philip S. Miller Park Amphitheater — 25+ Colorado breweries, 7+ food trucks, unlimited tastings, and live music. It sells out; no door sales.",
         "The 24th Annual Taste of Douglas County returns Thursday, Aug 20, 2026, 5–8pm — an indoor, air-conditioned evening of food samples from dozens of area restaurants, drinks, and live entertainment at the Douglas County Events Center in Castle Rock. $10 in advance, $20 at the door.",
@@ -184,6 +395,14 @@
         "Bar Hummingbird Castle Rock — Menu, Hours, and What We Tried"
       ],
       "structuredLeads": [
+        {
+          "id": "dougco-social-castle-pines-is-getting-a-wave-of-new-pickleball-courts",
+          "headline": "Castle Pines Is Getting a Wave of New Pickleball Courts",
+          "url": "https://dougcosocial.com/news/castle-pines-pickleball-the-canyons-life-time",
+          "observedDate": "2026-08-13",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
         {
           "id": "dougco-social-gold-crown-field-house-coming-to-castle-rock-s-dawson-trails",
           "headline": "Gold Crown Field House Coming to Castle Rock's Dawson Trails",
@@ -381,7 +600,7 @@
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.543Z",
+      "checkedAt": "2026-08-14T03:19:11.691Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -419,9 +638,9 @@
     },
     "what-now-denver": {
       "status": "ok",
-      "checkedAt": "2026-08-13T16:52:40.544Z",
-      "changedAt": "2026-08-13T16:52:19.004Z",
-      "fingerprint": "a283669f7ee1408c06050c6045c0d4956fe3d392bd165b4b1678fb45f8e719a1",
+      "checkedAt": "2026-08-14T03:19:11.692Z",
+      "changedAt": "2026-08-14T03:18:38.105Z",
+      "fingerprint": "cd78f30b80dc86e85b9368490e7c066a270712babc6db65182f97d7b3d50804a",
       "finalUrl": "https://whatnow.com/denver/restaurants/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -433,19 +652,235 @@
         "Restaurants Retail Real Estate -->",
         "Restaurants ▾",
         "Restaurants Retail Real Estate",
+        "La Vie En Rose Sets September Opening in RiNo",
+        "Black Box Bakery to Open New Café in Edgewater",
         "The Coastal Service Bringing New Seafood Bar to Denver Tech Center",
         "Mosaic Chai House Plans New North Denver Coffee Shop",
         "G-Que BBQ Breaks Ground on New Parker Restaurant",
         "Jet’s Pizza Coming Soon to Colorado Springs",
         "Barcelona Wine Bar Plans New Denver Tech Center Location",
         "Kiki’s Health Cafe to Open Second Location in Morrison",
-        "King of Wings Team Plans Two New Wheat Ridge Restaurants",
-        "Boka Restaurant Group Plans Three New Cherry Creek Concepts",
         "What Now connects leading organizations across the restaurant, retail, and real estate industries nationwide, empowering you to grow, expand, and thrive in local markets.",
         "Something opening or closing in your neighborhood? Drop us a note:",
         "Pre-Opening Checklist",
         "Our Partner Guide outlines every step in opening a restaurant — from concept creation to securing a lease to hiring your team, and everything in between.",
         "Something opening or closing in your ‘hood? Drop us a Note: [email protected]"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "littleton-development-activity": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "visit-littleton-new-businesses": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.694Z",
+      "changedAt": null,
+      "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
+      "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "What’s New in Littleton, CO for 2026 | New Shops, Restaurants & Fitness",
+        "Beauty, Spas and Fitness",
+        "Restaurants",
+        "Coffee, Tea & Smoothies",
+        "Specialty Markets",
+        "As 2026 gets underway, Littleton is changing in ways that feel noticeable but familiar. New storefronts are opening. Longtime businesses are moving to larger spaces. Construction is underway on projects that will shape how people shop, eat, and spend time in the city for years to come.",
+        "This isn’t growth for growth’s sake. Much of what’s happening is tied to everyday life: places to grab coffee, studios to work out, restaurants that fit into weekly routines, and retail that keeps people close to home. Some of these businesses are already open and settling in. Others are officially on the way, with buildouts and planning in progress. Together, they reflect a city growing with intention while holding onto what residents value most.",
+        "A Healthy Start: Fitness & Wellness Expansions",
+        "“New year, new me” feels especially fitting in Littleton, where staying active has long been part of daily life. From trail access and parks to walkable neighborhoods, fitness is already woven into the city’s culture. Heading into 2026, new studios and developments are adding indoor options that support that lifestyle year-round.",
+        "HAVN joins a deep roster of established fitness options throughout Littleton. Anytime Fitness offers flexible, no-frills gym access, while places like Camp MissFits focus on coached strength training and small-group formats. These spaces appeal to residents looking for structure, accountability, and personalized support.",
+        "Movement-based studios are also a big part of Littleton’s fitness culture. The Ballet Physique on Main Street blends barre, Pilates, and strength training in a boutique setting, while Pilates by Johanna and H2 Pilates Studio emphasize controlled, low-impact movement designed to support long-term mobility. Yoga remains a staple as well, with studios like Sumits Yoga Littleton offering classes that balance physical challenge with recovery and stress relief.",
+        "Community-centered options round out the picture. The Littleton Family YMCA and Douglas H. Buck Community Recreation Center continue to serve residents of all ages with group classes, open gym time, and accessible programming that keeps fitness inclusive.",
+        "Beyond individual studios, fitness is increasingly built into how Littleton grows. Mixed-use developments like Mineral Place are designed with trail access and on-site fitness amenities in mind, creating space for future wellness offerings that integrate naturally into daily routines. Together, these options reflect a city where staying active doesn’t require a single approach. It’s flexible and woven into everyday life.",
+        "Beyond Thai brings a fresh, modern take on Thai cuisine to Littleton, offering a menu that blends traditional flavors with contemporary presentation. Known for dishes like pad thai, curries, and noodle bowls, the restaurant provides a comfortable, sit-down dining experience that works for both casual nights out and special occasions. Its addition helps round out Littleton’s growing mix of global dining options.",
+        "Hearth Bakery & Coffee Shop expanded into Littleton in 2025 with a new location at 5610 S. Curtice Street. Known for its artisan breads, pastries, and comforting café fare, Hearth feels right at home on Main Street. Fresh-baked bread, hearty sandwiches, and a warm interior have made it a regular stop for breakfast, lunch, or a slower afternoon visit.",
+        "Hibachi V Express adds a fast-casual Japanese grill option to Littleton’s dining mix. Located in a former Pierogies shop, the restaurant serves hibachi-style meals like grilled steak, chicken, or shrimp with vegetables and rice, along with items such as okonomiyaki. It’s a convenient option for lunch or takeout without the time commitment of a traditional hibachi restaurant.",
+        "Craft beverage fans can also visit Honnibrook Craft Meadery , which opened a tasting room in Downtown Littleton. Often referred to as the “Mead Cottage,” the space on Rapp Street offers honey-based wines ranging from traditional styles to fruit-forward blends, providing a quieter alternative to beer and cocktails.",
+        "Littleton Brewing Company officially opened in March 2025, transforming a former autobody shop into a two-story neighborhood brewery. Family-owned and community-focused, the brewery features a rooftop patio with fire pits that draws steady crowds when the weather cooperates. With a well-rounded beer lineup that includes approachable lagers and hop-forward styles, it has quickly become a favorite gathering spot.",
+        "Dirt Coffee , a beloved hometown coffee shop known for its mission to empower neurodivergent individuals in the workforce, moved into a larger Downtown Littleton location in late 2025. The new space at 2506 W. Alamo Ave. includes an expanded café and Colorado’s first drop-in Workforce Connection Center for neurodivergent job seekers. The move allows Dirt Coffee to serve more customers, host events, and deepen its community impact while continuing to do what it does best.",
+        "Ruby Jane Boutique , a Colorado-based retailer known for mountain-chic fashion and gifts, opened a new store on Littleton’s Main Street. For many locals, it means no longer needing to head to Denver or mountain towns to shop the brand’s curated styles. Its arrival reflects a broader increase in downtown retail, helping keep shopping local and walkable.",
+        "Shops, Services, and Openings Coming Soon",
+        "Several additional businesses are officially listed as coming soon in Littleton.",
+        "Downtown, Diamond Reserve is preparing to open on West Main Street, adding a jewelry retailer to the historic core. Rhonda Allison , a professional skincare brand, is also slated to open a location on South Prince Street, expanding service-oriented retail options downtown.",
+        "Coffee service will expand further with 7 Brew Coffee , coming to West Mineral Avenue. The drive-thru-focused concept will add a quick coffee option to the south end of the city.",
+        "The financial sector is expanding as well. Academy Bank opened a Downtown Littleton branch in fall 2025. Central Bank (2516 W. Main St.) and Huntington National Bank (100 E. Mineral Ave.) are also officially listed as coming soon, increasing access to banking services near downtown and the Mineral corridor.",
+        "A Costco warehouse store will anchor Mineral Place, marking Littleton’s first Costco location. The 159,000-square-foot store will include a gas station and tire center and is projected to open in 2026.",
+        "Beyond the anchors, Mineral Place plans include a second big-box retailer yet to be announced and nine smaller retail and dining spaces. A 370-unit luxury apartment community developed by Embrey, known as The Sullivan , will also be part of the project.",
+        "As 2026 continues, Littleton’s growth is unfolding on multiple levels. New fitness studios are opening. Restaurants and coffee shops are becoming part of daily routines. Downtown retail is filling in. Major developments like Mineral Place are laying the groundwork for what comes next."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "park-meadows-directory": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.696Z",
+      "changedAt": null,
+      "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
+      "finalUrl": "https://www.parkmeadows.com/en/directory/",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Stores Map News & Events Hours & Info"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "hogback-post": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.698Z",
+      "changedAt": null,
+      "fingerprint": "8b317b87cbdd1e3e9ec9aa41d7c454a1f983481060cdb7102b98e82386ee27e5",
+      "finalUrl": "https://www.hogbackpost.com/",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Every Friday, the Hogback Post delivers local news, events, restaurant openings, trail updates, and development intel that actually matters to Littleton, Ken Caryl, and the SW Denver foothills. Five-minute read.",
+        "Restaurant and business openings : Portillo&#x27;s coming to Mineral, Ziggi&#x27;s Coffee, Nanu&#x27;s Kitchen, Ken Caryl Kabob, and what opens next",
+        "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "littleton-downtown-directory": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "lone-tree-timberlines": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.699Z",
+      "changedAt": null,
+      "fingerprint": "b54408634310b9281f1f5c3565beedff14994ed04ea697449f4d5973312daea9",
+      "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Parks, Trails, Open Space"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "colorado-liquor-license-lists": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.701Z",
+      "changedAt": null,
+      "fingerprint": "8f6869839f5a7e9eb204ba22d864449e1da1b7c44b756a29e58afb3d4c47e94e",
+      "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Liquor License Lists | Department of Revenue - Specialized Business Group",
+        "Liquor License Lists",
+        "View and download PDF and/or Excel liquor license lists using the links below.",
+        "All-State Liquor Licenses (PDF) as of 8/7/2026",
+        "All-State Liquor Licenses (Excel) as of 8/7/2026",
+        "Recently Approved Liquor Licenses (PDF) as of 8/7/2026",
+        "Recently Approved Liquor Licenses(Excel) as of 8/7/2026",
+        "Recently Expired & Surrendered Liquor Licenses (PDF) as of 8/7/2026",
+        "Recently Expired & Surrendered Liquor Licenses (Excel) as of 8/7/2026",
+        "Retail Liquor Stores Educational Classes Registration List",
+        "Transparency Online"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "westword-openings-closings": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.703Z",
+      "changedAt": null,
+      "fingerprint": "4d25cd4c239a30107f21cdc1fa06707b23cd4377cab7c6f53aa7d5b96e5adbf3",
+      "finalUrl": "https://www.westword.com/tag/openings-closings/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Openings & Closings Archives | Denver Westword",
+        "Openings & Closings",
+        "Restaurants",
+        "Shops & Markets",
+        "Top 50 Restaurants",
+        "RiNo Champagne bar to open Labor Day weekend",
+        "La Vie En Rose is taking over the former Noble Riot space.",
+        "Every opening and closing this week: Carriage House opens along Cheesman Park",
+        "A new owner has revived the pizza restaurant adjoining the PS Lounge on Colfax.",
+        "Edgewater bakery expanding to a second Denver location this fall",
+        "Black Box Bakery will soon open a sit-down café.",
+        "Restaurant Roll Call: Every opening and closing in July",
+        "Notable openings temper the pang felt by three big losses.",
+        "Plus, restaurant industry workers get a free screening of ‘Tony.’",
+        "Zoe Ma Ma and Dragonfly chef opening new “elevated American Chinese” concept next month",
+        "Every opening and closing this week: Gennaro’s space gets new tenant",
+        "Odyssey Italian Restaurant reopens this week, expanding to Uptown",
+        "Sister restaurant Ollie & Park’s will be retired and reopened as ‘Odyssey Uptown’ once repairs are complete.",
+        "Wax Trax is opening a “real store” at Stanley Marketplace",
+        "Every opening and closing this week: Two new sushi spots surface",
+        "Neighboring Hamburger Mary’s is temporarily closed until power is restored.",
+        "Carmine’s Italian Restaurant is closing one of two locations",
+        "Marketing"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "castle-rock-outlets-directory": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.704Z",
+      "changedAt": null,
+      "fingerprint": "42ae5fe3812ca33610c9a38713bb60bc7205c547dfbef9be674b756da0ab7626",
+      "finalUrl": "https://www.outletsatcastlerock.com/",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Shop Stores",
+        "EXTRA SAVINGS Outlets at Castle Rock’s Elite Savings Passbook provides additional discounts to over half of our stores. It’s worth $100s in savings! Sign up for Elite Rewards Program to download the Passbook today!"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "douglas-county-manager-reports": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.706Z",
+      "changedAt": null,
+      "fingerprint": "358f371d96d8d8628d14307716c36fa70a22bc9e25cb38566a386cebd0fab81c",
+      "finalUrl": "https://www.douglasco.gov/documents/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Parks, Trails, Historic Resources and Open Space Fund",
+        "Open Space Properties & Trails",
+        "Commercial Forms",
+        "Commercial Property",
+        "Building Permits",
+        "Restaurant Inspections",
+        "Child Care Center Inspections",
+        "Septic System Inspections",
+        "by Webolutions Digital Marketing Agency"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "parker-chamber-ribbon-cuttings": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.708Z",
+      "changedAt": null,
+      "fingerprint": "5766cce7f9f907a38beb9d901991292b438255ce8abe63a6bd7fdd19e8ec92b3",
+      "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "castle-rock-chamber-ribbon-cuttings": {
+      "status": "ok",
+      "checkedAt": "2026-08-14T03:19:11.709Z",
+      "changedAt": null,
+      "fingerprint": "d79397dc9f53877f71fba07f07d34fdc0fe299125aa19e9fa0b37cf4cb77d3be",
+      "finalUrl": "https://business.castlerock.org/events/calendar",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Ribbon Cutting and Grand Opening- The Ottmann Agency 4-6pm"
       ],
       "structuredLeads": [],
       "newSignals": []
