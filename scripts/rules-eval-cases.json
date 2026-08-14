@@ -291,6 +291,51 @@
     "expectedFirstAny": ["Sec. 21-22"]
   },
   {
+    "question": "Lights on porches and patios",
+    "expectedFirstAny": ["Updated exterior lighting policy"],
+    "answerIncludesAll": ["DRC approval", "3,000 Kelvin", "outdoor living space"]
+  },
+  {
+    "question": "Are there rules where the electrical panels need to be placed?",
+    "variants": [
+      "The physical location of the Xcel electrical panel does it have to be in the gates of the home or can it be outside, any rules builders have on placement?"
+    ],
+    "expectedFirstAny": ["Sec. 21-22"],
+    "answerIncludesAll": ["does not set a specific", "initial construction", "electric utility"]
+  },
+  {
+    "question": "I lost access to home seer steward system. How do I restore it?",
+    "expectedFirstAny": ["Sec. 25-23"],
+    "answerIncludesAll": ["Lumiere.technology/help", "help@lumierefiber.com"]
+  },
+  {
+    "question": "Can you park an RV on the street",
+    "expectedFirstAny": ["Sec. 1-37"],
+    "answerIncludesAll": ["may not be parked on the street", "72-hour exception", "driveway"]
+  },
+  {
+    "question": "Can you cover your car with a tarp in the street",
+    "expectedFirstAny": ["Sec. 21-22"],
+    "expectedAny": ["Sec. 1-37"],
+    "answerIncludesAll": ["general tarp does not meet", "DRC approval", "specifically manufactured"]
+  },
+  {
+    "question": "Chickens",
+    "variants": ["Can we have chickena", "Can I have chickens?"],
+    "expectedFirstAny": ["Sec. 1-33"],
+    "answerIncludesAll": ["Backyard chickens are not allowed", "fowl", "poultry"]
+  },
+  {
+    "question": "What about cars parked in the street rules can they be broken?",
+    "expectedFirstAny": ["Sec. 1-37"],
+    "answerIncludesAll": ["street-parking rules still apply", "inoperative", "fire lane"]
+  },
+  {
+    "question": "Can I buy the lot behind me and tear the house down for a bigger yard",
+    "expectedFirstAny": ["Sec. 21-22"],
+    "answerIncludesAll": ["does not grant permission", "DRC review", "county officials"]
+  },
+  {
     "question": "Can I run a food truck from my driveway?",
     "shouldRefuse": true,
     "expectedReason": "no-food-truck-specific-rule"
@@ -299,10 +344,6 @@
     "question": "What is the HOA phone number?",
     "shouldRefuse": true,
     "expectedReason": "missing-requested-contact-info"
-  },
-  {
-    "question": "Can I have chickens?",
-    "shouldRefuse": true
   },
   {
     "question": "Can I remove a tree?",
