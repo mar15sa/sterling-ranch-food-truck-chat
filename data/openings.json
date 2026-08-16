@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-14T12:14:54-06:00",
+  "updatedAt": "2026-08-16T10:18:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -1281,14 +1281,18 @@
       "area": "The Canyons",
       "address": "Castle Pines, CO",
       "status": "under-construction",
-      "openingWindow": "Expected fall 2026",
-      "summary": "Life Time says its new 102,000-square-foot athletic country club will arrive this fall.",
-      "verifiedAt": "2026-08-13",
+      "openingWindow": "Targeting November 2026",
+      "summary": "Life Time says its new 102,000-square-foot athletic country club will arrive this fall; a local construction update places the target in November.",
+      "verifiedAt": "2026-08-16",
       "confidence": "business-confirmed",
       "sources": [
         {
           "label": "Life Time",
           "url": "https://www.lifetime.life/locations/co/castle-pines.html"
+        },
+        {
+          "label": "Castle Pines construction update",
+          "url": "https://dougcosocial.com/news/castle-pines-pickleball-the-canyons-life-time"
         }
       ],
       "coordinates": {
@@ -2297,6 +2301,118 @@
         "lng": -104.743252,
         "precision": "approximate",
         "geocodedFrom": "East Mainstreet development, Parker, CO 80138"
+      }
+    },
+    {
+      "id": "foss-swim-school-parker",
+      "name": "FOSS Swim School",
+      "category": "Fitness & wellness",
+      "community": "Parker",
+      "area": "Dransfeldt Road",
+      "address": "11177 Dransfeldt Road, Suite 139, Parker, CO 80134",
+      "status": "opening-soon",
+      "openingWindow": "Opening for fall 2026",
+      "summary": "The swim school is enrolling for its Parker grand opening and fall-quarter classes, with an August 25 ribbon cutting scheduled.",
+      "verifiedAt": "2026-08-16",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "FOSS Swim School Parker grand-opening page",
+          "url": "https://www.fossswimschool.com/swimming-lesson-locations/foss-swim-school-in-parker-co/"
+        },
+        {
+          "label": "Parker Chamber ribbon-cutting calendar",
+          "url": "https://business.parkerchamber.com/events/catgid/3"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.513449,
+        "lng": -104.770757,
+        "precision": "address",
+        "geocodedFrom": "11177 Dransfeldt Road, Suite 139, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "gradepower-learning-parker",
+      "name": "GradePower Learning",
+      "category": "Services",
+      "community": "Parker",
+      "area": "Crossroads Drive",
+      "address": "10841 South Crossroads Drive, Suite 18, Parker, CO 80134",
+      "status": "open",
+      "openingWindow": "Open now; ribbon cutting August 4, 2026",
+      "summary": "The locally operated tutoring center is open in Parker and marked its opening with an August 4 ribbon cutting.",
+      "verifiedAt": "2026-08-16",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "GradePower Learning Parker location and hours",
+          "url": "https://gradepowerlearning.com/locations/parker-tutoring/"
+        },
+        {
+          "label": "Parker Chamber ribbon-cutting calendar",
+          "url": "https://business.parkerchamber.com/events/catgid/6"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.520612,
+        "lng": -104.767361,
+        "precision": "address",
+        "geocodedFrom": "10841 South Crossroads Drive, Suite 18, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "sherwin-williams-commercial-parker",
+      "name": "Sherwin-Williams Commercial Paint Store",
+      "category": "Shopping",
+      "community": "Parker",
+      "area": "Longs Way",
+      "address": "18403 Longs Way, Parker, CO 80134",
+      "status": "open",
+      "openingWindow": "Open now; ribbon cutting July 29, 2026",
+      "summary": "The commercial paint store is open on Longs Way and held a Parker Chamber ribbon cutting in late July.",
+      "verifiedAt": "2026-08-16",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Sherwin-Williams Parker store page and hours",
+          "url": "https://www.sherwin-williams.com/store-locator/commercial-paint-store/parker/co/701648"
+        },
+        {
+          "label": "Parker Chamber ribbon-cutting calendar",
+          "url": "https://business.parkerchamber.com/events/catgid/6"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.524939,
+        "lng": -104.776113,
+        "precision": "address",
+        "geocodedFrom": "18403 Longs Way, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "rock-bottom-highlands-ranch",
+      "name": "Rock Bottom Restaurant & Brewery",
+      "category": "Restaurant",
+      "community": "Highlands Ranch",
+      "area": "Central Park",
+      "address": "1505 Park Central Drive, Highlands Ranch, CO 80129",
+      "status": "closed",
+      "openingWindow": "Closed August 2026",
+      "summary": "The Highlands Ranch brewpub has closed; Westword reported it among the chain's latest Colorado closures.",
+      "verifiedAt": "2026-08-16",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "Westword closure report",
+          "url": "https://www.westword.com/food-drink/every-opening-and-closing-this-week-rock-bottom-continues-to-bottom-out-40922440/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.555146,
+        "lng": -105.007532,
+        "precision": "address",
+        "geocodedFrom": "1505 Park Central Drive, Highlands Ranch, CO 80129"
       }
     }
   ]
