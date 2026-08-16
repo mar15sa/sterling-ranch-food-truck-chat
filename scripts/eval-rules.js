@@ -100,6 +100,19 @@ async function main() {
           answer: result.answer,
         });
       }
+
+      if (
+        Object.prototype.hasOwnProperty.call(testCase, "expectedReviewNeeded") &&
+        result.reviewNeeded !== testCase.expectedReviewNeeded
+      ) {
+        failures.push({
+          question: testCase.question,
+          issue: `Expected reviewNeeded to be ${testCase.expectedReviewNeeded}, got ${result.reviewNeeded}.`,
+          confidence: result.confidence,
+          sources: formatSources(result.sources || []),
+          answer: result.answer,
+        });
+      }
       continue;
     }
 

@@ -4520,7 +4520,7 @@ async function handleRulesAsk(req, res, url) {
 
   const answer = await answerRulesQuestion(question);
   logRulesQuestion(question, answer, req);
-  if (answer?.confidence?.canAnswer === false) {
+  if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false) {
     recordRulesLowConfidence({
       question: cleanQuestionForLog(question),
       reason: answer.confidence.reason,
