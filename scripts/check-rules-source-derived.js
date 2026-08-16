@@ -42,4 +42,19 @@ const missing = sourceDerivedAnswerParts("What is the fee?", [
 ]);
 assert.equal(missing.available, false, "Missing current facts must fail closed.");
 
+const changedPetLimit = sourceDerivedAnswerParts(
+  "How many dogs can I keep?",
+  [
+    {
+      title: "Current pets rule",
+      text: "Household pets are allowed, with an aggregate limit of five domestic animals.",
+      excerpt: "Current pets rule.",
+    },
+  ],
+  "Short answer: Yes, household pets such as cats and dogs are allowed. The rule has an aggregate limit of four domestic animals."
+);
+assert.match(changedPetLimit.answer, /household pets such as cats and dogs are allowed/i);
+assert.doesNotMatch(changedPetLimit.answer, /four domestic animals/i);
+assert.match(changedPetLimit.sources[0].excerpt, /five domestic animals/i);
+
 console.log("Source-derived rules fact checks passed.");
