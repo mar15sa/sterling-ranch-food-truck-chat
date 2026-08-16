@@ -107,7 +107,7 @@ npm run ingest:rules
 
 ### Plain-English answers (optional)
 
-By default, answers are assembled directly from the matching rule sections. If an `ANTHROPIC_API_KEY` is set, the assistant uses Claude to rewrite those same sections into a plain-English answer. Claude only rephrases the sections the search already found — it is instructed to use nothing else and never to invent rules, numbers, or fees — and every answer still links the exact source sections. If the key is missing, or a request errors, times out, or is declined, the assistant automatically falls back to the built-in answer, so it never hard-fails.
+By default, answers are assembled directly from the matching rule sections. Any changing date, time, fee, count, or measurement is extracted from the currently loaded official source at response time instead of being trusted from a typed summary. If the current value cannot be extracted, the assistant fails closed and asks the resident to confirm the official section rather than returning an old value. If an `ANTHROPIC_API_KEY` is set, the assistant uses Claude to rewrite those same current source facts into a plain-English answer. Claude only rephrases the sections the search already found — it is instructed to use nothing else and never to invent rules, numbers, or fees — and every answer still links the exact source sections. If the key is missing, or a request errors, times out, or is declined, the assistant falls back to a stable plain-English conclusion plus the current official source passage.
 
 Environment variables:
 

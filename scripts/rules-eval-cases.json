@@ -21,13 +21,13 @@
     ],
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Landscape Screens One-Sheet"],
-    "answerIncludesAll": ["DRC approval", "rear or side yard", "five feet", "six feet", "eight feet", "30 percent"]
+    "answerIncludesAll": ["DRC approval", "rear or side yard", "Five-foot", "six-foot", "Eight-foot", "30 percent"]
   },
   {
     "question": "What is the rule on privacy screens in your backyard?",
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Landscape Screens One-Sheet"],
-    "answerIncludesAll": ["DRC approval", "freestanding", "outside easements", "no more than three", "Vinyl is not allowed"]
+    "answerIncludesAll": ["DRC approval", "freestanding", "outside easements", "maximum of three", "Vinyl is not permitted"]
   },
   {
     "question": "Do I need approval for solar panels?",
@@ -81,7 +81,7 @@
   {
     "question": "Can I put up a political sign?",
     "expectedFirstAny": ["2024 CAB Code amendments"],
-    "answerIncludesAny": ["commercial-message"]
+    "answerIncludesAny": ["commercial messages"]
   },
   {
     "question": "What flags can I fly?",
@@ -146,7 +146,7 @@
       "What are the backyard trampoline setback rules?"
     ],
     "expectedFirstAny": ["Sec. 21-22"],
-    "answerIncludesAll": ["Trampolines require DRC approval", "five feet", "screened"]
+    "answerIncludesAll": ["Trampolines require DRC approval", "five feet", "Tall plant material"]
   },
   {
     "question": "Can I install a swimming pool in my backyard?",
@@ -237,7 +237,7 @@
   {
     "question": "What happens if I do not pay my water bill?",
     "expectedFirstAny": ["collection process for delinquent"],
-    "answerIncludesAll": ["3 days", "7 days", "last Wednesday"]
+    "answerIncludesAll": ["three days", "seven calendar days", "last Wednesday"]
   },
   {
     "question": "What is Chapter 5 about?",
@@ -311,7 +311,7 @@
   {
     "question": "Can you park an RV on the street",
     "expectedFirstAny": ["Sec. 1-37"],
-    "answerIncludesAll": ["may not be parked on the street", "72-hour exception", "driveway"]
+    "answerIncludesAll": ["may not be parked on the street", "72 hours", "driveway"]
   },
   {
     "question": "Can you cover your car with a tarp in the street",
@@ -329,7 +329,7 @@
     "question": "Can I keep dogs?",
     "variants": ["Are household pets allowed?", "How many cats and dogs can I have?"],
     "expectedFirstAny": ["Sec. 1-33"],
-    "answerIncludesAll": ["allowed", "limit of four", "leashed", "Pet waste"]
+    "answerIncludesAll": ["allowed", "not more than four", "leashed", "Pet waste"]
   },
   {
     "question": "Can I have a greenhouse in my backyard?",
