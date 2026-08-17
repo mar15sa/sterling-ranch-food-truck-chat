@@ -54,7 +54,10 @@ function formatDateTime(value) {
 
 function formatDateShort(value) {
   if (!value) return "";
-  const date = new Date(value);
+  const dateOnly = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const date = dateOnly
+    ? new Date(Number(dateOnly[1]), Number(dateOnly[2]) - 1, Number(dateOnly[3]))
+    : new Date(value);
   if (Number.isNaN(date.getTime())) return "";
   return new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(date);
 }
@@ -220,7 +223,19 @@ function renderLabeled(key, rest) {
 
 /* ---------- Sources ---------- */
 function sourceMeta(source) {
-  return [source.chapter, source.article].filter(Boolean).join(" · ");
+  const details = [source.chapter, source.article].filter(Boolean);
+  if (source.isSupplemental) {
+    details.unshift(
+      source.sourceLifecycle === "current"
+        ? "Current supplemental policy"
+        : "Supplemental policy"
+    );
+  } else if (!source.isOfficialResource) {
+    details.unshift("Codified rulebook");
+  }
+  const effective = formatDateShort(source.effectiveDate || source.approvedDate);
+  if (effective) details.push(`effective ${effective}`);
+  return details.join(" · ");
 }
 
 function textFragmentPhrase(text) {
@@ -273,7 +288,10 @@ function renderSourceItem(source) {
   if (source.excerpt) {
     const excerpt = document.createElement("p");
     excerpt.className = "rules-source-excerpt";
-    excerpt.textContent = source.excerpt;
+    const cleanExcerpt = String(source.excerpt).replace(/\s+/g, " ").trim();
+    excerpt.textContent = cleanExcerpt.length > 520
+      ? `${cleanExcerpt.slice(0, 517).trim()}…`
+      : cleanExcerpt;
     item.append(excerpt);
   }
 
@@ -336,6 +354,25 @@ function addAnswer(data, question) {
   const sources = Array.isArray(data.sources) ? data.sources : [];
 
   renderAnswerInto(node.querySelector(".rules-answer"), data.answer || "");
+
+  const answerLabel = node.querySelector(".rules-answer-actions-label");
+  if (data.inputClassification === "prompt-injection") {
+    answerLabel.textContent = "Safety response";
+    answerLabel.dataset.state = "unverified";
+  } else if (["conversation", "unrelated", "unclear"].includes(data.inputClassification)) {
+    answerLabel.textContent = "Rules assistant";
+  } else if (data.confidence?.canAnswer !== true) {
+    answerLabel.textContent = "Could not verify — next step included";
+    answerLabel.dataset.state = "unverified";
+  } else if (/\b(?:not allowed|prohibited|may not|cannot|can't)\b/i.test(data.answer || "")) {
+    answerLabel.textContent = "Rule says no";
+    answerLabel.dataset.state = "prohibited";
+  } else if (/\b(?:approval|required|submit(?:ted)? to the DRC)\b/i.test(data.answer || "")) {
+    answerLabel.textContent = "Allowed with approval or conditions";
+    answerLabel.dataset.state = "conditional";
+  } else {
+    answerLabel.textContent = "Rulebook answer";
+  }
 
   const shareButton = node.querySelector(".rules-share-button");
   shareButton.addEventListener("click", () => copyAnswerLink(shareButton, question));
@@ -474,6 +511,12 @@ async function askRules(question, source = "typed") {
       can_answer: Boolean(data.confidence?.canAnswer),
       source_count: Array.isArray(data.sources) ? data.sources.length : 0,
     });
+    if (data.confidence?.canAnswer !== true) {
+      trackEvent("rules_answer_unverified", {
+        reason: data.confidence?.reason || "unknown",
+        input_classification: data.inputClassification || "unknown",
+      });
+    }
   } catch (error) {
     trackEvent("rules_answer_error");
     const answer = document.createElement("div");

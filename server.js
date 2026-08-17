@@ -8,6 +8,7 @@ const {
   answerRulesQuestion,
   createRulesIndex,
   getRulesIndexStatus,
+  warmRulesIndex,
 } = require("./lib/rules-assistant");
 const {
   alertRulesRefreshFailed,
@@ -4544,6 +4545,20 @@ async function handleRulesStatus(req, res) {
   });
 }
 
+async function handleHealth(req, res) {
+  const rules = await getRulesIndexStatus();
+  const healthy = rules.exists && rules.inlineTopicCount >= 100;
+  sendJson(res, healthy ? 200 : 503, {
+    status: healthy ? "ok" : "not-ready",
+    uptimeSeconds: Math.round(process.uptime()),
+    rules: {
+      exists: rules.exists,
+      isStale: rules.isStale,
+      inlineTopicCount: rules.inlineTopicCount,
+    },
+  });
+}
+
 async function handleRulesRefresh(req, res, url) {
   if (req.method !== "POST") {
     sendJson(res, 405, { error: "Use POST to refresh the rules source." });
@@ -4680,6 +4695,10 @@ function serveStatic(req, res, url) {
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
+    if (url.pathname === "/api/health") {
+      await handleHealth(req, res);
+      return;
+    }
     if (url.pathname === "/api/ask") {
       await handleAsk(req, res, url);
       return;
@@ -4740,9 +4759,13 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`Food truck chat is running on ${HOST}:${PORT}`);
-  scheduleRulesRefreshChecks();
-  scheduleOpeningsRadar();
-});
+warmRulesIndex()
+  .catch((error) => console.error("Rules index warmup failed:", error.message))
+  .finally(() => {
+    server.listen(PORT, HOST, () => {
+      console.log(`Food truck chat is running on ${HOST}:${PORT}`);
+      scheduleRulesRefreshChecks();
+      scheduleOpeningsRadar();
+    });
+  });
 

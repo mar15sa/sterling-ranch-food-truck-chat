@@ -76,6 +76,42 @@ async function main() {
     const result = await answerRulesQuestion(testCase.question);
     const refused = isRefusal(result);
 
+    if (
+      testCase.expectedClassification &&
+      result.inputClassification !== testCase.expectedClassification
+    ) {
+      failures.push({
+        question: testCase.question,
+        issue: `Expected classification "${testCase.expectedClassification}", got "${result.inputClassification}".`,
+        confidence: result.confidence,
+        sources: formatSources(result.sources || []),
+        answer: result.answer,
+      });
+      continue;
+    }
+
+    if (testCase.expectedAnswerMode && result.answerMode !== testCase.expectedAnswerMode) {
+      failures.push({
+        question: testCase.question,
+        issue: `Expected answer mode "${testCase.expectedAnswerMode}", got "${result.answerMode}".`,
+        confidence: result.confidence,
+        sources: formatSources(result.sources || []),
+        answer: result.answer,
+      });
+      continue;
+    }
+
+    if (testCase.expectedNoSources && (result.sources || []).length !== 0) {
+      failures.push({
+        question: testCase.question,
+        issue: "Expected the request to stop before retrieval, but sources were returned.",
+        confidence: result.confidence,
+        sources: formatSources(result.sources || []),
+        answer: result.answer,
+      });
+      continue;
+    }
+
     if (testCase.shouldRefuse) {
       if (!refused) {
         failures.push({

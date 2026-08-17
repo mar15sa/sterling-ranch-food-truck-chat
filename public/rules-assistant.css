@@ -491,6 +491,18 @@ kbd {
   text-transform: uppercase;
 }
 
+.rules-answer-actions-label[data-state="prohibited"] {
+  color: #9b3a2e;
+}
+
+.rules-answer-actions-label[data-state="conditional"] {
+  color: var(--rules-clay);
+}
+
+.rules-answer-actions-label[data-state="unverified"] {
+  color: #8a6200;
+}
+
 .rules-share-button {
   display: inline-flex;
   align-items: center;

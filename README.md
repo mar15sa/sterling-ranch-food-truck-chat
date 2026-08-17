@@ -93,6 +93,8 @@ Opening tips are accepted at `POST /api/openings/tips`. Set `OPENINGS_TIP_WEBHOO
 
 ## Sterling Ranch Rules Assistant
 
+For the safe staging-to-production release process, source hierarchy, automatic safeguards, rollback steps, dependencies, and known limitations, see [the rules assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md).
+
 The separate rules page lives at:
 
 ```text
