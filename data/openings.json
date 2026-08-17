@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-16T10:18:00-06:00",
+  "updatedAt": "2026-08-17T08:12:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2413,6 +2413,35 @@
         "lng": -105.007532,
         "precision": "address",
         "geocodedFrom": "1505 Park Central Drive, Highlands Ranch, CO 80129"
+      }
+    },
+    {
+      "id": "g-que-bbq-parker",
+      "name": "G-Que BBQ",
+      "category": "Restaurant",
+      "community": "Parker",
+      "area": "Parker Road and E-470",
+      "address": "Near South Parker Road and E-470, Parker, CO 80134",
+      "status": "under-construction",
+      "openingWindow": "Expected by the end of 2026",
+      "summary": "The Colorado barbecue chain has broken ground on its eleventh location, planned with dine-in service, a full bar, catering, and drive-thru pickup.",
+      "verifiedAt": "2026-08-17",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "What Now Denver construction report",
+          "url": "https://whatnow.com/denver/restaurants/g-que-bbq-breaks-ground-on-new-parker-restaurant/"
+        },
+        {
+          "label": "ColoradoBiz groundbreaking report",
+          "url": "https://coloradobiz.com/g-que-bbq-breaks-ground-parker-restaurant/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.551776,
+        "lng": -104.77629,
+        "precision": "approximate",
+        "geocodedFrom": "South Parker Road and E-470, Parker, CO 80134"
       }
     }
   ]
