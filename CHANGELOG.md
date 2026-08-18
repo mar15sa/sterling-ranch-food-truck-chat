@@ -8,6 +8,7 @@
 - Keep current fees, dates, times, measurements, and limits extracted from official source text at response time.
 - Mark approval-based answers as conditional and prevent uncertain answers from being labeled verified.
 - Add permanent local and daily live checks for every example question, including answer length, required facts, verdicts, and raw-document artifacts.
+- Point the default live monitors at the resident-facing production domain instead of an outdated Railway-generated address.
 - Bust the cached rules-assistant browser script so residents receive the corrected verdict labels immediately.
 
 ### CTO audit hardening

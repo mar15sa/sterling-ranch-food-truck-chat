@@ -1,5 +1,5 @@
 const DEFAULT_BASE_URL =
-  "https://sterling-ranch-food-truck-chat-production.up.railway.app";
+  "https://sterlingranchsociety.com";
 const BASE_URL = String(process.env.RULES_LIVE_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, "");
 const REQUEST_TIMEOUT_MS = Number(process.env.RULES_LIVE_TIMEOUT_MS) || 25000;
 

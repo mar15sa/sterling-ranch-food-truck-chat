@@ -26,7 +26,7 @@ http://localhost:3000
 Railway is the primary hosted version:
 
 ```text
-https://sterling-ranch-food-truck-chat-production.up.railway.app
+https://sterlingranchsociety.com
 ```
 
 ## Put it online

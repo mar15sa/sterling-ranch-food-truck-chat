@@ -1,7 +1,7 @@
 const { assertMenuQualityFixtures, describeMenuQuality, isJunkMenuItem } = require("../lib/menu-quality");
 
 const SITE_URL =
-  process.env.SITE_URL || "https://sterling-ranch-food-truck-chat-production.up.railway.app";
+  process.env.SITE_URL || "https://sterlingranchsociety.com";
 const DAYS_TO_CHECK = Number(process.env.DAYS_TO_CHECK || 8);
 const TRUCK_NAME_SANITY_DAYS = Number(process.env.TRUCK_NAME_SANITY_DAYS || 45);
 const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS || 15000);
