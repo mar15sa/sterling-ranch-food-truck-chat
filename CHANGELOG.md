@@ -10,6 +10,7 @@
 - Add Content Security Policy and HSTS headers, safer production errors, and proxy-aware rate-limit keys.
 - Expand `/api/health` with source, latency, error, and optional AI token/request signals.
 - Add conventional unit tests, coverage reporting, configuration inventory, and updated product metadata.
+- Apply the shared staging banner and production-only analytics guard to the openings page as well as every other resident page.
 
 ## 2026-08-18 — production
 
