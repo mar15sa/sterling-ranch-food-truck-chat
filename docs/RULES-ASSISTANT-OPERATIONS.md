@@ -66,7 +66,7 @@ Do not copy a changing fee, limit, date, or time into a plain-English summary. P
 | Gmail / Apps Script | Alert intake | Current Google account/plan |
 | Google Analytics | Anonymous product events | Current analytics plan |
 
-The complete environment-variable inventory and integration failure behavior are in `docs/CONFIGURATION.md` and `.env.example`.
+The complete environment-variable inventory and integration failure behavior are in `docs/CONFIGURATION.md` and `.env.example`. The transfer-level system map and current cost evidence are in `docs/ARCHITECTURE.md` and `docs/OPERATING-COSTS.md`.
 
 Record actual invoice amounts quarterly in a private owner document; do not put billing details or credentials in this repository.
 

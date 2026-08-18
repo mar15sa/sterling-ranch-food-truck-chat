@@ -11,6 +11,7 @@
 - Expand `/api/health` with source, latency, error, and optional AI token/request signals.
 - Add conventional unit tests, coverage reporting, configuration inventory, and updated product metadata.
 - Apply the shared staging banner and production-only analytics guard to the openings page as well as every other resident page.
+- Add a transfer-ready architecture map and an evidence-backed operating-cost snapshot.
 
 ## 2026-08-18 — production
 

@@ -7,7 +7,7 @@ This is the source code and operating documentation for the Sterling Ranch Socie
 - Live Overlook outdoor-pool status.
 - An evidence-backed Douglas County-area openings tracker.
 
-Start with [the configuration reference](docs/CONFIGURATION.md) and [the Rules Assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md) when operating or handing off the project.
+Start with [the configuration reference](docs/CONFIGURATION.md), [the architecture map](docs/ARCHITECTURE.md), [the operating-cost snapshot](docs/OPERATING-COSTS.md), and [the Rules Assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md) when operating or handing off the project.
 
 ## Run it
 
