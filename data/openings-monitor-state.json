@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-17T14:05:51.410Z",
+  "lastRunAt": "2026-08-18T14:09:19.556Z",
   "sources": {
     "castle-rock-development": {
-      "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.106Z",
-      "changedAt": "2026-08-14T03:18:37.911Z",
-      "fingerprint": "1352d75cb3d6610b6c0b1b4fa6ea9b8ced82f2a8c4ce8bdd39495d65935ea553",
+      "status": "changed",
+      "checkedAt": "2026-08-18T14:09:17.013Z",
+      "changedAt": "2026-08-18T14:09:17.013Z",
+      "fingerprint": "ecfa1986ff7afa06608d9bb9c8ed34afec1ebdac8c007b863a970564f19a6428",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -16,21 +16,24 @@
       "newSignals": []
     },
     "castle-rock-agendas": {
-      "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.156Z",
-      "changedAt": "2026-08-16T15:55:43.932Z",
-      "fingerprint": "afec7ab4cf0e5bce16e86a66af88450887360db248a08f3a82356415cfb24972",
+      "status": "changed",
+      "checkedAt": "2026-08-18T14:09:17.080Z",
+      "changedAt": "2026-08-18T14:09:17.080Z",
+      "fingerprint": "355c575053b61ad3ffb941fbf6064b97f979b90bd6ac0a2bdf5064964144aea3",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
-        "Liquor License Authority"
+        "Liquor License Authority",
+        "Lost Canyon Ranch Open Space, Cattleman's Trailhead"
       ],
       "structuredLeads": [],
-      "newSignals": []
+      "newSignals": [
+        "Lost Canyon Ranch Open Space, Cattleman's Trailhead"
+      ]
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.157Z",
+      "checkedAt": "2026-08-18T14:09:17.082Z",
       "changedAt": null,
       "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
       "finalUrl": "https://www.parkerco.gov/Planning",
@@ -44,7 +47,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.158Z",
+      "checkedAt": "2026-08-18T14:09:17.083Z",
       "changedAt": null,
       "fingerprint": "698d121769465bd2d44287e3fa49df3ddac965dea5db2034e0dfa9edf66babef",
       "finalUrl": "https://www.parkered.com/",
@@ -58,7 +61,7 @@
     },
     "lone-tree-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.159Z",
+      "checkedAt": "2026-08-18T14:09:17.085Z",
       "changedAt": null,
       "fingerprint": "0202e72b4881cb4c0a4260ada79cb2d0bf5fc3262d3d450205ada9d305b67eda",
       "finalUrl": "https://cityoflonetree.com/projects/",
@@ -71,7 +74,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.160Z",
+      "checkedAt": "2026-08-18T14:09:17.087Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -89,7 +92,7 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.161Z",
+      "checkedAt": "2026-08-18T14:09:17.089Z",
       "changedAt": null,
       "fingerprint": "abef7df19e072bfc429686fbea3bec2d128ed6d88ab11b12f2219873e53af366",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
@@ -139,10 +142,10 @@
       "newSignals": []
     },
     "douglas-county-recent-projects": {
-      "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.162Z",
-      "changedAt": "2026-08-14T18:13:29.934Z",
-      "fingerprint": "2d60957d4df9182bfb13d488edeb7a1edfec8bebf0a0fa0f4ca3b06795d382a6",
+      "status": "changed",
+      "checkedAt": "2026-08-18T14:09:17.090Z",
+      "changedAt": "2026-08-18T14:09:17.090Z",
+      "fingerprint": "4be38f5b089bd18db26c42500c93e80288090dd551fe9b85f43d582377d8e3bb",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
       "contentType": "text/html; charset=utf-8",
       "signals": [],
@@ -160,7 +163,7 @@
     },
     "douglas-county-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.163Z",
+      "checkedAt": "2026-08-18T14:09:17.092Z",
       "changedAt": "2026-08-16T15:55:43.947Z",
       "fingerprint": "7920b1e7e77631e18dbc8cc63d683ad8ae48bac4c1fd53ebb9b0a88c072ada91",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
@@ -173,7 +176,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.164Z",
+      "checkedAt": "2026-08-18T14:09:17.094Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -227,7 +230,7 @@
     },
     "highlands-ranch-news-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.165Z",
+      "checkedAt": "2026-08-18T14:09:17.095Z",
       "changedAt": null,
       "fingerprint": "a0095ba701b9a3e627a0316f1b9f5c16f7a9e74bb1b537818b46990776119417",
       "finalUrl": "https://www.highlandsranch.org/news-events",
@@ -256,7 +259,7 @@
     },
     "sterling-ranch-cab-news": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.165Z",
+      "checkedAt": "2026-08-18T14:09:17.096Z",
       "changedAt": null,
       "fingerprint": "78d0c1de85136fd681223fa642ac0ac1a51305cf1284fbb21e9148c4ef8468fb",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
@@ -287,10 +290,10 @@
       "newSignals": []
     },
     "sterling-ranch-cab-agendas": {
-      "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.166Z",
-      "changedAt": "2026-08-14T18:13:29.941Z",
-      "fingerprint": "7ae8f808d2c8ec968347f7dbb86887cab57288ccc65110caf6fde87ddcbf8a69",
+      "status": "changed",
+      "checkedAt": "2026-08-18T14:09:17.098Z",
+      "changedAt": "2026-08-18T14:09:17.098Z",
+      "fingerprint": "add22f1f65e083d7480151e79ebc83fe7d422415cc676b88c4e7ba737ddf9d1f",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
       "contentType": "text/html; charset=utf-8",
       "signals": [],
@@ -299,7 +302,7 @@
     },
     "sterling-ranch-developer-news": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.166Z",
+      "checkedAt": "2026-08-18T14:09:17.099Z",
       "changedAt": "2026-08-16T15:55:43.955Z",
       "fingerprint": "58753e4dd449dcb73a4fd9eda97cad47d363cb18069df3b9a43dda998bacb532",
       "finalUrl": "https://sterlingranch.com/happenings/",
@@ -316,7 +319,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.167Z",
+      "checkedAt": "2026-08-18T14:09:17.100Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -342,10 +345,10 @@
       "newSignals": []
     },
     "dougco-social": {
-      "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.168Z",
-      "changedAt": "2026-08-16T15:55:43.957Z",
-      "fingerprint": "b50ba0fac2a091234868e7ec0e22542d539738fb7327f4c7d02d84de9f2f4c25",
+      "status": "changed",
+      "checkedAt": "2026-08-18T14:09:17.101Z",
+      "changedAt": "2026-08-18T14:09:17.101Z",
+      "fingerprint": "3a9847901f7d8009f752b4e6223eba033c27d53e59e6d4b09709c00588edbe30",
       "finalUrl": "https://dougcosocial.com/news",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -391,6 +394,14 @@
         "Bar Hummingbird Castle Rock — Menu, Hours, and What We Tried"
       ],
       "structuredLeads": [
+        {
+          "id": "dougco-social-fiber-internet-is-coming-to-castle-rock-castle-pines-the-pinery-and-cottonwood",
+          "headline": "Fiber Internet Is Coming to Castle Rock, Castle Pines, The Pinery and Cottonwood",
+          "url": "https://dougcosocial.com/news/bam-broadband-fiber-douglas-county",
+          "observedDate": "2026-08-17",
+          "sourceId": "dougco-social",
+          "sourceName": "DougCo Social openings and local updates"
+        },
         {
           "id": "dougco-social-castle-pines-is-getting-a-wave-of-new-pickleball-courts",
           "headline": "Castle Pines Is Getting a Wave of New Pickleball Courts",
@@ -574,29 +585,13 @@
           "observedDate": "2026-06-27",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-a-new-trail-will-connect-downtown-castle-rock-to-philip-s-miller-park",
-          "headline": "A New Trail Will Connect Downtown Castle Rock to Philip S. Miller Park",
-          "url": "https://dougcosocial.com/news/industrial-tributary-trail-castle-rock",
-          "observedDate": "2026-04-27",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-free-rideshare-is-officially-coming-to-castle-rock",
-          "headline": "Free Rideshare Is Officially Coming to Castle Rock",
-          "url": "https://dougcosocial.com/news/link-on-demand-castle-rock",
-          "observedDate": "2026-04-27",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
         }
       ],
       "newSignals": []
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.169Z",
+      "checkedAt": "2026-08-18T14:09:17.103Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -674,7 +669,7 @@
     },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.169Z",
+      "checkedAt": "2026-08-18T14:09:17.104Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -714,7 +709,7 @@
     },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.170Z",
+      "checkedAt": "2026-08-18T14:09:17.105Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -727,7 +722,7 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.170Z",
+      "checkedAt": "2026-08-18T14:09:17.106Z",
       "changedAt": "2026-08-16T15:55:43.962Z",
       "fingerprint": "28e2c38a52e771647d225df426a564f6e8a7392adb4e035763ffd8dc8a07f33f",
       "finalUrl": "https://www.hogbackpost.com/",
@@ -752,7 +747,7 @@
     },
     "lone-tree-timberlines": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.171Z",
+      "checkedAt": "2026-08-18T14:09:17.107Z",
       "changedAt": "2026-08-16T15:55:43.963Z",
       "fingerprint": "f61e08af217eac566bef5aa347c514197e3b48f70e2e53fea8d0958355657329",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
@@ -765,7 +760,7 @@
     },
     "colorado-liquor-license-lists": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.171Z",
+      "checkedAt": "2026-08-18T14:09:17.108Z",
       "changedAt": null,
       "fingerprint": "8f6869839f5a7e9eb204ba22d864449e1da1b7c44b756a29e58afb3d4c47e94e",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
@@ -788,7 +783,7 @@
     },
     "westword-openings-closings": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.172Z",
+      "checkedAt": "2026-08-18T14:09:17.109Z",
       "changedAt": "2026-08-16T15:55:43.965Z",
       "fingerprint": "77f4c4479ac65ae0fe0cea5102b49e2ff0fc222313689fd4ea45c2f4ed8351ff",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
@@ -823,8 +818,8 @@
       "newSignals": []
     },
     "castle-rock-outlets-directory": {
-      "status": "changed",
-      "checkedAt": "2026-08-17T14:05:49.173Z",
+      "status": "ok",
+      "checkedAt": "2026-08-18T14:09:17.110Z",
       "changedAt": "2026-08-17T14:05:49.173Z",
       "fingerprint": "533c15a72739f52186d279964ec0d26158ac5de78410be7876823cc0a1331469",
       "finalUrl": "https://www.outletsatcastlerock.com/",
@@ -857,7 +852,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.173Z",
+      "checkedAt": "2026-08-18T14:09:17.111Z",
       "changedAt": null,
       "fingerprint": "5766cce7f9f907a38beb9d901991292b438255ce8abe63a6bd7fdd19e8ec92b3",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -868,7 +863,7 @@
     },
     "castle-rock-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-17T14:05:49.174Z",
+      "checkedAt": "2026-08-18T14:09:17.112Z",
       "changedAt": null,
       "fingerprint": "d79397dc9f53877f71fba07f07d34fdc0fe299125aa19e9fa0b37cf4cb77d3be",
       "finalUrl": "https://business.castlerock.org/events/calendar",
