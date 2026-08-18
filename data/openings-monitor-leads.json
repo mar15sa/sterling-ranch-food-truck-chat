@@ -1,6 +1,14 @@
 {
-  "generatedAt": "2026-08-17T14:05:51.410Z",
+  "generatedAt": "2026-08-18T14:09:19.556Z",
   "leads": [
+    {
+      "id": "dougco-social-fiber-internet-is-coming-to-castle-rock-castle-pines-the-pinery-and-cottonwood",
+      "headline": "Fiber Internet Is Coming to Castle Rock, Castle Pines, The Pinery and Cottonwood",
+      "url": "https://dougcosocial.com/news/bam-broadband-fiber-douglas-county",
+      "observedDate": "2026-08-17",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
     {
       "id": "dougco-social-the-brickyard-castle-rock-s-400-million-new-neighborhood",
       "headline": "The Brickyard: Castle Rock's $400 Million New Neighborhood",
@@ -30,22 +38,6 @@
       "headline": "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff",
       "url": "https://dougcosocial.com/news/hideaway-bar-grill-fire-castle-rock",
       "observedDate": "2026-06-27",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
-    {
-      "id": "dougco-social-a-new-trail-will-connect-downtown-castle-rock-to-philip-s-miller-park",
-      "headline": "A New Trail Will Connect Downtown Castle Rock to Philip S. Miller Park",
-      "url": "https://dougcosocial.com/news/industrial-tributary-trail-castle-rock",
-      "observedDate": "2026-04-27",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
-    {
-      "id": "dougco-social-free-rideshare-is-officially-coming-to-castle-rock",
-      "headline": "Free Rideshare Is Officially Coming to Castle Rock",
-      "url": "https://dougcosocial.com/news/link-on-demand-castle-rock",
-      "observedDate": "2026-04-27",
       "sourceId": "dougco-social",
       "sourceName": "DougCo Social openings and local updates"
     }

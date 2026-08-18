@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-17T08:12:00-06:00",
+  "updatedAt": "2026-08-18T08:18:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -841,13 +841,17 @@
       "address": "Dawson Trails, Castle Rock, CO",
       "status": "proposed",
       "openingWindow": "Targeting 2027",
-      "summary": "A site plan is under review for a full-service King Soopers in the Dawson Trails commercial district.",
-      "verifiedAt": "2026-08-13",
+      "summary": "Town Council is scheduled to review and decide on the proposed 100,054-square-foot King Soopers and seven-pump fuel station on August 18.",
+      "verifiedAt": "2026-08-18",
       "confidence": "official",
       "sources": [
         {
           "label": "Town of Castle Rock site plan",
           "url": "https://www.crgov.com/DocumentCenter/View/51236/-King-Soopers-Dawson-Trails-Site-Plan-PDF?bidId="
+        },
+        {
+          "label": "Town Council public hearing notice",
+          "url": "https://www.crgov.com/Calendar.aspx?EID=10975"
         }
       ],
       "coordinates": {
