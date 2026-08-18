@@ -5,6 +5,41 @@ const REQUEST_TIMEOUT_MS = Number(process.env.RULES_LIVE_TIMEOUT_MS) || 25000;
 
 const CHECKS = [
   {
+    question: "Can I build a shed in my backyard?",
+    firstSourceIncludes: "(b)(9) - Backyard utility sheds",
+    answerIncludes: ["DRC approval", "150 square feet", "screening"],
+    expectedVerdict: "conditional",
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "When can I put up holiday lights?",
+    firstSourceIncludes: "Updated exterior lighting policy",
+    answerIncludes: ["June 18", "July 7", "October 1", "January 31", "10:00 p.m."],
+    expectedVerdict: "allowed",
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "What are the landscaping and yard rules?",
+    firstSourceIncludes: "Required lot landscape",
+    answerIncludes: ["DRC review", "Yard design", "Ongoing care"],
+    expectedVerdict: "conditional",
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "What fees do residents pay?",
+    firstSourceIncludes: "water, sanitary sewer, and stormwater",
+    answerIncludes: ["fixed charges", "Charges that depend on usage", "home type"],
+    expectedVerdict: "verified",
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "What are the rules for parks and open spaces?",
+    firstSourceIncludes: "Sec. 17-54",
+    answerIncludes: ["Dogs:", "motorized vehicles", "CAB fishing permit"],
+    expectedVerdict: "verified",
+    maxAnswerLength: 1000,
+  },
+  {
     question: "What is the rule on privacy screens in your backyard?",
     firstSourceIncludes: "(b)(54) - Landscape screens",
     answerIncludes: ["DRC approval", "30 percent"],
@@ -195,6 +230,17 @@ async function main() {
       }
       if (check.expectedVerdict && result.answerVerdict !== check.expectedVerdict) {
         issues.push(`expected verdict "${check.expectedVerdict}", got "${result.answerVerdict}"`);
+      }
+      if (check.maxAnswerLength && String(result.answer || "").length > check.maxAnswerLength) {
+        issues.push(`answer is ${String(result.answer || "").length} characters; expected no more than ${check.maxAnswerLength}`);
+      }
+      if (
+        check.maxAnswerLength &&
+        /I (?:do not|don't) have enough information|\.\.\.|WHEREAS|ADOPTED AND APPROVED|-- \d+ of \d+ --/i.test(
+          result.answer || ""
+        )
+      ) {
+        issues.push("resident-facing answer contains uncertainty or raw-document artifacts");
       }
       if (result.monitorDurationMs > 5000) {
         issues.push(`answer took ${result.monitorDurationMs}ms; expected no more than 5000ms`);

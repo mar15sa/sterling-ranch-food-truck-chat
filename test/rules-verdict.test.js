@@ -24,6 +24,20 @@ test("prohibition and approval answers receive explicit verdicts", () => {
     deriveAnswerVerdict("Short answer: A greenhouse requires DRC approval.", supported),
     "conditional"
   );
+  assert.equal(
+    deriveAnswerVerdict(
+      "Short answer: Yes, but you need DRC approval before building a backyard shed.",
+      supported
+    ),
+    "conditional"
+  );
+  assert.equal(
+    deriveAnswerVerdict(
+      "Short answer: Most landscaping is allowed, but landscape plans need DRC review.",
+      supported
+    ),
+    "conditional"
+  );
   assert.equal(deriveAnswerVerdict("Short answer: No. This use is prohibited.", supported), "prohibited");
 });
 

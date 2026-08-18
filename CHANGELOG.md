@@ -2,6 +2,14 @@
 
 ## Unreleased — staging
 
+### Human-readable rules answers
+
+- Replace raw ordinance dumps with concise, source-derived summaries for public examples and other high-use rule topics.
+- Keep current fees, dates, times, measurements, and limits extracted from official source text at response time.
+- Mark approval-based answers as conditional and prevent uncertain answers from being labeled verified.
+- Add permanent local and daily live checks for every example question, including answer length, required facts, verdicts, and raw-document artifacts.
+- Bust the cached rules-assistant browser script so residents receive the corrected verdict labels immediately.
+
 ### CTO audit hardening
 
 - Return an explicit allowed, prohibited, conditional, verified, or unverified verdict with each rules answer instead of guessing from the full answer in the browser.
