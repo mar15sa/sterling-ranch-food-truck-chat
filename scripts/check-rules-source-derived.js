@@ -43,6 +43,41 @@ assert.equal(changed.sources[0].structuredFacts[0].effectiveDate, "2027-01-01");
 assert.doesNotMatch(changed.answer, /\$50\.20/);
 assert.doesNotMatch(changed.sources[0].excerpt, /\$50\.20/);
 
+const residentFeeOverview = sourceDerivedAnswerParts(
+  "What fees do residents pay?",
+  [
+    {
+      title: "2027 water, sanitary sewer, and stormwater rates, fees, and charges.",
+      text: [
+        'Monthly Fee Residential (per Unit) Single Family Detached (5/8") $51.00',
+        "Tier residential and non-residential Fee per 1,000 gallons Tier 1 < 100% of AWC $10.00",
+        "Monthly Base Fee Residential (per Unit) Single Family Detached $45.00",
+        "Fee per 1,000 gallons of Indoor Water Use Residential (per Unit) Single Family Detached $13.00",
+        "Monthly Charge Residential (per Unit) Single Family Detached $19.00",
+      ].join(" "),
+    },
+    {
+      title: "2027 CAB service fees.",
+      text: [
+        "Streetlight Monthly Charge Residential (per unit) Single Family $10.00",
+        "Trash Monthly Charge Residential (per unit) Single Family $15.00",
+        "Driveway Maintenance Monthly Charge Shared Driveways $34.00",
+        "Alley Load Homes $27.00",
+      ].join(" "),
+    },
+  ]
+);
+assert.equal(residentFeeOverview.available, true);
+assert.match(residentFeeOverview.answer, /\$140\.00 each month/);
+assert.match(residentFeeOverview.answer, /Typical fixed monthly charges/);
+assert.match(residentFeeOverview.answer, /Charges that depend on usage/);
+assert.match(residentFeeOverview.answer, /Charges that apply only to some homes/);
+assert.doesNotMatch(residentFeeOverview.answer, /Meter Capacity Ratio|EQR|Tier 4 Annual/i);
+assert.equal(residentFeeOverview.sources.length, 2);
+assert.deepEqual(residentFeeOverview.sources[0].derivedFacts, [
+  "Calculated fixed-charge subtotal: $140.00.",
+]);
+
 const missing = sourceDerivedAnswerParts("What is the fee?", [
   {
     title: "Incomplete fee notice",

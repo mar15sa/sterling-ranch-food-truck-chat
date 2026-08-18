@@ -1,6 +1,6 @@
 const assert = require("node:assert/strict");
 
-const { claimPolarityIssues } = require("../lib/rules-grounding");
+const { claimPolarityIssues, groundednessIssues } = require("../lib/rules-grounding");
 const { currentSourceConflicts } = require("../lib/rules-assistant");
 
 function source(text) {
@@ -59,6 +59,28 @@ assert.deepEqual(
     source("Aboveground pools are prohibited except for a small splash pool under the stated limits.")
   ),
   []
+);
+
+assert.deepEqual(
+  groundednessIssues("Short answer: The calculated subtotal is $140.00.", [
+    {
+      title: "Official test section",
+      text: "The listed charges are $50.00 and $90.00.",
+      derivedFacts: ["Calculated subtotal: $140.00."],
+    },
+  ]),
+  [],
+  "A controlled, source-derived calculation should be grounded."
+);
+assert.ok(
+  groundednessIssues("Short answer: The calculated subtotal is $999.00.", [
+    {
+      title: "Official test section",
+      text: "The listed charges are $50.00 and $90.00.",
+      derivedFacts: ["Calculated subtotal: $140.00."],
+    },
+  ]).some((issue) => /999/.test(issue)),
+  "An amount outside the source and controlled calculations must still be rejected."
 );
 
 const conflictingSources = currentSourceConflicts([
