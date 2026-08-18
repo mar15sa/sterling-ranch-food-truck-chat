@@ -12,6 +12,7 @@
 - Add conventional unit tests, coverage reporting, configuration inventory, and updated product metadata.
 - Apply the shared staging banner and production-only analytics guard to the openings page as well as every other resident page.
 - Add a transfer-ready architecture map and an evidence-backed operating-cost snapshot.
+- Retry transient openings-source failures before marking a healthy source unavailable.
 
 ## 2026-08-18 — production
 

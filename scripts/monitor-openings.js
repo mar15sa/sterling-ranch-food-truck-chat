@@ -9,6 +9,7 @@ const REPORT_PATH = path.join(ROOT_DIR, "data", "openings-monitor-report.md");
 const LEADS_PATH = path.join(ROOT_DIR, "data", "openings-monitor-leads.json");
 const WRITE_STATE = process.argv.includes("--write-state") || process.argv.includes("--write");
 const TIMEOUT_MS = Number(process.env.OPENINGS_MONITOR_TIMEOUT_MS) || 15000;
+const FETCH_RETRIES = Number(process.env.OPENINGS_MONITOR_FETCH_RETRIES) || 2;
 const USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 SterlingRanchSocietyRadar/1.0";
 
 const SIGNAL_WORDS = [
@@ -125,47 +126,55 @@ async function checkSource(source, previous) {
     };
   }
   const checkedAt = new Date().toISOString();
-  try {
-    const response = await fetch(source.url, {
-      headers: { "user-agent": USER_AGENT, accept: "text/html,application/xhtml+xml,application/pdf;q=0.8,*/*;q=0.5" },
-      redirect: "follow",
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const contentType = response.headers.get("content-type") || "";
-    const raw = Buffer.from(await response.arrayBuffer());
-    if (raw.length > 8_000_000) throw new Error("Source is larger than the 8 MB safety limit.");
-    const rawText = raw.toString("utf8");
-    const text = contentType.includes("pdf")
-      ? `PDF ${raw.length} bytes ${response.url}`
-      : htmlToRelevantText(rawText);
-    if (text.length < 40) throw new Error("Source returned too little readable content.");
-    const hash = fingerprint(text);
-    const signals = extractSignals(text);
-    const structuredLeads = extractStructuredLeads(rawText, source, contentType);
-    const changed = Boolean(previous?.fingerprint && previous.fingerprint !== hash);
-    return {
-      status: changed ? "changed" : "ok",
-      checkedAt,
-      changedAt: changed ? checkedAt : previous?.changedAt || null,
-      fingerprint: hash,
-      finalUrl: response.url,
-      contentType,
-      signals,
-      structuredLeads,
-      newSignals: changed ? newSignals(previous?.signals, signals) : [],
-    };
-  } catch (error) {
-    return {
-      status: "error",
-      checkedAt,
-      changedAt: previous?.changedAt || null,
-      fingerprint: previous?.fingerprint || null,
-      signals: previous?.signals || [],
-      newSignals: [],
-      error: error.message,
-    };
+  let lastError;
+  for (let attempt = 0; attempt <= FETCH_RETRIES; attempt += 1) {
+    try {
+      const response = await fetch(source.url, {
+        headers: { "user-agent": USER_AGENT, accept: "text/html,application/xhtml+xml,application/pdf;q=0.8,*/*;q=0.5" },
+        redirect: "follow",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const contentType = response.headers.get("content-type") || "";
+      const raw = Buffer.from(await response.arrayBuffer());
+      if (raw.length > 8_000_000) throw new Error("Source is larger than the 8 MB safety limit.");
+      const rawText = raw.toString("utf8");
+      const text = contentType.includes("pdf")
+        ? `PDF ${raw.length} bytes ${response.url}`
+        : htmlToRelevantText(rawText);
+      if (text.length < 40) throw new Error("Source returned too little readable content.");
+      const hash = fingerprint(text);
+      const signals = extractSignals(text);
+      const structuredLeads = extractStructuredLeads(rawText, source, contentType);
+      const changed = Boolean(previous?.fingerprint && previous.fingerprint !== hash);
+      return {
+        status: changed ? "changed" : "ok",
+        checkedAt,
+        changedAt: changed ? checkedAt : previous?.changedAt || null,
+        fingerprint: hash,
+        finalUrl: response.url,
+        contentType,
+        signals,
+        structuredLeads,
+        newSignals: changed ? newSignals(previous?.signals, signals) : [],
+      };
+    } catch (error) {
+      lastError = error;
+      if (attempt < FETCH_RETRIES) {
+        await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+      }
+    }
   }
+
+  return {
+    status: "error",
+    checkedAt,
+    changedAt: previous?.changedAt || null,
+    fingerprint: previous?.fingerprint || null,
+    signals: previous?.signals || [],
+    newSignals: [],
+    error: lastError?.message || "Source check failed after retries.",
+  };
 }
 
 function buildReport(config, state, previousState) {
