@@ -9,6 +9,7 @@ const refreshButton = document.querySelector("#refreshStatus");
 const statusAlert = document.querySelector("#poolStatusAlert");
 const statusDot = document.querySelector("#poolStatusDot");
 const currentText = document.querySelector("#poolCurrentText");
+const poolDetailsChecked = document.querySelector("#poolDetailsChecked");
 
 const FALLBACK_STATUS = {
   state: "unknown",
@@ -68,6 +69,7 @@ function updateStatus(rawStatus) {
   residentAction.textContent = status.residentAction;
   signalLabel.textContent = status.officialColorLabel || status.detectedLabel || "Unknown";
   lastChecked.textContent = formatCheckedAt(status.checkedAt);
+  if (poolDetailsChecked) poolDetailsChecked.textContent = formatCheckedAt(status.checkedAt);
   sourceLink.href = status.sourceUrl || FALLBACK_STATUS.sourceUrl;
   actionLink.href = status.actionUrl || status.sourceUrl || FALLBACK_STATUS.actionUrl;
   actionLink.textContent = actionLabelFor(status);

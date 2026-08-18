@@ -101,6 +101,17 @@ async function main() {
       continue;
     }
 
+    if (testCase.expectedVerdict && result.answerVerdict !== testCase.expectedVerdict) {
+      failures.push({
+        question: testCase.question,
+        issue: `Expected answer verdict "${testCase.expectedVerdict}", got "${result.answerVerdict}".`,
+        confidence: result.confidence,
+        sources: formatSources(result.sources || []),
+        answer: result.answer,
+      });
+      continue;
+    }
+
     if (testCase.expectedNoSources && (result.sources || []).length !== 0) {
       failures.push({
         question: testCase.question,

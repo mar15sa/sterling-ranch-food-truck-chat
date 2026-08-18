@@ -323,18 +323,21 @@
     "question": "Chickens",
     "variants": ["Can we have chickena", "Can I have chickens?", "Can I keep poultry in my backyard?"],
     "expectedFirstAny": ["Sec. 1-33"],
+    "expectedVerdict": "prohibited",
     "answerIncludesAll": ["Backyard chickens are not allowed", "fowl", "poultry"]
   },
   {
     "question": "Can I keep dogs?",
     "variants": ["Are household pets allowed?", "How many cats and dogs can I have?"],
     "expectedFirstAny": ["Sec. 1-33"],
+    "expectedVerdict": "allowed",
     "answerIncludesAll": ["allowed", "not more than four", "leashed", "Pet waste"]
   },
   {
     "question": "Can I have a greenhouse in my backyard?",
     "variants": ["Do greenhouses require approval?"],
     "expectedFirstAny": ["Sec. 21-22"],
+    "expectedVerdict": "conditional",
     "answerIncludesAll": ["greenhouse", "DRC approval", "accessory-building"]
   },
   {

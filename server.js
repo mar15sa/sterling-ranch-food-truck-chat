@@ -17,6 +17,13 @@ const {
 } = require("./lib/rules-alerts");
 const { cleanQuestionForLog, logRulesQuestion } = require("./lib/rules-question-log");
 const {
+  SECURITY_HEADERS,
+  clientKeyForRateLimit,
+  publicServerError,
+} = require("./lib/http-security");
+const { getRulesLlmMetrics } = require("./lib/rules-llm");
+const { operationsSnapshot, recordRequest } = require("./lib/operations");
+const {
   normalizeTruckName,
   splitListedTruckNames: splitTruckNames,
 } = require("./lib/truck-names");
@@ -2713,13 +2720,6 @@ const mimeTypes = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
 };
-const SECURITY_HEADERS = {
-  "x-content-type-options": "nosniff",
-  "referrer-policy": "strict-origin-when-cross-origin",
-  "permissions-policy": "camera=(), microphone=(), geolocation=()",
-  "x-frame-options": "SAMEORIGIN",
-};
-
 const calendarCache = new Map();
 const menuCache = new Map();
 const answerCache = new Map();
@@ -2777,13 +2777,6 @@ async function readJsonBody(req) {
   } catch {
     return {};
   }
-}
-
-function clientKeyForRateLimit(req) {
-  const forwarded = String(req.headers["x-forwarded-for"] || "")
-    .split(",")[0]
-    .trim();
-  return forwarded || req.socket?.remoteAddress || "unknown";
 }
 
 function cleanupRulesAskRateLimits(now) {
@@ -4547,15 +4540,32 @@ async function handleRulesStatus(req, res) {
 
 async function handleHealth(req, res) {
   const rules = await getRulesIndexStatus();
+  const openings = getOpeningsSourceStatus();
   const healthy = rules.exists && rules.inlineTopicCount >= 100;
   sendJson(res, healthy ? 200 : 503, {
     status: healthy ? "ok" : "not-ready",
     uptimeSeconds: Math.round(process.uptime()),
+    deploymentReady: healthy,
     rules: {
       exists: rules.exists,
       isStale: rules.isStale,
       inlineTopicCount: rules.inlineTopicCount,
+      lastFetchedAt: rules.lastFetchedAt,
+      warnings: rules.warnings || [],
     },
+    openings: {
+      lastRunAt: openings.lastRunAt || null,
+      totalSources: openings.total || 0,
+      automatedSources: openings.automated || 0,
+      errors: openings.errors || 0,
+    },
+    pool: {
+      hasRecentStatus: Boolean(poolStatusCache),
+      checkedAt: poolStatusCache?.data?.checkedAt || null,
+      stale: Boolean(poolStatusCache?.data?.stale),
+    },
+    requests: operationsSnapshot(),
+    optionalLlmRewrite: getRulesLlmMetrics(),
   });
 }
 
@@ -4693,8 +4703,12 @@ function serveStatic(req, res, url) {
 }
 
 const server = http.createServer(async (req, res) => {
+  const requestStartedAt = Date.now();
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
+    res.once("finish", () => {
+      recordRequest(url.pathname, res.statusCode, Date.now() - requestStartedAt);
+    });
     if (url.pathname === "/api/health") {
       await handleHealth(req, res);
       return;
@@ -4752,10 +4766,7 @@ const server = http.createServer(async (req, res) => {
     serveStatic(req, res, url);
   } catch (error) {
     console.error(error);
-    sendJson(res, 500, {
-      error: "Something went wrong while checking this request.",
-      detail: error.message,
-    });
+    sendJson(res, 500, publicServerError(error));
   }
 });
 

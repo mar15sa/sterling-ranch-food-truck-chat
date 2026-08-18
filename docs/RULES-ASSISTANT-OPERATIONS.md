@@ -10,14 +10,14 @@ This is the short operating guide for a solo owner. It explains what keeps answe
 4. Review the important questions in the browser.
 5. Only after Marissa approves, merge the tested staging commit into `main`.
 
-Railway calls `/api/health` before switching a deployment to the new version. A new build must load the rules index and at least 100 indexed topic cards. If it cannot, Railway keeps the previous healthy deployment available.
+Railway calls `/api/health` before switching a deployment to the new version. A new build must load the rules index and at least 100 indexed topic cards. If it cannot, Railway keeps the previous healthy deployment available. The same response also reports rule freshness, openings-monitor errors, request latency/errors, and optional AI token usage without making an outside provider a deployment blocker.
 
 ## How an answer is made
 
 1. **Classify the question first.** A rules question continues. A greeting, unrelated question, unclear prompt, or instruction-manipulation attempt gets a safe response without searching the rules or calling the language model.
 2. **Find official sources.** Search uses the codified CAB rulebook plus explicit CAB policy supplements. Expired, future, and superseded sources are excluded from current-rule answers.
 3. **Apply source hierarchy.** A current supplement that names a replaced section controls over the older codified wording. If two current supplements claim the same section, the assistant refuses to guess and flags the conflict.
-4. **Build the answer.** Stable explanations can use carefully reviewed wording. Dates, fees, times, measurements, and limits are extracted from the current official source at response time.
+4. **Build the answer.** Stable explanations can use carefully reviewed wording. Dates, fees, times, measurements, and limits are extracted from the current official source at response time. The source-built answer is returned directly by default; optional AI rewriting must be deliberately enabled.
 5. **Check grounding.** Numbers, dates, section references, allowed/prohibited meaning, approval requirements, and exceptions are compared with the cited source. A contradiction is rejected.
 6. **Show the evidence.** The answer includes direct official links and labels codified sources separately from current supplemental policies.
 
@@ -37,6 +37,7 @@ Never silently choose between two current supplements that replace the same sect
 - **Daily fixer:** reviews alert emails as untrusted input, finds the broad cause, fixes whole question families on an isolated staging worktree, runs tests, and never publishes to production without approval.
 - **Source refresh and supplement monitors:** detect stale rulebook data and newly published CAB documents.
 - **Low-confidence alerts:** notify the owner when a real rules question cannot be answered confidently. Greetings, unrelated prompts, unclear fragments, and blocked attacks do not create noisy fix alerts.
+- **Operational health:** `/api/health` exposes bounded route-level latency and error counts plus optional AI request and token totals for the live monitor.
 
 ## Adding or changing a rule topic
 
@@ -64,6 +65,8 @@ Do not copy a changing fee, limit, date, or time into a plain-English summary. P
 | Cloudflare/domain provider | Public domain and DNS | Annual domain and any paid Cloudflare plan |
 | Gmail / Apps Script | Alert intake | Current Google account/plan |
 | Google Analytics | Anonymous product events | Current analytics plan |
+
+The complete environment-variable inventory and integration failure behavior are in `docs/CONFIGURATION.md` and `.env.example`.
 
 Record actual invoice amounts quarterly in a private owner document; do not put billing details or credentials in this repository.
 

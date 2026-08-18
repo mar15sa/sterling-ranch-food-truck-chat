@@ -2,6 +2,17 @@
 
 ## Unreleased — staging
 
+### CTO audit hardening
+
+- Return an explicit allowed, prohibited, conditional, verified, or unverified verdict with each rules answer instead of guessing from the full answer in the browser.
+- Disable optional AI rewriting by default so already-grounded answers return without a rejected model round-trip.
+- Remove seasonal pool hours and limits from fixed website copy and direct residents to the current official source.
+- Add Content Security Policy and HSTS headers, safer production errors, and proxy-aware rate-limit keys.
+- Expand `/api/health` with source, latency, error, and optional AI token/request signals.
+- Add conventional unit tests, coverage reporting, configuration inventory, and updated product metadata.
+
+## 2026-08-18 — production
+
 ### Trustworthy answers
 
 - Classify rules questions, greetings, unrelated prompts, unclear fragments, and prompt-injection attempts before retrieval or model use.

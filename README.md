@@ -1,12 +1,13 @@
-# Sterling Ranch Food Truck Chat
+# Sterling Ranch Society resident tools
 
-This is a tiny local web app for asking questions like:
+This is the source code and operating documentation for the Sterling Ranch Society resident site. It includes:
 
-- "What food truck is here today?"
-- "What food truck is here tomorrow?"
-- "What food truck is here May 20?"
+- Food-truck and menu lookups from the community calendar.
+- A source-grounded Sterling Ranch Rules Assistant.
+- Live Overlook outdoor-pool status.
+- An evidence-backed Douglas County-area openings tracker.
 
-It checks the Sterling Ranch CAB calendar event, finds the food truck listed for that date, then searches for likely public menu links. When a truck has a readable online menu, the app shows menu items directly.
+Start with [the configuration reference](docs/CONFIGURATION.md) and [the Rules Assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md) when operating or handing off the project.
 
 ## Run it
 
@@ -109,11 +110,12 @@ npm run ingest:rules
 
 ### Plain-English answers (optional)
 
-By default, answers are assembled directly from the matching rule sections. Any changing date, time, fee, count, or measurement is extracted from the currently loaded official source at response time instead of being trusted from a typed summary. If the current value cannot be extracted, the assistant fails closed and asks the resident to confirm the official section rather than returning an old value. If an `ANTHROPIC_API_KEY` is set, the assistant uses Claude to rewrite those same current source facts into a plain-English answer. Claude only rephrases the sections the search already found — it is instructed to use nothing else and never to invent rules, numbers, or fees — and every answer still links the exact source sections. If the key is missing, or a request errors, times out, or is declined, the assistant falls back to a stable plain-English conclusion plus the current official source passage.
+By default, answers are assembled directly from the matching rule sections. Any changing date, time, fee, count, or measurement is extracted from the currently loaded official source at response time instead of being trusted from a typed summary. If the current value cannot be extracted, the assistant fails closed and asks the resident to confirm the official section rather than returning an old value. Optional Claude rewriting is disabled by default because the source-built answers are faster and already pass the grounding suite. An owner can deliberately enable it with both `RULES_ENABLE_LLM_REWRITE=true` and an `ANTHROPIC_API_KEY`; rejected or unavailable rewrites still fall back to the grounded answer.
 
 Environment variables:
 
-- `ANTHROPIC_API_KEY` — enables Claude-written answers. Without it, the built-in answers are used.
+- `RULES_ENABLE_LLM_REWRITE` — keep `false` for the faster source-built answer path; set to `true` only when optional rewriting is desired.
+- `ANTHROPIC_API_KEY` — required in addition to the enable flag for Claude-written answers.
 - `RULES_LLM_MODEL` — which model to use. Defaults to `claude-haiku-4-5` (lowest cost, well-suited to this). Use `claude-sonnet-4-6` or `claude-opus-4-8` for more nuance.
 - `RULES_LLM_MAX_TOKENS` (default `600`) and `RULES_LLM_TIMEOUT_MS` (default `15000`) — optional tuning.
 - `RULES_ALERT_WEBHOOK_URL` — optional webhook for runtime alerts. When set, the server alerts when an answer is uncertain, rules questions hit repeated rate-limit blocks, the rulebook refresh fails, or LLM rewrites are rejected often. Without it, those alerts are still written to server logs.
@@ -129,7 +131,7 @@ Environment variables:
 
 Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
 
-The scheduled `Rules answer quality monitor` GitHub workflow runs the full local rules evaluation and a live production smoke test every day. If either check fails, it opens or updates a GitHub issue with a review checklist. When the checks pass again, the workflow comments on and closes that issue automatically. Every uncertain production answer is also written to the server log with the sanitized question, reason, and closest source so it can be researched and added as a permanent regression case. The first occurrence of each distinct uncertain question can alert immediately; repeats of that same question are quiet for 24 hours.
+The scheduled `Rules answer quality monitor` GitHub workflow runs the full local evaluation and live production journeys every day. It checks the homepage and security headers, pool status, openings catalog, food-truck dates, representative rule answers, prompt injection, and source health. If a check fails, it opens or updates a GitHub issue with a review checklist. When the checks pass again, the workflow comments on and closes that issue automatically. Every uncertain production answer is also written to the server log with the sanitized question, reason, and closest source so it can be researched and added as a permanent regression case. The first occurrence of each distinct uncertain question can alert immediately; repeats of that same question are quiet for 24 hours.
 
 The server also has an admin refresh endpoint:
 

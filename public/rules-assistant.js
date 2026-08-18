@@ -361,17 +361,20 @@ function addAnswer(data, question) {
     answerLabel.dataset.state = "unverified";
   } else if (["conversation", "unrelated", "unclear"].includes(data.inputClassification)) {
     answerLabel.textContent = "Rules assistant";
-  } else if (data.confidence?.canAnswer !== true) {
+  } else if (data.answerVerdict === "unverified" || data.confidence?.canAnswer !== true) {
     answerLabel.textContent = "Could not verify — next step included";
     answerLabel.dataset.state = "unverified";
-  } else if (/\b(?:not allowed|prohibited|may not|cannot|can't)\b/i.test(data.answer || "")) {
+  } else if (data.answerVerdict === "prohibited") {
     answerLabel.textContent = "Rule says no";
     answerLabel.dataset.state = "prohibited";
-  } else if (/\b(?:approval|required|submit(?:ted)? to the DRC)\b/i.test(data.answer || "")) {
+  } else if (data.answerVerdict === "conditional") {
     answerLabel.textContent = "Allowed with approval or conditions";
     answerLabel.dataset.state = "conditional";
+  } else if (data.answerVerdict === "allowed") {
+    answerLabel.textContent = "Rule says yes";
+    answerLabel.dataset.state = "allowed";
   } else {
-    answerLabel.textContent = "Rulebook answer";
+    answerLabel.textContent = "Verified rulebook answer";
   }
 
   const shareButton = node.querySelector(".rules-share-button");
