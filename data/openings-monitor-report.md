@@ -1,21 +1,12 @@
 # Douglas County openings radar
 
-Scan completed: 2026-08-18T14:09:19.556Z
+Scan completed: 2026-08-19T17:46:36.387Z
 Sources tracked: 36
 Automatically checked: 26
 Manual research lookups: 10
-Changed: 5
+Changed: 10
 Errors: 0
-New structured leads: 1
-
-## New leads
-
-- [Fiber Internet Is Coming to Castle Rock, Castle Pines, The Pinery and Cottonwood](https://dougcosocial.com/news/bam-broadband-fiber-douglas-county) — DougCo Social openings and local updates
-
-## Leads no longer present
-
-- [A New Trail Will Connect Downtown Castle Rock to Philip S. Miller Park](https://dougcosocial.com/news/industrial-tributary-trail-castle-rock) — may have moved off the source feed
-- [Free Rideshare Is Officially Coming to Castle Rock](https://dougcosocial.com/news/link-on-demand-castle-rock) — may have moved off the source feed
+New structured leads: 0
 
 ## Changed: Castle Rock development activity
 
@@ -27,25 +18,57 @@ The page changed, but the text filter did not isolate a new business signal. Rev
 
 https://castlerock-co.legistar.com/Calendar.aspx
 
-Possible opening-related signals:
-
-- Lost Canyon Ranch Open Space, Cattleman's Trailhead
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Changed: Douglas County newly filed planning projects
 
 https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch
 
+Possible opening-related signals:
+
+- Request for a Site Improvement Plan for a coffee shop and oil change facility.
+
+## Changed: Douglas County public meetings and agenda items
+
+https://douglascounty.legistar.com/Calendar.aspx
+
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
-## Changed: Sterling Ranch CAB and construction agendas
+## Changed: Highlands Ranch news, projects, and community openings
 
-https://sterlingranchcab.com/AgendaCenter
+https://www.highlandsranch.org/news-events
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Changed: DougCo Social openings and local updates
 
 https://dougcosocial.com/news
+
+Possible opening-related signals:
+
+- Douglas County News — Openings & Closings | DougCo Social Skip to main content DougCo Social
+
+## Changed: Colorado recently approved liquor licenses
+
+https://sbg.colorado.gov/liquor-license-lists
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+
+## Changed: Westword restaurant openings and closings
+
+https://www.westword.com/tag/openings-closings/
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+
+## Changed: Parker Chamber ribbon cuttings
+
+https://business.parkerchamber.com/events/calendarcatgid/6
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+
+## Changed: Castle Rock Chamber ribbon cuttings
+
+https://business.castlerock.org/events/calendar
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
