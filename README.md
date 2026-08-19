@@ -110,12 +110,12 @@ npm run ingest:rules
 
 ### Plain-English answers (optional)
 
-By default, answers are assembled directly from the matching rule sections. Any changing date, time, fee, count, or measurement is extracted from the currently loaded official source at response time instead of being trusted from a typed summary. If the current value cannot be extracted, the assistant fails closed and asks the resident to confirm the official section rather than returning an old value. Optional Claude rewriting is disabled by default because the source-built answers are faster and already pass the grounding suite. An owner can deliberately enable it with both `RULES_ENABLE_LLM_REWRITE=true` and an `ANTHROPIC_API_KEY`; rejected or unavailable rewrites still fall back to the grounded answer.
+Answers are assembled directly from the matching rule sections. Any changing date, time, fee, count, or measurement is extracted from the currently loaded official source at response time instead of being trusted from a typed summary. If the current value cannot be extracted, the assistant fails closed and asks the resident to confirm the official section rather than returning an old value. In the recommended selective AI mode, Claude is used only when a supported question needs generic text translated or facts synthesized across multiple sources. Prompt injection, unclear questions, missing evidence, conflicts, and already-readable covered answers never reach Claude. Every rewrite is checked against the cited sources and rejected rewrites, errors, or timeouts fall back to the grounded source-built answer.
 
 Environment variables:
 
-- `RULES_ENABLE_LLM_REWRITE` — keep `false` for the faster source-built answer path; set to `true` only when optional rewriting is desired.
-- `ANTHROPIC_API_KEY` — required in addition to the enable flag for Claude-written answers.
+- `RULES_LLM_MODE` — `selective` is recommended; `off` disables Claude and `all` preserves the older rewrite-every-supported-answer behavior.
+- `ANTHROPIC_API_KEY` — required for Claude-written answers. Without it, the source-built fallback is returned.
 - `RULES_LLM_MODEL` — which model to use. Defaults to `claude-haiku-4-5` (lowest cost, well-suited to this). Use `claude-sonnet-4-6` or `claude-opus-4-8` for more nuance.
 - `RULES_LLM_MAX_TOKENS` (default `600`) and `RULES_LLM_TIMEOUT_MS` (default `15000`) — optional tuning.
 - `RULES_ALERT_WEBHOOK_URL` — optional webhook for runtime alerts. When set, the server alerts when an answer is uncertain, rules questions hit repeated rate-limit blocks, the rulebook refresh fails, or LLM rewrites are rejected often. Without it, those alerts are still written to server logs.
