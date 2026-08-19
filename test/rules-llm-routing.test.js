@@ -2,7 +2,11 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
-const { getRulesLlmMode, selectiveRewriteDecision } = require("../lib/rules-llm");
+const {
+  getRulesLlmMode,
+  normalizeGovernanceNamesToSources,
+  selectiveRewriteDecision,
+} = require("../lib/rules-llm");
 
 const supported = {
   mode: "selective",
@@ -56,6 +60,16 @@ test("unsafe, unsupported, and uncertain inputs never reach AI", () => {
   ]) {
     assert.equal(selectiveRewriteDecision({ ...supported, ...input }).eligible, false);
   }
+});
+
+test("AI organization-name expansions are normalized to the cited source wording", () => {
+  assert.equal(
+    normalizeGovernanceNamesToSources(
+      "The Design Review Committee requires approval from the Sterling Ranch Community Authority Board.",
+      [{ title: "Rule", text: "DRC approval is required. Contact the CAB." }]
+    ),
+    "DRC requires approval from CAB."
+  );
 });
 
 test("prompt injection returns before the rewrite function can run", async () => {
