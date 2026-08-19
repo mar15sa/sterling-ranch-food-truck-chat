@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const {
   claimPolarityIssues,
   groundednessIssues,
+  numberWordsToDigits,
   properNounPhrases,
 } = require("../lib/rules-grounding");
 const { currentSourceConflicts } = require("../lib/rules-assistant");
@@ -69,6 +70,16 @@ assert.deepEqual(
   ),
   [],
   "A grounded DRC instruction should not be rejected because it begins with an action verb."
+);
+assert.deepEqual(
+  numberWordsToDigits("Review the shed one-sheet."),
+  [],
+  "A document called a one-sheet should not be treated as the quantity one."
+);
+assert.deepEqual(
+  numberWordsToDigits("The fence may have three rails."),
+  ["3"],
+  "Real written quantities must still be protected."
 );
 
 assert.deepEqual(
