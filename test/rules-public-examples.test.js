@@ -110,3 +110,18 @@ test("the same concept layer distinguishes cancellations from new bookings", asy
   assert.match(result.answer, /current Rental Agreement/i);
   assert.match(result.sources[0]?.title || "", /17-196|Cancellation and refund policy/i);
 });
+
+test("compound questions keep a grounded source for each requested topic", async () => {
+  let rewriteSources = [];
+  const result = await answerRulesQuestion("Can I add a fence and a shed?", {
+    llmMode: "selective",
+    rewriteAnswerWithLLM: async (_question, _draft, sources) => {
+      rewriteSources = sources;
+      return "Short answer: Both projects have rules.\n\nWhat I found:\n- Fence source included.\n- Shed source included.\n\nBefore you act: Review both linked sections.";
+    },
+  });
+  assert.equal(result.confidence?.canAnswer, true);
+  assert.ok(rewriteSources.some((source) => /fenc/i.test(source.title || "")));
+  assert.ok(rewriteSources.some((source) => /shed/i.test(source.title || "")));
+  assert.match(result.answerMode || "", /llm-selective/);
+});

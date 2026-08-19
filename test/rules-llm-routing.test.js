@@ -33,11 +33,20 @@ test("selective mode sends generic extractive answers and compound multi-source 
     selectiveRewriteDecision({ ...supported, answerStrategy: "deterministic" }),
     { eligible: true, reason: "multi-source-synthesis" }
   );
+  assert.deepEqual(
+    selectiveRewriteDecision({ ...supported, answerStrategy: "structured" }),
+    { eligible: true, reason: "multi-source-synthesis" }
+  );
 });
 
 test("selective mode keeps already-readable and simple covered answers deterministic", () => {
   assert.deepEqual(
-    selectiveRewriteDecision({ ...supported, answerStrategy: "structured" }),
+    selectiveRewriteDecision({
+      ...supported,
+      question: "Can I add a shed?",
+      sources: [supported.sources[0]],
+      answerStrategy: "structured",
+    }),
     { eligible: false, reason: "already-human-readable" }
   );
   assert.deepEqual(
