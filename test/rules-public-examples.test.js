@@ -77,11 +77,36 @@ test("park and amenity booking questions use the reservation process", async () 
     const result = await answerRulesQuestion(question);
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
-    assert.match(result.answer, /Facility Rental Application/i);
+    assert.match(result.answer, /Facilities Rental Application and Agreement/i);
     assert.match(result.answer, /first-come, first-served/i);
     assert.ok(
       result.sources.some((source) => /Amenity Rentals/i.test(source.title || "")),
       `${question} should link the official Amenity Rentals page.`
     );
   }
+});
+
+test("unseen everyday wording maps to the reusable facility-reservation concept", async () => {
+  for (const question of [
+    "I want to hold a birthday party at a park shelter. What paperwork do I need?",
+    "What is the process for using a pavilion for an event?",
+    "Where do I sign up to use a CAB facility?",
+  ]) {
+    const result = await answerRulesQuestion(question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.match(result.confidence?.reason || "", /semantic-concept-supported:facility-reservations/);
+    assert.match(result.answer, /Facilities Rental Application and Agreement/i);
+    assert.ok(
+      result.sources.some((source) => /17-188|Reservation process/i.test(source.title || "")),
+      `${question} should retrieve the reservation process without an exact-question route.`
+    );
+  }
+});
+
+test("the same concept layer distinguishes cancellations from new bookings", async () => {
+  const result = await answerRulesQuestion("How do I cancel a clubhouse rental and get a refund?");
+  assert.equal(result.confidence?.canAnswer, true);
+  assert.match(result.confidence?.reason || "", /semantic-concept-supported:rental-cancellations/);
+  assert.match(result.answer, /current Rental Agreement/i);
+  assert.match(result.sources[0]?.title || "", /17-196|Cancellation and refund policy/i);
 });
