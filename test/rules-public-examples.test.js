@@ -66,3 +66,22 @@ test("public example questions in the page are covered by the regression suite",
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
   assert.match(html, /rules-assistant\.js\?v=20260818-readable-examples/);
 });
+
+test("park and amenity booking questions use the reservation process", async () => {
+  for (const question of [
+    "How do I book the park?",
+    "Can I reserve a park shelter?",
+    "How do I rent a pavilion?",
+    "Where do I book the clubhouse?",
+  ]) {
+    const result = await answerRulesQuestion(question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
+    assert.match(result.answer, /Facility Rental Application/i);
+    assert.match(result.answer, /first-come, first-served/i);
+    assert.ok(
+      result.sources.some((source) => /Amenity Rentals/i.test(source.title || "")),
+      `${question} should link the official Amenity Rentals page.`
+    );
+  }
+});
