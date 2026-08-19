@@ -1,6 +1,10 @@
 const assert = require("node:assert/strict");
 
-const { claimPolarityIssues, groundednessIssues } = require("../lib/rules-grounding");
+const {
+  claimPolarityIssues,
+  groundednessIssues,
+  properNounPhrases,
+} = require("../lib/rules-grounding");
 const { currentSourceConflicts } = require("../lib/rules-assistant");
 
 function source(text) {
@@ -51,6 +55,20 @@ assert.deepEqual(
     source("Gemstone and Jellyfish systems are the approved systems. Installation requires DRC approval.")
   ),
   []
+);
+
+assert.deepEqual(
+  properNounPhrases("Before you act: Get DRC approval before work."),
+  ["drc"],
+  "A sentence-opening action verb should not be mistaken for part of an organization name."
+);
+assert.deepEqual(
+  groundednessIssues(
+    "Short answer: A fence requires approval. Before you act: Get DRC approval before work.",
+    source("Fences require prior DRC approval before work begins.")
+  ),
+  [],
+  "A grounded DRC instruction should not be rejected because it begins with an action verb."
 );
 
 assert.deepEqual(
