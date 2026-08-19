@@ -125,3 +125,15 @@ test("compound questions keep a grounded source for each requested topic", async
   assert.ok(rewriteSources.some((source) => /shed/i.test(source.title || "")));
   assert.match(result.answerMode || "", /llm-selective/);
 });
+
+test("compound questions keep every topic when the AI rewrite is rejected", async () => {
+  const result = await answerRulesQuestion("Can I add a fence and a shed?", {
+    llmMode: "selective",
+    rewriteAnswerWithLLM: async () => null,
+  });
+  assert.equal(result.confidence?.canAnswer, true);
+  assert.match(result.answer, /Fence:/i);
+  assert.match(result.answer, /Shed:/i);
+  assert.match(result.answer, /separate projects with separate requirements/i);
+  assert.match(result.answerMode || "", /source-derived-extractive/);
+});
