@@ -41,7 +41,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v34";
+const MENU_CACHE_VERSION = "menus-v35";
 const FETCH_TIMEOUT_MS = 8000;
 const ANSWER_CACHE_TTL_MS = 1000 * 60 * 10;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
@@ -1906,10 +1906,54 @@ const KNOWN_TRUCK_LINKS = {
       title: "2 Salty Sarges",
       url: "https://2saltysarges.com/",
     },
+    instagram: {
+      title: "2 Salty Sarges - StreetFoodFinder",
+      url: "https://streetfoodfinder.com/2SaltySarges",
+    },
     menu: [
       {
-        title: "2 Salty Sarges menu",
-        url: "https://2saltysarges.com/menu",
+        title: "2 Salty Sarges profile - Denver Food Trucks",
+        url: "https://denverfoodtrucks.org/member/2SaltySarges",
+      },
+      {
+        title: "2 Salty Sarges feature - Westword",
+        url: "https://www.westword.com/food-drink/two-army-veterans-2-salty-sarges-food-truck-16831456/",
+      },
+      {
+        title: "2 Salty Sarges owner-verified listing - FoodTrucksIn",
+        url: "https://foodtrucksin.com/2-salty-sarges",
+      },
+    ],
+    items: [
+      {
+        name: "Pulled Pork Sandwich",
+        description: "Smoked pulled pork on a grilled brioche bun with spicy slaw and red and white barbecue sauces.",
+        price: "",
+        url: "https://www.westword.com/food-drink/two-army-veterans-2-salty-sarges-food-truck-16831456/",
+      },
+      {
+        name: "Garlic Parmesan Chicken Po'Boy",
+        description: "Chicken po'boy served with white barbecue sauce.",
+        price: "",
+        url: "https://www.westword.com/food-drink/two-army-veterans-2-salty-sarges-food-truck-16831456/",
+      },
+      {
+        name: "Italian Sausage Hoagie",
+        description: "Comfort-food hoagie built around Italian sausage.",
+        price: "",
+        url: "https://www.westword.com/food-drink/two-army-veterans-2-salty-sarges-food-truck-16831456/",
+      },
+      {
+        name: "Burgers",
+        description: "Gourmet-style burgers from the truck's American comfort-food menu.",
+        price: "",
+        url: "https://foodtrucksin.com/2-salty-sarges",
+      },
+      {
+        name: "Fries",
+        description: "Fries listed as one of the truck's served food types.",
+        price: "",
+        url: "https://foodtrucksin.com/2-salty-sarges",
       },
     ],
   },
@@ -2205,13 +2249,21 @@ const KNOWN_TRUCK_LINKS = {
   },
   "tula s tapas": {
     official: {
-      title: "Tula's Tapas",
-      url: "https://www.tulastapas.com/",
+      title: "Tula's Tapas menu and ordering",
+      url: "https://tulas-tapas-and-culinary-creations.square.site/",
     },
     menu: [
       {
+        title: "Tula's Tapas profile - Bruz Beers",
+        url: "https://bruzbeers.com/food-trucks/tulas-tapas/",
+      },
+      {
         title: "Tula's Tapas food truck menu",
         url: "https://www.tulastapas.com/catering-packages/the-food-truck",
+      },
+      {
+        title: "Tula's Tapas menu and ordering",
+        url: "https://tulas-tapas-and-culinary-creations.square.site/",
       },
     ],
     items: [
