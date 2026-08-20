@@ -178,6 +178,46 @@ test("AI search still refuses an unrelated question without official-source evid
   assert.deepEqual(result.sources, []);
 });
 
+test("AI search expansion preserves strong answers the original wording already found", async () => {
+  const cases = [
+    {
+      question: "Can I add a fence and a shed?",
+      intent: "design_review",
+      searches: ["fencing standards", "backyard shed DRC approval"],
+      expected: [/Fence:/i, /Shed:/i],
+    },
+    {
+      question: "What approval and setbacks apply to a backyard spa?",
+      intent: "design_review",
+      searches: ["hot tub outdoor spa approval", "spa setback screening"],
+      expected: [/DRC approval/i, /five feet/i],
+    },
+    {
+      question: "Can my dog be off leash at Prospect Village park?",
+      intent: "pets",
+      searches: ["dog off leash park rules", "Prospect Village park leash"],
+      expected: [/leash/i, /physical control/i],
+    },
+  ];
+
+  for (const item of cases) {
+    const result = await answerRulesQuestion(item.question, {
+      searchMode: "ai-hybrid",
+      llmMode: "off",
+      planRulesSearch: async () => ({
+        inScope: "yes",
+        intent: item.intent,
+        normalizedQuestion: item.question,
+        searchQueries: item.searches,
+        entities: [],
+      }),
+      rerankRulesSources: async (_question, sources) => sources,
+    });
+    assert.equal(result.confidence?.canAnswer, true, item.question);
+    for (const pattern of item.expected) assert.match(result.answer, pattern, item.question);
+  }
+});
+
 test("compound questions keep a grounded source for each requested topic", async () => {
   let rewriteSources = [];
   const result = await answerRulesQuestion("Can I add a fence and a shed?", {
