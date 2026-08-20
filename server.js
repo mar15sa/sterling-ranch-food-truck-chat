@@ -22,6 +22,7 @@ const {
   publicServerError,
 } = require("./lib/http-security");
 const { getRulesLlmMetrics } = require("./lib/rules-llm");
+const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
   normalizeTruckName,
@@ -4565,6 +4566,7 @@ async function handleHealth(req, res) {
       stale: Boolean(poolStatusCache?.data?.stale),
     },
     requests: operationsSnapshot(),
+    rulesSearch: getRulesSearchMetrics(),
     optionalLlmRewrite: getRulesLlmMetrics(),
   });
 }

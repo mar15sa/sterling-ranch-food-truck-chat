@@ -128,6 +128,56 @@ test("defensive spray questions do not route to irrigation spray rules", async (
   }
 });
 
+test("AI search recognizes a named facility and an obvious typo without a manual facility route", async () => {
+  const planRulesSearch = async (question) => ({
+    inScope: "yes",
+    intent: "facility_reservation",
+    normalizedQuestion: question.replace(/\brend\b/i, "rent"),
+    searchQueries: [
+      "Overlook facility rental reservation process",
+      "Overlook Great Hall pavilion rental application",
+    ],
+    entities: ["Overlook"],
+  });
+
+  for (const question of [
+    "How do I rent the Overlook?",
+    "How do I rend the overlook?",
+    "Where's the Overlook rental form?",
+  ]) {
+    const result = await answerRulesQuestion(question, {
+      searchMode: "ai-hybrid",
+      llmMode: "off",
+      planRulesSearch,
+      rerankRulesSources: async (_question, sources) => sources,
+    });
+    assert.equal(result.inputClassification, "rules-question", question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.match(result.answer, /Facilities Rental Application and Agreement/i);
+    assert.ok(result.sources.some((source) => /Reservation process/i.test(source.title || "")));
+    assert.ok(result.sources.some((source) => /Amenity Rentals/i.test(source.title || "")));
+    assert.ok(!result.sources.some((source) => /Architectural Improvement|Design Review Documents/i.test(source.title || "")));
+  }
+});
+
+test("AI search still refuses an unrelated question without official-source evidence", async () => {
+  const result = await answerRulesQuestion("How do I repair my bicycle?", {
+    searchMode: "ai-hybrid",
+    llmMode: "off",
+    planRulesSearch: async (question) => ({
+      inScope: "no",
+      intent: "other",
+      normalizedQuestion: question,
+      searchQueries: [],
+      entities: [],
+    }),
+    rerankRulesSources: async (_question, sources) => sources,
+  });
+  assert.equal(result.inputClassification, "unrelated");
+  assert.equal(result.confidence?.reason, "ai-search-no-source-evidence");
+  assert.deepEqual(result.sources, []);
+});
+
 test("compound questions keep a grounded source for each requested topic", async () => {
   let rewriteSources = [];
   const result = await answerRulesQuestion("Can I add a fence and a shed?", {
