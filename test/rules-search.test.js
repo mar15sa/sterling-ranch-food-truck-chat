@@ -27,9 +27,11 @@ test("search plans correct wording without losing named places", () => {
   assert.equal(plan.intent, "facility_reservation");
   assert.equal(plan.normalizedQuestion, "How do I rent the Overlook?");
   assert.deepEqual(plan.entities, ["Overlook"]);
-  assert.equal(buildRetrievalQueries("How do I rend the Overlook?", plan).length, 1);
-  assert.match(buildRetrievalQueries("How do I rend the Overlook?", plan)[0], /Overlook facility rental/i);
-  assert.match(buildRoutingQuery("How do I rend the Overlook?", plan), /facility amenity rental/i);
+  const queries = buildRetrievalQueries("How do I rend the Overlook?", plan);
+  assert.equal(queries[0], "How do I rend the Overlook?");
+  assert.ok(queries.length > 1);
+  assert.match(queries.join(" "), /Overlook facility rental/i);
+  assert.match(buildRoutingQuery("How do I rend the Overlook?", plan), /facility rental/i);
 });
 
 test("hybrid retrieval combines evidence from the resident wording and AI queries", () => {
