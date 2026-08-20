@@ -111,6 +111,23 @@ test("the same concept layer distinguishes cancellations from new bookings", asy
   assert.match(result.sources[0]?.title || "", /17-196|Cancellation and refund policy/i);
 });
 
+test("defensive spray questions do not route to irrigation spray rules", async () => {
+  for (const question of [
+    "Is bear spray allowed",
+    "Can I carry pepper spray?",
+    "Is mace spray okay in the park?",
+  ]) {
+    const result = await answerRulesQuestion(question);
+    assert.equal(result.confidence?.canAnswer, false, question);
+    assert.equal(result.confidence?.reason, "no-single-source-support", question);
+    assert.doesNotMatch(result.sources[0]?.title || "", /Irrigation system design/i);
+    assert.ok(
+      result.sources.some((source) => /1-36|17-54|17-156|flammable|weapons|general rules/i.test(source.title || "")),
+      `${question} should retrieve the official hazardous-materials or weapons rules.`
+    );
+  }
+});
+
 test("compound questions keep a grounded source for each requested topic", async () => {
   let rewriteSources = [];
   const result = await answerRulesQuestion("Can I add a fence and a shed?", {

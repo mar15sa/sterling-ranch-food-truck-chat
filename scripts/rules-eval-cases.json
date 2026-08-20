@@ -408,7 +408,7 @@
   },
   {
     "question": "What is Atlas WiFi?",
-    "variants": ["Tell me a joke", "What is the weather today?"],
+    "variants": ["What is atlas coffee wifi?", "What is the Atlas coffee WiFi?", "Tell me a joke", "What is the weather today?"],
     "shouldRefuse": true,
     "expectedClassification": "unrelated",
     "expectedAnswerMode": "conversation",
