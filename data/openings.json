@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-18T08:18:00-06:00",
+  "updatedAt": "2026-08-20T09:20:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -236,15 +236,19 @@
       "community": "Parker",
       "area": "Downtown Parker",
       "address": "11160 South Pikes Peak Drive, Parker, CO",
-      "status": "proposed",
-      "openingWindow": "Opening date not announced",
-      "summary": "Temporary signage and a related state business registration point to a Mexican cantina in the former Wild Goose Saloon space, but ownership and an opening plan are not yet public.",
-      "verifiedAt": "2026-08-13",
-      "confidence": "reported",
+      "status": "open",
+      "openingWindow": "Opened August 19, 2026",
+      "summary": "The family-owned Mexican restaurant and cantina is open in the former Wild Goose Saloon after an August 19 grand opening.",
+      "verifiedAt": "2026-08-20",
+      "confidence": "firsthand",
       "sources": [
         {
-          "label": "DougCo Social",
+          "label": "DougCo Social grand-opening report",
           "url": "https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker"
+        },
+        {
+          "label": "JP Cocina & Cantina official website",
+          "url": "https://jpcocina.com/"
         }
       ],
       "coordinates": {
