@@ -1,35 +1,28 @@
 # Douglas County openings radar
 
-Scan completed: 2026-08-18T14:09:19.556Z
+Scan completed: 2026-08-20T15:00:43.595Z
 Sources tracked: 36
 Automatically checked: 26
 Manual research lookups: 10
-Changed: 5
+Changed: 7
 Errors: 0
-New structured leads: 1
-
-## New leads
-
-- [Fiber Internet Is Coming to Castle Rock, Castle Pines, The Pinery and Cottonwood](https://dougcosocial.com/news/bam-broadband-fiber-douglas-county) — DougCo Social openings and local updates
+New structured leads: 0
 
 ## Leads no longer present
 
-- [A New Trail Will Connect Downtown Castle Rock to Philip S. Miller Park](https://dougcosocial.com/news/industrial-tributary-trail-castle-rock) — may have moved off the source feed
-- [Free Rideshare Is Officially Coming to Castle Rock](https://dougcosocial.com/news/link-on-demand-castle-rock) — may have moved off the source feed
-
-## Changed: Castle Rock development activity
-
-https://www.crgov.com/1907/Development-Activity
-
-The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+- [JP Cocina & Cantina Replacing Wild Goose Saloon in Parker](https://dougcosocial.com/news/jps-sports-bar-replacing-wild-goose-saloon-parker) — may have moved off the source feed
 
 ## Changed: Castle Rock public meetings
 
 https://castlerock-co.legistar.com/Calendar.aspx
 
-Possible opening-related signals:
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
-- Lost Canyon Ranch Open Space, Cattleman's Trailhead
+## Changed: Parker Economic Development
+
+https://www.parkered.com/
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Changed: Douglas County newly filed planning projects
 
@@ -37,15 +30,29 @@ https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=Rece
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
-## Changed: Sterling Ranch CAB and construction agendas
+## Changed: Douglas County public meetings and agenda items
 
-https://sterlingranchcab.com/AgendaCenter
+https://douglascounty.legistar.com/Calendar.aspx
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+
+## Changed: Sterling Ranch news, events, and town-life directory
+
+https://sterlingranch.com/happenings/
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Changed: DougCo Social openings and local updates
 
 https://dougcosocial.com/news
+
+Possible opening-related signals:
+
+- JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Same menu 10am to 11pm daily, bar until 2am Thursday through Sunday, happy hour 2 to 5.
+
+## Changed: Westword restaurant openings and closings
+
+https://www.westword.com/tag/openings-closings/
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
