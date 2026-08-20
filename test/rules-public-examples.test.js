@@ -163,6 +163,47 @@ test("AI search recognizes a named facility and an obvious typo without a manual
   }
 });
 
+test("AI search terms do not leak unrelated facility prices into the resident answer", async () => {
+  const planRulesSearch = async (question) => ({
+    inScope: "yes",
+    intent: "facility_reservation",
+    normalizedQuestion: question,
+    searchQueries: [
+      "Overlook Great Hall pavilion park shelter facility rental reservation process",
+      "facility amenity rental application",
+    ],
+    entities: [],
+  });
+  const cases = [
+    {
+      question: "Can I reserve the Great Hall for a baby shower?",
+      includes: [/\$100\.00/, /\$250\.00/],
+      excludes: [/\$25\.00/, /\$15\.00/],
+    },
+    {
+      question: "Where do I pay the deposit for Overlook Pavilion 2?",
+      includes: [/\$25\.00/, /no security deposit/i],
+      excludes: [/\$100\.00/, /\$15\.00/],
+    },
+    {
+      question: "How do I rent a park shelter?",
+      includes: [/\$15\.00/, /no security deposit/i],
+      excludes: [/\$100\.00/, /\$25\.00/],
+    },
+  ];
+
+  for (const item of cases) {
+    const result = await answerRulesQuestion(item.question, {
+      searchMode: "ai-hybrid",
+      llmMode: "off",
+      planRulesSearch,
+      rerankRulesSources: async (_question, sources) => sources,
+    });
+    for (const pattern of item.includes) assert.match(result.answer, pattern, item.question);
+    for (const pattern of item.excludes) assert.doesNotMatch(result.answer, pattern, item.question);
+  }
+});
+
 test("AI search still refuses an unrelated question without official-source evidence", async () => {
   const result = await answerRulesQuestion("How do I repair my bicycle?", {
     searchMode: "ai-hybrid",
