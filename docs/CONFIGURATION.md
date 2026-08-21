@@ -8,6 +8,7 @@ This file describes the settings a future owner needs to run the site. Keep real
 - `HOST=0.0.0.0`
 - Railway supplies `PORT` automatically.
 - `RULES_REFRESH_TOKEN` protects the manual rule-source refresh endpoint.
+- Set `RULES_SEARCH_MODE=ai-hybrid` to let Anthropic interpret unfamiliar wording and expand source retrieval. Use `legacy` for deterministic retrieval only. AI search can change the search query, but official indexed sources still control the facts and final grounding checks.
 - Set `RULES_LLM_MODE=selective` for AI help only on supported questions that need synthesis. Use `off` to disable AI or `all` for the older rewrite-every-supported-answer behavior. Every mode falls back to the grounded source-built answer when AI is unavailable or rejected.
 
 The application can start without email, Notion, Anthropic, or openings-tip credentials. Those integrations degrade independently instead of preventing the resident site from loading.
@@ -28,9 +29,13 @@ The application can start without email, Notion, Anthropic, or openings-tip cred
 
 Staging must use the `staging` branch, show the purple test-site banner, avoid live Google Analytics, and use disabled or test-only alert destinations. It may share the official public source URLs because accurate source behavior is part of staging verification.
 
+Staging may use the same Anthropic credential as production, but its request and token usage should be included in the same owner cost review. Secrets stay in Railway and are never copied into repository files.
+
 ## Operational evidence
 
 `/api/health` reports deployment readiness, source freshness, openings-monitor errors, recent request latency/error counts, and optional LLM request/token totals. It intentionally contains no credentials. The daily live monitor checks the health response plus representative answer journeys.
+
+`npm run eval:rules:unseen` runs a separate holdout scorecard with alternate resident wording. Those cases are kept outside the main authored answer-quality set so a passing result demonstrates broader behavior rather than memorization of the public examples.
 
 ## Ownership checklist
 
