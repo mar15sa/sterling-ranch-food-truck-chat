@@ -12,7 +12,7 @@ flowchart LR
   App --> Pool[Official CAB pool status]
   App --> Openings[Verified openings catalog]
   Rules --> Index[Local verified rules index and supplements]
-  Rules -. optional, disabled by default .-> Claude[Anthropic rewrite]
+  Rules --> Claude[Anthropic search planner and selective rewrite]
   App --> Alerts[Email, webhook, and existing analytics]
   GitHub[GitHub daily monitors] --> App
   GitHub --> Sources[Official source checks]
@@ -26,7 +26,9 @@ flowchart LR
 
 ## Failure boundaries
 
-- Rules answers remain deterministic if Anthropic is disabled or unavailable.
+- Anthropic helps interpret unfamiliar wording and may rewrite a weak draft, but it never supplies the governing facts. If it is disabled, unavailable, or fails grounding checks, the source-built answer still works.
+- Strong source-built answers bypass rewriting, reducing cost and avoiding unnecessary answer drift.
+- Prompt-injection screening runs before source search or Anthropic, including attempts to disclose prompts, credentials, tokens, environment variables, or webhook URLs.
 - Missing or conflicting current rule facts fail closed instead of being guessed.
 - A failed pool-source request sends residents to the official CAB page.
 - Openings source changes are queued for human review rather than automatically published.

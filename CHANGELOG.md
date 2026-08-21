@@ -2,6 +2,19 @@
 
 ## Unreleased — staging
 
+### Broader answer reliability
+
+- Distinguish residential Airbnb/VRBO questions from CAB facility rentals and answer from residential-use rules.
+- Compare requested RV stays with the current 72-hour and three-overnight limits instead of always leading with “yes.”
+- Apply watering method, time, and season together so ordinary noon summer irrigation is not mislabeled allowed.
+- Explain that fence height depends on the applicable fence type and surface the sourced 54-inch Ascent Village standard.
+- Answer trash-timing questions directly without reviving superseded fixed pickup times.
+- Expand prompt-injection protection to credentials, environment variables, tokens, configuration, and webhook URLs.
+- Add a separate unseen-question evaluation, broader regression families, and Node 20-compatible CI.
+- Skip AI rewriting when a grounded answer is already human-readable while retaining AI search planning for unfamiliar wording.
+
+## 2026-08-20 — production
+
 ### Human-readable rules answers
 
 - Replace raw ordinance dumps with concise, source-derived summaries for public examples and other high-use rule topics.

@@ -272,9 +272,10 @@ test("compound questions keep a grounded source for each requested topic", async
     },
   });
   assert.equal(result.confidence?.canAnswer, true);
-  assert.ok(rewriteSources.some((source) => /fenc/i.test(source.title || "")));
-  assert.ok(rewriteSources.some((source) => /shed/i.test(source.title || "")));
-  assert.match(result.answerMode || "", /llm-selective/);
+  assert.equal(rewriteSources.length, 0);
+  assert.ok(result.sources.some((source) => /fenc/i.test(source.title || "")));
+  assert.ok(result.sources.some((source) => /shed/i.test(source.title || "")));
+  assert.match(result.answerMode || "", /source-derived-extractive/);
 });
 
 test("compound questions keep every topic when the AI rewrite is rejected", async () => {
