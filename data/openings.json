@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-20T09:20:00-06:00",
+  "updatedAt": "2026-08-21T08:45:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -291,9 +291,9 @@
       "area": "Parker Road",
       "address": "9700 South Parker Road, Parker, CO",
       "status": "opening-soon",
-      "openingWindow": "Targeting August 2026",
-      "summary": "South Korea’s largest salad chain has signage up for a Parker location.",
-      "verifiedAt": "2026-07-24",
+      "openingWindow": "Opening August 22, 2026",
+      "summary": "South Korea’s largest salad chain is scheduled to open its Parker location on August 22.",
+      "verifiedAt": "2026-08-21",
       "confidence": "reported",
       "sources": [
         {
@@ -618,6 +618,31 @@
         "lng": -104.957588,
         "precision": "address",
         "geocodedFrom": "2670 E. County Line Road, Suite I, Highlands Ranch, CO"
+      }
+    },
+    {
+      "id": "dumpling-bay-highlands-ranch",
+      "name": "Dumpling Bay Noodle Wok Bar",
+      "category": "Restaurant",
+      "community": "Highlands Ranch",
+      "area": "County Line Road",
+      "address": "2690 E. County Line Road, Unit E, Highlands Ranch, CO",
+      "status": "proposed",
+      "openingWindow": "Sign permits issued July 2026; opening date not announced",
+      "summary": "Douglas County issued two sign permits for a new dumpling and noodle restaurant on County Line Road.",
+      "verifiedAt": "2026-08-21",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Douglas County Manager Report — July 28, 2026",
+          "url": "https://douglascounty.legistar.com/View.ashx?GUID=599F30C7-8E39-4EFA-990E-DB63E88E7684&ID=1347111&M=A"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.564911,
+        "lng": -104.956628,
+        "precision": "address",
+        "geocodedFrom": "2690 E. County Line Road, Unit E, Highlands Ranch, CO"
       }
     },
     {
