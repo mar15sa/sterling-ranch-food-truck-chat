@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-21T08:45:00-06:00",
+  "updatedAt": "2026-08-22T12:05:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -281,6 +281,39 @@
         "lng": -104.761992,
         "precision": "address",
         "geocodedFrom": "19590 Mainstreet, Parker, CO"
+      }
+    },
+    {
+      "id": "goods-and-grace-parker",
+      "name": "Goods & Grace",
+      "category": "Shopping",
+      "community": "Parker",
+      "area": "Mainstreet",
+      "address": "17002 E. Mainstreet, Unit L, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened August 14, 2026",
+      "summary": "The curated marketplace for local makers, home décor, gifts, apparel, jewelry, and specialty foods is open on Mainstreet.",
+      "verifiedAt": "2026-08-22",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Goods & Grace official website",
+          "url": "https://shopgoodsandgrace.com/"
+        },
+        {
+          "label": "Parker Chamber ribbon cutting — August 20, 2026",
+          "url": "https://business.parkerchamber.com/events/details/ribbon-cutting-goods-grace-elevated-decor-gifts-and-more-9193?calendarMonth=2026-08-01"
+        },
+        {
+          "label": "DougCo Social opening details",
+          "url": "https://dougcosocial.com/directory/parker/goods-and-grace-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.514413,
+        "lng": -104.792383,
+        "precision": "address",
+        "geocodedFrom": "17002 E. Mainstreet, Unit L, Parker, CO"
       }
     },
     {

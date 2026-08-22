@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-21T14:29:25.683Z",
+  "lastRunAt": "2026-08-22T17:51:52.943Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.576Z",
+      "checkedAt": "2026-08-22T17:51:50.614Z",
       "changedAt": "2026-08-19T17:46:33.926Z",
       "fingerprint": "315398d6b380dab9c571bd2c9825e0dc058550fec9d9cb34102d2db5137c9ad9",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
@@ -16,8 +16,8 @@
       "newSignals": []
     },
     "castle-rock-agendas": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.673Z",
+      "status": "ok",
+      "checkedAt": "2026-08-22T17:51:50.680Z",
       "changedAt": "2026-08-21T14:29:23.673Z",
       "fingerprint": "d0997a58266dd4d2efd92d0d63967afcea68dea80b0e78e5f778b35726950a88",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
@@ -31,7 +31,7 @@
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.675Z",
+      "checkedAt": "2026-08-22T17:51:50.681Z",
       "changedAt": null,
       "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
       "finalUrl": "https://www.parkerco.gov/Planning",
@@ -45,7 +45,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.676Z",
+      "checkedAt": "2026-08-22T17:51:50.682Z",
       "changedAt": "2026-08-20T15:00:41.369Z",
       "fingerprint": "2d9cadb23b1ae7055c2af8353bb2c555975bb0974a43b71c24fc069666a37f9d",
       "finalUrl": "https://www.parkered.com/",
@@ -59,7 +59,7 @@
     },
     "lone-tree-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.677Z",
+      "checkedAt": "2026-08-22T17:51:50.684Z",
       "changedAt": null,
       "fingerprint": "0202e72b4881cb4c0a4260ada79cb2d0bf5fc3262d3d450205ada9d305b67eda",
       "finalUrl": "https://cityoflonetree.com/projects/",
@@ -72,7 +72,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.679Z",
+      "checkedAt": "2026-08-22T17:51:50.686Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -90,7 +90,7 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.680Z",
+      "checkedAt": "2026-08-22T17:51:50.687Z",
       "changedAt": null,
       "fingerprint": "abef7df19e072bfc429686fbea3bec2d128ed6d88ab11b12f2219873e53af366",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
@@ -141,9 +141,9 @@
     },
     "douglas-county-recent-projects": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.681Z",
-      "changedAt": "2026-08-21T14:29:23.681Z",
-      "fingerprint": "43650465e370f464425e6032475a8d66a39e2c17549f069480281910f97b4261",
+      "checkedAt": "2026-08-22T17:51:50.689Z",
+      "changedAt": "2026-08-22T17:51:50.689Z",
+      "fingerprint": "b3ec1e78ab1553142082ab543867f8baeb795561fc868227f563436c74cf7f32",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -151,9 +151,7 @@
         "Request for a Site Improvement Plan (SIP) for the construction of an office building with warehouse space and outdoor storage."
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "Request for a Site Improvement Plan (SIP) for the construction of an office building with warehouse space and outdoor storage."
-      ]
+      "newSignals": []
     },
     "douglas-county-building-records": {
       "status": "manual-review",
@@ -166,9 +164,9 @@
     },
     "douglas-county-agendas": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.682Z",
-      "changedAt": "2026-08-21T14:29:23.682Z",
-      "fingerprint": "29750728883dfdea62d27e617f847a9d87521f917cb81309e4ad7ba8d9ccdd25",
+      "checkedAt": "2026-08-22T17:51:50.689Z",
+      "changedAt": "2026-08-22T17:51:50.689Z",
+      "fingerprint": "770136ddfe9a10d51f405fb61155fc191ea430d916db3634e90cbfdb017dbc71",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -179,7 +177,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.683Z",
+      "checkedAt": "2026-08-22T17:51:50.690Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -233,9 +231,9 @@
     },
     "highlands-ranch-news-projects": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.685Z",
-      "changedAt": "2026-08-21T14:29:23.685Z",
-      "fingerprint": "28ca004840e120d84dea058ddca5890c0750ed9cfcc17c60e8700bf27f302795",
+      "checkedAt": "2026-08-22T17:51:50.691Z",
+      "changedAt": "2026-08-22T17:51:50.691Z",
+      "fingerprint": "fb1d12b523510fe6fb834b845143948ade7967a4c8ee0cb882312de8acbd6159",
       "finalUrl": "https://www.highlandsranch.org/news-events",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -261,8 +259,8 @@
       "newSignals": []
     },
     "sterling-ranch-cab-news": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.685Z",
+      "status": "ok",
+      "checkedAt": "2026-08-22T17:51:50.692Z",
       "changedAt": "2026-08-21T14:29:23.685Z",
       "fingerprint": "b140b66213fc7f6f81acfaa9c384d8f611a4aea648d7aa59c411923709df82a7",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
@@ -291,13 +289,11 @@
         "Sterling Ranch News 01-24-2025: Milkshake contest, planning for spring landscaping, Rave clinic opening"
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "Sterling Ranch News 8-14-2026: Sterling Ranch Days recap, Farmer's Market info, Middle Fork roundabout update."
-      ]
+      "newSignals": []
     },
     "sterling-ranch-cab-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.686Z",
+      "checkedAt": "2026-08-22T17:51:50.693Z",
       "changedAt": "2026-08-18T14:09:17.098Z",
       "fingerprint": "add22f1f65e083d7480151e79ebc83fe7d422415cc676b88c4e7ba737ddf9d1f",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
@@ -308,9 +304,9 @@
     },
     "sterling-ranch-developer-news": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.687Z",
-      "changedAt": "2026-08-21T14:29:23.687Z",
-      "fingerprint": "6c29c65d2d6f259cec572529e7543ad78c8dcdf9055102be0c1c7a200c913034",
+      "checkedAt": "2026-08-22T17:51:50.693Z",
+      "changedAt": "2026-08-22T17:51:50.693Z",
+      "fingerprint": "21db9715ee1bfe1448a9883861322e11a40f14c0f12a00d1e41fa06d61338ea8",
       "finalUrl": "https://sterlingranch.com/happenings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -325,7 +321,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.688Z",
+      "checkedAt": "2026-08-22T17:51:50.694Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -352,15 +348,15 @@
     },
     "dougco-social": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.689Z",
-      "changedAt": "2026-08-21T14:29:23.689Z",
-      "fingerprint": "847d04b9e34df30c5731211a42da0e26a062f094ee8b437c82b579976adbeb08",
+      "checkedAt": "2026-08-22T17:51:50.695Z",
+      "changedAt": "2026-08-22T17:51:50.695Z",
+      "fingerprint": "161bdac41e974dfcd66d76dfa15dc5d8eb042378cdf6c7cb632a2bc90464d33b",
       "finalUrl": "https://dougcosocial.com/news",
       "contentType": "text/html; charset=utf-8",
       "signals": [
         "Douglas County News — Openings & Closings | DougCo Social Skip to main content DougCo Social",
         "New openings, closings, development, and community updates from Castle Rock, Parker, Highlands Ranch, Lone Tree, Castle Pines, and across Douglas County — first-person coverage you won&#x27;t find anywhere else.",
-        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day, happy hour 2pm to 5pm.",
+        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day. A happy hour is planned but hasn&#x27;t started yet.",
         "Egg Harbor Cafe Is Coming to Belleview Station in Denver",
         "The family-owned breakfast brand that opened in Highlands Ranch this spring is expanding — a second Colorado location is coming to Belleview Station in southeast Denver, looking like a third-week-of-September opening (recently pushed back).",
         "Douglas County approved $7.5 million toward a 75,000-square-foot Gold Crown youth field house in Castle Rock&#x27;s Dawson Trails — six basketball courts, a dozen volleyball courts, and an early-2028 opening.",
@@ -468,7 +464,7 @@
           "id": "dougco-social-salady-opens-in-parker-saturday-august-22",
           "headline": "Salady Opens in Parker Saturday, August 22",
           "url": "https://dougcosocial.com/news/salady-parker",
-          "observedDate": "2026-08-20",
+          "observedDate": "2026-08-22",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
         },
@@ -586,12 +582,12 @@
         }
       ],
       "newSignals": [
-        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day, happy hour 2pm to 5pm."
+        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day. A happy hour is planned but hasn&#x27;t started yet."
       ]
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.691Z",
+      "checkedAt": "2026-08-22T17:51:50.696Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -669,7 +665,7 @@
     },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.691Z",
+      "checkedAt": "2026-08-22T17:51:50.697Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -709,7 +705,7 @@
     },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.692Z",
+      "checkedAt": "2026-08-22T17:51:50.698Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -722,7 +718,7 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.693Z",
+      "checkedAt": "2026-08-22T17:51:50.699Z",
       "changedAt": "2026-08-16T15:55:43.962Z",
       "fingerprint": "28e2c38a52e771647d225df426a564f6e8a7392adb4e035763ffd8dc8a07f33f",
       "finalUrl": "https://www.hogbackpost.com/",
@@ -747,7 +743,7 @@
     },
     "lone-tree-timberlines": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.694Z",
+      "checkedAt": "2026-08-22T17:51:50.699Z",
       "changedAt": "2026-08-16T15:55:43.963Z",
       "fingerprint": "f61e08af217eac566bef5aa347c514197e3b48f70e2e53fea8d0958355657329",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
@@ -760,7 +756,7 @@
     },
     "colorado-liquor-license-lists": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.694Z",
+      "checkedAt": "2026-08-22T17:51:50.700Z",
       "changedAt": "2026-08-19T17:46:34.039Z",
       "fingerprint": "8ec20f56db29805308244af20c8608de90178c169edbf6098a02524712a789bf",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
@@ -783,9 +779,9 @@
     },
     "westword-openings-closings": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.695Z",
-      "changedAt": "2026-08-21T14:29:23.695Z",
-      "fingerprint": "cd691ab59ed46288ce464cb8c02305351350c77ff462905821cab198dee4b0ac",
+      "checkedAt": "2026-08-22T17:51:50.700Z",
+      "changedAt": "2026-08-22T17:51:50.700Z",
+      "fingerprint": "b0e9de03ab6c63b6f46f2ac478b242246f61a16ec669b00ed3193af29eedf022",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -794,6 +790,7 @@
         "Restaurants",
         "Shops & Markets",
         "Top 50 Restaurants",
+        "Every opening and closing this week: Temaki Den chef opens po’ boy pop-up",
         "Small Bites: Rock Bottom Brewery sued by landlord over unpaid rent",
         "Plus: Another Filipino restaurant in danger, another old-school restaurant demolished, another opening delayed.",
         "Every opening and closing this week: Rock Bottom continues to bottom out",
@@ -813,20 +810,18 @@
         "Odyssey Italian Restaurant reopens this week, expanding to Uptown",
         "Sister restaurant Ollie & Park’s will be retired and reopened as ‘Odyssey Uptown’ once repairs are complete.",
         "Wax Trax is opening a “real store” at Stanley Marketplace",
-        "Every opening and closing this week: Two new sushi spots surface",
         "Marketing"
       ],
       "structuredLeads": [],
       "newSignals": [
-        "Small Bites: Rock Bottom Brewery sued by landlord over unpaid rent",
-        "Plus: Another Filipino restaurant in danger, another old-school restaurant demolished, another opening delayed."
+        "Every opening and closing this week: Temaki Den chef opens po’ boy pop-up"
       ]
     },
     "castle-rock-outlets-directory": {
-      "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.696Z",
-      "changedAt": "2026-08-17T14:05:49.173Z",
-      "fingerprint": "533c15a72739f52186d279964ec0d26158ac5de78410be7876823cc0a1331469",
+      "status": "changed",
+      "checkedAt": "2026-08-22T17:51:50.701Z",
+      "changedAt": "2026-08-22T17:51:50.701Z",
+      "fingerprint": "7444eea666326f836526c68b34dbabcfe870f7d855cc1a0ef5e1fc265738b954",
       "finalUrl": "https://www.outletsatcastlerock.com/",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -857,7 +852,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.697Z",
+      "checkedAt": "2026-08-22T17:51:50.702Z",
       "changedAt": "2026-08-19T17:46:34.042Z",
       "fingerprint": "33eb1e6ae91c8f6e0918f928a66b14874a6f1e42389fa457cd48979e9bacdc3c",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -868,7 +863,7 @@
     },
     "castle-rock-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.697Z",
+      "checkedAt": "2026-08-22T17:51:50.703Z",
       "changedAt": "2026-08-19T17:46:34.043Z",
       "fingerprint": "e594bd7fe6e837afaa35fa3bf2bedc12cdec1830293fd65c095980bd3c58e7cb",
       "finalUrl": "https://business.castlerock.org/events/calendar",
