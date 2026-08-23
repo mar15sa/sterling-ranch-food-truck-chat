@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-22T12:05:00-06:00",
+  "updatedAt": "2026-08-23T08:45:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2255,6 +2255,56 @@
         "lng": -104.873654,
         "precision": "address",
         "geocodedFrom": "5050 Factory Shops Boulevard, Suite 615, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "journeys-castle-rock-outlets",
+      "name": "Journeys",
+      "category": "Retail",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Space 540, Castle Rock, CO 80108",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The footwear and accessories retailer is now operating at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-08-23",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Journeys official Castle Rock store page",
+          "url": "https://www.journeys.com/store/journeys-outlets-at-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.415565,
+        "lng": -104.872147,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Space 540, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "portland-leather-goods-castle-rock-outlets",
+      "name": "Portland Leather Goods",
+      "category": "Retail",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Suite 220, Castle Rock, CO 80108",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon; opening date not announced",
+      "summary": "The leather bags and accessories brand officially lists a coming-soon store at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-08-23",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Portland Leather Goods official Castle Rock announcement",
+          "url": "https://www.portlandleathergoods.com/pages/castle-rock-co-coming-soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.414096,
+        "lng": -104.872172,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Suite 220, Castle Rock, CO 80108"
       }
     },
     {
