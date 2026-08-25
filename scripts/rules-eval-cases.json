@@ -266,9 +266,13 @@
   {
     "question": "Can I plant a vegetable garden?",
     "variants": [
-      "Can raised vegetable beds go in a side yard?"
+      "Can raised vegetable beds go in a side yard?",
+      "Can I put up a raised garden in my yard?",
+      "Can I install garden boxes behind my house?",
+      "Are vegtable garden beds allowed in the side yard?"
     ],
-    "expectedFirstAny": ["Sec. 21-22"]
+    "expectedFirstAny": ["Sec. 21-22"],
+    "answerIncludesAll": ["DRC approval", "rear or side yard", "five feet"]
   },
   {
     "question": "Do I need permission to replant a dead tree?",

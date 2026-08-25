@@ -67,6 +67,25 @@ test("watering answers apply method, time, and season instead of leading with an
   assert.match(handWatering.answer, /Yes\..*Hand watering/i);
 });
 
+test("raised garden phrasings route to the vegetable garden rule family", async () => {
+  for (const question of [
+    "Can I put up a raised garden in my yard?",
+    "Can raised vegetable beds go in a side yard?",
+    "Can I install garden boxes behind my house?",
+    "Are vegtable garden beds allowed in the side yard?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.answerVerdict, "conditional", question);
+    assert.match(result.answer, /DRC approval/i, question);
+    assert.match(result.answer, /rear or side yard/i, question);
+    assert.match(result.answer, /five feet/i, question);
+  }
+
+  const result = await answer("Can I dump garden soil behind the fence in open space?");
+  assert.notEqual(result.answerVerdict, "allowed");
+  assert.doesNotMatch(result.answer, /Vegetable gardens and raised beds may go/i);
+});
+
 test("fence-height answers explain the type distinction and give the sourced standard", async () => {
   for (const question of ["How tall can my fence be?", "What is the maximum fence height?"]) {
     const result = await answer(question);
