@@ -178,6 +178,7 @@ async function checkResidentJourneys(failures) {
 
 async function main() {
   const failures = [];
+  let freshnessPending = false;
 
   try {
     const response = await fetch(`${BASE_URL}/api/health`, {
@@ -187,10 +188,8 @@ async function main() {
     if (!response.ok || health.status !== "ok" || (health.rules?.inlineTopicCount || 0) < 100) {
       failures.push({ question: "Deployment health check", issues: [`unhealthy response: ${JSON.stringify(health)}`] });
     } else if (health.rules?.isStale) {
-      failures.push({
-        question: "Deployment health check",
-        issues: [`source monitoring is degraded: ${JSON.stringify({ rules: health.rules, openings: health.openings })}`],
-      });
+      freshnessPending = true;
+      console.warn("WARN: Rules source refresh is still running after deployment; freshness will be checked again after the resident journeys.");
     } else {
       console.log("PASS: Deployment health check");
       console.log(`INFO: ${JSON.stringify({ requests: health.requests, optionalLlmRewrite: health.optionalLlmRewrite })}`);
@@ -271,6 +270,32 @@ async function main() {
         question: check.question,
         issues: [error && error.message ? error.message : String(error)],
       });
+    }
+  }
+
+  if (freshnessPending) {
+    try {
+      let response = await fetch(`${BASE_URL}/api/health`, {
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      });
+      let health = await response.json();
+      if (response.ok && health.status === "ok" && health.rules?.isStale) {
+        await new Promise((resolve) => setTimeout(resolve, 10000));
+        response = await fetch(`${BASE_URL}/api/health`, {
+          signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        });
+        health = await response.json();
+      }
+      if (!response.ok || health.status !== "ok" || health.rules?.isStale) {
+        failures.push({
+          question: "Deployment health check",
+          issues: [`rules source remained stale after the deployment refresh window: ${JSON.stringify(health.rules)}`],
+        });
+      } else {
+        console.log("PASS: Deployment health check (automatic rules refresh completed)");
+      }
+    } catch (error) {
+      failures.push({ question: "Deployment health recheck", issues: [error?.message || String(error)] });
     }
   }
 
