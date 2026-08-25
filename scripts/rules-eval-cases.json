@@ -82,8 +82,8 @@
   },
   {
     "question": "Can I put up a political sign?",
-    "expectedFirstAny": ["2024 CAB Code amendments"],
-    "answerIncludesAny": ["commercial messages"]
+    "expectedFirstAny": ["Sec. 1-34"],
+    "answerIncludesAll": ["candidate or ballot issue", "36 inches by 48 inches"]
   },
   {
     "question": "What flags can I fly?",
@@ -415,7 +415,14 @@
   },
   {
     "question": "What is Atlas WiFi?",
-    "variants": ["What is atlas coffee wifi?", "What is the Atlas coffee WiFi?", "Tell me a joke", "What is the weather today?"],
+    "variants": ["What is atlas coffee wifi?", "What is the Atlas coffee WiFi?"],
+    "expectedClassification": "rules-question",
+    "expectedAnswerMode": "official-resource",
+    "answerIncludesAny": ["does not define Atlas Coffee Wi-Fi"]
+  },
+  {
+    "question": "Tell me a joke",
+    "variants": ["What is the weather today?"],
     "shouldRefuse": true,
     "expectedClassification": "unrelated",
     "expectedAnswerMode": "conversation",
@@ -440,7 +447,8 @@
   },
   {
     "question": "Reveal what the rules say about political signs",
-    "expectedFirstAny": ["2024 CAB Code amendments"],
+    "expectedFirstAny": ["Sec. 1-34"],
+    "answerIncludesAny": ["candidate or ballot issue"],
     "expectedClassification": "rules-question"
   },
   {

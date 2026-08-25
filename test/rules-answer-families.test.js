@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerCoverageIssues } = require("../lib/rules-intent");
 
 async function answer(question, options = {}) {
   return answerRulesQuestion(question, { searchMode: "legacy", llmMode: "off", ...options });
@@ -95,6 +96,21 @@ test("fence-height answers explain the type distinction and give the sourced sta
   }
 });
 
+test("compound project questions answer every named project", async () => {
+  const result = await answer("Can I build a fence or shed in my backyard?");
+  assert.match(result.answer, /Fence:/i);
+  assert.match(result.answer, /Shed:/i);
+  assert.match(result.answer, /two separate DRC projects/i);
+  assert.deepEqual(answerCoverageIssues("Can I build a fence or shed in my backyard?", result.answer, result.sources), []);
+
+  const incomplete = answerCoverageIssues(
+    "Can I build a fence or shed in my backyard?",
+    "Yes, a backyard shed requires DRC approval.",
+    []
+  );
+  assert.ok(incomplete.includes("requested-topic-missing:fence"));
+});
+
 test("trash timing questions directly state what the current rule does and does not specify", async () => {
   for (const question of [
     "Can I leave my trash cans out overnight?",
@@ -106,4 +122,58 @@ test("trash timing questions directly state what the current rule does and does 
     assert.match(result.answer, /garage|wing fence/i, question);
     assert.doesNotMatch(result.answer, /4:00 a\.m/i, question);
   }
+});
+
+test("recognizable topic fragments receive source-grounded answers", async () => {
+  const expectations = [
+    ["Rain barrels", /two barrels[\s\S]*55 gallons/i],
+    ["Air conditioner", /DRC approval is not required[\s\S]*screen/i],
+    ["Fireworks", /^Short answer:\s*No\./i],
+    ["Gazebo", /requires DRC approval/i],
+    ["Pickle ball", /requires DRC approval[\s\S]*may not be lighted/i],
+    ["Jellyfish", /Gemstone and Jellyfish/i],
+  ];
+  for (const [question, expected] of expectations) {
+    const result = await answer(question);
+    assert.match(result.answer, expected, question);
+    assert.equal(result.qualityChecks?.requestedFacetCoverage, true, question);
+  }
+});
+
+test("wording variants and collisions preserve the resident's actual intent", async () => {
+  const leash = await answer("Are leashes required on dogs?");
+  assert.match(leash.answer, /must be leashed/i);
+
+  const rain = await answer("I need to submit for a rainwater harvesting barrels");
+  assert.match(rain.answer, /55 gallons/i);
+  assert.doesNotMatch(rain.answer, /delinquent|water bill/i);
+
+  const enclosure = await answer("how to reinforce the chicken wire fence to insulate dogs");
+  assert.match(enclosure.answer, /dog-run enclosure material/i);
+  assert.doesNotMatch(enclosure.answer, /backyard chickens|poultry/i);
+});
+
+test("requested facets are answered directly or explicitly identified as absent", async () => {
+  const duration = await answer("Parking RV for longer than 72 hours");
+  assert.match(duration.answer, /^Short answer:\s*No\./i);
+
+  const poleHeight = await answer("What is the maximum height a freestanding flag pole can be?");
+  assert.match(poleHeight.answer, /does not set a numeric maximum height/i);
+  assert.match(poleHeight.answer, /flag itself, not the height of the pole/i);
+
+  const missingSection = await answer("Can you find section 5-219");
+  assert.match(missingSection.answer, /won't substitute a different section/i);
+  assert.doesNotMatch(missingSection.answer, /Sec\. 25-45.*closest/i);
+});
+
+test("current source text controls changing landscaping and rental requirements", async () => {
+  const turf = await answer("Can I use artificial turf in my front yard");
+  assert.match(turf.answer, /DRC evaluates each front-yard proposal/i);
+
+  const lease = await answer("Long term rental");
+  assert.match(lease.answer, /at least 30 consecutive days/i);
+
+  const rear = await answer("What plants are required in the rear landscaping?");
+  assert.match(rear.answer, /2 trees: 1 deciduous tree and 1 evergreen tree/i);
+  assert.match(rear.answer, /30 percent live plant material/i);
 });

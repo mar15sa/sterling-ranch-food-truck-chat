@@ -32,6 +32,12 @@ jobs:
       - name: Check local rules retrieval and uncertainty handling
         run: npm run check
 
+      - name: Re-audit every captured resident wording
+        run: npm run rules:eval:residents
+
+      - name: Verify official resident-resource links
+        run: npm run rules:resources:check:live
+
       - name: Check the live rules assistant
         run: npm run rules:monitor:live
 
