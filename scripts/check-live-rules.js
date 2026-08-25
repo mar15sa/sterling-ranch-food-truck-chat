@@ -97,9 +97,10 @@ const CHECKS = [
   },
   {
     question: "What is Atlas WiFi?",
-    expectedClassification: "unrelated",
-    expectedReason: "unrelated-not-rule-question",
-    expectedNoSources: true,
+    expectedClassification: "rules-question",
+    expectedReason: "official-resource-boundary",
+    expectedAnswerMode: "official-resource",
+    answerIncludes: ["rulebook does not define", "Ask staff"],
   },
 ];
 
@@ -185,7 +186,7 @@ async function main() {
     const health = await response.json();
     if (!response.ok || health.status !== "ok" || (health.rules?.inlineTopicCount || 0) < 100) {
       failures.push({ question: "Deployment health check", issues: [`unhealthy response: ${JSON.stringify(health)}`] });
-    } else if (health.rules?.isStale || (health.openings?.errors || 0) > 0) {
+    } else if (health.rules?.isStale) {
       failures.push({
         question: "Deployment health check",
         issues: [`source monitoring is degraded: ${JSON.stringify({ rules: health.rules, openings: health.openings })}`],
@@ -193,6 +194,9 @@ async function main() {
     } else {
       console.log("PASS: Deployment health check");
       console.log(`INFO: ${JSON.stringify({ requests: health.requests, optionalLlmRewrite: health.optionalLlmRewrite })}`);
+      if ((health.openings?.errors || 0) > 0) {
+        console.warn(`WARN: Openings monitoring has ${health.openings.errors} source error(s); the separate openings journey still determines whether resident access works.`);
+      }
     }
   } catch (error) {
     failures.push({ question: "Deployment health check", issues: [error?.message || String(error)] });
