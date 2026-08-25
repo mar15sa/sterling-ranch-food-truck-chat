@@ -7,7 +7,7 @@ flowchart LR
   Resident[Resident browser] --> Edge[Cloudflare and custom domain]
   Edge --> App[Railway Node application]
   App --> Static[Resident pages]
-  App --> Rules[Rules classifier, retrieval, facts, grounding, verdict]
+  App --> Rules[Intent, retrieval, current facts, coverage, grounding, verdict]
   App --> Food[Calendar and menu lookup]
   App --> Pool[Official CAB pool status]
   App --> Openings[Verified openings catalog]
@@ -30,6 +30,10 @@ flowchart LR
 - Strong source-built answers bypass rewriting, reducing cost and avoiding unnecessary answer drift.
 - Prompt-injection screening runs before source search or Anthropic, including attempts to disclose prompts, credentials, tokens, environment variables, or webhook URLs.
 - Missing or conflicting current rule facts fail closed instead of being guessed.
+- The intent layer normalizes common wording and typo variants, keeps unrelated meanings separate, and records the requested answer facet before retrieval.
+- The coverage gate rejects answers that cite a relevant-looking section but omit the resident's requested price, limit, process, link, definition, duration, or permission decision.
+- All 116 historical resident wordings, broader family variants, and a separate unseen-question set run before release. The same resident corpus runs daily after deployment.
+- Official resident-resource links are cataloged separately from rules and checked daily, which prevents the assistant from treating a stale convenience link as a governing rule.
 - A failed pool-source request sends residents to the official CAB page.
 - Openings source changes are queued for human review rather than automatically published.
 - Alert, Notion, analytics, and tip integrations cannot prevent the resident site from answering.
