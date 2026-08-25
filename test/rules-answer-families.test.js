@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerCoverageIssues } = require("../lib/rules-intent");
 
 async function answer(question, options = {}) {
   return answerRulesQuestion(question, { searchMode: "legacy", llmMode: "off", ...options });
@@ -93,6 +94,21 @@ test("fence-height answers explain the type distinction and give the sourced sta
     assert.match(result.answer, /54 inches/i, question);
     assert.match(result.answer, /DRC/i, question);
   }
+});
+
+test("compound project questions answer every named project", async () => {
+  const result = await answer("Can I build a fence or shed in my backyard?");
+  assert.match(result.answer, /Fence:/i);
+  assert.match(result.answer, /Shed:/i);
+  assert.match(result.answer, /two separate DRC projects/i);
+  assert.deepEqual(answerCoverageIssues("Can I build a fence or shed in my backyard?", result.answer, result.sources), []);
+
+  const incomplete = answerCoverageIssues(
+    "Can I build a fence or shed in my backyard?",
+    "Yes, a backyard shed requires DRC approval.",
+    []
+  );
+  assert.ok(incomplete.includes("requested-topic-missing:fence"));
 });
 
 test("trash timing questions directly state what the current rule does and does not specify", async () => {
