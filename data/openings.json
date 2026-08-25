@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-23T08:45:00-06:00",
+  "updatedAt": "2026-08-25T09:50:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -322,15 +322,15 @@
       "category": "Restaurant",
       "community": "Parker",
       "area": "Parker Road",
-      "address": "9700 South Parker Road, Parker, CO",
-      "status": "opening-soon",
-      "openingWindow": "Opening August 22, 2026",
-      "summary": "South Korea’s largest salad chain is scheduled to open its Parker location on August 22.",
-      "verifiedAt": "2026-08-21",
-      "confidence": "reported",
+      "address": "9700 South Parker Road, Unit 700, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened August 22, 2026",
+      "summary": "The Korean salad, grain-bowl, and wrap chain is now open in Parker Gateway Marketplace.",
+      "verifiedAt": "2026-08-25",
+      "confidence": "firsthand",
       "sources": [
         {
-          "label": "DougCo Social",
+          "label": "DougCo Social opening-day report",
           "url": "https://dougcosocial.com/news/salady-parker"
         }
       ],
@@ -1030,10 +1030,10 @@
       "community": "Parker",
       "area": "The Juniper on Mainstreet",
       "address": "19865 Mainstreet, Unit 150, Parker, CO",
-      "status": "opening-soon",
-      "openingWindow": "Targeting August 2026",
-      "summary": "A 5,000-square-foot seasonal restaurant from the owner of Wolf Peach is in its final buildout.",
-      "verifiedAt": "2026-06-27",
+      "status": "under-construction",
+      "openingWindow": "Likely late 2026; no firm date announced",
+      "summary": "The 5,000-square-foot seasonal restaurant from the owner of Wolf Peach remains under construction; the kitchen hood is installed, but the buildout is continuing.",
+      "verifiedAt": "2026-08-25",
       "confidence": "permits",
       "sources": [
         {
@@ -2315,14 +2315,18 @@
       "area": "Ken Caryl",
       "address": "8020 S. Sangre de Cristo Road, Littleton, CO 80127",
       "status": "opening-soon",
-      "openingWindow": "Grand-opening week begins August 18, 2026",
-      "summary": "Ziggi's is opening a new cafe and drive-thru beside the Marketplace at Ken Caryl, with official grand-opening events scheduled for August 18–22.",
-      "verifiedAt": "2026-08-14",
+      "openingWindow": "Opening August 25, 2026; grand-opening events August 27–29",
+      "summary": "Ziggi's is opening a new cafe and drive-thru beside the Marketplace at Ken Caryl, followed by three days of official grand-opening offers.",
+      "verifiedAt": "2026-08-25",
       "confidence": "business-confirmed",
       "sources": [
         {
           "label": "Ziggi's official Littleton location and grand-opening schedule",
           "url": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/"
+        },
+        {
+          "label": "Littleton opening-date report",
+          "url": "https://www.milehighonthecheap.com/ziggis-coffee-grand-opening-new-littleton/"
         }
       ],
       "coordinates": {
