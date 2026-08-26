@@ -48,3 +48,28 @@ Every source refresh also rebuilds `data/rules-fact-catalog.json`. The catalog r
 ## Scaling trigger
 
 The application intentionally uses one process and bounded in-memory caches/rate limits. If Railway is changed to run more than one production replica, move rate limits and shared caches to an edge or shared store before scaling. At the current single-replica traffic level, adding that infrastructure would add cost and operational complexity without improving resident outcomes.
+
+## Reusable community-answer product
+
+The product direction is broader than a rules chatbot. Its core promise is to make official community information direct, specific, human-readable, and easy to find. A customer starts with one input—the community's main public website—and the setup pipeline discovers and connects the official systems behind it.
+
+The `/community-demo` staging page is the first working onboarding slice. It safely inspects a public homepage, detects CivicPlus Web Central, groups discovered links by resident need, explains the authority assigned to each source type, and produces a review-only setup plan. It never publishes scraped content automatically.
+
+The existing Sterling Ranch Society tools provide the first reusable connectors and operating patterns:
+
+- Rules and documents: Municode ingestion, supplement review, structured changing facts, citations, and answer audits.
+- Community events: CivicPlus calendar ingestion, event-specific food-truck discovery, and the combined resident calendar.
+- Facilities and actions: CivicPlus/CivicRec pages, current prices, direct booking or contact paths, and action-link coverage checks.
+- Live status: the CAB pool page translated into accessible plain English.
+- Local information: the openings catalog's source fingerprinting, review queue, and daily change monitor.
+
+Each future community receives a `community_id` and a source profile rather than copied Sterling Ranch logic. That profile records the official domain, platform, connected modules, authority rules, refresh schedule, and launch evaluation set. At answer time, AI may interpret a resident's wording and summarize retrieved material, but it cannot invent facts or overrule the source hierarchy.
+
+The intended source hierarchy is:
+
+1. Adopted code, rule, or policy for what is allowed or required.
+2. Current facility, form, payment, and registration systems for transactions, prices, availability, and required steps.
+3. Current alerts and calendars for time-sensitive information.
+4. Official informational pages for services, contacts, and explanations.
+
+Freshness is part of the product rather than a one-time setup task. Every connector should retain source URLs, fingerprints, last-checked times, and lifecycle dates; run daily change and broken-link checks; detect conflicting official sources; quarantine unsupported changing facts; and rerun a community-specific question set before changed answers are published.

@@ -3,7 +3,7 @@
   "sourceFiles": {
     "rulesIndex": {
       "path": "data/rules-index.json",
-      "sha256": "59865b3176f549b30d4820bec7ab9e9535f7c45f37dc09b18bdfa9c7f794c8fc"
+      "sha256": "72d1059e52ee9da9bcc6f4d23c9622e5e4af288618ec97e5e703798571be4c49"
     },
     "supplements": {
       "path": "data/rules-supplement-sections.json",

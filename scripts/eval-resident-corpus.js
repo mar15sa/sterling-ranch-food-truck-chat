@@ -3,6 +3,7 @@
 const questions = require("./resident-rules-corpus.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCoverageIssues } = require("../lib/rules-intent");
+const { actionLinkIssues } = require("../lib/rules-action-coverage");
 
 const searchMode = process.env.RULES_CORPUS_SEARCH_MODE || "legacy";
 const llmMode = process.env.RULES_CORPUS_LLM_MODE || "off";
@@ -38,6 +39,7 @@ function ratingFor(question, result) {
 
   const issues = [
     ...answerCoverageIssues(question, answer, result.sources || []),
+    ...actionLinkIssues(answer, result.sources || []),
     ...(result.qualityChecks?.issues || []),
   ];
   const vague = /I(?:’|')m not sure which community rule|I(?:’|')m only set up|I (?:do not|don't) have enough|closest (?:matches|starting points)|Try rephrasing/i.test(answer);

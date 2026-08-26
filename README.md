@@ -6,6 +6,7 @@ This is the source code and operating documentation for the Sterling Ranch Socie
 - A source-grounded Sterling Ranch Rules Assistant.
 - Live Overlook outdoor-pool status.
 - An evidence-backed Douglas County-area openings tracker.
+- A staging-only community onboarding demo that turns one official website into a reviewed source-connection plan.
 
 Start with [the configuration reference](docs/CONFIGURATION.md), [the architecture map](docs/ARCHITECTURE.md), [the operating-cost snapshot](docs/OPERATING-COSTS.md), and [the Rules Assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md) when operating or handing off the project.
 
@@ -20,6 +21,8 @@ Then open:
 ```text
 http://localhost:3000
 ```
+
+The reusable community setup demo lives at `/community-demo`. Its product promise is simple: paste the main official website, then let the system find and organize the rules, events, forms, fees, facilities, alerts, and service information needed to create direct, specific, human-readable resident answers. The first scan is preview-only; publication still requires source checks and resident-question testing.
 
 ## Live app
 

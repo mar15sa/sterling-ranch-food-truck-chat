@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Community Answer Platform Demo</title>
+    <meta name="description" content="Turn an official community website into specific, human-readable resident answers." />
+    <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/community-demo.css?v=20260826" />
+    <script src="/environment.js" data-page-title="Community setup demo" data-page-path="/community-demo"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Sterling Ranch Society home">
+        <img src="/rules-icon.svg" alt="" />
+        <span>Verified Community Answers</span>
+      </a>
+      <span class="demo-label">Product demo</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">From official website to resident-ready answers</p>
+        <h1>Make community information easy to find—and easy to understand.</h1>
+        <p class="hero-copy">
+          Paste a community’s main website. Behind the scenes, we find its rules, events, forms,
+          fees, facilities, alerts, and other official sources—then turn them into direct,
+          specific answers residents can actually use.
+        </p>
+
+        <form id="setup-form" class="setup-form">
+          <label for="community-url">Official community website</label>
+          <div class="url-row">
+            <input id="community-url" name="website" type="url" value="https://sterlingranchcab.com/" required />
+            <button type="submit">Build the preview</button>
+          </div>
+          <p class="form-note">This preview reads public sources only. Nothing is published automatically.</p>
+        </form>
+      </section>
+
+      <section id="progress" class="progress-panel" hidden aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <div>
+          <strong>Mapping the official sources…</strong>
+          <p>Checking the website platform, resident information, forms, calendars, and connected systems.</p>
+        </div>
+      </section>
+
+      <section id="error-panel" class="error-panel" hidden role="alert"></section>
+
+      <section id="results" class="results" hidden aria-live="polite">
+        <div class="result-heading">
+          <div>
+            <p class="eyebrow">Community setup preview</p>
+            <h2 id="community-name"></h2>
+            <p id="result-summary"></p>
+          </div>
+          <div class="platform-card">
+            <span>Website platform</span>
+            <strong id="platform-name"></strong>
+            <small id="platform-connector"></small>
+          </div>
+        </div>
+
+        <div class="promise-card">
+          <span class="promise-icon" aria-hidden="true">✓</span>
+          <div>
+            <strong>The resident promise</strong>
+            <p id="resident-promise"></p>
+          </div>
+        </div>
+
+        <div>
+          <p class="section-kicker">What the system can connect</p>
+          <div id="capabilities" class="capability-grid"></div>
+        </div>
+
+        <details class="source-details">
+          <summary>See official pages found in this first scan</summary>
+          <div id="source-list" class="source-list"></div>
+        </details>
+
+        <div class="behind-scenes">
+          <div>
+            <p class="section-kicker">What happens behind the scenes</p>
+            <ol id="setup-steps"></ol>
+          </div>
+          <aside>
+            <strong>Before anything goes live</strong>
+            <p>
+              We test real resident questions, confirm every changing detail against its current source,
+              require working action links, and flag conflicts or stale pages for review.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="proof-section">
+        <p class="eyebrow">Already proven in the Sterling Ranch pilot</p>
+        <h2>We’re joining existing capabilities into one reusable product.</h2>
+        <div class="proof-grid">
+          <article><strong>Rules and documents</strong><p>Source-grounded answers with citations, changing-fact checks, and a 200+ question audit.</p></article>
+          <article><strong>Community events</strong><p>Official calendar ingestion already powers event and food-truck answers, including linked menu research.</p></article>
+          <article><strong>Live community status</strong><p>The pool tool translates the official status into a quick, accessible answer residents can understand.</p></article>
+          <article><strong>Freshness monitoring</strong><p>Daily checks watch rules, documents, source pages, links, answers, and nearby openings for changes.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <script src="/community-demo.js?v=20260826" defer></script>
+  </body>
+</html>

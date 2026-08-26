@@ -77,13 +77,21 @@ test("park and amenity booking questions use the reservation process", async () 
     const result = await answerRulesQuestion(question);
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
-    assert.match(result.answer, /Facilities Rental Application and Agreement/i);
+    if (/park/i.test(question)) {
+      assert.match(result.answer, /Park Shelters page|Facility Rentals catalog/i);
+    } else {
+      assert.match(result.answer, /Facilities Rental Application and Agreement/i);
+    }
     assert.match(result.answer, /first-come, first-served/i);
     assert.match(result.answer, /\$(?:15|25|100)\.00/i, `${question} should include the published rental rate.`);
     assert.ok(
       result.sources.some((source) => /Amenity Rentals/i.test(source.title || "")),
       `${question} should link the official Amenity Rentals page.`
     );
+    if (/park/i.test(question)) {
+      assert.ok(result.sources.some((source) => /Park Shelters/i.test(source.title || "")));
+      assert.ok(result.sources.some((source) => /Facility Rentals Catalog/i.test(source.title || "")));
+    }
   }
 });
 
@@ -96,7 +104,11 @@ test("unseen everyday wording maps to the reusable facility-reservation concept"
     const result = await answerRulesQuestion(question);
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.match(result.confidence?.reason || "", /semantic-concept-supported:facility-reservations/);
-    assert.match(result.answer, /Facilities Rental Application and Agreement/i);
+    if (/park shelter/i.test(question)) {
+      assert.match(result.answer, /Park Shelters page|Facility Rentals catalog/i);
+    } else {
+      assert.match(result.answer, /Facilities Rental Application and Agreement/i);
+    }
     assert.match(result.answer, /\$(?:15|25|100)\.00/i, `${question} should include the published rental rate.`);
     assert.ok(
       result.sources.some((source) => /17-188|Reservation process/i.test(source.title || "")),

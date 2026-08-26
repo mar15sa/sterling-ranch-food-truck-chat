@@ -33,6 +33,7 @@ const {
   getOpeningsSourceStatus,
   submitOpeningTip,
 } = require("./lib/openings");
+const { previewCommunitySetup } = require("./lib/community-onboarding");
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -52,6 +53,8 @@ const RULES_ASK_RATE_WINDOW_MS =
 const RULES_ASK_RATE_MAX = Number(process.env.RULES_ASK_RATE_MAX) || 30;
 const RULES_QUESTION_MAX_CHARS =
   Number(process.env.RULES_QUESTION_MAX_CHARS) || 500;
+const COMMUNITY_PREVIEW_RATE_MAX =
+  Number(process.env.COMMUNITY_PREVIEW_RATE_MAX) || 5;
 const RULES_REFRESH_CHECK_INTERVAL_MS =
   Number(process.env.RULES_REFRESH_CHECK_INTERVAL_MS) || 1000 * 60 * 60;
 const RULES_REFRESH_START_DELAY_MS =
@@ -2777,6 +2780,7 @@ const calendarCache = new Map();
 const menuCache = new Map();
 const answerCache = new Map();
 const rulesAskRateLimits = new Map();
+const communityPreviewRateLimits = new Map();
 const menuLookupPromises = new Map();
 let warmupPromise = null;
 let lastWarmupStartedAt = 0;
@@ -4703,6 +4707,37 @@ async function handleOpeningTips(req, res) {
   sendJson(res, result.accepted ? 202 : result.status || 400, result);
 }
 
+function communityPreviewAllowed(req) {
+  const now = Date.now();
+  const key = clientKeyForRateLimit(req);
+  const existing = communityPreviewRateLimits.get(key);
+  const bucket = existing && now - existing.startedAt < 60 * 60 * 1000
+    ? existing
+    : { startedAt: now, count: 0 };
+  bucket.count += 1;
+  communityPreviewRateLimits.set(key, bucket);
+  return bucket.count <= COMMUNITY_PREVIEW_RATE_MAX;
+}
+
+async function handleCommunitySetupPreview(req, res) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST to build a community setup preview." });
+    return;
+  }
+  if (!communityPreviewAllowed(req)) {
+    sendJson(res, 429, { error: "Please wait before building another preview." }, { "retry-after": "3600" });
+    return;
+  }
+
+  const body = await readJsonBody(req);
+  try {
+    const preview = await previewCommunitySetup(body.website);
+    sendJson(res, 200, preview);
+  } catch (error) {
+    sendJson(res, 400, { error: error?.message || "The community website could not be previewed." });
+  }
+}
+
 function serveStatic(req, res, url) {
   if (url.pathname === "/" && url.searchParams.has("date")) {
     res.writeHead(302, {
@@ -4724,6 +4759,8 @@ function serveStatic(req, res, url) {
     "/pool-status/": "/pool.html",
     "/openings": "/openings.html",
     "/openings/": "/openings.html",
+    "/community-demo": "/community-demo.html",
+    "/community-demo/": "/community-demo.html",
   };
   const requested = url.pathname === "/" ? "/index.html" : pageAliases[url.pathname] || url.pathname;
   const filePath = path.normalize(path.join(PUBLIC_DIR, requested));
@@ -4814,6 +4851,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/openings/tips") {
       await handleOpeningTips(req, res);
+      return;
+    }
+
+    if (url.pathname === "/api/community/setup-preview") {
+      await handleCommunitySetupPreview(req, res);
       return;
     }
 
