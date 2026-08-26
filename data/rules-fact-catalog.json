@@ -3,11 +3,11 @@
   "sourceFiles": {
     "rulesIndex": {
       "path": "data/rules-index.json",
-      "sha256": "39816fbb966e921c6118ea7c8ffc99c62eca838c6f45baaf5fc79eccb4e2b96f"
+      "sha256": "59865b3176f549b30d4820bec7ab9e9535f7c45f37dc09b18bdfa9c7f794c8fc"
     },
     "supplements": {
       "path": "data/rules-supplement-sections.json",
-      "sha256": "c88a1296d9675ee6c4f3442779bf13085c853ff543f87d43bd6a0d340b2ffef8"
+      "sha256": "71ea2eee70eea50df929b2a7c6b83b389beeb888c1a723e272a859a2171a0ced"
     }
   },
   "factCount": 1977,
