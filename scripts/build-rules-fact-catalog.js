@@ -17,7 +17,15 @@ function readJson(filePath, fallback) {
 
 function fileHash(filePath) {
   if (!fs.existsSync(filePath)) return "";
-  return crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex");
+  const content = fs.readFileSync(filePath, "utf8");
+  let canonicalContent = content.replace(/\r\n/g, "\n");
+  try {
+    canonicalContent = JSON.stringify(JSON.parse(content));
+  } catch {
+    // These source files are JSON, but normalizing line endings keeps the hash
+    // portable if a future source is plain text.
+  }
+  return crypto.createHash("sha256").update(canonicalContent).digest("hex");
 }
 
 function buildRulesFactCatalog({ indexPath = DEFAULT_INDEX_PATH, supplementsPath = DEFAULT_SUPPLEMENTS_PATH } = {}) {

@@ -1,5 +1,8 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 const { extractStructuredFacts } = require("../lib/rules-facts");
 const { buildRulesFactCatalog } = require("../scripts/build-rules-fact-catalog");
@@ -36,4 +39,26 @@ test("the generated catalog covers both the rulebook and adopted supplements", (
   assert.ok(catalog.facts.some((fact) => fact.kind === "money" && fact.sourceUrl));
   assert.ok(catalog.facts.some((fact) => fact.kind === "date"));
   assert.ok(catalog.facts.some((fact) => fact.kind === "duration"));
+});
+
+test("catalog freshness ignores operating-system line endings", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "rules-facts-"));
+  const lfIndex = path.join(tempDir, "index-lf.json");
+  const crlfIndex = path.join(tempDir, "index-crlf.json");
+  const supplements = path.join(tempDir, "supplements.json");
+  const indexJson = JSON.stringify({ documents: [{ id: "rule-1", text: "The limit is 3 days." }] }, null, 2);
+
+  try {
+    fs.writeFileSync(lfIndex, `${indexJson}\n`);
+    fs.writeFileSync(crlfIndex, `${indexJson.replace(/\n/g, "\r\n")}\r\n`);
+    fs.writeFileSync(supplements, "[]\n");
+
+    const lfCatalog = buildRulesFactCatalog({ indexPath: lfIndex, supplementsPath: supplements });
+    const crlfCatalog = buildRulesFactCatalog({ indexPath: crlfIndex, supplementsPath: supplements });
+
+    assert.equal(lfCatalog.sourceFiles.rulesIndex.sha256, crlfCatalog.sourceFiles.rulesIndex.sha256);
+    assert.deepEqual(lfCatalog.facts, crlfCatalog.facts);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 });
