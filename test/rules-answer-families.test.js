@@ -53,6 +53,59 @@ test("RV duration answers compare the requested stay with the current source lim
   }
 });
 
+test("bare pickleball questions answer the community-court interpretation and preserve the private-court distinction", async () => {
+  for (const question of ["Pickle ball", "What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
+    const result = await answer(question);
+    assert.match(result.answer, /neighborhood pickleball courts|general park and facility rules/i, question);
+    assert.match(result.answer, /5:00 a\.m\..*11:00 p\.m\./is, question);
+    assert.match(result.answer, /posted/i, question);
+    assert.match(result.answer, /private court.*DRC approval/is, question);
+    assert.deepEqual(result.qualityChecks?.issues, [], question);
+  }
+
+  const privateCourt = await answer("Can I build a pickleball court in my backyard?");
+  assert.match(privateCourt.answer, /private pickleball.*DRC approval/i);
+  assert.match(privateCourt.answer, /may not be lighted/i);
+  assert.doesNotMatch(privateCourt.answer, /rulebook does not publish pickleball-specific play/i);
+});
+
+test("flagpole height answers include the connected installation restrictions", async () => {
+  for (const question of ["What is the maximum height a freestanding flag pole can be?", "How tall can my flagpole be?"]) {
+    const result = await answer(question);
+    assert.match(result.answer, /does not set a numeric maximum height/i, question);
+    assert.match(result.answer, /four feet by six feet/i, question);
+    assert.match(result.answer, /nighttime illumination.*DRC approval/i, question);
+    assert.match(result.answer, /commercial-message flags are prohibited/i, question);
+    assert.deepEqual(result.qualityChecks?.issues, [], question);
+  }
+});
+
+test("approved-tree questions provide examples extracted from the current source list", async () => {
+  for (const question of ["What trees can I plant", "What trees can we plant?", "Give me examples of approved trees"]) {
+    const result = await answer(question);
+    assert.match(result.answer, /Low-water examples:/i, question);
+    assert.match(result.answer, /Moderate-water examples:/i, question);
+    assert.match(result.answer, /Rocky Mountain Juniper|Thornless Cockspur Hawthorn/i, question);
+    assert.match(result.answer, /Freeman Maple|Amur Maple/i, question);
+    assert.doesNotMatch(result.answer, /Open the linked Sec\. 5-131 source for the current list/i, question);
+    assert.deepEqual(result.qualityChecks?.issues, [], question);
+  }
+});
+
+test("yard-art questions retain a readable summary while using current source limits", async () => {
+  for (const question of ["Yard art?", "What are the rules for yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
+    const result = await answer(question);
+    assert.match(result.answer, /Front yard:/i, question);
+    assert.match(result.answer, /no more than three ornaments/i, question);
+    assert.match(result.answer, /12 inches/i, question);
+    assert.match(result.answer, /Rear yard:/i, question);
+    assert.match(result.answer, /three feet/i, question);
+    assert.doesNotMatch(result.answer, /I pulled the controlling dates, amounts, and limits/i, question);
+    assert.doesNotMatch(result.answer, /\.\.\./, question);
+    assert.deepEqual(result.qualityChecks?.issues, [], question);
+  }
+});
+
 test("watering answers apply method, time, and season instead of leading with an exception", async () => {
   for (const question of [
     "Can I water my lawn at noon in July?",
@@ -130,7 +183,7 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
     ["Air conditioner", /DRC approval is not required[\s\S]*screen/i],
     ["Fireworks", /^Short answer:\s*No\./i],
     ["Gazebo", /requires DRC approval/i],
-    ["Pickle ball", /requires DRC approval[\s\S]*may not be lighted/i],
+    ["Pickle ball", /neighborhood pickleball courts[\s\S]*private court[\s\S]*DRC approval/i],
     ["Jellyfish", /Gemstone and Jellyfish/i],
   ];
   for (const [question, expected] of expectations) {

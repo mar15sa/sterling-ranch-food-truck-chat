@@ -2,6 +2,12 @@ const DEFAULT_BASE_URL =
   "https://sterlingranchsociety.com";
 const BASE_URL = String(process.env.RULES_LIVE_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, "");
 const REQUEST_TIMEOUT_MS = Number(process.env.RULES_LIVE_TIMEOUT_MS) || 25000;
+const {
+  deploymentHealthState,
+  evaluateRuleResult,
+  freshnessRecheckIssue,
+  shouldRetrySlowResponse,
+} = require("../lib/rules-monitor");
 
 const CHECKS = [
   {
@@ -23,6 +29,30 @@ const CHECKS = [
     firstSourceIncludes: "Required lot landscape",
     answerIncludes: ["DRC review", "Yard design", "Ongoing care"],
     expectedVerdict: "conditional",
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "What are the neighborhood pickleball court rules?",
+    firstSourceIncludes: "Sec. 17-54",
+    answerIncludes: ["neighborhood pickleball courts", "5:00 a.m.", "11:00 p.m.", "private court"],
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "What is the maximum height a freestanding flag pole can be?",
+    firstSourceIncludes: "2024 CAB Code amendments",
+    answerIncludes: ["does not set a numeric maximum height", "four feet by six feet", "nighttime illumination"],
+    maxAnswerLength: 1000,
+  },
+  {
+    question: "What trees can we plant?",
+    firstSourceIncludes: "Sec. 5-131",
+    answerIncludes: ["Low-water examples", "Moderate-water examples", "Freeman Maple"],
+    maxAnswerLength: 1200,
+  },
+  {
+    question: "What are the rules for yard art?",
+    firstSourceIncludes: "2024 CAB Code amendments",
+    answerIncludes: ["Front yard", "three ornaments", "12 inches", "Rear yard", "three feet"],
     maxAnswerLength: 1000,
   },
   {
@@ -104,11 +134,6 @@ const CHECKS = [
   },
 ];
 
-function includesAll(text, values) {
-  const haystack = String(text || "").toLowerCase();
-  return values.every((value) => haystack.includes(String(value).toLowerCase()));
-}
-
 async function askLive(question) {
   const startedAt = Date.now();
   const response = await fetch(`${BASE_URL}/api/rules/ask`, {
@@ -185,9 +210,10 @@ async function main() {
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     const health = await response.json();
-    if (!response.ok || health.status !== "ok" || (health.rules?.inlineTopicCount || 0) < 100) {
+    const healthState = deploymentHealthState(response.ok, health);
+    if (healthState === "failed") {
       failures.push({ question: "Deployment health check", issues: [`unhealthy response: ${JSON.stringify(health)}`] });
-    } else if (health.rules?.isStale) {
+    } else if (healthState === "refreshing") {
       freshnessPending = true;
       console.warn("WARN: Rules source refresh is still running after deployment; freshness will be checked again after the resident journeys.");
     } else {
@@ -207,58 +233,14 @@ async function main() {
     try {
       let result = await askLive(check.question);
       const firstDurationMs = result.monitorDurationMs;
-      if (firstDurationMs > 5000) {
+      if (shouldRetrySlowResponse(firstDurationMs)) {
         const retry = await askLive(check.question);
         if (retry.monitorDurationMs <= 5000) {
           console.warn(`WARN: ${check.question} recovered from a ${firstDurationMs}ms cold response to ${retry.monitorDurationMs}ms on retry.`);
         }
         result = retry;
       }
-      const firstSource = result.sources?.[0]?.title || "";
-      const issues = [];
-
-      if (check.expectedClassification) {
-        if (result.inputClassification !== check.expectedClassification) {
-          issues.push(`expected classification "${check.expectedClassification}", got "${result.inputClassification}"`);
-        }
-        if (result.confidence?.reason !== check.expectedReason) {
-          issues.push(`expected reason "${check.expectedReason}", got "${result.confidence?.reason}"`);
-        }
-        if (check.expectedAnswerMode && result.answerMode !== check.expectedAnswerMode) {
-          issues.push(`expected answer mode "${check.expectedAnswerMode}", got "${result.answerMode}"`);
-        }
-        if (check.expectedNoSources && result.sources?.length) {
-          issues.push(`expected no sources, got ${result.sources.length}`);
-        }
-      } else if (result.confidence?.canAnswer !== true || result.confidence?.confidence !== "high") {
-        issues.push(`expected a high-confidence answer, got ${JSON.stringify(result.confidence)}`);
-      }
-      if (check.firstSourceIncludes && !firstSource.includes(check.firstSourceIncludes)) {
-        issues.push(`expected first source containing "${check.firstSourceIncludes}", got "${firstSource}"`);
-      }
-      if (check.answerIncludes && !includesAll(result.answer, check.answerIncludes)) {
-        issues.push(`answer is missing: ${check.answerIncludes.filter((value) => !includesAll(result.answer, [value])).join(", ")}`);
-      }
-      if (check.expectedVerdict && result.answerVerdict !== check.expectedVerdict) {
-        issues.push(`expected verdict "${check.expectedVerdict}", got "${result.answerVerdict}"`);
-      }
-      if (check.maxAnswerLength && String(result.answer || "").length > check.maxAnswerLength) {
-        issues.push(`answer is ${String(result.answer || "").length} characters; expected no more than ${check.maxAnswerLength}`);
-      }
-      if (
-        check.maxAnswerLength &&
-        /I (?:do not|don't) have enough information|\.\.\.|WHEREAS|ADOPTED AND APPROVED|-- \d+ of \d+ --/i.test(
-          result.answer || ""
-        )
-      ) {
-        issues.push("resident-facing answer contains uncertainty or raw-document artifacts");
-      }
-      if (result.monitorDurationMs > 5000) {
-        issues.push(`answer remained slow after retry (${firstDurationMs}ms, then ${result.monitorDurationMs}ms); expected no more than 5000ms`);
-      }
-      if (!check.expectedClassification && (result.sourceStatus?.inlineTopicCount || 0) < 100) {
-        issues.push(`expected at least 100 indexed topic cards, got ${result.sourceStatus?.inlineTopicCount || 0}`);
-      }
+      const issues = evaluateRuleResult(check, result, { firstDurationMs });
 
       if (issues.length) {
         failures.push({ question: check.question, issues });
@@ -286,10 +268,11 @@ async function main() {
         });
         health = await response.json();
       }
-      if (!response.ok || health.status !== "ok" || health.rules?.isStale) {
+      const freshnessIssue = freshnessRecheckIssue(response.ok, health);
+      if (freshnessIssue) {
         failures.push({
           question: "Deployment health check",
-          issues: [`rules source remained stale after the deployment refresh window: ${JSON.stringify(health.rules)}`],
+          issues: [freshnessIssue],
         });
       } else {
         console.log("PASS: Deployment health check (automatic rules refresh completed)");
