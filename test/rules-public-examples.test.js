@@ -2,6 +2,8 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerCommunityQuestion } = require("../lib/community-assistant");
+const communityIndex = require("../data/community-index.json");
 
 const EXAMPLES = [
   {
@@ -29,27 +31,53 @@ const EXAMPLES = [
     verdict: "verified",
     includes: ["Dogs:", "motorized vehicles", "CAB fishing permit"],
   },
+  {
+    question: "How do I reserve an Overlook space?",
+    verdict: "conditional",
+    includes: ["Facilities Rental Application", "$100.00", "$250.00"],
+    requiresAction: true,
+    maxLineLength: 320,
+  },
+  {
+    question: "Who do I contact about water billing?",
+    verdict: "informational",
+    includes: ["833", "ClientCare@AmCoBi.com"],
+    requiresSections: false,
+  },
 ];
 
 for (const example of EXAMPLES) {
   test(`public example stays useful: ${example.question}`, async () => {
-    const result = await answerRulesQuestion(example.question);
+    const result = await answerCommunityQuestion(example.question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      answerRulesQuestion,
+      synthesizeCommunityAnswer: false,
+    });
     assert.equal(result.confidence?.canAnswer, true);
     assert.equal(result.answerVerdict, example.verdict);
     assert.ok(result.answer.length <= 1000, `Answer is ${result.answer.length} characters long.`);
     assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
     assert.doesNotMatch(result.answer, /\.\.\.|-- \d+ of \d+ --|WHEREAS|ADOPTED AND APPROVED/i);
     assert.match(result.answer, /^Short answer:/);
-    assert.match(result.answer, /\n\nWhat I found:/);
-    assert.match(result.answer, /\n\nBefore you act:/);
+    if (example.requiresSections !== false) {
+      assert.match(result.answer, /\n\nWhat I found:/);
+      assert.match(result.answer, /\n\nBefore you act:/);
+    }
     for (const phrase of example.includes) {
       assert.ok(
         result.answer.toLowerCase().includes(phrase.toLowerCase()),
         `Expected answer to include "${phrase}".`
       );
     }
+    if (example.requiresAction) {
+      assert.ok(result.actions?.some((action) => /^https?:\/\//i.test(action.url || "")));
+    }
     const longestLine = Math.max(...result.answer.split("\n").map((line) => line.length));
-    assert.ok(longestLine <= 260, `A resident-facing line is ${longestLine} characters long.`);
+    assert.ok(
+      longestLine <= (example.maxLineLength || 260),
+      `A resident-facing line is ${longestLine} characters long.`
+    );
   });
 }
 
@@ -64,7 +92,8 @@ test("public example questions in the page are covered by the regression suite",
     (match) => match[1].trim()
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
-  assert.match(html, /rules-assistant\.js\?v=20260818-readable-examples/);
+  assert.match(html, /rules-assistant\.css\?v=20260826-community-assistant/);
+  assert.match(html, /rules-assistant\.js\?v=20260826-community-assistant/);
 });
 
 test("park and amenity booking questions use the reservation process", async () => {

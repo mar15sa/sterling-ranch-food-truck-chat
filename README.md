@@ -3,7 +3,7 @@
 This is the source code and operating documentation for the Sterling Ranch Society resident site. It includes:
 
 - Food-truck and menu lookups from the community calendar.
-- A source-grounded Sterling Ranch Rules Assistant.
+- A source-grounded Community Assistant for rules, services, forms, facilities, prices, contacts, events, and live status.
 - Live Overlook outdoor-pool status.
 - An evidence-backed Douglas County-area openings tracker.
 - A staging-only community onboarding demo that turns one official website into a reviewed source-connection plan.
@@ -95,30 +95,40 @@ The production server schedules the radar daily, and the `Douglas County opening
 
 Opening tips are accepted at `POST /api/openings/tips`. Set `OPENINGS_TIP_WEBHOOK_URL` in hosting to send them to a durable review inbox, or configure `OPENINGS_TIP_EMAIL_TO`, `OPENINGS_TIP_EMAIL_FROM`, and `OPENINGS_TIP_RESEND_API_KEY` (the shared Resend/rules-alert settings also work) to receive them by email. Local development falls back to the gitignored `data/openings-tips.ndjson` file; production returns a visible error instead of silently saving a tip to temporary storage when no durable inbox is configured. `OPENINGS_AUTO_MONITOR=false` disables the server-side schedule if the GitHub schedule should be the only scanner.
 
-## Sterling Ranch Rules Assistant
+## Sterling Ranch Community Assistant
 
 For the safe staging-to-production release process, source hierarchy, automatic safeguards, rollback steps, dependencies, and known limitations, see [the rules assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md).
 
-The separate rules page lives at:
+The resident assistant lives at:
 
 ```text
-/rules-assistant
+/community-assistant
 ```
 
-It uses a local searchable index built from the public Sterling Ranch CAB Rules and Regulations. To refresh that source index manually, run:
+The legacy `/rules-assistant` URL remains available and opens the same assistant. It combines the mature rulebook engine with a community index built from reviewed Sterling Ranch CAB, CivicPlus, CivicRec, Municode, calendar, form, facility, service, and status sources. To refresh the broader community index manually, run:
+
+```powershell
+npm run ingest:community
+```
+
+To rebuild only the codified rulebook index, run:
 
 ```powershell
 npm run ingest:rules
 ```
 
-### Plain-English answers (optional)
+### Grounded AI answers
 
-Answers are assembled directly from the matching rule sections. Any changing date, time, fee, count, or measurement is extracted from the currently loaded official source at response time instead of being trusted from a typed summary. If the current value cannot be extracted, the assistant fails closed and asks the resident to confirm the official section rather than returning an old value. In the recommended selective AI mode, Claude is used only when a supported question needs generic text translated or facts synthesized across multiple sources. Prompt injection, unclear questions, missing evidence, conflicts, and already-readable covered answers never reach Claude. Every rewrite is checked against the cited sources and rejected rewrites, errors, or timeouts fall back to the grounded source-built answer.
+The mature rules engine answers covered rulebook topics first. For unfamiliar wording and broader community questions, hybrid retrieval searches only the configured community's approved official sources. Claude may expand a search or organize retrieved evidence, but it cannot supply facts. Each AI claim is checked against its cited source; unsupported values, prompt-injection content, conflicting sources, errors, and timeouts fall back to a source-built answer or a safe refusal.
+
+Background checks refresh unchanged sources automatically. Changed, new, or removed source material is held for review rather than silently replacing the last tested version. A reviewed index is published through the normal staging release path.
 
 Environment variables:
 
 - `RULES_LLM_MODE` — `selective` is recommended; `off` disables Claude and `all` preserves the older rewrite-every-supported-answer behavior.
 - `ANTHROPIC_API_KEY` — required for Claude-written answers. Without it, the source-built fallback is returned.
+- `COMMUNITY_LLM_MODEL`, `COMMUNITY_LLM_MAX_TOKENS`, and `COMMUNITY_LLM_TIMEOUT_MS` — optional settings for broader community search and synthesis; they fall back to the matching rules settings where applicable.
+- `COMMUNITY_REFRESH_INTERVAL_MS` (default six hours) and `COMMUNITY_AUTO_REFRESH=false` — optional background source-check controls.
 - `RULES_LLM_MODEL` — which model to use. Defaults to `claude-haiku-4-5` (lowest cost, well-suited to this). Use `claude-sonnet-4-6` or `claude-opus-4-8` for more nuance.
 - `RULES_LLM_MAX_TOKENS` (default `600`) and `RULES_LLM_TIMEOUT_MS` (default `15000`) — optional tuning.
 - `RULES_ALERT_WEBHOOK_URL` — optional webhook for runtime alerts. When set, the server alerts when an answer is uncertain, rules questions hit repeated rate-limit blocks, the rulebook refresh fails, or LLM rewrites are rejected often. Without it, those alerts are still written to server logs.
@@ -135,6 +145,8 @@ Environment variables:
 Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
 
 The scheduled `Rules answer quality monitor` GitHub workflow runs the full local evaluation and live production journeys every day. It checks the homepage and security headers, pool status, openings catalog, food-truck dates, representative rule answers, prompt injection, and source health. If a check fails, it opens or updates a GitHub issue with a review checklist. When the checks pass again, the workflow comments on and closes that issue automatically. Every uncertain production answer is also written to the server log with the sanitized question, reason, and closest source so it can be researched and added as a permanent regression case. The first occurrence of each distinct uncertain question can alert immediately; repeats of that same question are quiet for 24 hours.
+
+`npm run check` is the release gate. It includes the 116 historical resident questions, authored and unseen rule tests, source/link safety checks, and a 228-question old-versus-upgraded Community Assistant comparison. A smaller corpus, any regression, a lower overall score, or any very-low upgraded answer blocks release. `npm run community:portability:live` separately proves the same engine can crawl and answer end-to-end questions for a second CivicPlus community without community-specific code changes.
 
 The server also has an admin refresh endpoint:
 

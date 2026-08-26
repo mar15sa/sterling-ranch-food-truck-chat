@@ -23,6 +23,11 @@ const {
 } = require("./lib/http-security");
 const { getRulesLlmMetrics } = require("./lib/rules-llm");
 const { getRulesSearchMetrics } = require("./lib/rules-search");
+const { answerCommunityQuestion } = require("./lib/community-assistant");
+const { getCommunityEvents } = require("./lib/community-events");
+const { getCommunityLlmMetrics } = require("./lib/community-llm");
+const { getCommunitySearchMetrics } = require("./lib/community-search");
+const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
   normalizeTruckName,
@@ -4569,7 +4574,13 @@ async function handleRulesAsk(req, res, url) {
     await maybeRefreshRulesInBackground(status);
   }
 
-  const answer = await answerRulesQuestion(question);
+  const answer = await answerCommunityQuestion(question, {
+    answerRulesQuestion,
+    getPoolStatus,
+    getCommunityEvents,
+    index: getCommunityIndex(),
+    communityId: "sterling-ranch",
+  });
   logRulesQuestion(question, answer, req);
   if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false) {
     recordRulesLowConfidence({
@@ -4581,6 +4592,7 @@ async function handleRulesAsk(req, res, url) {
   answer.sourceStatus = {
     ...answer.sourceStatus,
     refreshing: Boolean(rulesRefreshPromise),
+    communitySources: communitySourceStatus(),
   };
   sendJson(res, 200, answer);
 }
@@ -4592,6 +4604,7 @@ async function handleRulesStatus(req, res) {
     ...status,
     refreshing: Boolean(rulesRefreshPromise),
     refreshStarted,
+    communitySources: communitySourceStatus(),
   });
 }
 
@@ -4624,6 +4637,9 @@ async function handleHealth(req, res) {
     requests: operationsSnapshot(),
     rulesSearch: getRulesSearchMetrics(),
     optionalLlmRewrite: getRulesLlmMetrics(),
+    communitySearch: getCommunitySearchMetrics(),
+    communityLlm: getCommunityLlmMetrics(),
+    communitySources: communitySourceStatus(),
   });
 }
 
@@ -4753,6 +4769,8 @@ function serveStatic(req, res, url) {
     "/food-truck/": "/food-truck.html",
     "/rules-assistant": "/rules-assistant.html",
     "/rules-assistant/": "/rules-assistant.html",
+    "/community-assistant": "/rules-assistant.html",
+    "/community-assistant/": "/rules-assistant.html",
     "/pool": "/pool.html",
     "/pool/": "/pool.html",
     "/pool-status": "/pool.html",
@@ -4824,7 +4842,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    if (url.pathname === "/api/rules/ask") {
+    if (url.pathname === "/api/rules/ask" || url.pathname === "/api/community/ask") {
       await handleRulesAsk(req, res, url);
       return;
     }
@@ -4872,6 +4890,7 @@ warmRulesIndex()
     server.listen(PORT, HOST, () => {
       console.log(`Food truck chat is running on ${HOST}:${PORT}`);
       scheduleRulesRefreshChecks();
+      scheduleCommunityRefresh();
       scheduleOpeningsRadar();
     });
   });

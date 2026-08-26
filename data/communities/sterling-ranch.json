@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "name": "Sterling Ranch Community Authority Board",
+  "shortName": "Sterling Ranch",
+  "website": "https://sterlingranchcab.com/",
+  "platform": "civicplus-web-central",
+  "timezone": "America/Denver",
+  "status": "active",
+  "connectors": [
+    {
+      "id": "official-website",
+      "type": "civicplus-pages",
+      "baseUrl": "https://sterlingranchcab.com/",
+      "refreshMinutes": 1440,
+      "maxPages": 80,
+      "seedUrls": [
+        "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+        "https://sterlingranchcab.com/201/Design-Review-Documents",
+        "https://sterlingranchcab.com/257/Amenity-Rentals",
+        "https://sterlingranchcab.com/311/Park-Shelters",
+        "https://sterlingranchcab.com/324/Important-Contact-Information",
+        "https://sterlingranchcab.com/247/Trash-Recycling",
+        "https://sterlingranchcab.com/248/Water-Sewer",
+        "https://sterlingranchcab.com/187/Pool"
+      ]
+    },
+    {
+      "id": "official-calendar",
+      "type": "civicplus-calendar",
+      "baseUrl": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
+      "refreshMinutes": 60
+    },
+    {
+      "id": "official-rules",
+      "type": "municode",
+      "baseUrl": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+      "refreshMinutes": 1440
+    },
+    {
+      "id": "facility-rentals",
+      "type": "civicrec",
+      "baseUrl": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog",
+      "refreshMinutes": 360
+    },
+    {
+      "id": "pool-status",
+      "type": "live-status",
+      "baseUrl": "https://sterlingranchcab.com/187/Pool",
+      "refreshMinutes": 1
+    }
+  ],
+  "authority": {
+    "rules": ["municode", "adopted-document"],
+    "facilities": ["civicrec", "civicplus-pages", "municode"],
+    "forms": ["civicplus-pages", "civicrec", "document"],
+    "events": ["civicplus-calendar", "civicplus-pages"],
+    "alerts": ["civicplus-alerts", "civicplus-pages"],
+    "status": ["live-status", "civicplus-alerts"],
+    "services": ["civicplus-pages", "document"]
+  },
+  "allowedHosts": [
+    "sterlingranchcab.com",
+    "www.sterlingranchcab.com",
+    "library.municode.com",
+    "secure.rec1.com"
+  ],
+  "actions": [
+    {
+      "id": "submit-drc-application",
+      "label": "Open DRC applications and submission instructions",
+      "url": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+      "sourceType": "forms",
+      "actionType": "form",
+      "keywords": ["DRC", "design review", "architectural application", "landscape application"],
+      "refreshMinutes": 1440
+    }
+  ]
+}

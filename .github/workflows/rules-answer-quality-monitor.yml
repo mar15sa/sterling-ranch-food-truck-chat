@@ -38,6 +38,9 @@ jobs:
       - name: Verify official resident-resource links
         run: npm run rules:resources:check:live
 
+      - name: Refresh and audit official community sources
+        run: npm run community:check -- --live
+
       - name: Check the live rules assistant
         run: npm run rules:monitor:live
 
@@ -58,7 +61,7 @@ jobs:
               "",
               `Review the failed run: ${workflowUrl}`,
               "",
-              "Please inspect any recent Railway log entries beginning with `uncertain answer recorded`. For each real gap, verify the official rule, fix retrieval or answer wording, and add the resident's phrasing to `scripts/rules-eval-cases.json` before closing this issue.",
+              "Review source changes, broken links, stale answers, and any Railway entries beginning with `uncertain answer recorded`. Fix the reusable retrieval, grounding, or source-coverage cause and add representative wording to the evaluation set before closing this issue.",
             ].join("\n");
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,

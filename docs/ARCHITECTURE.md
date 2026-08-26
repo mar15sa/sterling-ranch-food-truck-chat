@@ -7,13 +7,13 @@ flowchart LR
   Resident[Resident browser] --> Edge[Cloudflare and custom domain]
   Edge --> App[Railway Node application]
   App --> Static[Resident pages]
-  App --> Rules[Intent, retrieval, current facts, coverage, grounding, verdict]
+  App --> Assistant[Community Assistant routing, retrieval, grounding, and verdict]
   App --> Food[Calendar and menu lookup]
   App --> Pool[Official CAB pool status]
   App --> Openings[Verified openings catalog]
-  Rules --> Index[Local verified rules index and supplements]
-  Rules --> Facts[Structured fact catalog with source and lifecycle metadata]
-  Rules --> Claude[Anthropic search planner and selective rewrite]
+  Assistant --> Rules[Existing rules engine and structured fact catalog]
+  Assistant --> Community[Approved community source index and live connectors]
+  Assistant --> Claude[Constrained search planner and grounded synthesis]
   App --> Alerts[Email, webhook, and existing analytics]
   GitHub[GitHub daily monitors] --> App
   GitHub --> Sources[Official source checks]
@@ -33,15 +33,15 @@ flowchart LR
 - Missing or conflicting current rule facts fail closed instead of being guessed.
 - The intent layer normalizes common wording and typo variants, keeps unrelated meanings separate, and records the requested answer facet before retrieval.
 - The coverage gate rejects answers that cite a relevant-looking section but omit the resident's requested price, limit, process, link, definition, duration, or permission decision.
-- All 116 historical resident wordings, broader family variants, and a separate unseen-question set run before release. The same resident corpus runs daily after deployment.
+- All 116 historical resident wordings, broader family variants, a separate unseen-question set, and a 228-question old-versus-upgraded comparison run before release. Any regression blocks release.
 - Official resident-resource links are cataloged separately from rules and checked daily, which prevents the assistant from treating a stale convenience link as a governing rule.
 - A failed pool-source request sends residents to the official CAB page.
 - Openings source changes are queued for human review rather than automatically published.
 - Alert, Notion, analytics, and tip integrations cannot prevent the resident site from answering.
 
-## Rules Assistant boundaries
+## Community Assistant boundaries
 
-The Rules Assistant is no longer one undifferentiated block. Its safety classification, intent and requested-detail checks, source lifecycle rules, structured fact extraction, focused answer families, answer formatting, grounding, verdicts, optional AI work, and live-monitor decisions live in separate modules. `lib/rules-assistant.js` remains the coordinator while these pieces can be tested independently.
+The existing rules engine remains the first route for topics it already answers well. The Community Assistant adds tenant profiles, source ingestion and cleaning, hybrid retrieval, live events/status connectors, claim-level grounding, optional AI search planning and synthesis, source conflict detection, and direct action links. These responsibilities live in separate modules; `lib/community-assistant.js` coordinates them without weakening the mature rules path.
 
 Every source refresh also rebuilds `data/rules-fact-catalog.json`. The catalog records each detected changing value with a stable fact key, normalized value, scope, effective and expiration dates, source URL, and source hash. The release check fails when that catalog no longer matches the rulebook or adopted supplements.
 
@@ -53,7 +53,7 @@ The application intentionally uses one process and bounded in-memory caches/rate
 
 The product direction is broader than a rules chatbot. Its core promise is to make official community information direct, specific, human-readable, and easy to find. A customer starts with one input—the community's main public website—and the setup pipeline discovers and connects the official systems behind it.
 
-The `/community-demo` staging page is the first working onboarding slice. It safely inspects a public homepage, detects CivicPlus Web Central, groups discovered links by resident need, explains the authority assigned to each source type, and produces a review-only setup plan. It never publishes scraped content automatically.
+The `/community-demo` staging page is the onboarding preview. The production-capable assistant behind `/community-assistant` now uses the generated community profile and approved index to answer resident questions. The preview never publishes scraped content automatically.
 
 The existing Sterling Ranch Society tools provide the first reusable connectors and operating patterns:
 
@@ -63,7 +63,7 @@ The existing Sterling Ranch Society tools provide the first reusable connectors 
 - Live status: the CAB pool page translated into accessible plain English.
 - Local information: the openings catalog's source fingerprinting, review queue, and daily change monitor.
 
-Each future community receives a `community_id` and a source profile rather than copied Sterling Ranch logic. That profile records the official domain, platform, connected modules, authority rules, refresh schedule, and launch evaluation set. At answer time, AI may interpret a resident's wording and summarize retrieved material, but it cannot invent facts or overrule the source hierarchy.
+Each community receives a `community_id` and a source profile rather than copied Sterling Ranch logic. That profile records the official domains, platform, connectors, authority rules, refresh schedule, and launch evaluation set. Tenant filtering prevents cross-community evidence leakage. A live Castle Rock portability check exercises end-to-end answers from a second CivicPlus profile without core-code changes.
 
 The intended source hierarchy is:
 
@@ -72,4 +72,4 @@ The intended source hierarchy is:
 3. Current alerts and calendars for time-sensitive information.
 4. Official informational pages for services, contacts, and explanations.
 
-Freshness is part of the product rather than a one-time setup task. Every connector should retain source URLs, fingerprints, last-checked times, and lifecycle dates; run daily change and broken-link checks; detect conflicting official sources; quarantine unsupported changing facts; and rerun a community-specific question set before changed answers are published.
+Freshness is part of the product rather than a one-time setup task. Every source retains its URL, fingerprint, last-checked time, and stale deadline. Unchanged sources refresh automatically. Changed, new, or removed records are quarantined while the last tested version stays active; the daily monitor reports the difference, broken resident action links fail the source audit, and the full question set must pass before the reviewed index is released.

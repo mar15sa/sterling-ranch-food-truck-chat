@@ -5,3 +5,4 @@ npm-debug.log*
 Thumbs.db
 tmp/
 data/openings-tips.ndjson
+data/community-assistant-eval.json

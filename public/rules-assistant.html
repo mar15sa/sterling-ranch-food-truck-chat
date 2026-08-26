@@ -3,39 +3,39 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sterling Ranch Rules Assistant</title>
+    <title>Sterling Ranch Community Assistant</title>
     <meta
       name="description"
-      content="An unofficial helper for searching the Sterling Ranch CAB Rules and Regulations."
+      content="Ask plain-English questions about Sterling Ranch rules, services, forms, facilities, events, and current community information."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sterling Ranch Society" />
-    <meta property="og:title" content="Sterling Ranch Rules Assistant" />
+    <meta property="og:title" content="Sterling Ranch Community Assistant" />
     <meta
       property="og:description"
-      content="Ask plain-English questions about the Sterling Ranch CAB Rules and Regulations, with links to the source sections."
+      content="Ask plain-English questions about Sterling Ranch, with links to current official sources and next steps."
     />
-    <meta property="og:url" content="https://sterlingranchsociety.com/rules-assistant" />
+    <meta property="og:url" content="https://sterlingranchsociety.com/community-assistant" />
     <meta property="og:image" content="https://sterlingranchsociety.com/rules-social-preview.png" />
     <meta property="og:image:secure_url" content="https://sterlingranchsociety.com/rules-social-preview.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Sterling Ranch Rules Assistant" />
+    <meta property="og:image:alt" content="Sterling Ranch Community Assistant" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Sterling Ranch Rules Assistant" />
+    <meta name="twitter:title" content="Sterling Ranch Community Assistant" />
     <meta
       name="twitter:description"
-      content="Ask plain-English questions about the Sterling Ranch CAB Rules and Regulations, with links to the source sections."
+      content="Ask plain-English questions about Sterling Ranch, with links to current official sources and next steps."
     />
     <meta name="twitter:image" content="https://sterlingranchsociety.com/rules-social-preview.png" />
-    <meta name="twitter:image:alt" content="Sterling Ranch Rules Assistant" />
+    <meta name="twitter:image:alt" content="Sterling Ranch Community Assistant" />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/rules-assistant.css?v=20260731-answer-sharing2" />
+    <link rel="stylesheet" href="/rules-assistant.css?v=20260826-community-assistant" />
     <script
       src="/environment.js"
-      data-page-title="Sterling Ranch Rules Assistant"
-      data-page-path="/rules-assistant"
+      data-page-title="Sterling Ranch Community Assistant"
+      data-page-path="/community-assistant"
     ></script>
   </head>
   <body class="rules-page">
@@ -48,7 +48,7 @@
             </span>
             <div class="rules-brand-text">
               <p class="rules-eyebrow">Sterling Ranch Society</p>
-              <h1>Rules Assistant</h1>
+              <h1>Community Assistant</h1>
               <div class="rules-statusbar">
                 <span class="rules-status-dot" id="statusDot" data-state="busy" aria-hidden="true"></span>
                 <span class="rules-status-headline" id="statusHeadline">Checking the source&hellip;</span>
@@ -68,7 +68,7 @@
                   <dl class="rules-status-detail" id="statusDetail" hidden>
                     <div>
                       <dt>Source</dt>
-                      <dd id="statusSource">Sterling Ranch CAB Rules and Regulations</dd>
+                      <dd id="statusSource">Official CAB sources and Rules and Regulations</dd>
                     </div>
                     <div>
                       <dt>Last checked</dt>
@@ -90,11 +90,11 @@
           </div>
           <a
             class="rules-source-link"
-            href="https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations"
+            href="https://sterlingranchcab.com/"
             target="_blank"
             rel="noreferrer"
           >
-            <span>Official rulebook</span>
+            <span>Official CAB website</span>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path
                 d="M14 4h6v6m0-6L10 14M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"
@@ -115,7 +115,7 @@
           class="rules-thread"
           id="rulesMessages"
           aria-live="polite"
-          aria-label="Conversation with the rules assistant"
+          aria-label="Conversation with the community assistant"
         ></div>
       </main>
 
@@ -127,6 +127,8 @@
             <button type="button">What are the landscaping and yard rules?</button>
             <button type="button">What fees do residents pay?</button>
             <button type="button">What are the rules for parks and open spaces?</button>
+            <button type="button">How do I reserve an Overlook space?</button>
+            <button type="button">Who do I contact about water billing?</button>
           </div>
 
           <button
@@ -140,14 +142,14 @@
 
           <form class="rules-composer" id="rulesForm">
             <label class="rules-visually-hidden" for="rulesQuestion">
-              Ask a question about the Sterling Ranch rules
+              Ask a question about Sterling Ranch
             </label>
             <textarea
               id="rulesQuestion"
               name="question"
               rows="1"
               autocomplete="off"
-              placeholder="Ask about the rules&hellip;"
+              placeholder="Ask about rules, services, forms, facilities, or events&hellip;"
             ></textarea>
             <button type="submit" class="rules-send" id="rulesSend" aria-label="Send question">
               <svg class="rules-send-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -172,8 +174,8 @@
           <p>
             Sterling Ranch Society is an independent community resource. This unofficial helper is not
             legal advice and is not affiliated with or endorsed by the Sterling Ranch Community
-            Authority Board or the rulebook publisher. Always confirm important decisions with the
-            official rulebook or the CAB.
+            Authority Board or its source providers. Important decisions should always be confirmed
+            using the official source links included with the answer or directly with the CAB.
           </p>
         </details>
         <a
@@ -191,7 +193,7 @@
     <template id="rulesAnswerTemplate">
       <article class="rules-message rules-message-bot">
         <div class="rules-answer-actions">
-          <span class="rules-answer-actions-label">Rulebook response</span>
+          <span class="rules-answer-actions-label">Community response</span>
           <button type="button" class="rules-share-button">
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <rect x="8" y="8" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" />
@@ -237,6 +239,6 @@
       </article>
     </template>
 
-    <script src="/rules-assistant.js?v=20260818-readable-examples"></script>
+    <script src="/rules-assistant.js?v=20260826-community-assistant"></script>
   </body>
 </html>

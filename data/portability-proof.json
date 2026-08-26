@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-08-26T21:27:19.261Z",
+  "result": "passed",
+  "communityId": "castle-rock",
+  "communityName": "Town of Castle Rock",
+  "platform": "civicplus-web-central",
+  "configurationOnly": true,
+  "coreCodeChangesRequired": 0,
+  "livePagesChecked": 30,
+  "normalizedSourceRecords": 869,
+  "sourceFailures": 3,
+  "sourceTypesFound": [
+    "events",
+    "facilities",
+    "forms",
+    "rules",
+    "services"
+  ],
+  "sampleQuestions": [
+    {
+      "question": "How do I reserve a picnic pavilion?",
+      "topOfficialSource": "Park Pavilion Rentals"
+    },
+    {
+      "question": "Who do I contact about parks maintenance?",
+      "topOfficialSource": "FAQs - CivicPlus.CMS.FAQ"
+    },
+    {
+      "question": "Where can I find town events?",
+      "topOfficialSource": "Calendar"
+    }
+  ],
+  "endToEndAnswers": [
+    {
+      "question": "How do I reserve a picnic pavilion?",
+      "answer": "Short answer: Parks, Open Space and Trails How do I reserve a picnic shelter/pavilion?\n\nWhat I found:\n- Picnic pavilions at select parks are available for rental with at least two weeks' notice by calling 720-733-2260 between the hours of 7 a.m. and 3 p.m.\n- Please note Requesting the park pavilion does not reserve the athletic field as well.\n\nBefore you act: Use the “Open official Park Pavilion Rentals” link below for the current next step.",
+      "answerMode": "community-source-extractive",
+      "topOfficialSource": "Park Pavilion Rentals",
+      "sourceUrls": [
+        "https://www.crgov.com/2161/Park-Pavilion-Rental",
+        "https://www.crgov.com/m/faq",
+        "https://www.crgov.com/FormCenter/Parks-and-Recreation-3/Philip-S-Miller-Reservation-Request-Form-211",
+        "https://www.crgov.com/2630/Millhouse-at-Philip-S-Miller-Park"
+      ],
+      "actionUrls": [
+        "https://www.crgov.com/2161/Park-Pavilion-Rental"
+      ]
+    },
+    {
+      "question": "Who do I contact about parks maintenance?",
+      "answer": "Short answer: For parks maintenance, call 720-733-2260.\n\nBefore you act: Use the “Open official FAQs - CivicPlus.CMS.FAQ” link below for the current next step.",
+      "answerMode": "community-source-extractive",
+      "topOfficialSource": "FAQs - CivicPlus.CMS.FAQ",
+      "sourceUrls": [
+        "https://www.crgov.com/m/faq",
+        "https://www.crgov.com/2270/Meet-Council",
+        "https://www.crgov.com/2630/Millhouse-at-Philip-S-Miller-Park",
+        "https://www.crgov.com/2323/Plans-and-Regulations",
+        "https://www.crgov.com/FormCenter/Parks-and-Recreation-3/Philip-S-Miller-Reservation-Request-Form-211"
+      ],
+      "actionUrls": [
+        "https://www.crgov.com/m/faq"
+      ]
+    },
+    {
+      "question": "Where can I find town events?",
+      "answer": "Short answer: Use the official Calendar • Town of Castle Rock • CivicEngage link below to find current community events.\n\nWhat I found:\n- Featured Events Summer Concert Series - Still the Same - Bob Seger Tribute with the Denver Pops Orchestra August 29, 2026 1375 W.\n- Event Details Town Council Meeting September 1, 2026 100 N.\n\nBefore you act: Use the “Open official Calendar • Town of Castle Rock • CivicEngage” link below for the current next step.",
+      "answerMode": "community-source-extractive",
+      "topOfficialSource": "Calendar • Town of Castle Rock • CivicEngage",
+      "sourceUrls": [
+        "https://www.crgov.com/calendar.aspx?view=list",
+        "https://www.crgov.com/Calendar.aspx",
+        "https://www.crgov.com/calendar.aspx",
+        "https://www.crgov.com/calendar.aspx?CID=60",
+        "https://www.crgov.com/1988/Parks-Open-Space-and-Trails-POST-Partner"
+      ],
+      "actionUrls": [
+        "https://www.crgov.com/calendar.aspx?view=list"
+      ]
+    }
+  ]
+}

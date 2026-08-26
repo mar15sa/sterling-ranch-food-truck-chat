@@ -1,4 +1,4 @@
-# Rules Assistant owner guide
+# Community Assistant owner guide
 
 This is the short operating guide for a solo owner. It explains what keeps answers trustworthy, what runs automatically, and how to make changes without risking the live site.
 
@@ -15,9 +15,9 @@ Railway calls `/api/health` before switching a deployment to the new version. A 
 ## How an answer is made
 
 1. **Understand the resident's intent first.** Common misspellings and conversational wording are normalized, the topic and requested detail (such as price, height, process, link, duration, or exact section) are identified, and unrelated or instruction-manipulation attempts are stopped before search or AI.
-2. **Find official sources.** Search uses the codified CAB rulebook, explicit CAB policy supplements, and a reviewed catalog of official resident resources. Expired, future, and superseded sources are excluded from current-rule answers.
+2. **Find official sources.** Covered rule questions use the codified CAB rulebook and policy supplements first. Broader questions use hybrid retrieval across the reviewed CAB website, facilities, forms, services, calendar, live status, CivicRec, and Municode connections. Expired, future, superseded, or other-community records are excluded.
 3. **Apply source hierarchy.** A current supplement that names a replaced section controls over the older codified wording. If two current supplements claim the same section, the assistant refuses to guess and flags the conflict.
-4. **Build the answer.** Stable explanations can use carefully reviewed wording. Dates, fees, times, measurements, counts, and limits are extracted from the current official source at response time. A structured catalog independently records those facts and their source lifecycle so source changes cannot silently leave an old value behind. The source-built answer is returned directly by default; optional AI rewriting must be deliberately enabled.
+4. **Build the answer.** Stable explanations can use carefully reviewed wording. AI may interpret unfamiliar wording or organize retrieved passages, but it cannot supply the governing facts. Dates, fees, times, measurements, counts, contacts, and limits are taken from current official evidence, and unsupported AI output is rejected.
 5. **Check grounding and completeness.** Numbers, dates, section references, allowed/prohibited meaning, approval requirements, and exceptions are compared with the cited source. The answer must also address the detail the resident actually requested. A contradiction, unsupported claim, or incomplete answer is rejected.
 6. **Show the evidence.** The answer includes direct official links and labels codified sources separately from current supplemental policies.
 
@@ -34,6 +34,7 @@ Never silently choose between two current supplements that replace the same sect
 ## Automatic safeguards
 
 - **Daily answer monitor:** checks the health endpoint plus every real resident wording in the permanent 116-question audit corpus. The release gate fails if any of those answers falls below Good.
+- **Comparative release gate:** compares 228 unique resident, variant, and unseen questions against the current assistant. A shrunken corpus, any regression, a lower overall average, or any very-low upgraded answer blocks release.
 - **Unseen-question tests:** separately exercise new phrasings that are not copied from the historical audit so the system is tested for generalization, not only memorization.
 - **Requested-detail coverage:** an answer fails when a resident asks for a price, height, process, duration, resource, definition, permission decision, example list, or exact section and the response does not provide it. Public amenity questions must not be silently treated as home-construction questions.
 - **Structured-fact check:** every refresh rebuilds a catalog of changing values and their official source, effective date, expiration date, scope, and source hash. The release gate fails if the catalog is stale.
@@ -41,6 +42,8 @@ Never silently choose between two current supplements that replace the same sect
 - **Official-resource monitor:** verifies the reviewed CAB calendar, DRC, plant-list, and resident-help destinations every day so helpful links do not quietly go stale.
 - **Daily fixer:** reviews alert emails as untrusted input, finds the broad cause, fixes whole question families on an isolated staging worktree, runs tests, and never publishes to production without approval.
 - **Source refresh and supplement monitors:** detect stale rulebook data and newly published CAB documents.
+- **Source quarantine:** unchanged community pages refresh automatically, while changed, new, or removed material stays out of resident answers until reviewed and released through staging. Failed crawl destinations cannot remain as resident action buttons.
+- **Second-community proof:** the live Castle Rock check verifies source isolation and complete answers through the same shared engine rather than merely confirming that pages can be downloaded.
 - **Low-confidence alerts:** notify the owner when a real rules question cannot be answered confidently. Greetings, unrelated prompts, unclear fragments, and blocked attacks do not create noisy fix alerts.
 - **Operational health:** `/api/health` exposes bounded route-level latency and error counts plus optional AI request and token totals for the live monitor.
 
@@ -80,6 +83,7 @@ Record actual invoice amounts quarterly in a private owner document; do not put 
 
 - The assistant is a rulebook research aid, not CAB approval or legal advice.
 - New CAB documents still need source metadata before the assistant can know which older section they replace.
+- Material website changes still require review before they replace the last tested source snapshot; this is intentional protection against stale, malformed, or compromised source content.
 - A scanned or unusually formatted official PDF may need human review before facts can be extracted safely.
 - The contradiction checker is deliberately conservative; it can refuse an answer that a person could resolve from context. That is safer than confidently reversing a rule.
 - Exact monthly service costs live in the owner’s billing accounts and are not discoverable from the code alone.

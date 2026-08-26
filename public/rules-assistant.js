@@ -17,7 +17,7 @@ const statusOnlineDate = document.querySelector("#statusOnlineDate");
 const statusCodified = document.querySelector("#statusCodified");
 const statusNote = document.querySelector("#statusNote");
 
-const PUBLIC_SOURCE_NAME = "Sterling Ranch CAB Rules and Regulations";
+const PUBLIC_SOURCE_NAME = "Official CAB sources and Rules and Regulations";
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let conversationStarted = false;
@@ -118,7 +118,7 @@ function addThinking() {
   message.className = "rules-message rules-message-bot";
   const typing = document.createElement("div");
   typing.className = "rules-typing";
-  typing.setAttribute("aria-label", "Searching the rulebook");
+  typing.setAttribute("aria-label", "Searching official community sources");
   typing.append(
     document.createElement("span"),
     document.createElement("span"),
@@ -299,7 +299,7 @@ function renderSourceItem(source) {
 }
 
 function sharedAnswerUrl(question) {
-  const url = new URL("/rules-assistant", window.location.origin);
+  const url = new URL("/community-assistant", window.location.origin);
   url.searchParams.set("q", question);
   return url.toString();
 }
@@ -356,11 +356,11 @@ function addAnswer(data, question) {
   renderAnswerInto(node.querySelector(".rules-answer"), data.answer || "");
 
   const answerLabel = node.querySelector(".rules-answer-actions-label");
-  if (data.inputClassification === "prompt-injection") {
+  if (data.answerMode === "safety" || data.answerStatus === "safety-rejected" || data.inputClassification === "prompt-injection") {
     answerLabel.textContent = "Safety response";
     answerLabel.dataset.state = "unverified";
   } else if (["conversation", "unrelated", "unclear"].includes(data.inputClassification)) {
-    answerLabel.textContent = "Rules assistant";
+    answerLabel.textContent = "Community assistant";
   } else if (data.answerVerdict === "unverified" || data.confidence?.canAnswer !== true) {
     answerLabel.textContent = "Could not verify — next step included";
     answerLabel.dataset.state = "unverified";
@@ -374,11 +374,32 @@ function addAnswer(data, question) {
     answerLabel.textContent = "Rule says yes";
     answerLabel.dataset.state = "allowed";
   } else {
-    answerLabel.textContent = "Verified rulebook answer";
+    answerLabel.textContent = "Verified community answer";
   }
 
   const shareButton = node.querySelector(".rules-share-button");
   shareButton.addEventListener("click", () => copyAnswerLink(shareButton, question));
+
+  const actions = Array.isArray(data.actions) ? data.actions.filter((action) => action?.label && /^https?:\/\//i.test(action.url || "")) : [];
+  if (actions.length) {
+    const actionPanel = document.createElement("div");
+    actionPanel.className = "rules-next-actions";
+    const actionLabel = document.createElement("p");
+    actionLabel.className = "rules-next-actions-label";
+    actionLabel.textContent = "Official next steps";
+    const actionLinks = document.createElement("div");
+    actionLinks.className = "rules-next-actions-links";
+    actions.slice(0, 3).forEach((action) => {
+      const link = document.createElement("a");
+      link.href = action.url;
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = action.label;
+      actionLinks.append(link);
+    });
+    actionPanel.append(actionLabel, actionLinks);
+    node.querySelector(".rules-answer").after(actionPanel);
+  }
 
   const details = node.querySelector(".rules-sources");
   if (sources.length) {
@@ -400,24 +421,28 @@ function updateStatus(status) {
   if (!status) return;
 
   statusSource.textContent = PUBLIC_SOURCE_NAME;
+  const community = status.communitySources || {};
   const lastChecked = formatDateTime(status.lastFetchedAt);
+  const communityChecked = formatDateTime(community.generatedAt);
   statusChecked.textContent =
     status.refreshing && lastChecked !== "Not available"
       ? `Checking now; last successful check ${lastChecked}`
-      : lastChecked;
+      : communityChecked !== "Not available"
+        ? `Rules: ${lastChecked}; community pages: ${communityChecked}`
+        : lastChecked;
   statusOnlineDate.textContent = formatDateTime(status.onlineUpdateDate);
   statusCodified.textContent = status.codifiedThrough || "Not available";
 
   let headline;
   let state;
-  if (status.refreshing) {
-    headline = "Refreshing the rulebook index…";
+  if (status.refreshing || community.refreshing) {
+    headline = "Refreshing official sources…";
     state = "busy";
-  } else if (status.isStale) {
-    headline = "Rulebook index may be out of date";
+  } else if (status.isStale || community.stale) {
+    headline = "Some official sources may be out of date";
     state = "warn";
   } else {
-    headline = "Rulebook ready";
+    headline = "Official sources ready";
     state = "ok";
   }
   statusHeadline.textContent = headline;
@@ -426,6 +451,9 @@ function updateStatus(status) {
   const notes = [];
   if (status.refreshing) notes.push("Refreshing the rulebook index now.");
   if (status.isStale) notes.push("The local rulebook index may be stale.");
+  if (community.refreshing) notes.push("Refreshing official community pages now.");
+  if (community.stale) notes.push("One or more community pages are due for a freshness check.");
+  if (community.lastRefreshError) notes.push("The latest community-page refresh failed; older sources are marked accordingly.");
   if (Array.isArray(status.warnings)) {
     const sourcePlatformPattern = new RegExp(`\\b${["Muni", "code"].join("")}\\b`, "g");
     status.warnings
@@ -489,7 +517,7 @@ async function askRules(question, source = "typed") {
   });
 
   try {
-    const response = await fetch("/api/rules/ask", {
+    const response = await fetch("/api/community/ask", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ question }),
@@ -500,11 +528,11 @@ async function askRules(question, source = "typed") {
     try {
       data = JSON.parse(text);
     } catch {
-      throw new Error("The rules assistant is temporarily unavailable.");
+      throw new Error("The community assistant is temporarily unavailable.");
     }
 
     if (!response.ok) {
-      throw new Error(data.error || "The rules assistant is temporarily unavailable.");
+      throw new Error(data.error || "The community assistant is temporarily unavailable.");
     }
 
     thinking.remove();
@@ -526,7 +554,7 @@ async function askRules(question, source = "typed") {
     answer.className = "rules-answer";
     renderAnswerInto(
       answer,
-      error.message || "The rules assistant is temporarily unavailable."
+      error.message || "The community assistant is temporarily unavailable."
     );
     thinking.replaceChildren(answer);
     scrollToMessageStart(thinking);
@@ -646,6 +674,6 @@ if (sharedQuestion) {
   askRules(sharedQuestion, "shared_link");
 } else {
   addBotText(
-    "Ask me what’s allowed in Sterling Ranch and you’ll get a clear answer, plus a link to the official rule so you can check it yourself. Not sure where to start? Try one of the examples below."
+    "Ask me about Sterling Ranch rules, services, forms, facilities, events, or current community information. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Try one of the examples below."
   );
 }

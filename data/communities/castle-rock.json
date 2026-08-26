@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "communityId": "castle-rock",
+  "name": "Town of Castle Rock",
+  "shortName": "Castle Rock",
+  "website": "https://www.crgov.com/",
+  "platform": "civicplus-web-central",
+  "timezone": "America/Denver",
+  "status": "portability-test",
+  "connectors": [
+    {
+      "id": "official-website",
+      "type": "civicplus-pages",
+      "baseUrl": "https://www.crgov.com/",
+      "refreshMinutes": 1440,
+      "maxPages": 30,
+      "seedUrls": [
+        "https://www.crgov.com/FAQ.aspx",
+        "https://www.crgov.com/FormCenter",
+        "https://www.crgov.com/Calendar.aspx"
+      ]
+    },
+    {
+      "id": "official-calendar",
+      "type": "civicplus-calendar",
+      "baseUrl": "https://www.crgov.com/Calendar.aspx",
+      "refreshMinutes": 60
+    },
+    {
+      "id": "official-code",
+      "type": "municode",
+      "baseUrl": "https://library.municode.com/co/castle_rock/codes/municipal_code",
+      "refreshMinutes": 1440
+    }
+  ],
+  "authority": {
+    "rules": ["municode", "civicplus-pages"],
+    "facilities": ["civicplus-pages", "municode"],
+    "forms": ["civicplus-pages"],
+    "events": ["civicplus-calendar", "civicplus-pages"],
+    "alerts": ["civicplus-alerts", "civicplus-pages"],
+    "status": ["civicplus-alerts", "civicplus-pages"],
+    "services": ["civicplus-pages"]
+  },
+  "allowedHosts": [
+    "crgov.com",
+    "www.crgov.com",
+    "library.municode.com"
+  ]
+}
