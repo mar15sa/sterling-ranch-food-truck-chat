@@ -12,6 +12,7 @@ flowchart LR
   App --> Pool[Official CAB pool status]
   App --> Openings[Verified openings catalog]
   Rules --> Index[Local verified rules index and supplements]
+  Rules --> Facts[Structured fact catalog with source and lifecycle metadata]
   Rules --> Claude[Anthropic search planner and selective rewrite]
   App --> Alerts[Email, webhook, and existing analytics]
   GitHub[GitHub daily monitors] --> App
@@ -37,6 +38,12 @@ flowchart LR
 - A failed pool-source request sends residents to the official CAB page.
 - Openings source changes are queued for human review rather than automatically published.
 - Alert, Notion, analytics, and tip integrations cannot prevent the resident site from answering.
+
+## Rules Assistant boundaries
+
+The Rules Assistant is no longer one undifferentiated block. Its safety classification, intent and requested-detail checks, source lifecycle rules, structured fact extraction, focused answer families, answer formatting, grounding, verdicts, optional AI work, and live-monitor decisions live in separate modules. `lib/rules-assistant.js` remains the coordinator while these pieces can be tested independently.
+
+Every source refresh also rebuilds `data/rules-fact-catalog.json`. The catalog records each detected changing value with a stable fact key, normalized value, scope, effective and expiration dates, source URL, and source hash. The release check fails when that catalog no longer matches the rulebook or adopted supplements.
 
 ## Scaling trigger
 

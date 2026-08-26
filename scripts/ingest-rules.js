@@ -5,6 +5,7 @@ const {
   DEFAULT_INDEX_PATH,
   createRulesIndex,
 } = require("../lib/rules-assistant");
+const { writeRulesFactCatalog } = require("./build-rules-fact-catalog");
 
 function parseArgs(argv) {
   const args = {
@@ -52,12 +53,14 @@ async function main() {
     indexPath: args.indexPath,
     sourceFile: args.sourceFile,
   });
+  const { catalog } = writeRulesFactCatalog({ indexPath: args.indexPath });
 
   console.log(`Wrote ${args.indexPath}`);
   console.log(`Latest job ID: ${index.source.latestJobId}`);
   console.log(`Online update date: ${index.source.onlineUpdateDate || "Unknown"}`);
   console.log(`Sections indexed: ${index.source.sectionCount}`);
   console.log(`Search chunks indexed: ${index.source.chunkCount}`);
+  console.log(`Structured changing facts indexed: ${catalog.factCount}`);
 }
 
 main().catch((error) => {
