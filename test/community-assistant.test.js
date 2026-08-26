@@ -126,6 +126,35 @@ test("contact answers choose the fact whose context matches the requested servic
   assert.equal(answer.actions[0].url, faq.sourceUrl);
 });
 
+test("contact answers preserve exact structured details even when AI synthesis would omit them", async () => {
+  const billing = source({
+    id: "alpha-water-billing",
+    title: "Water & Sewer",
+    sourceType: "services",
+    text: "AmCoBi administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    facts: [
+      { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+      { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+    ],
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  let synthesisCalls = 0;
+  const answer = await answerCommunityQuestion("Who do I contact about water billing?", {
+    index,
+    communityId: "alpha",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: async () => {
+      synthesisCalls += 1;
+      return { directAnswer: "Contact the community office.", keyDetails: [], claims: [] };
+    },
+  });
+
+  assert.equal(synthesisCalls, 0);
+  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.match(answer.answer, /\(833\) 772-2240/);
+  assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
+});
+
 test("tenant filtering prevents one community's sources leaking into another", () => {
   const index = { communityId: "alpha", sources: [source(), source({ id: "beta-rentals", communityId: "beta", sourceUrl: "https://beta.gov/rentals", text: "The Beta Hall costs $25 per hour." })] };
   const result = searchCommunityIndex("How much does the hall cost?", { index, communityId: "beta" });
