@@ -93,7 +93,7 @@ test("approved-tree questions provide examples extracted from the current source
 });
 
 test("yard-art questions retain a readable summary while using current source limits", async () => {
-  for (const question of ["Yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
+  for (const question of ["Yard art?", "What are the rules for yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
     const result = await answer(question);
     assert.match(result.answer, /Front yard:/i, question);
     assert.match(result.answer, /no more than three ornaments/i, question);
