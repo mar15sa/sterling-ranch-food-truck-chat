@@ -334,6 +334,34 @@
       "url": "https://business.castlerock.org/events/calendar",
       "cadence": "daily",
       "notes": "Grand-opening and ribbon-cutting events provide opening dates for local stores, restaurants, and services."
+    },
+    {
+      "id": "ziggis-ken-caryl",
+      "name": "Ziggi's Coffee Ken Caryl location",
+      "community": "Littleton",
+      "kind": "business",
+      "url": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/",
+      "cadence": "daily",
+      "notes": "The business page carries the opening status, event dates, contact details, and later operating information."
+    },
+    {
+      "id": "bodybar-colorado-studios",
+      "name": "BODYBAR Pilates Colorado studios",
+      "community": "Douglas County and nearby",
+      "kind": "business",
+      "url": "https://bodybarpilates.com/studios/colorado/",
+      "cadence": "daily",
+      "notes": "Official studio list identifies coming-soon locations and links to location-specific opening pages."
+    },
+    {
+      "id": "swthz-highlands-ranch",
+      "name": "SWTHZ Highlands Ranch opening page",
+      "community": "Highlands Ranch",
+      "kind": "business",
+      "url": "https://sweathouz.com/highlands-ranch-book-now/",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "Official opening window, address, presale state, and eventual booking availability for the Highlands Ranch studio."
     }
   ]
 }
