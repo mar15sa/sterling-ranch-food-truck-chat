@@ -21,6 +21,10 @@ test("prohibition and approval answers receive explicit verdicts", () => {
     "prohibited"
   );
   assert.equal(
+    deriveAnswerVerdict("Short answer: Chickens aren't allowed.", supported),
+    "prohibited"
+  );
+  assert.equal(
     deriveAnswerVerdict("Short answer: A greenhouse requires DRC approval.", supported),
     "conditional"
   );
