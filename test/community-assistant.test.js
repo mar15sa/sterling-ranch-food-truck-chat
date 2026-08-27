@@ -155,6 +155,65 @@ test("contact answers preserve exact structured details even when AI synthesis w
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });
 
+test("structured contacts outrank an earlier confident rules or AI answer that omitted them", async () => {
+  const billing = source({
+    id: "alpha-water-billing-priority",
+    title: "Water & Sewer",
+    sourceType: "services",
+    text: "AmCoBi administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    facts: [
+      { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+      { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+    ],
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  const answer = await answerCommunityQuestion("Who do I contact about water billing?", {
+    index,
+    communityId: "alpha",
+    planCommunitySearch: false,
+    answerRulesQuestion: async () => ({
+      answer: "Contact the community office.",
+      answerMode: "grounded-ai-fallback",
+      answerVerdict: "verified",
+      confidence: { canAnswer: true },
+      sources: [],
+      actions: [],
+    }),
+  });
+
+  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.match(answer.answer, /\(833\) 772-2240/);
+  assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
+});
+
+test("an exact contact already grounded by the rules path is not replaced by a related community contact", async () => {
+  const currentContact = source({
+    id: "alpha-design-submissions",
+    title: "Design Review Applications",
+    sourceType: "services",
+    text: "Submit current applications to residentsubmit@alpha.gov.",
+    facts: [
+      { id: "submission-email", factKey: "design-submission-email", type: "email", value: "residentsubmit@alpha.gov", context: "Submit current applications to residentsubmit@alpha.gov." },
+    ],
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [currentContact] };
+  const answer = await answerCommunityQuestion("What is the DRC email address?", {
+    index,
+    communityId: "alpha",
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: For DRC questions, email submit@alphadrc.gov.",
+      answerMode: "deterministic",
+      answerVerdict: "informational",
+      confidence: { canAnswer: true },
+      sources: [{ title: "Current design rule", sourceUrl: "https://alpha.gov/rules", text: "For DRC questions, email submit@alphadrc.gov." }],
+      actions: [],
+    }),
+  });
+
+  assert.match(answer.answer, /submit@alphadrc\.gov/i);
+  assert.doesNotMatch(answer.answer, /residentsubmit@alpha\.gov/i);
+});
+
 test("tenant filtering prevents one community's sources leaking into another", () => {
   const index = { communityId: "alpha", sources: [source(), source({ id: "beta-rentals", communityId: "beta", sourceUrl: "https://beta.gov/rentals", text: "The Beta Hall costs $25 per hour." })] };
   const result = searchCommunityIndex("How much does the hall cost?", { index, communityId: "beta" });
