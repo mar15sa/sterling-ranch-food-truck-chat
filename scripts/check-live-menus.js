@@ -44,6 +44,8 @@ function normalizeTruckName(truckName = "") {
 }
 
 function isImplausibleTruckName(truckName = "") {
+  if (/[A-Za-z]+\s+s\s+[A-Z][A-Za-z]/.test(String(truckName))) return true;
+
   const normalized = normalizeTruckName(truckName).toLowerCase();
   if (!normalized || /^\d+$/.test(normalized)) return true;
   if (/^(st|nd|rd|th)$/.test(normalized)) return true;

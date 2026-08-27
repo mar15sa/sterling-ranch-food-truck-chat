@@ -2762,6 +2762,12 @@ const KNOWN_TRUCK_ALIASES = {
   "cousin s maine lobster": "cousins maine lobster",
 };
 
+const KNOWN_TRUCK_DISPLAY_NAMES = {
+  "cousin s maine lobster": "Cousins Maine Lobster",
+  "cousins maine lobster": "Cousins Maine Lobster",
+  "tula s tapas": "Tula's Tapas",
+};
+
 KNOWN_TRUCK_LINKS["billy s beefy burgers"] = KNOWN_TRUCK_LINKS["billys beefy burgers"];
 KNOWN_TRUCK_LINKS["shuggs bbq"] = KNOWN_TRUCK_LINKS["shugg s bbq"];
 KNOWN_TRUCK_LINKS.tacontento = KNOWN_TRUCK_LINKS.tacotento;
@@ -3250,6 +3256,10 @@ function hasKnownTruckData(truckName) {
 function knownTruckKey(truckName) {
   const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
   return KNOWN_TRUCK_ALIASES[key] || key;
+}
+
+function displayTruckName(truckName) {
+  return KNOWN_TRUCK_DISPLAY_NAMES[knownTruckKey(truckName)] || truckName;
 }
 
 function isNonTruckCalendarTitle(truckName) {
@@ -4324,7 +4334,9 @@ function buildAnswer({ question, targetDate, truck, calendar, menu, truckListing
     text: `For ${friendlyDate}, ${truckText}.${itemText}`,
     date: formatIso(targetDate),
     friendlyDate,
-    truck,
+    truck: truckListings.length
+      ? formatTruckList(truckListings.map((listing) => listing.name))
+      : displayTruckName(truck),
     trucks: truckListings,
     location: truckListings[0]?.location || "",
     sourceUrl: calendar.sourceUrl,
@@ -4381,10 +4393,14 @@ async function getAnswerForDate(question, targetDate) {
     uniqueListingInputs.push(listing);
   }
   const menus = await Promise.all(
-    uniqueListingInputs.map(async (listing) => ({
-      ...listing,
-      menu: await getMenuForTruck(listing.name),
-    }))
+    uniqueListingInputs.map(async (listing) => {
+      const displayName = displayTruckName(listing.name);
+      return {
+        ...listing,
+        name: displayName,
+        menu: await getMenuForTruck(displayName),
+      };
+    })
   );
   const menu = menus[0]?.menu || { links: [], items: [] };
   const data = buildAnswer({
