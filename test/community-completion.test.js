@@ -59,6 +59,7 @@ test("expected safety rejections do not create vague-question review work", asyn
 
 test("food-truck answers use the shared contract and cite schedule and menu evidence", () => {
   assert.equal(isFoodTruckQuestion("Who is the food truck tomorrow?"), true);
+  assert.equal(isFoodTruckQuestion("Can I run a food truck from my driveway?"), false);
   const answer = foodTruckAnswer({
     date: "2026-08-29",
     friendlyDate: "Saturday, August 29",
@@ -72,6 +73,36 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
   assert.match(answer.directAnswer, /Example Eats at Prospect Park/);
   assert.match(answer.keyDetails[0], /Tacos.*\$12/);
   assert.equal(answer.claims.every((claim) => claim.verified), true);
+});
+
+test("negative controls cannot become unrelated confident answers", async () => {
+  const options = {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    synthesizeCommunityAnswer: false,
+  };
+  const cases = [
+    ["good morning", /Hi! Ask me/i, /trash|pickup/i],
+    ["What can you do?", /community rules/i, /emergency|trash/i],
+    ["Tell me a joke", /can(?:not|'t) verify|can help/i, /pool contamination|trash pickup/i],
+    ["What about that?", /What would you like help with/i, /Lumiere|water supply/i],
+    ["Please help", /What would you like help with/i, /trash carts|Waste Connections/i],
+    ["What is the weather today?", /can(?:not|'t) verify|can help/i, /pool contamination/i],
+    ["Who is Diane Smethills?", /reliably identify/i, /clubhouse|water billing/i],
+    ["Can I run a food truck from my driveway?", /could not verify.*operating a food-truck business/i, /pool deck|listed food truck/i],
+    ["Can I remove a tree?", /could not verify blanket permission/i, /VPN hardware/i],
+    ["Can I paint my mailbox purple?", /could not verify permission to repaint/i, /same colors as the original/i],
+    ["What is the CAB Instagram account?", /could not verify.*Instagram/i, /clubhouse|trash carts/i],
+    ["Can I build a helipad in my yard?", /could not verify.*helipad/i, /utility shed.*8/i],
+  ];
+  for (const [question, include, exclude] of cases) {
+    const result = await answerCommunityQuestion(question, options);
+    assert.match(result.answer, include, question);
+    assert.doesNotMatch(result.answer, exclude, question);
+    assert.equal(result.confidence.canAnswer, false, question);
+  }
 });
 
 test("official service pages rescue questions the rulebook cannot answer", async () => {
