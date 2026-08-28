@@ -88,8 +88,13 @@ async function main() {
       question,
       intent: classifyCommunityIntent(question),
       current: { ...currentAssessment, answer: current.answer, mode: current.answerMode, sourceCount: current.sources?.length || 0 },
-      upgraded: { ...upgradedAssessment, answer: upgraded.answer, mode: upgraded.answerMode, sourceCount: upgraded.sources?.length || 0, sourceIds: (upgraded.sources || []).map((source) => source.id || source.nodeId || source.sourceUrl), actions: upgraded.actions || [] },
+      upgraded: { ...upgradedAssessment, answer: upgraded.answer, mode: upgraded.answerMode, sourceCount: upgraded.sources?.length || 0, sourceIds: (upgraded.sources || []).map((source) => source.id || source.nodeId || source.sourceUrl), actions: upgraded.actions || [], claims: upgraded.claims || [] },
       scoreChange: upgradedAssessment.score - currentAssessment.score,
+      changeReason: upgradedAssessment.score > currentAssessment.score
+        ? "The upgraded answer passed more usefulness and grounding checks."
+        : upgradedAssessment.score < currentAssessment.score
+          ? "The upgraded answer lost a required usefulness or grounding check."
+          : "The upgraded answer retained the prior quality score.",
     });
   }
   const report = {
@@ -100,6 +105,7 @@ async function main() {
     improved: rows.filter((row) => row.scoreChange > 0).length,
     retained: rows.filter((row) => row.scoreChange === 0).length,
     regressed: rows.filter((row) => row.scoreChange < 0).length,
+    unsupportedClaimCount: rows.reduce((sum, row) => sum + (row.upgraded.claims || []).filter((claim) => !claim.verified).length, 0),
     rows,
   };
   if (process.argv.includes("--write")) fs.writeFileSync(outputPath, `${JSON.stringify(report, null, 2)}\n`);
@@ -115,8 +121,9 @@ async function main() {
     if (report.questionCount < 200) releaseFailures.push(`evaluation corpus unexpectedly shrank to ${report.questionCount} questions`);
     if (report.regressed) releaseFailures.push(`${report.regressed} answer regressions`);
     if (report.upgraded.average < report.current.average) releaseFailures.push("upgraded average is lower than the current assistant");
-    const veryLow = rows.filter((row) => row.upgraded.score < 3);
-    if (veryLow.length) releaseFailures.push(`${veryLow.length} upgraded answers scored below 3`);
+    const belowGood = rows.filter((row) => row.upgraded.score < 4);
+    if (belowGood.length) releaseFailures.push(`${belowGood.length} upgraded answers scored below Good`);
+    if (report.unsupportedClaimCount) releaseFailures.push(`${report.unsupportedClaimCount} unsupported claims were returned`);
     if (releaseFailures.length) {
       console.error(`Community Assistant release gate failed: ${releaseFailures.join("; ")}.`);
       process.exitCode = 1;

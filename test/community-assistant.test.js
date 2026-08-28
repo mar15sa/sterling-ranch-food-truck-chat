@@ -126,6 +126,23 @@ test("contact answers choose the fact whose context matches the requested servic
   assert.equal(answer.actions[0].url, faq.sourceUrl);
 });
 
+test("contact answers honor whether the resident asked for email or phone", async () => {
+  const billing = source({
+    id: "alpha-water-contact-types",
+    title: "Water & Sewer",
+    sourceType: "services",
+    text: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    facts: [
+      { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+      { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+    ],
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  const answer = await answerCommunityQuestion("What email should I use for water billing?", { index, communityId: "alpha", planCommunitySearch: false, synthesizeCommunityAnswer: false });
+  assert.match(answer.directAnswer, /ClientCare@AmCoBi\.com/i);
+  assert.doesNotMatch(answer.directAnswer, /call\s+\d/i);
+});
+
 test("contact answers preserve exact structured details even when AI synthesis would omit them", async () => {
   const billing = source({
     id: "alpha-water-billing",

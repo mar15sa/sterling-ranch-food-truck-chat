@@ -7,6 +7,7 @@ const rulesTemplate = document.querySelector("#rulesAnswerTemplate");
 const rulesStarters = document.querySelector("#rulesStarters");
 const rulesDock = document.querySelector("#rulesDock");
 const startersToggle = document.querySelector("#startersToggle");
+const rulesStartOver = document.querySelector("#rulesStartOver");
 const statusDot = document.querySelector("#statusDot");
 const statusHeadline = document.querySelector("#statusHeadline");
 const statusToggle = document.querySelector("#statusToggle");
@@ -23,6 +24,31 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 let conversationStarted = false;
 let statusPollTimer = null;
 let statusPollAttempts = 0;
+const CONTEXT_STORAGE_KEY = "sterling-community-conversation-v1";
+let conversationContext = loadConversationContext();
+
+function loadConversationContext() {
+  try {
+    const value = JSON.parse(sessionStorage.getItem(CONTEXT_STORAGE_KEY) || "[]");
+    return Array.isArray(value) ? value.slice(-3) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveConversationContext() {
+  try { sessionStorage.setItem(CONTEXT_STORAGE_KEY, JSON.stringify(conversationContext.slice(-3))); } catch { /* session storage may be blocked */ }
+}
+
+function rememberExchange(question, data) {
+  conversationContext.push({
+    question: String(question).slice(0, 500),
+    resolvedQuestion: String(data.resolvedQuestion || question).slice(0, 500),
+    answer: String(data.directAnswer || data.answer || "").slice(0, 1200),
+  });
+  conversationContext = conversationContext.slice(-3);
+  saveConversationContext();
+}
 
 function cleanQuestionForAnalytics(question) {
   return String(question || "")
@@ -520,7 +546,7 @@ async function askRules(question, source = "typed") {
     const response = await fetch("/api/community/ask", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify({ question, context: conversationContext }),
     });
     const text = await response.text();
     let data;
@@ -537,6 +563,7 @@ async function askRules(question, source = "typed") {
 
     thinking.remove();
     addAnswer(data, question);
+    rememberExchange(question, data);
     trackEvent("rules_answer_received", {
       answer_mode: data.answerMode || "deterministic",
       can_answer: Boolean(data.confidence?.canAnswer),
@@ -628,6 +655,19 @@ startersToggle.addEventListener("click", () => {
   startersToggle.textContent = open ? "Hide example questions" : "Show example questions";
 });
 
+rulesStartOver.addEventListener("click", () => {
+  conversationContext = [];
+  saveConversationContext();
+  rulesMessages.replaceChildren();
+  conversationStarted = false;
+  rulesDock.classList.remove("has-conversation", "starters-open");
+  startersToggle.setAttribute("aria-expanded", "false");
+  startersToggle.textContent = "Show example questions";
+  addBotText("Ask me a new question about Sterling Ranch rules, services, facilities, events, pool status, or food trucks.");
+  rulesQuestion.focus();
+  trackEvent("rules_conversation_reset");
+});
+
 statusToggle.addEventListener("click", () => {
   const open = statusDetail.hasAttribute("hidden");
   statusDetail.toggleAttribute("hidden", !open);
@@ -671,9 +711,17 @@ loadStatus();
 
 const sharedQuestion = new URLSearchParams(window.location.search).get("q")?.trim() || "";
 if (sharedQuestion) {
+  conversationContext = [];
+  saveConversationContext();
   askRules(sharedQuestion, "shared_link");
+} else if (conversationContext.length) {
+  startConversation();
+  conversationContext.forEach((exchange) => {
+    addUserMessage(exchange.question);
+    addBotText(`Short answer: ${exchange.answer}`);
+  });
 } else {
   addBotText(
-    "Ask me about Sterling Ranch rules, services, forms, facilities, events, or current community information. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Try one of the examples below."
+    "Ask me about Sterling Ranch rules, services, forms, facilities, events, pool status, or food trucks. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Try one of the examples below."
   );
 }

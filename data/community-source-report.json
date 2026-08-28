@@ -1,0 +1,2983 @@
+{
+  "checkedAt": "2026-08-28T20:08:23.366Z",
+  "trustedFile": "community-index.json",
+  "candidateFile": "community-index.candidate.json",
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "13 possible fact groups require answer-time authority resolution."
+  ],
+  "diff": {
+    "trustedFingerprint": "7b08785f482415007719b00ca989a117bbab5f0c942467ba1d3a93a6f4e5b044",
+    "candidateFingerprint": "1b379067ffbe4ee95a750ad1eeec028665fd8bb2d978e5be4eaeb7bbfec49e4f",
+    "changedSourceIds": [
+      "sterling-ranch-sterling-ranch-community-authority-board-co-1",
+      "sterling-ranch-important-contact-information-1",
+      "sterling-ranch-important-contact-information-2",
+      "sterling-ranch-trash-recycling-1",
+      "sterling-ranch-trash-recycling-2",
+      "sterling-ranch-overlook-outdoor-pool-1",
+      "sterling-ranch-overlook-outdoor-pool-2",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-1",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-3",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-5",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-13",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-16",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-21",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-24",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-31",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+      "sterling-ranch-faqs-civicplus-cms-faq-1",
+      "sterling-ranch-faqs-civicplus-cms-faq-2",
+      "sterling-ranch-faqs-civicplus-cms-faq-3",
+      "sterling-ranch-faqs-civicplus-cms-faq-4",
+      "sterling-ranch-faqs-civicplus-cms-faq-5",
+      "sterling-ranch-faqs-civicplus-cms-faq-6",
+      "sterling-ranch-faqs-civicplus-cms-faq-7",
+      "sterling-ranch-faqs-civicplus-cms-faq-8",
+      "sterling-ranch-faqs-civicplus-cms-faq-9",
+      "sterling-ranch-faqs-civicplus-cms-faq-10",
+      "sterling-ranch-faqs-civicplus-cms-faq-11",
+      "sterling-ranch-faqs-civicplus-cms-faq-12",
+      "sterling-ranch-faqs-civicplus-cms-faq-13",
+      "sterling-ranch-faqs-civicplus-cms-faq-14",
+      "sterling-ranch-faqs-civicplus-cms-faq-15",
+      "sterling-ranch-faqs-civicplus-cms-faq-16",
+      "sterling-ranch-faqs-civicplus-cms-faq-17",
+      "sterling-ranch-faqs-civicplus-cms-faq-18",
+      "sterling-ranch-faqs-civicplus-cms-faq-19",
+      "sterling-ranch-faqs-civicplus-cms-faq-20",
+      "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-1",
+      "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-2",
+      "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-3",
+      "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-4",
+      "sterling-ranch-documents-applications-and-forms-1",
+      "sterling-ranch-water-rear-yard-establishment-notification-2021-august-2",
+      "sterling-ranch-backyard-utility-sheds-2",
+      "sterling-ranch-trash-screening-1",
+      "sterling-ranch-trash-screening-2",
+      "sterling-ranch-connector-official-calendar",
+      "sterling-ranch-connector-official-rules",
+      "sterling-ranch-connector-facility-rentals",
+      "sterling-ranch-connector-pool-status",
+      "sterling-ranch-action-submit-drc-application"
+    ],
+    "addedSourceIds": [],
+    "removedSourceIds": [
+      "sterling-ranch-faqs-civicplus-cms-faq-21"
+    ],
+    "factChanges": [
+      {
+        "sourceId": "sterling-ranch-sterling-ranch-community-authority-board-co-1",
+        "factKey": "link-view-all-events-https-sterlingranchcab-com-calendar-aspx-cid-28-24-29-14-23:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/calendar.aspx?CID=28,24,29,14,23"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "phone-ed-emergency-such-as-an-irrigation-leak-or-community-space-safety-hazards-please-cal:phone",
+        "before": null,
+        "after": "720-661-9694"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "phone-er-hours-emergency-720-661-9694-press-2-monday-friday-8-00-am-5-00-pm-information-de:phone",
+        "before": null,
+        "after": "303-882-7603"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "phone-8-00-am-5-00-pm-information-desk-at-the-sterling-center-303-882-7603-daily-10-00-am-:phone",
+        "before": null,
+        "after": "720-728-7257"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "phone-douglas-count-y-sheriff-non-emergency-line-303-660-7500-xcel-energy-power-and-gas-is:phone",
+        "before": "800-895-2999",
+        "after": "800-895-4999"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "phone-on-emergency-line-303-660-7500-xcel-energy-power-and-gas-issues-or-outages-800-895-4:phone",
+        "before": null,
+        "after": "800-895-2999"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "email-pm-information-desk-at-the-sterling-center-303-882-7603-daily-10-00-am-5-00-pm-overl:email",
+        "before": null,
+        "after": "recreation@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "time-resident-resource-center-720-661-9694-after-hours-emergency-720-661-9694-press-2-mond:time",
+        "before": "10:00 AM",
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-1",
+        "factKey": "time-720-661-9694-press-2-monday-friday-8-00-am-5-00-pm-information-desk-at-the-sterling-c:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-um-fiber-centurylink-833-926-1289-colorado-parks-and-wildlife-business-hours-303-791:phone",
+        "before": null,
+        "after": "303-239-4501"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-s-and-smart-home-help-833-926-1289-internet-outage-troubleshooting-waste-connections:phone",
+        "before": null,
+        "after": "303-288-2100"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-ste-connections-trash-removal-and-recycling-303-288-2100-dreamfinder-townhomes-servi:phone",
+        "before": null,
+        "after": "720-571-1440"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-571-1440-work-order-requests-violation-responses-general-inquiries-tripointe-townhom:phone",
+        "before": null,
+        "after": "720-667-6468"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-e-management-group-720-667-6468-work-order-requests-violation-responses-general-inqu:phone",
+        "before": null,
+        "after": "720) 974-4238"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-equests-violation-responses-general-inquiries-lennar-townhomes-msi-720-974-4238-doug:phone",
+        "before": null,
+        "after": "303-660-7500"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-msi-720-974-4238-douglas-county-animal-control-303-660-7500-douglas-county-public-wo:phone",
+        "before": null,
+        "after": "303-660-7480"
+      },
+      {
+        "sourceId": "sterling-ranch-important-contact-information-2",
+        "factKey": "phone-county-animal-control-303-660-7500-douglas-county-public-works-snow-removal-issues-3:phone",
+        "before": null,
+        "after": "800-222-1222"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-1",
+        "factKey": "schedule-for-providence-village-trash-is-picked-up-weekly-on-changing-day-and-recycling-is:schedule",
+        "before": null,
+        "after": "For Providence Village , trash is picked up weekly on Monday, and recycling is picked up every other Monday."
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-1",
+        "factKey": "schedule-for-ascent-village-trash-is-picked-up-weekly-on-changing-day-and-recycling-is-pic:schedule",
+        "before": null,
+        "after": "For Ascent Village, trash is picked up weekly on Tuesday, and recycling is picked up every other Tuesday."
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-1",
+        "factKey": "schedule-for-prospect-village-trash-is-picked-up-weekly-on-changing-day-and-recycling-is-p:schedule",
+        "before": null,
+        "after": "For Prospect Village , trash is picked up weekly on Thursday, and recycling is picked up every other Thursday."
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-1",
+        "factKey": "link-please-submit-this-form-https-www-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-1",
+        "factKey": "link-bulk-item-pick-up-https-www-wasteconnections-com-contact-us:link",
+        "before": null,
+        "after": "https://www.wasteconnections.com/contact-us/"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-2",
+        "factKey": "email-if-you-still-do-not-receive-trash-carts-after-ten-days-since-closing-please-contact-:email",
+        "before": null,
+        "after": "info@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-2",
+        "factKey": "link-please-submit-this-form-https-www-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-2",
+        "factKey": "link-bulk-item-pick-up-https-www-wasteconnections-com-contact-us:link",
+        "before": null,
+        "after": "https://www.wasteconnections.com/contact-us/"
+      },
+      {
+        "sourceId": "sterling-ranch-overlook-outdoor-pool-1",
+        "factKey": "limit-00-am-8-45-pm-sunday-7-00-am-8-45-pm-lifeguards-on-duty-9-00-am-8-45-pm-guest-passes:limit",
+        "before": null,
+        "after": "25 guest"
+      },
+      {
+        "sourceId": "sterling-ranch-overlook-outdoor-pool-1",
+        "factKey": "link-can-i-reserve-the-pool-for-a-party-https-sterlingranchcab-com-faq-aspx-qid-119:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/Faq.aspx?QID=119"
+      },
+      {
+        "sourceId": "sterling-ranch-overlook-outdoor-pool-2",
+        "factKey": "link-can-i-reserve-the-pool-for-a-party-https-sterlingranchcab-com-faq-aspx-qid-119:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/Faq.aspx?QID=119"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-1",
+        "factKey": "time-sday-thursday-friday-saturday-26-27-28-29-30-31-01-tv-game-show-night-category-adult-:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-1",
+        "factKey": "time-day-friday-saturday-26-27-28-29-30-31-01-tv-game-show-night-category-adult-events-tv-:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-1",
+        "factKey": "date-e-show-night-category-adult-events-tv-game-show-night-when-7-00-pm-9-00-pm-location-s:date",
+        "before": null,
+        "after": "August 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-r-ave-littleton-co-80125-02-03-movie-night-at-ranch-social-category-community-events-:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-leton-co-80125-02-03-movie-night-at-ranch-social-category-community-events-movie-nigh:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-00-ranch-social-8155-piney-river-ave-sterling-ranch-co-80125-landscape-class-category:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-avenue-sterling-ranch-co-80125-04-community-standards-committee-category-meetings-com:time",
+        "before": null,
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-erling-ranch-co-80125-04-community-standards-committee-category-meetings-community-st:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-all-7853-piney-river-avenue-sterling-ranch-co-80125-05-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-eagle-river-st-sterling-ranch-co-80125-national-night-out-category-community-events-n:time",
+        "before": null,
+        "after": "7:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-enter-8155-piney-river-ave-sterling-ranch-co-80125-trivia-night-category-community-ev:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-nue-sterling-ranch-co-80125-06-design-review-committee-meeting-category-meetings-desi:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "time-ng-ranch-co-80125-06-design-review-committee-meeting-category-meetings-design-review-:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "date-cial-category-community-events-movie-night-at-ranch-social-when-6-30-pm-8-30-pm-locat:date",
+        "before": null,
+        "after": "August 3, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "date-ds-committee-category-meetings-community-standards-committee-when-5-00-pm-7-00-pm-loc:date",
+        "before": null,
+        "after": "August 4, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 5, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "factKey": "date-g-category-meetings-design-review-committee-meeting-when-9-00-am-11-00-am-location-ov:date",
+        "before": null,
+        "after": "August 6, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-7853-piney-river-avenue-littleton-co-80125-07-sterling-ranch-days-category-community-:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-y-river-avenue-littleton-co-80125-07-sterling-ranch-days-category-community-events-st:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-nch-co-80125-mutton-bustin-sterling-ranch-days-category-community-events-mutton-busti:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-25-mutton-bustin-sterling-ranch-days-category-community-events-mutton-bustin-sterling:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-r-st-sterling-ranch-co-80125-saddles-spurs-horse-parade-category-community-events-sad:time",
+        "before": null,
+        "after": "8:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-documentcenter-view-2634-sterling-ranch-co-80125-10-11-active-minds-category-educatio:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-rling-ranch-co-80125-cancelled-design-advisory-committee-category-meetings-cancelled-:time",
+        "before": null,
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-h-co-80125-cancelled-design-advisory-committee-category-meetings-cancelled-design-adv:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-all-7853-piney-river-avenue-sterling-ranch-co-80125-12-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-river-ave-eagle-river-st-sterling-ranch-co-80125-trivia-night-category-community-even:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-er-8155-piney-river-ave-littleton-co-80125-new-homeowner-orientation-category-meeting:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-venue-sterling-ranch-co-80125-13-construction-committee-meeting-category-meetings-con:time",
+        "before": null,
+        "after": "10:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-ing-ranch-co-80125-13-construction-committee-meeting-category-meetings-construction-c:time",
+        "before": null,
+        "after": "12:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-g-id-234-508-239-596-9-passcode-nn7am9et-finance-committee-meeting-category-meetings-:time",
+        "before": null,
+        "after": "1:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "time-508-239-596-9-passcode-nn7am9et-finance-committee-meeting-category-meetings-finance-c:time",
+        "before": null,
+        "after": "3:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "date-anch-days-category-community-events-sterling-ranch-days-when-4-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 7, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "date-ity-events-sterling-ranch-days-when-4-00-pm-7-00-pm-location-providence-park-more-det:date",
+        "before": null,
+        "after": "August 9, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "date-ch-days-category-community-events-mutton-bustin-sterling-ranch-days-when-9-00-am-10-0:date",
+        "before": null,
+        "after": "August 8, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "date-10-11-active-minds-category-education-active-minds-when-10-00-am-11-00-am-location-ov:date",
+        "before": null,
+        "after": "August 11, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 12, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "factKey": "date-when-10-30-am-12-00-pm-location-join-the-meeting-now-meeting-id-234-508-239-596-9-pas:date",
+        "before": null,
+        "after": "August 13, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-5",
+        "factKey": "time-343054473-united-states-chicago-find-a-local-number-phone-conference-id-343-054-473-m:time",
+        "before": null,
+        "after": "1:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-5",
+        "factKey": "time-3-united-states-chicago-find-a-local-number-phone-conference-id-343-054-473-more-deta:time",
+        "before": null,
+        "after": "3:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-5",
+        "factKey": "date-e-1-872-888-7894-343054473-united-states-chicago-find-a-local-number-phone-conference:date",
+        "before": null,
+        "after": "August 13, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-nd-a-local-number-phone-conference-id-343-054-473-14-firepit-fridays-category-communi:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-number-phone-conference-id-343-054-473-14-firepit-fridays-category-community-events-f:time",
+        "before": null,
+        "after": "7:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-155-piney-river-ave-sterling-ranch-co-80125-15-comedy-night-18-category-adult-events-:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-ing-ranch-cab-quarterly-evening-meeting-category-meetings-sterling-ranch-cab-quarterl:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-ling-center-8155-piney-river-ave-littleton-co-80125-19-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-00-sterling-center-8155-piney-river-ave-littleton-co-80125-20-bingo-night-category-co:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-ng-center-8155-piney-river-ave-littleton-co-80125-20-bingo-night-category-community-e:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-y-river-ave-littleton-co-80125-design-review-committee-meeting-category-meetings-desi:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-e-littleton-co-80125-design-review-committee-meeting-category-meetings-design-review-:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-ey-river-avenue-sterling-ranch-co-80125-21-ascent-concert-series-category-community-e:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "time-venue-sterling-ranch-co-80125-21-ascent-concert-series-category-community-events-asce:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "date-firepit-fridays-category-community-events-firepit-fridays-when-5-30-pm-7-30-pm-locati:date",
+        "before": null,
+        "after": "August 14, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "date-comedy-night-18-category-adult-events-comedy-night-18-when-7-30-pm-9-00-pm-location-s:date",
+        "before": null,
+        "after": "August 15, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "date-y-meetings-sterling-ranch-cab-quarterly-evening-meeting-when-5-30-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 18, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 19, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "date-25-20-bingo-night-category-community-events-bingo-night-when-6-30-pm-8-30-pm-location:date",
+        "before": null,
+        "after": "August 20, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "factKey": "date-ory-community-events-ascent-concert-series-when-6-00-pm-8-00-pm-location-ascent-villa:date",
+        "before": null,
+        "after": "August 21, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "factKey": "time-25-sterling-ranch-cab-regular-board-meeting-category-meetings-sterling-ranch-cab-regu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "factKey": "time-m-3-00-pm-overlook-virtual-sterling-ranch-cab-regular-board-meeting-2026-08-21t13-00-:time",
+        "before": null,
+        "after": "1:00pm"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "factKey": "date-t-4a-4e-and-subdistrict-7a-7e-regular-board-meetings-when-12-00-pm-1-00-pm-location-o:date",
+        "before": null,
+        "after": "August 21, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "time-co-80125-22-23-24-25-cancelled-design-advisory-committee-category-meetings-cancelled-:time",
+        "before": null,
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "time-2-23-24-25-cancelled-design-advisory-committee-category-meetings-cancelled-design-adv:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "time-all-7853-piney-river-avenue-sterling-ranch-co-80125-26-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "time-iney-river-avenue-sterling-ranch-co-80125-26-farmer-s-market-category-community-event:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "time-river-ave-eagle-river-st-sterling-ranch-co-80125-trivia-night-category-community-even:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "date-ittee-category-meetings-cancelled-design-advisory-committee-when-5-00-pm-6-00-pm-loca:date",
+        "before": null,
+        "after": "August 25, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 26, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-venue-sterling-ranch-co-80125-27-neighborhood-watch-meeting-category-community-events:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-ling-ranch-co-80125-27-neighborhood-watch-meeting-category-community-events-neighborh:time",
+        "before": null,
+        "after": "7:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-erling-ranch-co-80125-28-karaoke-night-kids-only-category-community-events-karaoke-ni:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-y-river-ave-littleton-co-80125-karaoke-night-adults-only-category-community-events-ka:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-e-littleton-co-80125-karaoke-night-adults-only-category-community-events-karaoke-nigh:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-enter-8155-piney-river-ave-littleton-co-80125-29-atlas-coffee-tasting-category-adult-:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-piney-river-ave-littleton-co-80125-29-atlas-coffee-tasting-category-adult-events-atla:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-0-00-ranch-social-8155-piney-river-ave-sterling-ranch-co-80125-splash-bash-category-c:time",
+        "before": null,
+        "after": "12:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-social-8155-piney-river-ave-sterling-ranch-co-80125-splash-bash-category-community-ev:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "time-ue-sterling-ranch-co-80125-dive-in-movie-night-moana-2-category-community-events-dive:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "date-meeting-category-community-events-neighborhood-watch-meeting-when-5-30-pm-7-30-pm-loc:date",
+        "before": null,
+        "after": "August 27, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "date-nly-category-community-events-karaoke-night-kids-only-when-5-30-pm-6-30-pm-location-s:date",
+        "before": null,
+        "after": "August 28, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "factKey": "date-coffee-tasting-category-adult-events-atlas-coffee-tasting-when-9-00-am-10-00-am-locat:date",
+        "before": null,
+        "after": "August 29, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-res:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+        "factKey": "time-l-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+        "factKey": "time-7853-piney-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident:time",
+        "before": null,
+        "after": "1:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+        "factKey": "time-y-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident-clubs-ca:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+        "factKey": "date-nch-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 10, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-11-active-minds-category-e:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-hall-7853-piney-river-avenue-sterling-ranch-co-80125-11-active-minds-category-educati:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-piney-river-avenue-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-sc:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-er-avenue-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-e-littleton-co-80125-cancelled-design-advisory-committee-category-meetings-cancelled-:time",
+        "before": null,
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-n-co-80125-cancelled-design-advisory-committee-category-meetings-cancelled-design-adv:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-ney-river-avenue-sterling-ranch-co-80125-mat-pilates-for-boomers-category-resident-cl:time",
+        "before": null,
+        "after": "8:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "time-avenue-sterling-ranch-co-80125-mat-pilates-for-boomers-category-resident-clubs-mat-pi:time",
+        "before": null,
+        "after": "9:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "date-25-11-active-minds-category-education-active-minds-when-10-00-am-11-00-am-location-ov:date",
+        "before": null,
+        "after": "August 11, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-all-7853-piney-river-avenue-sterling-ranch-co-80125-12-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-iney-river-avenue-sterling-ranch-co-80125-12-farmer-s-market-category-community-event:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-river-ave-eagle-river-st-sterling-ranch-co-80125-trivia-night-category-community-even:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-ter-8155-piney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-iney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-er-8155-piney-river-ave-littleton-co-80125-new-homeowner-orientation-category-meeting:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-8-12t17-30-00-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-tai-chi-cate:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-00-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-tai-chi-category-reside:time",
+        "before": null,
+        "after": "9:45 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-res:time",
+        "before": "11:00 AM",
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "time-l-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 12, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-13",
+        "factKey": "time-3-piney-river-avenue-sterling-ranch-co-80125-neighborhood-run-club-category-resident-:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-13",
+        "factKey": "time-ver-avenue-sterling-ranch-co-80125-neighborhood-run-club-category-resident-clubs-neig:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "phone-microsoft-teams-need-help-join-the-meeting-now-meeting-id-237-649-491-832-18-passcod:phone",
+        "before": null,
+        "after": "1 872-888-7894"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "time-com-littleton-co-80125-13-food-truck-schedule-category-food-truck-schedule-food-truck:time",
+        "before": "3:30 PM",
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "time-ney-river-ave-littleton-co-80125-construction-committee-meeting-category-meetings-con:time",
+        "before": null,
+        "after": "10:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "time-ve-littleton-co-80125-construction-committee-meeting-category-meetings-construction-c:time",
+        "before": null,
+        "after": "12:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "time-g-id-234-508-239-596-9-passcode-nn7am9et-finance-committee-meeting-category-meetings-:time",
+        "before": null,
+        "after": "1:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "time-508-239-596-9-passcode-nn7am9et-finance-committee-meeting-category-meetings-finance-c:time",
+        "before": null,
+        "after": "3:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "factKey": "date-when-10-30-am-12-00-pm-location-join-the-meeting-now-meeting-id-234-508-239-596-9-pas:date",
+        "before": null,
+        "after": "August 13, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-cal-number-phone-conference-id-343-054-473-mah-jongg-for-boomers-category-resident-cl:time",
+        "before": null,
+        "after": "2:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-phone-conference-id-343-054-473-mah-jongg-for-boomers-category-resident-clubs-mah-jon:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-all-7853-piney-river-avenue-sterling-ranch-co-80125-14-firepit-fridays-category-commu:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-iney-river-avenue-sterling-ranch-co-80125-14-firepit-fridays-category-community-event:time",
+        "before": null,
+        "after": "7:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-river-ave-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-river-ave-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-fl:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "time-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-floor-mat-pi:time",
+        "before": null,
+        "after": "10:15 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "date-gg-for-boomers-category-resident-clubs-mah-jongg-for-boomers-when-2-00-pm-4-00-pm-loc:date",
+        "before": null,
+        "after": "August 13, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "date-firepit-fridays-category-community-events-firepit-fridays-when-5-30-pm-7-30-pm-locati:date",
+        "before": null,
+        "after": "August 14, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-16",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-res:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-16",
+        "factKey": "time-l-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-16",
+        "factKey": "date-nch-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 14, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-pool-7853-piney-river-avenue-sterling-ranch-co-80125-15-comedy-night-18-category-adul:time",
+        "before": null,
+        "after": "7:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-piney-river-avenue-sterling-ranch-co-80125-15-comedy-night-18-category-adult-events-c:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-ter-8155-piney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-iney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-00-00-sterling-center-8155-piney-river-ave-littleton-co-80125-yoga-w-laura-category-r:time",
+        "before": null,
+        "after": "7:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-rling-center-8155-piney-river-ave-littleton-co-80125-yoga-w-laura-category-resident-c:time",
+        "before": null,
+        "after": "8:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-sterling-center-8155-piney-river-ave-littleton-co-80125-sr-crochet-club-category-resi:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-eat-hall-7853-piney-river-avenue-sterling-ranch-co-80125-yoga-with-laura-category-res:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-0-00-sterling-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-r:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "time-ng-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "date-comedy-night-18-category-adult-events-comedy-night-18-when-7-30-pm-9-00-pm-location-s:date",
+        "before": null,
+        "after": "August 15, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "date-0125-sr-crochet-club-category-resident-clubs-sr-crochet-club-when-3-00-pm-4-00-pm-loc:date",
+        "before": null,
+        "after": "August 16, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "factKey": "date-ton-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 17, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "factKey": "email-s-august-17-2026-7-00-pm-8-30-pm-great-hall-canceled-sr-cooking-club-2026-08-17t19-0:email",
+        "before": null,
+        "after": "fostermomhasse@aol.com"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "factKey": "time-7853-piney-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident:time",
+        "before": null,
+        "after": "1:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "factKey": "time-y-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident-clubs-ca:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "factKey": "time-y-river-avenue-sterling-ranch-co-80125-canceled-sr-cooking-club-category-resident-clu:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "factKey": "time-enue-sterling-ranch-co-80125-canceled-sr-cooking-club-category-resident-clubs-cancele:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "factKey": "date-asta-for-boomers-category-resident-clubs-canasta-for-boomers-when-1-00-pm-3-00-pm-loc:date",
+        "before": null,
+        "after": "August 17, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-ney-river-avenue-sterling-ranch-co-80125-18-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-avenue-sterling-ranch-co-80125-18-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-0125-sterling-ranch-cab-quarterly-evening-meeting-category-meetings-sterling-ranch-ca:time",
+        "before": null,
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-ing-ranch-cab-quarterly-evening-meeting-category-meetings-sterling-ranch-cab-quarterl:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-river-ave-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-fl:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-floor-mat-pi:time",
+        "before": null,
+        "after": "10:15 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-3-piney-river-avenue-sterling-ranch-co-80125-book-club-for-boomers-category-resident-:time",
+        "before": null,
+        "after": "1:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "time-ver-avenue-sterling-ranch-co-80125-book-club-for-boomers-category-resident-clubs-book:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "factKey": "date-y-meetings-sterling-ranch-cab-quarterly-evening-meeting-when-5-30-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 18, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-all-7853-piney-river-avenue-sterling-ranch-co-80125-19-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-iney-river-avenue-sterling-ranch-co-80125-19-farmer-s-market-category-community-event:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-river-ave-eagle-river-st-sterling-ranch-co-80125-trivia-night-category-community-even:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-ter-8155-piney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-iney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-0-00-sterling-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-r:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-ng-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "time-ol-7853-piney-river-avenue-sterling-ranch-co-80125-farkle-for-boomers-category-reside:time",
+        "before": null,
+        "after": "2:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 19, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-21",
+        "factKey": "time-3-piney-river-avenue-sterling-ranch-co-80125-neighborhood-run-club-category-resident-:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-21",
+        "factKey": "time-ver-avenue-sterling-ranch-co-80125-neighborhood-run-club-category-resident-clubs-neig:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-com-littleton-co-80125-book-club-evening-edition-category-resident-clubs-book-club-ev:time",
+        "before": "6:00 PM",
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-20-bingo-night-category-co:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-ter-8155-piney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-iney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-y-river-ave-littleton-co-80125-design-review-committee-meeting-category-meetings-desi:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-e-littleton-co-80125-design-review-committee-meeting-category-meetings-design-review-:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-3-piney-river-avenue-sterling-ranch-co-80125-mah-jongg-for-boomers-category-resident-:time",
+        "before": null,
+        "after": "2:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "time-ey-river-avenue-sterling-ranch-co-80125-21-ascent-concert-series-category-community-e:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "date-ng-edition-category-resident-clubs-book-club-evening-edition-when-7-00-pm-8-30-pm-loc:date",
+        "before": null,
+        "after": "August 19, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "date-25-20-bingo-night-category-community-events-bingo-night-when-6-30-pm-8-30-pm-location:date",
+        "before": null,
+        "after": "August 20, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "factKey": "date-ory-community-events-ascent-concert-series-when-6-00-pm-8-00-pm-location-ascent-villa:date",
+        "before": null,
+        "after": "August 21, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "time-25-sterling-ranch-cab-regular-board-meeting-category-meetings-sterling-ranch-cab-regu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "time-m-3-00-pm-overlook-virtual-sterling-ranch-cab-regular-board-meeting-2026-08-21t13-00-:time",
+        "before": null,
+        "after": "1:00pm"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "time-er-avenue-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-fl:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "time-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-floor-mat-pi:time",
+        "before": null,
+        "after": "10:15 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-res:time",
+        "before": "11:00 AM",
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "time-l-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "factKey": "date-t-4a-4e-and-subdistrict-7a-7e-regular-board-meetings-when-12-00-pm-1-00-pm-location-o:date",
+        "before": null,
+        "after": "August 21, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-24",
+        "factKey": "time-nch-co-80125-fac-friday-afternoon-club-for-boomers-category-resident-clubs-fac-friday:time",
+        "before": null,
+        "after": "4:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-24",
+        "factKey": "time-25-fac-friday-afternoon-club-for-boomers-category-resident-clubs-fac-friday-afternoon:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-24",
+        "factKey": "date-ategory-resident-clubs-fac-friday-afternoon-club-for-boomers-when-4-30-pm-6-30-pm-loc:date",
+        "before": null,
+        "after": "August 21, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-24",
+        "factKey": "schedule-for-boomers-when-4-30-pm-6-30-pm-location-great-hall-more-details-august-21-2026-:schedule",
+        "before": null,
+        "after": "for Boomers When: 4:30 PM - 6:30 PM Location: Great Hall More Details August 21, 2026, 4:30 PM - 6:30 PM @ Great Hall FAC Friday Afternoon Club for Boomers 2026-08-21T16:30:00 Gather with other SR Boomers to socialize, relax and laugh."
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-ney-river-avenue-sterling-ranch-co-80125-22-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-avenue-sterling-ranch-co-80125-22-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-00-00-sterling-center-8155-piney-river-ave-littleton-co-80125-yoga-w-laura-category-r:time",
+        "before": null,
+        "after": "7:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-rling-center-8155-piney-river-ave-littleton-co-80125-yoga-w-laura-category-resident-c:time",
+        "before": null,
+        "after": "8:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-sterling-center-8155-piney-river-ave-littleton-co-80125-yoga-with-laura-category-resi:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-0-00-sterling-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-r:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "time-ng-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "date-n-co-80125-yoga-w-laura-category-resident-clubs-yoga-w-laura-when-7-30-am-8-30-am-loc:date",
+        "before": null,
+        "after": "August 22, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "date-category-resident-clubs-yoga-with-laura-when-7-00-pm-8-00-pm-location-yoga-with-laura:date",
+        "before": null,
+        "after": "August 23, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "factKey": "date-ton-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 24, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+        "factKey": "time-7853-piney-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident:time",
+        "before": null,
+        "after": "1:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+        "factKey": "time-y-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident-clubs-ca:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+        "factKey": "time-r-avenue-sterling-ranch-co-80125-farkle-for-boomers-evenings-category-resident-clubs-:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+        "factKey": "time-terling-ranch-co-80125-farkle-for-boomers-evenings-category-resident-clubs-farkle-for:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+        "factKey": "date-asta-for-boomers-category-resident-clubs-canasta-for-boomers-when-1-00-pm-3-00-pm-loc:date",
+        "before": null,
+        "after": "August 24, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-h-co-80125-storytime-with-douglas-county-libraries-category-youth-events-storytime-wi:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-storytime-with-douglas-county-libraries-category-youth-events-storytime-with-douglas-:time",
+        "before": null,
+        "after": "10:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-piney-river-ave-sterling-ranch-co-80125-25-food-truck-schedule-category-food-truck-sc:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-er-ave-sterling-ranch-co-80125-25-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-e-littleton-co-80125-cancelled-design-advisory-committee-category-meetings-cancelled-:time",
+        "before": null,
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-n-co-80125-cancelled-design-advisory-committee-category-meetings-cancelled-design-adv:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-enue-sterling-ranch-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-fl:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "time-ing-ranch-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-floor-mat-pi:time",
+        "before": null,
+        "after": "10:15 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "date-youth-events-storytime-with-douglas-county-libraries-when-10-00-am-10-30-am-location-:date",
+        "before": null,
+        "after": "August 24, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "factKey": "date-ittee-category-meetings-cancelled-design-advisory-committee-when-5-00-pm-6-00-pm-loca:date",
+        "before": null,
+        "after": "August 25, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-ll-7853-piney-river-avenue-sterling-ranch-co-80125-50-coffee-meet-up-category-residen:time",
+        "before": null,
+        "after": "9:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-ney-river-avenue-sterling-ranch-co-80125-50-coffee-meet-up-category-resident-clubs-50:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-center-8155-piney-river-ave-sterling-ranch-co-80125-26-farmer-s-market-category-commu:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-5-piney-river-ave-sterling-ranch-co-80125-26-farmer-s-market-category-community-event:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-river-ave-eagle-river-st-sterling-ranch-co-80125-trivia-night-category-community-even:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-ter-8155-piney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-s:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "time-iney-river-ave-littleton-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "date-fee-meet-up-category-resident-clubs-50-coffee-meet-up-when-9-30-am-11-00-am-location-:date",
+        "before": null,
+        "after": "August 25, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "date-rmer-s-market-category-community-events-farmer-s-market-when-3-00-pm-7-00-pm-location:date",
+        "before": null,
+        "after": "August 26, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+        "factKey": "time-ok-virtual-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-res:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+        "factKey": "time-l-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+        "factKey": "time-3-piney-river-avenue-sterling-ranch-co-80125-neighborhood-run-club-category-resident-:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+        "factKey": "time-ver-avenue-sterling-ranch-co-80125-neighborhood-run-club-category-resident-clubs-neig:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+        "factKey": "date-nch-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 26, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-com-littleton-co-80125-27-neighborhood-watch-meeting-category-community-events-neighb:time",
+        "before": "10:15 AM",
+        "after": "5:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-littleton-co-80125-27-neighborhood-watch-meeting-category-community-events-neighborho:time",
+        "before": null,
+        "after": "7:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-piney-river-avenue-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-sc:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-er-avenue-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-nter-8155-piney-river-ave-littleton-co-80125-mah-jongg-for-boomers-category-resident-:time",
+        "before": null,
+        "after": "2:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-erling-ranch-co-80125-28-karaoke-night-kids-only-category-community-events-karaoke-ni:time",
+        "before": null,
+        "after": "6:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-y-river-ave-littleton-co-80125-karaoke-night-adults-only-category-community-events-ka:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-e-littleton-co-80125-karaoke-night-adults-only-category-community-events-karaoke-nigh:time",
+        "before": null,
+        "after": "9:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-river-ave-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-fl:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "time-littleton-co-80125-floor-mat-pilates-for-boomers-category-resident-clubs-floor-mat-pi:time",
+        "before": null,
+        "after": "10:15 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "date-meeting-category-community-events-neighborhood-watch-meeting-when-5-30-pm-7-30-pm-loc:date",
+        "before": null,
+        "after": "August 27, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "factKey": "date-nly-category-community-events-karaoke-night-kids-only-when-5-30-pm-6-30-pm-location-s:date",
+        "before": null,
+        "after": "August 28, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-31",
+        "factKey": "time-great-hall-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-res:time",
+        "before": "11:00 AM",
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-31",
+        "factKey": "time-l-7853-piney-river-avenue-sterling-ranch-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-31",
+        "factKey": "date-nch-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 28, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-53-piney-river-avenue-sterling-ranch-co-80125-29-atlas-coffee-tasting-category-adult-:time",
+        "before": null,
+        "after": "9:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-iver-avenue-sterling-ranch-co-80125-29-atlas-coffee-tasting-category-adult-events-atl:time",
+        "before": null,
+        "after": "10:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-0-00-ranch-social-8155-piney-river-ave-sterling-ranch-co-80125-splash-bash-category-c:time",
+        "before": null,
+        "after": "12:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-social-8155-piney-river-ave-sterling-ranch-co-80125-splash-bash-category-community-ev:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-ue-sterling-ranch-co-80125-dive-in-movie-night-moana-2-category-community-events-dive:time",
+        "before": null,
+        "after": "8:30 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-piney-river-avenue-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-sc:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-er-avenue-sterling-ranch-co-80125-food-truck-schedule-category-food-truck-schedule-fo:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-00-00-sterling-center-8155-piney-river-ave-littleton-co-80125-yoga-w-laura-category-r:time",
+        "before": null,
+        "after": "7:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-rling-center-8155-piney-river-ave-littleton-co-80125-yoga-w-laura-category-resident-c:time",
+        "before": null,
+        "after": "8:30 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-sterling-center-8155-piney-river-ave-littleton-co-80125-yoga-with-laura-category-resi:time",
+        "before": null,
+        "after": "7:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "time-ng-center-8155-piney-river-ave-littleton-co-80125-water-walkers-category-resident-clu:time",
+        "before": null,
+        "after": "11:00 AM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "date-coffee-tasting-category-adult-events-atlas-coffee-tasting-when-9-00-am-10-00-am-locat:date",
+        "before": null,
+        "after": "August 29, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "date-hedule-category-food-truck-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location:date",
+        "before": null,
+        "after": "January 1, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "date-schedule-food-truck-schedule-when-4-00-pm-8-00-pm-location-sterling-center-more-detai:date",
+        "before": null,
+        "after": "December 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "date-category-resident-clubs-yoga-with-laura-when-7-00-pm-8-00-pm-location-yoga-with-laura:date",
+        "before": null,
+        "after": "August 30, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "factKey": "date-ton-co-80125-water-walkers-category-resident-clubs-water-walkers-when-10-00-am-11-00-:date",
+        "before": null,
+        "after": "August 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+        "factKey": "time-7853-piney-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident:time",
+        "before": null,
+        "after": "1:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+        "factKey": "time-y-river-avenue-sterling-ranch-co-80125-canasta-for-boomers-category-resident-clubs-ca:time",
+        "before": null,
+        "after": "3:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+        "factKey": "time-terling-ranch-co-80125-boomer-mah-jongg-evening-edition-category-resident-clubs-boome:time",
+        "before": null,
+        "after": "6:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+        "factKey": "time-nch-co-80125-boomer-mah-jongg-evening-edition-category-resident-clubs-boomer-mah-jong:time",
+        "before": null,
+        "after": "8:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+        "factKey": "date-asta-for-boomers-category-resident-clubs-canasta-for-boomers-when-1-00-pm-3-00-pm-loc:date",
+        "before": null,
+        "after": "August 31, 2026"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-1",
+        "factKey": "email-6-all-content-how-do-i-submit-an-application-for-design-review-please-submit-your-co:email",
+        "before": null,
+        "after": "residentsubmit@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-1",
+        "factKey": "schedule-for-the-first-and-third-changing-day-during-the-months-of-march-through-september:schedule",
+        "before": null,
+        "after": "for the first and third Thursday during the months of March through September, and the first Thursday during October through February."
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-1",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-1",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-1",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-1",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-2",
+        "factKey": "email-ption-by-month-and-year-if-you-are-having-trouble-locating-your-account-number-or-ne:email",
+        "before": null,
+        "after": "info@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-2",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-2",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-2",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-2",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-3",
+        "factKey": "limit-complete-one-of-the-forms-below-and-a-cab-representative-will-follow-up-with-you-wit:limit",
+        "before": null,
+        "after": "48 hours"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-3",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-3",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-3",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-3",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-4",
+        "factKey": "email-you-have-not-received-the-email-or-your-link-is-expired-please-contact-the-overlook-:email",
+        "before": null,
+        "after": "recreation@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-4",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-4",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-4",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-4",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "phone-he-first-time-or-if-you-did-not-receive-the-email-to-complete-your-account-setup-ple:phone",
+        "before": null,
+        "after": "720-728-7257"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "email-u-did-not-receive-the-email-to-complete-your-account-setup-please-call-the-overlook-:email",
+        "before": null,
+        "after": "recreation@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "limit-need-additional-assistance-the-overlook-staff-is-available-to-assist-homeowners-with:limit",
+        "before": null,
+        "after": "7 days"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-5",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-6",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-6",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-6",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-6",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-7",
+        "factKey": "limit-water-used-during-the-establishment-period-changing-value-following-the-installation:limit",
+        "before": null,
+        "after": "45 days"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-7",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-7",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-7",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-7",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-9",
+        "factKey": "limit-once-the-siemens-technician-arrives-at-your-home-the-equipment-upgrades-should-take-:limit",
+        "before": null,
+        "after": "2 hours"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-9",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-9",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-9",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-9",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-10",
+        "factKey": "limit-quired-for-the-rear-yard-at-initial-installation-in-the-rear-yard-one-deciduous-tree:limit",
+        "before": null,
+        "after": "6 inches"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-10",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-10",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-10",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-10",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-11",
+        "factKey": "limit-water-to-water-same-design-review-how-long-does-the-design-review-process-take-the-d:limit",
+        "before": null,
+        "after": "30 days"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-11",
+        "factKey": "limit-design-review-how-many-days-do-i-have-to-install-my-rear-yard-the-rear-yard-landscap:limit",
+        "before": null,
+        "after": "120 days"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-11",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-11",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-11",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-11",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-12",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-12",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-12",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-12",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-13",
+        "factKey": "email-questions-or-concerns-about-an-exterior-modification-to-your-home-contact-the-cab-st:email",
+        "before": null,
+        "after": "residentsubmit@sterlingranchcab.com"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-13",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-13",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-13",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-13",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-14",
+        "factKey": "limit-changing-value-during-any-7-day-period-for-loading-delivery-and-maintenance:limit",
+        "before": null,
+        "after": "72 hours"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-14",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-14",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-14",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-14",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-15",
+        "factKey": "phone-ommunicating-your-concern-to-the-pet-owner-or-contact-the-following-county-authoriti:phone",
+        "before": null,
+        "after": "303-660-7529"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-15",
+        "factKey": "time-our-concern-to-the-pet-owner-or-contact-the-following-county-authorities-douglas-coun:time",
+        "before": null,
+        "after": "7:00 a.m"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-15",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-15",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-15",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-15",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "limit-users-who-are-ill-have-experienced-vomiting-or-diarrhea-in-the-past-changing-value-h:limit",
+        "before": null,
+        "after": "24 hours"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "limit-or-similar-items-are-only-allowed-under-the-following-conditions-only-transparent-ci:limit",
+        "before": null,
+        "after": "42 inches"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "limit-mesh-infant-inflatables-may-be-no-larger-than-changing-value-by-38-inches:limit",
+        "before": null,
+        "after": "33 inches"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "limit-mesh-infant-inflatables-may-be-no-larger-than-33-inches-by-changing-value:limit",
+        "before": null,
+        "after": "38 inches"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-16",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "time-overlook-clubhouse-pool-what-are-the-hours-of-operation-monday-friday-changing-value-:time",
+        "before": null,
+        "after": "5:00 am"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "time-overlook-clubhouse-pool-what-are-the-hours-of-operation-monday-friday-5-00-am-changin:time",
+        "before": null,
+        "after": "7:00 am"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "time-lubhouse-pool-what-are-the-hours-of-operation-monday-friday-5-00-am-7-00-am-lap-swim-:time",
+        "before": null,
+        "after": "8:45 am"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-17",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-18",
+        "factKey": "money-overlook-clubhouse-pool-can-a-caregiver-take-my-kids-to-the-pool-you-can-purchase-a-:money",
+        "before": null,
+        "after": "$300.00"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-18",
+        "factKey": "limit-overlook-clubhouse-pool-can-i-bring-a-guest-to-the-pool-yes-each-household-receives-:limit",
+        "before": null,
+        "after": "25 guest"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-18",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-18",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-18",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-18",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-19",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-19",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-19",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-19",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-20",
+        "factKey": "link-email-distribution-sign-up-e-form-https-lp-constantcontactpages-com-su-qirbksc:link",
+        "before": null,
+        "after": "https://lp.constantcontactpages.com/su/QIRBKsC"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-20",
+        "factKey": "link-general-inquiries-https-sterlingranchcab-com-298-submit-your-feedback:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/298/Submit-Your-Feedback"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-20",
+        "factKey": "link-resident-amenity-form-https-sterlingranchcab-com-formcenter-membership-forms-10-resident-a:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-20",
+        "factKey": "link-how-do-i-submit-an-application-for-design-review-https-sterlingranchcab-com-m-faq:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/m/faq"
+      },
+      {
+        "sourceId": "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-1",
+        "factKey": "link-signing-in-or-creating-an-account-https-sterlingranchcab-com-formcenter-membership-forms-1:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-2",
+        "factKey": "link-signing-in-or-creating-an-account-https-sterlingranchcab-com-formcenter-membership-forms-1:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-3",
+        "factKey": "link-signing-in-or-creating-an-account-https-sterlingranchcab-com-formcenter-membership-forms-1:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-form-center-overlook-clubhouse-membership-agreement-4",
+        "factKey": "link-signing-in-or-creating-an-account-https-sterlingranchcab-com-formcenter-membership-forms-1:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/FormCenter/Membership-Forms-10/Resident-Amenity-Form-56"
+      },
+      {
+        "sourceId": "sterling-ranch-water-rear-yard-establishment-notification-2021-august-2",
+        "factKey": "limit-changing-value-is-the-time-granted-to-each-owner-to-complete-rear-yard-landscaping-s:limit",
+        "before": null,
+        "after": "120 days"
+      },
+      {
+        "sourceId": "sterling-ranch-backyard-utility-sheds-2",
+        "factKey": "limit-com-design-review-process-drc-review-timeline-the-deign-review-committee-drc-shall-s:limit",
+        "before": null,
+        "after": "30 days"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-screening-1",
+        "factKey": "limit-posed-corner-side-must-be-attached-to-the-side-of-the-house-has-a-minimum-setback-fr:limit",
+        "before": null,
+        "after": "5 feet"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-screening-2",
+        "factKey": "email-pleted-application-via-deliver-to-the-resident-resource-center-at-8220-piney-river-a:email",
+        "before": null,
+        "after": "ResidentSubmit@SterlingRanchCAB.com"
+      },
+      {
+        "sourceId": "sterling-ranch-trash-screening-2",
+        "factKey": "limit-the-sterling-ranch-community-authority-board-cab-prior-to-proceeding-with-this-proje:limit",
+        "before": null,
+        "after": "30 days"
+      },
+      {
+        "sourceId": "sterling-ranch-connector-official-calendar",
+        "factKey": "link-official-calendar-open:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list"
+      },
+      {
+        "sourceId": "sterling-ranch-connector-official-rules",
+        "factKey": "link-official-rules-open:link",
+        "before": null,
+        "after": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations"
+      },
+      {
+        "sourceId": "sterling-ranch-connector-facility-rentals",
+        "factKey": "link-facility-rentals-open:link",
+        "before": null,
+        "after": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog"
+      },
+      {
+        "sourceId": "sterling-ranch-connector-pool-status",
+        "factKey": "link-pool-status-open:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/187/Pool"
+      },
+      {
+        "sourceId": "sterling-ranch-action-submit-drc-application",
+        "factKey": "link-submit-drc-application:link",
+        "before": null,
+        "after": "https://sterlingranchcab.com/198/Architectural-Community-Standards"
+      }
+    ],
+    "actionChanges": [
+      {
+        "sourceId": "sterling-ranch-trash-recycling-1",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+          "https://sterlingranchcab.com/DocumentCenter/View/520/Waste-Connections-Recycling-Right-Presentation-PDF"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-trash-recycling-2",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+          "https://sterlingranchcab.com/DocumentCenter/View/520/Waste-Connections-Recycling-Right-Presentation-PDF"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-1",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-2",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-3",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-4",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-5",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-6",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-8",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-9",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-10",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-11",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-12",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-13",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-14",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-15",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-16",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-17",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-18",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-19",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-20",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-21",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-22",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-23",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-24",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-25",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-26",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-27",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-28",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-29",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-30",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-31",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-32",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-33",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2634"
+        ]
+      },
+      {
+        "sourceId": "sterling-ranch-documents-applications-and-forms-1",
+        "added": [],
+        "removed": [
+          "https://sterlingranchcab.com/DocumentCenter/View/612/Water-Rear-Yard-Establishment-Notification_2021_August",
+          "https://sterlingranchcab.com/DocumentCenter/View/628/Instructions-for-Landscape-Inspections_2020_Aug",
+          "https://sterlingranchcab.com/DocumentCenter/View/1350/Application-Landscape-Professional_2023",
+          "https://sterlingranchcab.com/DocumentCenter/View/1574/Attachment-A-3-General-Arch-Improvment-2023",
+          "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet_2024",
+          "https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-",
+          "https://sterlingranchcab.com/DocumentCenter/View/770/Calculating-Outdoor-Water-Usage",
+          "https://sterlingranchcab.com/DocumentCenter/View/626/Backyard-Utility-Sheds",
+          "https://sterlingranchcab.com/DocumentCenter/View/625/Controlled-Pet-Areas-",
+          "https://sterlingranchcab.com/DocumentCenter/View/624/Landscape-Screens-",
+          "https://sterlingranchcab.com/DocumentCenter/View/623/Rear-Patio-Lights-",
+          "https://sterlingranchcab.com/DocumentCenter/View/622/Trash-Screening-",
+          "https://sterlingranchcab.com/DocumentCenter/View/621/Exterior-Light-Replacement",
+          "https://sterlingranchcab.com/DocumentCenter/View/620/Storm-Doors-",
+          "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-",
+          "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-",
+          "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-",
+          "https://sterlingranchcab.com/DocumentCenter/View/748/Roll-Off-Containers"
+        ]
+      }
+    ]
+  },
+  "linkChecks": {
+    "total": 13,
+    "broken": []
+  }
+}

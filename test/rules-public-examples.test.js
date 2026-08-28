@@ -44,6 +44,13 @@ const EXAMPLES = [
     includes: ["833", "ClientCare@AmCoBi.com"],
     requiresSections: false,
   },
+  {
+    question: "Which food truck is here tomorrow?",
+    verdict: "informational",
+    includes: ["Example Eats", "Prospect Park"],
+    requiresSections: false,
+    foodTruck: true,
+  },
 ];
 
 for (const example of EXAMPLES) {
@@ -53,6 +60,15 @@ for (const example of EXAMPLES) {
       communityId: "sterling-ranch",
       answerRulesQuestion,
       synthesizeCommunityAnswer: false,
+      getFoodTruckAnswer: example.foodTruck ? async () => ({
+        date: "2026-08-29",
+        friendlyDate: "tomorrow",
+        truck: "Example Eats",
+        trucks: [{ name: "Example Eats", location: "Prospect Park" }],
+        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+        checkedAt: "2026-08-28T00:00:00.000Z",
+        menu: { links: [], items: [] },
+      }) : undefined,
     });
     assert.equal(result.confidence?.canAnswer, true);
     assert.equal(result.answerVerdict, example.verdict);
@@ -92,8 +108,8 @@ test("public example questions in the page are covered by the regression suite",
     (match) => match[1].trim()
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
-  assert.match(html, /rules-assistant\.css\?v=20260826-community-assistant/);
-  assert.match(html, /rules-assistant\.js\?v=20260826-community-assistant/);
+  assert.match(html, /rules-assistant\.css\?v=20260828-completion/);
+  assert.match(html, /rules-assistant\.js\?v=20260828-completion/);
 });
 
 test("park and amenity booking questions use the reservation process", async () => {

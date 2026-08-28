@@ -802,6 +802,25 @@ kbd {
   cursor: pointer;
 }
 
+.rules-start-over {
+  display: none;
+  margin: 0 0 11px 16px;
+  border: 0;
+  padding: 2px 0;
+  background: none;
+  color: var(--rules-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rules-start-over:hover { text-decoration: underline; }
+.rules-start-over:focus-visible {
+  outline: 2px solid var(--rules-forest);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 .rules-starters-toggle:hover {
   text-decoration: underline;
 }
@@ -817,6 +836,10 @@ kbd {
 }
 
 .rules-dock.has-conversation .rules-starters-toggle {
+  display: inline-flex;
+}
+
+.rules-dock.has-conversation .rules-start-over {
   display: inline-flex;
 }
 

@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://sterlingranchsociety.com/rules-social-preview.png" />
     <meta name="twitter:image:alt" content="Sterling Ranch Community Assistant" />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/rules-assistant.css?v=20260826-community-assistant" />
+    <link rel="stylesheet" href="/rules-assistant.css?v=20260828-completion" />
     <script
       src="/environment.js"
       data-page-title="Sterling Ranch Community Assistant"
@@ -129,6 +129,7 @@
             <button type="button">What are the rules for parks and open spaces?</button>
             <button type="button">How do I reserve an Overlook space?</button>
             <button type="button">Who do I contact about water billing?</button>
+            <button type="button">Which food truck is here tomorrow?</button>
           </div>
 
           <button
@@ -138,6 +139,9 @@
             aria-expanded="false"
           >
             Show example questions
+          </button>
+          <button type="button" class="rules-start-over" id="rulesStartOver">
+            Start over
           </button>
 
           <form class="rules-composer" id="rulesForm">
@@ -149,7 +153,7 @@
               name="question"
               rows="1"
               autocomplete="off"
-              placeholder="Ask about rules, services, forms, facilities, or events&hellip;"
+              placeholder="Ask about rules, services, facilities, events, or food trucks&hellip;"
             ></textarea>
             <button type="submit" class="rules-send" id="rulesSend" aria-label="Send question">
               <svg class="rules-send-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -239,6 +243,6 @@
       </article>
     </template>
 
-    <script src="/rules-assistant.js?v=20260826-community-assistant"></script>
+    <script src="/rules-assistant.js?v=20260828-completion"></script>
   </body>
 </html>

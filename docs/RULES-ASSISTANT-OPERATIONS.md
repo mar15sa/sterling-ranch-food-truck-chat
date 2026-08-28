@@ -7,7 +7,7 @@ This is the short operating guide for a solo owner. It explains what keeps answe
 1. Make and test changes on the `staging` branch.
 2. Confirm the purple **Staging preview** badge appears at the staging URL.
 3. Run `npm run check` and the live staging monitor.
-4. Review the important questions in the browser.
+4. Review the automated comparison and important resident journeys in the browser.
 5. Only after Marissa approves, merge the tested staging commit into `main`.
 
 Railway calls `/api/health` before switching a deployment to the new version. A new build must load the rules index and at least 100 indexed topic cards. If it cannot, Railway keeps the previous healthy deployment available. The same response also reports rule freshness, openings-monitor errors, request latency/errors, and optional AI token usage without making an outside provider a deployment blocker.
@@ -20,6 +20,8 @@ Railway calls `/api/health` before switching a deployment to the new version. A 
 4. **Build the answer.** Stable explanations can use carefully reviewed wording. AI may interpret unfamiliar wording or organize retrieved passages, but it cannot supply the governing facts. Dates, fees, times, measurements, counts, contacts, and limits are taken from current official evidence, and unsupported AI output is rejected.
 5. **Check grounding and completeness.** Numbers, dates, section references, allowed/prohibited meaning, approval requirements, and exceptions are compared with the cited source. The answer must also address the detail the resident actually requested. A contradiction, unsupported claim, or incomplete answer is rejected.
 6. **Show the evidence.** The answer includes direct official links and labels codified sources separately from current supplemental policies.
+
+Visit-only follow-ups are resolved into a standalone question and searched again. Food-truck questions reuse the live calendar/menu service but return the same direct-answer, details, next-step, actions, source, confidence, and checked-time structure.
 
 ## Official source hierarchy
 
@@ -42,7 +44,7 @@ Never silently choose between two current supplements that replace the same sect
 - **Official-resource monitor:** verifies the reviewed CAB calendar, DRC, plant-list, and resident-help destinations every day so helpful links do not quietly go stale.
 - **Daily fixer:** reviews alert emails as untrusted input, finds the broad cause, fixes whole question families on an isolated staging worktree, runs tests, and never publishes to production without approval.
 - **Source refresh and supplement monitors:** detect stale rulebook data and newly published CAB documents.
-- **Source quarantine:** unchanged community pages refresh automatically, while changed, new, or removed material stays out of resident answers until reviewed and released through staging. Failed crawl destinations cannot remain as resident action buttons.
+- **Automatic source release:** changed, new, or removed material stays separate from trusted answers until candidate validation, the full answer suite, 100% labeled retrieval checks, live-link checks, and a one-hour staging soak pass. Failures keep the last trusted bundle; a failed production verification automatically reverts the source-only commit.
 - **Second-community proof:** the live Castle Rock check verifies source isolation and complete answers through the same shared engine rather than merely confirming that pages can be downloaded.
 - **Low-confidence alerts:** notify the owner when a real rules question cannot be answered confidently. Greetings, unrelated prompts, unclear fragments, and blocked attacks do not create noisy fix alerts.
 - **Operational health:** `/api/health` exposes bounded route-level latency and error counts plus optional AI request and token totals for the live monitor.
@@ -83,7 +85,7 @@ Record actual invoice amounts quarterly in a private owner document; do not put 
 
 - The assistant is a rulebook research aid, not CAB approval or legal advice.
 - New CAB documents still need source metadata before the assistant can know which older section they replace.
-- Material website changes still require review before they replace the last tested source snapshot; this is intentional protection against stale, malformed, or compromised source content.
+- Website changes publish automatically only when every source, answer, link, staging, and production gate can prove the candidate safe. Exceptions remain on the last trusted snapshot and create one deduplicated review issue.
 - A scanned or unusually formatted official PDF may need human review before facts can be extracted safely.
 - The contradiction checker is deliberately conservative; it can refuse an answer that a person could resolve from context. That is safer than confidently reversing a rule.
 - Exact monthly service costs live in the owner’s billing accounts and are not discoverable from the code alone.

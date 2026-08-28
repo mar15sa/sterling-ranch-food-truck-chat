@@ -8,7 +8,7 @@ flowchart LR
   Edge --> App[Railway Node application]
   App --> Static[Resident pages]
   App --> Assistant[Community Assistant routing, retrieval, grounding, and verdict]
-  App --> Food[Calendar and menu lookup]
+  Assistant --> Food[Live food-truck calendar and menu lookup]
   App --> Pool[Official CAB pool status]
   App --> Openings[Verified openings catalog]
   Assistant --> Rules[Existing rules engine and structured fact catalog]
@@ -24,6 +24,7 @@ flowchart LR
 - `staging` deploys to the public but unadvertised test URL. Every page shows a purple staging badge, test traffic does not enter production Google Analytics, and notification destinations are disabled.
 - `main` deploys to production. Railway sends traffic to a new release only after `/api/health` confirms that the rules index is ready.
 - Daily GitHub checks exercise the homepage, security headers, rules answers, pool status, openings catalog, and eight days of food-truck lookups.
+- The first application-code release remains deliberate. After it is live, the source-only workflow builds a candidate, runs the complete gates, soaks the exact bundle on staging for one hour, and then promotes only that bundle to production. A failed production verification reverts the source commit.
 
 ## Failure boundaries
 
@@ -42,6 +43,10 @@ flowchart LR
 ## Community Assistant boundaries
 
 The existing rules engine remains the first route for topics it already answers well. The Community Assistant adds tenant profiles, source ingestion and cleaning, hybrid retrieval, live events/status connectors, claim-level grounding, optional AI search planning and synthesis, source conflict detection, and direct action links. These responsibilities live in separate modules; `lib/community-assistant.js` coordinates them without weakening the mature rules path.
+
+The browser keeps at most three prior question-and-answer pairs in session storage. The server uses them only to turn a follow-up into a standalone search question, screens them for instruction attacks, and searches official evidence again. Prior answers are never treated as evidence and full conversation history is not persisted.
+
+Every response has an `answerId`. A bounded operational trace records the route, source identifiers, verification result, source age, timing, fallback reason, and approximate AI token cost without retaining the resident's full wording. Food-truck questions use the same response contract and trace path as rules and services while retaining the standalone food-truck page for compatibility.
 
 Every source refresh also rebuilds `data/rules-fact-catalog.json`. The catalog records each detected changing value with a stable fact key, normalized value, scope, effective and expiration dates, source URL, and source hash. The release check fails when that catalog no longer matches the rulebook or adopted supplements.
 
@@ -72,4 +77,4 @@ The intended source hierarchy is:
 3. Current alerts and calendars for time-sensitive information.
 4. Official informational pages for services, contacts, and explanations.
 
-Freshness is part of the product rather than a one-time setup task. Every source retains its URL, fingerprint, last-checked time, and stale deadline. Unchanged sources refresh automatically. Changed, new, or removed records are quarantined while the last tested version stays active; the daily monitor reports the difference, broken resident action links fail the source audit, and the full question set must pass before the reviewed index is released.
+Freshness is part of the product rather than a one-time setup task. Every source retains its URL, fingerprint, last-checked time, and stale deadline. A changed bundle stays separate from the trusted version until collection, redirect, instruction-safety, structured-fact, live-link, retrieval, grounding, and full answer gates pass. Broken optional links are removed; a missing protected action still blocks the answer gate. Safe source-only bundles soak on staging for one hour before automatic production promotion, while any failure retains or restores the last trusted version.
