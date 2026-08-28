@@ -112,6 +112,24 @@ test("negative controls cannot become unrelated confident answers", async () => 
   }
 });
 
+test("a confident AI rewrite cannot substitute a broad category for an unsupported named project", async () => {
+  const answer = await answerCommunityQuestion("Can I build a helipad in my yard?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: Most landscaping is allowed with DRC approval.",
+      answerMode: "llm-rewrite",
+      inputClassification: "rules-question",
+      confidence: { canAnswer: true, confidence: "high", reason: "llm-grounded" },
+      sources: [{ title: "Landscape standards", excerpt: "Landscape plans require DRC review." }],
+    }),
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(answer.confidence.canAnswer, false);
+  assert.match(answer.answer, /could not verify.*helipad/i);
+  assert.doesNotMatch(answer.answer, /Most landscaping is allowed/i);
+});
+
 test("official service pages rescue questions the rulebook cannot answer", async () => {
   const answer = await answerCommunityQuestion("Who do I contact about internet service?", {
     index: communityIndex,
