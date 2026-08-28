@@ -119,6 +119,26 @@ test("waste storage rules are not replaced by pickup schedules or contacts", asy
   }
 });
 
+test("official rule documents remain usable action links even without display metadata", async () => {
+  const result = await answerCommunityQuestion("What fees do residents pay?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: The current fee schedules list the resident charges.\n\nWhat I found:\n- The exact amount depends on the service and home type.",
+      answerMode: "source-derived-extractive",
+      confidence: { canAnswer: true, confidence: "high" },
+      sources: [{
+        title: "2026 CAB service fees",
+        sourceUrl: "https://sterlingranchcab.com/DocumentCenter/View/2474/current-fees",
+        text: "Current official CAB service fee schedule.",
+      }],
+    }),
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(result.actions[0]?.url, "https://sterlingranchcab.com/DocumentCenter/View/2474/current-fees");
+  assert.doesNotMatch(result.actions[0]?.label || "", /FAQ/i);
+});
+
 test("answer contracts cap resident-facing details at three", () => {
   const answer = buildAnswerContract({ directAnswer: "Here is the answer.", keyDetails: ["One", "Two", "Three", "Four"] });
   assert.deepEqual(answer.keyDetails, ["One", "Two", "Three"]);
