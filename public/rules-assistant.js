@@ -226,7 +226,7 @@ function renderLabeled(key, rest) {
     lead.className = "rules-answer-lead";
     const tag = document.createElement("span");
     tag.className = "rules-answer-tag";
-    tag.textContent = "Short answer";
+    tag.textContent = "Answer";
     lead.append(tag, document.createTextNode(rest));
     return lead;
   }
@@ -236,15 +236,83 @@ function renderLabeled(key, rest) {
     note.className = "rules-callout";
     const tag = document.createElement("span");
     tag.className = "rules-callout-tag";
-    tag.textContent = "Before you act";
+    tag.textContent = "Next step";
     note.append(tag, document.createTextNode(rest));
     return note;
   }
 
   const subhead = document.createElement("p");
   subhead.className = "rules-answer-subhead";
-  subhead.textContent = rest || "What I found";
+  subhead.textContent = rest || "Key details";
   return subhead;
+}
+
+function renderFoodTruckAnswer(container, presentation = {}) {
+  container.replaceChildren();
+  const card = document.createElement("section");
+  card.className = "rules-food-truck-card";
+
+  const date = document.createElement("p");
+  date.className = "rules-food-truck-date";
+  date.textContent = presentation.dateLabel || "Food-truck schedule";
+
+  const title = document.createElement("h2");
+  title.className = "rules-food-truck-title";
+  title.textContent = presentation.title || "Food-truck schedule";
+  card.append(date, title);
+
+  if (presentation.location) {
+    const location = document.createElement("p");
+    location.className = "rules-food-truck-location";
+    location.textContent = `At ${presentation.location}`;
+    card.append(location);
+  }
+
+  const truckNames = Array.isArray(presentation.truckNames) ? presentation.truckNames : [];
+  if (truckNames.length > 1) {
+    const lineup = document.createElement("p");
+    lineup.className = "rules-food-truck-lineup";
+    lineup.textContent = truckNames.join(" · ");
+    card.append(lineup);
+  }
+
+  const items = Array.isArray(presentation.menuItems) ? presentation.menuItems : [];
+  if (items.length) {
+    const menuHeading = document.createElement("p");
+    menuHeading.className = "rules-food-truck-menu-heading";
+    menuHeading.textContent = "Menu preview";
+    const menu = document.createElement("ul");
+    menu.className = "rules-food-truck-menu";
+    items.forEach((item) => {
+      const row = document.createElement("li");
+      const top = document.createElement("div");
+      top.className = "rules-food-truck-menu-row";
+      const name = document.createElement("strong");
+      name.textContent = item.name || "Menu item";
+      top.append(name);
+      if (item.price) {
+        const price = document.createElement("span");
+        price.textContent = item.price;
+        top.append(price);
+      }
+      row.append(top);
+      if (item.description) {
+        const description = document.createElement("p");
+        description.textContent = item.description;
+        row.append(description);
+      }
+      menu.append(row);
+    });
+    card.append(menuHeading, menu);
+  }
+
+  if (presentation.note) {
+    const note = document.createElement("p");
+    note.className = "rules-food-truck-note";
+    note.textContent = presentation.note;
+    card.append(note);
+  }
+  container.append(card);
 }
 
 /* ---------- Sources ---------- */
@@ -379,10 +447,18 @@ function addAnswer(data, question) {
   const node = rulesTemplate.content.firstElementChild.cloneNode(true);
   const sources = Array.isArray(data.sources) ? data.sources : [];
 
-  renderAnswerInto(node.querySelector(".rules-answer"), data.answer || "");
+  const answerContainer = node.querySelector(".rules-answer");
+  if (data.presentation?.kind === "food-truck") {
+    renderFoodTruckAnswer(answerContainer, data.presentation);
+    node.classList.add("rules-message-food-truck");
+  } else {
+    renderAnswerInto(answerContainer, data.answer || "");
+  }
 
   const answerLabel = node.querySelector(".rules-answer-actions-label");
-  if (data.answerMode === "safety" || data.answerStatus === "safety-rejected" || data.inputClassification === "prompt-injection") {
+  if (data.presentation?.kind === "food-truck") {
+    answerLabel.textContent = "Food-truck schedule";
+  } else if (data.answerMode === "safety" || data.answerStatus === "safety-rejected" || data.inputClassification === "prompt-injection") {
     answerLabel.textContent = "Safety response";
     answerLabel.dataset.state = "unverified";
   } else if (["conversation", "unrelated", "unclear"].includes(data.inputClassification)) {
@@ -400,7 +476,7 @@ function addAnswer(data, question) {
     answerLabel.textContent = "Rule says yes";
     answerLabel.dataset.state = "allowed";
   } else {
-    answerLabel.textContent = "Verified community answer";
+    answerLabel.textContent = "Verified answer";
   }
 
   const shareButton = node.querySelector(".rules-share-button");
@@ -412,11 +488,12 @@ function addAnswer(data, question) {
     actionPanel.className = "rules-next-actions";
     const actionLabel = document.createElement("p");
     actionLabel.className = "rules-next-actions-label";
-    actionLabel.textContent = "Official next steps";
+    actionLabel.textContent = "Helpful links";
     const actionLinks = document.createElement("div");
     actionLinks.className = "rules-next-actions-links";
-    actions.slice(0, 3).forEach((action) => {
+    actions.slice(0, 3).forEach((action, index) => {
       const link = document.createElement("a");
+      link.className = index === 0 ? "rules-next-action rules-next-action-primary" : "rules-next-action rules-next-action-secondary";
       link.href = action.url;
       link.target = "_blank";
       link.rel = "noreferrer";

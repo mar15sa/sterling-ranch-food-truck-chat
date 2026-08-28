@@ -461,9 +461,9 @@ kbd {
 
 .rules-callout {
   padding: 12px 15px;
-  border-left: 2px solid var(--rules-clay);
-  border-radius: 0 var(--rules-radius-sm) var(--rules-radius-sm) 0;
-  background: var(--rules-clay-soft);
+  border: 1px solid var(--rules-line-soft);
+  border-radius: var(--rules-radius-sm);
+  background: #f7f6f1;
 }
 
 .rules-callout-tag {
@@ -496,7 +496,92 @@ kbd {
 }
 
 .rules-answer-actions-label[data-state="conditional"] {
-  color: var(--rules-clay);
+  color: var(--rules-forest);
+}
+
+.rules-food-truck-card {
+  display: grid;
+  gap: 7px;
+}
+
+.rules-food-truck-date,
+.rules-food-truck-menu-heading {
+  margin: 0;
+  color: var(--rules-faint);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.rules-food-truck-title {
+  margin: 0;
+  color: var(--rules-forest-deep);
+  font-family: var(--rules-serif);
+  font-size: clamp(1.45rem, 3.2vw, 2rem);
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+.rules-food-truck-location,
+.rules-food-truck-lineup {
+  margin: 0;
+  color: var(--rules-muted);
+  font-size: 0.95rem;
+}
+
+.rules-food-truck-menu-heading {
+  margin-top: 14px;
+  color: var(--rules-forest);
+}
+
+.rules-food-truck-menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules-food-truck-menu li {
+  padding: 11px 12px;
+  border: 1px solid var(--rules-line-soft);
+  border-radius: var(--rules-radius-sm);
+  background: #faf9f5;
+}
+
+.rules-food-truck-menu-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rules-food-truck-menu-row strong {
+  color: var(--rules-forest-deep);
+  font-size: 0.93rem;
+}
+
+.rules-food-truck-menu-row span {
+  color: var(--rules-ink);
+  font-size: 0.9rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.rules-food-truck-menu li p {
+  margin: 5px 0 0;
+  color: var(--rules-muted);
+  font-size: 0.79rem;
+  line-height: 1.4;
+}
+
+.rules-food-truck-note {
+  margin: 7px 0 0;
+  color: var(--rules-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
 .rules-answer-actions-label[data-state="unverified"] {
@@ -548,10 +633,8 @@ kbd {
 
 .rules-next-actions {
   margin-top: 18px;
-  padding: 14px;
-  border: 1px solid var(--rules-line);
-  border-radius: var(--rules-radius-sm);
-  background: var(--rules-forest-soft);
+  padding: 15px 0 0;
+  border-top: 1px solid var(--rules-line-soft);
 }
 
 .rules-next-actions-label {
@@ -581,6 +664,17 @@ kbd {
   font-weight: 700;
   line-height: 1.25;
   text-decoration: none;
+}
+
+.rules-next-actions-links .rules-next-action-secondary {
+  border: 1px solid var(--rules-line);
+  background: transparent;
+  color: var(--rules-forest);
+}
+
+.rules-next-actions-links .rules-next-action-secondary:hover {
+  border-color: var(--rules-forest);
+  background: var(--rules-forest-soft);
 }
 
 .rules-next-actions-links a::after {
@@ -1036,6 +1130,10 @@ kbd {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
+  .rules-food-truck-menu {
+    grid-template-columns: 1fr;
+  }
+
   .rules-app {
     height: 100svh;
   }
