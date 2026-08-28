@@ -130,6 +130,23 @@ test("a confident AI rewrite cannot substitute a broad category for an unsupport
   assert.doesNotMatch(answer.answer, /Most landscaping is allowed/i);
 });
 
+test("AI phrasing does not erase a mature rule engine decision for the named project", async () => {
+  const answer = await answerCommunityQuestion("What approval and setbacks apply to a backyard spa?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: DRC approval is required, and the spa must be at least five feet from property lines.",
+      answerMode: "llm-rewrite",
+      inputClassification: "rules-question",
+      confidence: { canAnswer: true, confidence: "high", reason: "hot-tub-rule" },
+      sources: [{ title: "(b)(48) - Hot tubs, outdoor spas, outdoor saunas", excerpt: "DRC approval is required. The minimum distance is five feet." }],
+    }),
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(answer.confidence.canAnswer, true);
+  assert.match(answer.answer, /DRC approval.*five feet/i);
+});
+
 test("official service pages rescue questions the rulebook cannot answer", async () => {
   const answer = await answerCommunityQuestion("Who do I contact about internet service?", {
     index: communityIndex,
