@@ -210,10 +210,23 @@ function renderAnswerInto(container, text) {
 function renderBullet(body) {
   const item = document.createElement("li");
   const split = body.indexOf(": ");
-  if (split > 0 && split < 90) {
+  if (split > 0 && split < 160) {
+    const detailText = body.slice(split + 2).trim();
     const name = document.createElement("strong");
     name.textContent = body.slice(0, split);
-    item.append(name, document.createTextNode(": " + body.slice(split + 2)));
+    item.append(name);
+    if (detailText.length > 220 || /\.\.\./.test(detailText)) {
+      const details = document.createElement("details");
+      details.className = "rules-official-wording";
+      const summary = document.createElement("summary");
+      summary.textContent = "View official wording";
+      const copy = document.createElement("p");
+      copy.textContent = detailText;
+      details.append(summary, copy);
+      item.append(details);
+    } else if (detailText) {
+      item.append(document.createTextNode(": " + detailText));
+    }
   } else {
     item.textContent = body;
   }

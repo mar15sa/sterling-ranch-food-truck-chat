@@ -459,6 +459,28 @@ kbd {
   color: var(--rules-forest-deep);
 }
 
+.rules-official-wording {
+  margin-top: 5px;
+  color: var(--rules-muted);
+}
+
+.rules-official-wording summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--rules-forest);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.rules-official-wording p {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--rules-line);
+  color: var(--rules-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .rules-callout {
   padding: 12px 15px;
   border: 1px solid var(--rules-line-soft);
