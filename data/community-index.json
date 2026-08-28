@@ -445,8 +445,8 @@
       "actions": [],
       "facts": [],
       "contentHash": "b0b5365f14f9288f382b14508314efd9a783cd957fb06ac264139381640c4402",
-      "checkedAt": "2026-08-26T21:27:38.973Z",
-      "staleAfter": "2026-08-27T21:27:42.136Z",
+      "checkedAt": "2026-08-28T18:30:31.004Z",
+      "staleAfter": "2026-08-29T18:30:32.646Z",
       "lifecycle": "current"
     },
     {
@@ -491,8 +491,8 @@
         }
       ],
       "contentHash": "f66efa5d3a1ccf0352384ec2c36274e0660544975536a40decd0faf45a55db0e",
-      "checkedAt": "2026-08-26T21:27:38.973Z",
-      "staleAfter": "2026-08-27T21:27:42.136Z",
+      "checkedAt": "2026-08-28T18:30:31.004Z",
+      "staleAfter": "2026-08-29T18:30:32.646Z",
       "lifecycle": "current"
     },
     {
