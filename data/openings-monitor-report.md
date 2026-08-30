@@ -1,12 +1,18 @@
 # Douglas County openings radar
 
-Scan completed: 2026-08-30T15:21:19.324Z
-Sources tracked: 45
-Automatically checked: 32
-Manual research lookups: 13
-Changed: 0
+Scan completed: 2026-08-30T15:51:42.916Z
+Sources tracked: 53
+Automatically checked: 37
+Manual research lookups: 16
+Changed: 1
 Errors: 0
 New structured leads: 0
+
+## Changed: Aspen Grove tenant directory
+
+https://aspengrovecenter.com/shop/
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Review rule
 

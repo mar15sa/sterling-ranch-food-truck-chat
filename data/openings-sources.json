@@ -226,13 +226,88 @@
     },
     {
       "id": "littleton-development-activity",
-      "name": "City of Littleton development activity",
+      "name": "City of Littleton Development Activity List",
       "community": "Littleton",
       "kind": "official",
-      "url": "https://data.littletongov.org/pal.php",
+      "url": "https://www.littletonco.gov/Building-Development/Development-Activity-List",
       "cadence": "daily",
       "monitorMode": "manual",
-      "notes": "Named commercial proposals, approvals, construction records, and project documents inside the 20-mile radius."
+      "notes": "The city's 2026 map draws from eTRAKiT and covers pre-applications, active and completed projects, permits, documents, and neighborhood meetings."
+    },
+    {
+      "id": "littleton-etrakit",
+      "name": "City of Littleton eTRAKiT permits and inspections",
+      "community": "Littleton",
+      "kind": "official-verification",
+      "url": "https://www.littletonco.gov/Building-Development/eTRAKiT-Online-System",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "Address-level permit, plan-review, inspection, and anticipated issue-date lookup used to distinguish a proposal from active construction or opening readiness."
+    },
+    {
+      "id": "littleton-business-development-news",
+      "name": "Littleton business and development news",
+      "community": "Littleton",
+      "kind": "official",
+      "url": "https://www.littletonco.gov/Government/City-News",
+      "cadence": "daily",
+      "notes": "Official city news and the monthly Business and Development Newsletter, including explicit new-business and major-project updates."
+    },
+    {
+      "id": "littleton-public-meetings",
+      "name": "Littleton council, planning, and licensing agendas",
+      "community": "Littleton",
+      "kind": "official",
+      "url": "https://littletongov.legistar.com/Calendar.aspx",
+      "cadence": "daily",
+      "notes": "City Council, Planning Commission, and Licensing Commission packets can identify commercial projects, incentives, and liquor applicants before consumer announcements."
+    },
+    {
+      "id": "riverpark-developer",
+      "name": "RiverPark developer and leasing page",
+      "community": "Littleton",
+      "kind": "developer",
+      "url": "https://evgre.com/properties/mineral-santa-fe-littleton-co",
+      "cadence": "daily",
+      "notes": "Evergreen Devco's direct leasing page for RiverPark's daily-needs, lifestyle, restaurant, shop, and destination-retail districts at Mineral and Santa Fe."
+    },
+    {
+      "id": "arapahoe-health-inspections",
+      "name": "Arapahoe County health inspection lookup",
+      "community": "Littleton",
+      "kind": "official-verification",
+      "url": "https://files.arapahoeco.gov/your_county/county_departments/public_health_department/health_protection___response/environmental_health/inspection_look_up.php",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "Restaurant and other regulated-business inspections help verify when a Littleton location is preparing to open or has begun operating."
+    },
+    {
+      "id": "naked-denver-mineral-place",
+      "name": "Naked Denver Mineral Place tracker",
+      "community": "Littleton",
+      "kind": "local-reporting",
+      "url": "https://www.nakeddenver.com/projects/mineral-place",
+      "cadence": "daily",
+      "notes": "Project-specific construction photos and status reporting for Mineral Place and its retail pads."
+    },
+    {
+      "id": "galloway-mineral-place",
+      "name": "Galloway Mineral Place project page",
+      "community": "Littleton",
+      "kind": "project-team",
+      "url": "https://gallowayus.com/project/mineral-place-development/",
+      "cadence": "daily",
+      "notes": "The project engineer's page tracks the planned retail mix, possible restaurants, and overall completion target."
+    },
+    {
+      "id": "mineral-place-portillos-lead",
+      "name": "Mineral Place Portillo's pre-application lead",
+      "community": "Littleton",
+      "kind": "official-lead",
+      "url": "https://data.littletongov.org/PALattachments/PREAPP24-0040/PREAPP24-0040%20Comments%20and%20Review%20Feedback%20Portillo_s.pdf",
+      "cadence": "weekly",
+      "monitorMode": "manual",
+      "notes": "Held lead only: a 2024 city pre-application names Portillo's, but no current formal application or business confirmation supports publishing it as a confirmed opening."
     },
     {
       "id": "visit-littleton-new-businesses",
