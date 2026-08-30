@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-27T18:19:08.380Z",
+  "lastRunAt": "2026-08-30T14:16:49.136Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:06.962Z",
+      "checkedAt": "2026-08-30T14:16:46.864Z",
       "changedAt": "2026-08-19T17:46:33.926Z",
       "fingerprint": "315398d6b380dab9c571bd2c9825e0dc058550fec9d9cb34102d2db5137c9ad9",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
@@ -17,9 +17,9 @@
     },
     "castle-rock-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.045Z",
-      "changedAt": "2026-08-27T17:33:53.147Z",
-      "fingerprint": "aea34595c50c4b56da30d726b227d292df348ec04a992cf71bb729043dc8440d",
+      "checkedAt": "2026-08-30T14:16:46.944Z",
+      "changedAt": "2026-08-29T17:32:07.994Z",
+      "fingerprint": "601c6cb9a0ab59c709d1b14ea6f3c9f0e476eef13a1ba4aa0b18ebf84e3c9f4f",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -31,7 +31,7 @@
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.047Z",
+      "checkedAt": "2026-08-30T14:16:46.947Z",
       "changedAt": null,
       "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
       "finalUrl": "https://www.parkerco.gov/Planning",
@@ -45,7 +45,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.049Z",
+      "checkedAt": "2026-08-30T14:16:46.948Z",
       "changedAt": "2026-08-20T15:00:41.369Z",
       "fingerprint": "2d9cadb23b1ae7055c2af8353bb2c555975bb0974a43b71c24fc069666a37f9d",
       "finalUrl": "https://www.parkered.com/",
@@ -59,7 +59,7 @@
     },
     "lone-tree-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.051Z",
+      "checkedAt": "2026-08-30T14:16:46.950Z",
       "changedAt": "2026-08-27T18:18:43.589Z",
       "fingerprint": "b8b779d1450553ec13fdddde030a515fa8cffb8463ecb3787b46e2a28afac577",
       "finalUrl": "https://cityoflonetree.com/projects/",
@@ -72,7 +72,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.053Z",
+      "checkedAt": "2026-08-30T14:16:46.952Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -90,7 +90,7 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.054Z",
+      "checkedAt": "2026-08-30T14:16:46.954Z",
       "changedAt": "2026-08-27T17:33:53.154Z",
       "fingerprint": "74125995492be8eb8a85232dedb078515a801df02bbe529bac10a0f0008e3f63",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
@@ -140,9 +140,9 @@
     },
     "douglas-county-recent-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.056Z",
-      "changedAt": "2026-08-27T17:33:53.155Z",
-      "fingerprint": "4a3116cf031b11f4f37090ab11666aa25d7098ceb714bc15bd9ad2ce7ae52fbb",
+      "checkedAt": "2026-08-30T14:16:46.955Z",
+      "changedAt": "2026-08-29T17:32:08.000Z",
+      "fingerprint": "fca9e318fa6b3a59e5c4b494115dc6d222d143e319165b267770e19e5bc325ad",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -163,9 +163,9 @@
     },
     "douglas-county-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.057Z",
-      "changedAt": "2026-08-27T17:33:53.155Z",
-      "fingerprint": "7cbee3a1d51b7b825d4a7ffab4de6a5d6da608921e1e371b6e355e577654a8f1",
+      "checkedAt": "2026-08-30T14:16:46.956Z",
+      "changedAt": "2026-08-29T17:32:08.001Z",
+      "fingerprint": "2b4f5b28b9a626cca53c02c2a36926e7064045bb46f0d0f8f07f25a52ac63630",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -176,7 +176,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.059Z",
+      "checkedAt": "2026-08-30T14:16:46.958Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -230,7 +230,7 @@
     },
     "highlands-ranch-news-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.061Z",
+      "checkedAt": "2026-08-30T14:16:46.960Z",
       "changedAt": "2026-08-27T17:33:53.158Z",
       "fingerprint": "86df8057f16b5f534127c6cc1951690a382fb75eef2e2a5ae62cdc0abc6724b3",
       "finalUrl": "https://www.highlandsranch.org/news-events",
@@ -259,7 +259,7 @@
     },
     "sterling-ranch-cab-news": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.063Z",
+      "checkedAt": "2026-08-30T14:16:46.961Z",
       "changedAt": "2026-08-25T15:28:06.562Z",
       "fingerprint": "ddd354aea897e3b186050bc5d95d6753d69517a52156bcd38807cb7befc05482",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
@@ -292,9 +292,9 @@
     },
     "sterling-ranch-cab-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.063Z",
-      "changedAt": "2026-08-27T17:33:53.159Z",
-      "fingerprint": "32a0890a7bd70f0b2e551636c2f97adbdbfe3c3376565385a31774e3a4ef6e30",
+      "checkedAt": "2026-08-30T14:16:46.961Z",
+      "changedAt": "2026-08-29T17:32:08.004Z",
+      "fingerprint": "13ed0576511abd7720e2c1506ef99f86b8b820444ef1b43dc771096aef13e6ff",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
       "contentType": "text/html; charset=utf-8",
       "signals": [],
@@ -303,9 +303,9 @@
     },
     "sterling-ranch-developer-news": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.064Z",
-      "changedAt": "2026-08-27T17:33:53.160Z",
-      "fingerprint": "5a6433b58c6ba3ea47114e975d487dab7b36faa672f2065b6ea80be8af83d699",
+      "checkedAt": "2026-08-30T14:16:46.962Z",
+      "changedAt": "2026-08-30T14:13:29.813Z",
+      "fingerprint": "3687dd46c3226b2d17daa4f1134324cadb22ab102d44813e0b02a7bc4cf86a85",
       "finalUrl": "https://sterlingranch.com/happenings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -320,7 +320,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.065Z",
+      "checkedAt": "2026-08-30T14:16:46.964Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -347,7 +347,7 @@
     },
     "dougco-social": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.068Z",
+      "checkedAt": "2026-08-30T14:16:46.965Z",
       "changedAt": "2026-08-27T17:33:53.162Z",
       "fingerprint": "ab7fb3888feaa28eb3e3e8f35139c1cb815acbf0cfcca17bcc70a34948b5f329",
       "finalUrl": "https://dougcosocial.com/news",
@@ -552,7 +552,7 @@
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.070Z",
+      "checkedAt": "2026-08-30T14:16:46.967Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -630,7 +630,7 @@
     },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.071Z",
+      "checkedAt": "2026-08-30T14:16:46.968Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -670,7 +670,7 @@
     },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.072Z",
+      "checkedAt": "2026-08-30T14:16:46.969Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -683,15 +683,62 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.073Z",
-      "changedAt": "2026-08-16T15:55:43.962Z",
-      "fingerprint": "28e2c38a52e771647d225df426a564f6e8a7392adb4e035763ffd8dc8a07f33f",
+      "checkedAt": "2026-08-30T14:16:46.970Z",
+      "changedAt": "2026-08-30T14:13:29.821Z",
+      "fingerprint": "5fc5e6932dcc334cc83f8b5e3bb5a99450cad633af1d09d929652c9b250d8d9f",
       "finalUrl": "https://www.hogbackpost.com/",
       "contentType": "text/html; charset=utf-8",
       "signals": [
         "New Restaurants in 80127",
         "Every Friday, the Hogback Post delivers local news, events, restaurant openings, trail updates, and development intel that actually matters to Littleton, Ken Caryl, and the SW Denver foothills. Five-minute read.",
         "Restaurant and business openings : Portillo&#x27;s coming to Mineral, Ziggi&#x27;s Coffee, Nanu&#x27;s Kitchen, Ken Caryl Kabob, and what opens next",
+        "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "hogback-development-tracker": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T14:16:46.971Z",
+      "changedAt": null,
+      "fingerprint": "6fed996ae27ffa754c5265bdd91cb6c1d4976d02a609d50a9f1c0368fe9eb3da",
+      "finalUrl": "https://www.hogbackpost.com/whats-going-in-there",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "New Restaurants in 80127",
+        "Opening soon",
+        "Ziggi&#x27;s Coffee, 8020 South Sangre de Cristo. Open. The Colorado-grown drive-thru chain opened its Chatfield and Sangre de Cristo corner on Thursday, August 27, with a grand-opening week of daily deals running through Saturday the 29th. After months on this page, this one graduates.",
+        "Better Mattress, 8055 West Bowles at Bowles Crossing. The Colorado chain with stores from Arvada to Lone Tree now lists Bowles Crossing as Coming Soon on its own store locator, matching a tenant-finish permit issued in late July. No date yet.",
+        "Jersey Mike&#x27;s, 7735 West Long Drive. One zip over, about a mile east of Kipling. A tenant permit issued in July reads like a sub shop starter kit, two kitchen hoods and a brand-new grease trap. Details in Issue #19 .",
+        "Under construction",
+        "The old Walgreens at Simms and Ken Caryl. It&#x27;s becoming a medical office building. The conversion permit issued July 1, right after the property sold in June, and the first phase demolishes everything that makes the building recognizable as a Walgreens, the gable canopies, the pharmacy drive-through, the old entrance. No tenant is named in the county&#x27;s records yet. The tenant permit is where a name usually shows up first, so I&#x27;m watching for it. The story ran in Issue #18 .",
+        "Turnbuckle Distilling, northwest corner of Bowles and C-470. The old Whistling Hare property is turning into a five-acre distillery with a restaurant, a silo tasting room, and a working farm. Construction was underway when I checked in early July, and as of mid-August the company&#x27;s own site still says Coming Soon with no date attached.",
+        "The new Deer Creek Library, 11100 Bradford Road. Jeffco Public Library is building a full branch at its Bradford site in Ken Caryl, and the system&#x27;s own project records point at a 2028 opening. Between now and September 27, the library is collecting marker drawings of Colorado nature from all ages for a community art wall inside the future building. I&#x27;ve been pulling the project&#x27;s records for a fuller story in the newsletter.",
+        "More field guides from the Post: the new-restaurants page for what&#x27;s opening to eat, the trails page for where you can actually hike around here, and the bears page for what to do when a bear finds your trash cans.",
+        "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "hogback-new-restaurants": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T14:16:46.971Z",
+      "changedAt": null,
+      "fingerprint": "c4827905d511d336debc8a57764b52b207e6230e2f3769c4daede9adfee0fb4e",
+      "finalUrl": "https://www.hogbackpost.com/new-restaurants-littleton-80127",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "New Restaurants in Littleton 80127: What Just Opened & What&#x27;s Coming | Hogback Post",
+        "New Restaurants in 80127",
+        "New Restaurants in 80127 (and What&#x27;s Coming)",
+        "When I surveyed readers this summer about what they wanted more of, restaurant and opening news won by a mile. So this page is the running answer: what&#x27;s newly open around Littleton 80127 and Ken Caryl, what&#x27;s coming, and what we lost. A lot of it comes out of county permit files before anyone announces a thing, which is how this newsletter found half the entries below. The Friday email gets each one first.",
+        "Ziggi&#x27;s Coffee, 8020 South Sangre de Cristo. The Colorado-grown drive-thru chain opened its Chatfield and Sangre de Cristo corner on August 27, after a spring and summer of construction on that lot. Dirty sodas, protein coffees, and a kids&#x27; menu, plus a drive-thru line that will tell you how the zip is voting.",
+        "Hotpot Den, 5934 South Kipling Parkway. A family-run, all-you-can-eat hot pot spot in the old Chen&#x27;s Kitchen space, with house-made broths and the cook-it-yourself table experience. It quietly became one of the zip&#x27;s most interesting dinner options the day it opened.",
+        "Los Dos Potrillos, 10065 West San Juan Way. Back. The family Mexican standby reopened July 9 after a kitchen fire in March kept it dark for four months, and the line on reopening day said everything about how much this one was missed.",
+        "Coming soon",
+        "The Summit Steak Bar, the Bevy&#x27;s building on South Alkire. The steakhouse finally put a date on its banner: opening Monday, August 31, with dinner from 4 and reservations through its site. Months of \"live website, no date\" end Monday.",
+        "Jersey Mike&#x27;s, 7735 West Long Drive. One zip over, about a mile east of Kipling. The July tenant permit reads like a sub shop starter kit, two kitchen hoods and a brand-new grease trap.",
+        "Turnbuckle Distilling, northwest corner of Bowles and C-470. The most ambitious of the batch: a five-acre distillery with a chef-driven restaurant, a silo tasting room, and a working farm on the old Whistling Hare property. Its own site still says Coming Soon with no date.",
         "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
       ],
       "structuredLeads": [],
@@ -708,7 +755,7 @@
     },
     "lone-tree-timberlines": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.074Z",
+      "checkedAt": "2026-08-30T14:16:46.973Z",
       "changedAt": "2026-08-27T18:18:43.607Z",
       "fingerprint": "859f2f84db81a1b470e4be2921e4d15b9877edf0938973db12d2bf2f61673247",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
@@ -721,7 +768,7 @@
     },
     "colorado-liquor-license-lists": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.075Z",
+      "checkedAt": "2026-08-30T14:16:46.974Z",
       "changedAt": "2026-08-27T17:33:53.166Z",
       "fingerprint": "ccaa475fb00059f4f41b93f656c7320fed0e0fc2ae3226bbdbc67e16874104db",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
@@ -744,9 +791,9 @@
     },
     "westword-openings-closings": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.076Z",
-      "changedAt": "2026-08-27T17:33:53.167Z",
-      "fingerprint": "1d418ee9b55784d12ef53ba8e511e8db627a09d07defc646347cc96da04b54f0",
+      "checkedAt": "2026-08-30T14:16:46.975Z",
+      "changedAt": "2026-08-29T17:32:08.011Z",
+      "fingerprint": "97e028488d05294caa9fda63b9c466aeb3c2979282464a89ec2a5c7619f90ccb",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -755,6 +802,10 @@
         "Restaurants",
         "Shops & Markets",
         "Top 50 Restaurants",
+        "Every opening and closing this week: Chicago Mike’s closes after owner’s death",
+        "Plus: Soda Club pops off in RiNo, Hearth opens an add-on, and a popular Asian bakery generates big lines.",
+        "New bistro coming to former Table 6 space",
+        "Small Bites: Thai eatery eyes vacant Union Station space",
         "Hearth Bakery expands with Euro-style patisserie in Highland",
         "The grand opening takes place today at noon.",
         "Every opening and closing this week: Temaki Den chef opens po’ boy pop-up",
@@ -773,7 +824,6 @@
         "Notable openings temper the pang felt by three big losses.",
         "Plus, restaurant industry workers get a free screening of ‘Tony.’",
         "Zoe Ma Ma and Dragonfly chef opening new “elevated American Chinese” concept next month",
-        "Every opening and closing this week: Gennaro’s space gets new tenant",
         "Marketing"
       ],
       "structuredLeads": [],
@@ -781,9 +831,9 @@
     },
     "castle-rock-outlets-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.078Z",
-      "changedAt": "2026-08-27T17:33:53.167Z",
-      "fingerprint": "05610e939c6e6a370a9c5598cecf8ea7fff67d223b996566afc66fe095cd44bd",
+      "checkedAt": "2026-08-30T14:16:46.976Z",
+      "changedAt": "2026-08-30T14:13:29.826Z",
+      "fingerprint": "7e34f25c329acc254e16716ebd4bbb7cb8d9a6732051816a52bc58859b970ca6",
       "finalUrl": "https://www.outletsatcastlerock.com/",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -814,7 +864,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.079Z",
+      "checkedAt": "2026-08-30T14:16:46.976Z",
       "changedAt": "2026-08-19T17:46:34.042Z",
       "fingerprint": "33eb1e6ae91c8f6e0918f928a66b14874a6f1e42389fa457cd48979e9bacdc3c",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -825,7 +875,7 @@
     },
     "castle-rock-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.080Z",
+      "checkedAt": "2026-08-30T14:16:46.977Z",
       "changedAt": "2026-08-19T17:46:34.043Z",
       "fingerprint": "e594bd7fe6e837afaa35fa3bf2bedc12cdec1830293fd65c095980bd3c58e7cb",
       "finalUrl": "https://business.castlerock.org/events/calendar",
@@ -838,7 +888,7 @@
     },
     "ziggis-ken-caryl": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.081Z",
+      "checkedAt": "2026-08-30T14:16:46.978Z",
       "changedAt": null,
       "fingerprint": "284af98213f18d71ea33bcf2cbb41c65ce358cf21f046997f4867a3a5ce25aa6",
       "finalUrl": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/",
@@ -861,7 +911,7 @@
     },
     "bodybar-colorado-studios": {
       "status": "ok",
-      "checkedAt": "2026-08-27T18:19:07.082Z",
+      "checkedAt": "2026-08-30T14:16:46.979Z",
       "changedAt": null,
       "fingerprint": "aa14a8d4081cf5769263df9dfc2679ddbd76836cc527206cddc526ebd9b64cd6",
       "finalUrl": "https://bodybarpilates.com/studios/colorado/",

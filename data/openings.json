@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-27T11:55:00-06:00",
+  "updatedAt": "2026-08-30T08:12:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -1537,15 +1537,19 @@
       "community": "Lone Tree",
       "area": "Park Meadows",
       "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
-      "status": "opening-soon",
-      "openingWindow": "Coming soon",
-      "summary": "Park Meadows officially lists the clothing retailer as coming soon on Level 2.",
-      "verifiedAt": "2026-08-13",
+      "status": "open",
+      "openingWindow": "Opened August 2026",
+      "summary": "Faherty is now open on Level 2 at Park Meadows in suite 2555.",
+      "verifiedAt": "2026-08-29",
       "confidence": "official",
       "sources": [
         {
-          "label": "Park Meadows listing: Faherty coming soon",
-          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Coming%20Soon"
+          "label": "Park Meadows directory: Faherty now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Now%20Open"
+        },
+        {
+          "label": "Faherty official Park Meadows store page",
+          "url": "https://stores.fahertybrand.com/co/lone-tree-/pmw99/"
         }
       ],
       "coordinates": {
@@ -2699,6 +2703,126 @@
         "lng": -104.875716,
         "precision": "address",
         "geocodedFrom": "572 East Castle Pines Parkway, Suite A5, Castle Pines, CO 80108"
+      }
+    },
+    {
+      "id": "hotpot-den-littleton",
+      "name": "Hotpot Den",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Kipling Parkway",
+      "address": "5934 South Kipling Parkway, Suite E, Littleton, CO 80127",
+      "status": "open",
+      "openingWindow": "Opened in 2026",
+      "summary": "The family-owned, all-you-can-eat hot pot restaurant is open with house-made broths, meats, seafood, vegetables, and a sauce bar.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Hotpot Den official website and hours",
+          "url": "https://hotpotden.com/"
+        },
+        {
+          "label": "Jefferson County liquor-license record",
+          "url": "https://pub-jeffco.escribemeetings.com/Meeting.aspx?Agenda=Agenda&Id=798475dc-d624-4da8-8394-e0d3c772c51a&lang=English"
+        },
+        {
+          "label": "Hogback Post local opening report",
+          "url": "https://www.hogbackpost.com/new-restaurants-littleton-80127"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.608273,
+        "lng": -105.107969,
+        "precision": "address",
+        "geocodedFrom": "5934 South Kipling Parkway, Suite E, Littleton, CO 80127"
+      }
+    },
+    {
+      "id": "summit-steak-bar-littleton",
+      "name": "The Summit Steak Bar",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Alkire Street",
+      "address": "5869 South Alkire Street, Suite B, Littleton, CO 80127",
+      "status": "opening-soon",
+      "openingWindow": "Opening August 31, 2026",
+      "summary": "The steakhouse plans to open August 31 with an in-house butcher shop, dry-aged beef, a full bar, and dinner service.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "The Summit Steak Bar official website",
+          "url": "https://summitsteakbar.com/"
+        },
+        {
+          "label": "Hogback Post opening-date report",
+          "url": "https://www.hogbackpost.com/new-restaurants-littleton-80127"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.611351,
+        "lng": -105.150116,
+        "precision": "address",
+        "geocodedFrom": "5869 South Alkire Street, Suite B, Littleton, CO 80127"
+      }
+    },
+    {
+      "id": "turnbuckle-distilling-littleton",
+      "name": "Turnbuckle Distilling",
+      "category": "Entertainment & restaurant",
+      "community": "Littleton",
+      "area": "Bowles Avenue and C-470",
+      "address": "Northwest corner of West Bowles Avenue and C-470, Littleton, CO 80127",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "Construction is underway on a five-acre distillery destination with a restaurant, silo tasting room, production space, barrel cave, and small farm.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Turnbuckle official new-location page",
+          "url": "https://www.turnbuckledistilling.com/coming-soon"
+        },
+        {
+          "label": "Hogback Post construction update",
+          "url": "https://www.hogbackpost.com/whats-going-in-there"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.609555,
+        "lng": -105.154225,
+        "precision": "approximate",
+        "geocodedFrom": "Bowles Avenue and C-470, Littleton, Colorado"
+      }
+    },
+    {
+      "id": "ivybrook-academy-littleton",
+      "name": "Ivybrook Academy",
+      "category": "Everyday services",
+      "community": "Littleton",
+      "area": "Bowles Avenue",
+      "address": "8906 West Bowles Avenue, Suite 100, Littleton, CO 80123",
+      "status": "under-construction",
+      "openingWindow": "Now enrolling for the 2026–27 school year; opening date not announced",
+      "summary": "A new half-day preschool for children ages 18 months to 6 is building out its Littleton campus and accepting enrollment inquiries.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Ivybrook Academy official Littleton campus page",
+          "url": "https://www.ivybrookacademy.com/littleton"
+        },
+        {
+          "label": "Hogback Post permit and construction report",
+          "url": "https://www.hogbackpost.com/whats-going-in-there"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.609274,
+        "lng": -105.097915,
+        "precision": "address",
+        "geocodedFrom": "8906 West Bowles Avenue, Suite 100, Littleton, CO 80123"
       }
     }
   ]

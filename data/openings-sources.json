@@ -262,6 +262,24 @@
       "notes": "Hyperlocal reporting for Roxborough, Ken Caryl, Morrison, and the southwest edge of the radius."
     },
     {
+      "id": "hogback-development-tracker",
+      "name": "Hogback Post development tracker",
+      "community": "Southwest metro",
+      "kind": "local-reporting",
+      "url": "https://www.hogbackpost.com/whats-going-in-there",
+      "cadence": "daily",
+      "notes": "Direct project tracker for construction, permits, and named tenants around Littleton and Ken Caryl."
+    },
+    {
+      "id": "hogback-new-restaurants",
+      "name": "Hogback Post new restaurant tracker",
+      "community": "Southwest metro",
+      "kind": "local-reporting",
+      "url": "https://www.hogbackpost.com/new-restaurants-littleton-80127",
+      "cadence": "daily",
+      "notes": "Direct tracker for restaurant openings, announced dates, and closures in 80127 and Ken Caryl."
+    },
+    {
       "id": "littleton-downtown-directory",
       "name": "Downtown Littleton business directory",
       "community": "Littleton",
