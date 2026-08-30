@@ -296,6 +296,22 @@ test("live Waste Connections dates replace the undated recycling fallback", asyn
   assert.doesNotMatch(JSON.stringify(answer), /Submit-Your-Feedback|Bulk Item|Recycling Tips/i);
 });
 
+test("live schedule routing does not replace recycling cart-storage rules", async () => {
+  let liveCalls = 0;
+  const answer = await answerCommunityQuestion("When do I need to bring my recycling cans in?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    getWasteSchedule: async () => { liveCalls += 1; throw new Error("should not run"); },
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(liveCalls, 0);
+  assert.notEqual(answer.answerMode, "community-live-recycling");
+  assert.match(`${answer.directAnswer || ""} ${answer.answer || ""}`, /end of (?:the )?pickup day|stored|screened/i);
+});
+
 test("Waste Connections service reads dated recycling events without a resident address", async () => {
   const requested = [];
   const fetchImpl = async (url) => {
