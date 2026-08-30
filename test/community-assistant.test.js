@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildAnswerContract, detectFactConflicts, validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
-const { contentHtml, extractFacts, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
+const { contentHtml, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
 const { verifyStructuredDraft } = require("../lib/community-grounding");
 const { parseJson } = require("../lib/community-llm");
 const { classifyCommunityIntent, requestedDetails, searchCommunityIndex } = require("../lib/community-search");
@@ -72,6 +72,13 @@ test("CivicPlus cleaning keeps resident content and removes page chrome and conf
   assert.equal(pageText(html), "Amenity Rentals The Great Hall costs $100 per hour. Reserve the Great Hall");
   assert.doesNotMatch(pageText(html), /Privacy|WidgetSkin|Navigation/);
   assert.deepEqual(extractFacts(pageText(html)).filter((fact) => fact.type === "money").map((fact) => fact.value), ["$100 per hour"]);
+});
+
+test("action extraction keeps nearby meaning and recognizes official mobile-app links", () => {
+  const html = `<section><h2>Download the App</h2><p>Use WasteConnect to view your pickup schedule.</p><a href="https://play.google.com/store/apps/details?id=org.wcnx.mobile">Google Play</a></section>`;
+  const actions = extractActions(linksFromHtml(html, "https://sterlingranchcab.com/247/Trash-Recycling"));
+  assert.equal(actions[0].actionType, "download");
+  assert.match(actions[0].context, /WasteConnect.*pickup schedule/i);
 });
 
 test("claim verification rejects invented changing values and source instructions", () => {

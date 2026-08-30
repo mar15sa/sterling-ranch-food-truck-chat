@@ -231,6 +231,54 @@ test("recurring service schedules are structured instead of returned as raw page
   assert.match(answer.actions[0].url, /\/247\/Trash-Recycling/);
 });
 
+test("alternating recycling questions disclose the missing date anchor and link to the exact-schedule tools", async () => {
+  const answer = await answerCommunityQuestion("When is recycling week?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(answer.answerMode, "community-recurring-schedule");
+  assert.match(answer.directAnswer, /can(?:not|’t|'t) reliably tell.*this week or next/i);
+  assert.deepEqual(answer.keyDetails, [
+    "Providence Village: recycling every other Monday",
+    "Ascent Village: recycling every other Tuesday",
+    "Prospect Village: recycling every other Thursday",
+  ]);
+  assert.deepEqual(answer.actions.map((action) => action.label), [
+    "Open WasteConnect for Android",
+    "Open WasteConnect for iPhone",
+    "Open official Trash & Recycling information",
+  ]);
+  assert.doesNotMatch(JSON.stringify(answer.actions), /Submit-Your-Feedback|Bulk Item|Recycling Tips/i);
+});
+
+test("unrelated community-page actions are not attached to grounded rule answers", async () => {
+  const cases = [
+    ["Can we have chickens?", /Water-Sewer|Resident-Amenity|Submit-Your-Feedback/i],
+    ["Are household pets allowed?", /Resident-Amenity|Submit-Your-Feedback/i],
+    ["Are there rules where the electrical panels need to be placed?", /Resident-Amenity|Water-Sewer/i],
+    ["Can you park an RV on the street?", /Submit-Your-Feedback|Park-Shelters|Amenity-Rentals/i],
+    ["Can I install a swimming pool in my backyard?", /QID=119|reserve-the-pool|Backyard-Utility-Sheds/i],
+    ["Can I put up a political sign?", /constantcontact|wasteconnections|Bulk-Item|Submit-Your-Feedback/i],
+    ["Does the community own the landscaping on the sidewalk?", /calendar\.aspx/i],
+    ["I lost access to home seer steward system. How do I restore it?", /Resident-Amenity/i],
+  ];
+  for (const [question, forbidden] of cases) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+    });
+    assert.doesNotMatch(JSON.stringify(answer.actions || []), forbidden, question);
+  }
+});
+
 test("waste storage rules are not replaced by pickup schedules or contacts", async () => {
   for (const question of [
     "When does trash need to be stored?",

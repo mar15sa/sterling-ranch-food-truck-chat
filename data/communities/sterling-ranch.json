@@ -63,7 +63,9 @@
     "sterlingranchcab.com",
     "www.sterlingranchcab.com",
     "library.municode.com",
-    "secure.rec1.com"
+    "secure.rec1.com",
+    "play.google.com",
+    "apps.apple.com"
   ],
   "actions": [
     {
@@ -73,6 +75,24 @@
       "sourceType": "forms",
       "actionType": "form",
       "keywords": ["DRC", "design review", "architectural application", "landscape application"],
+      "refreshMinutes": 1440
+    },
+    {
+      "id": "wasteconnect-android",
+      "label": "Open WasteConnect for Android",
+      "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile",
+      "sourceType": "services",
+      "actionType": "download",
+      "keywords": ["WasteConnect", "trash", "recycling", "pickup schedule", "collection reminders"],
+      "refreshMinutes": 1440
+    },
+    {
+      "id": "wasteconnect-iphone",
+      "label": "Open WasteConnect for iPhone",
+      "url": "https://apps.apple.com/app/id1442351850",
+      "sourceType": "services",
+      "actionType": "download",
+      "keywords": ["WasteConnect", "trash", "recycling", "pickup schedule", "collection reminders"],
       "refreshMinutes": 1440
     }
   ]
