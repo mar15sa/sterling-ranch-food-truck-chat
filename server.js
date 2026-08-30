@@ -29,6 +29,7 @@ const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("./lib/community-observability");
 const { getCommunityEvents } = require("./lib/community-events");
 const { getCommunityLlmMetrics } = require("./lib/community-llm");
+const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
 const { getCommunitySearchMetrics } = require("./lib/community-search");
 const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
@@ -4486,6 +4487,7 @@ async function handleRulesAsk(req, res, url) {
     answerRulesQuestion,
     getPoolStatus,
     getCommunityEvents,
+    getWasteSchedule: getSterlingRanchWasteSchedule,
     getFoodTruckAnswer: async (foodTruckQuestion) => getAnswerForDate(foodTruckQuestion, parseAskedDate(foodTruckQuestion)),
     index: getCommunityIndex(),
     communityId: "sterling-ranch",

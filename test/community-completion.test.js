@@ -8,6 +8,7 @@ const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
 const { diffCommunityIndexes, sourceReleaseDecision, validateCommunityCandidate } = require("../lib/community-release");
+const { getSterlingRanchWasteSchedule, scheduleTimingLabel, villageDatesForAnchor } = require("../lib/community-waste-schedule");
 
 function source(id, hash, overrides = {}) {
   return {
@@ -263,6 +264,63 @@ test("alternating recycling questions disclose the missing date anchor and link 
     "Open WasteConnect for Android",
     "Open WasteConnect for iPhone",
   ]);
+});
+
+test("live Waste Connections dates replace the undated recycling fallback", async () => {
+  const answer = await answerCommunityQuestion("When is recycling week?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    getWasteSchedule: async () => ({
+      timing: "starting tomorrow",
+      anchorDate: "2026-08-31",
+      villageDates: [
+        { village: "Providence Village", date: "2026-08-31" },
+        { village: "Ascent Village", date: "2026-09-01" },
+        { village: "Prospect Village", date: "2026-09-03" },
+      ],
+      checkedAt: "2026-08-30T18:00:00.000Z",
+      sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+    }),
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(answer.answerMode, "community-live-recycling");
+  assert.match(answer.directAnswer, /starting tomorrow/i);
+  assert.deepEqual(answer.keyDetails, [
+    "Providence Village: Monday, August 31, 2026",
+    "Ascent Village: Tuesday, September 1, 2026",
+    "Prospect Village: Thursday, September 3, 2026",
+  ]);
+  assert.match(answer.actions[0].url, /wasteconnections\.com\/pickup-schedule/);
+  assert.doesNotMatch(JSON.stringify(answer), /Submit-Your-Feedback|Bulk Item|Recycling Tips/i);
+});
+
+test("Waste Connections service reads dated recycling events without a resident address", async () => {
+  const requested = [];
+  const fetchImpl = async (url) => {
+    requested.push(String(url));
+    if (String(url).includes("address-suggest")) {
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE" }] };
+    }
+    return { ok: true, json: async () => ({ events: [
+      { day: "2026-08-31", flags: [{ name: "Garbage" }] },
+      { day: "2026-08-31", flags: [{ name: "Recycling" }] },
+    ] }) };
+  };
+  const schedule = await getSterlingRanchWasteSchedule({ fetchImpl, now: new Date("2026-08-30T18:00:00Z") });
+  assert.equal(schedule.timing, "starting tomorrow");
+  assert.equal(schedule.villageDates[2].date, "2026-09-03");
+  assert.equal(requested.length, 2);
+  assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
+  assert.doesNotMatch(JSON.stringify(schedule), /7853|place_id/i);
+  assert.equal(scheduleTimingLabel("2026-09-07", "2026-08-30"), "the week of September 7, 2026");
+  assert.deepEqual(villageDatesForAnchor("2026-11-23", [{ day: "2026-11-26", type: "holiday" }]), [
+    { village: "Providence Village", date: "2026-11-23" },
+    { village: "Ascent Village", date: "2026-11-24" },
+    { village: "Prospect Village", date: "2026-11-27" },
+  ]);
+  assert.equal(villageDatesForAnchor("2026-09-08", [{ day: "2026-09-07", type: "holiday" }])[2].date, "2026-09-11");
 });
 
 test("unrelated community-page actions are not attached to grounded rule answers", async () => {
