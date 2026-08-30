@@ -274,7 +274,7 @@ test("unrelated community-page actions are not attached to grounded rule answers
     ["Can I install a swimming pool in my backyard?", /QID=119|reserve-the-pool|Backyard-Utility-Sheds/i],
     ["Can I put up a political sign?", /constantcontact|wasteconnections|Bulk-Item|Submit-Your-Feedback/i],
     ["Does the community own the landscaping on the sidewalk?", /calendar\.aspx/i],
-    ["I lost access to home seer steward system. How do I restore it?", /Resident-Amenity/i],
+    ["I lost access to home seer steward system. How do I restore it?", /Resident-Amenity|constantcontact|Email Distribution/i],
   ];
   for (const [question, forbidden] of cases) {
     const answer = await answerCommunityQuestion(question, {
