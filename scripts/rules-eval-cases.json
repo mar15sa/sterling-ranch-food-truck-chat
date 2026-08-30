@@ -166,10 +166,14 @@
   {
     "question": "Do I need DRC approval to paint my house?",
     "variants": [
-      "Does repainting the outside of my house require approval?"
+      "Does repainting the outside of my house require approval?",
+      "Are there preapproved garage door colors",
+      "Is there a list of approved garage door colors?",
+      "What color can I paint my garage door?",
+      "Are there pre-approved exterior colors for my village?"
     ],
     "expectedAny": ["Sec. 21-22"],
-    "answerIncludesAll": ["DRC approval", "same colors", "touch-ups"]
+    "answerIncludesAll": ["DRC approval", "same colors", "preapproved colors"]
   },
   {
     "question": "Can I build a deck?",
