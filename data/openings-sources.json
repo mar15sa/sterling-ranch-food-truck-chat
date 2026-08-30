@@ -244,6 +244,44 @@
       "notes": "City-backed roundup of businesses that opened, moved, or are officially coming soon."
     },
     {
+      "id": "aspen-grove-directory",
+      "name": "Aspen Grove tenant directory",
+      "community": "Littleton",
+      "kind": "property-owner",
+      "url": "https://aspengrovecenter.com/shop/",
+      "cadence": "daily",
+      "notes": "The center's official directory identifies the full tenant mix and labels businesses that are now open."
+    },
+    {
+      "id": "aspen-grove-leasing",
+      "name": "Aspen Grove owner and leasing roster",
+      "community": "Littleton",
+      "kind": "property-owner",
+      "url": "https://www.gerrity.co/properties/aspen-grove",
+      "cadence": "daily",
+      "notes": "The property owner's roster and leasing information can reveal tenant and vacancy changes before consumer announcements."
+    },
+    {
+      "id": "aspen-grove-redevelopment",
+      "name": "Aspen Grove redevelopment plan",
+      "community": "Littleton",
+      "kind": "official",
+      "url": "https://data.littletongov.org/pal.php?project=MDP22-0001",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "City project record for the approved mixed-use and commercial redevelopment of Aspen Grove."
+    },
+    {
+      "id": "mineral-place-development",
+      "name": "Mineral Place development record",
+      "community": "Littleton",
+      "kind": "official",
+      "url": "https://data.littletongov.org/pal.php?project=SIP24-0001",
+      "cadence": "daily",
+      "monitorMode": "manual",
+      "notes": "City project record for Costco and the future retail and dining pads at Santa Fe Drive and Mineral Avenue."
+    },
+    {
       "id": "park-meadows-directory",
       "name": "Park Meadows tenant directory",
       "community": "Lone Tree",

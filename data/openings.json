@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-30T08:12:00-06:00",
+  "updatedAt": "2026-08-30T11:45:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2823,6 +2823,39 @@
         "lng": -105.097915,
         "precision": "address",
         "geocodedFrom": "8906 West Bowles Avenue, Suite 100, Littleton, CO 80123"
+      }
+    },
+    {
+      "id": "call-your-mother-aspen-grove",
+      "name": "Call Your Mother Lil' Deli",
+      "category": "Coffee & bakery",
+      "community": "Littleton",
+      "area": "Aspen Grove",
+      "address": "7301 South Santa Fe Drive, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened spring 2026",
+      "summary": "The bright-pink Lil' Deli pop-up is serving bagels, breakfast sandwiches, deli sandwiches, and coffee at Aspen Grove.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Call Your Mother official Aspen Grove location",
+          "url": "https://www.callyourmotherdeli.com/order"
+        },
+        {
+          "label": "Aspen Grove official tenant page",
+          "url": "https://aspengrovecenter.com/retailer/call-your-mother/"
+        },
+        {
+          "label": "City of Littleton April and May 2026 report",
+          "url": "https://www.littletonco.gov/files/sharedassets/public/v/1/communications/littleton-reports/2026-littleton-reports/2026-04-apr-littleton-report.pdf"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.586357,
+        "lng": -105.023912,
+        "precision": "address",
+        "geocodedFrom": "7301 South Santa Fe Drive, Littleton, CO 80120"
       }
     }
   ]
