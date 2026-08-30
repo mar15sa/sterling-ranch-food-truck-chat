@@ -40,6 +40,19 @@ function saveConversationContext() {
   try { sessionStorage.setItem(CONTEXT_STORAGE_KEY, JSON.stringify(conversationContext.slice(-3))); } catch { /* session storage may be blocked */ }
 }
 
+function resetConversation({ showPrompt = true } = {}) {
+  conversationContext = [];
+  saveConversationContext();
+  rulesMessages.replaceChildren();
+  conversationStarted = false;
+  rulesDock.classList.remove("has-conversation", "starters-open");
+  startersToggle.setAttribute("aria-expanded", "false");
+  startersToggle.textContent = "Show example questions";
+  if (showPrompt) {
+    addBotText("Ask me a new question about Sterling Ranch rules, services, facilities, events, pool status, or food trucks.");
+  }
+}
+
 function rememberExchange(question, data) {
   conversationContext.push({
     question: String(question).slice(0, 500),
@@ -736,6 +749,7 @@ rulesStarters.addEventListener("click", (event) => {
   const button = event.target.closest("button");
   if (!button) return;
   trackEvent("rules_starter_clicked");
+  resetConversation({ showPrompt: false });
   askRules(button.textContent.trim(), "example");
 });
 
@@ -746,14 +760,7 @@ startersToggle.addEventListener("click", () => {
 });
 
 rulesStartOver.addEventListener("click", () => {
-  conversationContext = [];
-  saveConversationContext();
-  rulesMessages.replaceChildren();
-  conversationStarted = false;
-  rulesDock.classList.remove("has-conversation", "starters-open");
-  startersToggle.setAttribute("aria-expanded", "false");
-  startersToggle.textContent = "Show example questions";
-  addBotText("Ask me a new question about Sterling Ranch rules, services, facilities, events, pool status, or food trucks.");
+  resetConversation();
   rulesQuestion.focus();
   trackEvent("rules_conversation_reset");
 });

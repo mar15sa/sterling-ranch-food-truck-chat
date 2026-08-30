@@ -3,7 +3,17 @@ const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
-const communityIndex = require("../data/community-index.json");
+const storedCommunityIndex = require("../data/community-index.json");
+// Public-example regression tests verify answer behavior, not wall-clock source
+// freshness. The live source monitor covers expiration separately, so keep this
+// fixture current instead of letting the test change merely because a day passed.
+const communityIndex = {
+  ...storedCommunityIndex,
+  sources: (storedCommunityIndex.sources || []).map((source) => ({
+    ...source,
+    staleAfter: "2099-01-01T00:00:00.000Z",
+  })),
+};
 
 const EXAMPLES = [
   {
@@ -109,7 +119,7 @@ test("public example questions in the page are covered by the regression suite",
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
   assert.match(html, /rules-assistant\.css\?v=20260828-completion/);
-  assert.match(html, /rules-assistant\.js\?v=20260828-helpful-answer-card/);
+  assert.match(html, /rules-assistant\.js\?v=20260830-context-isolation/);
 });
 
 test("park and amenity booking questions use the reservation process", async () => {

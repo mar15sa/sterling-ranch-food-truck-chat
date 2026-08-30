@@ -38,6 +38,57 @@ test("visit-only context resolves pronouns but does not override an explicit new
   assert.equal(topicChange.usedPriorContext, false);
 });
 
+test("complete standalone questions never inherit an unrelated prior answer", () => {
+  const context = [{
+    question: "What are the landscaping and yard rules?",
+    resolvedQuestion: "What are the landscaping and yard rules?",
+    answer: "Most landscaping is allowed, but plans need DRC review.",
+  }];
+  const standaloneQuestions = [
+    "What fees do residents pay?",
+    "What are utility tap fees?",
+    "Short term rental",
+    "Do greenhouses require approval?",
+    "Are there rules where the electrical panels need to be placed?",
+    "Sheds",
+    "Are household pets allowed?",
+    "Can I install holiday lights?",
+    "Can a homeowner continually add to their front yard landscaping without DRC approval?",
+    "I lost access to home seer steward system. How do I restore it?",
+    "I need to submit something to the DRC. How do I do that?",
+    "The physical location of the Xcel electrical panel does it have to be in the gates of the home or can it be outside?",
+    "Is every backyard fence allowed to be the same height?",
+  ];
+  for (const question of standaloneQuestions) {
+    const result = resolveConversationQuestion(question, context);
+    assert.equal(result.usedPriorContext, false, question);
+    assert.equal(result.resolvedQuestion, question, question);
+  }
+});
+
+test("only genuinely dependent follow-ups reuse the previous turn", () => {
+  const context = [{ question: "Who is the food truck tomorrow?", answer: "Example Eats is scheduled." }];
+  for (const question of ["What is on their menu?", "How much does it cost?", "Menu?", "And tomorrow?"]) {
+    assert.equal(resolveConversationQuestion(question, context).usedPriorContext, true, question);
+  }
+  assert.equal(resolveConversationQuestion("Is it okay to have chickens?", context).usedPriorContext, false);
+});
+
+test("the 228-question corpus does not inherit landscaping except for intentionally incomplete follow-ups", () => {
+  const resident = require("../scripts/resident-rules-corpus.json");
+  const authored = require("../scripts/rules-eval-cases.json");
+  const unseen = require("../scripts/rules-unseen-eval-cases.json");
+  const questions = [...new Set([
+    ...resident,
+    ...authored.flatMap((item) => [item.question, ...(item.variants || [])]),
+    ...unseen.map((item) => item.question),
+  ])];
+  const context = [{ question: "What are the landscaping and yard rules?", answer: "Plans need DRC review." }];
+  const allowedFollowUps = new Set(["What about that?", "Can I?"]);
+  const inherited = questions.filter((question) => resolveConversationQuestion(question, context).usedPriorContext);
+  assert.deepEqual(inherited.sort(), [...allowedFollowUps].sort());
+});
+
 test("contact follow-ups become clean standalone questions", () => {
   const context = [{ question: "Who do I contact about water billing?", answer: "Call AmCoBi." }];
   const followUp = resolveConversationQuestion("What about their email?", context);

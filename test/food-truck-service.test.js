@@ -55,6 +55,7 @@ test("the Community Assistant has a dedicated resident-friendly food-truck card"
   assert.match(script, /Menu preview/);
   assert.match(script, /Helpful links/);
   assert.match(script, /View official wording/);
+  assert.match(script, /resetConversation\(\{ showPrompt: false \}\)/);
   assert.match(styles, /\.rules-food-truck-menu/);
   assert.match(styles, /\.rules-official-wording/);
   assert.match(styles, /\.rules-next-action-secondary/);
