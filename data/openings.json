@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-30T11:45:00-06:00",
+  "updatedAt": "2026-08-30T14:10:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2856,6 +2856,68 @@
         "lng": -105.023912,
         "precision": "address",
         "geocodedFrom": "7301 South Santa Fe Drive, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "hodgepodge-market-aspen-grove",
+      "name": "Hodgepodge Market",
+      "category": "Retail",
+      "community": "Littleton",
+      "area": "Aspen Grove",
+      "address": "7301 South Santa Fe Drive, Suite 110, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened August 2026",
+      "summary": "The new Aspen Grove shop carries vintage finds, apparel, furniture, decor, snacks, gifts, books, jewelry, and stained-glass art.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "City of Littleton August 2026 business newsletter",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/4256c6d"
+        },
+        {
+          "label": "Aspen Grove official Hodgepodge Market directory entry",
+          "url": "https://aspengrovecenter.com/retailers_categories/clothing/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.586372,
+        "lng": -105.023889,
+        "precision": "address",
+        "geocodedFrom": "7301 South Santa Fe Drive, Suite 110, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "first-street-farms-riverpark",
+      "name": "1st Street Farms",
+      "category": "Entertainment & restaurant",
+      "community": "Littleton",
+      "area": "RiverPark at Mineral and Santa Fe",
+      "address": "South Platte River Parkway near West Mineral Avenue, Littleton, CO 80120",
+      "status": "approved",
+      "openingWindow": "Approved June 2026; opening date not announced",
+      "summary": "The approved five-acre destination is planned around a full-service restaurant, event venue, beer garden, community turf field, public trails, and outdoor gathering spaces.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "City of Littleton approval and project record",
+          "url": "https://littletongov.legistar.com/LegislationDetail.aspx?FullText=1&GUID=DD23A807-5EE9-4EB6-9CD8-BDE875B1603A&ID=8057793"
+        },
+        {
+          "label": "Evergreen Devco official RiverPark project page",
+          "url": "https://evgre.com/properties/mineral-santa-fe-littleton-co"
+        },
+        {
+          "label": "City of Littleton July 2026 development newsletter",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/42174a2"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.582759,
+        "lng": -105.027057,
+        "precision": "approximate",
+        "geocodedFrom": "South Platte River Parkway near West Mineral Avenue, Littleton, CO 80120"
       }
     }
   ]

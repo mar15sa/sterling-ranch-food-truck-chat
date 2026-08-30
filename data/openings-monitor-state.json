@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-30T15:21:19.324Z",
+  "lastRunAt": "2026-08-30T15:51:42.916Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.742Z",
+      "checkedAt": "2026-08-30T15:51:36.358Z",
       "changedAt": "2026-08-19T17:46:33.926Z",
       "fingerprint": "315398d6b380dab9c571bd2c9825e0dc058550fec9d9cb34102d2db5137c9ad9",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
@@ -17,7 +17,7 @@
     },
     "castle-rock-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.828Z",
+      "checkedAt": "2026-08-30T15:51:36.431Z",
       "changedAt": "2026-08-29T17:32:07.994Z",
       "fingerprint": "601c6cb9a0ab59c709d1b14ea6f3c9f0e476eef13a1ba4aa0b18ebf84e3c9f4f",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
@@ -31,7 +31,7 @@
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.830Z",
+      "checkedAt": "2026-08-30T15:51:36.432Z",
       "changedAt": null,
       "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
       "finalUrl": "https://www.parkerco.gov/Planning",
@@ -45,7 +45,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.832Z",
+      "checkedAt": "2026-08-30T15:51:36.434Z",
       "changedAt": "2026-08-20T15:00:41.369Z",
       "fingerprint": "2d9cadb23b1ae7055c2af8353bb2c555975bb0974a43b71c24fc069666a37f9d",
       "finalUrl": "https://www.parkered.com/",
@@ -59,7 +59,7 @@
     },
     "lone-tree-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.833Z",
+      "checkedAt": "2026-08-30T15:51:36.436Z",
       "changedAt": "2026-08-27T18:18:43.589Z",
       "fingerprint": "b8b779d1450553ec13fdddde030a515fa8cffb8463ecb3787b46e2a28afac577",
       "finalUrl": "https://cityoflonetree.com/projects/",
@@ -72,7 +72,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.835Z",
+      "checkedAt": "2026-08-30T15:51:36.438Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -90,7 +90,7 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.837Z",
+      "checkedAt": "2026-08-30T15:51:36.440Z",
       "changedAt": "2026-08-27T17:33:53.154Z",
       "fingerprint": "74125995492be8eb8a85232dedb078515a801df02bbe529bac10a0f0008e3f63",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
@@ -140,7 +140,7 @@
     },
     "douglas-county-recent-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.838Z",
+      "checkedAt": "2026-08-30T15:51:36.441Z",
       "changedAt": "2026-08-29T17:32:08.000Z",
       "fingerprint": "fca9e318fa6b3a59e5c4b494115dc6d222d143e319165b267770e19e5bc325ad",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
@@ -163,7 +163,7 @@
     },
     "douglas-county-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.840Z",
+      "checkedAt": "2026-08-30T15:51:36.442Z",
       "changedAt": "2026-08-29T17:32:08.001Z",
       "fingerprint": "2b4f5b28b9a626cca53c02c2a36926e7064045bb46f0d0f8f07f25a52ac63630",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
@@ -176,7 +176,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.841Z",
+      "checkedAt": "2026-08-30T15:51:36.444Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -230,7 +230,7 @@
     },
     "highlands-ranch-news-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.843Z",
+      "checkedAt": "2026-08-30T15:51:36.446Z",
       "changedAt": "2026-08-27T17:33:53.158Z",
       "fingerprint": "86df8057f16b5f534127c6cc1951690a382fb75eef2e2a5ae62cdc0abc6724b3",
       "finalUrl": "https://www.highlandsranch.org/news-events",
@@ -259,7 +259,7 @@
     },
     "sterling-ranch-cab-news": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.844Z",
+      "checkedAt": "2026-08-30T15:51:36.447Z",
       "changedAt": "2026-08-25T15:28:06.562Z",
       "fingerprint": "ddd354aea897e3b186050bc5d95d6753d69517a52156bcd38807cb7befc05482",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
@@ -292,7 +292,7 @@
     },
     "sterling-ranch-cab-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.845Z",
+      "checkedAt": "2026-08-30T15:51:36.448Z",
       "changedAt": "2026-08-29T17:32:08.004Z",
       "fingerprint": "13ed0576511abd7720e2c1506ef99f86b8b820444ef1b43dc771096aef13e6ff",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
@@ -303,7 +303,7 @@
     },
     "sterling-ranch-developer-news": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.846Z",
+      "checkedAt": "2026-08-30T15:51:36.449Z",
       "changedAt": "2026-08-30T14:13:29.813Z",
       "fingerprint": "3687dd46c3226b2d17daa4f1134324cadb22ab102d44813e0b02a7bc4cf86a85",
       "finalUrl": "https://sterlingranch.com/happenings/",
@@ -320,7 +320,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.847Z",
+      "checkedAt": "2026-08-30T15:51:36.450Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -347,7 +347,7 @@
     },
     "dougco-social": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.848Z",
+      "checkedAt": "2026-08-30T15:51:36.451Z",
       "changedAt": "2026-08-27T17:33:53.162Z",
       "fingerprint": "ab7fb3888feaa28eb3e3e8f35139c1cb815acbf0cfcca17bcc70a34948b5f329",
       "finalUrl": "https://dougcosocial.com/news",
@@ -552,7 +552,7 @@
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.849Z",
+      "checkedAt": "2026-08-30T15:51:36.452Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -628,9 +628,114 @@
       "structuredLeads": [],
       "newSignals": []
     },
+    "littleton-etrakit": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "littleton-business-development-news": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T15:51:36.454Z",
+      "changedAt": null,
+      "fingerprint": "276fbb0876e70e8dc1458d7821fed2a9a8ee27028efe561520687279eb8e6656",
+      "finalUrl": "https://www.littletonco.gov/Government/City-News",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Spanish Select this as your preferred language",
+        "Building Inspections",
+        "Liquor Licenses",
+        "Commercial Real Estate",
+        "Retail Opportunities",
+        "Jessica Bixenman — Director of Communications, Marketing, and Events; 303-795-3733",
+        "The city’s Sewer and Stormwater Rate Study is evaluating the appropriate rates for residential, multifamily, and commercial customers"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "littleton-public-meetings": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T15:51:36.455Z",
+      "changedAt": null,
+      "fingerprint": "46bb527e9dd34a6ea340f34d166e9609087995c09c3ed9cac2bcd2f331abffe1",
+      "finalUrl": "https://littletongov.legistar.com/Calendar.aspx",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "riverpark-developer": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T15:51:36.456Z",
+      "changedAt": null,
+      "fingerprint": "876f3a41362172bb347970f369ec5f368984aec08a2fe0e56edacf769d5ef917",
+      "finalUrl": "https://evgre.com/properties/mineral-santa-fe-littleton-co",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "What We Do Retail Development",
+        "Mixed Use | Retail",
+        "Mineral & Santa Fe SWC_Marketing Brochure"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "arapahoe-health-inspections": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "naked-denver-mineral-place": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T15:51:36.457Z",
+      "changedAt": null,
+      "fingerprint": "870b881bbbaff28bb4fc14917fae35b0d651756fdf5cfedcfd49ec6fa94e6f8b",
+      "finalUrl": "https://www.nakeddenver.com/projects/mineral-place",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Mixed Use Under Construction",
+        "The project includes a 160,000-square-foot Costco with a fuel station, a second major retail anchor, nine smaller retail pads, and The Sullivan, a 370-unit luxury apartment community with one- to three-bedroom units and amenity spaces. The redevelopment is designed to generate economic activity, new jobs, and sales tax revenue while bringing residential, retail, dining, and community space to a key south-Denver-metro corridor.",
+        "Demolition of existing structures, including the 130-foot Qwest Tower, cleared the site for new construction. Mineral Place is expected to open in phases beginning in 2026, with retail anchors leading and residential deliveries through 2026–2027.",
+        "Status Under Construction",
+        "Get the latest property updates and market insights delivered to your inbox."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "galloway-mineral-place": {
+      "status": "ok",
+      "checkedAt": "2026-08-30T15:51:36.457Z",
+      "changedAt": null,
+      "fingerprint": "954e8154ffd7912dc5a44c7745f35b1b92dd77e10b7e8e7b8085e0aac0f1fe45",
+      "finalUrl": "https://gallowayus.com/project/mineral-place-development/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Retail & Commercial",
+        "Mineral Place is a transformative 63-acre redevelopment project in Littleton, Colorado, reimagining a long-vacant industrial site into a vibrant mixed-use destination. The revitalized development will feature a 370-unit luxury apartment community, nine small retail stores, a Costco Wholesale with a 32-pump gas station, and potential restaurants to bring new energy, housing, and economic opportunity to the area.",
+        "Galloway provided civil engineering services for the site’s master infrastructure and other individual pad sites, including grading, utility design, drainage, and entitlement support. One of the project’s engineering challenges involved consolidating multiple detention ponds into a single, strategically located pond in the site’s northwest corner. This approach maximized developable space while still meeting stormwater management requirements.",
+        "Mesa Ridge Marketplace"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "mineral-place-portillos-lead": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.852Z",
+      "checkedAt": "2026-08-30T15:51:36.458Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -669,10 +774,10 @@
       "newSignals": []
     },
     "aspen-grove-directory": {
-      "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.853Z",
-      "changedAt": null,
-      "fingerprint": "f08866f4d6956a29573e97c691be9912ab297e18aff9ea8fbc12d8813cbcd83f",
+      "status": "changed",
+      "checkedAt": "2026-08-30T15:51:36.459Z",
+      "changedAt": "2026-08-30T15:51:36.459Z",
+      "fingerprint": "b4999960bb1a5cafebc024fb4050a63d7bdff410f5c8fea7f4416d978b48f1d6",
       "finalUrl": "https://aspengrovecenter.com/shop/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -688,7 +793,7 @@
     },
     "aspen-grove-leasing": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.854Z",
+      "checkedAt": "2026-08-30T15:51:36.460Z",
       "changedAt": null,
       "fingerprint": "d3d7b163cd55bcbac1e63c2e8824dc59733e9d44ef1c6024900a913115f63afd",
       "finalUrl": "https://www.gerrity.co/properties/aspen-grove",
@@ -728,7 +833,7 @@
     },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.855Z",
+      "checkedAt": "2026-08-30T15:51:36.461Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -741,7 +846,7 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.856Z",
+      "checkedAt": "2026-08-30T15:51:36.462Z",
       "changedAt": "2026-08-30T14:13:29.821Z",
       "fingerprint": "5fc5e6932dcc334cc83f8b5e3bb5a99450cad633af1d09d929652c9b250d8d9f",
       "finalUrl": "https://www.hogbackpost.com/",
@@ -757,7 +862,7 @@
     },
     "hogback-development-tracker": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.857Z",
+      "checkedAt": "2026-08-30T15:51:36.463Z",
       "changedAt": null,
       "fingerprint": "6fed996ae27ffa754c5265bdd91cb6c1d4976d02a609d50a9f1c0368fe9eb3da",
       "finalUrl": "https://www.hogbackpost.com/whats-going-in-there",
@@ -780,7 +885,7 @@
     },
     "hogback-new-restaurants": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.858Z",
+      "checkedAt": "2026-08-30T15:51:36.464Z",
       "changedAt": null,
       "fingerprint": "c4827905d511d336debc8a57764b52b207e6230e2f3769c4daede9adfee0fb4e",
       "finalUrl": "https://www.hogbackpost.com/new-restaurants-littleton-80127",
@@ -813,7 +918,7 @@
     },
     "lone-tree-timberlines": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.859Z",
+      "checkedAt": "2026-08-30T15:51:36.465Z",
       "changedAt": "2026-08-27T18:18:43.607Z",
       "fingerprint": "859f2f84db81a1b470e4be2921e4d15b9877edf0938973db12d2bf2f61673247",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
@@ -826,7 +931,7 @@
     },
     "colorado-liquor-license-lists": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.860Z",
+      "checkedAt": "2026-08-30T15:51:36.466Z",
       "changedAt": "2026-08-27T17:33:53.166Z",
       "fingerprint": "ccaa475fb00059f4f41b93f656c7320fed0e0fc2ae3226bbdbc67e16874104db",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
@@ -849,7 +954,7 @@
     },
     "westword-openings-closings": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.861Z",
+      "checkedAt": "2026-08-30T15:51:36.466Z",
       "changedAt": "2026-08-29T17:32:08.011Z",
       "fingerprint": "97e028488d05294caa9fda63b9c466aeb3c2979282464a89ec2a5c7619f90ccb",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
@@ -889,7 +994,7 @@
     },
     "castle-rock-outlets-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.862Z",
+      "checkedAt": "2026-08-30T15:51:36.467Z",
       "changedAt": "2026-08-30T14:13:29.826Z",
       "fingerprint": "7e34f25c329acc254e16716ebd4bbb7cb8d9a6732051816a52bc58859b970ca6",
       "finalUrl": "https://www.outletsatcastlerock.com/",
@@ -922,7 +1027,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.863Z",
+      "checkedAt": "2026-08-30T15:51:36.468Z",
       "changedAt": "2026-08-19T17:46:34.042Z",
       "fingerprint": "33eb1e6ae91c8f6e0918f928a66b14874a6f1e42389fa457cd48979e9bacdc3c",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -933,7 +1038,7 @@
     },
     "castle-rock-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.864Z",
+      "checkedAt": "2026-08-30T15:51:36.470Z",
       "changedAt": "2026-08-19T17:46:34.043Z",
       "fingerprint": "e594bd7fe6e837afaa35fa3bf2bedc12cdec1830293fd65c095980bd3c58e7cb",
       "finalUrl": "https://business.castlerock.org/events/calendar",
@@ -946,7 +1051,7 @@
     },
     "ziggis-ken-caryl": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.865Z",
+      "checkedAt": "2026-08-30T15:51:36.471Z",
       "changedAt": null,
       "fingerprint": "284af98213f18d71ea33bcf2cbb41c65ce358cf21f046997f4867a3a5ce25aa6",
       "finalUrl": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/",
@@ -969,7 +1074,7 @@
     },
     "bodybar-colorado-studios": {
       "status": "ok",
-      "checkedAt": "2026-08-30T15:21:13.866Z",
+      "checkedAt": "2026-08-30T15:51:36.472Z",
       "changedAt": null,
       "fingerprint": "aa14a8d4081cf5769263df9dfc2679ddbd76836cc527206cddc526ebd9b64cd6",
       "finalUrl": "https://bodybarpilates.com/studios/colorado/",
