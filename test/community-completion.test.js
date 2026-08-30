@@ -3,7 +3,7 @@ const test = require("node:test");
 const { buildAnswerContract } = require("../lib/community-contracts");
 const { resolveConversationQuestion } = require("../lib/community-conversation");
 const { foodTruckAnswer, isFoodTruckQuestion } = require("../lib/community-food-trucks");
-const { answerCommunityQuestion, cleanAnswerText } = require("../lib/community-assistant");
+const { answerCommunityQuestion, cleanAnswerText, unanchoredRecurringScheduleAnswer } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
@@ -253,6 +253,16 @@ test("alternating recycling questions disclose the missing date anchor and link 
     "Open official Trash & Recycling information",
   ]);
   assert.doesNotMatch(JSON.stringify(answer.actions), /Submit-Your-Feedback|Bulk Item|Recycling Tips/i);
+
+  const pageOnlyResult = unanchoredRecurringScheduleAnswer("When is recycling week?", {
+    index: communityIndex,
+    requestedDetails: ["date"],
+    sources: communityIndex.sources.filter((source) => /^sterling-ranch-trash-recycling-/.test(source.id)),
+  });
+  assert.deepEqual(pageOnlyResult.actions.slice(0, 2).map((action) => action.label), [
+    "Open WasteConnect for Android",
+    "Open WasteConnect for iPhone",
+  ]);
 });
 
 test("unrelated community-page actions are not attached to grounded rule answers", async () => {
