@@ -92,6 +92,41 @@ test("approved-tree questions provide examples extracted from the current source
   }
 });
 
+test("plant-list wording variants all retrieve Section 5-131 first", async () => {
+  for (const question of [
+    "Is there a list of preapproved plants?",
+    "Is there a pre-approved plant list?",
+    "Is there an approved plant list?",
+    "Is there a recommended plant list?",
+    "Do you have a list of approved plants?",
+    "Where can I find recommended plants?",
+    "Which plants are recommended?",
+  ]) {
+    const result = await answer(question);
+    assert.match(result.answer, /Yes\. Section 5-131 contains Sterling Ranch’s preapproved and recommended plant list/i, question);
+    assert.match(result.answer, /Low-water examples:/i, question);
+    assert.doesNotMatch(result.answer, /there (?:is|are)(?:n't| not).*list|no .*list/i, question);
+    assert.match(result.sources?.[0]?.title || "", /^Sec\. 5-131\. - Preapproved plant list/i, question);
+    assert.deepEqual(result.qualityChecks?.issues, [], question);
+  }
+});
+
+test("missing retrieval cannot be presented as proof that an official list does not exist", () => {
+  const unsupported = answerCoverageIssues(
+    "Is there a list of preapproved plants?",
+    "No, there is no preapproved plant list.",
+    [{ title: "Landscape guidance", text: "Plants are grouped by their relative water need." }]
+  );
+  assert.ok(unsupported.includes("unsupported-resource-absence-claim"));
+
+  const explicitlySupported = answerCoverageIssues(
+    "Is there an approved contractor list?",
+    "The official rule says there is no approved contractor list.",
+    [{ title: "Contractor policy", text: "There is no approved contractor list maintained by the CAB." }]
+  );
+  assert.doesNotMatch(explicitlySupported.join(" "), /unsupported-resource-absence-claim/);
+});
+
 test("yard-art questions retain a readable summary while using current source limits", async () => {
   for (const question of ["Yard art?", "What are the rules for yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
     const result = await answer(question);
