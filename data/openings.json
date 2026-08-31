@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-30T14:10:00-06:00",
+  "updatedAt": "2026-08-31T08:20:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2918,6 +2918,56 @@
         "lng": -105.027057,
         "precision": "approximate",
         "geocodedFrom": "South Platte River Parkway near West Mineral Avenue, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "seven-brew-pinery-village",
+      "name": "7 Brew Coffee",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "Pinery Village",
+      "address": "Parker Road and North Pinery Parkway, Parker, CO 80134",
+      "status": "proposed",
+      "openingWindow": "Site plan filed August 21, 2026; opening date not announced",
+      "summary": "A newly filed Douglas County site plan names a 7 Brew Coffee drive-thru for the King Soopers-anchored Pinery Village development.",
+      "verifiedAt": "2026-08-31",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Douglas County site plan SP2026-120",
+          "url": "https://apps.douglas.co.us/planning/projects/Default.aspx?PosseObjectId=108344987&PossePresentation=SIPJob"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.459283,
+        "lng": -104.785834,
+        "precision": "approximate",
+        "geocodedFrom": "Parker Road and North Pinery Parkway, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "take-five-oil-change-pinery-village",
+      "name": "Take 5 Oil Change",
+      "category": "Everyday services",
+      "community": "Parker",
+      "area": "Pinery Village",
+      "address": "Parker Road and North Pinery Parkway, Parker, CO 80134",
+      "status": "proposed",
+      "openingWindow": "Site plan filed August 21, 2026; opening date not announced",
+      "summary": "The same active Douglas County site plan names a Take 5 oil-change facility beside the proposed 7 Brew Coffee in Pinery Village.",
+      "verifiedAt": "2026-08-31",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Douglas County site plan SP2026-120",
+          "url": "https://apps.douglas.co.us/planning/projects/Default.aspx?PosseObjectId=108344987&PossePresentation=SIPJob"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.459283,
+        "lng": -104.785834,
+        "precision": "approximate",
+        "geocodedFrom": "Parker Road and North Pinery Parkway, Parker, CO 80134"
       }
     }
   ]
