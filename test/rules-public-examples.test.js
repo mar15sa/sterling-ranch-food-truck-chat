@@ -44,7 +44,7 @@ const EXAMPLES = [
   {
     question: "How do I reserve an Overlook space?",
     verdict: "conditional",
-    includes: ["Facilities Rental Application", "$100.00", "$250.00"],
+    includes: ["live catalog", "$100", "$250"],
     requiresAction: true,
     maxLineLength: 320,
   },

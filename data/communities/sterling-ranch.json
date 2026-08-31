@@ -22,7 +22,13 @@
         "https://sterlingranchcab.com/324/Important-Contact-Information",
         "https://sterlingranchcab.com/247/Trash-Recycling",
         "https://sterlingranchcab.com/248/Water-Sewer",
-        "https://sterlingranchcab.com/187/Pool"
+        "https://sterlingranchcab.com/187/Pool",
+        "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+        "https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-",
+        "https://sterlingranchcab.com/206/Water-Billing",
+        "https://sterlingranchcab.com/269/Rent-the-Facility",
+        "https://sterlingranchcab.com/Faq.aspx?QID=88",
+        "https://sterlingranchcab.com/245/STEWARD-Home-Automation-System"
       ]
     },
     {
@@ -65,9 +71,30 @@
     "library.municode.com",
     "secure.rec1.com",
     "play.google.com",
-    "apps.apple.com"
+    "apps.apple.com",
+    "srcab.utilityhawk.us",
+    "ebill.sterlingranchco.com",
+    "lumiere.technology"
   ],
   "actions": [
+    {
+      "id": "utilityhawk-login",
+      "label": "Open UtilityHawk water usage and billing",
+      "url": "https://srcab.utilityhawk.us/login",
+      "sourceType": "services",
+      "actionType": "account",
+      "keywords": ["UtilityHawk", "water usage", "water bill", "pay water bill", "usage alerts", "consumption history"],
+      "refreshMinutes": 1440
+    },
+    {
+      "id": "approved-landscapers",
+      "label": "Open the current approved landscapers list",
+      "url": "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+      "sourceType": "services",
+      "actionType": "list",
+      "keywords": ["approved landscapers", "landscape company", "irrigation company", "landscape professional"],
+      "refreshMinutes": 1440
+    },
     {
       "id": "submit-drc-application",
       "label": "Open DRC applications and submission instructions",
