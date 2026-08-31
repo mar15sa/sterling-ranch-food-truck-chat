@@ -30,6 +30,31 @@ function source(id, hash, overrides = {}) {
   };
 }
 
+test("fence-color wording variants use the searchable official one-sheet, even without AI", async () => {
+  for (const question of [
+    "What is the fence paint color?",
+    "What color should I paint my fence?",
+    "Which stain color is approved for 3-rail fencing?",
+    "What colour is the wood fence supposed to be?",
+  ]) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+        ...options,
+        searchMode: "legacy",
+        llmMode: "off",
+      }),
+    });
+
+    assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
+    assert.match(answer.sources[0]?.sourceUrl || "", /DocumentCenter\/View\/618/i, question);
+    assert.doesNotMatch(answer.answer, /garage-door color list/i, question);
+  }
+});
+
 test("visit-only context resolves pronouns but does not override an explicit new topic", () => {
   const context = [{ question: "Who is the food truck tomorrow?", resolvedQuestion: "Who is the food truck tomorrow?", answer: "The listed truck is Example Eats." }];
   const followUp = resolveConversationQuestion("What is on their menu?", context);
