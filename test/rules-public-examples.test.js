@@ -37,12 +37,7 @@ const EXAMPLES = [
     includes: ["fixed charges", "Charges that depend on usage", "home type"],
   },
   {
-    question: "What are the rules for parks and open spaces?",
-    verdict: "verified",
-    includes: ["Dogs:", "motorized vehicles", "CAB fishing permit"],
-  },
-  {
-    question: "How do I reserve an Overlook space?",
+    question: "How do I reserve the Overlook Clubhouse?",
     verdict: "informational",
     includes: ["live rental catalog", "$100", "$250"],
     requiresAction: true,
@@ -51,7 +46,7 @@ const EXAMPLES = [
   {
     question: "Who do I contact about water billing?",
     verdict: "informational",
-    includes: ["833", "ClientCare@AmCoBi.com"],
+    includes: ["American Conservation and Billing Solutions", "AmCoBi", "833", "ClientCare@AmCoBi.com"],
     requiresSections: false,
   },
   {

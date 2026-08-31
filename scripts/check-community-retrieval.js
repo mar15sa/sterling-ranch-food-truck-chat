@@ -9,7 +9,7 @@ const CASES = [
   ["What are the landscaping and yard rules?", /Required lot landscape/i],
   ["What fees do residents pay?", /water, sanitary sewer, and stormwater/i],
   ["What are the rules for parks and open spaces?", /17-54/i],
-  ["How do I reserve an Overlook space?", /Rent the Facility/i],
+  ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i],
   ["Who do I contact about water billing?", /Water Billing/i],
   ["What are the neighborhood pickleball court rules?", /17-54/i],
   ["What is the maximum height a freestanding flag pole can be?", /2024 CAB Code amendments/i],

@@ -155,7 +155,7 @@ test("contact answers preserve exact structured details even when AI synthesis w
     id: "alpha-water-billing",
     title: "Water & Sewer",
     sourceType: "services",
-    text: "AmCoBi administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    text: "American Conservation and Billing Solutions (AmCoBi) administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
     facts: [
       { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
       { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
@@ -175,6 +175,7 @@ test("contact answers preserve exact structured details even when AI synthesis w
 
   assert.equal(synthesisCalls, 0);
   assert.equal(answer.answerMode, "community-source-extractive");
+  assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });
@@ -184,7 +185,7 @@ test("structured contacts outrank an earlier confident rules or AI answer that o
     id: "alpha-water-billing-priority",
     title: "Water & Sewer",
     sourceType: "services",
-    text: "AmCoBi administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    text: "American Conservation and Billing Solutions (AmCoBi) administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
     facts: [
       { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
       { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
@@ -206,6 +207,7 @@ test("structured contacts outrank an earlier confident rules or AI answer that o
   });
 
   assert.equal(answer.answerMode, "community-source-extractive");
+  assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });

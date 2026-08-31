@@ -11,7 +11,7 @@ const intervalMs = Math.max(0, Number(option("--interval-ms", "900000")));
 const expectedFingerprint = option("--fingerprint", process.env.EXPECTED_COMMUNITY_FINGERPRINT || "");
 const questions = [
   "Who do I contact about water billing?",
-  "How do I reserve an Overlook space?",
+  "How do I reserve the Overlook Clubhouse?",
   "What fees do residents pay?",
   "Can I build a shed in my backyard?",
   "Which food truck is here tomorrow?",
