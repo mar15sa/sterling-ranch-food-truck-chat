@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-21T14:29:25.683Z",
+  "lastRunAt": "2026-08-31T14:12:08.202Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.576Z",
+      "checkedAt": "2026-08-31T14:12:03.700Z",
       "changedAt": "2026-08-19T17:46:33.926Z",
       "fingerprint": "315398d6b380dab9c571bd2c9825e0dc058550fec9d9cb34102d2db5137c9ad9",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
@@ -16,10 +16,10 @@
       "newSignals": []
     },
     "castle-rock-agendas": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.673Z",
-      "changedAt": "2026-08-21T14:29:23.673Z",
-      "fingerprint": "d0997a58266dd4d2efd92d0d63967afcea68dea80b0e78e5f778b35726950a88",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.752Z",
+      "changedAt": "2026-08-29T17:32:07.994Z",
+      "fingerprint": "601c6cb9a0ab59c709d1b14ea6f3c9f0e476eef13a1ba4aa0b18ebf84e3c9f4f",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -31,7 +31,7 @@
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.675Z",
+      "checkedAt": "2026-08-31T14:12:03.753Z",
       "changedAt": null,
       "fingerprint": "fea198a8eb5963e246b173469d184a90f88ffc2cd5ce009a9b825e8cab5b5c9f",
       "finalUrl": "https://www.parkerco.gov/Planning",
@@ -45,7 +45,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.676Z",
+      "checkedAt": "2026-08-31T14:12:03.754Z",
       "changedAt": "2026-08-20T15:00:41.369Z",
       "fingerprint": "2d9cadb23b1ae7055c2af8353bb2c555975bb0974a43b71c24fc069666a37f9d",
       "finalUrl": "https://www.parkered.com/",
@@ -59,9 +59,9 @@
     },
     "lone-tree-projects": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.677Z",
-      "changedAt": null,
-      "fingerprint": "0202e72b4881cb4c0a4260ada79cb2d0bf5fc3262d3d450205ada9d305b67eda",
+      "checkedAt": "2026-08-31T14:12:03.755Z",
+      "changedAt": "2026-08-27T18:18:43.589Z",
+      "fingerprint": "b8b779d1450553ec13fdddde030a515fa8cffb8463ecb3787b46e2a28afac577",
       "finalUrl": "https://cityoflonetree.com/projects/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -72,7 +72,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.679Z",
+      "checkedAt": "2026-08-31T14:12:03.756Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -90,9 +90,9 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.680Z",
-      "changedAt": null,
-      "fingerprint": "abef7df19e072bfc429686fbea3bec2d128ed6d88ab11b12f2219873e53af366",
+      "checkedAt": "2026-08-31T14:12:03.757Z",
+      "changedAt": "2026-08-27T17:33:53.154Z",
+      "fingerprint": "74125995492be8eb8a85232dedb078515a801df02bbe529bac10a0f0008e3f63",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -101,10 +101,9 @@
         "Liquor License Renewal",
         "CP Commercial, LLC Lawsuit",
         "Building Inspections",
-        "A 7 Brew Coffee is currently under construction. The latest information about development activity around Castle Pines is available at CastlePinesCO.gov/DevelopmentActivity.",
-        "When is the new storage facility opening?",
+        "A 7 Brew Coffee is currently under construction. The latest information about development activity around Castle Pines is available at CastlePinesCO.gov/DevelopmentActivity .",
         "Is there a new restaurant going into the old Pino’s location?",
-        "Yes, Castilla Italiano is expected to open in the former Pino’s location. The restaurant’s owners have indicated that they plan to be open for business later this summer, following the completion of extensive renovation work.",
+        "Yes, Castilla Italiano is expected to open in the former Pino’s location. The restaurant’s owners have indicated they plan to open in September 2026, following the completion of extensive renovations.",
         "What is happening with the open space in front of the skyline ridge neighborhood? On chase lane and Kenzie circle? Rumored that the city owns it and they will build a school there. What about a pool and community center for the neighborhood?",
         "The owners of the former Safeway site are currently seeking a tenant to fill the vacant site. Safeway previously had a multi-year lease in place for the property. However, that lease was terminated last year. Following that lease termination, the property owner entered into an agreement with a private fitness facility known as Engage: A Total Wellness Community . However, that agreement is no longer in place.",
         "The property owner is actively searching for a new tenant to fill the space. We'll share information on a new tenant when available.",
@@ -140,20 +139,18 @@
       "newSignals": []
     },
     "douglas-county-recent-projects": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.681Z",
-      "changedAt": "2026-08-21T14:29:23.681Z",
-      "fingerprint": "43650465e370f464425e6032475a8d66a39e2c17549f069480281910f97b4261",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.758Z",
+      "changedAt": "2026-08-31T14:08:46.640Z",
+      "fingerprint": "d73ce8e1ad0be3d05909f6d6de50d087f7fe15ba012499529e3dacb18abf39fe",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
       "contentType": "text/html; charset=utf-8",
       "signals": [
-        "Request for a Site Improvement Plan for a coffee shop and oil change facility.",
+        "Request for a Site Improvement Plan (SIP) for a coffee shop and oil change facility.",
         "Request for a Site Improvement Plan (SIP) for the construction of an office building with warehouse space and outdoor storage."
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "Request for a Site Improvement Plan (SIP) for the construction of an office building with warehouse space and outdoor storage."
-      ]
+      "newSignals": []
     },
     "douglas-county-building-records": {
       "status": "manual-review",
@@ -165,10 +162,10 @@
       "newSignals": []
     },
     "douglas-county-agendas": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.682Z",
-      "changedAt": "2026-08-21T14:29:23.682Z",
-      "fingerprint": "29750728883dfdea62d27e617f847a9d87521f917cb81309e4ad7ba8d9ccdd25",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.759Z",
+      "changedAt": "2026-08-29T17:32:08.001Z",
+      "fingerprint": "2b4f5b28b9a626cca53c02c2a36926e7064045bb46f0d0f8f07f25a52ac63630",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -179,7 +176,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.683Z",
+      "checkedAt": "2026-08-31T14:12:03.760Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -232,10 +229,10 @@
       "newSignals": []
     },
     "highlands-ranch-news-projects": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.685Z",
-      "changedAt": "2026-08-21T14:29:23.685Z",
-      "fingerprint": "28ca004840e120d84dea058ddca5890c0750ed9cfcc17c60e8700bf27f302795",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.761Z",
+      "changedAt": "2026-08-27T17:33:53.158Z",
+      "fingerprint": "86df8057f16b5f534127c6cc1951690a382fb75eef2e2a5ae62cdc0abc6724b3",
       "finalUrl": "https://www.highlandsranch.org/news-events",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -261,10 +258,10 @@
       "newSignals": []
     },
     "sterling-ranch-cab-news": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.685Z",
-      "changedAt": "2026-08-21T14:29:23.685Z",
-      "fingerprint": "b140b66213fc7f6f81acfaa9c384d8f611a4aea648d7aa59c411923709df82a7",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.761Z",
+      "changedAt": "2026-08-25T15:28:06.562Z",
+      "fingerprint": "ddd354aea897e3b186050bc5d95d6753d69517a52156bcd38807cb7befc05482",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -291,15 +288,13 @@
         "Sterling Ranch News 01-24-2025: Milkshake contest, planning for spring landscaping, Rave clinic opening"
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "Sterling Ranch News 8-14-2026: Sterling Ranch Days recap, Farmer's Market info, Middle Fork roundabout update."
-      ]
+      "newSignals": []
     },
     "sterling-ranch-cab-agendas": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.686Z",
-      "changedAt": "2026-08-18T14:09:17.098Z",
-      "fingerprint": "add22f1f65e083d7480151e79ebc83fe7d422415cc676b88c4e7ba737ddf9d1f",
+      "checkedAt": "2026-08-31T14:12:03.762Z",
+      "changedAt": "2026-08-29T17:32:08.004Z",
+      "fingerprint": "13ed0576511abd7720e2c1506ef99f86b8b820444ef1b43dc771096aef13e6ff",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
       "contentType": "text/html; charset=utf-8",
       "signals": [],
@@ -307,10 +302,10 @@
       "newSignals": []
     },
     "sterling-ranch-developer-news": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.687Z",
-      "changedAt": "2026-08-21T14:29:23.687Z",
-      "fingerprint": "6c29c65d2d6f259cec572529e7543ad78c8dcdf9055102be0c1c7a200c913034",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.762Z",
+      "changedAt": "2026-08-30T14:13:29.813Z",
+      "fingerprint": "3687dd46c3226b2d17daa4f1134324cadb22ab102d44813e0b02a7bc4cf86a85",
       "finalUrl": "https://sterlingranch.com/happenings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -325,7 +320,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.688Z",
+      "checkedAt": "2026-08-31T14:12:03.763Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -351,16 +346,19 @@
       "newSignals": []
     },
     "dougco-social": {
-      "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.689Z",
-      "changedAt": "2026-08-21T14:29:23.689Z",
-      "fingerprint": "847d04b9e34df30c5731211a42da0e26a062f094ee8b437c82b579976adbeb08",
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.764Z",
+      "changedAt": "2026-08-27T17:33:53.162Z",
+      "fingerprint": "ab7fb3888feaa28eb3e3e8f35139c1cb815acbf0cfcca17bcc70a34948b5f329",
       "finalUrl": "https://dougcosocial.com/news",
       "contentType": "text/html; charset=utf-8",
       "signals": [
         "Douglas County News — Openings & Closings | DougCo Social Skip to main content DougCo Social",
         "New openings, closings, development, and community updates from Castle Rock, Parker, Highlands Ranch, Lone Tree, Castle Pines, and across Douglas County — first-person coverage you won&#x27;t find anywhere else.",
-        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day, happy hour 2pm to 5pm.",
+        "Life Time doesn&#x27;t publish pricing for its Castle Pines club. A grand-opening breakdown shared publicly puts an individual membership at $329 a month and a family of five near $789. Here&#x27;s that breakdown, and what&#x27;s actually in the building.",
+        "The drive-thru coffee chain&#x27;s Castle Pines building is up, the signage is installed and the lot is striped. The city&#x27;s own development page still lists it as barely started.",
+        "Rock Bottom Restaurant & Brewery has closed its Highlands Ranch location along with Centennial, leaving Loveland as the chain&#x27;s only remaining Colorado brewpub. The landlord is suing.",
+        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day. A happy hour is planned but hasn&#x27;t started yet.",
         "Egg Harbor Cafe Is Coming to Belleview Station in Denver",
         "The family-owned breakfast brand that opened in Highlands Ranch this spring is expanding — a second Colorado location is coming to Belleview Station in southeast Denver, looking like a third-week-of-September opening (recently pushed back).",
         "Douglas County approved $7.5 million toward a 75,000-square-foot Gold Crown youth field house in Castle Rock&#x27;s Dawson Trails — six basketball courts, a dozen volleyball courts, and an early-2028 opening.",
@@ -371,7 +369,7 @@
         "Shake Shack Opening in Parker August 12 — In the Former Wendy&#x27;s Spot",
         "Shake Shack is opening its first Parker location at 9185 Crown Crest Blvd on Wednesday, August 12, 2026 — in the space that formerly housed a Wendy&#x27;s. Here&#x27;s what we know.",
         "A 31-acre, $400 million mixed-use district is under construction on Castle Rock&#x27;s west side — a sports center, a hotel, six restaurants, and hundreds of homes, from the same developer behind Riverwalk downtown.",
-        "Salady — billed as South Korea&#x27;s largest salad franchise, with 300-plus stores — is coming to Parker at 9700 S Parker Rd, in the Parker Gateway Marketplace next to Einstein Bros Bagels, as the Korean chain expands across the U.S. The exterior sign is up, and staff on site say the store is targeting an August 2026 opening.",
+        "Salady — billed as South Korea&#x27;s largest salad franchise, with 400-plus stores — opened in Parker on Saturday, August 22, 2026 at 9700 S Parker Rd in the Parker Gateway Marketplace. I went on opening day: here is the room, the menu, and what the bowls are actually like.",
         "A new permanent sculpture called Big Drive — a bull, cow, and calf standing about 11 feet tall and 20 feet wide — is being installed at Castle Rock&#x27;s Rock Park Open Space, where the Town&#x27;s Western Heritage Cattle Drive begins each summer. Here&#x27;s the story, the artists behind it, and the July 22 dedication.",
         "Lost Canyon Ranch Open Space: I Hiked Every Open Trail. Here&#x27;s the Guide.",
         "Castle Rock&#x27;s Lost Canyon Ranch Open Space opened July 13, 2026. I hiked all 10 miles over two days. Here is every open trail with real distance, elevation and shade, both trailheads, what is still closed, and what to know before you go. No dogs.",
@@ -394,10 +392,7 @@
         "The Castle Rock Super-Sport club at 5745 New Abbey Ln reopens Wednesday, May 27 after a targeted renovation: 50 pieces of new equipment, an expanded Zone, new flooring and paint, and the new Reformer24 private Pilates studio. Here are the soft-opening details, presale pricing, and what&#x27;s already in the club.",
         "Champagne Velvet Proper Kitchen & Bar Castle Rock — What We Tried, Menu, and What to Know",
         "Champagne Velvet Proper Kitchen & Bar opened Sunday, May 17, 2026 at 2355 Mercantile St in Castle Rock — the rebrand of the former I.C. Brewhouse, named for Upland Brewing&#x27;s 1902 &#x27;Million Dollar Flavor&#x27; pilsner. We went for lunch on opening day. Here&#x27;s what we tried, the full menu, and what to know before you go.",
-        "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff",
-        "Starbird Chicken&#x27;s Castle Rock location opens Monday, April 27, 5–9pm at the Promenade. Soft opening notes, menu highlights, hours, and patio details.",
-        "Lone Tree is building High Note Regional Park in the Lyric neighborhood. Phase 1 includes playgrounds, a dog park, sports fields, and a beer garden. Opening 2027.",
-        "Bar Hummingbird Castle Rock — Menu, Hours, and What We Tried"
+        "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff"
       ],
       "structuredLeads": [
         {
@@ -468,7 +463,7 @@
           "id": "dougco-social-salady-opens-in-parker-saturday-august-22",
           "headline": "Salady Opens in Parker Saturday, August 22",
           "url": "https://dougcosocial.com/news/salady-parker",
-          "observedDate": "2026-08-20",
+          "observedDate": "2026-08-24",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
         },
@@ -551,47 +546,13 @@
           "observedDate": "2026-07-03",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-24-hour-fitness-castle-rock-reopens-after-renovation-may-27-soft-opening",
-          "headline": "24 Hour Fitness Castle Rock Reopens After Renovation — May 27 Soft Opening",
-          "url": "https://dougcosocial.com/news/24-hour-fitness-castle-rock-renovation",
-          "observedDate": "2026-07-06",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-champagne-velvet-proper-kitchen-bar-castle-rock-what-we-tried-menu-and-what-to-know",
-          "headline": "Champagne Velvet Proper Kitchen & Bar Castle Rock — What We Tried, Menu, and What to Know",
-          "url": "https://dougcosocial.com/news/champagne-velvet-proper-kitchen-bar-castle-rock",
-          "observedDate": "2026-08-19",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-hideaway-bar-grill-in-castle-rock-hit-by-two-fires-in-two-days-how-to-help-the-staff",
-          "headline": "Hideaway Bar & Grill in Castle Rock Hit by Two Fires in Two Days — How to Help the Staff",
-          "url": "https://dougcosocial.com/news/hideaway-bar-grill-fire-castle-rock",
-          "observedDate": "2026-06-27",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-riot-bbq-takes-over-wide-open-saloon-kitchen-in-sedalia",
-          "headline": "Riot BBQ Takes Over Wide Open Saloon Kitchen in Sedalia",
-          "url": "https://dougcosocial.com/news/riot-bbq-wide-open-saloon-sedalia",
-          "observedDate": "2026-06-27",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
         }
       ],
-      "newSignals": [
-        "JP Cocina & Cantina opened Wednesday, August 19 in the old Wild Goose Saloon at 11160 S Pikes Peak Dr in Parker, from Jose Poblano of El Poblano Mexican Eats and The Perfect Time Cafe. Open 10am to midnight Sunday through Wednesday and 10am to 2am Thursday through Saturday, same menu all day, happy hour 2pm to 5pm."
-      ]
+      "newSignals": []
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.691Z",
+      "checkedAt": "2026-08-31T14:12:03.764Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -667,9 +628,114 @@
       "structuredLeads": [],
       "newSignals": []
     },
+    "littleton-etrakit": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "littleton-business-development-news": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.765Z",
+      "changedAt": null,
+      "fingerprint": "276fbb0876e70e8dc1458d7821fed2a9a8ee27028efe561520687279eb8e6656",
+      "finalUrl": "https://www.littletonco.gov/Government/City-News",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Spanish Select this as your preferred language",
+        "Building Inspections",
+        "Liquor Licenses",
+        "Commercial Real Estate",
+        "Retail Opportunities",
+        "Jessica Bixenman — Director of Communications, Marketing, and Events; 303-795-3733",
+        "The city’s Sewer and Stormwater Rate Study is evaluating the appropriate rates for residential, multifamily, and commercial customers"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "littleton-public-meetings": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.766Z",
+      "changedAt": null,
+      "fingerprint": "46bb527e9dd34a6ea340f34d166e9609087995c09c3ed9cac2bcd2f331abffe1",
+      "finalUrl": "https://littletongov.legistar.com/Calendar.aspx",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "riverpark-developer": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.767Z",
+      "changedAt": null,
+      "fingerprint": "876f3a41362172bb347970f369ec5f368984aec08a2fe0e56edacf769d5ef917",
+      "finalUrl": "https://evgre.com/properties/mineral-santa-fe-littleton-co",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "What We Do Retail Development",
+        "Mixed Use | Retail",
+        "Mineral & Santa Fe SWC_Marketing Brochure"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "arapahoe-health-inspections": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "naked-denver-mineral-place": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.767Z",
+      "changedAt": null,
+      "fingerprint": "870b881bbbaff28bb4fc14917fae35b0d651756fdf5cfedcfd49ec6fa94e6f8b",
+      "finalUrl": "https://www.nakeddenver.com/projects/mineral-place",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Mixed Use Under Construction",
+        "The project includes a 160,000-square-foot Costco with a fuel station, a second major retail anchor, nine smaller retail pads, and The Sullivan, a 370-unit luxury apartment community with one- to three-bedroom units and amenity spaces. The redevelopment is designed to generate economic activity, new jobs, and sales tax revenue while bringing residential, retail, dining, and community space to a key south-Denver-metro corridor.",
+        "Demolition of existing structures, including the 130-foot Qwest Tower, cleared the site for new construction. Mineral Place is expected to open in phases beginning in 2026, with retail anchors leading and residential deliveries through 2026–2027.",
+        "Status Under Construction",
+        "Get the latest property updates and market insights delivered to your inbox."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "galloway-mineral-place": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.768Z",
+      "changedAt": null,
+      "fingerprint": "954e8154ffd7912dc5a44c7745f35b1b92dd77e10b7e8e7b8085e0aac0f1fe45",
+      "finalUrl": "https://gallowayus.com/project/mineral-place-development/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Retail & Commercial",
+        "Mineral Place is a transformative 63-acre redevelopment project in Littleton, Colorado, reimagining a long-vacant industrial site into a vibrant mixed-use destination. The revitalized development will feature a 370-unit luxury apartment community, nine small retail stores, a Costco Wholesale with a 32-pump gas station, and potential restaurants to bring new energy, housing, and economic opportunity to the area.",
+        "Galloway provided civil engineering services for the site’s master infrastructure and other individual pad sites, including grading, utility design, drainage, and entitlement support. One of the project’s engineering challenges involved consolidating multiple detention ponds into a single, strategically located pond in the site’s northwest corner. This approach maximized developable space while still meeting stormwater management requirements.",
+        "Mesa Ridge Marketplace"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "mineral-place-portillos-lead": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.691Z",
+      "checkedAt": "2026-08-31T14:12:03.768Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -707,9 +773,67 @@
       "structuredLeads": [],
       "newSignals": []
     },
+    "aspen-grove-directory": {
+      "status": "changed",
+      "checkedAt": "2026-08-31T14:12:03.769Z",
+      "changedAt": "2026-08-31T14:12:03.769Z",
+      "fingerprint": "f08866f4d6956a29573e97c691be9912ab297e18aff9ea8fbc12d8813cbcd83f",
+      "finalUrl": "https://aspengrovecenter.com/shop/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Alamo Drafthouse Cinema",
+        "Anthony Vince’ Nail Spa",
+        "Avalon Salon & Spa SHOP LOCAL",
+        "Butterscotch Grove Bakery SHOP LOCAL",
+        "Retailer Login",
+        "Size needed for the Retailer photo 900 x 428 pixels."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "aspen-grove-leasing": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.770Z",
+      "changedAt": null,
+      "fingerprint": "d3d7b163cd55bcbac1e63c2e8824dc59733e9d44ef1c6024900a913115f63afd",
+      "finalUrl": "https://www.gerrity.co/properties/aspen-grove",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Specialty Retail",
+        "Site Plans",
+        "# of tenants at this location",
+        "Available Space (sq. ft.)",
+        "Aspen Grove is an experiential lifestyle center located in Littleton, Colorado. Facilitated by Gerrity's on-site team, this center is home to a recurring farmer's market, an outdoor bar, and a movie theatre. This center is teeming with Littleton culture, due in part to Gerrity's specialty leasing efforts to support local businesses.",
+        "Site Plan",
+        "Available Space",
+        "Space N.",
+        "Monika Foley - Specialty Retail",
+        "Marketplace At Birdcage"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "aspen-grove-redevelopment": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "mineral-place-development": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
+      "structuredLeads": [],
+      "newSignals": []
+    },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.692Z",
+      "checkedAt": "2026-08-31T14:12:03.770Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -722,15 +846,62 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.693Z",
-      "changedAt": "2026-08-16T15:55:43.962Z",
-      "fingerprint": "28e2c38a52e771647d225df426a564f6e8a7392adb4e035763ffd8dc8a07f33f",
+      "checkedAt": "2026-08-31T14:12:03.771Z",
+      "changedAt": "2026-08-30T14:13:29.821Z",
+      "fingerprint": "5fc5e6932dcc334cc83f8b5e3bb5a99450cad633af1d09d929652c9b250d8d9f",
       "finalUrl": "https://www.hogbackpost.com/",
       "contentType": "text/html; charset=utf-8",
       "signals": [
         "New Restaurants in 80127",
         "Every Friday, the Hogback Post delivers local news, events, restaurant openings, trail updates, and development intel that actually matters to Littleton, Ken Caryl, and the SW Denver foothills. Five-minute read.",
         "Restaurant and business openings : Portillo&#x27;s coming to Mineral, Ziggi&#x27;s Coffee, Nanu&#x27;s Kitchen, Ken Caryl Kabob, and what opens next",
+        "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "hogback-development-tracker": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.771Z",
+      "changedAt": null,
+      "fingerprint": "6fed996ae27ffa754c5265bdd91cb6c1d4976d02a609d50a9f1c0368fe9eb3da",
+      "finalUrl": "https://www.hogbackpost.com/whats-going-in-there",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "New Restaurants in 80127",
+        "Opening soon",
+        "Ziggi&#x27;s Coffee, 8020 South Sangre de Cristo. Open. The Colorado-grown drive-thru chain opened its Chatfield and Sangre de Cristo corner on Thursday, August 27, with a grand-opening week of daily deals running through Saturday the 29th. After months on this page, this one graduates.",
+        "Better Mattress, 8055 West Bowles at Bowles Crossing. The Colorado chain with stores from Arvada to Lone Tree now lists Bowles Crossing as Coming Soon on its own store locator, matching a tenant-finish permit issued in late July. No date yet.",
+        "Jersey Mike&#x27;s, 7735 West Long Drive. One zip over, about a mile east of Kipling. A tenant permit issued in July reads like a sub shop starter kit, two kitchen hoods and a brand-new grease trap. Details in Issue #19 .",
+        "Under construction",
+        "The old Walgreens at Simms and Ken Caryl. It&#x27;s becoming a medical office building. The conversion permit issued July 1, right after the property sold in June, and the first phase demolishes everything that makes the building recognizable as a Walgreens, the gable canopies, the pharmacy drive-through, the old entrance. No tenant is named in the county&#x27;s records yet. The tenant permit is where a name usually shows up first, so I&#x27;m watching for it. The story ran in Issue #18 .",
+        "Turnbuckle Distilling, northwest corner of Bowles and C-470. The old Whistling Hare property is turning into a five-acre distillery with a restaurant, a silo tasting room, and a working farm. Construction was underway when I checked in early July, and as of mid-August the company&#x27;s own site still says Coming Soon with no date attached.",
+        "The new Deer Creek Library, 11100 Bradford Road. Jeffco Public Library is building a full branch at its Bradford site in Ken Caryl, and the system&#x27;s own project records point at a 2028 opening. Between now and September 27, the library is collecting marker drawings of Colorado nature from all ages for a community art wall inside the future building. I&#x27;ve been pulling the project&#x27;s records for a fuller story in the newsletter.",
+        "More field guides from the Post: the new-restaurants page for what&#x27;s opening to eat, the trails page for where you can actually hike around here, and the bears page for what to do when a bear finds your trash cans.",
+        "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "hogback-new-restaurants": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.771Z",
+      "changedAt": null,
+      "fingerprint": "c4827905d511d336debc8a57764b52b207e6230e2f3769c4daede9adfee0fb4e",
+      "finalUrl": "https://www.hogbackpost.com/new-restaurants-littleton-80127",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "New Restaurants in Littleton 80127: What Just Opened & What&#x27;s Coming | Hogback Post",
+        "New Restaurants in 80127",
+        "New Restaurants in 80127 (and What&#x27;s Coming)",
+        "When I surveyed readers this summer about what they wanted more of, restaurant and opening news won by a mile. So this page is the running answer: what&#x27;s newly open around Littleton 80127 and Ken Caryl, what&#x27;s coming, and what we lost. A lot of it comes out of county permit files before anyone announces a thing, which is how this newsletter found half the entries below. The Friday email gets each one first.",
+        "Ziggi&#x27;s Coffee, 8020 South Sangre de Cristo. The Colorado-grown drive-thru chain opened its Chatfield and Sangre de Cristo corner on August 27, after a spring and summer of construction on that lot. Dirty sodas, protein coffees, and a kids&#x27; menu, plus a drive-thru line that will tell you how the zip is voting.",
+        "Hotpot Den, 5934 South Kipling Parkway. A family-run, all-you-can-eat hot pot spot in the old Chen&#x27;s Kitchen space, with house-made broths and the cook-it-yourself table experience. It quietly became one of the zip&#x27;s most interesting dinner options the day it opened.",
+        "Los Dos Potrillos, 10065 West San Juan Way. Back. The family Mexican standby reopened July 9 after a kitchen fire in March kept it dark for four months, and the line on reopening day said everything about how much this one was missed.",
+        "Coming soon",
+        "The Summit Steak Bar, the Bevy&#x27;s building on South Alkire. The steakhouse finally put a date on its banner: opening Monday, August 31, with dinner from 4 and reservations through its site. Months of \"live website, no date\" end Monday.",
+        "Jersey Mike&#x27;s, 7735 West Long Drive. One zip over, about a mile east of Kipling. The July tenant permit reads like a sub shop starter kit, two kitchen hoods and a brand-new grease trap.",
+        "Turnbuckle Distilling, northwest corner of Bowles and C-470. The most ambitious of the batch: a five-acre distillery with a chef-driven restaurant, a silo tasting room, and a working farm on the old Whistling Hare property. Its own site still says Coming Soon with no date.",
         "Your weekly guide to Littleton, Ken Caryl, and the SW Denver foothills. Events, restaurants, trails, development news, and the stuff your neighbors are talking about."
       ],
       "structuredLeads": [],
@@ -747,9 +918,9 @@
     },
     "lone-tree-timberlines": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.694Z",
-      "changedAt": "2026-08-16T15:55:43.963Z",
-      "fingerprint": "f61e08af217eac566bef5aa347c514197e3b48f70e2e53fea8d0958355657329",
+      "checkedAt": "2026-08-31T14:12:03.772Z",
+      "changedAt": "2026-08-27T18:18:43.607Z",
+      "fingerprint": "859f2f84db81a1b470e4be2921e4d15b9877edf0938973db12d2bf2f61673247",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -760,9 +931,9 @@
     },
     "colorado-liquor-license-lists": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.694Z",
-      "changedAt": "2026-08-19T17:46:34.039Z",
-      "fingerprint": "8ec20f56db29805308244af20c8608de90178c169edbf6098a02524712a789bf",
+      "checkedAt": "2026-08-31T14:12:03.772Z",
+      "changedAt": "2026-08-27T17:33:53.166Z",
+      "fingerprint": "ccaa475fb00059f4f41b93f656c7320fed0e0fc2ae3226bbdbc67e16874104db",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -783,9 +954,9 @@
     },
     "westword-openings-closings": {
       "status": "changed",
-      "checkedAt": "2026-08-21T14:29:23.695Z",
-      "changedAt": "2026-08-21T14:29:23.695Z",
-      "fingerprint": "cd691ab59ed46288ce464cb8c02305351350c77ff462905821cab198dee4b0ac",
+      "checkedAt": "2026-08-31T14:12:03.773Z",
+      "changedAt": "2026-08-31T14:12:03.773Z",
+      "fingerprint": "c7608b579dd70d3fd46fbc9057f485b9c43b2d19c12553dee151f5e545f538c9",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -794,6 +965,13 @@
         "Restaurants",
         "Shops & Markets",
         "Top 50 Restaurants",
+        "Every opening and closing this week: Chicago Mike’s closes after owner’s death",
+        "Plus: Soda Club pops off in RiNo, Hearth opens an add-on, and a popular Asian bakery generates big lines.",
+        "New bistro coming to former Table 6 space",
+        "Small Bites: Thai eatery eyes vacant Union Station space",
+        "Hearth Bakery expands with Euro-style patisserie in Highland",
+        "The grand opening takes place today at noon.",
+        "Every opening and closing this week: Temaki Den chef opens po’ boy pop-up",
         "Small Bites: Rock Bottom Brewery sued by landlord over unpaid rent",
         "Plus: Another Filipino restaurant in danger, another old-school restaurant demolished, another opening delayed.",
         "Every opening and closing this week: Rock Bottom continues to bottom out",
@@ -809,24 +987,16 @@
         "Notable openings temper the pang felt by three big losses.",
         "Plus, restaurant industry workers get a free screening of ‘Tony.’",
         "Zoe Ma Ma and Dragonfly chef opening new “elevated American Chinese” concept next month",
-        "Every opening and closing this week: Gennaro’s space gets new tenant",
-        "Odyssey Italian Restaurant reopens this week, expanding to Uptown",
-        "Sister restaurant Ollie & Park’s will be retired and reopened as ‘Odyssey Uptown’ once repairs are complete.",
-        "Wax Trax is opening a “real store” at Stanley Marketplace",
-        "Every opening and closing this week: Two new sushi spots surface",
         "Marketing"
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "Small Bites: Rock Bottom Brewery sued by landlord over unpaid rent",
-        "Plus: Another Filipino restaurant in danger, another old-school restaurant demolished, another opening delayed."
-      ]
+      "newSignals": []
     },
     "castle-rock-outlets-directory": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.696Z",
-      "changedAt": "2026-08-17T14:05:49.173Z",
-      "fingerprint": "533c15a72739f52186d279964ec0d26158ac5de78410be7876823cc0a1331469",
+      "checkedAt": "2026-08-31T14:12:03.773Z",
+      "changedAt": "2026-08-31T14:08:46.657Z",
+      "fingerprint": "05610e939c6e6a370a9c5598cecf8ea7fff67d223b996566afc66fe095cd44bd",
       "finalUrl": "https://www.outletsatcastlerock.com/",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -857,7 +1027,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.697Z",
+      "checkedAt": "2026-08-31T14:12:03.774Z",
       "changedAt": "2026-08-19T17:46:34.042Z",
       "fingerprint": "33eb1e6ae91c8f6e0918f928a66b14874a6f1e42389fa457cd48979e9bacdc3c",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -868,7 +1038,7 @@
     },
     "castle-rock-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-08-21T14:29:23.697Z",
+      "checkedAt": "2026-08-31T14:12:03.775Z",
       "changedAt": "2026-08-19T17:46:34.043Z",
       "fingerprint": "e594bd7fe6e837afaa35fa3bf2bedc12cdec1830293fd65c095980bd3c58e7cb",
       "finalUrl": "https://business.castlerock.org/events/calendar",
@@ -876,6 +1046,57 @@
       "signals": [
         "Ribbon Cutting and Grand Opening- The Ottmann Agency 4-6pm"
       ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "ziggis-ken-caryl": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.775Z",
+      "changedAt": null,
+      "fingerprint": "284af98213f18d71ea33bcf2cbb41c65ce358cf21f046997f4867a3a5ce25aa6",
+      "finalUrl": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "8020 Sangre De Cristo Rd. - Locations – Ziggi's Coffee",
+        "Ziggi's Coffee in Littleton, CO",
+        "Opening Soon",
+        "littleton64@ziggiscoffee.com",
+        "Ziggi’s Coffee is a leading specialty coffee shop and drive-thru franchise dedicated to serving only the finest roasted coffee, uniquely handcrafted drinks, with amazing, locally-made breakfast, lunch and snack options.",
+        "Details: 20% of store sales from August 29 will be donated to a local organization.",
+        "Fresherz & Sparkling Sodas",
+        "Iced Coffees",
+        "Hot Coffees",
+        "Ziggi’s Coffee Store #",
+        "Shop Coffee"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "bodybar-colorado-studios": {
+      "status": "ok",
+      "checkedAt": "2026-08-31T14:12:03.777Z",
+      "changedAt": null,
+      "fingerprint": "aa14a8d4081cf5769263df9dfc2679ddbd76836cc527206cddc526ebd9b64cd6",
+      "finalUrl": "https://bodybarpilates.com/studios/colorado/",
+      "contentType": "text/html; charset=UTF-8",
+      "signals": [
+        "Reformer Pilates in Colorado | BODYBAR Pilates",
+        "BODYBAR Reformer Pilates Studios in Colorado",
+        "Highlands Ranch Coming Soon",
+        "Lone Tree Coming Soon",
+        "Become a BODYBAR Franchise Owner in Colorado",
+        "BODYBAR Pilates studio ownership offers a healthy, balanced, and supported career for entrepreneurial minds and fitness enthusiasts alike—plus a chance to build real community right here in Colorado. If you’re ready for a rewarding franchise opportunity backed by a proven system, we’d love to have you on our team!",
+        "&copy; 2026 BODYBAR Pilates All Rights Reserved"
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "swthz-highlands-ranch": {
+      "status": "manual-review",
+      "checkedAt": null,
+      "changedAt": null,
+      "fingerprint": null,
+      "signals": [],
       "structuredLeads": [],
       "newSignals": []
     }

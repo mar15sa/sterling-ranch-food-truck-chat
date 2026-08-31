@@ -52,7 +52,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v35";
+const MENU_CACHE_VERSION = "menus-v36";
 const FETCH_TIMEOUT_MS = 8000;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -2769,6 +2769,16 @@ const KNOWN_TRUCK_LINKS = {
   },
 };
 
+const KNOWN_TRUCK_ALIASES = {
+  "cousin s maine lobster": "cousins maine lobster",
+};
+
+const KNOWN_TRUCK_DISPLAY_NAMES = {
+  "cousin s maine lobster": "Cousins Maine Lobster",
+  "cousins maine lobster": "Cousins Maine Lobster",
+  "tula s tapas": "Tula's Tapas",
+};
+
 KNOWN_TRUCK_LINKS["billy s beefy burgers"] = KNOWN_TRUCK_LINKS["billys beefy burgers"];
 KNOWN_TRUCK_LINKS["shuggs bbq"] = KNOWN_TRUCK_LINKS["shugg s bbq"];
 KNOWN_TRUCK_LINKS.tacontento = KNOWN_TRUCK_LINKS.tacotento;
@@ -3223,7 +3233,7 @@ function scoreResult(result) {
 }
 
 function knownTruckLinks(truckName) {
-  const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
+  const key = knownTruckKey(truckName);
   const links = KNOWN_TRUCK_LINKS[key] || (key.startsWith("the ") ? KNOWN_TRUCK_LINKS[key.slice(4)] : null);
   if (!links) return {};
 
@@ -3250,8 +3260,17 @@ function knownTruckLinks(truckName) {
 }
 
 function hasKnownTruckData(truckName) {
-  const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
+  const key = knownTruckKey(truckName);
   return Boolean(KNOWN_TRUCK_LINKS[key] || (key.startsWith("the ") && KNOWN_TRUCK_LINKS[key.slice(4)]));
+}
+
+function knownTruckKey(truckName) {
+  const key = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
+  return KNOWN_TRUCK_ALIASES[key] || key;
+}
+
+function displayTruckName(truckName) {
+  return KNOWN_TRUCK_DISPLAY_NAMES[knownTruckKey(truckName)] || truckName;
 }
 
 function isNonTruckCalendarTitle(truckName) {
@@ -4289,6 +4308,7 @@ async function getMenuForTruck(truckName) {
 }
 
 const foodTruckService = createFoodTruckService({
+  displayTruckName,
   formatFriendly,
   formatIso,
   getEventTruckListings,

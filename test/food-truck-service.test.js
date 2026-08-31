@@ -40,6 +40,35 @@ test("one food-truck service owns schedule, menu, and answer caching for every c
   assert.equal(community.question, "What is on their menu?");
 });
 
+test("calendar aliases use the known public truck name for answers and menu lookup", async () => {
+  let requestedMenuName = "";
+  const service = createFoodTruckService({
+    formatIso: () => "2026-08-29",
+    formatFriendly: () => "Saturday, August 29, 2026",
+    getScheduleForMonth: async () => ({
+      sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+      schedule: { "2026-08-29": "Cousins Main Lobster" },
+      localEvents: {},
+    }),
+    getEventTruckListings: async () => [],
+    getMenuForTruck: async (name) => {
+      requestedMenuName = name;
+      return { links: [], items: [] };
+    },
+    isNonTruckCalendarTitle: () => false,
+    normalizeTruckName: (name) => name,
+    splitListedTruckNames: (name) => [name],
+    displayTruckName: (name) => name === "Cousins Main Lobster" ? "Cousins Maine Lobster" : name,
+  });
+
+  const answer = await service.getAnswerForDate("Who is here?", new Date(Date.UTC(2026, 7, 29)));
+
+  assert.equal(requestedMenuName, "Cousins Maine Lobster");
+  assert.equal(answer.truck, "Cousins Maine Lobster");
+  assert.equal(answer.trucks[0].name, "Cousins Maine Lobster");
+  assert.match(answer.text, /Cousins Maine Lobster/);
+});
+
 test("both public APIs are wired to the same extracted food-truck service", () => {
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
   assert.match(server, /createFoodTruckService\(\{/);

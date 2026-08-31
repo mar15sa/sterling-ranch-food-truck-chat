@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-21T08:45:00-06:00",
+  "updatedAt": "2026-08-31T08:20:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -284,20 +284,53 @@
       }
     },
     {
+      "id": "goods-and-grace-parker",
+      "name": "Goods & Grace",
+      "category": "Shopping",
+      "community": "Parker",
+      "area": "Mainstreet",
+      "address": "17002 E. Mainstreet, Unit L, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened August 14, 2026",
+      "summary": "The curated marketplace for local makers, home décor, gifts, apparel, jewelry, and specialty foods is open on Mainstreet.",
+      "verifiedAt": "2026-08-22",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Goods & Grace official website",
+          "url": "https://shopgoodsandgrace.com/"
+        },
+        {
+          "label": "Parker Chamber ribbon cutting — August 20, 2026",
+          "url": "https://business.parkerchamber.com/events/details/ribbon-cutting-goods-grace-elevated-decor-gifts-and-more-9193?calendarMonth=2026-08-01"
+        },
+        {
+          "label": "DougCo Social opening details",
+          "url": "https://dougcosocial.com/directory/parker/goods-and-grace-parker"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.514413,
+        "lng": -104.792383,
+        "precision": "address",
+        "geocodedFrom": "17002 E. Mainstreet, Unit L, Parker, CO"
+      }
+    },
+    {
       "id": "salady-parker",
       "name": "Salady",
       "category": "Restaurant",
       "community": "Parker",
       "area": "Parker Road",
-      "address": "9700 South Parker Road, Parker, CO",
-      "status": "opening-soon",
-      "openingWindow": "Opening August 22, 2026",
-      "summary": "South Korea’s largest salad chain is scheduled to open its Parker location on August 22.",
-      "verifiedAt": "2026-08-21",
-      "confidence": "reported",
+      "address": "9700 South Parker Road, Unit 700, Parker, CO",
+      "status": "open",
+      "openingWindow": "Opened August 22, 2026",
+      "summary": "The Korean salad, grain-bowl, and wrap chain is now open in Parker Gateway Marketplace.",
+      "verifiedAt": "2026-08-25",
+      "confidence": "firsthand",
       "sources": [
         {
-          "label": "DougCo Social",
+          "label": "DougCo Social opening-day report",
           "url": "https://dougcosocial.com/news/salady-parker"
         }
       ],
@@ -997,10 +1030,10 @@
       "community": "Parker",
       "area": "The Juniper on Mainstreet",
       "address": "19865 Mainstreet, Unit 150, Parker, CO",
-      "status": "opening-soon",
-      "openingWindow": "Targeting August 2026",
-      "summary": "A 5,000-square-foot seasonal restaurant from the owner of Wolf Peach is in its final buildout.",
-      "verifiedAt": "2026-06-27",
+      "status": "under-construction",
+      "openingWindow": "Likely late 2026; no firm date announced",
+      "summary": "The 5,000-square-foot seasonal restaurant from the owner of Wolf Peach remains under construction; the kitchen hood is installed, but the buildout is continuing.",
+      "verifiedAt": "2026-08-25",
       "confidence": "permits",
       "sources": [
         {
@@ -1258,23 +1291,27 @@
       "category": "Coffee & bakery",
       "community": "Castle Pines",
       "area": "Castle Pines Parkway",
-      "address": "Near Wendy’s off Castle Pines Parkway, Castle Pines, CO",
+      "address": "570 East Castle Pines Parkway, Castle Pines, CO 80108",
       "status": "under-construction",
-      "openingWindow": "Opening date not announced",
-      "summary": "The city confirms that the new building under construction near Wendy’s is a 7 Brew Coffee.",
-      "verifiedAt": "2026-07-16",
+      "openingWindow": "Nearly complete; opening date not announced",
+      "summary": "The drive-thru building and signage are up and the lot is paved; final landscaping and site work were still underway on August 23.",
+      "verifiedAt": "2026-08-27",
       "confidence": "official",
       "sources": [
         {
           "label": "Castle Pines announcement: 7 Brew construction",
           "url": "https://www.castlepinesco.gov/rumor-has-it/#:~:text=A%207%20Brew%20Coffee%20is%20currently%20under%20construction"
+        },
+        {
+          "label": "DougCo Social on-site construction update",
+          "url": "https://dougcosocial.com/news/7-brew-coffee-castle-pines"
         }
       ],
       "coordinates": {
-        "lat": 39.471731,
-        "lng": -104.874427,
-        "precision": "approximate",
-        "geocodedFrom": "Near Wendy’s off Castle Pines Parkway, Castle Pines, CO"
+        "lat": 39.471819,
+        "lng": -104.875641,
+        "precision": "address",
+        "geocodedFrom": "570 East Castle Pines Parkway, Castle Pines, CO 80108"
       }
     },
     {
@@ -1285,9 +1322,9 @@
       "area": "Village Square",
       "address": "361 Village Square Lane, Suite 130, Castle Pines, CO 80108",
       "status": "opening-soon",
-      "openingWindow": "Expected late summer 2026",
-      "summary": "The restaurant is renovating the former Pino’s location and expects to open later this summer.",
-      "verifiedAt": "2026-07-14",
+      "openingWindow": "Expected September 2026",
+      "summary": "The restaurant is completing extensive renovations in the former Pino’s location and plans to open in September.",
+      "verifiedAt": "2026-08-27",
       "confidence": "official",
       "sources": [
         {
@@ -1500,15 +1537,19 @@
       "community": "Lone Tree",
       "area": "Park Meadows",
       "address": "8401 Park Meadows Center Drive, Lone Tree, CO 80124",
-      "status": "opening-soon",
-      "openingWindow": "Coming soon",
-      "summary": "Park Meadows officially lists the clothing retailer as coming soon on Level 2.",
-      "verifiedAt": "2026-08-13",
+      "status": "open",
+      "openingWindow": "Opened August 2026",
+      "summary": "Faherty is now open on Level 2 at Park Meadows in suite 2555.",
+      "verifiedAt": "2026-08-29",
       "confidence": "official",
       "sources": [
         {
-          "label": "Park Meadows listing: Faherty coming soon",
-          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Coming%20Soon"
+          "label": "Park Meadows directory: Faherty now open",
+          "url": "https://www.parkmeadows.com/en/directory/#:~:text=Faherty,Now%20Open"
+        },
+        {
+          "label": "Faherty official Park Meadows store page",
+          "url": "https://stores.fahertybrand.com/co/lone-tree-/pmw99/"
         }
       ],
       "coordinates": {
@@ -2095,9 +2136,9 @@
       "area": "South Broadway",
       "address": "9265 South Broadway, Suite 100, Highlands Ranch, CO 80129",
       "status": "under-construction",
-      "openingWindow": "Targeting fall 2026",
-      "summary": "The reformer Pilates studio is preparing its Highlands Ranch location and is enrolling founding members ahead of opening.",
-      "verifiedAt": "2026-08-13",
+      "openingWindow": "Opening October 12, 2026",
+      "summary": "The reformer Pilates studio plans to open October 12, with founding-member preview classes scheduled for October 5–11.",
+      "verifiedAt": "2026-08-27",
       "confidence": "business-confirmed",
       "sources": [
         {
@@ -2225,21 +2266,75 @@
       }
     },
     {
+      "id": "journeys-castle-rock-outlets",
+      "name": "Journeys",
+      "category": "Retail",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Space 540, Castle Rock, CO 80108",
+      "status": "open",
+      "openingWindow": "Open now",
+      "summary": "The footwear and accessories retailer is now operating at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-08-23",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Journeys official Castle Rock store page",
+          "url": "https://www.journeys.com/store/journeys-outlets-at-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.415565,
+        "lng": -104.872147,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Space 540, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "portland-leather-goods-castle-rock-outlets",
+      "name": "Portland Leather Goods",
+      "category": "Retail",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Suite 220, Castle Rock, CO 80108",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon; opening date not announced",
+      "summary": "The leather bags and accessories brand officially lists a coming-soon store at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-08-23",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Portland Leather Goods official Castle Rock announcement",
+          "url": "https://www.portlandleathergoods.com/pages/castle-rock-co-coming-soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.414096,
+        "lng": -104.872172,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Suite 220, Castle Rock, CO 80108"
+      }
+    },
+    {
       "id": "ziggis-coffee-ken-caryl",
       "name": "Ziggi's Coffee",
       "category": "Coffee",
       "community": "Littleton",
       "area": "Ken Caryl",
       "address": "8020 S. Sangre de Cristo Road, Littleton, CO 80127",
-      "status": "opening-soon",
-      "openingWindow": "Grand-opening week begins August 18, 2026",
-      "summary": "Ziggi's is opening a new cafe and drive-thru beside the Marketplace at Ken Caryl, with official grand-opening events scheduled for August 18–22.",
-      "verifiedAt": "2026-08-14",
+      "status": "open",
+      "openingWindow": "Opened August 25, 2026",
+      "summary": "The new café and drive-thru is open beside the Marketplace at Ken Caryl, with grand-opening events running August 27–29.",
+      "verifiedAt": "2026-08-27",
       "confidence": "business-confirmed",
       "sources": [
         {
           "label": "Ziggi's official Littleton location and grand-opening schedule",
           "url": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/"
+        },
+        {
+          "label": "Littleton opening-date report",
+          "url": "https://www.milehighonthecheap.com/ziggis-coffee-grand-opening-new-littleton/"
         }
       ],
       "coordinates": {
@@ -2475,6 +2570,404 @@
         "lng": -104.77629,
         "precision": "approximate",
         "geocodedFrom": "South Parker Road and E-470, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "swthz-highlands-ranch",
+      "name": "SWTHZ",
+      "category": "Fitness & wellness",
+      "community": "Highlands Ranch",
+      "area": "South Colorado Boulevard",
+      "address": "9364 South Colorado Boulevard, Suite C-2A, Highlands Ranch, CO 80126",
+      "status": "opening-soon",
+      "openingWindow": "Opening early fall 2026",
+      "summary": "The private contrast-therapy studio will offer infrared sauna, cold plunge, and vitamin-C shower suites; founding memberships are available ahead of opening.",
+      "verifiedAt": "2026-08-27",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "SWTHZ official Highlands Ranch opening page",
+          "url": "https://sweathouz.com/highlands-ranch-book-now/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.545109,
+        "lng": -104.942197,
+        "precision": "address",
+        "geocodedFrom": "9364 South Colorado Boulevard, Suite C-2A, Highlands Ranch, CO 80126"
+      }
+    },
+    {
+      "id": "bodybar-pilates-lone-tree",
+      "name": "BODYBAR Pilates",
+      "category": "Fitness & wellness",
+      "community": "Lone Tree",
+      "area": "Lincoln Station",
+      "address": "9231 East Lincoln Avenue, Suite 600–700, Lone Tree, CO 80124",
+      "status": "confirmed",
+      "openingWindow": "Coming soon; opening date not announced",
+      "summary": "BODYBAR officially lists a coming-soon Lone Tree reformer Pilates studio near Lincoln Station, with a founding-member interest list open.",
+      "verifiedAt": "2026-08-27",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "BODYBAR official Lone Tree coming-soon page",
+          "url": "https://bodybarpilates.com/studios/colorado/lone-tree/"
+        },
+        {
+          "label": "Lone Tree location details",
+          "url": "https://dougcosocial.com/directory/lone-tree/bodybar-pilates-lone-tree"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.53733,
+        "lng": -104.882741,
+        "precision": "address",
+        "geocodedFrom": "9231 East Lincoln Avenue, Suite 600, Lone Tree, CO 80124"
+      }
+    },
+    {
+      "id": "pure-green-castle-pines",
+      "name": "Pure Green",
+      "category": "Restaurant",
+      "community": "Castle Pines",
+      "area": "Village at Castle Pines",
+      "address": "858 West Happy Canyon Road, Suite 120, Castle Pines, CO 80108",
+      "status": "under-construction",
+      "openingWindow": "Targeting November–December 2026",
+      "summary": "The smoothie and cold-pressed juice shop is building out a Village at Castle Pines location with bowls, juices, oatmeal, and toast.",
+      "verifiedAt": "2026-08-27",
+      "confidence": "firsthand",
+      "sources": [
+        {
+          "label": "Pure Green Castle Pines construction and owner-supplied timeline",
+          "url": "https://dougcosocial.com/directory/castle-pines/pure-green-castle-pines"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.427189,
+        "lng": -104.901119,
+        "precision": "address",
+        "geocodedFrom": "858 West Happy Canyon Road, Suite 120, Castle Pines, CO 80108"
+      }
+    },
+    {
+      "id": "jack-in-the-box-castle-rock",
+      "name": "Jack in the Box",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Wolfensberger Road",
+      "address": "27 East Wolfensberger Road, Castle Rock, CO 80109",
+      "status": "closed",
+      "openingWindow": "Closed August 2026",
+      "summary": "The Castle Rock restaurant has permanently closed; its windows are papered over and the location is absent from the chain’s current Colorado directory.",
+      "verifiedAt": "2026-08-27",
+      "confidence": "firsthand",
+      "sources": [
+        {
+          "label": "DougCo Social on-site closure report",
+          "url": "https://dougcosocial.com/news/jack-in-the-box-castle-rock-closed"
+        },
+        {
+          "label": "Jack in the Box current Colorado location directory",
+          "url": "https://locations.jackinthebox.com/us/co"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.380789,
+        "lng": -104.863633,
+        "precision": "address",
+        "geocodedFrom": "27 East Wolfensberger Road, Castle Rock, CO 80109"
+      }
+    },
+    {
+      "id": "alice-and-kate-bakery-castle-pines",
+      "name": "Alice + Kate Bakery",
+      "category": "Coffee & bakery",
+      "community": "Castle Pines",
+      "area": "Castle Pines Parkway",
+      "address": "572 East Castle Pines Parkway, Suite A5, Castle Pines, CO 80108",
+      "status": "closed",
+      "openingWindow": "Closed August 2026",
+      "summary": "The boutique bakery has permanently closed; the storefront was verified closed and its online store has been deactivated.",
+      "verifiedAt": "2026-08-27",
+      "confidence": "firsthand",
+      "sources": [
+        {
+          "label": "DougCo Social on-site closure confirmation",
+          "url": "https://dougcosocial.com/news/7-brew-coffee-castle-pines"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.471294,
+        "lng": -104.875716,
+        "precision": "address",
+        "geocodedFrom": "572 East Castle Pines Parkway, Suite A5, Castle Pines, CO 80108"
+      }
+    },
+    {
+      "id": "hotpot-den-littleton",
+      "name": "Hotpot Den",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Kipling Parkway",
+      "address": "5934 South Kipling Parkway, Suite E, Littleton, CO 80127",
+      "status": "open",
+      "openingWindow": "Opened in 2026",
+      "summary": "The family-owned, all-you-can-eat hot pot restaurant is open with house-made broths, meats, seafood, vegetables, and a sauce bar.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Hotpot Den official website and hours",
+          "url": "https://hotpotden.com/"
+        },
+        {
+          "label": "Jefferson County liquor-license record",
+          "url": "https://pub-jeffco.escribemeetings.com/Meeting.aspx?Agenda=Agenda&Id=798475dc-d624-4da8-8394-e0d3c772c51a&lang=English"
+        },
+        {
+          "label": "Hogback Post local opening report",
+          "url": "https://www.hogbackpost.com/new-restaurants-littleton-80127"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.608273,
+        "lng": -105.107969,
+        "precision": "address",
+        "geocodedFrom": "5934 South Kipling Parkway, Suite E, Littleton, CO 80127"
+      }
+    },
+    {
+      "id": "summit-steak-bar-littleton",
+      "name": "The Summit Steak Bar",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Alkire Street",
+      "address": "5869 South Alkire Street, Suite B, Littleton, CO 80127",
+      "status": "opening-soon",
+      "openingWindow": "Opening August 31, 2026",
+      "summary": "The steakhouse plans to open August 31 with an in-house butcher shop, dry-aged beef, a full bar, and dinner service.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "The Summit Steak Bar official website",
+          "url": "https://summitsteakbar.com/"
+        },
+        {
+          "label": "Hogback Post opening-date report",
+          "url": "https://www.hogbackpost.com/new-restaurants-littleton-80127"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.611351,
+        "lng": -105.150116,
+        "precision": "address",
+        "geocodedFrom": "5869 South Alkire Street, Suite B, Littleton, CO 80127"
+      }
+    },
+    {
+      "id": "turnbuckle-distilling-littleton",
+      "name": "Turnbuckle Distilling",
+      "category": "Entertainment & restaurant",
+      "community": "Littleton",
+      "area": "Bowles Avenue and C-470",
+      "address": "Northwest corner of West Bowles Avenue and C-470, Littleton, CO 80127",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "Construction is underway on a five-acre distillery destination with a restaurant, silo tasting room, production space, barrel cave, and small farm.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Turnbuckle official new-location page",
+          "url": "https://www.turnbuckledistilling.com/coming-soon"
+        },
+        {
+          "label": "Hogback Post construction update",
+          "url": "https://www.hogbackpost.com/whats-going-in-there"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.609555,
+        "lng": -105.154225,
+        "precision": "approximate",
+        "geocodedFrom": "Bowles Avenue and C-470, Littleton, Colorado"
+      }
+    },
+    {
+      "id": "ivybrook-academy-littleton",
+      "name": "Ivybrook Academy",
+      "category": "Everyday services",
+      "community": "Littleton",
+      "area": "Bowles Avenue",
+      "address": "8906 West Bowles Avenue, Suite 100, Littleton, CO 80123",
+      "status": "under-construction",
+      "openingWindow": "Now enrolling for the 2026–27 school year; opening date not announced",
+      "summary": "A new half-day preschool for children ages 18 months to 6 is building out its Littleton campus and accepting enrollment inquiries.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Ivybrook Academy official Littleton campus page",
+          "url": "https://www.ivybrookacademy.com/littleton"
+        },
+        {
+          "label": "Hogback Post permit and construction report",
+          "url": "https://www.hogbackpost.com/whats-going-in-there"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.609274,
+        "lng": -105.097915,
+        "precision": "address",
+        "geocodedFrom": "8906 West Bowles Avenue, Suite 100, Littleton, CO 80123"
+      }
+    },
+    {
+      "id": "call-your-mother-aspen-grove",
+      "name": "Call Your Mother Lil' Deli",
+      "category": "Coffee & bakery",
+      "community": "Littleton",
+      "area": "Aspen Grove",
+      "address": "7301 South Santa Fe Drive, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened spring 2026",
+      "summary": "The bright-pink Lil' Deli pop-up is serving bagels, breakfast sandwiches, deli sandwiches, and coffee at Aspen Grove.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Call Your Mother official Aspen Grove location",
+          "url": "https://www.callyourmotherdeli.com/order"
+        },
+        {
+          "label": "Aspen Grove official tenant page",
+          "url": "https://aspengrovecenter.com/retailer/call-your-mother/"
+        },
+        {
+          "label": "City of Littleton April and May 2026 report",
+          "url": "https://www.littletonco.gov/files/sharedassets/public/v/1/communications/littleton-reports/2026-littleton-reports/2026-04-apr-littleton-report.pdf"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.586357,
+        "lng": -105.023912,
+        "precision": "address",
+        "geocodedFrom": "7301 South Santa Fe Drive, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "hodgepodge-market-aspen-grove",
+      "name": "Hodgepodge Market",
+      "category": "Retail",
+      "community": "Littleton",
+      "area": "Aspen Grove",
+      "address": "7301 South Santa Fe Drive, Suite 110, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened August 2026",
+      "summary": "The new Aspen Grove shop carries vintage finds, apparel, furniture, decor, snacks, gifts, books, jewelry, and stained-glass art.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "City of Littleton August 2026 business newsletter",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/4256c6d"
+        },
+        {
+          "label": "Aspen Grove official Hodgepodge Market directory entry",
+          "url": "https://aspengrovecenter.com/retailers_categories/clothing/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.586372,
+        "lng": -105.023889,
+        "precision": "address",
+        "geocodedFrom": "7301 South Santa Fe Drive, Suite 110, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "first-street-farms-riverpark",
+      "name": "1st Street Farms",
+      "category": "Entertainment & restaurant",
+      "community": "Littleton",
+      "area": "RiverPark at Mineral and Santa Fe",
+      "address": "South Platte River Parkway near West Mineral Avenue, Littleton, CO 80120",
+      "status": "approved",
+      "openingWindow": "Approved June 2026; opening date not announced",
+      "summary": "The approved five-acre destination is planned around a full-service restaurant, event venue, beer garden, community turf field, public trails, and outdoor gathering spaces.",
+      "verifiedAt": "2026-08-30",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "City of Littleton approval and project record",
+          "url": "https://littletongov.legistar.com/LegislationDetail.aspx?FullText=1&GUID=DD23A807-5EE9-4EB6-9CD8-BDE875B1603A&ID=8057793"
+        },
+        {
+          "label": "Evergreen Devco official RiverPark project page",
+          "url": "https://evgre.com/properties/mineral-santa-fe-littleton-co"
+        },
+        {
+          "label": "City of Littleton July 2026 development newsletter",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/42174a2"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.582759,
+        "lng": -105.027057,
+        "precision": "approximate",
+        "geocodedFrom": "South Platte River Parkway near West Mineral Avenue, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "seven-brew-pinery-village",
+      "name": "7 Brew Coffee",
+      "category": "Coffee & bakery",
+      "community": "Parker",
+      "area": "Pinery Village",
+      "address": "Parker Road and North Pinery Parkway, Parker, CO 80134",
+      "status": "proposed",
+      "openingWindow": "Site plan filed August 21, 2026; opening date not announced",
+      "summary": "A newly filed Douglas County site plan names a 7 Brew Coffee drive-thru for the King Soopers-anchored Pinery Village development.",
+      "verifiedAt": "2026-08-31",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Douglas County site plan SP2026-120",
+          "url": "https://apps.douglas.co.us/planning/projects/Default.aspx?PosseObjectId=108344987&PossePresentation=SIPJob"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.459283,
+        "lng": -104.785834,
+        "precision": "approximate",
+        "geocodedFrom": "Parker Road and North Pinery Parkway, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "take-five-oil-change-pinery-village",
+      "name": "Take 5 Oil Change",
+      "category": "Everyday services",
+      "community": "Parker",
+      "area": "Pinery Village",
+      "address": "Parker Road and North Pinery Parkway, Parker, CO 80134",
+      "status": "proposed",
+      "openingWindow": "Site plan filed August 21, 2026; opening date not announced",
+      "summary": "The same active Douglas County site plan names a Take 5 oil-change facility beside the proposed 7 Brew Coffee in Pinery Village.",
+      "verifiedAt": "2026-08-31",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Douglas County site plan SP2026-120",
+          "url": "https://apps.douglas.co.us/planning/projects/Default.aspx?PosseObjectId=108344987&PossePresentation=SIPJob"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.459283,
+        "lng": -104.785834,
+        "precision": "approximate",
+        "geocodedFrom": "Parker Road and North Pinery Parkway, Parker, CO 80134"
       }
     }
   ]
