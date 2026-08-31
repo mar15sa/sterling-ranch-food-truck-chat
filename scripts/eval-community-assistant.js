@@ -6,7 +6,7 @@ const authoredCases = require("./rules-eval-cases.json");
 const unseenCases = require("./rules-unseen-eval-cases.json");
 const communityIndex = require("../data/community-index.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
-const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { answerCommunityQuestion, directlyAnswersQuestionForm } = require("../lib/community-assistant");
 const { classifyCommunityIntent, requestedDetails } = require("../lib/community-search");
 
 const outputPath = path.join(__dirname, "..", "data", "community-assistant-eval.json");
@@ -118,11 +118,12 @@ function score(question, result) {
   const intent = classifyCommunityIntent(question);
   if (details.includes("action") && ["facilities", "forms"].includes(intent) && !(result.actions || []).some((action) => /^https?:\/\//i.test(action.url || ""))) issues.push("action-link-missing");
   if (!result.sources?.length && !/conversation|out-of-scope|exact-section-not-found/i.test(`${result.answerMode} ${result.answerVerdict}`)) issues.push("official-source-missing");
+  if (!directlyAnswersQuestionForm(question, { directAnswer: result.directAnswer || answer.match(/^Short answer:\s*([^\n]+)/i)?.[1] || "" })) issues.push("question-form-mismatch");
   if (residentEffort.score <= 2) issues.push("resident-effort-high");
   // Keep moderate remaining effort visible as its own product metric without
   // automatically calling an otherwise complete, grounded answer "Mixed."
   // High effort is still a release-blocking answer-quality failure.
-  const severe = issues.some((issue) => ["unhelpful-fallback", "raw-source-text", "required-details-missing", "expected-answer-missed", "required-refusal-missing", "answer-mode-mismatch", "input-classification-mismatch", "confidence-reason-mismatch", "unexpected-sources", "action-link-missing", "official-source-missing", "resident-effort-high"].includes(issue));
+  const severe = issues.some((issue) => ["unhelpful-fallback", "raw-source-text", "required-details-missing", "expected-answer-missed", "required-refusal-missing", "answer-mode-mismatch", "input-classification-mismatch", "confidence-reason-mismatch", "unexpected-sources", "action-link-missing", "official-source-missing", "resident-effort-high", "question-form-mismatch"].includes(issue));
   const value = severe ? 2 : issues.length ? 3 : result.answerMode === "community-rules-boundary" ? 5 : /^Short answer:/i.test(answer) && /What I found:/i.test(answer) ? 5 : 4;
   return { score: value, rating: value >= 5 ? "Excellent" : value >= 4 ? "Good" : value >= 3 ? "Mixed" : value >= 2 ? "Weak" : "Poor", issues, residentEffort };
 }
