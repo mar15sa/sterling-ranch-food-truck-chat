@@ -41,6 +41,13 @@ function residentEffortAssessment(question, result) {
     needs(/UtilityHawk/i, "account-tool-missing");
     needs(/srcab\.utilityhawk\.us/i, "direct-login-missing");
   }
+  if (/\b(?:pay|payment)\b/i.test(question)
+    && /\b(?:water|utility)\b.{0,30}\b(?:bill|billing|account)\b|\b(?:bill|billing|account)\b.{0,30}\b(?:water|utility)\b/i.test(question)
+    && !/\b(?:not pay|unpaid|late|past due|delinquent|disconnect|shut ?off|collection|payment plan)\b/i.test(question)) {
+    needs(/UtilityHawk/i, "payment-destination-missing");
+    needs(/srcab\.utilityhawk\.us\/login/i, "payment-link-missing");
+    needs(/Pay Online/i, "payment-step-missing");
+  }
   if (/\b(?:book|reserve|rent)\b.{0,40}\b(?:park|shelter|clubhouse|overlook|great hall|pavilion)\b|\b(?:park|shelter|clubhouse|overlook|great hall|pavilion)\b.{0,40}\b(?:book|reserve|rent)\b/i.test(question)) {
     needs(/\$\d+/i, "rental-price-missing");
     needs(/check availability|start a reservation|secure\.rec1\.com/i, "booking-action-missing");

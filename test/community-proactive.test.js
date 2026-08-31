@@ -45,6 +45,32 @@ test("water-usage portal questions provide the direct UtilityHawk login and capa
   assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us\/login/);
 });
 
+test("water-payment questions route to the current payment portal, not delinquency policy", async () => {
+  for (const question of [
+    "Where can I pay my water bill?",
+    "How do I pay my water bill?",
+    "Can I pay my water bill online?",
+    "What is the water bill payment portal?",
+    "Pay utility bill",
+  ]) {
+    const answer = await ask(question);
+    assert.equal(answer.answerMode, "community-proactive-payment", question);
+    assert.match(answer.directAnswer, /UtilityHawk.*select .Pay Online./i, question);
+    assert.match(answer.answer, /ACH.*free/i, question);
+    assert.match(answer.answer, /2\.95%.*Paymentus/i, question);
+    assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i, question);
+    assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us\\?\/login/i, question);
+    assert.doesNotMatch(answer.answer, /possible disconnection|past-due notice/i, question);
+  }
+
+  const late = await ask("What happens if I do not pay my water bill?");
+  assert.notEqual(late.answerMode, "community-proactive-payment");
+  assert.match(late.answer, /past due|late fee|disconnection/i);
+
+  const rates = await ask("How much will my water bill be?");
+  assert.notEqual(rates.answerMode, "community-proactive-payment");
+});
+
 test("park and clubhouse rentals give prices, terms, and a live booking path", async () => {
   const park = await ask("How do I book the park?");
   assert.doesNotMatch(park.directAnswer, /^(?:yes|no)\b/i);
