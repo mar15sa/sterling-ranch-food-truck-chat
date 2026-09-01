@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-08-31T08:20:00-06:00",
+  "updatedAt": "2026-09-01T08:45:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -42,6 +42,93 @@
     }
   ],
   "items": [
+    {
+      "id": "woof-gang-bakery-grooming-parker",
+      "name": "Woof Gang Bakery & Grooming",
+      "category": "Everyday services",
+      "community": "Parker",
+      "area": "Crossing at Stonegate",
+      "address": "17021 Lincoln Ave. #6B, Parker, CO 80134",
+      "status": "open",
+      "openingWindow": "Grand opening September 1, 2026",
+      "summary": "The pet bakery, boutique, and full-service grooming shop celebrated its Parker grand opening and ribbon cutting on September 1.",
+      "verifiedAt": "2026-09-01",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Parker Chamber grand-opening event",
+          "url": "https://business.parkerchamber.com/events/details/ribbon-cutting-woof-gang-bakery-grooming-9195"
+        },
+        {
+          "label": "Town of Parker tenant-remodel permit",
+          "url": "https://parkerco.gov/ArchiveCenter/ViewFile/Item/7246"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.536327,
+        "lng": -104.79165,
+        "precision": "address",
+        "geocodedFrom": "17021 Lincoln Ave. #6B, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "jets-pizza-castle-rock",
+      "name": "Jet's Pizza",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Founders Marketplace",
+      "address": "62 Founders Parkway, Unit F, Castle Rock, CO 80104",
+      "status": "open",
+      "openingWindow": "Opened July 17, 2026",
+      "summary": "The new Castle Rock Jet's is serving Detroit-style pizza at Founders Parkway and Front Street; its grand-opening ribbon cutting is scheduled for September 18.",
+      "verifiedAt": "2026-09-01",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Jet's Pizza Castle Rock location",
+          "url": "https://www.jetspizza.com/stores/colorado/castle-rock/62-founders-parkway-unit-f/"
+        },
+        {
+          "label": "Jet's Pizza recently opened stores",
+          "url": "https://www.jetspizza.com/store-news/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.410821,
+        "lng": -104.86446,
+        "precision": "address",
+        "geocodedFrom": "62 Founders Parkway, Unit F, Castle Rock, CO 80104"
+      }
+    },
+    {
+      "id": "sparq-physical-therapy-castle-rock",
+      "name": "Sparq Physical Therapy",
+      "category": "Fitness & wellness",
+      "community": "Castle Rock",
+      "area": "South Perry Street",
+      "address": "755 S. Perry Street, Suite 450, Castle Rock, CO 80104",
+      "status": "open",
+      "openingWindow": "Open now; ribbon cutting September 17, 2026",
+      "summary": "The women-owned physical-therapy practice is operating from its South Perry Street clinic and will mark the location with a September 17 ribbon cutting.",
+      "verifiedAt": "2026-09-01",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Castle Rock Chamber business listing",
+          "url": "https://business.castlerock.org/list/member/sparq-physical-therapy-castle-rock-30754"
+        },
+        {
+          "label": "Castle Rock Chamber ribbon-cutting calendar",
+          "url": "https://business.castlerock.org/events/calendar"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.363466,
+        "lng": -104.862124,
+        "precision": "address",
+        "geocodedFrom": "755 S. Perry Street, Suite 450, Castle Rock, CO 80104"
+      }
+    },
     {
       "id": "valvoline-roxborough",
       "name": "Valvoline Instant Oil Change",
@@ -123,8 +210,8 @@
         }
       ],
       "coordinates": {
-        "lat": 39.506824,
-        "lng": -105.037492,
+        "lat": 39.506875,
+        "lng": -105.037542,
         "precision": "address",
         "geocodedFrom": "8155 Piney River Avenue, Sterling Ranch, CO 80125"
       }
@@ -335,10 +422,10 @@
         }
       ],
       "coordinates": {
-        "lat": 39.538952,
-        "lng": -104.768387,
+        "lat": 39.53917,
+        "lng": -104.76838,
         "precision": "address",
-        "geocodedFrom": "9700 South Parker Road, Parker, CO"
+        "geocodedFrom": "9700 South Parker Road, Unit 700, Parker, CO"
       }
     },
     {
@@ -2569,7 +2656,7 @@
         "lat": 39.551776,
         "lng": -104.77629,
         "precision": "approximate",
-        "geocodedFrom": "South Parker Road and E-470, Parker, CO 80134"
+        "geocodedFrom": "Near South Parker Road and E-470, Parker, CO 80134"
       }
     },
     {
@@ -2623,7 +2710,7 @@
         "lat": 39.53733,
         "lng": -104.882741,
         "precision": "address",
-        "geocodedFrom": "9231 East Lincoln Avenue, Suite 600, Lone Tree, CO 80124"
+        "geocodedFrom": "9231 East Lincoln Avenue, Suite 600–700, Lone Tree, CO 80124"
       }
     },
     {
@@ -2793,7 +2880,7 @@
         "lat": 39.609555,
         "lng": -105.154225,
         "precision": "approximate",
-        "geocodedFrom": "Bowles Avenue and C-470, Littleton, Colorado"
+        "geocodedFrom": "Northwest corner of West Bowles Avenue and C-470, Littleton, CO 80127"
       }
     },
     {
