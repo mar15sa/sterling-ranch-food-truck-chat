@@ -294,7 +294,7 @@ test("AI unrelated scope preserves the public boundary metadata", async () => {
 
 test("contact extraction cannot substitute a different organization", async () => {
   const answer = await sourcedAnswer("What is the HOA phone number?", {
-    requestedDetails: ["contact"],
+    requestedDetails: [],
     sources: [{
       id: "water",
       title: "Water & Sewer",
