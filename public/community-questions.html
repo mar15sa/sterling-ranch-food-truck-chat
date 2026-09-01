@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>Community Assistant Questions</title>
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/community-questions.css?v=20260901-3" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260901-source-health3" />
   </head>
   <body>
     <main class="owner-shell">
@@ -35,6 +35,62 @@
             <button type="button" class="quiet-button" id="logoutButton">Sign out</button>
           </div>
         </header>
+
+        <section class="source-health" aria-labelledby="sourceHealthTitle">
+          <div class="source-health-heading">
+            <div>
+              <p class="eyebrow">Private operations</p>
+              <h2 id="sourceHealthTitle">Source health</h2>
+              <p>Coverage and refresh details shown only inside this password-protected owner view.</p>
+            </div>
+            <strong class="source-health-state" id="sourceHealthState">Checking…</strong>
+          </div>
+
+          <div class="source-health-summary" aria-label="Source health summary">
+            <div><span>Approved sources</span><strong id="sourceApprovedCount">—</strong></div>
+            <div><span>CAB page coverage</span><strong id="sourceCoverage">—</strong></div>
+            <div><span>Pages pending</span><strong id="sourcePendingCount">—</strong></div>
+            <div><span>Pages excluded</span><strong id="sourceExcludedCount">—</strong></div>
+          </div>
+
+          <details class="source-health-expanded">
+            <summary>View full source diagnostics</summary>
+            <div class="source-health-details">
+              <section aria-labelledby="rulebookHealthTitle">
+                <h3 id="rulebookHealthTitle">Rules and Regulations</h3>
+                <dl>
+                  <div><dt>Status</dt><dd id="rulesFreshness">—</dd></div>
+                  <div><dt>Last checked</dt><dd id="rulesLastChecked">—</dd></div>
+                  <div><dt>Latest online update</dt><dd id="rulesOnlineUpdate">—</dd></div>
+                  <div><dt>Codified through</dt><dd id="rulesCodified">—</dd></div>
+                  <div><dt>Index size</dt><dd id="rulesIndexSize">—</dd></div>
+                  <div><dt>Warnings</dt><dd id="rulesWarnings">—</dd></div>
+                </dl>
+              </section>
+              <section aria-labelledby="communityHealthTitle">
+                <h3 id="communityHealthTitle">Community pages</h3>
+                <dl>
+                  <div><dt>Approved library built</dt><dd id="communityGenerated">—</dd></div>
+                  <div><dt>Inventory</dt><dd id="communityInventory">—</dd></div>
+                  <div><dt>Freshness</dt><dd id="communityFreshness">—</dd></div>
+                  <div><dt>Failures and connectors</dt><dd id="communityFailures">—</dd></div>
+                  <div><dt>Pending review</dt><dd id="communityReview">—</dd></div>
+                  <div><dt>Last refresh error</dt><dd id="communityRefreshError">—</dd></div>
+                </dl>
+              </section>
+            </div>
+
+            <details class="source-health-technical">
+              <summary>Technical release details</summary>
+              <dl>
+                <div><dt>Promotion mode</dt><dd id="communityPromotion">—</dd></div>
+                <div><dt>Approved fingerprint</dt><dd id="communityFingerprint">—</dd></div>
+                <div><dt>Candidate fingerprint</dt><dd id="communityCandidateFingerprint">—</dd></div>
+                <div><dt>Health captured</dt><dd id="sourceHealthCaptured">—</dd></div>
+              </dl>
+            </details>
+          </details>
+        </section>
 
         <section class="summary" aria-label="Visible question summary">
           <div><span>Visible questions</span><strong id="questionCount">0</strong></div>
@@ -101,6 +157,6 @@
         <button type="button" class="load-more" id="loadMoreButton" hidden>Load more</button>
       </section>
     </main>
-    <script src="/community-questions.js?v=20260901-3"></script>
+    <script src="/community-questions.js?v=20260901-source-health3"></script>
   </body>
 </html>

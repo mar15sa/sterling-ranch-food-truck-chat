@@ -4833,6 +4833,23 @@ async function handleCommunityQuestionsLogout(req, res) {
   );
 }
 
+async function handleCommunitySourceHealth(req, res) {
+  if (req.method !== "GET") {
+    sendJson(res, 405, { error: "Use GET to view source health." });
+    return;
+  }
+  if (!requireQuestionAdmin(req, res)) return;
+  const rules = await getRulesIndexStatus();
+  sendJson(res, 200, {
+    checkedAt: new Date().toISOString(),
+    rules: {
+      ...rules,
+      refreshing: Boolean(rulesRefreshPromise),
+    },
+    community: communitySourceStatus(),
+  });
+}
+
 async function handleCommunityQuestions(req, res, url) {
   if (req.method !== "GET") {
     sendJson(res, 405, { error: "Use GET to view the question log." });
@@ -4984,6 +5001,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/community-questions") {
       await handleCommunityQuestions(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/community-source-health") {
+      await handleCommunitySourceHealth(req, res);
       return;
     }
 

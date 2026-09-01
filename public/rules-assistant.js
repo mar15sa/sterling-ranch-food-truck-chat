@@ -14,9 +14,6 @@ const statusToggle = document.querySelector("#statusToggle");
 const statusDetail = document.querySelector("#statusDetail");
 const statusSource = document.querySelector("#statusSource");
 const statusChecked = document.querySelector("#statusChecked");
-const statusCoverage = document.querySelector("#statusCoverage");
-const statusOnlineDate = document.querySelector("#statusOnlineDate");
-const statusCodified = document.querySelector("#statusCodified");
 const statusNote = document.querySelector("#statusNote");
 const testModeBanner = document.querySelector("#testModeBanner");
 
@@ -585,61 +582,33 @@ function updateStatus(status) {
 
   statusSource.textContent = PUBLIC_SOURCE_NAME;
   const community = status.communitySources || {};
-  const lastChecked = formatDateTime(status.lastFetchedAt);
-  const communityChecked = formatDateTime(community.generatedAt);
+  const checkedAt = [status.lastFetchedAt, community.generatedAt]
+    .map((value) => new Date(value || ""))
+    .filter((date) => !Number.isNaN(date.getTime()))
+    .sort((a, b) => b.getTime() - a.getTime())[0];
+  const lastChecked = formatDateTime(checkedAt?.toISOString());
   statusChecked.textContent =
     status.refreshing && lastChecked !== "Not available"
       ? `Checking now; last successful check ${lastChecked}`
-      : communityChecked !== "Not available"
-        ? `Rules: ${lastChecked}; community pages: ${communityChecked}`
-        : lastChecked;
-  statusOnlineDate.textContent = formatDateTime(status.onlineUpdateDate);
-  statusCodified.textContent = status.codifiedThrough || "Not available";
-  const indexedPages = Number(community.pageCount || 0);
-  const eligiblePages = Number(community.eligiblePageCount || 0);
-  const pendingPages = Number(community.pendingPageCount || 0);
-  const excludedPages = Number(community.excludedPageCount || 0);
-  statusCoverage.textContent = community.inventoryAvailable && eligiblePages
-    ? `${indexedPages} indexed of ${eligiblePages} eligible · ${pendingPages} pending · ${excludedPages} excluded with a reason`
-    : "Coverage inventory has not been built yet";
+      : lastChecked;
 
   let headline;
   let state;
   if (status.refreshing || community.refreshing) {
-    headline = "Refreshing official sources…";
+    headline = "Checking official sources…";
     state = "busy";
-  } else if (status.isStale || community.stale) {
-    headline = "Some official sources may be out of date";
-    state = "warn";
-  } else if (!community.inventoryComplete) {
-    headline = "Official source inventory still building";
-    state = "warn";
-  } else {
+  } else if (status.exists || Number(community.sourceCount || 0) > 0) {
     headline = "Official sources ready";
     state = "ok";
+  } else {
+    headline = "Official sources temporarily unavailable";
+    state = "warn";
   }
   statusHeadline.textContent = headline;
   statusDot.dataset.state = state;
-
-  const notes = [];
-  if (status.refreshing) notes.push("Refreshing the rulebook index now.");
-  if (status.isStale) notes.push("The local rulebook index may be stale.");
-  if (community.refreshing) notes.push("Refreshing official community pages now.");
-  if (community.stale) notes.push("One or more community pages are due for a freshness check.");
-  if (!community.inventoryComplete) notes.push(community.inventoryAvailable
-    ? `${pendingPages} eligible CAB pages remain to be checked; answers continue using the approved source library.`
-    : "The complete CAB page inventory has not been built yet; answers continue using the approved source library.");
-  if (community.lastRefreshError) notes.push("The latest community-page refresh failed; older sources are marked accordingly.");
-  if (Array.isArray(status.warnings)) {
-    const sourcePlatformPattern = new RegExp(`\\b${["Muni", "code"].join("")}\\b`, "g");
-    status.warnings
-      .map((warning) =>
-        String(warning).replace(sourcePlatformPattern, "the official online source")
-      )
-      .forEach((warning) => notes.push(warning));
-  }
-  statusNote.textContent = notes.join(" ");
-  statusNote.hidden = notes.length === 0;
+  statusNote.textContent = state === "warn"
+    ? "Source availability could not be confirmed just now. Important answers should be verified using the official links provided."
+    : "Answers use the approved source library and link to the supporting official pages.";
 }
 
 function scheduleStatusPoll() {
@@ -671,7 +640,7 @@ async function loadStatus() {
     statusHeadline.textContent = "Could not check the source just now";
     statusDot.dataset.state = "warn";
     statusChecked.textContent = "Could not check";
-    statusOnlineDate.textContent = "Could not check";
+    statusNote.textContent = "Important answers should be verified using the official links provided.";
   }
 }
 
