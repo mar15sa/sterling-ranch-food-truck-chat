@@ -17,9 +17,13 @@ const statusChecked = document.querySelector("#statusChecked");
 const statusOnlineDate = document.querySelector("#statusOnlineDate");
 const statusCodified = document.querySelector("#statusCodified");
 const statusNote = document.querySelector("#statusNote");
+const testModeBanner = document.querySelector("#testModeBanner");
 
 const PUBLIC_SOURCE_NAME = "Official CAB sources and Rules and Regulations";
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isTestMode = new URLSearchParams(window.location.search).get("test") === "1";
+
+if (testModeBanner && isTestMode) testModeBanner.hidden = false;
 
 let conversationStarted = false;
 let statusPollTimer = null;
@@ -678,7 +682,7 @@ async function askRules(question, source = "typed") {
     const response = await fetch("/api/community/ask", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ question, context: conversationContext }),
+      body: JSON.stringify({ question, context: conversationContext, isTest: isTestMode }),
     });
     const text = await response.text();
     let data;

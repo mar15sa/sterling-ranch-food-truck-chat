@@ -16,7 +16,19 @@ const {
   recordRulesLowConfidence,
   recordRulesRateLimitBlocked,
 } = require("./lib/rules-alerts");
-const { cleanQuestionForLog, logRulesQuestion } = require("./lib/rules-question-log");
+const {
+  cleanQuestionForLog,
+  logRulesQuestion,
+  queryQuestionLogs,
+} = require("./lib/rules-question-log");
+const {
+  createLoginLimiter,
+  createSessionToken,
+  expiredSessionCookie,
+  isAuthorizedRequest,
+  safeEqual,
+  sessionCookie,
+} = require("./lib/community-question-admin");
 const {
   SECURITY_HEADERS,
   clientKeyForRateLimit,
@@ -64,6 +76,7 @@ const RULES_QUESTION_MAX_CHARS =
   Number(process.env.RULES_QUESTION_MAX_CHARS) || 500;
 const COMMUNITY_PREVIEW_RATE_MAX =
   Number(process.env.COMMUNITY_PREVIEW_RATE_MAX) || 5;
+const questionAdminLoginLimiter = createLoginLimiter();
 const RULES_REFRESH_CHECK_INTERVAL_MS =
   Number(process.env.RULES_REFRESH_CHECK_INTERVAL_MS) || 1000 * 60 * 60;
 const RULES_REFRESH_START_DELAY_MS =
@@ -4453,7 +4466,11 @@ function scheduleRulesRefreshChecks() {
 
 async function getRulesRequest(req) {
   const body = await readJsonBody(req);
-  return { question: body.question || body.q || "", context: body.context };
+  return {
+    question: body.question || body.q || "",
+    context: body.context,
+    isTest: body.isTest === true,
+  };
 }
 
 function communityRoutingEvalEnabled() {
@@ -4558,7 +4575,7 @@ async function handleRulesAsk(req, res, url) {
   const llmAfter = getCommunityLlmMetrics();
   answer.resolvedQuestion = conversation.resolvedQuestion;
   answer.usedPriorContext = conversation.usedPriorContext;
-  logRulesQuestion(question, answer, req);
+  logRulesQuestion(question, answer, req, { isTest: request.isTest });
   if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false && answer?.answerStatus !== "safety-rejected") {
     recordRulesLowConfidence({
       question: cleanQuestionForLog(question),
@@ -4744,6 +4761,116 @@ async function handleCommunitySetupPreview(req, res) {
   }
 }
 
+function questionAdminConfig() {
+  return {
+    password: process.env.RULES_QUESTION_ADMIN_PASSWORD || "",
+    sessionSecret: process.env.RULES_QUESTION_ADMIN_SESSION_SECRET || "",
+  };
+}
+
+function questionAdminSecureCookie(req) {
+  if (process.env.NODE_ENV === "production") return true;
+  return String(req.headers["x-forwarded-proto"] || "").toLowerCase() === "https";
+}
+
+function requireQuestionAdmin(req, res) {
+  const { sessionSecret } = questionAdminConfig();
+  if (!sessionSecret || !isAuthorizedRequest(req, sessionSecret)) {
+    sendJson(res, 401, { error: "Please sign in to view the private question log." });
+    return false;
+  }
+  return true;
+}
+
+async function handleCommunityQuestionsLogin(req, res) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST to sign in." });
+    return;
+  }
+  const { password, sessionSecret } = questionAdminConfig();
+  if (!password || !sessionSecret) {
+    sendJson(res, 503, { error: "The owner question log login is not configured yet." });
+    return;
+  }
+  const key = clientKeyForRateLimit(req);
+  const limit = questionAdminLoginLimiter.check(key);
+  if (!limit.allowed) {
+    sendJson(
+      res,
+      429,
+      { error: "Too many sign-in attempts. Please wait and try again." },
+      { "retry-after": String(limit.retryAfterSeconds) }
+    );
+    return;
+  }
+  const body = await readJsonBody(req);
+  if (!safeEqual(body.password, password)) {
+    questionAdminLoginLimiter.fail(key);
+    sendJson(res, 401, { error: "That password did not match." });
+    return;
+  }
+  questionAdminLoginLimiter.clear(key);
+  const token = createSessionToken(sessionSecret);
+  sendJson(
+    res,
+    200,
+    { signedIn: true },
+    { "set-cookie": sessionCookie(token, { secure: questionAdminSecureCookie(req) }) }
+  );
+}
+
+async function handleCommunityQuestionsLogout(req, res) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST to sign out." });
+    return;
+  }
+  sendJson(
+    res,
+    200,
+    { signedIn: false },
+    { "set-cookie": expiredSessionCookie({ secure: questionAdminSecureCookie(req) }) }
+  );
+}
+
+async function handleCommunityQuestions(req, res, url) {
+  if (req.method !== "GET") {
+    sendJson(res, 405, { error: "Use GET to view the question log." });
+    return;
+  }
+  if (!requireQuestionAdmin(req, res)) return;
+  const allowedRanges = new Set(["today", "yesterday", "7d", "30d"]);
+  const allowedStatuses = new Set([
+    "all",
+    "Answered",
+    "Needs review",
+    "Clarification",
+    "Out of scope",
+    "Safety response",
+  ]);
+  const range = allowedRanges.has(url.searchParams.get("range"))
+    ? url.searchParams.get("range")
+    : "today";
+  const status = allowedStatuses.has(url.searchParams.get("status"))
+    ? url.searchParams.get("status")
+    : "all";
+  try {
+    const result = await queryQuestionLogs({
+      range,
+      status,
+      search: String(url.searchParams.get("search") || "").trim().slice(0, 100),
+      includeTests: url.searchParams.get("includeTests") === "true",
+      cursor: String(url.searchParams.get("cursor") || "").slice(0, 500),
+      pageSize: 100,
+    });
+    sendJson(res, 200, { ...result, range, status });
+  } catch (error) {
+    console.warn(`Community question log query failed: ${error.message || "unknown error"}`);
+    sendJson(res, 503, {
+      error: "The private question log could not reach Notion just now. Please try again shortly.",
+    });
+  }
+}
+
 function serveStatic(req, res, url) {
   if (url.pathname === "/" && url.searchParams.has("date")) {
     res.writeHead(302, {
@@ -4761,6 +4888,8 @@ function serveStatic(req, res, url) {
     "/rules-assistant/": "/rules-assistant.html",
     "/community-assistant": "/rules-assistant.html",
     "/community-assistant/": "/rules-assistant.html",
+    "/community-assistant/questions": "/community-questions.html",
+    "/community-assistant/questions/": "/community-questions.html",
     "/pool": "/pool.html",
     "/pool/": "/pool.html",
     "/pool-status": "/pool.html",
@@ -4834,6 +4963,21 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/rules/ask" || url.pathname === "/api/community/ask") {
       await handleRulesAsk(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/community-questions/login") {
+      await handleCommunityQuestionsLogin(req, res);
+      return;
+    }
+
+    if (url.pathname === "/api/community-questions/logout") {
+      await handleCommunityQuestionsLogout(req, res);
+      return;
+    }
+
+    if (url.pathname === "/api/community-questions") {
+      await handleCommunityQuestions(req, res, url);
       return;
     }
 
