@@ -28,7 +28,7 @@ async function ask(question) {
   const response = await fetch(`${baseUrl}/api/community/ask`, {
     method: "POST",
     headers: { "content-type": "application/json", "user-agent": "Sterling-Ranch-Live-Answer-Eval/1.0" },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, isTest: true }),
     signal: AbortSignal.timeout(30000),
   });
   if (response.status === 429) {

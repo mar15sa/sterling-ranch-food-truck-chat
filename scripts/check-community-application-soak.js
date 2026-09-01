@@ -58,7 +58,7 @@ async function ask(item) {
   const { body, durationMs } = await json(`${baseUrl}/api/community/ask`, {
     method: "POST",
     headers: { "content-type": "application/json", "user-agent": "Sterling-Ranch-AI-First-Soak/1.0" },
-    body: JSON.stringify({ question: item.question }),
+    body: JSON.stringify({ question: item.question, isTest: true }),
   });
   durations.push(durationMs);
   if (durationMs > 15000) throw new Error(`${item.id} exceeded the 15-second normal-request limit (${durationMs}ms).`);

@@ -77,3 +77,11 @@ test("staging-only real-model endpoint and scheduled benchmark stay wired", () =
   assert.match(workflow, /COMMUNITY_ROUTING_REPEATS:\s*3/);
   assert.match(workflow, /community:routing:live/);
 });
+
+test("live answer and soak traffic is marked as testing for the private review log", () => {
+  const root = path.join(__dirname, "..");
+  for (const file of ["eval-community-answers-live.js", "check-community-application-soak.js"]) {
+    const script = fs.readFileSync(path.join(root, "scripts", file), "utf8");
+    assert.match(script, /JSON\.stringify\(\{ question(?:: item\.question)?, isTest: true \}\)/, file);
+  }
+});
