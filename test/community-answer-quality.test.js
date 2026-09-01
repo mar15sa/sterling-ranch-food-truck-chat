@@ -17,6 +17,7 @@ test("a source-backed answer can still rate weak when it misses the question", (
   });
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("requested-time-missing"));
+  assert.equal(result.residentEffort.rating, "High resident effort");
 });
 
 test("a well-sourced handoff rates weak when it does not answer a planned-project question", () => {
@@ -30,6 +31,7 @@ test("a well-sourced handoff rates weak when it does not answer a planned-projec
   });
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("question-unresolved"));
+  assert.equal(result.residentEffort.rating, "High resident effort");
 });
 
 test("a pool-opening answer rates weak when the resident asked about construction", () => {
@@ -43,4 +45,5 @@ test("a pool-opening answer rates weak when the resident asked about constructio
   });
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("planned-project-answer-missing"));
+  assert.equal(result.residentEffort.rating, "High resident effort");
 });
