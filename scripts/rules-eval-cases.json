@@ -335,7 +335,7 @@
     "expectedFirstAny": ["Sec. 1-33"],
     "expectedVerdict": "prohibited",
     "answerIncludesAll": ["fowl", "poultry"],
-    "answerIncludesAny": ["Backyard chickens are not allowed", "Chickens aren't allowed"]
+    "answerIncludesAny": ["Backyard chickens are not allowed", "Chickens aren't allowed", "can't keep poultry"]
   },
   {
     "question": "Can I keep dogs?",
