@@ -19,6 +19,27 @@ const questionCount = document.querySelector("#questionCount");
 const answeredCount = document.querySelector("#answeredCount");
 const reviewCount = document.querySelector("#reviewCount");
 const qualityConcernCount = document.querySelector("#qualityConcernCount");
+const sourceHealthState = document.querySelector("#sourceHealthState");
+const sourceApprovedCount = document.querySelector("#sourceApprovedCount");
+const sourceCoverage = document.querySelector("#sourceCoverage");
+const sourcePendingCount = document.querySelector("#sourcePendingCount");
+const sourceExcludedCount = document.querySelector("#sourceExcludedCount");
+const rulesFreshness = document.querySelector("#rulesFreshness");
+const rulesLastChecked = document.querySelector("#rulesLastChecked");
+const rulesOnlineUpdate = document.querySelector("#rulesOnlineUpdate");
+const rulesCodified = document.querySelector("#rulesCodified");
+const rulesIndexSize = document.querySelector("#rulesIndexSize");
+const rulesWarnings = document.querySelector("#rulesWarnings");
+const communityGenerated = document.querySelector("#communityGenerated");
+const communityInventory = document.querySelector("#communityInventory");
+const communityFreshness = document.querySelector("#communityFreshness");
+const communityFailures = document.querySelector("#communityFailures");
+const communityReview = document.querySelector("#communityReview");
+const communityRefreshError = document.querySelector("#communityRefreshError");
+const communityPromotion = document.querySelector("#communityPromotion");
+const communityFingerprint = document.querySelector("#communityFingerprint");
+const communityCandidateFingerprint = document.querySelector("#communityCandidateFingerprint");
+const sourceHealthCaptured = document.querySelector("#sourceHealthCaptured");
 
 let refreshTimer = null;
 let searchTimer = null;
@@ -51,6 +72,74 @@ function formatTime(value) {
     hour: "numeric",
     minute: "2-digit",
   }).format(date);
+}
+
+function formatDateTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not available";
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Denver",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date);
+}
+
+function renderSourceHealth(sourceHealth = {}) {
+  const rules = sourceHealth.rules || {};
+  const community = sourceHealth.community || {};
+  const pendingReview = community.pendingReview || null;
+  const hasError = !rules.exists || Boolean(community.lastRefreshError) || Number(community.failureCount || 0) > 0;
+  const isWorking = Boolean(rules.refreshing || community.refreshing);
+  const needsMonitoring = Boolean(rules.isStale || community.stale || !community.inventoryComplete || pendingReview);
+  const state = hasError ? "Needs attention" : isWorking ? "Refreshing" : needsMonitoring ? "Monitoring" : "Healthy";
+  sourceHealthState.textContent = state;
+  sourceHealthState.dataset.state = hasError ? "error" : isWorking ? "working" : needsMonitoring ? "monitoring" : "healthy";
+
+  sourceApprovedCount.textContent = String(community.sourceCount ?? "—");
+  sourceCoverage.textContent = community.inventoryAvailable
+    ? `${community.pageCount || 0} of ${community.eligiblePageCount || 0}`
+    : "Not built";
+  sourcePendingCount.textContent = String(community.pendingPageCount ?? "—");
+  sourceExcludedCount.textContent = String(community.excludedPageCount ?? "—");
+
+  rulesFreshness.textContent = !rules.exists
+    ? "Index unavailable"
+    : rules.refreshing
+      ? "Refreshing now"
+      : rules.isStale
+        ? "Due for refresh; approved index remains active"
+        : "Current";
+  rulesLastChecked.textContent = formatDateTime(rules.lastFetchedAt);
+  rulesOnlineUpdate.textContent = formatDateTime(rules.onlineUpdateDate);
+  rulesCodified.textContent = rules.codifiedThrough || "Not available";
+  rulesIndexSize.textContent = `${rules.sectionCount || 0} sections · ${rules.chunkCount || 0} chunks · ${rules.inlineTopicCount || 0} topics`;
+  rulesWarnings.textContent = Array.isArray(rules.warnings) && rules.warnings.length ? rules.warnings.join(" ") : "None";
+
+  communityGenerated.textContent = formatDateTime(community.generatedAt);
+  communityInventory.textContent = community.inventoryAvailable
+    ? `${community.inventoryComplete ? "Complete" : "In progress"} · ${community.discoveredPageCount || 0} discovered`
+    : "Not built";
+  communityFreshness.textContent = community.refreshing
+    ? "Refreshing now"
+    : community.stale
+      ? `${community.staleSourceCount || 0} approved sources due for a freshness check`
+      : "Current";
+  communityFailures.textContent = `${community.failureCount || 0} crawl failures · ${community.liveConnectorCount || 0} live connectors`;
+  communityReview.textContent = pendingReview
+    ? `${pendingReview.changedSourceCount || 0} changed · ${pendingReview.newSourceCount || 0} new · ${pendingReview.removedSourceCount || 0} removed · checked ${formatDateTime(pendingReview.checkedAt)}`
+    : "No source changes awaiting review";
+  communityRefreshError.textContent = community.lastRefreshError || "None";
+  communityPromotion.textContent = [
+    community.promotionMode || "Not available",
+    community.lastSuccessfulPromotion ? `last promoted ${formatDateTime(community.lastSuccessfulPromotion)}` : "no recorded promotion",
+    community.lastRollback ? `last rollback ${formatDateTime(community.lastRollback)}` : "no recorded rollback",
+  ].join(" · ");
+  communityFingerprint.textContent = community.activeFingerprint || "Not available";
+  communityCandidateFingerprint.textContent = pendingReview?.candidateFingerprint || "No candidate awaiting review";
+  sourceHealthCaptured.textContent = formatDateTime(sourceHealth.checkedAt);
 }
 
 function answerPreview(answer) {
@@ -200,6 +289,19 @@ async function loadQuestions({ append = false, quiet = false } = {}) {
   }
 }
 
+async function loadSourceHealth() {
+  try {
+    const response = await fetch("/api/community-source-health");
+    const data = await response.json();
+    if (response.status === 401) return;
+    if (!response.ok) throw new Error(data.error || "Could not load source health.");
+    renderSourceHealth(data);
+  } catch {
+    sourceHealthState.textContent = "Unavailable";
+    sourceHealthState.dataset.state = "error";
+  }
+}
+
 function stopPolling() {
   if (refreshTimer) window.clearInterval(refreshTimer);
   refreshTimer = null;
@@ -208,7 +310,10 @@ function stopPolling() {
 function startPolling() {
   if (refreshTimer) return;
   refreshTimer = window.setInterval(() => {
-    if (!document.hidden) loadQuestions({ quiet: true });
+    if (!document.hidden) {
+      loadQuestions({ quiet: true });
+      loadSourceHealth();
+    }
   }, 5000);
 }
 
@@ -227,7 +332,7 @@ loginForm.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(data.error || "Could not sign in.");
     ownerPassword.value = "";
     showDashboard();
-    await loadQuestions();
+    await Promise.all([loadQuestions(), loadSourceHealth()]);
   } catch (error) {
     loginMessage.textContent = error.message || "Could not sign in.";
   } finally {
@@ -248,7 +353,10 @@ rangeFilter.addEventListener("change", () => loadQuestions());
 statusFilter.addEventListener("change", () => loadQuestions());
 qualityFilter.addEventListener("change", () => loadQuestions());
 includeTests.addEventListener("change", () => loadQuestions());
-refreshButton.addEventListener("click", () => loadQuestions());
+refreshButton.addEventListener("click", () => {
+  loadQuestions();
+  loadSourceHealth();
+});
 loadMoreButton.addEventListener("click", () => loadQuestions({ append: true }));
 searchFilter.addEventListener("input", () => {
   if (searchTimer) window.clearTimeout(searchTimer);
@@ -256,3 +364,4 @@ searchFilter.addEventListener("input", () => {
 });
 
 loadQuestions({ quiet: true });
+loadSourceHealth();
