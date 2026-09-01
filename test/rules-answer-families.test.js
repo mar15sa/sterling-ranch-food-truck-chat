@@ -53,12 +53,12 @@ test("RV duration answers compare the requested stay with the current source lim
   }
 });
 
-test("bare pickleball questions answer the community-court interpretation and preserve the private-court distinction", async () => {
+test("the rulebook path does not misstate public pickleball operations and preserves the private-court distinction", async () => {
   for (const question of ["Pickle ball", "What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
     const result = await answer(question);
-    assert.match(result.answer, /neighborhood pickleball courts|general park and facility rules/i, question);
-    assert.match(result.answer, /5:00 a\.m\..*11:00 p\.m\./is, question);
-    assert.match(result.answer, /posted/i, question);
+    assert.match(result.answer, /public pickleball courts|public-court/i, question);
+    assert.match(result.answer, /Pickleball Courts page/i, question);
+    assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is, question);
     assert.match(result.answer, /private court.*DRC approval/is, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
   }
@@ -218,7 +218,7 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
     ["Air conditioner", /DRC approval is not required[\s\S]*screen/i],
     ["Fireworks", /^Short answer:\s*No\./i],
     ["Gazebo", /requires DRC approval/i],
-    ["Pickle ball", /neighborhood pickleball courts[\s\S]*private court[\s\S]*DRC approval/i],
+    ["Pickle ball", /public pickleball courts[\s\S]*CAB.*Pickleball Courts page[\s\S]*private court[\s\S]*DRC approval/i],
     ["Jellyfish", /Gemstone and Jellyfish/i],
   ];
   for (const [question, expected] of expectations) {

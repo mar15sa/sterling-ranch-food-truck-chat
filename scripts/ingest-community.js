@@ -13,11 +13,15 @@ function option(name, fallback) {
 async function main() {
   const profilePath = path.resolve(option("--profile", path.join(__dirname, "..", "data", "communities", "sterling-ranch.json")));
   const outputPath = path.resolve(option("--output", path.join(__dirname, "..", "data", "community-index.json")));
+  const previousPath = path.resolve(option("--previous", path.join(__dirname, "..", "data", "community-index.json")));
   const maxPages = Number(option("--max-pages", "80"));
+  const maxDocuments = Number(option("--max-documents", "80"));
   const profile = validateCommunityProfile(JSON.parse(await fs.readFile(profilePath, "utf8")));
-  const index = await crawlCommunity(profile, { maxPages });
+  let previousIndex = null;
+  try { previousIndex = JSON.parse(await fs.readFile(previousPath, "utf8")); } catch { /* first collection */ }
+  const index = await crawlCommunity(profile, { maxPages, maxDocuments, previousIndex });
   await fs.writeFile(outputPath, `${JSON.stringify(index, null, 2)}\n`, "utf8");
-  console.log(`Wrote ${outputPath} with ${index.sourceCount} source records from ${index.pageCount} pages (${index.failureCount} failures).`);
+  console.log(`Wrote ${outputPath} with ${index.sourceCount} source records. Checked ${index.pageCount} pages; inventory: ${index.inventory?.indexedPageCount || 0} indexed, ${index.inventory?.pendingCount || 0} pending, ${index.inventory?.excludedCount || 0} explicitly excluded (${index.failureCount} failures).`);
   if (index.failureCount) {
     for (const failure of index.failures.slice(0, 10)) console.warn(`- ${failure.url}: ${failure.error}`);
   }

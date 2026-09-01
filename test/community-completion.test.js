@@ -487,7 +487,10 @@ test("candidate releases report changes and reject collection regressions", () =
   const candidate = { communityId: "sterling-ranch", failureCount: 0, sources: [source("one", "new", { text: "The current fee is $12.00.", facts: [{ id: "fee", factKey: "service-fee", type: "money", value: "$12.00", context: "The current fee is $12.00." }] })] };
   const profile = { communityId: "sterling-ranch", allowedHosts: ["sterlingranchcab.com"] };
   assert.equal(diffCommunityIndexes(trusted, candidate).changedSourceIds.length, 1);
-  assert.equal(validateCommunityCandidate(trusted, candidate, profile).valid, true);
+  const validation = validateCommunityCandidate(trusted, candidate, profile);
+  assert.equal(validation.valid, true);
+  assert.equal(validation.review.level, "high");
+  assert.equal(validation.review.requiresHumanReview, true);
   assert.equal(validateCommunityCandidate(trusted, { ...candidate, failureCount: 1 }, profile).valid, false);
 });
 

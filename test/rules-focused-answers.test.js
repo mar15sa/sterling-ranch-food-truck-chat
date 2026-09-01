@@ -5,7 +5,7 @@ const { focusedTopicAnswer } = require("../lib/rules-focused-answers");
 
 const capture = (shortAnswer, findings, nextStep) => ({ shortAnswer, findings, nextStep });
 
-test("focused answers derive changing court hours, flag size, and yard-art limits from source text", () => {
+test("focused answers defer public court operations while deriving rule-controlled flag and yard-art limits", () => {
   const court = focusedTopicAnswer(
     "Pickle ball",
     [
@@ -14,8 +14,8 @@ test("focused answers derive changing court hours, flag size, and yard-art limit
     ],
     capture
   );
-  assert.match(court.findings.join(" "), /6:00 a\.m\. to 10:00 p\.m\./);
-  assert.doesNotMatch(court.findings.join(" "), /5:00 a\.m\./);
+  assert.match(court.findings.join(" "), /CAB’s Pickleball Courts page/);
+  assert.doesNotMatch(court.findings.join(" "), /6:00 a\.m\. to 10:00 p\.m\.|5:00 a\.m\./);
 
   const flag = focusedTopicAnswer(
     "How tall can a flagpole be?",

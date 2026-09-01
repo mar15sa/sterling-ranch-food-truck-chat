@@ -70,12 +70,15 @@ async function main() {
   await fs.writeFile(path.resolve(reportPath), `${JSON.stringify(report, null, 2)}\n`, "utf8");
   if (!result.valid) throw new Error(result.errors.join(" "));
   if (process.argv.includes("--promote")) {
+    if (result.review?.requiresHumanReview && !process.argv.includes("--approve-reviewed")) {
+      throw new Error(`Human source review is required before promotion: ${result.review.reasons.join("; ")}. Re-run after review with --approve-reviewed.`);
+    }
     candidate.promotedAt = checkedAt;
     candidate.releaseFingerprint = result.diff.candidateFingerprint;
     await fs.writeFile(path.resolve(candidatePath), `${JSON.stringify(candidate, null, 2)}\n`, "utf8");
     await fs.copyFile(path.resolve(candidatePath), path.resolve(trustedPath));
   }
-  console.log(`Community candidate passed: ${JSON.stringify({ changed: result.diff.changedSourceIds.length, added: result.diff.addedSourceIds.length, removed: result.diff.removedSourceIds.length, factChanges: result.diff.factChanges.length })}`);
+  console.log(`Community candidate passed: ${JSON.stringify({ changed: result.diff.changedSourceIds.length, added: result.diff.addedSourceIds.length, removed: result.diff.removedSourceIds.length, factChanges: result.diff.factChanges.length, review: result.review })}`);
 }
 
 main().catch((error) => { console.error(`Community candidate failed: ${error.message}`); process.exitCode = 1; });

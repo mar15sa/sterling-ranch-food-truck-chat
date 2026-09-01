@@ -2,6 +2,12 @@ name: Sterling Ranch source release
 
 on:
   workflow_dispatch:
+    inputs:
+      approve_high_risk:
+        description: "I reviewed high-risk source changes (hours, fees, contacts, links, reservations, or removals)"
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: "35 13 * * *"
 
@@ -32,7 +38,9 @@ jobs:
         run: |
           npm run ingest:community -- --output data/community-index.candidate.json
           npm run community:facts -- --input data/community-index.candidate.json --output data/community-index.candidate.json
-          npm run community:candidate -- --candidate data/community-index.candidate.json --report data/community-source-report.json --check-links --prune-broken-links --promote
+          approval=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.approve_high_risk }}" = "true" ]; then approval="--approve-reviewed"; fi
+          npm run community:candidate -- --candidate data/community-index.candidate.json --report data/community-source-report.json --check-links --prune-broken-links --promote $approval
           rm data/community-index.candidate.json
           npm run check
       - name: Publish source-only staging commit
