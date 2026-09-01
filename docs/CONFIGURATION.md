@@ -13,6 +13,7 @@ This file describes the settings a future owner needs to run the site. Keep real
 - `ANTHROPIC_API_KEY` is shared by the rules and broader community paths. `COMMUNITY_LLM_MODEL`, `COMMUNITY_LLM_TIMEOUT_MS`, and `COMMUNITY_LLM_MAX_TOKENS` optionally tune the broader path.
 - `COMMUNITY_REFRESH_INTERVAL_MS` controls background checks (six hours by default); `COMMUNITY_AUTO_REFRESH=false` disables them. Background checks refresh unchanged evidence but quarantine changed, new, or removed material until it is reviewed and released through staging.
 - `COMMUNITY_LLM_INPUT_COST_PER_MILLION` and `COMMUNITY_LLM_OUTPUT_COST_PER_MILLION` optionally override the approximate token-cost rates reported in answer traces. Their defaults are estimates, not billing records.
+- `COMMUNITY_TRACE_SALT` is the private HMAC salt used to create non-reversible question and subject fingerprints for routing consistency monitoring. Set the same stable secret on each instance in an environment; never commit its real value.
 - Follow-up context is not configured server-side: the browser keeps at most three exchanges in session storage and sends them with the next question. The server does not persist the full thread.
 
 The application can start without email, Notion, Anthropic, or openings-tip credentials. Those integrations degrade independently instead of preventing the resident site from loading.
@@ -35,11 +36,13 @@ Staging must use the `staging` branch, show the purple test-site banner, avoid l
 
 Staging may use the same Anthropic credential as production, but its request and token usage should be included in the same owner cost review. Secrets stay in Railway and are never copied into repository files.
 
+The real-model routing evaluation endpoint is enabled automatically only when Railway identifies the environment as `staging`. `COMMUNITY_ROUTING_EVAL_ENABLED=true` can enable it in another controlled test environment. Leave it disabled in production.
+
 ## Operational evidence
 
-`/api/health` reports deployment readiness, the active source fingerprint and promotion status, source freshness, answer-trace summaries, openings-monitor errors, recent request latency/error counts, and optional LLM request/token totals. It intentionally contains no credentials or resident conversation text. The daily live monitor checks the health response plus representative answer journeys.
+`/api/health` reports deployment readiness, the active source fingerprint and promotion status, source freshness, answer-trace summaries, AI routing goals and fallback reasons, anonymized routing-drift counts, openings-monitor errors, recent request latency/error counts, and optional LLM request/token totals. It intentionally contains no credentials or resident conversation text. The daily live monitor checks the health response plus representative answer journeys and fails when repeated identical questions drift to different routing outcomes.
 
-`npm run check` runs the complete release gate, including historical, authored, unseen, source-safety, and 228-question comparative evaluations. `npm run community:portability:live` performs a live end-to-end proof against the configured second CivicPlus community. `npm run eval:rules:unseen` remains the smaller rules-only holdout scorecard.
+`npm run check` runs the complete deterministic release gate, including historical, authored, unseen, source-safety, and 228-question comparative evaluations. `npm run community:routing:live` separately asks the real staging AI router every labeled routing case three times. It requires 98% goal-and-subject accuracy, 95% intent accuracy, 98% repeat consistency, and 100% prompt-injection rejection. The daily `Community routing quality` workflow runs that same real-model gate so provider or prompt drift is detected between releases. `npm run community:portability:live` performs a live end-to-end proof against the configured second CivicPlus community. `npm run eval:rules:unseen` remains the smaller rules-only holdout scorecard.
 
 The `Sterling Ranch source release` GitHub workflow is deliberately dormant until the first unified production release is complete. Set the repository variable `COMMUNITY_AUTO_PROMOTE=true` only after that release. Optional `STAGING_BASE_URL` and `PRODUCTION_BASE_URL` variables override the documented defaults. The workflow never promotes application code—only the tested source index and its audit reports.
 

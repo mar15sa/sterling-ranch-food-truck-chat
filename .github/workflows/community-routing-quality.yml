@@ -1,0 +1,33 @@
+name: AI routing consistency
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 14 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: community-routing-quality
+  cancel-in-progress: false
+
+jobs:
+  live-routing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: staging
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Run repeated real-model routing benchmark
+        env:
+          COMMUNITY_ROUTING_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}
+          COMMUNITY_ROUTING_REPEATS: 3
+          COMMUNITY_ROUTING_DELAY_MS: 2100
+        run: npm run community:routing:live

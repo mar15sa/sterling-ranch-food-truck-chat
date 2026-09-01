@@ -23,6 +23,7 @@
     "ingest:community": "node scripts/ingest-community.js",
     "community:check": "node scripts/check-community-sources.js",
     "community:eval": "node scripts/eval-community-assistant.js --enforce",
+    "community:routing:live": "node scripts/eval-community-routing-live.js --enforce",
     "community:candidate": "node scripts/validate-community-candidate.js",
     "community:facts": "node scripts/enrich-community-facts.js",
     "community:soak": "node scripts/check-community-soak.js",

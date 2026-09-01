@@ -24,6 +24,7 @@ flowchart LR
 - `staging` deploys to the public but unadvertised test URL. Every page shows a purple staging badge, test traffic does not enter production Google Analytics, and notification destinations are disabled.
 - `main` deploys to production. Railway sends traffic to a new release only after `/api/health` confirms that the rules index is ready.
 - Daily GitHub checks exercise the homepage, security headers, rules answers, pool status, openings catalog, and eight days of food-truck lookups.
+- A separate daily real-model routing benchmark sends labeled questions through the staging AI planner three times. Goal, subject, intent, repeat consistency, and prompt-injection rejection must meet the same thresholds used before release.
 - The first application-code release remains deliberate. After it is live, the source-only workflow builds a candidate, runs the complete gates, soaks the exact bundle on staging for one hour, and then promotes only that bundle to production. A failed production verification reverts the source commit.
 
 ## Failure boundaries
@@ -46,7 +47,7 @@ The existing rules engine remains the first route for topics it already answers 
 
 The browser keeps at most three prior question-and-answer pairs in session storage. The server uses them only to turn a follow-up into a standalone search question, screens them for instruction attacks, and searches official evidence again. Prior answers are never treated as evidence and full conversation history is not persisted.
 
-Every response has an `answerId`. A bounded operational trace records the route, source identifiers, verification result, source age, timing, fallback reason, and approximate AI token cost without retaining the resident's full wording. Food-truck questions use the same response contract and trace path as rules and services while retaining the standalone food-truck page for compatibility.
+Every response has an `answerId`. A bounded operational trace records the route, planner goal and intent, source identifiers, verification result, source age, timing, fallback reason, and approximate AI token cost without retaining the resident's full wording. Question and subject consistency are tracked with salted, non-reversible fingerprints. If the same anonymized question changes routing outcomes, the health monitor records drift and blocks the live quality check. Food-truck questions use the same response contract and trace path as rules and services while retaining the standalone food-truck page for compatibility.
 
 Every source refresh also rebuilds `data/rules-fact-catalog.json`. The catalog records each detected changing value with a stable fact key, normalized value, scope, effective and expiration dates, source URL, and source hash. The release check fails when that catalog no longer matches the rulebook or adopted supplements.
 

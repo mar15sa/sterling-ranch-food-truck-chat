@@ -28,9 +28,10 @@ const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("./lib/community-observability");
 const { getCommunityEvents } = require("./lib/community-events");
-const { getCommunityLlmMetrics } = require("./lib/community-llm");
+const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community-llm");
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
-const { getCommunitySearchMetrics } = require("./lib/community-search");
+const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
+const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
 const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
@@ -4455,6 +4456,45 @@ async function getRulesRequest(req) {
   return { question: body.question || body.q || "", context: body.context };
 }
 
+function communityRoutingEvalEnabled() {
+  return process.env.COMMUNITY_ROUTING_EVAL_ENABLED === "true"
+    || String(process.env.RAILWAY_ENVIRONMENT_NAME || "").toLowerCase() === "staging";
+}
+
+async function handleCommunityRoutingEval(req, res) {
+  if (!communityRoutingEvalEnabled()) {
+    sendJson(res, 404, { error: "Not found." });
+    return;
+  }
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST for routing evaluations." });
+    return;
+  }
+  const limit = checkRulesAskRateLimit(req);
+  if (!limit.allowed) {
+    sendJson(res, 429, { error: "Routing evaluation rate limit reached." }, { "retry-after": String(limit.retryAfterSeconds) });
+    return;
+  }
+  const { question } = await getRulesRequest(req);
+  if (!question || String(question).length > RULES_QUESTION_MAX_CHARS) {
+    sendJson(res, 400, { error: "Provide one short routing question." });
+    return;
+  }
+  const classification = classifyRulesInput(question);
+  if (classification.classification === INPUT_CLASSIFICATIONS.PROMPT_INJECTION) {
+    sendJson(res, 200, { accepted: false, classification: classification.classification, reason: classification.reason, plan: null });
+    return;
+  }
+  const rawPlan = await planCommunitySearch(question);
+  const plan = normalizedRoutingPlan(rawPlan, question);
+  sendJson(res, 200, {
+    accepted: Boolean(plan),
+    classification: classification.classification,
+    reason: plan ? "structured-plan-accepted" : "planner-unavailable-or-incompatible",
+    plan,
+  });
+}
+
 async function handleRulesAsk(req, res, url) {
   if (req.method !== "POST") {
     sendJson(res, 405, { error: "Use POST for rules questions." });
@@ -4792,6 +4832,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/rules/ask" || url.pathname === "/api/community/ask") {
       await handleRulesAsk(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/community/route-eval") {
+      await handleCommunityRoutingEval(req, res);
       return;
     }
 

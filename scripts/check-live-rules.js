@@ -218,7 +218,27 @@ async function main() {
       console.warn("WARN: Rules source refresh is still running after deployment; freshness will be checked again after the resident journeys.");
     } else {
       console.log("PASS: Deployment health check");
-      console.log(`INFO: ${JSON.stringify({ requests: health.requests, optionalLlmRewrite: health.optionalLlmRewrite })}`);
+      console.log(`INFO: ${JSON.stringify({
+        requests: health.requests,
+        optionalLlmRewrite: health.optionalLlmRewrite,
+        communityRouting: health.communityAnswers ? {
+          routingDecisions: health.communityAnswers.routingDecisions,
+          routingGoals: health.communityAnswers.routingGoals,
+          routingFallbacks: health.communityAnswers.routingFallbacks,
+          routingSynthesisFallbacks: health.communityAnswers.routingSynthesisFallbacks,
+          routingGoalDrifts: health.communityAnswers.routingGoalDrifts,
+          lastRoutingGoalDriftAt: health.communityAnswers.lastRoutingGoalDriftAt,
+        } : undefined,
+      })}`);
+      const lastRoutingDriftAt = Date.parse(health.communityAnswers?.lastRoutingGoalDriftAt || "");
+      if ((health.communityAnswers?.routingGoalDrifts || 0) > 0
+        && Number.isFinite(lastRoutingDriftAt)
+        && Date.now() - lastRoutingDriftAt <= 24 * 60 * 60 * 1000) {
+        failures.push({
+          question: "AI routing consistency",
+          issues: [`${health.communityAnswers.routingGoalDrifts} anonymized repeated-question routing drift event(s) detected.`],
+        });
+      }
       if ((health.openings?.errors || 0) > 0) {
         console.warn(`WARN: Openings monitoring has ${health.openings.errors} source error(s); the separate openings journey still determines whether resident access works.`);
       }

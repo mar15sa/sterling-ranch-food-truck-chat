@@ -99,6 +99,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
     synthesizeCommunityAnswer: false,
   });
   assert.equal(outageFallback.routingDecision, "official-action-fallback");
+  assert.equal(outageFallback.routingFallbackReason, "planner-unavailable-or-disabled");
   assert.match(outageFallback.answer, /UtilityHawk.*payment options/i);
   assert.match(JSON.stringify(outageFallback.actions), /srcab\.utilityhawk\.us\/login/i);
   assert.doesNotMatch(JSON.stringify(outageFallback.actions), /Water Concern/i);
@@ -118,6 +119,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
     synthesizeCommunityAnswer: false,
   });
   assert.equal(mislabeledPlanFallback.routingDecision, "official-action-fallback");
+  assert.equal(mislabeledPlanFallback.routingFallbackReason, "planner-goal-incompatible");
   assert.match(mislabeledPlanFallback.answer, /UtilityHawk.*payment options/i);
   assert.match(JSON.stringify(mislabeledPlanFallback.actions), /srcab\.utilityhawk\.us\/login/i);
   assert.doesNotMatch(mislabeledPlanFallback.answer, /possible disconnection|past-due notice/i);
