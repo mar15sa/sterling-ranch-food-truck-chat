@@ -232,6 +232,23 @@ test("malformed and failed AI responses safely return no interpretation", async 
   assert.equal(failedCalls, 2);
 });
 
+test("provider schema errors expose bounded staging diagnostics without request data", async () => {
+  let diagnostic;
+  const plan = await planCommunitySearch("private resident wording", {
+    apiKey: "test-key",
+    now: NOW,
+    onDiagnostic: (value) => { diagnostic = value; },
+    fetchImpl: async () => new Response(JSON.stringify({ error: { type: "invalid_request_error", message: "tools.0.input_schema is invalid" } }), { status: 400 }),
+  });
+  assert.equal(plan, null);
+  assert.deepEqual(diagnostic, {
+    providerStatus: 400,
+    providerErrorType: "invalid_request_error",
+    providerMessage: "tools.0.input_schema is invalid",
+  });
+  assert.equal(JSON.stringify(diagnostic).includes("private resident wording"), false);
+});
+
 test("structured clarification and unrelated scope stop before retrieval", async () => {
   let connectorCalls = 0;
   const getCommunityEvents = async () => {
