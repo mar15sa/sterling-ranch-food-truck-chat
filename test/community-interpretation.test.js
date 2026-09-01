@@ -345,6 +345,27 @@ test("structured rules retry the deterministic index before a community-page fal
   assert.doesNotMatch(answer.answer, /Calculating Outdoor Water Usage/i);
 });
 
+test("known safety boundaries do not invoke a second AI-assisted rules interpretation", async () => {
+  let rulesCalls = 0;
+  const answer = await answerCommunityQuestion("What is the CAB Instagram account?", {
+    interpretationMode: "structured",
+    index: communityIndex,
+    planCommunitySearch: async () => interpretation({
+      intent: "services",
+      goal: "information",
+      goals: ["information"],
+      subject: "CAB Instagram account",
+      requestedDetails: [],
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["CAB Instagram account"],
+    }),
+    answerRulesQuestion: async () => { rulesCalls += 1; throw new Error("should not run"); },
+  });
+  assert.equal(rulesCalls, 0);
+  assert.equal(answer.answerMode, "community-rules-boundary");
+  assert.match(answer.answer, /could not verify.*Instagram/i);
+});
+
 test("AI unrelated scope preserves the public boundary metadata", async () => {
   const answer = await answerCommunityQuestion("Tell me a joke", {
     interpretationMode: "structured",
