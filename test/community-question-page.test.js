@@ -61,3 +61,17 @@ test("an expanded owner question stays open across automatic refreshes", () => {
   assert.match(script, /expandedQuestionIds\.add\(item\.id\)/);
   assert.match(script, /expandedQuestionIds\.delete\(item\.id\)/);
 });
+
+test("owner can mark an answer as needs work and filter those marks", () => {
+  const root = path.join(__dirname, "..");
+  const html = fs.readFileSync(path.join(root, "public", "community-questions.html"), "utf8");
+  const script = fs.readFileSync(path.join(root, "public", "community-questions.js"), "utf8");
+  const server = fs.readFileSync(path.join(root, "server.js"), "utf8");
+  assert.match(html, /id="ownerReviewFilter"/);
+  assert.match(html, /Marked needs work/);
+  assert.match(script, /Mark as needs work/);
+  assert.match(script, /\/api\/community-questions\/review/);
+  assert.match(script, /needsWork: !item\.needsWork/);
+  assert.match(server, /handleCommunityQuestionReview/);
+  assert.match(server, /requireQuestionAdmin\(req, res\)/);
+});
