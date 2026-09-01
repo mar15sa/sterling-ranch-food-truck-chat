@@ -28,3 +28,14 @@ test("Community Assistant test bookmark is visible and marks API requests", () =
   assert.match(script, /get\("test"\) === "1"/);
   assert.match(script, /isTest: isTestMode/);
 });
+
+test("source review dashboard is private, version-bound, and has no analytics", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.html"), "utf8");
+  const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.js"), "utf8");
+  assert.match(html, /Source review/);
+  assert.match(`${html}\n${script}`, /Current approved/);
+  assert.match(`${html}\n${script}`, /Proposed/);
+  assert.match(html, /noindex, nofollow, noarchive/);
+  assert.match(script, /\/api\/community-sources\/review/);
+  assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
+});

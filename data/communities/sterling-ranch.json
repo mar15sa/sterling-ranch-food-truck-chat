@@ -66,6 +66,16 @@
     "status": ["live-status", "civicplus-alerts"],
     "services": ["civicplus-pages", "document"]
   },
+  "factAuthority": {
+    "live-status": ["live-status", "civicplus-alerts", "civicplus-pages"],
+    "facility-hours": ["civicrec", "civicplus-pages", "civicplus-alerts", "official-pdf", "municode"],
+    "reservation-policy": ["civicrec", "civicplus-pages", "official-pdf", "municode"],
+    "fee": ["adopted-document", "civicrec", "official-pdf", "civicplus-pages", "municode"],
+    "restriction": ["municode", "adopted-document", "official-pdf", "civicplus-pages"],
+    "contact": ["civicplus-pages", "official-action", "official-pdf", "municode"],
+    "submission": ["official-action", "civicplus-pages", "official-pdf", "municode"],
+    "event-date": ["civicplus-calendar", "civicplus-alerts", "civicplus-pages"]
+  },
   "allowedHosts": [
     "sterlingranchcab.com",
     "www.sterlingranchcab.com",

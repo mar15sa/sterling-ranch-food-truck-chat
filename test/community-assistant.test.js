@@ -34,8 +34,9 @@ function source(overrides = {}) {
 
 function profile(overrides = {}) {
   const authority = Object.fromEntries(["rules", "facilities", "forms", "events", "alerts", "status", "services"].map((type) => [type, ["civicplus-pages"]]));
+  const factAuthority = Object.fromEntries(["live-status", "facility-hours", "reservation-policy", "fee", "restriction", "contact", "submission", "event-date"].map((facet) => [facet, ["civicplus-pages"]]));
   return {
-    communityId: "alpha", name: "Alpha", website: "https://alpha.gov/", allowedHosts: ["alpha.gov"], authority,
+    communityId: "alpha", name: "Alpha", website: "https://alpha.gov/", allowedHosts: ["alpha.gov"], authority, factAuthority,
     connectors: [{ id: "site", type: "civicplus-pages", baseUrl: "https://alpha.gov/" }],
     ...overrides,
   };
@@ -45,6 +46,7 @@ test("community profiles enforce explicit source hosts and authority orders", ()
   assert.equal(validateCommunityProfile(profile()).communityId, "alpha");
   assert.throws(() => validateCommunityProfile(profile({ connectors: [{ id: "bad", type: "civicplus-pages", baseUrl: "https://evil.example/" }] })), /allowedHosts/);
   assert.throws(() => validateCommunityProfile(profile({ authority: {} })), /Authority order/);
+  assert.throws(() => validateCommunityProfile(profile({ factAuthority: {} })), /Fact authority order/);
 });
 
 test("a second real CivicPlus community is configured without core-code changes", () => {
@@ -111,8 +113,9 @@ test("discovery inventories every safe same-site content page instead of filteri
     fetchImpl: async (url) => new Response(pages[new URL(url).pathname] || "missing", { status: pages[new URL(url).pathname] ? 200 : 404, headers: { "content-type": "text/html" } }),
   });
   assert.equal(index.inventory.complete, true);
-  assert.equal(index.inventory.eligibleCount, 2);
+  assert.equal(index.inventory.eligibleCount, 1);
   assert.ok(index.inventory.exclusions.some((item) => /FormCenter/.test(item.url) && item.reason === "technical-or-transaction-route"));
+  assert.ok(index.inventory.exclusions.some((item) => item.reason === "insufficient-resident-content"));
   assert.ok(index.sources.some((item) => /Pickleball Courts/i.test(item.title)));
 });
 
@@ -135,6 +138,19 @@ test("page budgets resume from persistent inventory and preserve already approve
   assert.equal(second.inventory.complete, true);
   assert.ok(second.sources.some((item) => item.title === "Home"));
   assert.ok(second.sources.some((item) => item.title === "Pickleball Courts"));
+});
+
+test("missing trusted pages require two checks at least 24 hours apart before retirement", async () => {
+  const okay = `<html><title>Courts</title><div data-cpRole="mainContentContainer"><h1>Courts</h1><p>Residents may reserve the courts during the published operating hours. The official facility page provides current reservation and access details.</p></div></html>`;
+  const options = { maxPages: 1, maxDocuments: 1, discoverSitemap: false, lookup: async () => [{ address: "203.0.113.10", family: 4 }] };
+  const trusted = await crawlCommunity(profile(), { ...options, now: "2026-09-01T12:00:00Z", fetchImpl: async () => new Response(okay, { status: 200, headers: { "content-type": "text/html" } }) });
+  const firstMissing = await crawlCommunity(profile(), { ...options, previousIndex: trusted, now: "2026-09-02T12:00:00Z", fetchImpl: async () => new Response("missing", { status: 404 }) });
+  assert.equal(firstMissing.pages[0].lifecycle, "retirement-pending");
+  assert.equal(firstMissing.pages[0].retirementConfirmedAt, "");
+  assert.equal(firstMissing.sources.length, trusted.sources.length);
+  const confirmed = await crawlCommunity(profile(), { ...options, previousIndex: firstMissing, now: "2026-09-03T13:00:00Z", fetchImpl: async () => new Response("missing", { status: 404 }) });
+  assert.equal(confirmed.pages[0].retirementConfirmedAt, "2026-09-03T13:00:00.000Z");
+  assert.equal(confirmed.sources.length, trusted.sources.length);
 });
 
 test("unchanged pages use conditional requests and duplicate page bodies are indexed once", async () => {

@@ -2,18 +2,13 @@ name: Sterling Ranch source release
 
 on:
   workflow_dispatch:
-    inputs:
-      approve_high_risk:
-        description: "I reviewed high-risk source changes (hours, fees, contacts, links, reservations, or removals)"
-        required: false
-        default: false
-        type: boolean
   schedule:
     - cron: "35 13 * * *"
 
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 concurrency:
   group: sterling-ranch-source-release
@@ -35,13 +30,20 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Build and validate candidate
+        env:
+          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
         run: |
-          npm run ingest:community -- --output data/community-index.candidate.json
+          force=""
+          if [ "$(date -u +%u)" = "7" ]; then force="--force-content"; fi
+          npm run ingest:community -- --max-pages 500 --max-documents 250 --output data/community-index.candidate.json $force
           npm run community:facts -- --input data/community-index.candidate.json --output data/community-index.candidate.json
-          approval=""
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.approve_high_risk }}" = "true" ]; then approval="--approve-reviewed"; fi
-          npm run community:candidate -- --candidate data/community-index.candidate.json --report data/community-source-report.json --check-links --prune-broken-links --promote $approval
+          npm run community:review:export -- --output data/community-review-decisions.json --fail-overdue
+          npm run community:candidate -- --candidate data/community-index.candidate.json --decisions data/community-review-decisions.json --report data/community-source-report.json --check-links --promote
           rm data/community-index.candidate.json
+          rm data/community-review-decisions.json
+          npm run community:safety
           npm run check
       - name: Publish source-only staging commit
         id: staging_commit
@@ -72,18 +74,33 @@ jobs:
       - name: Promote the exact source bundle to production
         if: steps.staging_commit.outputs.changed == 'true'
         id: production_commit
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           source_commit="${{ steps.staging_commit.outputs.commit }}"
           git fetch origin main
+          base_sha="$(git rev-parse origin/main)"
           git checkout -B source-release-main origin/main
           git checkout "$source_commit" -- data/community-index.json data/community-source-report.json data/community-assistant-eval.json
           git add data/community-index.json data/community-source-report.json data/community-assistant-eval.json
           git commit -m "Refresh verified Sterling Ranch sources"
-          git push origin HEAD:main
-          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          branch="source-release/${{ github.run_id }}"
+          git push origin "HEAD:$branch"
+          pr_url="$(gh pr create --base main --head "$branch" --title "Refresh verified Sterling Ranch sources" --body "Promotes the exact source bundle that passed the complete inventory, source review, staging tests, and soak gates.")"
+          gh pr merge "$pr_url" --auto --merge
+          for attempt in $(seq 1 40); do
+            state="$(gh pr view "$pr_url" --json state --jq .state)"
+            if [ "$state" = "MERGED" ]; then break; fi
+            sleep 30
+          done
+          if [ "$(gh pr view "$pr_url" --json state --jq .state)" != "MERGED" ]; then echo "Protected production merge did not complete."; exit 1; fi
+          merge_sha="$(gh pr view "$pr_url" --json mergeCommit --jq .mergeCommit.oid)"
+          echo "commit=$merge_sha" >> "$GITHUB_OUTPUT"
+          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
       - name: Verify production and roll back on failure
         if: steps.staging_commit.outputs.changed == 'true'
         env:
+          GH_TOKEN: ${{ github.token }}
           RULES_LIVE_BASE_URL: ${{ vars.PRODUCTION_BASE_URL || 'https://sterlingranchsociety.com' }}
           EXPECTED_COMMUNITY_FINGERPRINT: ${{ steps.staging_commit.outputs.fingerprint }}
         run: |
@@ -92,8 +109,15 @@ jobs:
           result=$?
           set -e
           if [ "$result" -ne 0 ]; then
-            git revert --no-edit "${{ steps.production_commit.outputs.commit }}"
-            git push origin HEAD:main
+            git fetch origin main
+            git checkout -B "source-rollback-${{ github.run_id }}" origin/main
+            git checkout "${{ steps.production_commit.outputs.base_sha }}" -- data/community-index.json data/community-source-report.json data/community-assistant-eval.json
+            git add data/community-index.json data/community-source-report.json data/community-assistant-eval.json
+            git commit -m "Roll back failed Sterling Ranch source release"
+            rollback_branch="source-rollback/${{ github.run_id }}"
+            git push origin "HEAD:$rollback_branch"
+            rollback_pr="$(gh pr create --base main --head "$rollback_branch" --title "Roll back failed Sterling Ranch source release" --body "Production verification failed, so this restores the last trusted source fingerprint.")"
+            gh pr merge "$rollback_pr" --auto --merge
             exit "$result"
           fi
       - name: Open or update an exception issue

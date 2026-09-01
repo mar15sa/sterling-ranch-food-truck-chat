@@ -11,7 +11,7 @@ const CASES = [
   ["What are the rules for parks and open spaces?", /17-54/i],
   ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i],
   ["Who do I contact about water billing?", /Water Billing/i],
-  ["What are the neighborhood pickleball court rules?", /17-54/i],
+  ["What are the neighborhood pickleball court rules?", /Pickleball Courts/i],
   ["What is the maximum height a freestanding flag pole can be?", /2024 CAB Code amendments/i],
   ["What trees can we plant?", /5-131|Preapproved plant list/i],
   ["What are the rules for yard art?", /2024 CAB Code amendments/i],
@@ -44,9 +44,9 @@ async function main() {
   }
   const recall = passed / CASES.length;
   console.log(`Community controlling-source retrieval: ${passed}/${CASES.length} (${Math.round(recall * 100)}%).`);
-  if (recall < 0.95) {
+  if (failures.length) {
     for (const failure of failures) console.error(JSON.stringify(failure));
-    throw new Error("Controlling-source retrieval fell below the 95% release threshold.");
+    throw new Error("Controlling-source retrieval must be 100% for critical questions.");
   }
 }
 
