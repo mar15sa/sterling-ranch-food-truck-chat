@@ -366,6 +366,29 @@ test("known safety boundaries do not invoke a second AI-assisted rules interpret
   assert.match(answer.answer, /could not verify.*Instagram/i);
 });
 
+test("fast safety boundaries preserve established diagnostic reasons", async () => {
+  const cases = [
+    ["Can I run a food truck from my driveway?", "no-food-truck-specific-rule"],
+    ["What is the HOA phone number?", "missing-requested-contact-info"],
+  ];
+  for (const [question, reason] of cases) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured",
+      index: communityIndex,
+      planCommunitySearch: async () => interpretation({
+        intent: "rules",
+        goal: "permission",
+        goals: ["permission"],
+        subject: question,
+        requestedDetails: ["permission"],
+        dateRange: { kind: "none", start: "", end: "", label: "" },
+        searchQueries: [question],
+      }),
+    });
+    assert.equal(answer.confidence.reason, reason);
+  }
+});
+
 test("AI unrelated scope preserves the public boundary metadata", async () => {
   const answer = await answerCommunityQuestion("Tell me a joke", {
     interpretationMode: "structured",
