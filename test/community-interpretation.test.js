@@ -348,6 +348,15 @@ test("grounding rejects stronger prohibitions than the official draft supports",
   assert.ok(issues.includes("unsupported prohibition replaced a limited-permission statement"));
 });
 
+test("grounding rejects a rewrite that drops a required dead-tree obligation", () => {
+  const issues = llmRewriteIssues(
+    "Short answer: Ask the DRC about replacing the tree with a two-inch caliper tree.",
+    "Short answer: Dead trees must be replaced with a two-inch caliper tree, and a design change requires DRC approval.",
+    [{ title: "Landscape maintenance", text: "Dead trees must be replaced. Replacement trees must be at least two inches in caliper. Design changes require DRC approval." }],
+  );
+  assert.ok(issues.includes("required dead-tree replacement obligation dropped"));
+});
+
 test("provider schema errors expose bounded staging diagnostics without request data", async () => {
   let diagnostic;
   const plan = await planCommunitySearch("private resident wording", {
