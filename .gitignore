@@ -6,3 +6,4 @@ Thumbs.db
 tmp/
 data/openings-tips.ndjson
 data/community-assistant-eval.json
+data/community-index.candidate.json
