@@ -91,6 +91,21 @@ kbd {
   margin-inline: auto;
 }
 
+.rules-test-banner {
+  width: min(var(--rules-content), calc(100% - 32px));
+  margin: 12px auto 0;
+  padding: 10px 14px;
+  border: 1px solid #c68b2c;
+  border-radius: var(--rules-radius-sm);
+  background: #fff4d8;
+  color: #5f4214;
+  box-shadow: var(--rules-shadow-sm);
+}
+
+.rules-test-banner strong {
+  margin-right: 6px;
+}
+
 /* ---------- Header ---------- */
 .rules-header {
   position: sticky;
