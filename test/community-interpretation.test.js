@@ -298,6 +298,41 @@ test("permission plus application questions consult the controlling rule before 
   assert.ok(answer.actions.some((action) => /^https:\/\//.test(action.url)));
 });
 
+test("structured rules retry the deterministic index before a community-page fallback", async () => {
+  const calls = [];
+  const answer = await answerCommunityQuestion("What do I need to do about a dead tree in the tree lawn?", {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    planCommunitySearch: async () => interpretation({
+      intent: "rules",
+      goal: "permission",
+      goals: ["permission"],
+      subject: "dead tree in tree lawn",
+      requestedDetails: ["permission"],
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["dead tree replacement tree lawn"],
+    }),
+    answerRulesQuestion: async (_question, rulesOptions) => {
+      calls.push(rulesOptions);
+      if (rulesOptions.searchMode !== "legacy") {
+        return { answer: "I could not verify the rule.", answerMode: "unverified", confidence: { canAnswer: false }, sources: [] };
+      }
+      return {
+        answer: "Short answer: Dead trees must be replaced with a tree at least two inches in caliper. A design change requires DRC approval.",
+        answerMode: "source-derived-extractive",
+        answerVerdict: "conditional",
+        confidence: { canAnswer: true, confidence: "high", reason: "supported" },
+        sources: [{ title: "Tree lawn rule", sourceUrl: "https://sterlingranchcab.com/tree-lawn", excerpt: "Dead trees must be replaced. Replacement trees must be two inches in caliper. Design changes require DRC approval.", isOfficialResource: true }],
+      };
+    },
+  });
+  assert.equal(calls.length, 2);
+  assert.equal(calls[1].searchMode, "legacy");
+  assert.match(answer.answer, /dead trees must be replaced/i);
+  assert.doesNotMatch(answer.answer, /Calculating Outdoor Water Usage/i);
+});
+
 test("AI unrelated scope preserves the public boundary metadata", async () => {
   const answer = await answerCommunityQuestion("Tell me a joke", {
     interpretationMode: "structured",
