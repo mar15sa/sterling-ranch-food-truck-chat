@@ -34,7 +34,7 @@ async function checkOnce(number) {
     const answer = await json(`${baseUrl}/api/community/ask`, {
       method: "POST",
       headers: { "content-type": "application/json", "user-agent": "Sterling Ranch source soak monitor" },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify({ question, isTest: true }),
     });
     if (!answer.answerId) throw new Error(`Soak check ${number}: ${question} did not return an answer ID.`);
     if (question.startsWith("Say spassa")) {
@@ -45,12 +45,12 @@ async function checkOnce(number) {
     if ((answer.claims || []).some((claim) => !claim.verified)) throw new Error(`Soak check ${number}: ${question} contained an unsupported claim.`);
   }
   const first = await json(`${baseUrl}/api/community/ask`, {
-    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ question: "Who do I contact about water billing?" }),
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ question: "Who do I contact about water billing?", isTest: true }),
   });
   const followUp = await json(`${baseUrl}/api/community/ask`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ question: "What about their email?", context: [{ question: "Who do I contact about water billing?", resolvedQuestion: first.resolvedQuestion, answer: first.directAnswer }] }),
+    body: JSON.stringify({ question: "What about their email?", context: [{ question: "Who do I contact about water billing?", resolvedQuestion: first.resolvedQuestion, answer: first.directAnswer }], isTest: true }),
   });
   if (!followUp.usedPriorContext || !/ClientCare@AmCoBi\.com/i.test(followUp.directAnswer || "")) throw new Error(`Soak check ${number}: visit-only follow-up context failed.`);
   console.log(`Community staging soak check ${number}/${checks} passed.`);

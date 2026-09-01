@@ -142,7 +142,7 @@ async function askLive(question) {
       "content-type": "application/json",
       "user-agent": "SterlingRanchRulesQualityMonitor/1.0",
     },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, isTest: true }),
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
 
