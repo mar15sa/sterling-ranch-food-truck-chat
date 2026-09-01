@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildAnswerContract, detectFactConflicts, validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
-const { contentHtml, crawlCommunity, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
+const { canonicalPageUrl, contentHtml, crawlCommunity, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
 const { verifyStructuredDraft } = require("../lib/community-grounding");
 const { parseJson, planCommunitySearch } = require("../lib/community-llm");
 const { actionSupportsGoal, classifyCommunityIntent, normalizedRoutingPlan, requestedDetails, searchCommunityIndex, sourceSupportsGoal } = require("../lib/community-search");
@@ -97,6 +97,71 @@ test("official PDFs linked from a crawled page receive a separate crawl budget a
   assert.equal(pdf.title, "Standard 3 Rail Fencing");
   assert.match(pdf.text, /Sherwin Williams #3002 Belvedere Tan/);
   assert.match(pdf.sourceUrl, /DocumentCenter\/View\/618/);
+});
+
+test("discovery inventories every safe same-site content page instead of filtering by topic words", async () => {
+  const pages = {
+    "/": `<html><title>Home</title><nav><a href="/418/Pickleball-Courts">Pickleball</a><a href="/FormCenter/Feedback-9">Feedback</a></nav><div data-cpRole="mainContentContainer"><h1>Home</h1><p>Official information for Alpha residents and community services.</p></div></html>`,
+    "/418/Pickleball-Courts": `<html><title>Pickleball Courts</title><div data-cpRole="mainContentContainer"><h1>Pickleball Courts</h1><p>Weekday court hours are 7:00 a.m. to dusk. Residents reserve courts seven days ahead.</p></div></html>`,
+  };
+  const index = await crawlCommunity(profile(), {
+    maxPages: 10,
+    discoverSitemap: false,
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async (url) => new Response(pages[new URL(url).pathname] || "missing", { status: pages[new URL(url).pathname] ? 200 : 404, headers: { "content-type": "text/html" } }),
+  });
+  assert.equal(index.inventory.complete, true);
+  assert.equal(index.inventory.eligibleCount, 2);
+  assert.ok(index.inventory.exclusions.some((item) => /FormCenter/.test(item.url) && item.reason === "technical-or-transaction-route"));
+  assert.ok(index.sources.some((item) => /Pickleball Courts/i.test(item.title)));
+});
+
+test("page budgets resume from persistent inventory and preserve already approved pages", async () => {
+  const body = (title, content, link = "") => `<html><title>${title}</title><div data-cpRole="mainContentContainer"><h1>${title}</h1><p>${content}</p>${link}</div></html>`;
+  const pages = {
+    "/": body("Home", "Official information for Alpha residents and community services.", `<a href="/418/Pickleball-Courts">Pickleball</a>`),
+    "/418/Pickleball-Courts": body("Pickleball Courts", "Residents may reserve pickleball courts seven days ahead during published hours."),
+  };
+  const options = {
+    maxPages: 1,
+    discoverSitemap: false,
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async (url) => new Response(pages[new URL(url).pathname], { status: 200, headers: { "content-type": "text/html" } }),
+  };
+  const first = await crawlCommunity(profile(), options);
+  assert.equal(first.inventory.pendingCount, 1);
+  const second = await crawlCommunity(profile(), { ...options, previousIndex: first });
+  assert.equal(second.inventory.pendingCount, 0);
+  assert.equal(second.inventory.complete, true);
+  assert.ok(second.sources.some((item) => item.title === "Home"));
+  assert.ok(second.sources.some((item) => item.title === "Pickleball Courts"));
+});
+
+test("unchanged pages use conditional requests and duplicate page bodies are indexed once", async () => {
+  const duplicate = `<html><title>Courts</title><div data-cpRole="mainContentContainer"><h1>Courts</h1><p>Residents reserve courts seven days ahead. Weekday hours begin at 7:00 a.m.</p></div></html>`;
+  const root = `<html><title>Home</title><div data-cpRole="mainContentContainer"><h1>Home</h1><p>Official information for Alpha residents.</p><a href="/courts">Courts</a><a href="/courts-copy">Courts copy</a></div></html>`;
+  const baseOptions = {
+    maxPages: 10,
+    discoverSitemap: false,
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async (url) => new Response(new URL(url).pathname === "/" ? root : duplicate, { status: 200, headers: { "content-type": "text/html", etag: `"${new URL(url).pathname}"` } }),
+  };
+  const first = await crawlCommunity(profile(), baseOptions);
+  assert.equal(first.pages.filter((page) => page.indexed && /courts/.test(page.url)).length, 1);
+  assert.ok(first.pages.some((page) => page.duplicateOf));
+  let conditionalHeaders;
+  const courtPage = first.pages.find((page) => /\/courts$/.test(new URL(page.url).pathname));
+  const second = await crawlCommunity(profile(), {
+    ...baseOptions,
+    maxPages: 1,
+    previousIndex: { ...first, inventory: { ...first.inventory, pendingUrls: [courtPage.url] } },
+    fetchImpl: async (_url, options) => {
+      conditionalHeaders = options.headers;
+      return new Response(null, { status: 304, headers: { etag: courtPage.etag } });
+    },
+  });
+  assert.equal(conditionalHeaders["if-none-match"], courtPage.etag);
+  assert.ok(second.pages.some((page) => canonicalPageUrl(page.url) === canonicalPageUrl(courtPage.url) && page.reused));
 });
 
 test("claim verification rejects invented changing values and source instructions", () => {
@@ -599,4 +664,37 @@ test("background refreshes update unchanged evidence but quarantine changed or n
   assert.equal(held.index.sources[0].text, trusted.sources[0].text);
   assert.deepEqual(held.pendingReview.changedSourceIds, ["alpha-rentals"]);
   assert.deepEqual(held.pendingReview.newSourceIds, ["new-page"]);
+});
+
+test("an exact facility page outranks a contradictory generic rulebook answer for public court operations", async () => {
+  const pickleball = source({
+    id: "alpha-pickleball",
+    title: "Pickleball Courts",
+    sourceUrl: "https://alpha.gov/418/Pickleball-Courts",
+    sourceType: "facilities",
+    text: "Pickleball Courts Pickleball Facility Guidelines Hours and Reservations Hours: Weekdays 7 am-dusk; Weekends 8 am-dusk. Courts are available for reservations and drop-in play. Court reservations can be made for a maximum of two hours/day. Residents can make reservations up to seven days in advance. Non-residents can make reservations up to three days in advance. Residents: Free. Non-residents: $40/court for up to four players. Open play for non-residents: $20 for two players. Open play hours: Mon-Fri: 7-11 am, 5-8 pm. Sat-Sun: 8-11 am, 5-8 pm. Reservation hours: Mon-Fri: 11 am-5 pm. Sat-Sun: 11 am-5 pm.",
+    excerpt: "Pickleball court hours, reservations, and fees.",
+    actions: [{ id: "courtreserve", label: "Reserve through CourtReserve", url: "https://alpha.gov/courtreserve", actionType: "booking" }],
+    facts: [
+      { id: "weekday-hours", factKey: "pickleball-weekday-hours", type: "time", value: "7:00 a.m.", context: "Pickleball Courts are open weekdays from 7:00 a.m. to dusk." },
+      { id: "fee", factKey: "pickleball-nonresident-fee", type: "money", value: "$40 per court", context: "Non-residents pay $40 per court reservation." },
+    ],
+  });
+  const result = await answerCommunityQuestion("What are the pickleball court rules?", {
+    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [pickleball] },
+    communityId: "alpha",
+    answerRulesQuestion: async () => ({
+      answer: "The general park rules apply from 5:00 a.m. to 11:00 p.m.",
+      answerMode: "source-derived-extractive",
+      confidence: { canAnswer: true, confidence: "high" },
+      sources: [],
+    }),
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(result.authorityDecision, "current-facility-operations");
+  assert.match(result.answer, /7 a\.m\..*dusk|seven days|\$40|two hours/is);
+  assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is);
+  assert.equal(result.actions[0].url, "https://alpha.gov/courtreserve");
+  assert.equal(result.sources[0].sourceUrl, "https://alpha.gov/418/Pickleball-Courts");
 });

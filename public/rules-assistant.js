@@ -14,6 +14,7 @@ const statusToggle = document.querySelector("#statusToggle");
 const statusDetail = document.querySelector("#statusDetail");
 const statusSource = document.querySelector("#statusSource");
 const statusChecked = document.querySelector("#statusChecked");
+const statusCoverage = document.querySelector("#statusCoverage");
 const statusOnlineDate = document.querySelector("#statusOnlineDate");
 const statusCodified = document.querySelector("#statusCodified");
 const statusNote = document.querySelector("#statusNote");
@@ -561,6 +562,13 @@ function updateStatus(status) {
         : lastChecked;
   statusOnlineDate.textContent = formatDateTime(status.onlineUpdateDate);
   statusCodified.textContent = status.codifiedThrough || "Not available";
+  const indexedPages = Number(community.pageCount || 0);
+  const eligiblePages = Number(community.eligiblePageCount || 0);
+  const pendingPages = Number(community.pendingPageCount || 0);
+  const excludedPages = Number(community.excludedPageCount || 0);
+  statusCoverage.textContent = community.inventoryAvailable && eligiblePages
+    ? `${indexedPages} indexed of ${eligiblePages} eligible · ${pendingPages} pending · ${excludedPages} excluded with a reason`
+    : "Coverage inventory has not been built yet";
 
   let headline;
   let state;
@@ -569,6 +577,9 @@ function updateStatus(status) {
     state = "busy";
   } else if (status.isStale || community.stale) {
     headline = "Some official sources may be out of date";
+    state = "warn";
+  } else if (!community.inventoryComplete) {
+    headline = "Official source inventory still building";
     state = "warn";
   } else {
     headline = "Official sources ready";
@@ -582,6 +593,9 @@ function updateStatus(status) {
   if (status.isStale) notes.push("The local rulebook index may be stale.");
   if (community.refreshing) notes.push("Refreshing official community pages now.");
   if (community.stale) notes.push("One or more community pages are due for a freshness check.");
+  if (!community.inventoryComplete) notes.push(community.inventoryAvailable
+    ? `${pendingPages} eligible CAB pages remain to be checked; answers continue using the approved source library.`
+    : "The complete CAB page inventory has not been built yet; answers continue using the approved source library.");
   if (community.lastRefreshError) notes.push("The latest community-page refresh failed; older sources are marked accordingly.");
   if (Array.isArray(status.warnings)) {
     const sourcePlatformPattern = new RegExp(`\\b${["Muni", "code"].join("")}\\b`, "g");
