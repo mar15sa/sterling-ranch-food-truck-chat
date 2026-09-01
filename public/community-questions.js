@@ -7,6 +7,7 @@ const logoutButton = document.querySelector("#logoutButton");
 const rangeFilter = document.querySelector("#rangeFilter");
 const statusFilter = document.querySelector("#statusFilter");
 const qualityFilter = document.querySelector("#qualityFilter");
+const ownerReviewFilter = document.querySelector("#ownerReviewFilter");
 const searchFilter = document.querySelector("#searchFilter");
 const includeTests = document.querySelector("#includeTests");
 const refreshButton = document.querySelector("#refreshButton");
@@ -19,6 +20,7 @@ const questionCount = document.querySelector("#questionCount");
 const answeredCount = document.querySelector("#answeredCount");
 const reviewCount = document.querySelector("#reviewCount");
 const qualityConcernCount = document.querySelector("#qualityConcernCount");
+const needsWorkCount = document.querySelector("#needsWorkCount");
 const sourceHealthState = document.querySelector("#sourceHealthState");
 const sourceApprovedCount = document.querySelector("#sourceApprovedCount");
 const sourceCoverage = document.querySelector("#sourceCoverage");
@@ -150,7 +152,7 @@ function answerPreview(answer) {
 function createQuestionEntry(item) {
   const details = document.createElement("details");
   const cssStatus = statusClass(item.reviewStatus);
-  details.className = `question-entry ${cssStatus}`;
+  details.className = `question-entry ${cssStatus}${item.needsWork ? " owner-needs-work" : ""}`;
   details.open = expandedQuestionIds.has(item.id);
   details.addEventListener("toggle", () => {
     if (details.open) expandedQuestionIds.add(item.id);
@@ -180,6 +182,12 @@ function createQuestionEntry(item) {
     test.className = "test-label";
     test.textContent = "Test";
     labels.append(test);
+  }
+  if (item.needsWork) {
+    const needsWork = document.createElement("span");
+    needsWork.className = "needs-work-label";
+    needsWork.textContent = "Needs work";
+    labels.append(needsWork);
   }
   const quality = document.createElement("span");
   const qualityClass = statusClass(item.qualityRating || "Not rated");
@@ -229,6 +237,46 @@ function createQuestionEntry(item) {
     meta.append(source);
   }
   body.append(meta);
+
+  const ownerReviewActions = document.createElement("div");
+  ownerReviewActions.className = "owner-review-actions";
+  const needsWorkButton = document.createElement("button");
+  needsWorkButton.type = "button";
+  needsWorkButton.className = `needs-work-button${item.needsWork ? " marked" : ""}`;
+  needsWorkButton.setAttribute("aria-pressed", String(Boolean(item.needsWork)));
+  needsWorkButton.textContent = item.needsWork ? "Marked as needs work — undo" : "Mark as needs work";
+  const ownerReviewNote = document.createElement("p");
+  ownerReviewNote.className = "owner-review-note";
+  ownerReviewNote.textContent = "Your mark is saved separately from the automatic score.";
+  needsWorkButton.addEventListener("click", async () => {
+    needsWorkButton.disabled = true;
+    listError.textContent = "";
+    try {
+      const response = await fetch("/api/community-questions/review", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: item.id, needsWork: !item.needsWork }),
+      });
+      const data = await response.json();
+      if (response.status === 401) {
+        stopPolling();
+        showLogin("Your private session expired. Please sign in again.");
+        return;
+      }
+      if (!response.ok) throw new Error(data.error || "Could not save your review.");
+      items = ownerReviewFilter.value === "needs-work" && !data.needsWork
+        ? items.filter((current) => current.id !== item.id)
+        : items.map((current) => current.id === item.id
+          ? { ...current, needsWork: data.needsWork }
+          : current);
+      renderItems();
+    } catch (error) {
+      listError.textContent = error.message || "Could not save your review.";
+      needsWorkButton.disabled = false;
+    }
+  });
+  ownerReviewActions.append(needsWorkButton, ownerReviewNote);
+  body.append(ownerReviewActions);
   details.append(summary, body);
   return details;
 }
@@ -240,6 +288,7 @@ function renderItems() {
   answeredCount.textContent = String(items.filter((item) => item.reviewStatus === "Answered").length);
   reviewCount.textContent = String(items.filter((item) => item.reviewStatus === "Needs review").length);
   qualityConcernCount.textContent = String(items.filter((item) => ["Weak", "Poor"].includes(item.qualityRating)).length);
+  needsWorkCount.textContent = String(items.filter((item) => item.needsWork).length);
   loadMoreButton.hidden = !nextCursor;
 }
 
@@ -248,6 +297,7 @@ function queryString(cursor = "") {
     range: rangeFilter.value,
     status: statusFilter.value,
     quality: qualityFilter.value,
+    ownerReview: ownerReviewFilter.value,
     includeTests: String(includeTests.checked),
   });
   const search = searchFilter.value.trim();
@@ -352,6 +402,7 @@ logoutButton.addEventListener("click", async () => {
 rangeFilter.addEventListener("change", () => loadQuestions());
 statusFilter.addEventListener("change", () => loadQuestions());
 qualityFilter.addEventListener("change", () => loadQuestions());
+ownerReviewFilter.addEventListener("change", () => loadQuestions());
 includeTests.addEventListener("change", () => loadQuestions());
 refreshButton.addEventListener("click", () => {
   loadQuestions();

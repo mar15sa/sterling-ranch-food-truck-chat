@@ -11,6 +11,7 @@ const {
   questionLogDateRange,
   resetQuestionLogCachesForTest,
   resolveNotionDataSourceId,
+  setQuestionNeedsWork,
 } = require("../lib/rules-question-log");
 
 test("question log redacts personal contact details in questions and answers", () => {
@@ -71,6 +72,7 @@ test("log entry stores the displayed answer and test marker", () => {
   assert.equal(properties["Review status"].select.name, "Answered");
   assert.equal(properties["Quality rating"].select.name, entry.qualityRating);
   assert.equal(properties["Quality score"].number, entry.qualityScore);
+  assert.equal(properties["Needs work"].checkbox, false);
 });
 
 test("Denver date presets use the correct daylight-saving boundaries", () => {
@@ -137,6 +139,7 @@ test("question query hides tests by default and maps the stored answer", async (
     "Quality issues": {},
     "Resident effort": {},
     "Resident effort score": {},
+    "Needs work": {},
   };
   const fetchImpl = async (url, options = {}) => {
     calls.push({ url, options });
@@ -168,6 +171,7 @@ test("question query hides tests by default and maps the stored answer", async (
               "Quality issues": { rich_text: [] },
               "Resident effort": { select: { name: "Resolved" } },
               "Resident effort score": { number: 5 },
+              "Needs work": { checkbox: true },
             },
           },
         ],
@@ -177,12 +181,13 @@ test("question query hides tests by default and maps the stored answer", async (
   };
   try {
     const result = await queryQuestionLogs(
-      { range: "today", status: "Answered", quality: "concerns", search: "shed", now: new Date("2026-09-01T18:00:00Z") },
+      { range: "today", status: "Answered", quality: "concerns", ownerReview: "needs-work", search: "shed", now: new Date("2026-09-01T18:00:00Z") },
       fetchImpl
     );
     assert.equal(result.items[0].answer, "Yes, with approval.");
     assert.equal(result.items[0].qualityRating, "Good");
     assert.equal(result.items[0].residentEffort, "Resolved");
+    assert.equal(result.items[0].needsWork, true);
     const queryCall = calls.find((call) => call.url.endsWith("/query"));
     const body = JSON.parse(queryCall.options.body);
     assert.ok(
@@ -192,7 +197,63 @@ test("question query hides tests by default and maps the stored answer", async (
     );
     assert.ok(body.filter.and.some((filter) => filter.property === "Review status" && filter.select.equals === "Answered"));
     assert.ok(body.filter.and.some((filter) => filter.or?.some((part) => part.property === "Quality rating" && part.select.equals === "Weak")));
+    assert.ok(body.filter.and.some((filter) => filter.property === "Needs work" && filter.checkbox.equals === true));
     assert.ok(body.filter.and.some((filter) => filter.property === "Question" && filter.title.contains === "shed"));
+  } finally {
+    if (previousToken === undefined) delete process.env.RULES_QUESTION_NOTION_TOKEN;
+    else process.env.RULES_QUESTION_NOTION_TOKEN = previousToken;
+    if (previousSource === undefined) delete process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID;
+    else process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID = previousSource;
+    resetQuestionLogCachesForTest();
+  }
+});
+
+test("owner can persist and undo a needs-work mark", async () => {
+  const previousToken = process.env.RULES_QUESTION_NOTION_TOKEN;
+  const previousSource = process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID;
+  process.env.RULES_QUESTION_NOTION_TOKEN = "test-token";
+  process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID = "question-source";
+  resetQuestionLogCachesForTest();
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, options });
+    if (url.endsWith("/data_sources/question-source")) {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          properties: {
+            Answer: {}, "Review status": {}, Testing: {}, "Confidence reason": {},
+            "Answer verdict": {}, "Top source": {}, "Quality rating": {}, "Quality score": {},
+            "Quality issues": {}, "Resident effort": {}, "Resident effort score": {}, "Needs work": {},
+          },
+        }),
+      };
+    }
+    if (url.endsWith(`/pages/${pageId}`) && !options.method) {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ parent: { type: "data_source_id", data_source_id: "question-source" } }),
+      };
+    }
+    return { ok: true, status: 200, json: async () => ({}) };
+  };
+  const pageId = "12345678-1234-4234-8234-123456789abc";
+  try {
+    assert.deepEqual(await setQuestionNeedsWork(pageId, true, fetchImpl), {
+      id: pageId,
+      needsWork: true,
+    });
+    const update = calls.find((call) => call.url.endsWith(`/pages/${pageId}`) && call.options.method === "PATCH");
+    assert.equal(update.options.method, "PATCH");
+    assert.deepEqual(JSON.parse(update.options.body), {
+      properties: { "Needs work": { checkbox: true } },
+    });
+    await assert.rejects(
+      () => setQuestionNeedsWork("not-a-page", true, fetchImpl),
+      /valid question/i
+    );
   } finally {
     if (previousToken === undefined) delete process.env.RULES_QUESTION_NOTION_TOKEN;
     else process.env.RULES_QUESTION_NOTION_TOKEN = previousToken;

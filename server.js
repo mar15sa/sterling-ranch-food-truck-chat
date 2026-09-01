@@ -20,6 +20,7 @@ const {
   cleanQuestionForLog,
   logRulesQuestion,
   queryQuestionLogs,
+  setQuestionNeedsWork,
 } = require("./lib/rules-question-log");
 const {
   createLoginLimiter,
@@ -4875,21 +4876,51 @@ async function handleCommunityQuestions(req, res, url) {
   const quality = allowedQuality.has(url.searchParams.get("quality"))
     ? url.searchParams.get("quality")
     : "all";
+  const ownerReview = url.searchParams.get("ownerReview") === "needs-work"
+    ? "needs-work"
+    : "all";
   try {
     const result = await queryQuestionLogs({
       range,
       status,
       quality,
+      ownerReview,
       search: String(url.searchParams.get("search") || "").trim().slice(0, 100),
       includeTests: url.searchParams.get("includeTests") === "true",
       cursor: String(url.searchParams.get("cursor") || "").slice(0, 500),
       pageSize: 100,
     });
-    sendJson(res, 200, { ...result, range, status, quality });
+    sendJson(res, 200, { ...result, range, status, quality, ownerReview });
   } catch (error) {
     console.warn(`Community question log query failed: ${error.message || "unknown error"}`);
     sendJson(res, 503, {
       error: "The private question log could not reach Notion just now. Please try again shortly.",
+    });
+  }
+}
+
+async function handleCommunityQuestionReview(req, res) {
+  if (req.method !== "POST") {
+    sendJson(res, 405, { error: "Use POST to update an owner review." });
+    return;
+  }
+  if (!requireQuestionAdmin(req, res)) return;
+  const body = await readJsonBody(req);
+  if (typeof body.needsWork !== "boolean") {
+    sendJson(res, 400, { error: "Choose whether this answer needs work." });
+    return;
+  }
+  try {
+    const result = await setQuestionNeedsWork(body.id, body.needsWork);
+    sendJson(res, 200, result);
+  } catch (error) {
+    if (/valid question/i.test(error.message || "")) {
+      sendJson(res, 400, { error: error.message });
+      return;
+    }
+    console.warn(`Community question owner review failed: ${error.message || "unknown error"}`);
+    sendJson(res, 503, {
+      error: "The owner review could not be saved to Notion just now. Please try again shortly.",
     });
   }
 }
@@ -5001,6 +5032,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/community-questions") {
       await handleCommunityQuestions(req, res, url);
+      return;
+    }
+
+    if (url.pathname === "/api/community-questions/review") {
+      await handleCommunityQuestionReview(req, res);
       return;
     }
 

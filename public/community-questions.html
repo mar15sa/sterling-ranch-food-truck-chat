@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>Community Assistant Questions</title>
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/community-questions.css?v=20260901-source-health3" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260901-owner-review1" />
   </head>
   <body>
     <main class="owner-shell">
@@ -97,6 +97,7 @@
           <div><span>Answered</span><strong id="answeredCount">0</strong></div>
           <div class="review-summary"><span>Needs review</span><strong id="reviewCount">0</strong></div>
           <div class="quality-summary"><span>Weak or poor answers</span><strong id="qualityConcernCount">0</strong></div>
+          <div class="owner-review-summary"><span>Marked needs work</span><strong id="needsWorkCount">0</strong></div>
         </section>
 
         <section class="filters" aria-label="Question filters">
@@ -133,6 +134,13 @@
               <option value="Not rated">Not rated (older)</option>
             </select>
           </label>
+          <label>
+            My review
+            <select id="ownerReviewFilter">
+              <option value="all">All answers</option>
+              <option value="needs-work">Marked needs work</option>
+            </select>
+          </label>
           <label class="search-label">
             Search
             <input id="searchFilter" type="search" placeholder="Search questions…" />
@@ -157,6 +165,6 @@
         <button type="button" class="load-more" id="loadMoreButton" hidden>Load more</button>
       </section>
     </main>
-    <script src="/community-questions.js?v=20260901-source-health4"></script>
+    <script src="/community-questions.js?v=20260901-owner-review1"></script>
   </body>
 </html>
