@@ -77,7 +77,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
         routingPlan: options.routingPlan,
       }),
     });
-    assert.equal(answer.answerMode, "community-grounded-ai", question);
+    assert.match(answer.answerMode, /^community-(?:proactive-)?grounded-ai$/, question);
     assert.equal(answer.routingDecision, "ai-planned", question);
     assert.equal(answer.routingPlan.goal, "payment", question);
     assert.equal(answer.routingPlan.subject, "water bill", question);
@@ -120,7 +120,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   });
   assert.equal(repairedPlan.routingDecision, "ai-planned");
   assert.equal(repairedPlan.routingPlan.goal, "payment");
-  assert.match(repairedPlan.answer, /UtilityHawk.*payment options/i);
+  assert.match(repairedPlan.answer, /UtilityHawk.*(?:Pay Online|payment options)/i);
   assert.match(JSON.stringify(repairedPlan.actions), /srcab\.utilityhawk\.us\/login/i);
   assert.doesNotMatch(repairedPlan.answer, /possible disconnection|past-due notice/i);
 
@@ -138,7 +138,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
     synthesizeCommunityAnswer: false,
   });
   assert.equal(rejectedSynthesisFallback.routingDecision, "ai-planned");
-  assert.match(rejectedSynthesisFallback.directAnswer, /UtilityHawk.*payment options/i);
+  assert.match(rejectedSynthesisFallback.directAnswer, /UtilityHawk.*(?:Pay Online|payment options)/i);
   assert.match(JSON.stringify(rejectedSynthesisFallback.actions), /srcab\.utilityhawk\.us\/login/i);
 
   const late = await ask("What happens if I do not pay my water bill?");

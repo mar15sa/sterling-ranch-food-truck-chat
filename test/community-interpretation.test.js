@@ -7,7 +7,8 @@ const {
 } = require("../lib/community-interpretation");
 const { getCommunityEvents, parseCivicPlusEvents } = require("../lib/community-events");
 const { isFoodTruckRequest } = require("../lib/community-food-trucks");
-const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { answerCommunityQuestion, sourcedAnswer } = require("../lib/community-assistant");
+const { llmRewriteIssues } = require("../lib/rules-grounding");
 const { planCommunitySearch } = require("../lib/community-llm");
 
 const NOW = new Date("2026-09-01T18:00:00Z");
@@ -259,6 +260,64 @@ test("structured plans canonicalize compound goals, consequence details, and eve
     filters: { audience: "", category: "", facility: "Sterling Center", location: "" },
   }), "What's happening at the Sterling Center tomorrow?", { now: NOW });
   assert.deepEqual(venue.filters, { audience: "", category: "", facility: "", location: "Sterling Center" });
+});
+
+test("structured validation keeps holiday lighting schedules out of live events", () => {
+  const { normalizedRoutingPlan } = require("../lib/community-search");
+  const plan = normalizedRoutingPlan(interpretation({
+    intent: "events",
+    goal: "schedule",
+    goals: ["schedule"],
+    subject: "holiday lighting season",
+    searchQueries: ["holiday lighting season"],
+  }), "What is the holiday lighting season?", { now: NOW });
+  assert.equal(plan.intent, "rules");
+});
+
+test("AI unrelated scope preserves the public boundary metadata", async () => {
+  const answer = await answerCommunityQuestion("Tell me a joke", {
+    interpretationMode: "structured",
+    planCommunitySearch: async () => interpretation({
+      intent: "services",
+      goal: "information",
+      goals: ["information"],
+      subject: "joke",
+      scope: "unrelated",
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["joke"],
+    }),
+  });
+  assert.equal(answer.inputClassification, "unrelated");
+  assert.equal(answer.confidence.reason, "unrelated-not-rule-question");
+  assert.equal(answer.confidence.canAnswer, false);
+});
+
+test("contact extraction cannot substitute a different organization", async () => {
+  const answer = await sourcedAnswer("What is the HOA phone number?", {
+    requestedDetails: ["contact"],
+    sources: [{
+      id: "water",
+      title: "Water & Sewer",
+      text: "For water service, call (833) 772-2240.",
+      excerpt: "For water service, call (833) 772-2240.",
+      score: 100,
+      authorityScore: 1,
+      checkedAt: "2026-09-01T18:00:00Z",
+      sourceUrl: "https://sterlingranchcab.com/water",
+    }],
+  }, { routingPlan: { goal: "contact", intent: "services" } });
+  assert.equal(answer.confidence.canAnswer, false);
+  assert.equal(answer.confidence.reason, "missing-requested-contact-info");
+  assert.doesNotMatch(answer.answer, /833/);
+});
+
+test("grounding rejects stronger prohibitions than the official draft supports", () => {
+  const issues = llmRewriteIssues(
+    "Short answer: You can't tear down the neighboring house.",
+    "Short answer: This section does not grant permission to demolish a neighboring home.",
+    [{ title: "General community standards", text: "Exterior additions require DRC review. County approvals may also be required." }],
+  );
+  assert.ok(issues.includes("unsupported prohibition replaced a limited-permission statement"));
 });
 
 test("provider schema errors expose bounded staging diagnostics without request data", async () => {

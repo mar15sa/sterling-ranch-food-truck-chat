@@ -1,23 +1,25 @@
 {
-  "generatedAt": "2026-09-01T04:12:13.140Z",
+  "generatedAt": "2026-09-01T18:25:10.179Z",
   "baseUrl": "https://sterling-ranch-food-truck-chat-staging.up.railway.app",
   "thresholds": {
     "goalAndSubjectAccuracy": 0.98,
     "intentAccuracy": 0.95,
+    "structuredAccuracy": 0.98,
     "consistency": 0.98,
     "injectionRejection": 1
   },
   "summary": {
-    "caseCount": 37,
-    "routingCaseCount": 33,
+    "caseCount": 45,
+    "routingCaseCount": 41,
     "injectionCaseCount": 4,
     "repeats": 3,
-    "runCount": 111,
+    "runCount": 135,
     "acceptedRate": 1,
     "goalAccuracy": 1,
     "subjectAccuracy": 1,
     "goalAndSubjectAccuracy": 1,
     "intentAccuracy": 1,
+    "structuredAccuracy": 1,
     "consistency": 1,
     "injectionRejection": 1,
     "driftCaseIds": []
