@@ -141,6 +141,8 @@ test("AI routing returns a structured goal and subject without answering the res
   assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "cost");
   assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "status");
   assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "schedule");
+  assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "backyard spa", searchQueries: ["spa approval"] }, "What approval and setbacks apply to a backyard spa?").goal, "permission");
+  assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "landscape", searchQueries: ["landscape application"] }, "How do I apply for landscape design approval?").goal, "application");
 
   const toolPlan = await planCommunitySearch("When is recycling pickup?", {
     apiKey: "test-key",
