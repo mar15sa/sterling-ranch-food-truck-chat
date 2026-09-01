@@ -6,6 +6,16 @@ const authoredCases = require("./rules-eval-cases.json");
 const unseenCases = require("./rules-unseen-eval-cases.json");
 const { score } = require("./eval-community-assistant");
 
+const expectationByQuestion = new Map();
+for (const item of authoredCases) {
+  for (const question of [item.question, ...(item.variants || [])]) {
+    expectationByQuestion.set(String(question).toLowerCase().trim(), item);
+  }
+}
+for (const item of unseenCases) {
+  expectationByQuestion.set(String(item.question).toLowerCase().trim(), item);
+}
+
 const baseUrl = String(process.env.COMMUNITY_ANSWERS_BASE_URL || "https://sterling-ranch-food-truck-chat-staging.up.railway.app").replace(/\/$/, "");
 const delayMs = Math.max(0, Number(process.env.COMMUNITY_ANSWERS_DELAY_MS || 2100));
 const reportPath = path.join(__dirname, "..", "data", "community-answers-live-report.json");
@@ -44,7 +54,9 @@ async function main() {
   const rows = [];
   for (const question of questions) {
     const { answer, durationMs } = await ask(question);
-    const assessment = score(question, answer);
+    const assessment = score(question, answer, {
+      expectation: expectationByQuestion.get(question.toLowerCase().trim()),
+    });
     const unsupportedClaims = (answer.claims || []).filter((claim) => !claim.verified).length;
     const issues = [...assessment.issues];
     if (!answer.answerId) issues.push("answer-id-missing");

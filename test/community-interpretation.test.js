@@ -309,6 +309,10 @@ test("contact extraction cannot substitute a different organization", async () =
   assert.equal(answer.confidence.canAnswer, false);
   assert.equal(answer.confidence.reason, "missing-requested-contact-info");
   assert.doesNotMatch(answer.answer, /833/);
+  assert.equal(answer.sources.length, 1);
+  assert.match(answer.sources[0].sourceUrl, /Important-Contact-Information/);
+  assert.equal(answer.actions.length, 1);
+  assert.match(answer.actions[0].url, /Important-Contact-Information/);
 });
 
 test("grounding rejects stronger prohibitions than the official draft supports", () => {
