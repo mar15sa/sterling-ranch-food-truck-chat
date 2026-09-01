@@ -549,11 +549,13 @@ test("conversation, underspecified prompts, and exact section lookups stay out o
   assert.equal(conversational.answerMode, "conversation");
   assert.equal(conversational.inputClassification, "conversation");
   assert.equal(conversational.confidence.reason, "conversation-not-rule-question");
+  assert.equal(conversational.reviewNeeded, false);
 
   const ambiguous = await answerCommunityQuestion("Can I?", options);
   assert.equal(ambiguous.answerMode, "conversation");
   assert.equal(ambiguous.inputClassification, "unclear");
   assert.match(ambiguous.answer, /What would you like/i);
+  assert.equal(ambiguous.reviewNeeded, false);
 
   const section = await answerCommunityQuestion("Can you find section 5-219", options);
   assert.equal(section.answerMode, "exact-section-not-found");
