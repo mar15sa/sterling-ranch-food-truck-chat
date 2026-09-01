@@ -1,6 +1,14 @@
 {
-  "generatedAt": "2026-08-31T14:12:08.202Z",
+  "generatedAt": "2026-09-01T14:09:28.670Z",
   "leads": [
+    {
+      "id": "dougco-social-five-new-sculptures-just-landed-around-castle-rock",
+      "headline": "Five New Sculptures Just Landed Around Castle Rock",
+      "url": "https://dougcosocial.com/news/art-encounters-castle-rock-2026",
+      "observedDate": "2026-08-31",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
     {
       "id": "dougco-social-fiber-internet-is-coming-to-castle-rock-castle-pines-the-pinery-and-cottonwood",
       "headline": "Fiber Internet Is Coming to Castle Rock, Castle Pines, The Pinery and Cottonwood",
