@@ -31,3 +31,16 @@ test("a well-sourced handoff rates weak when it does not answer a planned-projec
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("question-unresolved"));
 });
+
+test("a pool-opening answer rates weak when the resident asked about construction", () => {
+  const result = scoreCommunityAnswer("are they building a new community pool?", {
+    answer: "Short answer: Open. The pool is currently open for homeowners and guests.\n\nBefore you act: Normal entry rules still apply.",
+    directAnswer: "Open. The pool is currently open for homeowners and guests.",
+    answerMode: "community-live-status",
+    answerVerdict: "informational",
+    confidence: { canAnswer: true, reason: "official-source-supported" },
+    sources: [source("Official pool status")],
+  });
+  assert.equal(result.rating, "Weak");
+  assert.ok(result.issues.includes("planned-project-answer-missing"));
+});
