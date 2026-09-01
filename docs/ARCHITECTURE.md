@@ -34,6 +34,7 @@ flowchart LR
 - Prompt-injection screening runs before source search or Anthropic, including attempts to disclose prompts, credentials, tokens, environment variables, or webhook URLs.
 - Missing or conflicting current rule facts fail closed instead of being guessed.
 - The intent layer normalizes common wording and typo variants, keeps unrelated meanings separate, and records the requested answer facet before retrieval.
+- The model proposes the route, while a topic-neutral semantic contract enforces explicit question forms such as permission, payment, cost, schedule, status, contact, and account access. This corrects inconsistent model labels without hard-coding Sterling Ranch topics or answers.
 - The coverage gate rejects answers that cite a relevant-looking section but omit the resident's requested price, limit, process, link, definition, duration, or permission decision.
 - All 116 historical resident wordings, broader family variants, a separate unseen-question set, and a 228-question old-versus-upgraded comparison run before release. Any regression blocks release.
 - Official resident-resource links are cataloged separately from rules and checked daily, which prevents the assistant from treating a stale convenience link as a governing rule.

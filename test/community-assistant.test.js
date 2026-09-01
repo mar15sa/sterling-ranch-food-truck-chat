@@ -135,6 +135,10 @@ test("AI routing returns a structured goal and subject without answering the res
   assert.equal(requestBody.temperature, 0);
   assert.deepEqual(normalizedRoutingPlan(plan), plan);
   assert.equal(normalizedRoutingPlan({ intent: "services", searchQueries: ["pay bill"] }), null);
+  assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "permission");
+  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "cost");
+  assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "status");
+  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "schedule");
 });
 
 test("goal verification rejects a payment answer that only explains delinquency or links elsewhere", () => {
