@@ -156,6 +156,20 @@ test("AI routing returns a structured goal and subject without answering the res
     }), { status: 200, headers: { "content-type": "application/json" } }),
   });
   assert.deepEqual(toolPlan, { intent: "services", goal: "schedule", subject: "recycling pickup", searchQueries: ["recycling pickup schedule"] });
+
+  let retryCalls = 0;
+  const retriedPlan = await planCommunitySearch("When is recycling pickup?", {
+    apiKey: "test-key",
+    fetchImpl: async () => {
+      retryCalls += 1;
+      if (retryCalls === 1) return new Response("busy", { status: 529 });
+      return new Response(JSON.stringify({ content: [{ type: "tool_use", name: "route_community_question", input: {
+        intent: "services", goal: "schedule", subject: "recycling pickup", searchQueries: ["recycling pickup schedule"],
+      } }] }), { status: 200, headers: { "content-type": "application/json" } });
+    },
+  });
+  assert.equal(retryCalls, 2);
+  assert.equal(retriedPlan.goal, "schedule");
 });
 
 test("goal verification rejects a payment answer that only explains delinquency or links elsewhere", () => {
