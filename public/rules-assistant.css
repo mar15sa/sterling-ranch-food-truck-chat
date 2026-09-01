@@ -552,6 +552,28 @@ kbd {
   font-size: 0.95rem;
 }
 
+.rules-food-truck-truck {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+  padding-top: 15px;
+  border-top: 1px solid var(--rules-line-soft);
+}
+
+.rules-food-truck-truck-title {
+  margin: 0;
+  color: var(--rules-forest-deep);
+  font-family: var(--rules-serif);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.rules-food-truck-menu-unavailable {
+  margin: 7px 0 0;
+  color: var(--rules-muted);
+  font-size: 0.84rem;
+}
+
 .rules-food-truck-menu-heading {
   margin-top: 14px;
   color: var(--rules-forest);

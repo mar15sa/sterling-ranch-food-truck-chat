@@ -287,23 +287,18 @@ function renderFoodTruckAnswer(container, presentation = {}) {
   title.textContent = presentation.title || "Food-truck schedule";
   card.append(date, title);
 
-  if (presentation.location) {
+  const truckCards = Array.isArray(presentation.truckCards) ? presentation.truckCards : [];
+  const isMultiple = truckCards.length > 1;
+
+  if (presentation.location && !isMultiple) {
     const location = document.createElement("p");
     location.className = "rules-food-truck-location";
     location.textContent = `At ${presentation.location}`;
     card.append(location);
   }
 
-  const truckNames = Array.isArray(presentation.truckNames) ? presentation.truckNames : [];
-  if (truckNames.length > 1) {
-    const lineup = document.createElement("p");
-    lineup.className = "rules-food-truck-lineup";
-    lineup.textContent = truckNames.join(" · ");
-    card.append(lineup);
-  }
-
-  const items = Array.isArray(presentation.menuItems) ? presentation.menuItems : [];
-  if (items.length) {
+  function appendMenu(parent, items) {
+    if (!items.length) return false;
     const menuHeading = document.createElement("p");
     menuHeading.className = "rules-food-truck-menu-heading";
     menuHeading.textContent = "Menu preview";
@@ -329,7 +324,35 @@ function renderFoodTruckAnswer(container, presentation = {}) {
       }
       menu.append(row);
     });
-    card.append(menuHeading, menu);
+    parent.append(menuHeading, menu);
+    return true;
+  }
+
+  if (isMultiple) {
+    truckCards.forEach((truck) => {
+      const truckSection = document.createElement("section");
+      truckSection.className = "rules-food-truck-truck";
+      const truckTitle = document.createElement("h3");
+      truckTitle.className = "rules-food-truck-truck-title";
+      truckTitle.textContent = truck.name || "Food truck";
+      truckSection.append(truckTitle);
+      if (truck.location) {
+        const truckLocation = document.createElement("p");
+        truckLocation.className = "rules-food-truck-location";
+        truckLocation.textContent = `At ${truck.location}`;
+        truckSection.append(truckLocation);
+      }
+      const items = Array.isArray(truck.menuItems) ? truck.menuItems : [];
+      if (!appendMenu(truckSection, items)) {
+        const unavailable = document.createElement("p");
+        unavailable.className = "rules-food-truck-menu-unavailable";
+        unavailable.textContent = "A readable menu was not available when checked.";
+        truckSection.append(unavailable);
+      }
+      card.append(truckSection);
+    });
+  } else {
+    appendMenu(card, Array.isArray(presentation.menuItems) ? presentation.menuItems : []);
   }
 
   if (presentation.note) {
@@ -508,7 +531,11 @@ function addAnswer(data, question) {
   const shareButton = node.querySelector(".rules-share-button");
   shareButton.addEventListener("click", () => copyAnswerLink(shareButton, question));
 
-  const actions = Array.isArray(data.actions) ? data.actions.filter((action) => action?.label && /^https?:\/\//i.test(action.url || "")) : [];
+  const actions = Array.isArray(data.actions)
+    ? data.actions.filter(
+      (action) => action?.label && (/^https?:\/\//i.test(action.url || "") || /^\/(?!\/)/.test(action.url || ""))
+    )
+    : [];
   if (actions.length) {
     const actionPanel = document.createElement("div");
     actionPanel.className = "rules-next-actions";
@@ -517,12 +544,14 @@ function addAnswer(data, question) {
     actionLabel.textContent = "Helpful links";
     const actionLinks = document.createElement("div");
     actionLinks.className = "rules-next-actions-links";
-    actions.slice(0, 3).forEach((action, index) => {
+    actions.slice(0, 5).forEach((action, index) => {
       const link = document.createElement("a");
       link.className = index === 0 ? "rules-next-action rules-next-action-primary" : "rules-next-action rules-next-action-secondary";
       link.href = action.url;
-      link.target = "_blank";
-      link.rel = "noreferrer";
+      if (/^https?:\/\//i.test(action.url)) {
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      }
       link.textContent = action.label;
       actionLinks.append(link);
     });
