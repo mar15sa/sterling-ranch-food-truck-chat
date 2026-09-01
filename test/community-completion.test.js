@@ -161,7 +161,12 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
   assert.equal(answer.presentation.title, "Example Eats is scheduled");
   assert.equal(answer.presentation.location, "Prospect Park");
   assert.deepEqual(answer.presentation.menuItems[0], { name: "Tacos", price: "$12.00", description: "" });
-  assert.deepEqual(answer.actions.map((action) => action.label), ["View Example Eats menu", "View food-truck schedule"]);
+  assert.deepEqual(answer.actions.map((action) => action.label), [
+    "Open full food-truck answer",
+    "View Example Eats menu",
+    "View food-truck schedule",
+  ]);
+  assert.equal(answer.actions[0].url, "/food-truck?date=2026-08-29");
 });
 
 test("negative controls cannot become unrelated confident answers", async () => {
