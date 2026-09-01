@@ -133,12 +133,27 @@ test("AI routing returns a structured goal and subject without answering the res
   assert.match(requestBody.system, /consequences/i);
   assert.match(requestBody.system, /Are backyard chickens allowed/i);
   assert.equal(requestBody.temperature, 0);
+  assert.equal(requestBody.tool_choice.name, "route_community_question");
+  assert.deepEqual(requestBody.tools[0].input_schema.required, ["intent", "goal", "subject", "searchQueries"]);
   assert.deepEqual(normalizedRoutingPlan(plan), plan);
   assert.equal(normalizedRoutingPlan({ intent: "services", searchQueries: ["pay bill"] }), null);
   assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "permission");
   assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "cost");
   assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "status");
   assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "schedule");
+
+  const toolPlan = await planCommunitySearch("When is recycling pickup?", {
+    apiKey: "test-key",
+    fetchImpl: async () => new Response(JSON.stringify({
+      content: [{ type: "tool_use", name: "route_community_question", input: {
+        intent: "services",
+        goal: "schedule",
+        subject: "recycling pickup",
+        searchQueries: ["recycling pickup schedule"],
+      } }],
+    }), { status: 200, headers: { "content-type": "application/json" } }),
+  });
+  assert.deepEqual(toolPlan, { intent: "services", goal: "schedule", subject: "recycling pickup", searchQueries: ["recycling pickup schedule"] });
 });
 
 test("goal verification rejects a payment answer that only explains delinquency or links elsewhere", () => {
