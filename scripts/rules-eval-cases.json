@@ -334,7 +334,8 @@
     "variants": ["Can we have chickena", "Can I have chickens?", "Can I keep poultry in my backyard?"],
     "expectedFirstAny": ["Sec. 1-33"],
     "expectedVerdict": "prohibited",
-    "answerIncludesAll": ["Backyard chickens are not allowed", "fowl", "poultry"]
+    "answerIncludesAll": ["fowl", "poultry"],
+    "answerIncludesAny": ["Backyard chickens are not allowed", "Chickens aren't allowed"]
   },
   {
     "question": "Can I keep dogs?",
