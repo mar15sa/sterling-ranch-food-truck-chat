@@ -45,16 +45,42 @@ test("water-usage portal questions provide the direct UtilityHawk login and capa
   assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us\/login/);
 });
 
-test("water-payment questions route to the current payment portal, not delinquency policy", async () => {
+test("AI goal-and-subject routing sends payment questions to the current portal, not delinquency policy", async () => {
+  let plannerCalls = 0;
   for (const question of [
     "Where can I pay my water bill?",
     "How do I pay my water bill?",
     "Can I pay my water bill online?",
     "What is the water bill payment portal?",
     "Pay utility bill",
+    "What's the online place for settling my monthly utility charge?",
   ]) {
-    const answer = await ask(question);
-    assert.equal(answer.answerMode, "community-proactive-payment", question);
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: async () => {
+        plannerCalls += 1;
+        return { intent: "services", goal: "payment", subject: "water bill", searchQueries: ["pay water bill UtilityHawk", "water billing payment options"] };
+      },
+      synthesizeCommunityAnswer: async (_question, sources, options) => ({
+        directAnswer: "Pay your Sterling Ranch water bill through UtilityHawk. Sign in, then select “Pay Online.”",
+        keyDetails: [
+          "Bank-account payments (ACH) are free.",
+          "Debit and credit cards have a 2.95% processing fee charged by Paymentus.",
+          "American Conservation and Billing Solutions (AmCoBi) administers the monthly water bill.",
+        ],
+        nextStep: "Open UtilityHawk and sign in to pay your bill.",
+        answerMode: "community-grounded-ai",
+        claims: [{ text: "Pay through UtilityHawk.", evidenceSourceIds: [sources[0].id], verified: true }],
+        routingPlan: options.routingPlan,
+      }),
+    });
+    assert.equal(answer.answerMode, "community-grounded-ai", question);
+    assert.equal(answer.routingDecision, "ai-planned", question);
+    assert.equal(answer.routingPlan.goal, "payment", question);
+    assert.equal(answer.routingPlan.subject, "water bill", question);
     assert.match(answer.directAnswer, /UtilityHawk.*select .Pay Online./i, question);
     assert.match(answer.answer, /ACH.*free/i, question);
     assert.match(answer.answer, /2\.95%.*Paymentus/i, question);
@@ -62,13 +88,28 @@ test("water-payment questions route to the current payment portal, not delinquen
     assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us\\?\/login/i, question);
     assert.doesNotMatch(answer.answer, /possible disconnection|past-due notice/i, question);
   }
+  assert.equal(plannerCalls, 6);
+
+  const outageFallback = await answerCommunityQuestion("Where can I pay my water bill?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(outageFallback.routingDecision, "official-action-fallback");
+  assert.match(outageFallback.answer, /UtilityHawk.*payment options/i);
+  assert.match(JSON.stringify(outageFallback.actions), /srcab\.utilityhawk\.us\/login/i);
+  assert.doesNotMatch(JSON.stringify(outageFallback.actions), /Water Concern/i);
+  assert.doesNotMatch(outageFallback.answer, /possible disconnection|past-due notice/i);
 
   const late = await ask("What happens if I do not pay my water bill?");
-  assert.notEqual(late.answerMode, "community-proactive-payment");
+  assert.notEqual(late.routingDecision, "ai-planned");
   assert.match(late.answer, /past due|late fee|disconnection/i);
 
   const rates = await ask("How much will my water bill be?");
-  assert.notEqual(rates.answerMode, "community-proactive-payment");
+  assert.notEqual(rates.routingDecision, "ai-planned");
 });
 
 test("park and clubhouse rentals give prices, terms, and a live booking path", async () => {

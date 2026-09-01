@@ -8,6 +8,7 @@ const communityIndex = require("../data/community-index.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion, directlyAnswersQuestionForm } = require("../lib/community-assistant");
 const { classifyCommunityIntent, requestedDetails } = require("../lib/community-search");
+const { planCommunitySearchFixture, synthesizeCommunityAnswerFixture } = require("./community-ai-eval-fixtures");
 
 const outputPath = path.join(__dirname, "..", "data", "community-assistant-eval.json");
 const expectationByQuestion = new Map();
@@ -160,7 +161,8 @@ async function main() {
       communityId: "sterling-ranch",
       answerRulesQuestion,
       rulesOptions: { searchMode: "legacy", llmMode: "off" },
-      synthesizeCommunityAnswer: false,
+      planCommunitySearch: planCommunitySearchFixture,
+      synthesizeCommunityAnswer: synthesizeCommunityAnswerFixture,
     });
     const currentAssessment = score(question, current);
     const upgradedAssessment = score(question, upgraded);

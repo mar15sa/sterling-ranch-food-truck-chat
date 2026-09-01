@@ -2,8 +2,11 @@
 
 const questions = require("./resident-rules-corpus.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { answerCoverageIssues } = require("../lib/rules-intent");
 const { actionLinkIssues } = require("../lib/rules-action-coverage");
+const storedCommunityIndex = require("../data/community-index.json");
+const { hasAiEvalFixture, planCommunitySearchFixture, synthesizeCommunityAnswerFixture } = require("./community-ai-eval-fixtures");
 
 const searchMode = process.env.RULES_CORPUS_SEARCH_MODE || "legacy";
 const llmMode = process.env.RULES_CORPUS_LLM_MODE || "off";
@@ -27,6 +30,22 @@ const EXPECTATIONS = [
 
 const NON_RULE_PATTERNS = [/^Hi$/i, /^How are you\?$/i, /^Who is /i, /^I have an Alto v$/i];
 const INJECTION_PATTERNS = [/ignore the rules/i, /say spassa/i];
+const communityIndex = {
+  ...storedCommunityIndex,
+  sources: (storedCommunityIndex.sources || []).map((item) => ({ ...item, staleAfter: "2099-01-01T00:00:00.000Z" })),
+};
+
+async function answerForCorpus(question) {
+  if (!hasAiEvalFixture(question)) return answerRulesQuestion(question, { searchMode, llmMode });
+  return answerCommunityQuestion(question, {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode, llmMode },
+    planCommunitySearch: planCommunitySearchFixture,
+    synthesizeCommunityAnswer: synthesizeCommunityAnswerFixture,
+  });
+}
 
 function ratingFor(question, result) {
   const answer = String(result.answer || "");
@@ -54,7 +73,7 @@ function ratingFor(question, result) {
 async function main() {
   const rows = [];
   for (const question of questions) {
-    const result = await answerRulesQuestion(question, { searchMode, llmMode });
+    const result = await answerForCorpus(question);
     rows.push({
       question,
       rating: ratingFor(question, result),
@@ -68,7 +87,7 @@ async function main() {
     all[row.rating] = (all[row.rating] || 0) + 1;
     return all;
   }, {});
-  console.log(`Resident corpus: ${rows.length} questions (${searchMode}, LLM ${llmMode})`);
+  console.log(`Resident corpus: ${rows.length} questions (${searchMode}, rules LLM ${llmMode}, structured AI routing fixtures)`);
   console.log(`Ratings: ${JSON.stringify(counts)}`);
   for (const row of rows.filter((item) => item.rating < 4)) {
     console.log(`\n[${row.rating}] ${row.question}\n${String(row.answer || "").replace(/\s+/g, " ").slice(0, 520)}`);
