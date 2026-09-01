@@ -6,6 +6,7 @@ const loginMessage = document.querySelector("#loginMessage");
 const logoutButton = document.querySelector("#logoutButton");
 const rangeFilter = document.querySelector("#rangeFilter");
 const statusFilter = document.querySelector("#statusFilter");
+const qualityFilter = document.querySelector("#qualityFilter");
 const searchFilter = document.querySelector("#searchFilter");
 const includeTests = document.querySelector("#includeTests");
 const refreshButton = document.querySelector("#refreshButton");
@@ -17,6 +18,7 @@ const loadMoreButton = document.querySelector("#loadMoreButton");
 const questionCount = document.querySelector("#questionCount");
 const answeredCount = document.querySelector("#answeredCount");
 const reviewCount = document.querySelector("#reviewCount");
+const qualityConcernCount = document.querySelector("#qualityConcernCount");
 
 let refreshTimer = null;
 let searchTimer = null;
@@ -73,6 +75,8 @@ function createQuestionEntry(item) {
   preview.textContent = answerPreview(item.answer);
   question.append(preview);
 
+  const labels = document.createElement("span");
+  labels.className = "entry-labels";
   const status = document.createElement("span");
   status.className = `status-label ${cssStatus}`;
   status.textContent = item.reviewStatus || "Answered";
@@ -80,9 +84,16 @@ function createQuestionEntry(item) {
     const test = document.createElement("span");
     test.className = "test-label";
     test.textContent = "Test";
-    status.append(test);
+    labels.append(test);
   }
-  summary.append(time, question, status);
+  const quality = document.createElement("span");
+  const qualityClass = statusClass(item.qualityRating || "Not rated");
+  quality.className = `quality-label ${qualityClass}`;
+  quality.textContent = item.qualityRating === "Not rated"
+    ? "Not rated"
+    : `${item.qualityRating} ${item.qualityScore || ""}/5`.trim();
+  labels.prepend(status, quality);
+  summary.append(time, question, labels);
 
   const body = document.createElement("div");
   body.className = "question-detail";
@@ -104,6 +115,16 @@ function createQuestionEntry(item) {
     mode.textContent = `Answer mode: ${item.answerMode}`;
     meta.append(mode);
   }
+  if (item.residentEffort && item.residentEffort !== "Not rated") {
+    const effort = document.createElement("span");
+    effort.textContent = `Helpfulness: ${item.residentEffort}`;
+    meta.append(effort);
+  }
+  if (item.qualityIssues) {
+    const issues = document.createElement("span");
+    issues.textContent = `Quality flags: ${item.qualityIssues.replaceAll("-", " ")}`;
+    meta.append(issues);
+  }
   if (item.topSourceUrl) {
     const source = document.createElement("a");
     source.href = item.topSourceUrl;
@@ -123,6 +144,7 @@ function renderItems() {
   questionCount.textContent = String(items.length);
   answeredCount.textContent = String(items.filter((item) => item.reviewStatus === "Answered").length);
   reviewCount.textContent = String(items.filter((item) => item.reviewStatus === "Needs review").length);
+  qualityConcernCount.textContent = String(items.filter((item) => ["Weak", "Poor"].includes(item.qualityRating)).length);
   loadMoreButton.hidden = !nextCursor;
 }
 
@@ -130,6 +152,7 @@ function queryString(cursor = "") {
   const params = new URLSearchParams({
     range: rangeFilter.value,
     status: statusFilter.value,
+    quality: qualityFilter.value,
     includeTests: String(includeTests.checked),
   });
   const search = searchFilter.value.trim();
@@ -216,6 +239,7 @@ logoutButton.addEventListener("click", async () => {
 
 rangeFilter.addEventListener("change", () => loadQuestions());
 statusFilter.addEventListener("change", () => loadQuestions());
+qualityFilter.addEventListener("change", () => loadQuestions());
 includeTests.addEventListener("change", () => loadQuestions());
 refreshButton.addEventListener("click", () => loadQuestions());
 loadMoreButton.addEventListener("click", () => loadQuestions({ append: true }));

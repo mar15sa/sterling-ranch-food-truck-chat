@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>Community Assistant Questions</title>
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/community-questions.css?v=20260901-2" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260901-3" />
   </head>
   <body>
     <main class="owner-shell">
@@ -40,6 +40,7 @@
           <div><span>Visible questions</span><strong id="questionCount">0</strong></div>
           <div><span>Answered</span><strong id="answeredCount">0</strong></div>
           <div class="review-summary"><span>Needs review</span><strong id="reviewCount">0</strong></div>
+          <div class="quality-summary"><span>Weak or poor answers</span><strong id="qualityConcernCount">0</strong></div>
         </section>
 
         <section class="filters" aria-label="Question filters">
@@ -61,6 +62,19 @@
               <option value="Clarification">Clarification</option>
               <option value="Out of scope">Out of scope</option>
               <option value="Safety response">Safety response</option>
+            </select>
+          </label>
+          <label>
+            Answer quality
+            <select id="qualityFilter">
+              <option value="all">All quality ratings</option>
+              <option value="concerns">Weak or poor</option>
+              <option value="Excellent">Excellent</option>
+              <option value="Good">Good</option>
+              <option value="Mixed">Mixed</option>
+              <option value="Weak">Weak</option>
+              <option value="Poor">Poor</option>
+              <option value="Not rated">Not rated (older)</option>
             </select>
           </label>
           <label class="search-label">
@@ -87,6 +101,6 @@
         <button type="button" class="load-more" id="loadMoreButton" hidden>Load more</button>
       </section>
     </main>
-    <script src="/community-questions.js?v=20260901-2"></script>
+    <script src="/community-questions.js?v=20260901-3"></script>
   </body>
 </html>

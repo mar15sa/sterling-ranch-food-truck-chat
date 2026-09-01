@@ -9,6 +9,8 @@ test("owner page stays private and does not load analytics", () => {
     "utf8"
   );
   assert.match(html, /Owner question log/);
+  assert.match(html, /Weak or poor answers/);
+  assert.match(html, /Answer quality/);
   assert.match(html, /noindex, nofollow, noarchive/);
   assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
 });
