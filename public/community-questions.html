@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Community Assistant Questions</title>
+    <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260901-2" />
+  </head>
+  <body>
+    <main class="owner-shell">
+      <section class="login-panel" id="loginPanel" aria-labelledby="loginTitle">
+        <img src="/rules-icon.svg" alt="" class="owner-mark" />
+        <p class="eyebrow">Sterling Ranch Community Assistant</p>
+        <h1 id="loginTitle">Owner question log</h1>
+        <p class="intro">Enter the private owner password to see resident questions and answers.</p>
+        <form id="loginForm">
+          <label for="ownerPassword">Owner password</label>
+          <input id="ownerPassword" name="password" type="password" autocomplete="current-password" required />
+          <button type="submit">Sign in</button>
+          <p class="form-message" id="loginMessage" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="dashboard" id="dashboard" hidden>
+        <header class="owner-header">
+          <div>
+            <p class="eyebrow">Sterling Ranch Community Assistant</p>
+            <h1>Question log</h1>
+            <p class="intro">New questions normally appear within five seconds.</p>
+          </div>
+          <div class="header-actions">
+            <a href="/community-assistant?test=1" class="secondary-action">Open test mode</a>
+            <button type="button" class="quiet-button" id="logoutButton">Sign out</button>
+          </div>
+        </header>
+
+        <section class="summary" aria-label="Visible question summary">
+          <div><span>Visible questions</span><strong id="questionCount">0</strong></div>
+          <div><span>Answered</span><strong id="answeredCount">0</strong></div>
+          <div class="review-summary"><span>Needs review</span><strong id="reviewCount">0</strong></div>
+        </section>
+
+        <section class="filters" aria-label="Question filters">
+          <label>
+            Date
+            <select id="rangeFilter">
+              <option value="today">Today</option>
+              <option value="yesterday">Yesterday</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+            </select>
+          </label>
+          <label>
+            Status
+            <select id="statusFilter">
+              <option value="all">All statuses</option>
+              <option value="Needs review">Needs review</option>
+              <option value="Answered">Answered</option>
+              <option value="Clarification">Clarification</option>
+              <option value="Out of scope">Out of scope</option>
+              <option value="Safety response">Safety response</option>
+            </select>
+          </label>
+          <label class="search-label">
+            Search
+            <input id="searchFilter" type="search" placeholder="Search questions…" />
+          </label>
+          <label class="test-toggle">
+            <input id="includeTests" type="checkbox" />
+            <span>Include my tests</span>
+          </label>
+          <button type="button" class="refresh-button" id="refreshButton">Refresh now</button>
+        </section>
+
+        <div class="list-status">
+          <p id="updatedAt" aria-live="polite">Checking for questions…</p>
+          <p class="error-message" id="listError" role="alert"></p>
+        </div>
+
+        <section class="question-list" id="questionList" aria-label="Community Assistant questions"></section>
+        <div class="empty-state" id="emptyState" hidden>
+          <h2>No matching questions</h2>
+          <p>New questions will appear here automatically.</p>
+        </div>
+        <button type="button" class="load-more" id="loadMoreButton" hidden>Load more</button>
+      </section>
+    </main>
+    <script src="/community-questions.js?v=20260901-2"></script>
+  </body>
+</html>

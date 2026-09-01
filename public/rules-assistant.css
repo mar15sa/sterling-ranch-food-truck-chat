@@ -91,6 +91,21 @@ kbd {
   margin-inline: auto;
 }
 
+.rules-test-banner {
+  width: min(var(--rules-content), calc(100% - 32px));
+  margin: 12px auto 0;
+  padding: 10px 14px;
+  border: 1px solid #c68b2c;
+  border-radius: var(--rules-radius-sm);
+  background: #fff4d8;
+  color: #5f4214;
+  box-shadow: var(--rules-shadow-sm);
+}
+
+.rules-test-banner strong {
+  margin-right: 6px;
+}
+
 /* ---------- Header ---------- */
 .rules-header {
   position: sticky;
@@ -550,6 +565,28 @@ kbd {
   margin: 0;
   color: var(--rules-muted);
   font-size: 0.95rem;
+}
+
+.rules-food-truck-truck {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+  padding-top: 15px;
+  border-top: 1px solid var(--rules-line-soft);
+}
+
+.rules-food-truck-truck-title {
+  margin: 0;
+  color: var(--rules-forest-deep);
+  font-family: var(--rules-serif);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.rules-food-truck-menu-unavailable {
+  margin: 7px 0 0;
+  color: var(--rules-muted);
+  font-size: 0.84rem;
 }
 
 .rules-food-truck-menu-heading {
