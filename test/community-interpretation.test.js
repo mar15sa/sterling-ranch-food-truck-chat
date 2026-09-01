@@ -322,6 +322,7 @@ test("structured rules retry the deterministic index before a community-page fal
         answer: "Short answer: Dead trees must be replaced with a tree at least two inches in caliper. A design change requires DRC approval.",
         answerMode: "source-derived-extractive",
         answerVerdict: "conditional",
+        inputClassification: "unclear",
         confidence: { canAnswer: true, confidence: "high", reason: "supported" },
         sources: [{ title: "Tree lawn rule", sourceUrl: "https://sterlingranchcab.com/tree-lawn", excerpt: "Dead trees must be replaced. Replacement trees must be two inches in caliper. Design changes require DRC approval.", isOfficialResource: true }],
       };
