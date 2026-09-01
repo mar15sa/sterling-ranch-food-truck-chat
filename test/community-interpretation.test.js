@@ -10,6 +10,8 @@ const { isFoodTruckRequest } = require("../lib/community-food-trucks");
 const { answerCommunityQuestion, sourcedAnswer } = require("../lib/community-assistant");
 const { llmRewriteIssues } = require("../lib/rules-grounding");
 const { planCommunitySearch } = require("../lib/community-llm");
+const { answerRulesQuestion } = require("../lib/rules-assistant");
+const communityIndex = require("../data/community-index.json");
 
 const NOW = new Date("2026-09-01T18:00:00Z");
 
@@ -272,6 +274,28 @@ test("structured validation keeps holiday lighting schedules out of live events"
     searchQueries: ["holiday lighting season"],
   }), "What is the holiday lighting season?", { now: NOW });
   assert.equal(plan.intent, "rules");
+});
+
+test("permission plus application questions consult the controlling rule before forms", async () => {
+  const answer = await answerCommunityQuestion("I need to submit for rainwater harvesting barrels", {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: async () => interpretation({
+      intent: "forms",
+      goal: "application",
+      goals: ["application"],
+      subject: "rainwater harvesting barrels",
+      requestedDetails: ["action", "permission"],
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["rainwater harvesting barrels application"],
+    }),
+  });
+  assert.match(answer.answer, /55 gallons/i);
+  assert.match(answer.answer, /may not need DRC approval/i);
+  assert.ok(answer.actions.some((action) => /^https:\/\//.test(action.url)));
 });
 
 test("AI unrelated scope preserves the public boundary metadata", async () => {
