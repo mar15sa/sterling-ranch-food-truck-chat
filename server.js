@@ -4485,13 +4485,15 @@ async function handleCommunityRoutingEval(req, res) {
     sendJson(res, 200, { accepted: false, classification: classification.classification, reason: classification.reason, plan: null });
     return;
   }
-  const rawPlan = await planCommunitySearch(question);
+  let diagnostic = null;
+  const rawPlan = await planCommunitySearch(question, { onDiagnostic: (value) => { diagnostic = value; } });
   const plan = normalizedRoutingPlan(rawPlan, question);
   sendJson(res, 200, {
     accepted: Boolean(plan),
     classification: classification.classification,
     reason: plan ? "structured-plan-accepted" : "planner-unavailable-or-incompatible",
     plan,
+    diagnostic: plan ? undefined : diagnostic,
   });
 }
 
