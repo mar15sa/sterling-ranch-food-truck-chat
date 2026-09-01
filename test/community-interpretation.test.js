@@ -232,6 +232,35 @@ test("malformed and failed AI responses safely return no interpretation", async 
   assert.equal(failedCalls, 2);
 });
 
+test("structured plans canonicalize compound goals, consequence details, and event venue filters", () => {
+  const compound = normalizeInterpretation(interpretation({
+    intent: "facilities",
+    goal: "cost",
+    goals: ["cost", "booking"],
+    subject: "Great Hall rental",
+    requestedDetails: ["action", "price"],
+    dateRange: { kind: "open", start: "2026-09-01", end: "2026-12-31", label: "anytime" },
+    filters: { audience: "", category: "", facility: "Great Hall", location: "" },
+  }), "How much is the Great Hall and how do I reserve it?", { now: NOW });
+  assert.equal(compound.goal, "booking");
+  assert.deepEqual(compound.goals, ["booking", "cost"]);
+  assert.deepEqual(compound.requestedDetails, ["price", "action"]);
+
+  const consequence = normalizeInterpretation(interpretation({
+    intent: "rules",
+    goal: "information",
+    goals: ["information"],
+    subject: "water bill non-payment consequences",
+    requestedDetails: ["action"],
+  }), "What happens if I do not pay my water bill?", { now: NOW });
+  assert.deepEqual(consequence.requestedDetails, []);
+
+  const venue = normalizeInterpretation(interpretation({
+    filters: { audience: "", category: "", facility: "Sterling Center", location: "" },
+  }), "What's happening at the Sterling Center tomorrow?", { now: NOW });
+  assert.deepEqual(venue.filters, { audience: "", category: "", facility: "", location: "Sterling Center" });
+});
+
 test("provider schema errors expose bounded staging diagnostics without request data", async () => {
   let diagnostic;
   const plan = await planCommunitySearch("private resident wording", {
