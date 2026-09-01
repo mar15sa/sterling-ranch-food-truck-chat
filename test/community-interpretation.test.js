@@ -262,6 +262,17 @@ test("structured plans canonicalize compound goals, consequence details, and eve
     filters: { audience: "", category: "", facility: "Sterling Center", location: "" },
   }), "What's happening at the Sterling Center tomorrow?", { now: NOW });
   assert.deepEqual(venue.filters, { audience: "", category: "", facility: "", location: "Sterling Center" });
+
+  const inferredContact = normalizeInterpretation(interpretation({
+    intent: "rules",
+    goal: "permission",
+    goals: ["permission", "contact"],
+    subject: "dead tree in tree lawn",
+    requestedDetails: ["permission", "action", "contact"],
+    searchQueries: ["dead tree replacement"],
+  }), "What do I need to do about a dead tree in the tree lawn?", { now: NOW });
+  assert.deepEqual(inferredContact.goals, ["permission"]);
+  assert.deepEqual(inferredContact.requestedDetails, ["action", "permission"]);
 });
 
 test("structured validation keeps holiday lighting schedules out of live events", () => {
