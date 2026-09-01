@@ -45,6 +45,7 @@ let refreshTimer = null;
 let searchTimer = null;
 let nextCursor = null;
 let items = [];
+const expandedQuestionIds = new Set();
 
 function showLogin(message = "") {
   loginPanel.hidden = false;
@@ -150,6 +151,11 @@ function createQuestionEntry(item) {
   const details = document.createElement("details");
   const cssStatus = statusClass(item.reviewStatus);
   details.className = `question-entry ${cssStatus}`;
+  details.open = expandedQuestionIds.has(item.id);
+  details.addEventListener("toggle", () => {
+    if (details.open) expandedQuestionIds.add(item.id);
+    else expandedQuestionIds.delete(item.id);
+  });
 
   const summary = document.createElement("summary");
   const time = document.createElement("span");
@@ -338,6 +344,7 @@ logoutButton.addEventListener("click", async () => {
   stopPolling();
   await fetch("/api/community-questions/logout", { method: "POST" }).catch(() => {});
   items = [];
+  expandedQuestionIds.clear();
   renderItems();
   showLogin("You have been signed out.");
 });
