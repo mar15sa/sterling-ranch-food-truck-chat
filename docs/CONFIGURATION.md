@@ -11,6 +11,7 @@ This file describes the settings a future owner needs to run the site. Keep real
 - Set `RULES_SEARCH_MODE=ai-hybrid` to let Anthropic interpret unfamiliar wording and expand source retrieval. Use `legacy` for deterministic retrieval only. AI search can change the search query, but official indexed sources still control the facts and final grounding checks.
 - Set `RULES_LLM_MODE=selective` for AI help only on supported questions that need synthesis. Use `off` to disable AI or `all` for the older rewrite-every-supported-answer behavior. Every mode falls back to the grounded source-built answer when AI is unavailable or rejected.
 - `ANTHROPIC_API_KEY` is shared by the rules and broader community paths. `COMMUNITY_LLM_MODEL`, `COMMUNITY_LLM_TIMEOUT_MS`, and `COMMUNITY_LLM_MAX_TOKENS` optionally tune the broader path.
+- `COMMUNITY_INTERPRETATION_MODE` controls the shared question interpreter. `legacy` keeps the current production path, `shadow` records a structured interpretation without changing the answer, and `structured` makes the validated interpretation drive every substantive question. Staging defaults to `structured` when the setting is omitted; production defaults to `legacy` for a safe rollout and instant rollback. In every mode, facts still come only from connected official sources.
 - `COMMUNITY_REFRESH_INTERVAL_MS` controls background checks (six hours by default); `COMMUNITY_AUTO_REFRESH=false` disables them. Background checks refresh unchanged evidence but quarantine changed, new, or removed material until it is reviewed and released through staging.
 - `COMMUNITY_LLM_INPUT_COST_PER_MILLION` and `COMMUNITY_LLM_OUTPUT_COST_PER_MILLION` optionally override the approximate token-cost rates reported in answer traces. Their defaults are estimates, not billing records.
 - `COMMUNITY_TRACE_SALT` is the private HMAC salt used to create non-reversible question and subject fingerprints for routing consistency monitoring. Set the same stable secret on each instance in an environment; never commit its real value.
@@ -34,7 +35,7 @@ The application can start without email, Notion, Anthropic, or openings-tip cred
 
 Staging must use the `staging` branch, show the purple test-site banner, avoid live Google Analytics, and use disabled or test-only alert destinations. It may share the official public source URLs because accurate source behavior is part of staging verification.
 
-Staging may use the same Anthropic credential as production, but its request and token usage should be included in the same owner cost review. Secrets stay in Railway and are never copied into repository files.
+Staging may use the same Anthropic credential as production, but its request and token usage should be included in the same owner cost review. Secrets stay in Railway and are never copied into repository files. Set `COMMUNITY_INTERPRETATION_MODE=structured` for the required 24-hour application-code soak.
 
 The real-model routing evaluation endpoint is enabled automatically only when Railway identifies the environment as `staging`. `COMMUNITY_ROUTING_EVAL_ENABLED=true` can enable it in another controlled test environment. Leave it disabled in production.
 

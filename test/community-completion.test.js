@@ -500,9 +500,16 @@ test("automatic release decisions hold, promote, and roll back safely", () => {
 });
 
 test("answer traces expose operational metadata without storing question text", () => {
-  const answerId = recordCommunityAnswer({ answer: { answerMode: "community-source", answerStatus: "verified", communityIntent: "services", confidence: { confidence: "high", canAnswer: true }, sources: [], claims: [] }, resolvedQuestion: "private resident wording", usedPriorContext: true, durationMs: 25 });
+  const answerId = recordCommunityAnswer({ answer: { answerMode: "community-source", answerStatus: "verified", communityIntent: "services", confidence: { confidence: "high", canAnswer: true }, sources: [], claims: [], _interpretation: { mode: "structured", outcome: "ai", appliedFilters: [{ field: "location", value: "private location wording" }] }, _connectorDiagnostics: { sourceOutcome: "ok", beforeFilterCount: 5, afterFilterCount: 2 } }, resolvedQuestion: "private resident wording", usedPriorContext: true, durationMs: 25 });
   assert.match(answerId, /^[0-9a-f-]{36}$/);
   const trace = communityAnswerMetrics().recent.at(-1);
   assert.equal(trace.usedPriorContext, true);
+  assert.equal(trace.interpretationMode, "structured");
+  assert.equal(trace.interpretationOutcome, "ai");
+  assert.equal(trace.appliedFilterCount, 1);
+  assert.equal(trace.connectorOutcome, "ok");
+  assert.equal(trace.beforeFilterCount, 5);
+  assert.equal(trace.afterFilterCount, 2);
   assert.equal(Object.hasOwn(trace, "question"), false);
+  assert.equal(JSON.stringify(trace).includes("private location wording"), false);
 });

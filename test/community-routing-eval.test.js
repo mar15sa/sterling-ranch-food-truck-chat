@@ -16,6 +16,11 @@ test("routing benchmark covers every supported goal plus prompt injection", () =
   assert.deepEqual(new Set(counts.keys()), expectedGoals);
   for (const goal of expectedGoals) assert.ok(counts.get(goal) >= 3, `${goal} needs at least three cases.`);
   assert.ok(cases.filter((item) => item.expectedClassification === "prompt-injection").length >= 4);
+  assert.ok(cases.filter((item) => item.expectedDateKind).length >= 4);
+  assert.ok(cases.some((item) => item.expectedNoFilters));
+  assert.ok(cases.some((item) => item.expectedFilter));
+  assert.ok(cases.some((item) => item.expectedGoalsInclude?.length > 1));
+  assert.ok(cases.some((item) => item.expectedClarification));
   assert.equal(new Set(cases.map((item) => item.id)).size, cases.length);
 });
 
@@ -43,6 +48,7 @@ test("routing scorer checks goal, subject, intent, consistency, and safety indep
   assert.equal(summary.consistency, 0.5);
   assert.deepEqual(summary.driftCaseIds, ["payment-water"]);
   assert.ok(releaseFailures(summary, ROUTING_THRESHOLDS).some((failure) => /consistency/i.test(failure)));
+  assert.ok(Object.hasOwn(summary, "structuredAccuracy"));
 });
 
 test("production routing visibility detects drift without retaining question text", () => {

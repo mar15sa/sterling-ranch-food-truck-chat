@@ -38,7 +38,7 @@ const { getRulesLlmMetrics } = require("./lib/rules-llm");
 const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
-const { communityAnswerMetrics, recordCommunityAnswer } = require("./lib/community-observability");
+const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { getCommunityEvents } = require("./lib/community-events");
 const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community-llm");
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
@@ -4567,7 +4567,13 @@ async function handleRulesAsk(req, res, url) {
     getPoolStatus,
     getCommunityEvents,
     getWasteSchedule: getSterlingRanchWasteSchedule,
-    getFoodTruckAnswer: async (foodTruckQuestion) => getAnswerForDate(foodTruckQuestion, parseAskedDate(foodTruckQuestion)),
+    getFoodTruckAnswer: async (foodTruckRequest, originalQuestion) => {
+      const dateFromInterpretation = typeof foodTruckRequest === "object"
+        ? parseIsoDateParam(foodTruckRequest.dateRange?.start)
+        : null;
+      const foodTruckQuestion = originalQuestion || (typeof foodTruckRequest === "string" ? foodTruckRequest : "food truck schedule");
+      return getAnswerForDate(foodTruckQuestion, dateFromInterpretation || parseAskedDate(foodTruckQuestion));
+    },
     index: getCommunityIndex(),
     communityId: "sterling-ranch",
     }
@@ -4578,7 +4584,8 @@ async function handleRulesAsk(req, res, url) {
   logRulesQuestion(question, answer, req, { isTest: request.isTest });
   if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false && answer?.answerStatus !== "safety-rejected") {
     recordRulesLowConfidence({
-      question: cleanQuestionForLog(question),
+      questionFingerprint: privacyFingerprint(question),
+      questionLength: String(question || "").length,
       reason: answer.confidence.reason,
       topSource: answer.sources?.[0]?.title || "",
     });
@@ -4601,6 +4608,8 @@ async function handleRulesAsk(req, res, url) {
       outputTokens: Math.max(0, llmAfter.outputTokens - llmBefore.outputTokens),
     },
   });
+  delete answer._interpretation;
+  delete answer._connectorDiagnostics;
   sendJson(res, 200, answer);
 }
 

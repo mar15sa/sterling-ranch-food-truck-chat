@@ -123,18 +123,19 @@ test("AI routing returns a structured goal and subject without answering the res
       }), { status: 200, headers: { "content-type": "application/json" } });
     },
   });
-  assert.deepEqual(plan, {
-    intent: "services",
-    goal: "payment",
-    subject: "water bill",
-    searchQueries: ["pay water bill online", "water bill payment portal"],
-  });
+  assert.equal(plan.intent, "services");
+  assert.equal(plan.goal, "payment");
+  assert.deepEqual(plan.goals, ["payment"]);
+  assert.equal(plan.subject, "water bill");
+  assert.deepEqual(plan.requestedDetails, ["action"]);
+  assert.deepEqual(plan.filters, { audience: "", category: "", facility: "", location: "" });
+  assert.deepEqual(plan.searchQueries, ["pay water bill online", "water bill payment portal"]);
   assert.match(requestBody.system, /Do not answer the question/i);
   assert.match(requestBody.system, /consequences/i);
   assert.match(requestBody.system, /Are backyard chickens allowed/i);
   assert.equal(requestBody.temperature, 0);
   assert.equal(requestBody.tool_choice.name, "route_community_question");
-  assert.deepEqual(requestBody.tools[0].input_schema.required, ["intent", "goal", "subject", "searchQueries"]);
+  assert.deepEqual(requestBody.tools[0].input_schema.required, ["intent", "goal", "goals", "subject", "requestedDetails", "dateRange", "filters", "searchQueries", "scope", "needsClarification", "clarificationQuestion"]);
   assert.deepEqual(normalizedRoutingPlan(plan), plan);
   assert.equal(normalizedRoutingPlan({ intent: "services", searchQueries: ["pay bill"] }), null);
   assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "permission");
@@ -155,7 +156,10 @@ test("AI routing returns a structured goal and subject without answering the res
       } }],
     }), { status: 200, headers: { "content-type": "application/json" } }),
   });
-  assert.deepEqual(toolPlan, { intent: "services", goal: "schedule", subject: "recycling pickup", searchQueries: ["recycling pickup schedule"] });
+  assert.equal(toolPlan.intent, "services");
+  assert.equal(toolPlan.goal, "schedule");
+  assert.equal(toolPlan.subject, "recycling pickup");
+  assert.deepEqual(toolPlan.searchQueries, ["recycling pickup schedule"]);
 
   let retryCalls = 0;
   const retriedPlan = await planCommunitySearch("When is recycling pickup?", {
