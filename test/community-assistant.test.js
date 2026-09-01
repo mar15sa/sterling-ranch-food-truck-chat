@@ -131,6 +131,8 @@ test("AI routing returns a structured goal and subject without answering the res
   });
   assert.match(requestBody.system, /Do not answer the question/i);
   assert.match(requestBody.system, /consequences/i);
+  assert.match(requestBody.system, /Are backyard chickens allowed/i);
+  assert.equal(requestBody.temperature, 0);
   assert.deepEqual(normalizedRoutingPlan(plan), plan);
   assert.equal(normalizedRoutingPlan({ intent: "services", searchQueries: ["pay bill"] }), null);
 });
