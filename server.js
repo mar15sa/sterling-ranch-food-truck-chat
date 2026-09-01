@@ -4854,16 +4854,21 @@ async function handleCommunityQuestions(req, res, url) {
   const status = allowedStatuses.has(url.searchParams.get("status"))
     ? url.searchParams.get("status")
     : "all";
+  const allowedQuality = new Set(["all", "concerns", "Excellent", "Good", "Mixed", "Weak", "Poor", "Not rated"]);
+  const quality = allowedQuality.has(url.searchParams.get("quality"))
+    ? url.searchParams.get("quality")
+    : "all";
   try {
     const result = await queryQuestionLogs({
       range,
       status,
+      quality,
       search: String(url.searchParams.get("search") || "").trim().slice(0, 100),
       includeTests: url.searchParams.get("includeTests") === "true",
       cursor: String(url.searchParams.get("cursor") || "").slice(0, 500),
       pageSize: 100,
     });
-    sendJson(res, 200, { ...result, range, status });
+    sendJson(res, 200, { ...result, range, status, quality });
   } catch (error) {
     console.warn(`Community question log query failed: ${error.message || "unknown error"}`);
     sendJson(res, 503, {
