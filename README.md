@@ -139,8 +139,12 @@ Environment variables:
 - `RULES_ABUSE_ALERT_THRESHOLD` (default `10`), `RULES_LLM_REJECTION_ALERT_THRESHOLD` (default `5`), `RULES_LOW_CONFIDENCE_ALERT_THRESHOLD` (default `1`), `RULES_LOW_CONFIDENCE_ALERT_COOLDOWN_MS` (default `86400000`, or 24 hours), `RULES_ALERT_WINDOW_MS` (default `300000`), and `RULES_ALERT_COOLDOWN_MS` (default `900000`) — optional alert tuning.
 - `RULES_QUESTION_LOG_WEBHOOK_URL` — optional webhook that receives each rules question after the assistant answers.
 - `RULES_QUESTION_NOTION_TOKEN` or `NOTION_API_KEY` — optional Notion integration token for logging rules questions directly to a Notion database.
-- `RULES_QUESTION_NOTION_DATABASE_ID` — required when using direct Notion logging.
+- `RULES_QUESTION_NOTION_DATABASE_ID` — existing Notion database identifier. The app resolves its single data source automatically.
+- `RULES_QUESTION_NOTION_DATA_SOURCE_ID` — optional explicit data-source identifier for the current Notion API; use it when the database contains more than one data source.
 - `RULES_QUESTION_NOTION_TITLE_PROPERTY` (default `Question`), `RULES_QUESTION_NOTION_ASKED_AT_PROPERTY` (default `Asked at`), `RULES_QUESTION_NOTION_ANSWER_MODE_PROPERTY` (default `Answer mode`), `RULES_QUESTION_NOTION_CAN_ANSWER_PROPERTY` (default `Can answer`), and `RULES_QUESTION_NOTION_SOURCE_COUNT_PROPERTY` (default `Source count`) — optional Notion property-name overrides.
+- `RULES_QUESTION_ADMIN_PASSWORD` and `RULES_QUESTION_ADMIN_SESSION_SECRET` — required for the private `/community-assistant/questions` owner page. Use two different strong secrets; the signed login lasts 12 hours.
+
+The private owner page shows the exact sanitized answer, highlights questions that need review, and refreshes every five seconds. Use `/community-assistant?test=1` as the bookmarked testing version of the assistant; those questions are hidden from the normal owner view unless **Include my tests** is selected.
 
 Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
 
