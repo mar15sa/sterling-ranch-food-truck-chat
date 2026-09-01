@@ -28,3 +28,15 @@ test("Community Assistant test bookmark is visible and marks API requests", () =
   assert.match(script, /get\("test"\) === "1"/);
   assert.match(script, /isTest: isTestMode/);
 });
+
+test("an expanded owner question stays open across automatic refreshes", () => {
+  const script = fs.readFileSync(
+    path.join(__dirname, "..", "public", "community-questions.js"),
+    "utf8"
+  );
+  assert.match(script, /const expandedQuestionIds = new Set\(\)/);
+  assert.match(script, /details\.open = expandedQuestionIds\.has\(item\.id\)/);
+  assert.match(script, /details\.addEventListener\("toggle"/);
+  assert.match(script, /expandedQuestionIds\.add\(item\.id\)/);
+  assert.match(script, /expandedQuestionIds\.delete\(item\.id\)/);
+});
