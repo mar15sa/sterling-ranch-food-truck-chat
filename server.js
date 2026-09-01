@@ -4567,6 +4567,7 @@ async function handleRulesAsk(req, res, url) {
     });
   }
   answer.sourceStatus = {
+    ...status,
     ...answer.sourceStatus,
     refreshing: Boolean(rulesRefreshPromise),
     communitySources: communitySourceStatus(),
