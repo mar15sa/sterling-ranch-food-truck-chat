@@ -169,6 +169,47 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
   assert.equal(answer.actions[0].url, "/food-truck?date=2026-08-29");
 });
 
+test("food-truck answers keep each truck's menu, source, and action separate", () => {
+  const answer = foodTruckAnswer({
+    date: "2026-09-04",
+    friendlyDate: "Friday, September 4, 2026",
+    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    trucks: [
+      {
+        name: "Tula's Tapas",
+        menu: {
+          links: [{ title: "Tula's Tapas menu", url: "https://tulas.example/menu" }],
+          items: [{ name: "Tula's Tots", description: "Crispy tater tots." }],
+        },
+      },
+      {
+        name: "HipPops",
+        menu: {
+          links: [{ title: "HipPops menu", url: "https://hippops.example/menu" }],
+          items: [{ name: "Gelato Pops", price: "$6" }],
+        },
+      },
+    ],
+  });
+
+  assert.match(answer.directAnswer, /Tula's Tapas and HipPops/);
+  assert.deepEqual(answer.presentation.truckCards.map((truck) => truck.name), ["Tula's Tapas", "HipPops"]);
+  assert.equal(answer.presentation.truckCards[0].menuItems[0].name, "Tula's Tots");
+  assert.equal(answer.presentation.truckCards[1].menuItems[0].name, "Gelato Pops");
+  assert.deepEqual(answer.actions.map((action) => action.label), [
+    "Open full food-truck answer",
+    "View Tula's Tapas menu",
+    "View HipPops menu",
+    "View food-truck schedule",
+  ]);
+  assert.deepEqual(answer.sources.map((source) => source.title), [
+    "Official Sterling Ranch calendar",
+    "Tula's Tapas menu",
+    "HipPops menu",
+  ]);
+  assert.equal(answer.claims.every((claim) => claim.verified), true);
+});
+
 test("negative controls cannot become unrelated confident answers", async () => {
   const options = {
     index: communityIndex,
