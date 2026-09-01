@@ -508,7 +508,11 @@ function addAnswer(data, question) {
   const shareButton = node.querySelector(".rules-share-button");
   shareButton.addEventListener("click", () => copyAnswerLink(shareButton, question));
 
-  const actions = Array.isArray(data.actions) ? data.actions.filter((action) => action?.label && /^https?:\/\//i.test(action.url || "")) : [];
+  const actions = Array.isArray(data.actions)
+    ? data.actions.filter(
+      (action) => action?.label && (/^https?:\/\//i.test(action.url || "") || /^\/(?!\/)/.test(action.url || ""))
+    )
+    : [];
   if (actions.length) {
     const actionPanel = document.createElement("div");
     actionPanel.className = "rules-next-actions";
@@ -521,8 +525,10 @@ function addAnswer(data, question) {
       const link = document.createElement("a");
       link.className = index === 0 ? "rules-next-action rules-next-action-primary" : "rules-next-action rules-next-action-secondary";
       link.href = action.url;
-      link.target = "_blank";
-      link.rel = "noreferrer";
+      if (/^https?:\/\//i.test(action.url)) {
+        link.target = "_blank";
+        link.rel = "noreferrer";
+      }
       link.textContent = action.label;
       actionLinks.append(link);
     });
