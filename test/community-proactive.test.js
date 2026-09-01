@@ -105,7 +105,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   assert.doesNotMatch(JSON.stringify(outageFallback.actions), /Water Concern/i);
   assert.doesNotMatch(outageFallback.answer, /possible disconnection|past-due notice/i);
 
-  const mislabeledPlanFallback = await answerCommunityQuestion("What is the water bill payment portal?", {
+  const repairedPlan = await answerCommunityQuestion("What is the water bill payment portal?", {
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
@@ -118,11 +118,11 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
     }),
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(mislabeledPlanFallback.routingDecision, "official-action-fallback");
-  assert.equal(mislabeledPlanFallback.routingFallbackReason, "planner-goal-incompatible");
-  assert.match(mislabeledPlanFallback.answer, /UtilityHawk.*payment options/i);
-  assert.match(JSON.stringify(mislabeledPlanFallback.actions), /srcab\.utilityhawk\.us\/login/i);
-  assert.doesNotMatch(mislabeledPlanFallback.answer, /possible disconnection|past-due notice/i);
+  assert.equal(repairedPlan.routingDecision, "ai-planned");
+  assert.equal(repairedPlan.routingPlan.goal, "payment");
+  assert.match(repairedPlan.answer, /UtilityHawk.*payment options/i);
+  assert.match(JSON.stringify(repairedPlan.actions), /srcab\.utilityhawk\.us\/login/i);
+  assert.doesNotMatch(repairedPlan.answer, /possible disconnection|past-due notice/i);
 
   const rejectedSynthesisFallback = await answerCommunityQuestion("Where can I pay my water bill?", {
     index: communityIndex,
