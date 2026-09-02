@@ -1,0 +1,76 @@
+{
+  "startedAt": "2026-09-02T00:20:29.705Z",
+  "completedAt": "2026-09-02T00:20:51.795Z",
+  "baseUrl": "https://sterling-ranch-food-truck-chat-staging.up.railway.app",
+  "durationHours": 1,
+  "checkCount": 2,
+  "requestCount": 8,
+  "p95DurationMs": 3866,
+  "result": "passed",
+  "rows": [
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-02T00:20:35.054Z",
+      "durationMs": 5054,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-02T00:20:37.762Z",
+      "durationMs": 2690,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-02T00:20:41.051Z",
+      "durationMs": 3272,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-drc",
+      "sourceCount": 3
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-02T00:20:41.191Z",
+      "durationMs": 139,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "events-going-on-comparison",
+      "checkedAt": "2026-09-02T00:20:45.574Z",
+      "durationMs": 3866,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 5
+    },
+    {
+      "id": "events-happening-comparison",
+      "checkedAt": "2026-09-02T00:20:49.154Z",
+      "durationMs": 3579,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 5
+    },
+    {
+      "id": "events-going-on-comparison",
+      "checkedAt": "2026-09-02T00:20:51.265Z",
+      "durationMs": 483,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 5
+    },
+    {
+      "id": "events-happening-comparison",
+      "checkedAt": "2026-09-02T00:20:51.795Z",
+      "durationMs": 528,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 5
+    }
+  ]
+}

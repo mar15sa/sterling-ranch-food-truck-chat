@@ -533,3 +533,11 @@ test("shadow mode records the AI comparison without changing the legacy answer",
   assert.equal(answer._interpretation.outcome, "shadow");
   assert.equal(answer._interpretation.shadowPlan.scope, "unrelated");
 });
+
+test("the 24-hour staging soak saves progress and locks the tested source fingerprint", () => {
+  const script = require("node:fs").readFileSync(require("node:path").join(__dirname, "..", "scripts", "check-community-application-soak.js"), "utf8");
+  assert.match(script, /EXPECTED_COMMUNITY_FINGERPRINT/);
+  assert.match(script, /community source fingerprint changed during the soak/);
+  assert.match(script, /result: "in-progress"/);
+  assert.match(script, /completedChecks: number/);
+});

@@ -15,6 +15,8 @@ const intervalMs = Math.max(1000, Number(option("--interval-ms", "900000")) || 9
 const checks = Math.max(2, Number(option("--checks", String(Math.ceil(durationHours * 60 * 60 * 1000 / intervalMs) + 1))) || 2);
 const reportPath = path.resolve(option("--report", path.join(__dirname, "..", "data", "community-staging-soak-report.json")));
 const writeReport = process.argv.includes("--write");
+const expectedFingerprint = String(process.env.EXPECTED_COMMUNITY_FINGERPRINT || "").trim();
+const startedAt = new Date().toISOString();
 const durations = [];
 const rows = [];
 
@@ -102,6 +104,9 @@ async function checkOnce(number) {
   const { body: health } = await json(`${baseUrl}/api/health`);
   if (!health.deploymentReady || health.status !== "ok") throw new Error(`Check ${number}: staging is not deployment-ready.`);
   if (health.communitySources?.pendingReview) throw new Error(`Check ${number}: community sources are pending review.`);
+  if (expectedFingerprint && health.communitySources?.activeFingerprint !== expectedFingerprint) {
+    throw new Error(`Check ${number}: community source fingerprint changed during the soak.`);
+  }
   if (number === 1 || (number - 1) % 4 === 0) {
     const setIndex = Math.floor((number - 1) / 4) % questionSets.length;
     for (const item of questionSets[setIndex]) await ask(item);
@@ -111,10 +116,25 @@ async function checkOnce(number) {
 }
 
 async function main() {
-  const startedAt = new Date().toISOString();
   for (let number = 1; number <= checks; number += 1) {
     if (number > 1) await new Promise((resolve) => setTimeout(resolve, intervalMs));
     await checkOnce(number);
+    if (writeReport) {
+      const warmDurations = durations.slice(Math.min(4, durations.length));
+      fs.writeFileSync(reportPath, `${JSON.stringify({
+        startedAt,
+        updatedAt: new Date().toISOString(),
+        baseUrl,
+        durationHours,
+        expectedFingerprint: expectedFingerprint || null,
+        checkCount: checks,
+        completedChecks: number,
+        requestCount: durations.length,
+        p95DurationMs: percentile(warmDurations, 0.95),
+        result: "in-progress",
+        rows,
+      }, null, 2)}\n`);
+    }
   }
   const warmDurations = durations.slice(Math.min(4, durations.length));
   const p95DurationMs = percentile(warmDurations, 0.95);
@@ -124,6 +144,7 @@ async function main() {
     completedAt: new Date().toISOString(),
     baseUrl,
     durationHours,
+    expectedFingerprint: expectedFingerprint || null,
     checkCount: checks,
     requestCount: durations.length,
     p95DurationMs,
@@ -135,7 +156,7 @@ async function main() {
 }
 
 main().catch((error) => {
-  if (writeReport) fs.writeFileSync(reportPath, `${JSON.stringify({ completedAt: new Date().toISOString(), baseUrl, result: "failed", error: error.message, rows }, null, 2)}\n`);
+  if (writeReport) fs.writeFileSync(reportPath, `${JSON.stringify({ startedAt, completedAt: new Date().toISOString(), baseUrl, expectedFingerprint: expectedFingerprint || null, result: "failed", error: error.message, rows }, null, 2)}\n`);
   console.error(error.message);
   process.exitCode = 1;
 });
