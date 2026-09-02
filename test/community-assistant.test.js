@@ -616,6 +616,14 @@ test("background refreshes update unchanged evidence but quarantine changed or n
   assert.deepEqual(held.pendingReview.newSourceIds, ["new-page"]);
 });
 
+test("static page indexing excludes the rotating CivicPlus calendar widget", () => {
+  const html = `<main data-cpRole="mainContentContainer"><h1>Resident information</h1><p>Static official guidance stays indexed.</p><div data-widget-id="calendar" data-widget-controller-path="/Calendar/Widget"><div id="widgetCalendar"><li data-event-i-d="123"><a href="/Calendar.aspx?EID=123">Tomorrow's changing event</a></li><div class="addItemModal hidden"><div class="url hidden">/Calendar.aspx</div></div></div></div></div><p>Static contact information also stays indexed.</p></main>`;
+  const cleaned = contentHtml(html);
+  assert.match(cleaned, /Static official guidance stays indexed/);
+  assert.match(cleaned, /Static contact information also stays indexed/);
+  assert.doesNotMatch(cleaned, /changing event|Calendar\.aspx\?EID/);
+});
+
 test("background refreshes accept changing official events without approving static source changes", () => {
   const oldEvent = source({ id: "event-old", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "old-event" });
   const newEvent = source({ id: "event-new", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "new-event" });
