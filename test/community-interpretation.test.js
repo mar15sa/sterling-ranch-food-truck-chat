@@ -235,7 +235,7 @@ test("malformed and failed AI responses safely return no interpretation", async 
   assert.equal(failedCalls, 2);
 });
 
-test("structured plans canonicalize compound goals, consequence details, and event venue filters", () => {
+test("structured plans canonicalize compound goals and event venue filters without replacing AI meaning", () => {
   const compound = normalizeInterpretation(interpretation({
     intent: "facilities",
     goal: "cost",
@@ -256,7 +256,7 @@ test("structured plans canonicalize compound goals, consequence details, and eve
     subject: "water bill non-payment consequences",
     requestedDetails: ["action"],
   }), "What happens if I do not pay my water bill?", { now: NOW });
-  assert.deepEqual(consequence.requestedDetails, []);
+  assert.deepEqual(consequence.requestedDetails, ["action"]);
 
   const venue = normalizeInterpretation(interpretation({
     filters: { audience: "", category: "", facility: "Sterling Center", location: "" },
@@ -271,8 +271,8 @@ test("structured plans canonicalize compound goals, consequence details, and eve
     requestedDetails: ["permission", "action", "contact"],
     searchQueries: ["dead tree replacement"],
   }), "What do I need to do about a dead tree in the tree lawn?", { now: NOW });
-  assert.deepEqual(inferredContact.goals, ["permission"]);
-  assert.deepEqual(inferredContact.requestedDetails, ["action", "permission"]);
+  assert.deepEqual(inferredContact.goals, ["permission", "contact"]);
+  assert.deepEqual(inferredContact.requestedDetails, ["action", "contact", "permission"]);
 });
 
 test("structured validation keeps holiday lighting schedules out of live events", () => {

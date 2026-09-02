@@ -105,25 +105,6 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   assert.doesNotMatch(JSON.stringify(outageFallback.actions), /Water Concern/i);
   assert.doesNotMatch(outageFallback.answer, /possible disconnection|past-due notice/i);
 
-  const repairedPlan = await answerCommunityQuestion("What is the water bill payment portal?", {
-    index: communityIndex,
-    communityId: "sterling-ranch",
-    answerRulesQuestion,
-    rulesOptions: { searchMode: "legacy", llmMode: "off" },
-    planCommunitySearch: async () => ({
-      intent: "services",
-      goal: "information",
-      subject: "water bill payment portal",
-      searchQueries: ["water bill payment portal"],
-    }),
-    synthesizeCommunityAnswer: false,
-  });
-  assert.equal(repairedPlan.routingDecision, "ai-planned");
-  assert.equal(repairedPlan.routingPlan.goal, "payment");
-  assert.match(repairedPlan.answer, /UtilityHawk.*(?:Pay Online|payment options)/i);
-  assert.match(JSON.stringify(repairedPlan.actions), /srcab\.utilityhawk\.us\/login/i);
-  assert.doesNotMatch(repairedPlan.answer, /possible disconnection|past-due notice/i);
-
   const rejectedSynthesisFallback = await answerCommunityQuestion("Where can I pay my water bill?", {
     index: communityIndex,
     communityId: "sterling-ranch",

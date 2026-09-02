@@ -128,8 +128,15 @@ test("AI routing returns a structured goal and subject without answering the res
         content: [{ type: "text", text: JSON.stringify({
           intent: "services",
           goal: "payment",
+          goals: ["payment"],
           subject: "water bill",
+          requestedDetails: ["action"],
+          dateRange: null,
+          filters: { audience: "", category: "", facility: "", location: "" },
           searchQueries: ["pay water bill online", "water bill payment portal"],
+          scope: "community",
+          needsClarification: false,
+          clarificationQuestion: "",
         }) }],
       }), { status: 200, headers: { "content-type": "application/json" } });
     },
@@ -149,11 +156,11 @@ test("AI routing returns a structured goal and subject without answering the res
   assert.deepEqual(requestBody.tools[0].input_schema.required, ["intent", "goal", "goals", "subject", "requestedDetails", "dateRange", "filters", "searchQueries", "scope", "needsClarification", "clarificationQuestion"]);
   assert.deepEqual(normalizedRoutingPlan(plan), plan);
   assert.equal(normalizedRoutingPlan({ intent: "services", searchQueries: ["pay bill"] }), null);
-  assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "permission");
-  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "cost");
-  assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "status");
-  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "schedule");
-  assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "backyard spa", searchQueries: ["spa approval"] }, "What approval and setbacks apply to a backyard spa?").goal, "permission");
+  assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "backyard spa", searchQueries: ["spa approval"] }, "What approval and setbacks apply to a backyard spa?").goal, "application");
   assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "landscape", searchQueries: ["landscape application"] }, "How do I apply for landscape design approval?").goal, "application");
 
   const toolPlan = await planCommunitySearch("When is recycling pickup?", {
@@ -397,7 +404,7 @@ test("structured service contacts skip the unrelated rules lookup after shared i
   const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
   let rulesCalls = 0;
   let interpretationCalls = 0;
-  const answer = await answerCommunityQuestion("Who do I contact about water billing?", {
+  const answer = await answerCommunityQuestion("Who handles questions about my monthly water charge?", {
     index,
     communityId: "alpha",
     interpretationMode: "structured",
