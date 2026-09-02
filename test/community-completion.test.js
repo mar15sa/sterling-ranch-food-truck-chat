@@ -489,6 +489,8 @@ test("candidate releases report changes and reject collection regressions", () =
   assert.equal(diffCommunityIndexes(trusted, candidate).changedSourceIds.length, 1);
   assert.equal(validateCommunityCandidate(trusted, candidate, profile).valid, true);
   assert.equal(validateCommunityCandidate(trusted, { ...candidate, failureCount: 1 }, profile).valid, false);
+  assert.equal(validateCommunityCandidate(trusted, { ...candidate, sources: [candidate.sources[0], candidate.sources[0]] }, profile).valid, false);
+  assert.equal(validateCommunityCandidate({ ...trusted, sources: [trusted.sources[0], trusted.sources[0]] }, candidate, profile).valid, true);
 });
 
 test("automatic release decisions hold, promote, and roll back safely", () => {

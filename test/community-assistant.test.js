@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildAnswerContract, detectFactConflicts, validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
-const { contentHtml, crawlCommunity, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
+const { contentHtml, crawlCommunity, disambiguateSourceIds, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
 const { verifyStructuredDraft } = require("../lib/community-grounding");
 const { parseJson, planCommunitySearch } = require("../lib/community-llm");
 const { actionSupportsGoal, classifyCommunityIntent, normalizedRoutingPlan, requestedDetails, searchCommunityIndex, sourceSupportsGoal } = require("../lib/community-search");
@@ -64,6 +64,17 @@ test("source and answer contracts retain claim-level evidence", () => {
   assert.equal(answer.claims[0].verified, true);
   const incomplete = buildAnswerContract({ directAnswer: "It costs $90.", sources: [item], status: "verified", claims: [{ text: "It costs $90." }] });
   assert.equal(incomplete.answerStatus, "verified-incomplete");
+});
+
+test("source ingestion gives same-title pages stable unique ids", () => {
+  const first = source({ id: "alpha-faq-1", sourceUrl: "https://alpha.gov/faq?cat=16", facts: [{ id: "alpha-faq-1-link", sourceId: "alpha-faq-1" }] });
+  const second = source({ id: "alpha-faq-1", sourceUrl: "https://alpha.gov/faq?cat=21", facts: [{ id: "alpha-faq-1-link", sourceId: "alpha-faq-1" }] });
+  const duplicate = JSON.parse(JSON.stringify(second));
+  const records = disambiguateSourceIds([first, second, duplicate]);
+  assert.equal(records.length, 2);
+  assert.equal(new Set(records.map((item) => item.id)).size, 2);
+  assert.ok(records.every((item) => item.facts[0].sourceId === item.id));
+  assert.ok(records.every((item) => item.facts[0].id.startsWith(`${item.id}-`)));
 });
 
 test("CivicPlus cleaning keeps resident content and removes page chrome and configuration", () => {
@@ -603,4 +614,20 @@ test("background refreshes update unchanged evidence but quarantine changed or n
   assert.equal(held.index.sources[0].text, trusted.sources[0].text);
   assert.deepEqual(held.pendingReview.changedSourceIds, ["alpha-rentals"]);
   assert.deepEqual(held.pendingReview.newSourceIds, ["new-page"]);
+});
+
+test("background refreshes accept changing official events without approving static source changes", () => {
+  const oldEvent = source({ id: "event-old", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "old-event" });
+  const newEvent = source({ id: "event-new", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "new-event" });
+  const trusted = { communityId: "alpha", generatedAt: "2026-08-25T00:00:00.000Z", failureCount: 0, failures: [], sources: [source(), oldEvent] };
+  const candidate = { ...trusted, generatedAt: "2026-08-26T00:00:00.000Z", sources: [source({ checkedAt: "2026-08-26T00:00:00.000Z" }), newEvent] };
+  const safe = reconcileCommunityIndex(trusted, candidate);
+  assert.equal(safe.pendingReview, null);
+  assert.deepEqual(safe.index.sources.map((item) => item.id), ["alpha-rentals", "event-new"]);
+
+  const staticChange = { ...candidate, sources: [source({ contentHash: "changed" }), newEvent] };
+  const held = reconcileCommunityIndex(trusted, staticChange);
+  assert.deepEqual(held.pendingReview.changedSourceIds, ["alpha-rentals"]);
+  assert.ok(held.index.sources.some((item) => item.id === "event-new"));
+  assert.ok(!held.index.sources.some((item) => item.id === "event-old"));
 });
