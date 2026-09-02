@@ -41,7 +41,7 @@
   {
     "question": "What is the DRC email address?",
     "expectedAny": ["Sec. 21-21"],
-    "answerIncludesAny": ["submit@sterlingranchdrc.com"]
+    "answerIncludesAny": ["residentsubmit@sterlingranchcab.com", "submit@sterlingranchdrc.com"]
   },
   {
     "question": "What is the dog leash rule?",
