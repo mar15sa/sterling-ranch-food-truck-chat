@@ -7,7 +7,7 @@ const { parseJson, planCommunitySearch } = require("../lib/community-llm");
 const { actionSupportsGoal, classifyCommunityIntent, normalizedRoutingPlan, requestedDetails, searchCommunityIndex, sourceSupportsGoal } = require("../lib/community-search");
 const { eventDateRange, parseCivicPlusEvents } = require("../lib/community-events");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
-const { reconcileCommunityIndex } = require("../lib/community-source-manager");
+const { communitySourceStatus, reconcileCommunityIndex } = require("../lib/community-source-manager");
 const castleRockProfile = require("../data/communities/castle-rock.json");
 const portabilityProof = require("../data/portability-proof.json");
 
@@ -695,4 +695,27 @@ test("background refreshes accept changing official events without approving sta
   assert.deepEqual(held.pendingReview.changedSourceIds, ["alpha-rentals"]);
   assert.ok(held.index.sources.some((item) => item.id === "event-new"));
   assert.ok(!held.index.sources.some((item) => item.id === "event-old"));
+});
+
+test("source freshness tracks retrieved evidence but not connector or action pointers", () => {
+  const expired = "2026-08-01T00:00:00.000Z";
+  const now = Date.parse("2026-09-02T12:00:00.000Z");
+  const index = {
+    communityId: "alpha",
+    generatedAt: expired,
+    failureCount: 0,
+    sources: [
+      source({ id: "alpha-connector-facility-rentals", connectorType: "civicrec", staleAfter: expired }),
+      source({ id: "alpha-action-booking", connectorType: "official-action", staleAfter: expired }),
+      source({ id: "alpha-current-page", connectorType: "civicplus-pages", staleAfter: future }),
+    ],
+  };
+  const healthy = communitySourceStatus(index, now);
+  assert.equal(healthy.stale, false);
+  assert.equal(healthy.staleSourceCount, 0);
+
+  index.sources[2].staleAfter = expired;
+  const stale = communitySourceStatus(index, now);
+  assert.equal(stale.stale, true);
+  assert.equal(stale.staleSourceCount, 1);
 });
