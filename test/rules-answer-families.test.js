@@ -265,3 +265,27 @@ test("current source text controls changing landscaping and rental requirements"
   assert.match(rear.answer, /2 trees: 1 deciduous tree and 1 evergreen tree/i);
   assert.match(rear.answer, /30 percent live plant material/i);
 });
+
+test("yard completion deadlines use the controlling installation-date rule", async () => {
+  for (const question of [
+    "How many months do I have to finish my backyard?",
+    "How many months after our house is done being built do we have to finish the yard",
+    "How long do I have to complete rear-yard landscaping after closing?",
+    "When must my back yard be finshed after the CO?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.confidence?.canAnswer, true, `${question}\n${JSON.stringify(result, null, 2)}`);
+    assert.match(result.answer, /120 days/i, question);
+    assert.match(result.answer, /closing|CO|TCO/i, question);
+    assert.match(result.answer, /November 1.*April 30|winter deferral/is, question);
+    assert.match(result.sources?.[0]?.title || "", /^Sec\. 9-145\. - Completion\/installation dates/i, question);
+    assert.doesNotMatch(result.answer, /rules (?:do not|don't) set a deadline/i, question);
+  }
+
+  const front = await answer("How long does the builder have to finish the front yard after the certificate of occupancy?");
+  assert.match(front.answer, /30 days/i);
+  assert.doesNotMatch(front.answer, /homeowner has 120 days/i);
+
+  const unrelated = await answer("How long do I have to finish painting my garage door?");
+  assert.doesNotMatch(unrelated.answer, /rear yard landscaping must be completed within 120 days/i);
+});
