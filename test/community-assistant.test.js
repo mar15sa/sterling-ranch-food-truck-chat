@@ -383,6 +383,56 @@ test("contact answers preserve exact structured details even when AI synthesis w
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });
 
+test("structured service contacts skip the unrelated rules lookup after shared interpretation", async () => {
+  const billing = source({
+    id: "alpha-water-billing-fast-path",
+    title: "Water & Sewer",
+    sourceType: "services",
+    text: "American Conservation and Billing Solutions (AmCoBi) administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    facts: [
+      { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+      { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+    ],
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  let rulesCalls = 0;
+  let interpretationCalls = 0;
+  const answer = await answerCommunityQuestion("Who do I contact about water billing?", {
+    index,
+    communityId: "alpha",
+    interpretationMode: "structured",
+    planCommunitySearch: async () => {
+      interpretationCalls += 1;
+      return {
+        intent: "services",
+        goal: "contact",
+        goals: ["contact"],
+        subject: "water billing",
+        requestedDetails: ["contact"],
+        dateRange: null,
+        filters: {},
+        searchQueries: ["water billing contact"],
+        scope: "community",
+        needsClarification: false,
+        clarificationQuestion: "",
+      };
+    },
+    answerRulesQuestion: async () => {
+      rulesCalls += 1;
+      throw new Error("non-rules contact questions must not reach the rules engine");
+    },
+    synthesizeCommunityAnswer: async () => {
+      throw new Error("exact structured contacts must not need a second AI call");
+    },
+  });
+
+  assert.equal(interpretationCalls, 1);
+  assert.equal(rulesCalls, 0);
+  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.match(answer.answer, /\(833\) 772-2240/);
+  assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
+});
+
 test("structured contacts outrank an earlier confident rules or AI answer that omitted them", async () => {
   const billing = source({
     id: "alpha-water-billing-priority",
