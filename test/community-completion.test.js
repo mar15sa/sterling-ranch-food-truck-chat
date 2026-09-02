@@ -410,6 +410,23 @@ test("Waste Connections service reads dated recycling events without a resident 
   assert.equal(villageDatesForAnchor("2026-09-08", [{ day: "2026-09-07", type: "holiday" }])[2].date, "2026-09-11");
 });
 
+test("Waste Connections uses one total deadline across its sequential requests", async () => {
+  let calls = 0;
+  const fetchImpl = async (url, options = {}) => {
+    calls += 1;
+    if (String(url).includes("address-suggest")) {
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE" }] };
+    }
+    return new Promise((resolve, reject) => {
+      options.signal.addEventListener("abort", () => reject(Object.assign(new Error("aborted"), { name: "AbortError" })), { once: true });
+    });
+  };
+  const started = Date.now();
+  await assert.rejects(() => getSterlingRanchWasteSchedule({ fetchImpl, timeoutMs: 40 }), /aborted/i);
+  assert.equal(calls, 2);
+  assert.ok(Date.now() - started < 250);
+});
+
 test("unrelated community-page actions are not attached to grounded rule answers", async () => {
   const cases = [
     ["Can we have chickens?", /Water-Sewer|Resident-Amenity|Submit-Your-Feedback/i],

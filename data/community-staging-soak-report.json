@@ -1,0 +1,74 @@
+{
+  "startedAt": "2026-09-02T00:42:00.741Z",
+  "completedAt": "2026-09-02T01:42:54.044Z",
+  "baseUrl": "https://sterling-ranch-food-truck-chat-staging.up.railway.app",
+  "expectedFingerprint": "2d50c0c5d1c43b85ed651d5c17c48a4e70fe27fc6255da36785525e4fad7fb32",
+  "result": "failed",
+  "error": "service-recycling exceeded the 15-second normal-request limit (19541ms).",
+  "rows": [
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-02T00:42:06.036Z",
+      "durationMs": 5003,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-02T00:42:08.627Z",
+      "durationMs": 2579,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-02T00:42:11.931Z",
+      "durationMs": 3300,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-drc",
+      "sourceCount": 3
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-02T00:42:12.062Z",
+      "durationMs": 130,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "events-going-on-comparison",
+      "checkedAt": "2026-09-02T00:42:16.694Z",
+      "durationMs": 3959,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 5
+    },
+    {
+      "id": "events-happening-comparison",
+      "checkedAt": "2026-09-02T00:42:20.664Z",
+      "durationMs": 3969,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 5
+    },
+    {
+      "id": "service-payment",
+      "checkedAt": "2026-09-02T01:42:25.244Z",
+      "durationMs": 3468,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "service-contact",
+      "checkedAt": "2026-09-02T01:42:34.483Z",
+      "durationMs": 9237,
+      "answerStatus": "verified",
+      "answerMode": "community-source-extractive",
+      "sourceCount": 1
+    }
+  ]
+}

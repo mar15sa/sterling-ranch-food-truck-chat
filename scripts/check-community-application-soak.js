@@ -19,6 +19,7 @@ const expectedFingerprint = String(process.env.EXPECTED_COMMUNITY_FINGERPRINT ||
 const startedAt = new Date().toISOString();
 const durations = [];
 const rows = [];
+let completedChecks = 0;
 
 const questionSets = [
   [
@@ -119,6 +120,7 @@ async function main() {
   for (let number = 1; number <= checks; number += 1) {
     if (number > 1) await new Promise((resolve) => setTimeout(resolve, intervalMs));
     await checkOnce(number);
+    completedChecks = number;
     if (writeReport) {
       const warmDurations = durations.slice(Math.min(4, durations.length));
       fs.writeFileSync(reportPath, `${JSON.stringify({
@@ -156,7 +158,7 @@ async function main() {
 }
 
 main().catch((error) => {
-  if (writeReport) fs.writeFileSync(reportPath, `${JSON.stringify({ startedAt, completedAt: new Date().toISOString(), baseUrl, expectedFingerprint: expectedFingerprint || null, result: "failed", error: error.message, rows }, null, 2)}\n`);
+  if (writeReport) fs.writeFileSync(reportPath, `${JSON.stringify({ startedAt, completedAt: new Date().toISOString(), baseUrl, expectedFingerprint: expectedFingerprint || null, completedChecks, result: "failed", error: error.message, rows }, null, 2)}\n`);
   console.error(error.message);
   process.exitCode = 1;
 });
