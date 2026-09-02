@@ -494,6 +494,33 @@ test("structured clarification and unrelated scope stop before retrieval", async
   assert.equal(connectorCalls, 0);
 });
 
+test("AI clarification cannot stop a complete yard-deadline question before official retrieval", async () => {
+  const question = "How many months do I have to finish my backyard?";
+  const answer = await answerCommunityQuestion(question, {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: async () => interpretation({
+      intent: "rules",
+      goal: "information",
+      goals: ["information"],
+      subject: "backyard landscaping completion deadline",
+      requestedDetails: [],
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["backyard landscaping completion deadline"],
+      scope: "ambiguous",
+      needsClarification: true,
+      clarificationQuestion: "Do you mean the front yard or rear yard?",
+    }),
+  });
+  assert.notEqual(answer.answerMode, "targeted-clarification");
+  assert.equal(answer.confidence?.canAnswer, true);
+  assert.match(answer.answer, /120 days/i);
+  assert.match(answer.sources?.[0]?.title || "", /^Sec\. 9-145\. - Completion\/installation dates/i);
+});
+
 test("an explicit event filter miss offers the real unfiltered events", async () => {
   const plan = interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "" } });
   const answer = await answerCommunityQuestion("Are there youth events tomorrow?", {
