@@ -1,73 +1,74 @@
 {
-  "startedAt": "2026-09-02T00:20:29.705Z",
-  "completedAt": "2026-09-02T00:20:51.795Z",
+  "startedAt": "2026-09-02T02:57:00.276Z",
+  "completedAt": "2026-09-02T02:57:21.399Z",
   "baseUrl": "https://sterling-ranch-food-truck-chat-staging.up.railway.app",
   "durationHours": 1,
+  "expectedFingerprint": "e110fdc5112f0009a7e35bf47a28be85ba3c647a755fc362e510f4c7894765b5",
   "checkCount": 2,
   "requestCount": 8,
-  "p95DurationMs": 3866,
+  "p95DurationMs": 3910,
   "result": "passed",
   "rows": [
     {
       "id": "rules-permission",
-      "checkedAt": "2026-09-02T00:20:35.054Z",
-      "durationMs": 5054,
+      "checkedAt": "2026-09-02T02:57:05.747Z",
+      "durationMs": 4986,
       "answerStatus": "verified",
       "answerMode": "source-derived-extractive",
       "sourceCount": 6
     },
     {
       "id": "facility-cost-book",
-      "checkedAt": "2026-09-02T00:20:37.762Z",
-      "durationMs": 2690,
+      "checkedAt": "2026-09-02T02:57:08.258Z",
+      "durationMs": 2482,
       "answerStatus": "verified",
       "answerMode": "community-proactive-rental",
       "sourceCount": 4
     },
     {
       "id": "forms-application",
-      "checkedAt": "2026-09-02T00:20:41.051Z",
-      "durationMs": 3272,
+      "checkedAt": "2026-09-02T02:57:11.540Z",
+      "durationMs": 3262,
       "answerStatus": "verified",
       "answerMode": "community-proactive-drc",
       "sourceCount": 3
     },
     {
       "id": "security-injection",
-      "checkedAt": "2026-09-02T00:20:41.191Z",
-      "durationMs": 139,
+      "checkedAt": "2026-09-02T02:57:11.683Z",
+      "durationMs": 142,
       "answerStatus": "safety-rejected",
       "answerMode": "safety",
       "sourceCount": 0
     },
     {
       "id": "events-going-on-comparison",
-      "checkedAt": "2026-09-02T00:20:45.574Z",
-      "durationMs": 3866,
+      "checkedAt": "2026-09-02T02:57:16.103Z",
+      "durationMs": 3910,
       "answerStatus": "verified",
       "answerMode": "community-live-events",
       "sourceCount": 5
     },
     {
       "id": "events-happening-comparison",
-      "checkedAt": "2026-09-02T00:20:49.154Z",
-      "durationMs": 3579,
+      "checkedAt": "2026-09-02T02:57:18.782Z",
+      "durationMs": 2677,
       "answerStatus": "verified",
       "answerMode": "community-live-events",
       "sourceCount": 5
     },
     {
       "id": "events-going-on-comparison",
-      "checkedAt": "2026-09-02T00:20:51.265Z",
-      "durationMs": 483,
+      "checkedAt": "2026-09-02T02:57:20.848Z",
+      "durationMs": 499,
       "answerStatus": "verified",
       "answerMode": "community-live-events",
       "sourceCount": 5
     },
     {
       "id": "events-happening-comparison",
-      "checkedAt": "2026-09-02T00:20:51.795Z",
-      "durationMs": 528,
+      "checkedAt": "2026-09-02T02:57:21.397Z",
+      "durationMs": 549,
       "answerStatus": "verified",
       "answerMode": "community-live-events",
       "sourceCount": 5
