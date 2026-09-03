@@ -988,10 +988,10 @@
       "community": "Castle Rock",
       "area": "Dawson Trails",
       "address": "Dawson Trails, Castle Rock, CO",
-      "status": "proposed",
+      "status": "approved",
       "openingWindow": "Targeting 2027",
-      "summary": "Town Council is scheduled to review and decide on the proposed 100,054-square-foot King Soopers and seven-pump fuel station on August 18.",
-      "verifiedAt": "2026-08-18",
+      "summary": "Castle Rock Town Council approved the Dawson Trails site plan for a roughly 100,000-square-foot King Soopers with a pharmacy and seven-pump fuel station.",
+      "verifiedAt": "2026-09-03",
       "confidence": "official",
       "sources": [
         {
@@ -1001,6 +1001,14 @@
         {
           "label": "Town Council public hearing notice",
           "url": "https://www.crgov.com/Calendar.aspx?EID=10975"
+        },
+        {
+          "label": "Town Council legislation record",
+          "url": "https://castlerock-co.legistar.com/LegislationDetail.aspx?GUID=FAAB4167-237E-45A9-9B3D-A15286598DF3&ID=8171483&Options=&Search="
+        },
+        {
+          "label": "DougCo Social approval report",
+          "url": "https://dougcosocial.com/news/king-soopers-dawson-trails-castle-rock"
         }
       ],
       "coordinates": {
@@ -1066,23 +1074,31 @@
       "category": "Coffee & bakery",
       "community": "Castle Rock",
       "area": "Founders Marketplace",
-      "address": "Founders Marketplace, Castle Rock, CO",
-      "status": "approved",
-      "openingWindow": "Opening date not announced",
-      "summary": "A site plan has been approved for a new restaurant at Founders Marketplace.",
-      "verifiedAt": "2026-03-01",
+      "address": "1185 Aloha Street, Castle Rock, CO 80108",
+      "status": "opening-soon",
+      "openingWindow": "Opening fall 2026",
+      "summary": "Dunkin’ announced its first Castle Rock restaurant for fall 2026; the building and signage are already in place at Founders Marketplace.",
+      "verifiedAt": "2026-09-03",
       "confidence": "official",
       "sources": [
         {
           "label": "Castle Rock staff update",
           "url": "https://castlerock-co.legistar.com/View.ashx?GUID=B7F29C6C-5DA0-4DC9-9005-2702C4C0A41B&ID=15152042&M=F"
+        },
+        {
+          "label": "Dunkin’ Castle Rock hiring page",
+          "url": "https://careers.dunkindonuts.com/crew-member/job/B9A31ED90615AA6EFE5CCBCFF0E1F580"
+        },
+        {
+          "label": "Dunkin’ announcement and construction photos",
+          "url": "https://dougcosocial.com/news/dunkin-castle-rock"
         }
       ],
       "coordinates": {
-        "lat": 39.375396,
-        "lng": -104.827378,
-        "precision": "approximate",
-        "geocodedFrom": "Founders Marketplace, Castle Rock, CO"
+        "lat": 39.379844,
+        "lng": -104.828228,
+        "precision": "address",
+        "geocodedFrom": "1185 Aloha Street, Castle Rock, CO 80108"
       }
     },
     {
@@ -3059,6 +3075,60 @@
         "lng": -104.785834,
         "precision": "approximate",
         "geocodedFrom": "Parker Road and North Pinery Parkway, Parker, CO 80134"
+      }
+    },
+    {
+      "id": "dollar-tree-highlands-ranch-plaza",
+      "name": "Dollar Tree",
+      "category": "Grocery & retail",
+      "community": "Highlands Ranch",
+      "area": "The Plaza at Highlands Ranch",
+      "address": "1970 East County Line Road, Unit A, Highlands Ranch, CO 80126",
+      "status": "under-construction",
+      "openingWindow": "Opening date not announced",
+      "summary": "Construction documents identify a 7,400-square-foot Dollar Tree buildout, and hiring has begun for what will be the chain’s second Highlands Ranch store.",
+      "verifiedAt": "2026-09-03",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "Dollar Tree construction and hiring report",
+          "url": "https://whatnow.com/denver/retail/dollar-tree-to-debut-new-highlands-ranch-store/"
+        },
+        {
+          "label": "DougCo Social Highlands Ranch report",
+          "url": "https://dougcosocial.com/news/dollar-tree-highlands-ranch"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.564713,
+        "lng": -104.964345,
+        "precision": "address",
+        "geocodedFrom": "1970 East County Line Road, Unit A, Highlands Ranch, CO 80126"
+      }
+    },
+    {
+      "id": "peak-pizza-outlets-castle-rock",
+      "name": "Peak Pizza",
+      "category": "Restaurant & entertainment",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Suite 660, Castle Rock, CO 80108",
+      "status": "confirmed",
+      "openingWindow": "Opening date not announced",
+      "summary": "A locally owned pizzeria with an arcade is preparing a location in Suite 660 at the Outlets at Castle Rock.",
+      "verifiedAt": "2026-09-03",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "Peak Pizza announcement report",
+          "url": "https://dougcosocial.com/news/peak-pizza-castle-rock"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.415867,
+        "lng": -104.873041,
+        "precision": "address",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Suite 660, Castle Rock, CO 80108"
       }
     }
   ]

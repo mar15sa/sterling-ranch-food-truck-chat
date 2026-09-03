@@ -1,6 +1,22 @@
 {
-  "generatedAt": "2026-09-01T14:09:28.670Z",
+  "generatedAt": "2026-09-03T14:01:45.578Z",
   "leads": [
+    {
+      "id": "dougco-social-a-second-dollar-tree-is-coming-to-highlands-ranch",
+      "headline": "A Second Dollar Tree Is Coming to Highlands Ranch",
+      "url": "https://dougcosocial.com/news/dollar-tree-highlands-ranch",
+      "observedDate": "2026-09-02",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
+    {
+      "id": "dougco-social-peak-pizza-is-coming-to-the-outlets-at-castle-rock",
+      "headline": "Peak Pizza Is Coming to the Outlets at Castle Rock",
+      "url": "https://dougcosocial.com/news/peak-pizza-castle-rock",
+      "observedDate": "2026-09-02",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
     {
       "id": "dougco-social-five-new-sculptures-just-landed-around-castle-rock",
       "headline": "Five New Sculptures Just Landed Around Castle Rock",
