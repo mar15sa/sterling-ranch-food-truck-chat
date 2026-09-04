@@ -1,22 +1,6 @@
 {
-  "generatedAt": "2026-09-03T14:01:45.578Z",
+  "generatedAt": "2026-09-04T14:37:34.359Z",
   "leads": [
-    {
-      "id": "dougco-social-a-second-dollar-tree-is-coming-to-highlands-ranch",
-      "headline": "A Second Dollar Tree Is Coming to Highlands Ranch",
-      "url": "https://dougcosocial.com/news/dollar-tree-highlands-ranch",
-      "observedDate": "2026-09-02",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
-    {
-      "id": "dougco-social-peak-pizza-is-coming-to-the-outlets-at-castle-rock",
-      "headline": "Peak Pizza Is Coming to the Outlets at Castle Rock",
-      "url": "https://dougcosocial.com/news/peak-pizza-castle-rock",
-      "observedDate": "2026-09-02",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
     {
       "id": "dougco-social-five-new-sculptures-just-landed-around-castle-rock",
       "headline": "Five New Sculptures Just Landed Around Castle Rock",
@@ -38,14 +22,6 @@
       "headline": "The Brickyard: Castle Rock's $400 Million New Neighborhood",
       "url": "https://dougcosocial.com/news/the-brickyard-castle-rock",
       "observedDate": "2026-08-02",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
-    {
-      "id": "dougco-social-24-hour-fitness-south-parker-closed-for-renovation-reopens-july-11",
-      "headline": "24 Hour Fitness South Parker Closed for Renovation — Reopens July 11",
-      "url": "https://dougcosocial.com/news/24-hour-fitness-south-parker-renovation",
-      "observedDate": "2026-07-10",
       "sourceId": "dougco-social",
       "sourceName": "DougCo Social openings and local updates"
     }
