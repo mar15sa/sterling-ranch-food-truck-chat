@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-01T08:45:00-06:00",
+  "updatedAt": "2026-09-03T13:15:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -1408,10 +1408,10 @@
       "community": "Castle Pines",
       "area": "Village Square",
       "address": "361 Village Square Lane, Suite 130, Castle Pines, CO 80108",
-      "status": "opening-soon",
-      "openingWindow": "Expected September 2026",
-      "summary": "The restaurant is completing extensive renovations in the former Pino’s location and plans to open in September.",
-      "verifiedAt": "2026-08-27",
+      "status": "open",
+      "openingWindow": "Opened September 2026",
+      "summary": "Castello Italiano is now open in the former Pino’s location, with published hours, reservations, online ordering, and a live menu.",
+      "verifiedAt": "2026-09-03",
       "confidence": "official",
       "sources": [
         {
@@ -1421,6 +1421,10 @@
         {
           "label": "Colorado approved liquor license: Castello Italiano",
           "url": "https://sbg.colorado.gov/sites/sbg/files/documents/Recently_Approved_Liquor_Licenses_September_2025.pdf"
+        },
+        {
+          "label": "Castello Italiano official website and hours",
+          "url": "https://castelloitaliano.com/"
         }
       ],
       "coordinates": {
