@@ -1,6 +1,6 @@
 # Douglas County openings radar
 
-Scan completed: 2026-09-01T14:09:28.670Z
+Scan completed: 2026-09-04T14:37:34.359Z
 Sources tracked: 53
 Automatically checked: 37
 Manual research lookups: 16
@@ -10,11 +10,17 @@ New structured leads: 1
 
 ## New leads
 
-- [Five New Sculptures Just Landed Around Castle Rock](https://dougcosocial.com/news/art-encounters-castle-rock-2026) — DougCo Social openings and local updates
+- [Castello Italiano Is Open in Castle Pines, From the Owners of Farro](https://dougcosocial.com/news/castello-italiano-castle-pines) — DougCo Social openings and local updates
 
 ## Leads no longer present
 
-- [Peaky Peak Coffee & Charcuterie — Lone Tree Concept Expanding to Denver and Parker](https://dougcosocial.com/news/peaky-peak-coffee-charcuterie-denver-expansion) — may have moved off the source feed
+- [24 Hour Fitness South Parker Closed for Renovation — Reopens July 11](https://dougcosocial.com/news/24-hour-fitness-south-parker-renovation) — may have moved off the source feed
+
+## Changed: Castle Rock development activity
+
+https://www.crgov.com/1907/Development-Activity
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Changed: Castle Rock public meetings
 
@@ -22,13 +28,23 @@ https://castlerock-co.legistar.com/Calendar.aspx
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
+## Changed: Parker planning and development
+
+https://www.parkerco.gov/Planning
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+
+## Changed: Lone Tree development projects
+
+https://cityoflonetree.com/projects/
+
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
+
 ## Changed: Douglas County newly filed planning projects
 
 https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch
 
-Possible opening-related signals:
-
-- Request for a Site Improvement Plan Modification to install three dual EV chargers across 6 existing parking spaces.
+The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
 ## Changed: Douglas County public meetings and agenda items
 
@@ -36,33 +52,29 @@ https://douglascounty.legistar.com/Calendar.aspx
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
-## Changed: Highlands Ranch news, projects, and community openings
-
-https://www.highlandsranch.org/news-events
-
-The page changed, but the text filter did not isolate a new business signal. Review the page manually.
-
-## Changed: Sterling Ranch news, events, and town-life directory
-
-https://sterlingranch.com/happenings/
-
-The page changed, but the text filter did not isolate a new business signal. Review the page manually.
-
 ## Changed: DougCo Social openings and local updates
 
 https://dougcosocial.com/news
 
+Possible opening-related signals:
+
+- The former Pino&#x27;s space at 361 Village Square Lane is alive again. Castello Italiano — an upscale Italian restaurant from the family behind Farro Italian Restaurant — is officially open in Castle Pines, with wild boar ragu, bison short rib ravioli, and a 16-oz ribeye on the menu.
+
+## Changed: Littleton business and development news
+
+https://www.littletonco.gov/Government/City-News
+
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
-## Changed: Littleton council, planning, and licensing agendas
+## Changed: Aspen Grove tenant directory
 
-https://littletongov.legistar.com/Calendar.aspx
+https://aspengrovecenter.com/shop/
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
-## Changed: Colorado recently approved liquor licenses
+## Changed: Lone Tree Timberlines business openings
 
-https://sbg.colorado.gov/liquor-license-lists
+https://cityoflonetree.com/communications/timberlines/
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
@@ -72,26 +84,7 @@ https://www.westword.com/tag/openings-closings/
 
 Possible opening-related signals:
 
-- Restaurant roll call: Every opening and closing in August
-
-## Changed: Parker Chamber ribbon cuttings
-
-https://business.parkerchamber.com/events/calendarcatgid/6
-
-Possible opening-related signals:
-
-- Ribbon Cutting - WOOF GANG BAKERY & GROOMING
-
-## Changed: Castle Rock Chamber ribbon cuttings
-
-https://business.castlerock.org/events/calendar
-
-Possible opening-related signals:
-
-- T-Mobile Ribbon Cutting and Grand Re-Opening 12pm-1pm
-- Ribbon Cutting and Grand Opening for Hike Doggie at the Iron Mule Brewery 4-6pm
-- Ribbon Cutting at Sparq Physical Therapy 12-1pm
-- Ribbon Cutting & Grand Opening Celebration at Jet's Pizza 10:30am-11:00am
+- Small Bites: Carrie Baird returns to Bar Dough, Troy Guard plots a Denver comeback
 
 ## Review rule
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T14:09:28.670Z",
+  "generatedAt": "2026-09-04T14:37:34.359Z",
   "leads": [
     {
       "id": "dougco-social-five-new-sculptures-just-landed-around-castle-rock",
@@ -22,14 +22,6 @@
       "headline": "The Brickyard: Castle Rock's $400 Million New Neighborhood",
       "url": "https://dougcosocial.com/news/the-brickyard-castle-rock",
       "observedDate": "2026-08-02",
-      "sourceId": "dougco-social",
-      "sourceName": "DougCo Social openings and local updates"
-    },
-    {
-      "id": "dougco-social-24-hour-fitness-south-parker-closed-for-renovation-reopens-july-11",
-      "headline": "24 Hour Fitness South Parker Closed for Renovation — Reopens July 11",
-      "url": "https://dougcosocial.com/news/24-hour-fitness-south-parker-renovation",
-      "observedDate": "2026-07-10",
       "sourceId": "dougco-social",
       "sourceName": "DougCo Social openings and local updates"
     }
