@@ -574,6 +574,33 @@ test("AI unrelated scope cannot reject a clear state-parks-pass process question
   assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i);
 });
 
+test("AI clarification cannot suppress a complete verified answer about resident fees", async () => {
+  const answer = await answerCommunityQuestion("What fees do residents pay?", {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => interpretation({
+      intent: "services",
+      goal: "cost",
+      goals: ["cost"],
+      subject: "resident fees",
+      requestedDetails: ["price"],
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["resident fees"],
+      scope: "community",
+      needsClarification: true,
+      clarificationQuestion: "Are you asking about association fees, utility charges, or service fees?",
+    }),
+  });
+  assert.notEqual(answer.answerMode, "targeted-clarification");
+  assert.equal(answer.confidence?.canAnswer, true);
+  assert.match(answer.answer, /fixed charges/i);
+  assert.ok(answer.sources?.length > 0);
+});
+
 test("an explicit event filter miss offers the real unfiltered events", async () => {
   const plan = interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "" } });
   const answer = await answerCommunityQuestion("Are there youth events tomorrow?", {
