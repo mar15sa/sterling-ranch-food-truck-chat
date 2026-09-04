@@ -1,74 +1,811 @@
 {
-  "startedAt": "2026-09-02T00:42:00.741Z",
-  "completedAt": "2026-09-02T01:42:54.044Z",
+  "startedAt": "2026-09-02T17:53:19.804Z",
+  "completedAt": "2026-09-03T17:56:01.733Z",
   "baseUrl": "https://sterling-ranch-food-truck-chat-staging.up.railway.app",
-  "expectedFingerprint": "2d50c0c5d1c43b85ed651d5c17c48a4e70fe27fc6255da36785525e4fad7fb32",
+  "expectedFingerprint": "e110fdc5112f0009a7e35bf47a28be85ba3c647a755fc362e510f4c7894765b5",
+  "completedChecks": 96,
   "result": "failed",
-  "error": "service-recycling exceeded the 15-second normal-request limit (19541ms).",
+  "error": "Check 97: community sources are pending review.",
   "rows": [
     {
       "id": "rules-permission",
-      "checkedAt": "2026-09-02T00:42:06.036Z",
-      "durationMs": 5003,
+      "checkedAt": "2026-09-02T17:53:21.231Z",
+      "durationMs": 1111,
       "answerStatus": "verified",
       "answerMode": "source-derived-extractive",
       "sourceCount": 6
     },
     {
       "id": "facility-cost-book",
-      "checkedAt": "2026-09-02T00:42:08.627Z",
-      "durationMs": 2579,
+      "checkedAt": "2026-09-02T17:53:21.399Z",
+      "durationMs": 163,
       "answerStatus": "verified",
       "answerMode": "community-proactive-rental",
       "sourceCount": 4
     },
     {
       "id": "forms-application",
-      "checkedAt": "2026-09-02T00:42:11.931Z",
-      "durationMs": 3300,
-      "answerStatus": "verified",
-      "answerMode": "community-proactive-drc",
-      "sourceCount": 3
+      "checkedAt": "2026-09-02T17:53:21.541Z",
+      "durationMs": 141,
+      "answerStatus": "could-not-verify",
+      "answerMode": "targeted-clarification",
+      "sourceCount": 0
     },
     {
       "id": "security-injection",
-      "checkedAt": "2026-09-02T00:42:12.062Z",
-      "durationMs": 130,
+      "checkedAt": "2026-09-02T17:53:21.676Z",
+      "durationMs": 134,
       "answerStatus": "safety-rejected",
       "answerMode": "safety",
       "sourceCount": 0
     },
     {
       "id": "events-going-on-comparison",
-      "checkedAt": "2026-09-02T00:42:16.694Z",
-      "durationMs": 3959,
+      "checkedAt": "2026-09-02T17:53:23.252Z",
+      "durationMs": 974,
       "answerStatus": "verified",
       "answerMode": "community-live-events",
-      "sourceCount": 5
+      "sourceCount": 3
     },
     {
       "id": "events-happening-comparison",
-      "checkedAt": "2026-09-02T00:42:20.664Z",
-      "durationMs": 3969,
+      "checkedAt": "2026-09-02T17:53:23.903Z",
+      "durationMs": 650,
       "answerStatus": "verified",
       "answerMode": "community-live-events",
-      "sourceCount": 5
+      "sourceCount": 3
     },
     {
       "id": "service-payment",
-      "checkedAt": "2026-09-02T01:42:25.244Z",
-      "durationMs": 3468,
+      "checkedAt": "2026-09-02T18:53:25.357Z",
+      "durationMs": 258,
       "answerStatus": "verified",
       "answerMode": "community-proactive-account",
       "sourceCount": 4
     },
     {
       "id": "service-contact",
-      "checkedAt": "2026-09-02T01:42:34.483Z",
-      "durationMs": 9237,
+      "checkedAt": "2026-09-02T18:53:25.532Z",
+      "durationMs": 173,
       "answerStatus": "verified",
       "answerMode": "community-source-extractive",
       "sourceCount": 1
+    },
+    {
+      "id": "service-recycling",
+      "checkedAt": "2026-09-02T18:53:26.524Z",
+      "durationMs": 991,
+      "answerStatus": "verified",
+      "answerMode": "community-live-recycling",
+      "sourceCount": 2
+    },
+    {
+      "id": "status-pool",
+      "checkedAt": "2026-09-02T18:53:27.832Z",
+      "durationMs": 1307,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "events-natural",
+      "checkedAt": "2026-09-02T19:53:30.148Z",
+      "durationMs": 1263,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-paraphrase",
+      "checkedAt": "2026-09-02T19:53:30.808Z",
+      "durationMs": 659,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-filter",
+      "checkedAt": "2026-09-02T19:53:34.682Z",
+      "durationMs": 3873,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "food-truck",
+      "checkedAt": "2026-09-02T19:53:38.291Z",
+      "durationMs": 3608,
+      "answerStatus": "verified",
+      "answerMode": "community-live-food-truck",
+      "sourceCount": 2
+    },
+    {
+      "id": "rules-information",
+      "checkedAt": "2026-09-02T20:53:42.387Z",
+      "durationMs": 3050,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 4
+    },
+    {
+      "id": "account-access",
+      "checkedAt": "2026-09-02T20:53:45.683Z",
+      "durationMs": 3293,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "alerts",
+      "checkedAt": "2026-09-02T20:53:49.264Z",
+      "durationMs": 3581,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "conversation",
+      "checkedAt": "2026-09-02T20:53:49.401Z",
+      "durationMs": 136,
+      "answerStatus": "out-of-scope",
+      "answerMode": "conversation",
+      "sourceCount": 0
+    },
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-02T21:53:52.651Z",
+      "durationMs": 2174,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-02T21:53:52.790Z",
+      "durationMs": 137,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-02T21:53:52.921Z",
+      "durationMs": 131,
+      "answerStatus": "could-not-verify",
+      "answerMode": "targeted-clarification",
+      "sourceCount": 0
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-02T21:53:53.056Z",
+      "durationMs": 135,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "service-payment",
+      "checkedAt": "2026-09-02T22:53:54.229Z",
+      "durationMs": 169,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "service-contact",
+      "checkedAt": "2026-09-02T22:53:54.399Z",
+      "durationMs": 167,
+      "answerStatus": "verified",
+      "answerMode": "community-source-extractive",
+      "sourceCount": 1
+    },
+    {
+      "id": "service-recycling",
+      "checkedAt": "2026-09-02T22:53:55.053Z",
+      "durationMs": 653,
+      "answerStatus": "verified",
+      "answerMode": "community-live-recycling",
+      "sourceCount": 2
+    },
+    {
+      "id": "status-pool",
+      "checkedAt": "2026-09-02T22:53:56.077Z",
+      "durationMs": 1024,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "events-natural",
+      "checkedAt": "2026-09-02T23:53:58.106Z",
+      "durationMs": 1082,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-paraphrase",
+      "checkedAt": "2026-09-02T23:53:58.668Z",
+      "durationMs": 561,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-filter",
+      "checkedAt": "2026-09-02T23:53:59.156Z",
+      "durationMs": 487,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "food-truck",
+      "checkedAt": "2026-09-02T23:53:59.723Z",
+      "durationMs": 566,
+      "answerStatus": "verified",
+      "answerMode": "community-live-food-truck",
+      "sourceCount": 2
+    },
+    {
+      "id": "rules-information",
+      "checkedAt": "2026-09-03T00:54:03.717Z",
+      "durationMs": 2926,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 4
+    },
+    {
+      "id": "account-access",
+      "checkedAt": "2026-09-03T00:54:03.885Z",
+      "durationMs": 156,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "alerts",
+      "checkedAt": "2026-09-03T00:54:04.815Z",
+      "durationMs": 930,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "conversation",
+      "checkedAt": "2026-09-03T00:54:04.946Z",
+      "durationMs": 130,
+      "answerStatus": "out-of-scope",
+      "answerMode": "conversation",
+      "sourceCount": 0
+    },
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-03T01:54:08.143Z",
+      "durationMs": 2127,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-03T01:54:08.292Z",
+      "durationMs": 147,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-03T01:54:08.439Z",
+      "durationMs": 146,
+      "answerStatus": "could-not-verify",
+      "answerMode": "targeted-clarification",
+      "sourceCount": 0
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-03T01:54:08.578Z",
+      "durationMs": 138,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "service-payment",
+      "checkedAt": "2026-09-03T02:54:09.956Z",
+      "durationMs": 165,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "service-contact",
+      "checkedAt": "2026-09-03T02:54:10.104Z",
+      "durationMs": 146,
+      "answerStatus": "verified",
+      "answerMode": "community-source-extractive",
+      "sourceCount": 1
+    },
+    {
+      "id": "service-recycling",
+      "checkedAt": "2026-09-03T02:54:11.025Z",
+      "durationMs": 920,
+      "answerStatus": "verified",
+      "answerMode": "community-live-recycling",
+      "sourceCount": 2
+    },
+    {
+      "id": "status-pool",
+      "checkedAt": "2026-09-03T02:54:12.299Z",
+      "durationMs": 1274,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "events-natural",
+      "checkedAt": "2026-09-03T03:54:14.777Z",
+      "durationMs": 1333,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-paraphrase",
+      "checkedAt": "2026-09-03T03:54:15.668Z",
+      "durationMs": 889,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-filter",
+      "checkedAt": "2026-09-03T03:54:16.480Z",
+      "durationMs": 811,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "food-truck",
+      "checkedAt": "2026-09-03T03:54:17.365Z",
+      "durationMs": 885,
+      "answerStatus": "verified",
+      "answerMode": "community-live-food-truck",
+      "sourceCount": 2
+    },
+    {
+      "id": "rules-information",
+      "checkedAt": "2026-09-03T04:54:21.509Z",
+      "durationMs": 2971,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 4
+    },
+    {
+      "id": "account-access",
+      "checkedAt": "2026-09-03T04:54:21.651Z",
+      "durationMs": 140,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "alerts",
+      "checkedAt": "2026-09-03T04:54:22.614Z",
+      "durationMs": 962,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "conversation",
+      "checkedAt": "2026-09-03T04:54:22.749Z",
+      "durationMs": 134,
+      "answerStatus": "out-of-scope",
+      "answerMode": "conversation",
+      "sourceCount": 0
+    },
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-03T05:54:25.913Z",
+      "durationMs": 2196,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-03T05:54:26.059Z",
+      "durationMs": 142,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-03T05:54:26.201Z",
+      "durationMs": 141,
+      "answerStatus": "could-not-verify",
+      "answerMode": "targeted-clarification",
+      "sourceCount": 0
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-03T05:54:26.333Z",
+      "durationMs": 132,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "events-going-on-comparison",
+      "checkedAt": "2026-09-03T05:54:27.928Z",
+      "durationMs": 996,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "events-happening-comparison",
+      "checkedAt": "2026-09-03T05:54:28.592Z",
+      "durationMs": 663,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 3
+    },
+    {
+      "id": "service-payment",
+      "checkedAt": "2026-09-03T06:54:33.976Z",
+      "durationMs": 3402,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "service-contact",
+      "checkedAt": "2026-09-03T06:54:37.369Z",
+      "durationMs": 3391,
+      "answerStatus": "verified",
+      "answerMode": "community-source-extractive",
+      "sourceCount": 1
+    },
+    {
+      "id": "service-recycling",
+      "checkedAt": "2026-09-03T06:54:41.149Z",
+      "durationMs": 3779,
+      "answerStatus": "verified",
+      "answerMode": "community-live-recycling",
+      "sourceCount": 2
+    },
+    {
+      "id": "status-pool",
+      "checkedAt": "2026-09-03T06:54:44.260Z",
+      "durationMs": 3110,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "events-natural",
+      "checkedAt": "2026-09-03T07:54:50.080Z",
+      "durationMs": 4790,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "events-paraphrase",
+      "checkedAt": "2026-09-03T07:54:54.120Z",
+      "durationMs": 4039,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "events-filter",
+      "checkedAt": "2026-09-03T07:54:57.284Z",
+      "durationMs": 3163,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "food-truck",
+      "checkedAt": "2026-09-03T07:55:01.369Z",
+      "durationMs": 4084,
+      "answerStatus": "verified",
+      "answerMode": "community-live-food-truck",
+      "sourceCount": 3
+    },
+    {
+      "id": "rules-information",
+      "checkedAt": "2026-09-03T08:55:08.867Z",
+      "durationMs": 6315,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 4
+    },
+    {
+      "id": "account-access",
+      "checkedAt": "2026-09-03T08:55:12.205Z",
+      "durationMs": 3325,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "alerts",
+      "checkedAt": "2026-09-03T08:55:16.388Z",
+      "durationMs": 4181,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "conversation",
+      "checkedAt": "2026-09-03T08:55:16.571Z",
+      "durationMs": 182,
+      "answerStatus": "out-of-scope",
+      "answerMode": "conversation",
+      "sourceCount": 0
+    },
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-03T09:55:23.237Z",
+      "durationMs": 5675,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-03T09:55:26.003Z",
+      "durationMs": 2729,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-03T09:55:29.368Z",
+      "durationMs": 3355,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-drc",
+      "sourceCount": 3
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-03T09:55:29.504Z",
+      "durationMs": 136,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "service-payment",
+      "checkedAt": "2026-09-03T10:55:31.021Z",
+      "durationMs": 309,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "service-contact",
+      "checkedAt": "2026-09-03T10:55:31.174Z",
+      "durationMs": 145,
+      "answerStatus": "verified",
+      "answerMode": "community-source-extractive",
+      "sourceCount": 1
+    },
+    {
+      "id": "service-recycling",
+      "checkedAt": "2026-09-03T10:55:32.116Z",
+      "durationMs": 941,
+      "answerStatus": "verified",
+      "answerMode": "community-live-recycling",
+      "sourceCount": 2
+    },
+    {
+      "id": "status-pool",
+      "checkedAt": "2026-09-03T10:55:33.742Z",
+      "durationMs": 1625,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "events-natural",
+      "checkedAt": "2026-09-03T11:55:36.072Z",
+      "durationMs": 1305,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "events-paraphrase",
+      "checkedAt": "2026-09-03T11:55:36.919Z",
+      "durationMs": 847,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "events-filter",
+      "checkedAt": "2026-09-03T11:55:37.827Z",
+      "durationMs": 907,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "food-truck",
+      "checkedAt": "2026-09-03T11:55:38.690Z",
+      "durationMs": 860,
+      "answerStatus": "verified",
+      "answerMode": "community-live-food-truck",
+      "sourceCount": 3
+    },
+    {
+      "id": "rules-information",
+      "checkedAt": "2026-09-03T12:55:42.591Z",
+      "durationMs": 2950,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 4
+    },
+    {
+      "id": "account-access",
+      "checkedAt": "2026-09-03T12:55:42.750Z",
+      "durationMs": 155,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "alerts",
+      "checkedAt": "2026-09-03T12:55:43.731Z",
+      "durationMs": 980,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "conversation",
+      "checkedAt": "2026-09-03T12:55:43.878Z",
+      "durationMs": 147,
+      "answerStatus": "out-of-scope",
+      "answerMode": "conversation",
+      "sourceCount": 0
+    },
+    {
+      "id": "rules-permission",
+      "checkedAt": "2026-09-03T13:55:47.089Z",
+      "durationMs": 2150,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 6
+    },
+    {
+      "id": "facility-cost-book",
+      "checkedAt": "2026-09-03T13:55:47.226Z",
+      "durationMs": 134,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-rental",
+      "sourceCount": 4
+    },
+    {
+      "id": "forms-application",
+      "checkedAt": "2026-09-03T13:55:47.409Z",
+      "durationMs": 164,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-drc",
+      "sourceCount": 3
+    },
+    {
+      "id": "security-injection",
+      "checkedAt": "2026-09-03T13:55:47.543Z",
+      "durationMs": 134,
+      "answerStatus": "safety-rejected",
+      "answerMode": "safety",
+      "sourceCount": 0
+    },
+    {
+      "id": "service-payment",
+      "checkedAt": "2026-09-03T14:55:48.846Z",
+      "durationMs": 183,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "service-contact",
+      "checkedAt": "2026-09-03T14:55:49.009Z",
+      "durationMs": 163,
+      "answerStatus": "verified",
+      "answerMode": "community-source-extractive",
+      "sourceCount": 1
+    },
+    {
+      "id": "service-recycling",
+      "checkedAt": "2026-09-03T14:55:49.723Z",
+      "durationMs": 691,
+      "answerStatus": "verified",
+      "answerMode": "community-live-recycling",
+      "sourceCount": 2
+    },
+    {
+      "id": "status-pool",
+      "checkedAt": "2026-09-03T14:55:50.704Z",
+      "durationMs": 980,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "events-natural",
+      "checkedAt": "2026-09-03T15:55:52.945Z",
+      "durationMs": 1146,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "events-paraphrase",
+      "checkedAt": "2026-09-03T15:55:53.470Z",
+      "durationMs": 525,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "events-filter",
+      "checkedAt": "2026-09-03T15:55:53.990Z",
+      "durationMs": 520,
+      "answerStatus": "verified",
+      "answerMode": "community-live-events",
+      "sourceCount": 2
+    },
+    {
+      "id": "food-truck",
+      "checkedAt": "2026-09-03T15:55:54.525Z",
+      "durationMs": 532,
+      "answerStatus": "verified",
+      "answerMode": "community-live-food-truck",
+      "sourceCount": 3
+    },
+    {
+      "id": "rules-information",
+      "checkedAt": "2026-09-03T16:55:58.909Z",
+      "durationMs": 2976,
+      "answerStatus": "verified",
+      "answerMode": "source-derived-extractive",
+      "sourceCount": 4
+    },
+    {
+      "id": "account-access",
+      "checkedAt": "2026-09-03T16:55:59.056Z",
+      "durationMs": 139,
+      "answerStatus": "verified",
+      "answerMode": "community-proactive-account",
+      "sourceCount": 4
+    },
+    {
+      "id": "alerts",
+      "checkedAt": "2026-09-03T16:56:00.191Z",
+      "durationMs": 1135,
+      "answerStatus": "verified",
+      "answerMode": "community-live-status",
+      "sourceCount": 1
+    },
+    {
+      "id": "conversation",
+      "checkedAt": "2026-09-03T16:56:00.323Z",
+      "durationMs": 131,
+      "answerStatus": "out-of-scope",
+      "answerMode": "conversation",
+      "sourceCount": 0
     }
   ]
 }

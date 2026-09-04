@@ -697,6 +697,32 @@ test("background refreshes accept changing official events without approving sta
   assert.ok(!held.index.sources.some((item) => item.id === "event-old"));
 });
 
+test("background refreshes keep the reviewed release fingerprint stable when live events rotate", () => {
+  const oldEvent = source({ id: "event-old", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "old-event" });
+  const newEvent = source({ id: "event-new", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "new-event" });
+  const trusted = {
+    communityId: "alpha",
+    generatedAt: "2026-08-25T00:00:00.000Z",
+    promotedAt: "2026-08-25T00:01:00.000Z",
+    releaseFingerprint: "reviewed-release",
+    failureCount: 0,
+    failures: [],
+    sources: [source(), oldEvent],
+  };
+  const candidate = {
+    ...trusted,
+    generatedAt: "2026-08-26T00:00:00.000Z",
+    releaseFingerprint: undefined,
+    sources: [source({ checkedAt: "2026-08-26T00:00:00.000Z" }), newEvent],
+  };
+
+  const refreshed = reconcileCommunityIndex(trusted, candidate);
+  assert.equal(refreshed.pendingReview, null);
+  assert.equal(refreshed.index.releaseFingerprint, "reviewed-release");
+  assert.equal(communitySourceStatus(refreshed.index).activeFingerprint, "reviewed-release");
+  assert.ok(refreshed.index.sources.some((item) => item.id === "event-new"));
+});
+
 test("source freshness tracks retrieved evidence but not connector or action pointers", () => {
   const expired = "2026-08-01T00:00:00.000Z";
   const now = Date.parse("2026-09-02T12:00:00.000Z");

@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-04T01:07:49.753Z",
+  "trustedFile": "community-index.json",
+  "candidateFile": "community-index.review.json",
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "12 possible fact groups require answer-time authority resolution."
+  ],
+  "diff": {
+    "trustedFingerprint": "e110fdc5112f0009a7e35bf47a28be85ba3c647a755fc362e510f4c7894765b5",
+    "candidateFingerprint": "448e5db79ba0d6ff59033f2b9041cb67dc6d11a7abdbc64ce1634832eb731f39",
+    "changedSourceIds": [
+      "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+      "sterling-ranch-documents-applications-and-forms-1"
+    ],
+    "addedSourceIds": [
+      "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1",
+      "sterling-ranch-landscape-submittal-packet-2026-1",
+      "sterling-ranch-landscape-submittal-packet-2026-2",
+      "sterling-ranch-landscape-submittal-packet-2026-3",
+      "sterling-ranch-landscape-submittal-packet-2026-4"
+    ],
+    "removedSourceIds": [
+      "sterling-ranch-attachment-a-3-general-arch-improvment-2023-1",
+      "sterling-ranch-landscape-submittal-packet-2024-1",
+      "sterling-ranch-landscape-submittal-packet-2024-2",
+      "sterling-ranch-landscape-submittal-packet-2024-3",
+      "sterling-ranch-landscape-submittal-packet-2024-4"
+    ],
+    "factChanges": [
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "factKey": "time-n-littleton-co-80125-07-landscape-class-cancelled-holiday-category-education-landscap:time",
+        "before": null,
+        "after": "4:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "factKey": "time-n-co-80125-07-landscape-class-cancelled-holiday-category-education-landscape-class-ca:time",
+        "before": null,
+        "after": "5:00 PM"
+      },
+      {
+        "sourceId": "sterling-ranch-calendar-sterling-ranch-community-authority-board-co-ci-7",
+        "factKey": "date-oliday-category-education-landscape-class-cancelled-holiday-when-4-00-pm-5-00-pm-loca:date",
+        "before": null,
+        "after": "September 7, 2026"
+      }
+    ],
+    "actionChanges": []
+  }
+}
