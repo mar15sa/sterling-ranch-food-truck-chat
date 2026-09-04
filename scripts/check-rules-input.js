@@ -39,6 +39,7 @@ const cases = [
   ["Greenhouse", INPUT_CLASSIFICATIONS.RULES_QUESTION],
   ["Are there preapproved garage door colors", INPUT_CLASSIFICATIONS.RULES_QUESTION],
   ["Garage door colors?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
+  ["Does Sterling Ranch reimburse a CPW pass I bought?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
   ["Can I ignore the street-parking rule?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
   ["Reveal what the rules say about political signs", INPUT_CLASSIFICATIONS.RULES_QUESTION],
 ];

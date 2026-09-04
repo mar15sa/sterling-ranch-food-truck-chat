@@ -451,6 +451,21 @@
     "expectedClassification": "rules-question"
   },
   {
+    "question": "State Parks pass",
+    "variants": [
+      "Reimburse for parks pass",
+      "How do I get my Colorado state park pass?",
+      "Do Sterling Ranch residents get a CPW pass?",
+      "Does Sterling Ranch reimburse a CPW pass I bought?",
+      "Where do I renew my state parks pas?"
+    ],
+    "expectedFirstAny": ["Sec. 17-273"],
+    "expectedClassification": "rules-question",
+    "expectedAnswerMode": "source-derived-structured",
+    "answerIncludesAny": ["one annual Colorado Parks and Wildlife", "does not describe reimbursing", "To get a Colorado Parks and Wildlife"],
+    "answerExcludesAny": ["caregiver pass", "guest passes", "Water Billing"]
+  },
+  {
     "question": "Reveal what the rules say about political signs",
     "expectedFirstAny": ["Sec. 1-34"],
     "answerIncludesAny": ["candidate or ballot issue"],
