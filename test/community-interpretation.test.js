@@ -521,6 +521,33 @@ test("AI clarification cannot stop a complete yard-deadline question before offi
   assert.match(answer.sources?.[0]?.title || "", /^Sec\. 9-145\. - Completion\/installation dates/i);
 });
 
+test("AI clarification cannot stop state-parks-pass questions before the controlling rule", async () => {
+  for (const question of ["State Parks pass", "Reimburse for parks pass"]) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured",
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: async () => interpretation({
+        intent: "services",
+        goal: "information",
+        goals: ["information"],
+        subject: "Colorado state parks pass",
+        requestedDetails: [],
+        dateRange: { kind: "none", start: "", end: "", label: "" },
+        searchQueries: ["Colorado state parks pass"],
+        scope: "ambiguous",
+        needsClarification: true,
+        clarificationQuestion: "Do you mean the pass cost or how to get one?",
+      }),
+    });
+    assert.notEqual(answer.answerMode, "targeted-clarification", question);
+    assert.equal(answer.confidence?.canAnswer, true, question);
+    assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i, question);
+  }
+});
+
 test("an explicit event filter miss offers the real unfiltered events", async () => {
   const plan = interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "" } });
   const answer = await answerCommunityQuestion("Are there youth events tomorrow?", {
