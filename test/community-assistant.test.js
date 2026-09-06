@@ -107,6 +107,36 @@ test("collecting the same unreviewed candidate twice does not approve its facts"
   assert.ok(second.factLedger.every(fact => fact.reviewStatus !== "approved"));
 });
 
+test('scanned PDF page counters do not count as indexed or duplicate content', async () => {
+  const { hasReadableDocumentText } = require('../lib/community-ingest');
+  const counters = Array.from({ length: 16 }, (_, n) => `-- ${n + 1} of 16 --`).join(' ');
+  assert.equal(hasReadableDocumentText(counters), false);
+  assert.equal(hasReadableDocumentText(''), false);
+  assert.equal(hasReadableDocumentText('Resident application instructions -- 1 of 1 --'), true);
+  const url = 'https://alpha.gov/DocumentCenter/View/100/Scanned-Policy';
+  const index = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { sources: [], pages: [], inventory: { eligibleUrls: [url] } },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and resident services are available from this official website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async () => counters,
+  });
+  assert.equal(index.sources.some(s => s.sourceUrl === url), false);
+  assert.ok(index.failures.some(f => /OCR or manual/.test(f.error || f.message || '')));
+  assert.ok(index.inventory.pendingUrls.includes(url));
+  const retained = { id: 'old-scanned', communityId: 'alpha', title: 'Scanned Policy', sourceUrl: url,
+    text: counters, contentHash: 'counter-hash', connectorType: 'official-pdf', facts: [], actions: [] };
+  const repeated = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { ...index, sources: [retained], pages: [{ url, indexed: true, contentFingerprint: 'old-counter-fingerprint', chunkContentHashes: ['counter-hash'] }] },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and resident services are available from this official website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async () => counters,
+  });
+  assert.ok(repeated.inventory.pendingUrls.includes(url));
+  assert.equal(repeated.pages.find(p => p.url === url)?.indexed, false);
+});
+
 test("saved page metadata without retained content remains pending when a crawl budget is reached", async () => {
   const urls = ["https://alpha.gov/DocumentCenter/View/100/First", "https://alpha.gov/DocumentCenter/View/101/Second"];
   const index = await crawlCommunity(profile(), {
