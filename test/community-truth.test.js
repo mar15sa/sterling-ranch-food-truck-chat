@@ -50,6 +50,21 @@ test('inspection scheduling contacts coexist with submission contacts without hi
   assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 2);
 });
 
+test('explicit emergency contacts coexist with general phones while competing emergency numbers conflict', () => {
+  const source = { id: 'clubhouse', title: 'Clubhouse', sourceUrl: 'https://alpha.gov/clubhouse', contentHash: 'v1', connectorType: 'civicplus-pages', facts: [
+    { type: 'phone', value: '303-555-0100', context: 'Phone: 303-555-0100. Emergency Phone: 303-555-0101' },
+    { type: 'phone', value: '303-555-0101', context: 'Phone: 303-555-0100. Emergency Phone: 303-555-0101' },
+  ] };
+  const build = () => buildFactLedger({ communityId: 'alpha', sources: [source] }, { trusted: true });
+  assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 0);
+  source.facts.push({ type: 'phone', value: '303-555-0102', context: '24/7 Emergency Phone: 303-555-0102' });
+  assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 1);
+  source.facts.push({ type: 'phone', value: '303-555-0103', context: 'Non-Emergency Phone: 303-555-0103' });
+  const facts = build();
+  assert.equal(facts.at(-1).scopeKey, 'phone');
+  assert.equal(resolveFactLedger(facts, profile).unresolvedSensitive.length, 2);
+});
+
 function entry(overrides = {}) {
   return {
     id: overrides.id || Math.random().toString(36),
