@@ -36,6 +36,23 @@ async function checkLink(url) {
   } finally { clearTimeout(timer); }
 }
 
+async function validateActionLinks(result, indexes, checker = checkLink) {
+  // Check both proposed and retained actions even when a separate source gate fails.
+  const links = [...new Set(indexes.flatMap(index => (index.sources || [])
+    .flatMap(source => source.actions || []).map(action => action.url)).filter(Boolean))];
+  const checks = [];
+  for (let index = 0; index < links.length; index += 8) {
+    checks.push(...await Promise.all(links.slice(index, index + 8).map(checker)));
+  }
+  const broken = checks.filter(item => {
+    if (!item.okay) return true;
+    try { return new URL(item.finalUrl || item.url).protocol !== 'https:'; }
+    catch { return true; }
+  });
+  result.linkChecks = { total: checks.length, broken };
+  return broken;
+}
+
 async function main() {
   const root = path.join(__dirname, "..");
   const trustedPath = option("--trusted", path.join(root, "data", "community-index.json"));
@@ -58,15 +75,9 @@ async function main() {
     requireCompleteInventory: process.argv.includes("--promote"),
     requireApprovedFacts: process.argv.includes("--promote"),
   });
-  if (process.argv.includes("--check-links") && result.valid) {
-    const links = [...new Set(candidate.sources.flatMap((source) => source.actions || []).map((action) => action.url))];
-    const batches = [];
-    for (let index = 0; index < links.length; index += 8) batches.push(links.slice(index, index + 8));
-    const checks = [];
-    for (const batch of batches) checks.push(...await Promise.all(batch.map(checkLink)));
-    const broken = checks.filter((item) => !item.okay || new URL(item.finalUrl || item.url).protocol !== "https:");
-    result.linkChecks = { total: checks.length, broken };
-    if (broken.length && process.argv.includes("--prune-broken-links")) {
+  if (process.argv.includes("--check-links")) {
+    const broken = await validateActionLinks(result, [rawCandidate, candidate]);
+    if (broken.length && result.valid && process.argv.includes("--prune-broken-links")) {
       const brokenUrls = new Set(broken.map((item) => item.url));
       for (const source of candidate.sources) {
         source.actions = (source.actions || []).filter((action) => !brokenUrls.has(action.url));
@@ -113,4 +124,5 @@ async function main() {
   console.log(`Community candidate passed: ${JSON.stringify({ changed: result.diff.changedSourceIds.length, added: result.diff.addedSourceIds.length, removed: result.diff.removedSourceIds.length, factChanges: result.diff.factChanges.length, review: result.review })}`);
 }
 
-main().catch((error) => { console.error(`Community candidate failed: ${error.message}`); process.exitCode = 1; });
+if (require.main === module) main().catch((error) => { console.error(`Community candidate failed: ${error.message}`); process.exitCode = 1; });
+module.exports = { validateActionLinks };
