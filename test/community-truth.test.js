@@ -121,3 +121,35 @@ test("expired sensitive facts withhold the source text instead of leaking an old
   assert.equal(result.sources.length, 0);
   assert.equal(result.withheldSources[0].id, "pickleball");
 });
+
+test("contact comparisons distinguish channels and normalize phone formatting without hiding changed numbers", () => {
+  const source = { id: 'office', title: 'Office', sourceUrl: 'https://alpha.gov/contact', contentHash: 'v1', connectorType: 'civicplus-pages', facts: [
+    {type:'phone',value:'303-555-0100',normalizedValue:'303-555-0100',context:'Call the office or email office@example.gov.'},
+    {type:'phone',value:'+1 (303) 555-0100',normalizedValue:'+1 (303) 555-0100',context:'Call the office or email office@example.gov.'},
+    {type:'email',value:'office@example.gov',context:'Call the office or email office@example.gov.'}
+  ]};
+  const index={communityId:'alpha',sources:[source]};
+  const ledger=buildFactLedger(index,{trusted:true});
+  const result=resolveFactLedger(ledger,profile);
+  assert.equal(result.groups.length,2);
+  assert.equal(result.unresolvedSensitive.length,0);
+  source.facts.push({type:'phone',value:'303-555-0101',normalizedValue:'303-555-0101',context:'Call the office or email office@example.gov.'});
+  assert.equal(resolveFactLedger(buildFactLedger(index,{trusted:true}),profile).unresolvedSensitive.length,1);
+});
+
+test("time comparisons separate labeled days and interval endpoints but preserve same-day contradictions", () => {
+  const source={id:'courts',title:'Courts',sourceUrl:'https://alpha.gov/courts',contentHash:'v1',facts:[
+    {type:'time',value:'7 am',context:'Hours: Weekdays 7 am-dusk; Weekends 8 am-dusk.'},
+    {type:'time',value:'8 am',context:'Hours: Weekdays 7 am-dusk; Weekends 8 am-dusk.'},
+    {type:'time',value:'8:00 AM',context:'Monday - Friday: 8:00 AM - 5:00 PM'},
+    {type:'time',value:'5:00 PM',context:'Monday - Friday: 8:00 AM - 5:00 PM'}
+  ]};
+  const facts=buildFactLedger({communityId:'alpha',sources:[source]},{trusted:true});
+  assert.equal(facts[0].scopeKey,'weekday-opening');
+  assert.equal(facts[1].scopeKey,'weekends-opening');
+  assert.equal(facts[2].scopeKey,'weekday-opening');
+  assert.equal(facts[3].scopeKey,'weekday-closing');
+  const conflicts=resolveFactLedger(facts,profile).unresolvedSensitive;
+  assert.equal(conflicts.length,1);
+  assert.equal(conflicts[0].claimKey,'alpha:courts:facility-hours:weekday-opening');
+});
