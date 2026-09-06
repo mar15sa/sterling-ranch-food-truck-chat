@@ -191,3 +191,14 @@ test('company directory rows distinguish contacts while retaining same-company c
  const ambiguous=buildFactLedger({communityId:'alpha',sources:[source]},{trusted:true});
  assert.equal(ambiguous[0].subjectKey,'directory');
 });
+
+test('fee comparisons preserve explicit pricing units and still flag different per-court prices',()=>{
+ const source={id:'court',title:'Pickleball Courts',sourceUrl:'https://alpha.gov/courts',contentHash:'v1',facts:[
+  {type:'money',value:'$40',context:'Non-residents: $40/court for four players. Open play for non-residents: $20 for two players.'},
+  {type:'money',value:'$20',context:'Non-residents: $40/court for four players. Open play for non-residents: $20 for two players.'}
+ ]};
+ const index={communityId:'alpha',sources:[source]};
+ assert.equal(resolveFactLedger(buildFactLedger(index,{trusted:true}),profile).unresolvedSensitive.length,0);
+ source.facts.push({type:'money',value:'$50',context:'Non-residents: $50/court for four players. Open play for non-residents: $20 for two players.'});
+ assert.equal(resolveFactLedger(buildFactLedger(index,{trusted:true}),profile).unresolvedSensitive.length,1);
+});
