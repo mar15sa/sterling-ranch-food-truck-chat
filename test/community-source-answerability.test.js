@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { searchCommunityIndex } = require('../lib/community-search');
 const { sourceReviewGate } = require('../lib/community-source-answerability');
+const { answerCommunityQuestion } = require('../lib/community-assistant');
 const now = new Date('2026-09-06T22:00:00Z');
 const source = { id: 'water', communityId: 'alpha', sourceUrl: 'https://alpha.gov/water-billing', title: 'Water billing prices',
   sourceType: 'services', connectorType: 'civicplus-pages', contentHash: 'v1', reviewStatus: 'approved',
@@ -25,4 +26,20 @@ test('mixed fee approvals and stale source versions cannot leak through a matchi
 });
 test('static review rules leave live calendar identity separate', () => {
   assert.equal(sourceReviewGate(makeIndex([]), now.getTime())({ id: 'live-calendar', sourceType: 'events', connectorType: 'civicplus-calendar', lifecycle: 'current' }), true);
+});
+
+test('a pending controlling source produces an explicitly unverified answer without consulting fallback rules', async () => {
+  const answer = await answerCommunityQuestion('What is the water billing price?', {
+    index: makeIndex([{ ...fee, reviewStatus: 'candidate' }, contact]),
+    communityId: 'alpha', isTest: true,
+    planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: () => { throw new Error('Pending controlling evidence must not be bypassed.'); },
+  });
+  assert.equal(answer.answerMode, 'community-freshness-withheld');
+  assert.equal(answer.confidence.canAnswer, false);
+  assert.equal(answer.confidence.reason, 'source-review-required');
+  assert.equal(answer.confidence.score, 0);
+  assert.equal(answer.answerStatus, 'source-unavailable');
+  assert.doesNotMatch(answer.answer, /\$20|new-office@example\.com/);
+  assert.equal(answer.actions[0].url, source.sourceUrl);
 });
