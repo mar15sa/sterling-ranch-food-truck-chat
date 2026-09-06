@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-09-06T17:15:48.709Z",
+  "url": "https://sterlingranchcab.com/",
+  "before": "1f9f642333b2079554d2b222acb62fcc4adaf2492e114ca941a457e06ab450eb",
+  "after": "8c28cbf913c93acfe778047469de73b69205742aa9cf49c5203e7847a47eb007",
+  "standingTextUnchanged": true,
+  "actionsPreserved": true,
+  "reason": "Removed only stale homepage calendar listings; live events come from the calendar connector."
+}
