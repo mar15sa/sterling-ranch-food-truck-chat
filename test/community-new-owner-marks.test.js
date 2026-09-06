@@ -12,6 +12,11 @@ test('owner pool-event discovery reaches the calendar even when a planner propos
   assert.equal(plan.intent, 'events');
   assert.equal(plan.goal, 'schedule');
   assert.equal(plan.filters.location, 'pool');
+  for (const goals of [['schedule', 'status', 'information'], ['schedule', 'information'], ['status']]) {
+    const repeated = normalizedRoutingPlan({ intent: 'events', goal: goals[0], goals, scope: 'community',
+      subject: 'pool events and giveaways', searchQueries: ['pool events today'] }, poolQuestion, { now });
+    assert.deepEqual(repeated.goals, ['schedule']);
+  }
   let calendars = 0;
   let poolChecks = 0;
   const answer = await answerCommunityQuestion(poolQuestion, { now, index: { sources: [] }, interpretationMode: 'structured',
