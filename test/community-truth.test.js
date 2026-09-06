@@ -21,6 +21,22 @@ const profile = {
   },
 };
 
+test('date range endpoints coexist while changed endpoints remain conflicts', () => {
+  const context = 'A Winter Deferral Period for completion of rear yard planting is granted for closings from November 1 to April 30.';
+  const source = { id: 'winter', title: 'Winter deferral', sourceUrl: 'https://alpha.gov/winter', contentHash: 'v1',
+    connectorType: 'civicplus-pages', facts: ['November 1', 'April 30'].map(value => ({ type: 'date', value, context })) };
+  const index = { communityId: 'alpha', sources: [source] };
+  const original = buildFactLedger(index, { trusted: true });
+  assert.notEqual(original[0].claimKey, original[1].claimKey);
+  assert.equal(resolveFactLedger(original, profile).unresolved.length, 0);
+  const changed = { ...source, id: 'winter-other', contentHash: 'v2', facts: [
+    { type: 'date', value: 'November 15', context: context.replace('November 1', 'November 15') },
+    { type: 'date', value: 'May 15', context: context.replace('April 30', 'May 15') },
+  ] };
+  const combined = buildFactLedger({ ...index, sources: [source, changed] }, { trusted: true });
+  assert.equal(resolveFactLedger(combined, profile).unresolved.length, 2);
+});
+
 function entry(overrides = {}) {
   return {
     id: overrides.id || Math.random().toString(36),
