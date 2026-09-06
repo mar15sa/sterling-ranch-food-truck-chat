@@ -256,7 +256,8 @@ test("structured plans canonicalize compound goals and event venue filters witho
     subject: "water bill non-payment consequences",
     requestedDetails: ["action"],
   }), "What happens if I do not pay my water bill?", { now: NOW });
-  assert.deepEqual(consequence.requestedDetails, ["action"]);
+  // Explaining non-payment consequences must not become a payment request.
+  assert.deepEqual(consequence.requestedDetails, []);
 
   const venue = normalizeInterpretation(interpretation({
     filters: { audience: "", category: "", facility: "Sterling Center", location: "" },
