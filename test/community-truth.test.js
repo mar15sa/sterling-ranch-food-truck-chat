@@ -177,3 +177,17 @@ test("a later named-day schedule does not inherit an earlier weekday label",()=>
  assert.equal(facts[1].scopeKey,'tuesday-thursday-opening');
  assert.equal(resolveFactLedger(facts,profile).unresolvedSensitive.length,0);
 });
+
+test('company directory rows distinguish contacts while retaining same-company contradictions',()=>{
+ const header='Company Landscape Design Irrigation Design Landscape Installation Irrigation Installation Email Phone ';
+ const source={id:'directory',title:'Directory',sourceUrl:'https://alpha.gov/directory.pdf',contentHash:'v1',text:header+'Alpha Gardens  alpha@example.com 303-555-0100 Beta Gardens  beta@example.com 303-555-0200 Alpha Gardens  alpha@example.com 303-555-0300',facts:[{type:'phone',value:'303-555-0100'},{type:'phone',value:'303-555-0200'},{type:'phone',value:'303-555-0300'}]};
+ const facts=buildFactLedger({communityId:'alpha',sources:[source]},{trusted:true});
+ assert.equal(facts[0].subjectKey,'directory-alpha-gardens');
+ assert.equal(facts[1].subjectKey,'directory-beta-gardens');
+ const conflicts=resolveFactLedger(facts,profile).unresolvedSensitive;
+ assert.equal(conflicts.length,1);
+ assert.equal(conflicts[0].entries.length,2);
+ source.text=header+'Alpha Gardens  alpha@example.com 303-555-0100 Beta Gardens  beta@example.com 303-555-0100';
+ const ambiguous=buildFactLedger({communityId:'alpha',sources:[source]},{trusted:true});
+ assert.equal(ambiguous[0].subjectKey,'directory');
+});
