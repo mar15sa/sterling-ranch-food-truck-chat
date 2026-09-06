@@ -2,6 +2,14 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildReviewItems, compileReviewedCandidate, reviewCoverage } = require("../lib/community-source-review");
 
+test('routine calendar changes create no static source review and preserve the release identity', () => {
+  const { fingerprint } = require('../lib/community-source-review');
+  const before = {sources:[{id:'calendar',contentHash:'yesterday',connectorType:'civicplus-calendar'}]};
+  const after = {sources:[{id:'calendar',contentHash:'today',connectorType:'civicplus-calendar'}]};
+  assert.deepEqual(buildReviewItems(before,after,{}),[]);
+  assert.equal(fingerprint(before),fingerprint(after));
+});
+
 const profile = {
   factAuthority: {
     fee: ["civicplus-pages"], contact: ["civicplus-pages"], restriction: ["municode", "civicplus-pages"],

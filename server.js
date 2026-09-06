@@ -4,6 +4,11 @@ const path = require("node:path");
 const { spawn } = require("node:child_process");
 const { URL } = require("node:url");
 const { isJunkMenuItem } = require("./lib/menu-quality");
+const liveMonitor = require('./lib/community-live-monitor').createLiveMonitor({
+  getPoolStatus: (...args) => getPoolStatus(...args),
+  getCommunityEvents: (...args) => getCommunityEvents(...args),
+  notify: (...args) => require('./lib/rules-alerts').alertCommunityMonitorChanged(...args),
+});
 const { createFoodTruckService } = require("./lib/food-truck-service");
 const {
   answerRulesQuestion,
@@ -4636,6 +4641,7 @@ async function handleHealth(req, res) {
     uptimeSeconds: Math.round(process.uptime()),
     deploymentReady: healthy,
     deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    liveMonitoring: liveMonitor.status(),
     rules: {
       exists: rules.exists,
       isStale: rules.isStale,
@@ -5182,6 +5188,7 @@ warmRulesIndex()
       console.log(`Food truck chat is running on ${HOST}:${PORT}`);
       scheduleRulesRefreshChecks();
       scheduleCommunityRefresh();
+      liveMonitor.start();
       scheduleOpeningsRadar();
     });
   });

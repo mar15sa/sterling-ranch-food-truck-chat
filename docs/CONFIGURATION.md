@@ -51,3 +51,13 @@ The `Sterling Ranch source release` GitHub workflow is deliberately dormant unti
 ## Ownership checklist
 
 Keep a private record of the owner and renewal/billing location for Railway, GitHub, the domain/Cloudflare, Google Analytics, Gmail, Notion, Resend, and Anthropic. Also keep the most recent monthly cost snapshot and domain renewal date. Those records should not contain passwords or API keys.
+
+## Reconciled source monitoring
+
+The source inventory workflow is a monitor only: it checks nightly, forces content refresh weekly, records monthly accuracy/coverage/conflict/review-delay/release summaries, and preserves reports. It does not push staging or auto-merge production. Disabling automatic promotion cannot disable these checks. Publishing stays with the integration release task and protected review process.
+
+The existing quality workflow now includes hourly calendar and facility verification. The hosted app records facility checks every minute and calendar checks hourly; normal successful checks go to durable hosting logs, while failure and recovery transitions use the existing alert channel. Every question-based check remains labeled as a test.
+
+`RULES_FETCH_RETRY_ATTEMPTS` (default 3, capped at 5) and `RULES_FETCH_RETRY_DELAY_MS` (default 500) recover temporary official-source failures. All retries share the existing `RULES_FETCH_TIMEOUT_MS` time budget, rather than multiplying it. Missing pages and invalid JSON fail directly.
+
+The separate Source Review Notion database is connected in staging and in encrypted scheduled-job settings. Production identifiers must be added only as part of the approved Release 2 promotion. Public source batches remain candidates until the exact content receives an owner decision.

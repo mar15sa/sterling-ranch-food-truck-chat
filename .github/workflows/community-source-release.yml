@@ -2,6 +2,11 @@ name: Sterling Ranch source inventory and review
 
 on:
   workflow_dispatch:
+    inputs:
+      monthly:
+        description: Also record the monthly review
+        type: boolean
+        default: false
   schedule:
     - cron: "35 13 * * *"
 
@@ -39,6 +44,18 @@ jobs:
           node scripts/sync-community-review.js --candidate data/community-index.candidate.json
           npm run community:review:export -- --output data/community-review-decisions.json --fail-overdue
           npm run community:candidate -- --candidate data/community-index.candidate.json --decisions data/community-review-decisions.json --report data/community-source-report.json --check-links
+      - name: Record monthly accuracy and review outcomes
+        if: always()
+        env:
+          RUN_MONTHLY: ${{ inputs.monthly }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$(date -u +%d)" = "01" ] || [ "$RUN_MONTHLY" = "true" ]; then
+            node scripts/report-community-monthly.js
+          fi
       - name: Preserve monitoring evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -48,6 +65,7 @@ jobs:
             data/community-index.candidate.json
             data/community-source-report.json
             data/community-review-summary.json
+            data/community-monthly-report.json
           retention-days: 30
       - name: Open or update an exception issue
         if: failure()
