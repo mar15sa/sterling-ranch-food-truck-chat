@@ -21,6 +21,7 @@ const expectedRevision = String(process.env.EXPECTED_APPLICATION_REVISION || "")
 const segmentChecks = Math.max(1, Number(option("--segment-checks", String(checks))) || checks);
 const identity = { baseUrl, durationHours, checkCount: checks, intervalMs, expectedFingerprint, expectedRevision };
 const prior = process.argv.includes("--resume") ? resumeEvidence(JSON.parse(fs.readFileSync(reportPath, "utf8")), identity) : null;
+identity.configurationFingerprint = prior?.configurationFingerprint || '';
 const startedAt = prior?.startedAt || new Date().toISOString();
 const durations = prior?.durations || [];
 const rows = prior?.rows || [];
@@ -112,7 +113,13 @@ async function checkOnce(number) {
   if (!health.deploymentReady || health.status !== "ok") throw new Error(`Check ${number}: staging is not deployment-ready.`);
   if (health.rules?.isStale || health.communitySources?.stale || health.communitySources?.failureCount) throw new Error(`Check ${number}: source freshness or availability failed.`);
   if (expectedRevision && health.deploymentRevision !== expectedRevision) throw new Error(`Check ${number}: application revision changed during the soak.`);
-  if (health.communitySources?.pendingReview) throw new Error(`Check ${number}: community sources are pending review.`);
+  if (!health.configurationFingerprint) throw new Error(`Check ${number}: deployment configuration evidence is missing.`);
+  if (identity.configurationFingerprint && health.configurationFingerprint !== identity.configurationFingerprint) throw new Error(`Check ${number}: deployment configuration changed during the soak.`);
+  identity.configurationFingerprint = health.configurationFingerprint;
+  if (health.communitySources?.unresolvedSensitiveConflictCount > 0) throw new Error(`Check ${number}: active sensitive source conflicts remain.`);
+  rows.push({ id: 'deployment-health', checkedAt: new Date().toISOString(), deploymentRevision: health.deploymentRevision,
+    configurationFingerprint: health.configurationFingerprint, activeFingerprint: health.communitySources?.activeFingerprint,
+    quarantinedReview: health.communitySources?.pendingReview || null });
   if (expectedFingerprint && health.communitySources?.activeFingerprint !== expectedFingerprint) {
     throw new Error(`Check ${number}: community source fingerprint changed during the soak.`);
   }

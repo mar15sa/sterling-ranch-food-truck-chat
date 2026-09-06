@@ -4642,6 +4642,7 @@ async function handleHealth(req, res) {
     deploymentReady: healthy,
     deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
     liveMonitoring: liveMonitor.status(),
+    configurationFingerprint: require('./lib/community-soak-evidence').configurationFingerprint(),
     rules: {
       exists: rules.exists,
       isStale: rules.isStale,
@@ -5192,4 +5193,5 @@ warmRulesIndex()
       scheduleOpeningsRadar();
     });
   });
+
 
