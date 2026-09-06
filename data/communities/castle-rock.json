@@ -42,6 +42,16 @@
     "status": ["civicplus-alerts", "civicplus-pages"],
     "services": ["civicplus-pages"]
   },
+  "factAuthority": {
+    "live-status": ["civicplus-alerts", "civicplus-pages"],
+    "facility-hours": ["civicplus-pages", "official-pdf", "municode"],
+    "reservation-policy": ["civicplus-pages", "official-pdf", "municode"],
+    "fee": ["adopted-document", "official-pdf", "civicplus-pages", "municode"],
+    "restriction": ["municode", "adopted-document", "official-pdf", "civicplus-pages"],
+    "contact": ["civicplus-pages", "official-pdf", "municode"],
+    "submission": ["civicplus-pages", "official-pdf", "municode"],
+    "event-date": ["civicplus-calendar", "civicplus-alerts", "civicplus-pages"]
+  },
   "allowedHosts": [
     "crgov.com",
     "www.crgov.com",

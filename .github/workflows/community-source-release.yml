@@ -1,28 +1,20 @@
-name: Sterling Ranch source release
+name: Sterling Ranch source inventory and review
 
 on:
   workflow_dispatch:
-    inputs:
-      approve_high_risk:
-        description: "I reviewed high-risk source changes (hours, fees, contacts, links, reservations, or removals)"
-        required: false
-        default: false
-        type: boolean
   schedule:
     - cron: "35 13 * * *"
 
 permissions:
-  contents: write
+  contents: read
   issues: write
-  pull-requests: write
 
 concurrency:
-  group: community-staging-publisher
+  group: community-source-monitor
   cancel-in-progress: false
 
 jobs:
-  refresh-and-promote:
-    if: vars.COMMUNITY_AUTO_PROMOTE == 'true'
+  monitor:
     runs-on: ubuntu-latest
     timeout-minutes: 110
     steps:
@@ -35,88 +27,47 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Build and validate candidate
-        run: |
-          npm run ingest:community -- --output data/community-index.candidate.json
-          npm run community:facts -- --input data/community-index.candidate.json --output data/community-index.candidate.json
-          approval=""
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.approve_high_risk }}" = "true" ]; then approval="--approve-reviewed"; fi
-          npm run community:candidate -- --candidate data/community-index.candidate.json --report data/community-source-report.json --check-links --prune-broken-links --promote $approval
-          rm data/community-index.candidate.json
-          npm run check
-      - name: Publish source-only staging commit
-        id: staging_commit
-        run: |
-          if git diff --quiet -- data/community-index.json data/community-source-report.json data/community-assistant-eval.json; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/community-index.json data/community-source-report.json data/community-assistant-eval.json
-          git commit -m "Refresh verified Sterling Ranch sources"
-          git push origin HEAD:staging
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "fingerprint=$(node -e \"console.log(require('./lib/community-release').fingerprint(require('./data/community-index.json')))\")" >> "$GITHUB_OUTPUT"
-      - name: One-hour staging soak
-        if: steps.staging_commit.outputs.changed == 'true'
+      - name: Collect inventory and review evidence
         env:
-          RULES_LIVE_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}
-          EXPECTED_COMMUNITY_FINGERPRINT: ${{ steps.staging_commit.outputs.fingerprint }}
-        run: npm run community:soak -- --checks 5 --interval-ms 900000
-      - name: Run complete live staging monitor
-        if: steps.staging_commit.outputs.changed == 'true'
-        env:
-          RULES_LIVE_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}
-        run: npm run rules:monitor:live
-      - name: Promote the exact source bundle to production
-        if: steps.staging_commit.outputs.changed == 'true'
-        id: production_commit
+          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
         run: |
-          source_commit="${{ steps.staging_commit.outputs.commit }}"
-          git fetch origin main
-          git checkout -B source-release-main origin/main
-          git checkout "$source_commit" -- data/community-index.json data/community-source-report.json data/community-assistant-eval.json
-          git add data/community-index.json data/community-source-report.json data/community-assistant-eval.json
-          git commit -m "Refresh verified Sterling Ranch sources"
-          git push origin HEAD:main
-          echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-      - name: Verify production and roll back on failure
-        if: steps.staging_commit.outputs.changed == 'true'
-        env:
-          RULES_LIVE_BASE_URL: ${{ vars.PRODUCTION_BASE_URL || 'https://sterlingranchsociety.com' }}
-          EXPECTED_COMMUNITY_FINGERPRINT: ${{ steps.staging_commit.outputs.fingerprint }}
-        run: |
-          set +e
-          npm run community:soak -- --checks 2 --interval-ms 60000
-          result=$?
-          set -e
-          if [ "$result" -ne 0 ]; then
-            git revert --no-edit "${{ steps.production_commit.outputs.commit }}"
-            git push origin HEAD:main
-            exit "$result"
-          fi
+          force=""
+          if [ "$(date -u +%u)" = "7" ]; then force="--force-content"; fi
+          npm run ingest:community -- --max-pages 500 --max-documents 250 --output data/community-index.candidate.json $force
+          node scripts/sync-community-review.js --candidate data/community-index.candidate.json
+          npm run community:review:export -- --output data/community-review-decisions.json --fail-overdue
+          npm run community:candidate -- --candidate data/community-index.candidate.json --decisions data/community-review-decisions.json --report data/community-source-report.json --check-links
+      - name: Preserve monitoring evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-monitor-${{ github.run_id }}
+          path: |
+            data/community-index.candidate.json
+            data/community-source-report.json
+            data/community-review-summary.json
+          retention-days: 30
       - name: Open or update an exception issue
         if: failure()
         uses: actions/github-script@v7
         with:
           script: |
-            const title = "Sterling Ranch automatic source release was blocked";
+            const title = "Sterling Ranch source monitor needs review";
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const body = `The trusted source bundle remains live because an automated accuracy or deployment gate failed. Review: ${runUrl}`;
             const { data: issues } = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: "open", per_page: 100 });
             const existing = issues.find((issue) => !issue.pull_request && issue.title === title);
-            if (existing) await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
-            else await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
+            if (!existing) await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
       - name: Close the exception issue after recovery
         if: success()
         uses: actions/github-script@v7
         with:
           script: |
-            const title = "Sterling Ranch automatic source release was blocked";
+            const title = "Sterling Ranch source monitor needs review";
             const { data: issues } = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: "open", per_page: 100 });
             for (const issue of issues.filter((item) => !item.pull_request && item.title === title)) {
-              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, body: "The automatic source release is passing again. Closing this alert." });
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, body: "The source inventory and review checks are passing again. Closing this alert." });
               await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, state: "closed" });
             }
