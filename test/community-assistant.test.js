@@ -94,6 +94,35 @@ test("action extraction keeps nearby meaning and recognizes official mobile-app 
   assert.match(actions[0].context, /WasteConnect.*pickup schedule/i);
 });
 
+test("collecting the same unreviewed candidate twice does not approve its facts", async () => {
+  const options = {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async () => new Response('<div data-cpRole="mainContentContainer"><h1>Facility fees</h1><p>The Great Hall reservation fee is $100 per hour. Residents must use the official booking process.</p></div>', { headers: { "content-type": "text/html" } }),
+  };
+  const first = await crawlCommunity(profile(), options);
+  const second = await crawlCommunity(profile(), { ...options, previousIndex: first });
+  assert.ok(first.factLedger.length);
+  assert.ok(second.factLedger.length);
+  assert.ok(second.factLedger.every(fact => fact.reviewStatus !== "approved"));
+});
+
+test("saved page metadata without retained content remains pending when a crawl budget is reached", async () => {
+  const urls = ["https://alpha.gov/DocumentCenter/View/100/First", "https://alpha.gov/DocumentCenter/View/101/Second"];
+  const index = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { sources: [], pages: urls.map(url => ({ url, canonicalUrl: url, indexed: true, title: "Application", lastCheckedAt: "2026-09-06" })), inventory: { eligibleUrls: urls } },
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async () => new Response('<div data-cpRole="mainContentContainer"><h1>Home</h1><p>Official applications and resident information for the community are available here.</p></div>', { headers: { "content-type": "text/html" } }),
+    extractPdfText: async () => "Official application instructions: Submit the completed property owner application and supporting site plans to the community office.",
+  });
+  const omitted = urls.find(url => !index.sources.some(source => source.sourceUrl === url));
+  assert.ok(omitted);
+  assert.ok(index.inventory.pendingUrls.includes(omitted));
+  assert.equal(index.pages.find(page => page.url === omitted).indexed, false);
+  assert.equal(index.inventory.complete, false);
+});
+
 test("official PDFs linked from a crawled page receive a separate crawl budget and become searchable sources", async () => {
   const rootHtml = `<html><div data-cpRole="mainContentContainer"><h1>Design Review Documents</h1><p>Official standards and applications for residents are available here.</p><a href="/DocumentCenter/View/618/Standard-3-Rail-Fencing-">Standard 3 Rail Fencing</a></div></html>`;
   const index = await crawlCommunity(profile(), {

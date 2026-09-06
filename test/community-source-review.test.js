@@ -21,6 +21,15 @@ function source(hash, value = "$10") {
   return { id: "fees", communityId: "alpha", title: "Facility fees", sourceUrl: "https://alpha.gov/fees", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, text: `The fee is ${value}.`, excerpt: `The fee is ${value}.`, actions: [], facts: [{ id: "fee", factKey: "fee", type: "money", value, context: `The fee is ${value}.` }], contentHash: hash, checkedAt: "2026-09-01T00:00:00Z", staleAfter: "2099-01-01T00:00:00Z" };
 }
 
+test("source comparisons include changed clauses beyond the short excerpt", () => {
+  const current = source("old");
+  const proposed = { ...source("new"), text: "Application instructions. ".repeat(30) + "The modification fee is $150.", excerpt: "Application instructions." };
+  const items = buildReviewItems({ sources: [current] }, { sources: [proposed] }, profile);
+  const item = items.find(item => item.facet === "source");
+  assert.match(item.proposedValue, /modification fee is \$150/);
+  assert.match(item.supportingText, /modification fee is \$150/);
+});
+
 test("every material source change requires a hash-bound decision", () => {
   const trusted = { communityId: "alpha", sources: [source("old")], factLedger: [] };
   const candidate = { communityId: "alpha", generatedAt: "2026-09-01T00:00:00Z", sources: [source("new", "$12")] };
