@@ -4504,12 +4504,14 @@ async function handleCommunityRoutingEval(req, res) {
     return;
   }
   let diagnostic = null;
-  const rawPlan = await planCommunitySearch(question, { onDiagnostic: (value) => { diagnostic = value; } });
+  const rawPlan = await planCommunitySearch(question, { cache: false, onDiagnostic: (value) => { diagnostic = value; } });
   const plan = normalizedRoutingPlan(rawPlan, question);
   sendJson(res, 200, {
     accepted: Boolean(plan),
     classification: classification.classification,
     reason: plan ? "structured-plan-accepted" : "planner-unavailable-or-incompatible",
+    deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    evaluation: { isTest: true, cacheDisabled: true },
     plan,
     diagnostic: plan ? undefined : diagnostic,
   });
