@@ -137,6 +137,57 @@ test('scanned PDF page counters do not count as indexed or duplicate content', a
   assert.equal(repeated.pages.find(p => p.url === url)?.indexed, false);
 });
 
+test('PDF browser-print headers do not establish readable document body', () => {
+  const { hasReadableDocumentText } = require('../lib/community-ingest');
+  const headers = '12/23/24, 10:15 AM Landmark Web Official Records Search https://apps.douglas.co.us/LandmarkWeb/search/index?theme=.blue 1/6 -- 1 of 6 --';
+  assert.equal(hasReadableDocumentText(headers.repeat(6)), false);
+  assert.equal(hasReadableDocumentText(headers + 'Resolution forming Subdistrict B.'), true);
+});
+
+test('PDF deduplication requires full document identity and preserves image-only changes for review', async () => {
+  const urls = ['https://alpha.gov/DocumentCenter/View/100/Policy-A', 'https://alpha.gov/DocumentCenter/View/101/Policy-B'];
+  const text = 'Official policy: The facility deposit is $250. The attached map and scanned resolution identify which district this policy covers.';
+  const common = { maxPages: 1, maxDocuments: 2, discoverSitemap: false,
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response(`<main>Official community services and policies. ${urls.map(url => `<a href="${url}">Official policy</a>`).join(' ')}</main>`, { headers: { 'content-type': 'text/html' } }) };
+  const separate = await crawlCommunity(profile(), { ...common, extractPdfText: async (url, options) => {
+    options.onDocumentFingerprint(url.endsWith('Policy-A') ? 'binary-a' : 'binary-b'); return text;
+  } });
+  const documents = separate.sources.filter(s => urls.includes(s.sourceUrl));
+  assert.equal(documents.length, 2);
+  assert.equal(new Set(documents.map(s => s.contentHash)).size, 2);
+  assert.ok(separate.pages.filter(p => urls.includes(p.url)).every(p => p.indexed && !p.duplicateOf));
+  const identical = await crawlCommunity(profile(), { ...common, extractPdfText: async (url, options) => {
+    options.onDocumentFingerprint('same-binary'); return text;
+  } });
+  assert.equal(identical.sources.filter(s => urls.includes(s.sourceUrl)).length, 1);
+  assert.equal(identical.pages.filter(p => p.duplicateOf).length, 1);
+  const unverified = await crawlCommunity(profile(), { ...common, extractPdfText: async () => text });
+  assert.equal(unverified.sources.filter(s => urls.includes(s.sourceUrl)).length, 2);
+  const changed = await crawlCommunity(profile(), { ...common, previousIndex: separate, extractPdfText: async (url, options) => {
+    options.onDocumentFingerprint(url.endsWith('Policy-A') ? 'binary-a-new-map' : 'binary-b'); return text;
+  } });
+  assert.notEqual(changed.sources.find(s => s.sourceUrl === urls[0]).contentHash, documents.find(s => s.sourceUrl === urls[0]).contentHash);
+  const items = require('../lib/community-source-review').buildReviewItems(separate, changed, profile());
+  assert.ok(items.some(item => item.proposedSourceUrl === urls[0] && item.requiresReview));
+});
+
+test('old PDF text-only aliases remain pending when their document is not fetched', async () => {
+  const owner = 'https://alpha.gov/DocumentCenter/View/100/Policy-A';
+  const alias = 'https://alpha.gov/DocumentCenter/View/101/Policy-B';
+  const retained = source({ sourceUrl: owner, connectorType: 'official-pdf' });
+  const result = await crawlCommunity(profile(), { maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { sources: [retained], pages: [{ url: owner, indexed: true, contentFingerprint: 'same', chunkContentHashes: ['abc'] },
+      { url: alias, duplicateOf: owner, indexed: false, contentFingerprint: 'same', chunkContentHashes: ['abc'] }],
+      inventory: { eligibleUrls: [owner, alias], pendingUrls: [owner] } },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and services for residents are provided on this website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async () => retained.text });
+  assert.ok(result.inventory.pendingUrls.includes(alias));
+  assert.equal(result.pages.find(p => p.url === alias).indexed, false);
+  assert.equal(result.pages.find(p => p.url === alias).duplicateOf, undefined);
+});
+
 test("saved page metadata without retained content remains pending when a crawl budget is reached", async () => {
   const urls = ["https://alpha.gov/DocumentCenter/View/100/First", "https://alpha.gov/DocumentCenter/View/101/Second"];
   const index = await crawlCommunity(profile(), {
