@@ -83,6 +83,20 @@ test('explicit billing tiers coexist while different prices in the same tier con
   assert.match(conflicts[0].claimKey, /tier-1/);
 });
 
+test('explicit quantitative range bounds coexist while changed bounds still conflict', () => {
+  const context = 'The cleanout cover shall be 4 inches to 6 inches above finished grade.';
+  const source = { id: 'cleanout', title: 'Water standards', sourceUrl: 'https://alpha.gov/standards', contentHash: 'v1', connectorType: 'civicplus-pages',
+    facts: ['4 inches', '6 inches'].map(value => ({ type: 'limit', value, context })) };
+  const build = sources => buildFactLedger({ communityId: 'alpha', sources }, { trusted: true });
+  const initial = build([source]);
+  assert.notEqual(initial[0].claimKey, initial[1].claimKey);
+  assert.equal(resolveFactLedger(initial, profile).unresolvedSensitive.length, 0);
+  const changed = { ...source, id: 'updated', contentHash: 'v2', facts: [{ type: 'limit', value: '8 inches', context: context.replace('6 inches', '8 inches') }] };
+  const conflicts = resolveFactLedger(build([source, changed]), profile).unresolvedSensitive;
+  assert.equal(conflicts.length, 1);
+  assert.match(conflicts[0].claimKey, /range-upper/);
+});
+
 function entry(overrides = {}) {
   return {
     id: overrides.id || Math.random().toString(36),
