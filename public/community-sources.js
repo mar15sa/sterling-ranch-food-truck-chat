@@ -20,6 +20,7 @@ function showDashboard() { loginPanel.hidden = true; dashboard.hidden = false; }
 
 function sourceLink(url, label) {
   if (!url) return null;
+  try { if (!['https:', 'http:'].includes(new URL(url).protocol)) return null; } catch { return null; }
   const link = textElement("a", label);
   link.href = url; link.target = "_blank"; link.rel = "noreferrer";
   return link;
@@ -57,6 +58,7 @@ function reviewCard(item) {
   const evidence = document.createElement("div"); evidence.className = "evidence";
   evidence.append(textElement("h3", "Why this source ranks here"), textElement("p", item.authorityReason));
   evidence.append(textElement("h3", "Expected resident impact"), textElement("p", item.predictedAnswerChange));
+  if (item.supportingText) evidence.append(textElement('h3', 'Official supporting excerpt'), textElement('p', item.supportingText));
   evidence.append(textElement("h3", "Dates and release identity"), textElement("p", [
     `Published: ${item.publishedAt || "not stated"}`,
     `Effective: ${item.effectiveFrom || "not stated"}${item.effectiveTo ? ` through ${item.effectiveTo}` : ""}`,
@@ -65,7 +67,21 @@ function reviewCard(item) {
     `Candidate: ${item.candidateFingerprint || "not stated"}`,
     `Current release: ${item.releaseFingerprint || "not stated"}`,
   ].join("\n")));
-  if ((item.relatedConflicts || []).length) evidence.append(textElement("h3", "Related contradictions"), textElement("p", item.relatedConflicts.join("\n")));
+  if ((item.relatedConflicts || []).length) {
+    evidence.append(textElement('h3', 'Related contradictions'));
+    const conflicts = document.createElement('ul');
+    for (const conflict of item.relatedConflicts) {
+      const row = document.createElement('li');
+      if (typeof conflict === 'string') row.append(textElement('p', conflict));
+      else {
+        row.append(textElement('p', conflict.value));
+        const link = sourceLink(conflict.sourceUrl, conflict.sourceTitle || 'Open conflicting source');
+        if (link) row.append(link);
+      }
+      conflicts.append(row);
+    }
+    evidence.append(conflicts);
+  }
   const links = document.createElement("div"); links.className = "source-links";
   [sourceLink(item.currentSourceUrl, "Open current source"), sourceLink(item.proposedSourceUrl, "Open proposed source")].filter(Boolean).forEach((link) => links.append(link));
   evidence.append(links); card.append(evidence);
