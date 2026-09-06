@@ -937,3 +937,17 @@ test("a reused page with one missing recorded chunk stays pending", async()=>{
  assert.equal(index.pages[0].indexed,false);
  assert.ok(index.inventory.pendingUrls.includes(root));
 });
+
+test("FAQ accordion controls are not application actions but real answer links remain",()=>{
+ const links=linksFromHtml('<a href="#question-88">How do I submit an application for Design Review?</a><a href="/Faq.aspx?QID=88">How do I submit an application for Design Review?</a><a href="/DocumentCenter/View/1964/Packet">Landscape application packet</a>','https://alpha.gov/m/faq?cat=15');
+ const actions=extractActions(links);
+ assert.equal(actions.length,2);
+ assert.ok(actions.some(a=>a.url==='https://alpha.gov/Faq.aspx?QID=88'));
+ assert.ok(actions.some(a=>a.url==='https://alpha.gov/DocumentCenter/View/1964/Packet'));
+ assert.equal(actions.some(a=>a.url==='https://alpha.gov/m/faq?cat=15'),false);
+});
+
+test("real application anchors retain the section needed to complete the action",()=>{
+ const actions=extractActions(linksFromHtml('<a href="#apply-now">Submit application</a>','https://alpha.gov/application'));
+ assert.equal(actions[0].url,'https://alpha.gov/application#apply-now');
+});
