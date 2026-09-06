@@ -65,6 +65,24 @@ test('explicit emergency contacts coexist with general phones while competing em
   assert.equal(resolveFactLedger(facts, profile).unresolvedSensitive.length, 2);
 });
 
+test('explicit billing tiers coexist while different prices in the same tier conflict', () => {
+  const { extractFacts } = require('../lib/community-ingest');
+  const [extracted] = extractFacts('Tier 1 is $9.40/1,000 gallons.');
+  assert.equal(extracted.normalizedValue, 9.4);
+  const source = { id: 'rates', title: 'Water billing', sourceUrl: 'https://alpha.gov/rates', contentHash: 'v1', connectorType: 'civicplus-pages', facts: [
+    { type: 'money', value: '$9.40/1,000 gallons', unit: '1,000 gallons', context: 'Tier 1 0-100% of budget: 5000 gallons charged at a rate of $9.40/1,000 gallons' },
+    { type: 'money', value: '$11.35/1,000 gallons', unit: '1,000 gallons', context: 'Tier 2 101-120% of budget: 1000 gallons charged at a rate of $11.35/1,000 gallons' },
+  ] };
+  const build = () => buildFactLedger({ communityId: 'alpha', sources: [source] }, { trusted: true });
+  source.facts[0].normalizedValue = 9.401;
+  assert.equal(build()[0].normalizedValue, 9.4, 'old amount normalization must not include the unit quantity');
+  assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 0);
+  source.facts.push({ type: 'money', value: '$10.00/1,000 gallons', unit: '1,000 gallons', context: 'Tier 1 0-100% of budget: 5000 gallons charged at a rate of $10.00/1,000 gallons' });
+  const conflicts = resolveFactLedger(build(), profile).unresolvedSensitive;
+  assert.equal(conflicts.length, 1);
+  assert.match(conflicts[0].claimKey, /tier-1/);
+});
+
 function entry(overrides = {}) {
   return {
     id: overrides.id || Math.random().toString(36),
