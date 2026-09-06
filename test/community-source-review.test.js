@@ -100,3 +100,15 @@ test('batch assembly leaves live calendar facts outside static approval requirem
   assert.deepEqual(result.candidate.factLedger, []);
   assert.equal(result.coverage.pending.length, 0);
 });
+
+test('batch review refuses duplicate source identifiers instead of silently discarding records', () => {
+  const duplicate = { ...source('second'), sourceUrl: 'https://alpha.gov/other-fees' };
+  const ambiguous = { communityId: 'alpha', sources: [source('first'), duplicate] };
+  const empty = { communityId: 'alpha', sources: [] };
+  const original = JSON.stringify(ambiguous);
+  for (const [trusted, candidate] of [[ambiguous, empty], [empty, ambiguous]]) {
+    assert.throws(() => buildReviewItems(trusted, candidate, profile), { code: 'AMBIGUOUS_SOURCE_ID' });
+    assert.throws(() => compileReviewedCandidate(trusted, candidate, profile), { code: 'AMBIGUOUS_SOURCE_ID' });
+  }
+  assert.equal(JSON.stringify(ambiguous), original);
+});
