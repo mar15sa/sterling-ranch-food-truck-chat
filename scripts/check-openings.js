@@ -18,7 +18,7 @@ for (const item of raw.items || []) {
   if (!Array.isArray(item.sources) || !item.sources.length) errors.push(`${item.id} has no evidence source.`);
   const lat = Number(item.coordinates?.lat);
   const lng = Number(item.coordinates?.lng);
-  if (!Number.isFinite(lat) || lat < 39.1 || lat > 39.75 || !Number.isFinite(lng) || lng < -105.25 || lng > -104.6) {
+  if (!Number.isFinite(lat) || lat < 39.1 || lat > 39.78 || !Number.isFinite(lng) || lng < -105.25 || lng > -104.6) {
     errors.push(`${item.id} is missing a valid local map coordinate.`);
   }
   if (!["address", "approximate"].includes(item.coordinates?.precision)) {

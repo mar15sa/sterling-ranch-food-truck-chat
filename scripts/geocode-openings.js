@@ -3,7 +3,7 @@ const path = require("node:path");
 
 const DATA_PATH = path.join(__dirname, "..", "data", "openings.json");
 const WRITE = process.argv.includes("--write");
-const COLORADO_BOUNDS = { south: 39.1, north: 39.75, west: -105.25, east: -104.6 };
+const COLORADO_BOUNDS = { south: 39.1, north: 39.78, west: -105.25, east: -104.6 };
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
