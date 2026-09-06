@@ -983,3 +983,10 @@ test("duplicate aliases remain accounted when their owner chunks are retained un
  assert.equal(index.inventory.pendingCount,0);
  for(const page of index.pages)assert.equal(page.indexedSourceIds.length,3);
 });
+
+test('contact extraction preserves ampersands and spaced phone separators from the official text',()=>{
+ const facts=extractFacts('D&D Landscaping: d&d.landscaping@gmail.com. JS Enterprises: 720-254 -8148.');
+ assert.ok(facts.some(f=>f.type==='email'&&f.value==='d&d.landscaping@gmail.com'));
+ assert.equal(facts.some(f=>f.value==='d.landscaping@gmail.com'),false);
+ assert.ok(facts.some(f=>f.type==='phone'&&f.value==='720-254 -8148'));
+});

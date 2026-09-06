@@ -202,3 +202,12 @@ test('fee comparisons preserve explicit pricing units and still flag different p
  source.facts.push({type:'money',value:'$50',context:'Non-residents: $50/court for four players. Open play for non-residents: $20 for two players.'});
  assert.equal(resolveFactLedger(buildFactLedger(index,{trusted:true}),profile).unresolvedSensitive.length,1);
 });
+
+test('directory scope handles a blank email field and a following row without mixing companies',()=>{
+ const {directoryContactSubjects,contactKey}=require('../lib/community-directory-scopes');
+ const url='https://alpha.gov/directory.pdf';
+ const maps=directoryContactSubjects([{sourceUrl:url,text:'Company Landscape Design Irrigation Design Landscape Installation Irrigation Installation Email Phone CSI Construction   303-888-5748 D&D Landscaping  d&d.landscaping@gmail.com 303-332-7602 JS Enterprises  jsenterprise10@msn.com 720-254 -8148'}]);
+ assert.equal(maps.get(url).get(contactKey('phone','303-888-5748')),'CSI Construction');
+ assert.equal(maps.get(url).get(contactKey('email','d&d.landscaping@gmail.com')),'D&D Landscaping');
+ assert.equal(maps.get(url).get(contactKey('phone','720-254-8148')),'JS Enterprises');
+});
