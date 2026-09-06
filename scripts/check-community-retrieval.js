@@ -11,7 +11,9 @@ const CASES = [
   ["What are the rules for parks and open spaces?", /17-54/i],
   ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i],
   ["Who do I contact about water billing?", /Water Billing/i],
-  ["What are the neighborhood pickleball court rules?", /Pickleball Courts/i],
+  // The current official court page controls court hours, fees and booking.
+  // Section 17-54 is the general park rule and gives different park hours.
+  ["What are the neighborhood pickleball court rules?", /^Pickleball Courts$/i],
   ["What is the maximum height a freestanding flag pole can be?", /2024 CAB Code amendments/i],
   ["What trees can we plant?", /5-131|Preapproved plant list/i],
   ["What are the rules for yard art?", /2024 CAB Code amendments/i],
@@ -44,9 +46,10 @@ async function main() {
   }
   const recall = passed / CASES.length;
   console.log(`Community controlling-source retrieval: ${passed}/${CASES.length} (${Math.round(recall * 100)}%).`);
-  if (failures.length) {
+  require('node:fs').writeFileSync(require('node:path').join(__dirname, '../data/community-retrieval-report.json'), JSON.stringify({checkedAt:new Date().toISOString(),passed,total:CASES.length,failures},null,2)+'\n');
+  if (recall < 1) {
     for (const failure of failures) console.error(JSON.stringify(failure));
-    throw new Error("Controlling-source retrieval must be 100% for critical questions.");
+    throw new Error("Every critical question must use its controlling source before release.");
   }
 }
 
