@@ -951,3 +951,18 @@ test("real application anchors retain the section needed to complete the action"
  const actions=extractActions(linksFromHtml('<a href="#apply-now">Submit application</a>','https://alpha.gov/application'));
  assert.equal(actions[0].url,'https://alpha.gov/application#apply-now');
 });
+
+test("old metadata without retained text cannot suppress newly fetched duplicate content", async()=>{
+ const body='Official community application instructions explain the required property-owner documents and where residents should submit their completed forms.';
+ const {normalizedContentFingerprint}=require('../lib/community-ingest');
+ const index=await crawlCommunity(profile(),{
+  maxPages:1,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[{url:'https://alpha.gov/old-alias',canonicalUrl:'https://alpha.gov/old-alias',indexed:false,contentFingerprint:normalizedContentFingerprint(body)}],inventory:{}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async()=>new Response('<div data-cpRole="mainContentContainer"><p>'+body+'</p></div>',{headers:{'content-type':'text/html'}})
+ });
+ assert.ok(index.sources.some(s=>s.text===body));
+ const root=index.pages.find(p=>p.url==='https://alpha.gov/');
+ assert.equal(root.indexed,true);
+ assert.equal(root.duplicateOf,undefined);
+});
