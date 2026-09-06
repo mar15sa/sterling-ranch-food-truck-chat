@@ -493,6 +493,15 @@
       "cadence": "daily",
       "monitorMode": "manual",
       "notes": "Official opening window, address, presale state, and eventual booking availability for the Highlands Ranch studio."
+    },
+    {
+      "id": "denver-central-market-vendors",
+      "name": "Denver Central Market vendor directory",
+      "community": "Denver",
+      "kind": "property-owner",
+      "url": "https://www.denvercentralmarket.com/vendors",
+      "cadence": "daily",
+      "notes": "The market's official vendor directory identifies new food concepts and confirms when announced stalls begin operating."
     }
   ]
 }
