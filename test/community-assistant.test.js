@@ -966,3 +966,20 @@ test("old metadata without retained text cannot suppress newly fetched duplicate
  assert.equal(root.indexed,true);
  assert.equal(root.duplicateOf,undefined);
 });
+
+test("duplicate aliases remain accounted when their owner chunks are retained under another URL",async()=>{
+ const other='https://alpha.gov/other',alias='https://alpha.gov/alias';
+ const a='Official application information '+ 'alpha '.repeat(230)+'.';
+ const b='Official facility information '+ 'bravo '.repeat(230)+'.';
+ const c='Official service information '+ 'charlie '.repeat(220)+'.';
+ const index=await crawlCommunity(profile(),{
+  maxPages:3,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[],inventory:{eligibleUrls:[other,alias]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async url=>new Response('<div data-cpRole="mainContentContainer"><p>'+[a,...(String(url)==='https://alpha.gov/'?[b,c]:[c,b])].join(' ')+'</p></div>',{headers:{'content-type':'text/html'}})
+ });
+ assert.equal(index.sources.length,3);
+ assert.ok(index.pages.some(p=>p.duplicateOf));
+ assert.equal(index.inventory.pendingCount,0);
+ for(const page of index.pages)assert.equal(page.indexedSourceIds.length,3);
+});
