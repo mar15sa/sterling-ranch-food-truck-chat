@@ -31,18 +31,29 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Collect inventory and review evidence
-        env:
-          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
-          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
-          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
+      - name: Collect source inventory
+        id: inventory
         run: |
           force=""
           if [ "$(date -u +%u)" = "7" ]; then force="--force-content"; fi
           npm run ingest:community -- --max-pages 500 --max-documents 250 --output data/community-index.candidate.json $force
-          node scripts/sync-community-review.js --candidate data/community-index.candidate.json
-          npm run community:review:export -- --output data/community-review-decisions.json --fail-overdue
-          npm run community:candidate -- --candidate data/community-index.candidate.json --decisions data/community-review-decisions.json --report data/community-source-report.json --check-links
+      - name: Sync review evidence
+        if: always() && steps.inventory.outcome == 'success'
+        env:
+          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
+        run: node scripts/sync-community-review.js --candidate data/community-index.candidate.json
+      - name: Export decisions and check overdue reviews
+        if: always()
+        env:
+          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
+        run: node scripts/export-community-review-decisions.js --output data/community-review-decisions.json --fail-overdue
+      - name: Validate candidate sources and action links
+        if: always() && steps.inventory.outcome == 'success'
+        run: npm run community:candidate -- --candidate data/community-index.candidate.json --decisions data/community-review-decisions.json --report data/community-source-report.json --check-links
       - name: Record monthly accuracy and review outcomes
         if: always()
         env:
