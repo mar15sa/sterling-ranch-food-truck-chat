@@ -5,6 +5,22 @@ const { answerRulesQuestion } = require("../lib/rules-assistant");
 const index = require("../data/community-index.json");
 const { normalizeInterpretation } = require("../lib/community-interpretation");
 
+test("non-payment consequences cannot gain a payment-action detail", () => {
+  const base = {intent:"rules",goal:"information",goals:["information"],subject:"water bill non-payment",searchQueries:["late bill consequences"],requestedDetails:["action"]};
+  assert.deepEqual(normalizeInterpretation(base,"What happens if I do not pay my water bill?").requestedDetails,[]);
+});
+
+test("landscape application requests use complete current packet instructions without another synthesis", () => {
+  for (const question of ["Landscaping application", "Where do I submit my yard landscaping form?", "How do I apply for irrigation approval?"]) {
+    const answer=proactiveCommunityAnswer(question,{index,now:new Date("2026-09-06T20:00:00Z")});
+    assert.match(answer.directAnswer,/Landscape Submittal Packet/);
+    assert.match(answer.answer,/B-1/);
+    assert.match(answer.answer,/B-2/);
+    assert.match(answer.actions[0].url,/\/1964\/Landscape-Submittal-Packet-2026/);
+  }
+  assert.equal(proactiveCommunityAnswer("What is the landscaping application fee?",{index}),null);
+});
+
 test("invented open-ended dates cannot narrow a general process or recurring schedule", () => {
   const base = { intent: "services", goal: "schedule", goals: ["schedule"], subject: "trash collection", searchQueries: ["trash collection"], requestedDetails: ["date"] };
   for (const kind of ["open", "open-ended"]) {
