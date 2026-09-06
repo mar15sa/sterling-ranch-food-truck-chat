@@ -887,3 +887,18 @@ test("source freshness tracks retrieved evidence but not connector or action poi
   assert.equal(stale.stale, true);
   assert.equal(stale.staleSourceCount, 1);
 });
+
+test("rediscovered excluded documents are not also reported as crawl-limit omissions", async()=>{
+ const missing='https://alpha.gov/DocumentCenter/View/999/Missing';
+ const index=await crawlCommunity(profile(),{
+  maxPages:1,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[],inventory:{eligibleUrls:[missing],pendingUrls:[missing],exclusions:[{url:missing,reason:'unavailable-official-link'}]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async()=>new Response('<div data-cpRole="mainContentContainer"><h1>Official resources</h1><p>Official community applications and complete property-owner instructions are listed below for residents.</p><a href="'+missing+'">Old application</a></div>',{headers:{'content-type':'text/html'}}),
+  extractPdfText:async()=>{throw new Error('The website returned 404.');}
+ });
+ assert.ok(index.inventory.exclusions.some(e=>e.url===missing));
+ assert.equal(index.inventory.pendingUrls.includes(missing),false);
+ assert.equal(index.inventory.eligibleUrls.includes(missing),false);
+ assert.equal(new Set([...index.inventory.eligibleUrls,...index.inventory.exclusions.map(e=>e.url)]).size,index.inventory.discoveredCount);
+});
