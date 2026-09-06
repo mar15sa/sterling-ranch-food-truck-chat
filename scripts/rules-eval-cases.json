@@ -451,6 +451,19 @@
     "expectedClassification": "rules-question"
   },
   {
+    "question": "How far can my stuff go off my porch?",
+    "variants": [
+      "Can I leave chairs just past my front porch?",
+      "Where can I keep my bike by the patio?",
+      "Can I leave my furnture by the porhc?"
+    ],
+    "expectedFirstAny": ["Sec. 1-38"],
+    "expectedClassification": "rules-question",
+    "expectedAnswerMode": "source-derived-structured",
+    "answerIncludesAll": ["does not use a set distance from the porch", "stay on your lot", "roadway or walkway"],
+    "answerExcludesAny": ["could not verify", "could not find"]
+  },
+  {
     "question": "State Parks pass",
     "variants": [
       "Reimburse for parks pass",
