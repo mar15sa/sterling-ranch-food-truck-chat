@@ -37,6 +37,19 @@ test('date range endpoints coexist while changed endpoints remain conflicts', ()
   assert.equal(resolveFactLedger(combined, profile).unresolved.length, 2);
 });
 
+test('inspection scheduling contacts coexist with submission contacts without hiding competing inspection addresses', () => {
+  const source = { id: 'packet', title: 'Landscaping packet', sourceUrl: 'https://alpha.gov/packet', contentHash: 'v1', connectorType: 'civicplus-pages', facts: [
+    { type: 'email', value: 'submit@alpha.gov', context: 'Application for property owners. Email: submit@alpha.gov' },
+    { type: 'email', value: 'inspection@alpha.gov', context: 'TO SCHEDULE AN INSPECTION (MINIMUM 48 HOURS NOTICE, MONDAY THROUGH FRIDAY ONLY): Contact inspection@alpha.gov Provide your name.' },
+  ] };
+  const build = () => buildFactLedger({ communityId: 'alpha', sources: [source] }, { trusted: true });
+  assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 0);
+  source.facts.push({ type: 'email', value: 'other@alpha.gov', context: 'To schedule an inspection: Contact other@alpha.gov' });
+  assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 1);
+  source.facts.push({ type: 'email', value: 'general@alpha.gov', context: 'Questions about inspections? Email general@alpha.gov' });
+  assert.equal(resolveFactLedger(build(), profile).unresolvedSensitive.length, 2);
+});
+
 function entry(overrides = {}) {
   return {
     id: overrides.id || Math.random().toString(36),
