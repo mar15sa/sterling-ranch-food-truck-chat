@@ -103,7 +103,8 @@ async function requestRoute(baseUrl, question, fetchImpl = global.fetch) {
   const response = await fetchImpl(`${baseUrl}/api/community/route-eval`, {
     method: "POST",
     headers: { "content-type": "application/json", "user-agent": "Sterling-Ranch-Routing-Eval/1.0" },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, isTest: true }),
+    signal: AbortSignal.timeout(15000),
   });
   if (response.status === 429) {
     const retryMs = Math.max(1000, Number(response.headers.get("retry-after") || 1) * 1000);
@@ -111,16 +112,23 @@ async function requestRoute(baseUrl, question, fetchImpl = global.fetch) {
     return requestRoute(baseUrl, question, fetchImpl);
   }
   if (!response.ok) throw new Error(`Routing endpoint returned ${response.status}. Confirm the staging-only evaluator is deployed.`);
-  return response.json();
+  const body = await response.json();
+  if (body.accepted && (!body.deploymentRevision || body.evaluation?.cacheDisabled !== true)) throw new Error('The evaluator must identify its deployed version and make a fresh AI call.');
+  return body;
 }
 
 async function runBenchmark(options, dependencies = {}) {
   const cases = dependencies.cases || benchmark;
   const fetchRoute = dependencies.fetchRoute || ((question) => requestRoute(options.baseUrl, question));
   const runs = [];
+  let deploymentRevision = '';
   for (let repeat = 1; repeat <= options.repeats; repeat += 1) {
     for (const testCase of cases) {
       const response = await fetchRoute(testCase.question);
+      if (response.deploymentRevision) {
+        if (deploymentRevision && response.deploymentRevision !== deploymentRevision) throw new Error('The deployed version changed during the routing benchmark; mixed-version results cannot be credited.');
+        deploymentRevision = response.deploymentRevision;
+      }
       runs.push({ testCase, repeat, response, assessment: evaluateRoutingResult(testCase, response) });
       if (options.delayMs) await sleep(options.delayMs);
     }
@@ -129,8 +137,10 @@ async function runBenchmark(options, dependencies = {}) {
   return {
     generatedAt: new Date().toISOString(),
     baseUrl: options.baseUrl,
+    deploymentRevision,
     thresholds: ROUTING_THRESHOLDS,
     summary,
+    observations: runs.map(run => ({ id: run.testCase.id, repeat: run.repeat, accepted: run.response.accepted, plan: run.response.plan || null })),
     failures: runs.filter((run) => !run.assessment.correct).map((run) => ({
       id: run.testCase.id,
       repeat: run.repeat,
