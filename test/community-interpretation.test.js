@@ -548,6 +548,32 @@ test("AI clarification cannot stop state-parks-pass questions before the control
   }
 });
 
+test("AI unrelated scope cannot reject a clear state-parks-pass process question", async () => {
+  const question = "How do I get my Colorado state park pass?";
+  const answer = await answerCommunityQuestion(question, {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: async () => interpretation({
+      intent: "services",
+      goal: "information",
+      goals: ["information"],
+      subject: "Colorado state parks pass",
+      requestedDetails: ["action"],
+      dateRange: { kind: "none", start: "", end: "", label: "" },
+      searchQueries: ["Colorado state parks pass"],
+      scope: "unrelated",
+      needsClarification: false,
+      clarificationQuestion: "",
+    }),
+  });
+  assert.equal(answer.answerMode, "source-derived-structured");
+  assert.equal(answer.confidence?.canAnswer, true);
+  assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i);
+});
+
 test("an explicit event filter miss offers the real unfiltered events", async () => {
   const plan = interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "" } });
   const answer = await answerCommunityQuestion("Are there youth events tomorrow?", {
