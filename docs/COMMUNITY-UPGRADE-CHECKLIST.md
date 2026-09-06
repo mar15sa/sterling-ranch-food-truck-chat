@@ -1,4 +1,8 @@
-# Community Assistant reconciliation
+# Historical Community Assistant reconciliation snapshot
+
+This is the initial planning snapshot, retained as history. Its table is not current release status. The integration task maintains the single current project checklist in the original workspace's `COMMUNITY-UPGRADE-CHECKLIST.md`.
+
+The saved release drafts are [Release 1](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/41) and [Release 2](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/42). A saved draft or passing local test does not establish production deployment. Private source-review evidence remains in the project workspace.
 
 Updated September 6, 2026. Integration owner: task `01a0778a-7ed3-7082-817e-8975a841763f`.
 
