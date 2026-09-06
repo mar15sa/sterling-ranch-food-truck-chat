@@ -902,3 +902,38 @@ test("rediscovered excluded documents are not also reported as crawl-limit omiss
  assert.equal(index.inventory.eligibleUrls.includes(missing),false);
  assert.equal(new Set([...index.inventory.eligibleUrls,...index.inventory.exclusions.map(e=>e.url)]).size,index.inventory.discoveredCount);
 });
+
+test("chunk deduplication preserves verifiable coverage for every collected page", async()=>{
+ const other='https://alpha.gov/other';
+ const a='Official resident information '+ 'alpha '.repeat(230)+'.';
+ const b='Official facility information '+ 'bravo '.repeat(230)+'.';
+ const c='Official service information '+ 'charlie '.repeat(220)+'.';
+ const index=await crawlCommunity(profile(),{
+  maxPages:2,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[],inventory:{eligibleUrls:[other]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async url=>new Response('<div data-cpRole="mainContentContainer"><p>'+([a,...(String(url).includes('/other')?[c,b]:[b,c])].join(' '))+'</p></div>',{headers:{'content-type':'text/html'}})
+ });
+ assert.equal(index.sources.length,3);
+ for(const page of index.pages){
+  assert.equal(page.indexed,true);
+  assert.equal(page.chunkContentHashes.length,3);
+  assert.equal(page.indexedSourceIds.length,3);
+  assert.ok(page.indexedSourceIds.every(id=>index.sources.some(s=>s.id===id)));
+ }
+ assert.equal(index.inventory.pendingCount,0);
+ assert.ok(index.factLedger.every(f=>f.reviewStatus!=='approved'));
+});
+
+test("a reused page with one missing recorded chunk stays pending", async()=>{
+ const root='https://alpha.gov/';
+ const retained=source({id:'retained',sourceUrl:root});
+ const index=await crawlCommunity(profile(),{
+  maxPages:1,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[retained],pages:[{url:root,canonicalUrl:root,indexed:true,etag:'old',chunkContentHashes:['abc','missing-chunk']}],inventory:{eligibleUrls:[root]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async()=>new Response(null,{status:304})
+ });
+ assert.equal(index.pages[0].indexed,false);
+ assert.ok(index.inventory.pendingUrls.includes(root));
+});
