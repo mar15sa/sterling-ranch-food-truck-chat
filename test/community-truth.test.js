@@ -146,10 +146,23 @@ test("time comparisons separate labeled days and interval endpoints but preserve
   ]};
   const facts=buildFactLedger({communityId:'alpha',sources:[source]},{trusted:true});
   assert.equal(facts[0].scopeKey,'weekday-opening');
-  assert.equal(facts[1].scopeKey,'weekends-opening');
+  assert.equal(facts[1].scopeKey,'weekend-opening');
   assert.equal(facts[2].scopeKey,'weekday-opening');
   assert.equal(facts[3].scopeKey,'weekday-closing');
   const conflicts=resolveFactLedger(facts,profile).unresolvedSensitive;
   assert.equal(conflicts.length,1);
   assert.equal(conflicts[0].claimKey,'alpha:courts:facility-hours:weekday-opening');
+});
+
+test("separate reservation actions coexist but different targets for the same action remain conflicting",()=>{
+ const source={id:'court',title:'Court Reservations',sourceUrl:'https://alpha.gov/courts',contentHash:'v1',facts:[
+  {type:'link',value:'https://alpha.gov/book',context:'Reserve a court: https://alpha.gov/book'},
+  {type:'link',value:'https://alpha.gov/account',context:'Create reservation account: https://alpha.gov/account'}
+ ]};
+ const index={communityId:'alpha',sources:[source]};
+ assert.equal(resolveFactLedger(buildFactLedger(index,{trusted:true}),profile).unresolvedSensitive.length,0);
+ source.facts.push({type:'link',value:'https://alpha.gov/other-booking',context:'Reserve a court: https://alpha.gov/other-booking'});
+ const conflicts=resolveFactLedger(buildFactLedger(index,{trusted:true}),profile).unresolvedSensitive;
+ assert.equal(conflicts.length,1);
+ assert.equal(conflicts[0].entries.length,2);
 });
