@@ -7,7 +7,7 @@ const DEFAULT_BASE_URL = "https://sterling-ranch-food-truck-chat-staging.up.rail
 const DEFAULT_REPORT_PATH = path.join(__dirname, "..", "data", "community-routing-live-report.json");
 const ROUTING_THRESHOLDS = Object.freeze({
   goalAndSubjectAccuracy: 0.98,
-  intentAccuracy: 0.95,
+  intentAccuracy: 0.98,
   structuredAccuracy: 0.98,
   consistency: 0.98,
   injectionRejection: 1,
