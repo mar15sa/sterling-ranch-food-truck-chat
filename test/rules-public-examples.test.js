@@ -342,7 +342,7 @@ test("shared rules interpretation cannot be overridden by a conflicting facility
   assert.match(result.answer, /does not grant permission/i);
   assert.match(result.answer, /DRC review/i);
   assert.match(result.answer, /county officials/i);
-  assert.equal(result.searchStrategy, "legacy-strong-match-preserved");
+  assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
 });
 
 test("compound questions keep a grounded source for each requested topic", async () => {

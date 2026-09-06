@@ -15,11 +15,9 @@ concurrency:
 jobs:
   live-routing:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: staging
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -30,4 +28,11 @@ jobs:
           COMMUNITY_ROUTING_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}
           COMMUNITY_ROUTING_REPEATS: 3
           COMMUNITY_ROUTING_DELAY_MS: 2100
-        run: npm run community:routing:live
+        run: npm run community:routing:live -- --write
+      - name: Preserve routing evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: routing-evidence-${{ github.run_id }}
+          path: data/community-routing-live-report.json
+          retention-days: 30
