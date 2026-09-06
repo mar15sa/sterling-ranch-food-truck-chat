@@ -166,3 +166,14 @@ test("separate reservation actions coexist but different targets for the same ac
  assert.equal(conflicts.length,1);
  assert.equal(conflicts[0].entries.length,2);
 });
+
+test("a later named-day schedule does not inherit an earlier weekday label",()=>{
+ const source={id:'pool',title:'Pool hours',sourceUrl:'https://alpha.gov/pool',contentHash:'v1',facts:[
+  {type:'time',value:'5:00 am',context:'Monday-Friday: 5:00 am - 9:00 am: Lap Swim Tuesday & Thursday - 7:00 am - 8:45 am: Pool cleaning and maintenance.'},
+  {type:'time',value:'7:00 am',context:'Monday-Friday: 5:00 am - 9:00 am: Lap Swim Tuesday & Thursday - 7:00 am - 8:45 am: Pool cleaning and maintenance.'}
+ ]};
+ const facts=buildFactLedger({communityId:'alpha',sources:[source]},{trusted:true});
+ assert.equal(facts[0].scopeKey,'weekday-opening');
+ assert.equal(facts[1].scopeKey,'tuesday-thursday-opening');
+ assert.equal(resolveFactLedger(facts,profile).unresolvedSensitive.length,0);
+});
