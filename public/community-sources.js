@@ -32,8 +32,12 @@ async function decide(item, decision, note, status) {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ decision, note }),
   });
   const data = await response.json();
+  if (response.status === 401) {
+    showLogin("Your private session expired. Please sign in again.");
+    throw new Error("Your decision was not saved. Sign in and try again.");
+  }
   if (!response.ok) throw new Error(data.error || "The decision could not be saved.");
-  status.textContent = "Decision saved. It will be applied to the next tested release.";
+  status.textContent = "Decision saved for release review. This does not publish a change.";
   await loadReviews();
 }
 
@@ -96,7 +100,21 @@ function reviewCard(item) {
     const actions = document.createElement("div"); actions.className = "decision-actions";
     const choices = [["Approve proposed", "approve-proposed", ""], ["Keep current", "keep-current", "secondary"], ["Mark superseded", "mark-current-superseded", "warning"], ["Exclude page", "exclude-page", "secondary"], ["Ask CAB", "escalate", "secondary"]];
     const status = textElement("p", "", "decision-status");
-    choices.forEach(([label, value, className]) => { const button = textElement("button", label, className); button.type = "button"; button.addEventListener("click", () => decide(item, value, note.value, status).catch((error) => { status.textContent = error.message; })); actions.append(button); });
+    let saving = false;
+    const buttons = [];
+    choices.forEach(([label, value, className]) => {
+      const button = textElement("button", label, className); button.type = "button";
+      buttons.push(button);
+      button.addEventListener("click", async () => {
+        if (saving) return;
+        saving = true;
+        buttons.forEach(control => { control.disabled = true; });
+        try { await decide(item, value, note.value, status); }
+        catch (error) { status.textContent = error.message; }
+        finally { saving = false; buttons.forEach(control => { control.disabled = false; }); }
+      });
+      actions.append(button);
+    });
     form.append(note, actions, status); card.append(form);
   }
   return card;
