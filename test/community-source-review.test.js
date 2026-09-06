@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildReviewItems, compileReviewedCandidate, reviewCoverage } = require("../lib/community-source-review");
+const { buildFactLedger } = require('../lib/community-truth');
 
 test('routine calendar changes create no static source review and preserve the release identity', () => {
   const { fingerprint } = require('../lib/community-source-review');
@@ -51,4 +52,51 @@ test("old decisions become stale only when that same source changes again", () =
   const unrelated = compileReviewedCandidate(trusted, candidate, profile, [{ reviewId: "unrelated", sourceId: "other", sourceVersion: "older", sourceUrl: "https://alpha.gov/other", decision: "approve-proposed" }]);
   assert.equal(unrelated.staleDecisions.length, 0);
   assert.ok(items.length > 0);
+});
+
+test('batch assembly retains exact decisions but requires review for newly extracted facts on unchanged pages', () => {
+  const original = { ...source('same'), reviewStatus: 'approved' };
+  const trusted = { communityId: 'alpha', sources: [original] };
+  trusted.factLedger = buildFactLedger(trusted, { trusted: true });
+  const proposed = { ...original, facts: [...original.facts,
+    { type: 'email', value: 'billing@example.gov', context: 'Billing: billing@example.gov' }] };
+  const result = compileReviewedCandidate(trusted, { ...trusted, sources: [proposed] }, profile);
+  assert.equal(result.candidate.factLedger.find(f => f.factType === 'money').reviewStatus, 'approved');
+  const contact = result.candidate.factLedger.find(f => f.factType === 'email');
+  assert.equal(contact.reviewStatus, 'candidate');
+  assert.ok(result.coverage.pending.some(item => item.factId === contact.id));
+  assert.equal(result.candidate.truthStatus.migrationMode, 'reviewed');
+});
+
+test('a source-only decision does not approve new sensitive facts omitted from the input ledger', () => {
+  const trusted = { communityId: 'alpha', sources: [], factLedger: [] };
+  const candidate = { communityId: 'alpha', sources: [source('new')], factLedger: [] };
+  const preview = compileReviewedCandidate(trusted, candidate, profile);
+  const item = preview.items.find(item => item.kind.startsWith('source-'));
+  const result = compileReviewedCandidate(trusted, candidate, profile, [{
+    reviewId: item.id, sourceId: item.sourceId, sourceVersion: item.sourceVersion,
+    sourceUrl: item.proposedSourceUrl, decision: 'approve-proposed',
+  }]);
+  assert.equal(result.candidate.sources[0].reviewStatus, 'approved');
+  assert.equal(result.candidate.factLedger[0].reviewStatus, 'candidate');
+  assert.ok(result.coverage.pending.some(item => item.factId));
+  const decisions = preview.items.map(item => ({
+    reviewId: item.id, sourceId: item.sourceId, sourceVersion: item.sourceVersion,
+    sourceUrl: item.proposedSourceUrl, factId: item.factId, decision: 'approve-proposed',
+    reviewer: 'test-owner', decidedAt: '2026-09-06T00:00:00Z',
+  }));
+  const approved = compileReviewedCandidate(trusted, candidate, profile, decisions);
+  assert.equal(approved.coverage.pending.length, 0);
+  assert.equal(approved.candidate.factLedger[0].reviewStatus, 'approved');
+  const changed = compileReviewedCandidate(trusted, { ...candidate, sources: [source('changed-again')] }, profile, decisions);
+  assert.equal(changed.candidate.factLedger[0].reviewStatus, 'candidate');
+  assert.ok(changed.coverage.pending.length > 0);
+});
+
+test('batch assembly leaves live calendar facts outside static approval requirements', () => {
+  const live = { ...source('today'), connectorType: 'civicplus-calendar', sourceType: 'events' };
+  const result = compileReviewedCandidate({ sources: [] }, { communityId: 'alpha', sources: [live] }, profile);
+  assert.equal(result.candidate.sources.length, 1);
+  assert.deepEqual(result.candidate.factLedger, []);
+  assert.equal(result.coverage.pending.length, 0);
 });
