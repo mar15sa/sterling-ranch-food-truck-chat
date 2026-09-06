@@ -1,5 +1,13 @@
 name: Community Assistant hosted trial
 on:
+  workflow_call:
+    inputs:
+      revision:
+        required: true
+        type: string
+      fingerprint:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       revision:
@@ -64,4 +72,3 @@ jobs:
       previous: 5
       revision: ${{ inputs.revision }}
       fingerprint: ${{ inputs.fingerprint }}
-
