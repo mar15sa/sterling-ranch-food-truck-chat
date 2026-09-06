@@ -50,8 +50,12 @@ function reviewCard(item) {
   badges.append(textElement("span", item.status || "pending", "badge"));
   header.append(heading, badges); card.append(header);
 
+  card.append(textElement('p', 'This is the saved comparison from when the review was created. Its decision status does not confirm production deployment.', 'intro'));
+
   const comparison = document.createElement("div"); comparison.className = "comparison";
-  for (const [label, value] of [["Current approved", item.currentValue], ["Proposed", item.proposedValue]]) {
+  const previousValue = item.currentValue === 'Not currently approved'
+    ? 'No approved value was recorded before this review.' : item.currentValue;
+  for (const [label, value] of [["Before this review", previousValue], ["Proposed change", item.proposedValue]]) {
     const section = document.createElement("section"); section.append(textElement("h3", label), textElement("p", value)); comparison.append(section);
   }
   card.append(comparison);
@@ -65,7 +69,7 @@ function reviewCard(item) {
     `Observed: ${item.lastObservedAt || item.firstObservedAt || "not stated"}`,
     `Fresh through: ${item.staleAfter || "not stated"}`,
     `Candidate: ${item.candidateFingerprint || "not stated"}`,
-    `Current release: ${item.releaseFingerprint || "not stated"}`,
+    `Release at review creation: ${item.releaseFingerprint || "not stated"}`,
   ].join("\n")));
   if ((item.relatedConflicts || []).length) {
     evidence.append(textElement('h3', 'Related contradictions'));

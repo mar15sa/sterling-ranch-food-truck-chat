@@ -36,3 +36,14 @@ test('source evidence links reject executable or malformed destinations', () => 
     assert.equal(vm.runInContext('sourceLink(badUrl, "Evidence")', context), null);
   }
 });
+
+test('approved review history does not claim the old comparison is current approval or deployment state', () => {
+  const context = display();
+  context.item = { status: 'approved', currentValue: 'Not currently approved', proposedValue: '$100', releaseFingerprint: 'earlier-release' };
+  const nodes = flatten(vm.runInContext('reviewCard(item)', context));
+  assert.ok(nodes.some(n => n.textContent === 'Before this review'));
+  assert.ok(nodes.some(n => n.textContent === 'No approved value was recorded before this review.'));
+  assert.ok(nodes.some(n => String(n.textContent).includes('does not confirm production deployment')));
+  assert.ok(nodes.some(n => String(n.textContent).includes('Release at review creation: earlier-release')));
+  assert.ok(!nodes.some(n => n.textContent === 'Not currently approved' || n.textContent === 'Current approved'));
+});
