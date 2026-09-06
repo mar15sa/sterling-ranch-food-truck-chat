@@ -1,0 +1,58 @@
+name: Community trial segment
+on:
+  workflow_call:
+    inputs:
+      segment:
+        required: true
+        type: number
+      previous:
+        required: true
+        type: number
+      revision:
+        required: true
+        type: string
+      fingerprint:
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Validate immutable target
+        env:
+          EXPECTED_APPLICATION_REVISION: ${{ inputs.revision }}
+          EXPECTED_COMMUNITY_FINGERPRINT: ${{ inputs.fingerprint }}
+        run: |
+          node -e 'for (const k of ["EXPECTED_APPLICATION_REVISION","EXPECTED_COMMUNITY_FINGERPRINT"]) if (!/^[a-f0-9]{40,64}$/.test(process.env[k] || "")) process.exit(1)'
+      - uses: actions/download-artifact@v4
+        if: inputs.previous > 0
+        with:
+          name: community-trial-segment-${{ inputs.previous }}
+          path: trial-evidence
+      - name: Continue the same 24-hour trial
+        env:
+          EXPECTED_APPLICATION_REVISION: ${{ inputs.revision }}
+          EXPECTED_COMMUNITY_FINGERPRINT: ${{ inputs.fingerprint }}
+          RULES_LIVE_BASE_URL: https://sterling-ranch-food-truck-chat-staging.up.railway.app
+          TRIAL_PREVIOUS: ${{ inputs.previous }}
+        run: |
+          mkdir -p trial-evidence
+          resume=""
+          if [ "$TRIAL_PREVIOUS" -gt 0 ]; then resume="--resume"; fi
+          node scripts/check-community-application-soak.js --duration-hours 24 --segment-checks 17 --report trial-evidence/report.json --write --routing-benchmark $resume 2>&1 | tee trial-evidence/segment.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: community-trial-segment-${{ inputs.segment }}
+          path: trial-evidence/
+          retention-days: 30

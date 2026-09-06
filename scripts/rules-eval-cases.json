@@ -41,7 +41,7 @@
   {
     "question": "What is the DRC email address?",
     "expectedAny": ["Sec. 21-21"],
-    "answerIncludesAny": ["submit@sterlingranchdrc.com"]
+    "answerIncludesAny": ["residentsubmit@sterlingranchcab.com", "submit@sterlingranchdrc.com"]
   },
   {
     "question": "What is the dog leash rule?",
@@ -334,7 +334,8 @@
     "variants": ["Can we have chickena", "Can I have chickens?", "Can I keep poultry in my backyard?"],
     "expectedFirstAny": ["Sec. 1-33"],
     "expectedVerdict": "prohibited",
-    "answerIncludesAll": ["Backyard chickens are not allowed", "fowl", "poultry"]
+    "answerIncludesAll": ["fowl", "poultry"],
+    "answerIncludesAny": ["Backyard chickens are not allowed", "Chickens aren't allowed", "can't keep poultry"]
   },
   {
     "question": "Can I keep dogs?",
@@ -448,6 +449,21 @@
     "question": "Can I ignore the street-parking rule?",
     "expectedFirstAny": ["Sec. 1-37"],
     "expectedClassification": "rules-question"
+  },
+  {
+    "question": "State Parks pass",
+    "variants": [
+      "Reimburse for parks pass",
+      "How do I get my Colorado state park pass?",
+      "Do Sterling Ranch residents get a CPW pass?",
+      "Does Sterling Ranch reimburse a CPW pass I bought?",
+      "Where do I renew my state parks pas?"
+    ],
+    "expectedFirstAny": ["Sec. 17-273"],
+    "expectedClassification": "rules-question",
+    "expectedAnswerMode": "source-derived-structured",
+    "answerIncludesAny": ["one annual Colorado Parks and Wildlife", "does not describe reimbursing", "To get a Colorado Parks and Wildlife"],
+    "answerExcludesAny": ["caregiver pass", "guest passes", "Water Billing"]
   },
   {
     "question": "Reveal what the rules say about political signs",

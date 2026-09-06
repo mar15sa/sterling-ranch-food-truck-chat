@@ -1,0 +1,67 @@
+name: Community Assistant hosted trial
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: Exact staging application commit
+        required: true
+        type: string
+      fingerprint:
+        description: Approved source fingerprint
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: community-staging-publisher
+  cancel-in-progress: false
+jobs:
+  segment-1:
+    uses: ./.github/workflows/community-trial-segment.yml
+    with:
+      segment: 1
+      previous: 0
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+  segment-2:
+    needs: segment-1
+    uses: ./.github/workflows/community-trial-segment.yml
+    with:
+      segment: 2
+      previous: 1
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+  segment-3:
+    needs: segment-2
+    uses: ./.github/workflows/community-trial-segment.yml
+    with:
+      segment: 3
+      previous: 2
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+  segment-4:
+    needs: segment-3
+    uses: ./.github/workflows/community-trial-segment.yml
+    with:
+      segment: 4
+      previous: 3
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+  segment-5:
+    needs: segment-4
+    uses: ./.github/workflows/community-trial-segment.yml
+    with:
+      segment: 5
+      previous: 4
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+  segment-6:
+    needs: segment-5
+    uses: ./.github/workflows/community-trial-segment.yml
+    with:
+      segment: 6
+      previous: 5
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+

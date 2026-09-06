@@ -14,9 +14,10 @@ on:
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 concurrency:
-  group: sterling-ranch-source-release
+  group: community-staging-publisher
   cancel-in-progress: false
 
 jobs:

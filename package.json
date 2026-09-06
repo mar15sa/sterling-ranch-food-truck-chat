@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "node scripts/run-tests.js",
-    "precheck": "node scripts/build-rules-fact-catalog.js --check && node --check lib/community-onboarding.js && node --check lib/community-contracts.js && node --check lib/community-conversation.js && node --check lib/community-food-trucks.js && node --check lib/community-observability.js && node --check lib/community-release.js && node --check lib/community-ingest.js && node --check lib/community-search.js && node --check lib/community-events.js && node --check lib/community-grounding.js && node --check lib/community-llm.js && node --check lib/community-proactive.js && node --check lib/community-assistant.js && node --check lib/community-source-manager.js && node --check scripts/ingest-community.js && node --check scripts/check-community-sources.js && node --check scripts/check-community-soak.js && node --check scripts/validate-community-candidate.js && node --check scripts/promote-reviewed-community-page.js && node --check scripts/check-community-portability.js && node scripts/check-community-sources.js && node --check lib/rules-action-coverage.js && node --check lib/rules-answer-format.js && node --check lib/rules-focused-answers.js && node --check lib/rules-monitor.js && node --check lib/rules-source-lifecycle.js && node --check scripts/build-rules-fact-catalog.js",
+    "precheck": "node scripts/build-rules-fact-catalog.js --check && node --check lib/community-onboarding.js && node --check lib/community-contracts.js && node --check lib/community-conversation.js && node --check lib/community-interpretation.js && node --check lib/community-food-trucks.js && node --check lib/community-observability.js && node --check lib/community-release.js && node --check lib/community-ingest.js && node --check lib/community-search.js && node --check lib/community-events.js && node --check lib/community-grounding.js && node --check lib/community-llm.js && node --check lib/community-proactive.js && node --check lib/community-assistant.js && node --check lib/community-source-manager.js && node --check scripts/ingest-community.js && node --check scripts/check-community-sources.js && node --check scripts/check-community-soak.js && node --check scripts/check-community-application-soak.js && node --check scripts/eval-community-answers-live.js && node --check scripts/validate-community-candidate.js && node --check scripts/check-community-portability.js && node scripts/check-community-sources.js && node --check lib/rules-action-coverage.js && node --check lib/rules-answer-format.js && node --check lib/rules-focused-answers.js && node --check lib/rules-monitor.js && node --check lib/rules-source-lifecycle.js && node --check scripts/build-rules-fact-catalog.js && node --check scripts/promote-reviewed-community-page.js",
     "postcheck": "node scripts/eval-resident-corpus.js && node scripts/eval-community-assistant.js --enforce --write && node scripts/check-community-retrieval.js",
     "rules:eval:residents": "node scripts/eval-resident-corpus.js",
     "rules:resources:check": "node scripts/check-rules-resources.js",
@@ -25,10 +25,11 @@
     "community:check": "node scripts/check-community-sources.js",
     "community:eval": "node scripts/eval-community-assistant.js --enforce",
     "community:routing:live": "node scripts/eval-community-routing-live.js --enforce",
+    "community:answers:live": "node scripts/eval-community-answers-live.js --enforce --write",
     "community:candidate": "node scripts/validate-community-candidate.js",
-    "community:promote-page": "node scripts/promote-reviewed-community-page.js",
     "community:facts": "node scripts/enrich-community-facts.js",
     "community:soak": "node scripts/check-community-soak.js",
+    "community:soak:24h": "node scripts/check-community-application-soak.js --duration-hours 24 --interval-ms 900000 --write",
     "community:portability:live": "node scripts/check-community-portability.js --write",
     "supplements:audit": "node scripts/audit-rule-supplements.js --from 1 --to 2800",
     "supplements:monitor": "node scripts/audit-rule-supplements.js --from-baseline --lookahead 600 --fail-on-candidates",
@@ -36,7 +37,12 @@
     "supplements:propose": "node scripts/propose-rule-supplements.js --from-baseline --lookahead 600",
     "openings:monitor": "node scripts/monitor-openings.js --write-state"
   },
-  "keywords": ["community", "rules-assistant", "source-grounding", "resident-tools"],
+  "keywords": [
+    "community",
+    "rules-assistant",
+    "source-grounding",
+    "resident-tools"
+  ],
   "author": "Marissa Goldberg",
   "license": "ISC",
   "engines": {
