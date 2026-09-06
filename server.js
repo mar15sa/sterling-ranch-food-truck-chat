@@ -4634,6 +4634,7 @@ async function handleHealth(req, res) {
     uptimeSeconds: Math.round(process.uptime()),
     deploymentReady: healthy,
     deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    configurationFingerprint: require('./lib/community-soak-evidence').configurationFingerprint(),
     rules: {
       exists: rules.exists,
       isStale: rules.isStale,

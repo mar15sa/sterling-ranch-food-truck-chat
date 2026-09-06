@@ -1,5 +1,11 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+test('trial configuration identity notices model changes without including credentials', () => {
+  const {configurationFingerprint}=require('../lib/community-soak-evidence');
+  const base={COMMUNITY_LLM_MODEL:'first',ANTHROPIC_API_KEY:'secret-a'};
+  assert.notEqual(configurationFingerprint(base),configurationFingerprint({...base,COMMUNITY_LLM_MODEL:'second'}));
+  assert.equal(configurationFingerprint(base),configurationFingerprint({...base,ANTHROPIC_API_KEY:'secret-b'}));
+});
 const { resumeEvidence } = require('../lib/community-soak-evidence');
 const identity = { baseUrl:'https://staging.example', expectedFingerprint:'bundle', expectedRevision:'commit', durationHours:24, checkCount:97, intervalMs:900000 };
 const now = Date.parse('2026-09-06T12:00:00Z');
