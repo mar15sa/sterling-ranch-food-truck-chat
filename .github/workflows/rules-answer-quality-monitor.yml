@@ -55,7 +55,7 @@ jobs:
 
       - name: Refresh and audit official community sources
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
-        run: npm run community:check -- --live
+        run: npm run community:check -- --live --write
 
       - name: Check the live rules assistant
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
@@ -83,6 +83,15 @@ jobs:
           path: |
             data/community-assistant-eval.json
             data/community-retrieval-report.json
+          retention-days: 35
+
+      - name: Preserve source crawl review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-check-${{ github.run_id }}
+          path: data/community-source-check-report.json
+          if-no-files-found: ignore
           retention-days: 35
 
       - name: Open or update the review issue when checks fail

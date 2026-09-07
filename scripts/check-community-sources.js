@@ -39,13 +39,39 @@ function audit(index) {
 async function main() {
   const live = process.argv.includes("--live");
   const index = live ? await crawlCommunity(profile) : bundled;
-  const result = audit(index);
-  if (live) {
-    const before = new Map(bundled.sources.map((source) => [source.id, source.contentHash]));
-    result.changedSourceCount = index.sources.filter((source) => before.get(source.id) !== source.contentHash).length;
-    result.removedSourceCount = bundled.sources.filter((source) => !index.sources.some((candidate) => candidate.id === source.id)).length;
+  const before = new Map(bundled.sources.map((source) => [source.id, source]));
+  const after = new Map(index.sources.map((source) => [source.id, source]));
+  const identity = (source) => ({ id: source.id, title: source.title, url: source.url, contentHash: source.contentHash });
+  const report = {
+    checkedAt: new Date().toISOString(),
+    mode: live ? "live" : "bundled",
+    status: "pending",
+    publicationApproved: false,
+    failures: index.failures || [],
+    changedSources: live ? index.sources.filter((source) => before.get(source.id)?.contentHash !== source.contentHash).map((source) => ({ ...identity(source), previousContentHash: before.get(source.id)?.contentHash || null })) : [],
+    absentSources: live ? bundled.sources.filter((source) => !after.has(source.id)).map(identity) : [],
+    reviewNote: "Crawl differences require review. Absence from this crawl does not establish removal from the official site. This check does not approve changes or renew production freshness.",
+  };
+  report.reviewRequired = report.failures.length > 0 || report.changedSources.length > 0 || report.absentSources.length > 0;
+  const saveReport = () => {
+    if (process.argv.includes("--write")) fs.writeFileSync(path.join(root, "data", "community-source-check-report.json"), `${JSON.stringify(report, null, 2)}\n`);
+  };
+  try {
+    const result = audit(index);
+    if (live) {
+      result.changedSourceCount = report.changedSources.length;
+      result.absentSourceCount = report.absentSources.length;
+    }
+    report.status = "passed";
+    report.summary = result;
+    console.log(`Community source check passed: ${JSON.stringify(result)}`);
+  } catch (error) {
+    report.status = "failed";
+    report.error = error.message;
+    throw error;
+  } finally {
+    saveReport();
   }
-  console.log(`Community source check passed: ${JSON.stringify(result)}`);
 }
 
 main().catch((error) => { console.error(`Community source check failed: ${error.message}`); process.exitCode = 1; });
