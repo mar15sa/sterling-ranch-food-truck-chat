@@ -31,5 +31,7 @@ test('PDF refresh keeps descriptive identity while changed bytes get a new unapp
 test('bare PDF IDs retain meaningful prior titles without inventing document names', () => {
   assert.equal(documentTitle('https://example.org/DocumentCenter/View/1574', 'Pending official source', 'General Architectural Application'), 'General Architectural Application');
   assert.equal(documentTitle('https://example.org/DocumentCenter/View/766', 'Official document 766'), 'Official document 766');
+  assert.equal(documentTitle('https://example.org/DocumentCenter/View/1191', 'Previously discovered official source'), 'Official document 1191');
+  assert.notEqual(documentTitle('https://example.org/DocumentCenter/View/1191', 'Pending official source'), documentTitle('https://example.org/DocumentCenter/View/1281', 'Pending official source'));
   assert.equal(documentTitle('https://example.org/DocumentCenter/View/766/New-Name', 'Current facility agreement', 'Old agreement'), 'Current facility agreement');
 });
