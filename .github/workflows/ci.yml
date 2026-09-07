@@ -2,7 +2,6 @@ name: Rules assistant CI
 
 on:
   pull_request:
-    branches: [main, staging]
   push:
     branches: [main, staging]
 
