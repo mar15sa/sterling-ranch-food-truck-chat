@@ -1022,6 +1022,23 @@ test('directory ingestion separates people while detecting a changed contact for
  assert.ok(changed.factLedger.every(f=>f.reviewStatus==='candidate'));
 });
 
+test('FAQ ingestion keeps each question with its own contact and action link',async()=>{
+ const row=(id,title,email,path)=>`<li class="faq-question-item" id="question-${id}"><h3><button>${title}</button></h3><div class="accordion-text"><p>Contact ${email} for official help with this request.</p><a href="${path}">Submit this request</a></div></li>`;
+ const html=`<main><h1>Frequently Asked Questions</h1><ul>${row(1,'How do I apply?','apply@alpha.gov','/apply')}${row(2,'How do I pay?','billing@alpha.gov','/pay')}</ul></main>`;
+ const result=await crawlCommunity(profile({connectors:[{id:'site',type:'civicplus-pages',baseUrl:'https://alpha.gov/FAQ.aspx'}]}),{
+  maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async()=>new Response(html,{headers:{'content-type':'text/html'}})
+ });
+ assert.equal(result.sources.length,2);
+ const apply=result.sources.find(s=>s.subjectKey==='faq-question-1');
+ const pay=result.sources.find(s=>s.subjectKey==='faq-question-2');
+ assert.deepEqual(apply.actions.map(a=>a.url),['https://alpha.gov/apply']);
+ assert.deepEqual(pay.actions.map(a=>a.url),['https://alpha.gov/pay']);
+ assert.doesNotMatch(apply.text,/billing/);
+ assert.doesNotMatch(pay.text,/apply@/);
+ assert.equal(require('../lib/community-truth').resolveFactLedger(result.factLedger,profile()).unresolved.length,0);
+ assert.ok(result.factLedger.every(f=>f.reviewStatus==='candidate'));
+});
+
 test("chunk deduplication preserves verifiable coverage for every collected page", async()=>{
  const other='https://alpha.gov/other';
  const a='Official resident information '+ 'alpha '.repeat(230)+'.';
