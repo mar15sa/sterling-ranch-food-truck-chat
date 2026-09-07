@@ -7,6 +7,17 @@ on:
         description: Run the hosted 24-hour staging trial instead of the routing-only check
         type: boolean
         default: false
+      accelerated:
+        description: Run the one-hour hosted staging or production gate
+        type: boolean
+        default: false
+      environment:
+        description: Hosted environment for the accelerated gate
+        type: choice
+        options:
+          - staging
+          - production
+        default: staging
       revision:
         description: Exact staging revision (required for trial)
         type: string
@@ -26,7 +37,7 @@ concurrency:
 
 jobs:
   live-routing:
-    if: ${{ !inputs.trial }}
+    if: ${{ !inputs.trial && !inputs.accelerated }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -50,8 +61,15 @@ jobs:
           path: data/community-routing-live-report.json
           retention-days: 30
   hosted-trial:
-    if: ${{ inputs.trial }}
+    if: ${{ inputs.trial && !inputs.accelerated }}
     uses: ./.github/workflows/community-hosted-trial.yml
     with:
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
+  accelerated-gate:
+    if: ${{ inputs.accelerated && !inputs.trial }}
+    uses: ./.github/workflows/community-accelerated-release-check.yml
+    with:
+      environment: ${{ inputs.environment }}
       revision: ${{ inputs.revision }}
       fingerprint: ${{ inputs.fingerprint }}
