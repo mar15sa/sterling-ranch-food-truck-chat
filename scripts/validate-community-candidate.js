@@ -24,13 +24,22 @@ function readTrustedRef(ref, file) {
   return JSON.parse(execFileSync("git", ["show", `${ref}:${relative}`], { cwd: path.join(__dirname, ".."), encoding: "utf8" }));
 }
 
-async function checkLink(url) {
+async function checkLink(url, { fetchImpl = fetch } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
   try {
-    let response = await fetch(url, { method: "HEAD", redirect: "follow", signal: controller.signal, headers: { "user-agent": "Sterling Ranch source release validator" } });
-    if ([403, 405].includes(response.status)) response = await fetch(url, { method: "GET", redirect: "follow", signal: controller.signal, headers: { "user-agent": "Sterling Ranch source release validator" } });
-    return { url, okay: response.ok, status: response.status, finalUrl: response.url };
+    let response = await fetchImpl(url, { method: "HEAD", redirect: "follow", signal: controller.signal, headers: { "user-agent": "Sterling Ranch source release validator" } });
+    const headStatus = response.status;
+    let checkedWith = 'HEAD';
+    // Some official routes return 404 to HEAD but serve the page normally to GET.
+    if (!response.ok) {
+      await response.body?.cancel();
+      response = await fetchImpl(url, { method: "GET", redirect: "follow", signal: controller.signal, headers: { "user-agent": "Sterling Ranch source release validator" } });
+      checkedWith = 'GET';
+    }
+    const result = { url, okay: response.ok, status: response.status, finalUrl: response.url, headStatus, checkedWith };
+    await response.body?.cancel();
+    return result;
   } catch (error) {
     return { url, okay: false, status: 0, error: error?.message || String(error) };
   } finally { clearTimeout(timer); }
@@ -42,7 +51,7 @@ async function validateActionLinks(result, indexes, checker = checkLink) {
     .flatMap(source => source.actions || []).map(action => action.url)).filter(Boolean))];
   const checks = [];
   for (let index = 0; index < links.length; index += 8) {
-    checks.push(...await Promise.all(links.slice(index, index + 8).map(checker)));
+    checks.push(...await Promise.all(links.slice(index, index + 8).map(url => checker(url))));
   }
   const broken = checks.filter(item => {
     if (!item.okay) return true;
@@ -125,4 +134,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((error) => { console.error(`Community candidate failed: ${error.message}`); process.exitCode = 1; });
-module.exports = { validateActionLinks };
+module.exports = { validateActionLinks, checkLink };

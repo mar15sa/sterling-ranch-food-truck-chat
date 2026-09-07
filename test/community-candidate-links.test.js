@@ -1,6 +1,25 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { validateActionLinks } = require('../scripts/validate-community-candidate');
+const { validateActionLinks, checkLink } = require('../scripts/validate-community-candidate');
+
+test('a HEAD-only 404 is checked with GET before reporting a broken action', async () => {
+  const methods = [];
+  const result = await checkLink('https://example.gov/facility', { fetchImpl: async (url, options) => {
+    methods.push(options.method);
+    return { ok: options.method === 'GET', status: options.method === 'GET' ? 200 : 404, url };
+  } });
+  assert.deepEqual(methods, ['HEAD', 'GET']);
+  assert.equal(result.okay, true);
+  assert.equal(result.headStatus, 404);
+  assert.equal(result.checkedWith, 'GET');
+});
+
+test('a missing page remains broken after GET confirms the failure', async () => {
+  const result = await checkLink('https://example.gov/missing', { fetchImpl: async url => ({ ok: false, status: 404, url }) });
+  assert.equal(result.okay, false);
+  assert.equal(result.status, 404);
+  assert.equal(result.checkedWith, 'GET');
+});
 
 test('failed source gates still inspect proposed and retained action links without changing sources', async () => {
   const source = url => ({ sources: [{ actions: [{ url }] }] });
