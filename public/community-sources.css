@@ -1,0 +1,21 @@
+.source-list { display: grid; gap: 18px; }
+.source-card, .comparison section, .evidence { min-width: 0; overflow-wrap: anywhere; }
+.source-card { background: #fff; border: 1px solid #dedbd1; border-radius: 16px; padding: 22px; box-shadow: 0 8px 24px rgba(32, 57, 47, .07); }
+.source-card header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.source-card h2 { margin: 4px 0 8px; font-size: 1.35rem; }
+.badges { display: flex; gap: 7px; flex-wrap: wrap; }
+.badge { border-radius: 999px; background: #eef2ed; color: #294d40; padding: 5px 9px; font-size: .78rem; font-weight: 700; }
+.badge.high, .badge.conflict { background: #f8e6df; color: #8a3d2c; }
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.comparison section { background: #f6f5f0; border-radius: 12px; padding: 15px; }
+.comparison h3, .evidence h3 { margin: 0 0 7px; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #68736d; }
+.comparison p, .evidence p { white-space: pre-wrap; margin: 0; line-height: 1.5; }
+.source-links { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
+.decision-form { margin-top: 18px; border-top: 1px solid #e5e1d8; padding-top: 16px; display: grid; gap: 10px; }
+.decision-form textarea { width: 100%; min-height: 76px; resize: vertical; }
+.decision-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.decision-actions button { width: auto; }
+.decision-actions .secondary { background: #fff; color: #294d40; border: 1px solid #b9c3bd; }
+.decision-actions .warning { background: #8a4a35; }
+.decision-status { color: #56625c; font-weight: 700; }
+@media (max-width: 720px) { .comparison { grid-template-columns: 1fr; } .source-card header { flex-direction: column; } }

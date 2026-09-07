@@ -34,8 +34,9 @@ function source(overrides = {}) {
 
 function profile(overrides = {}) {
   const authority = Object.fromEntries(["rules", "facilities", "forms", "events", "alerts", "status", "services"].map((type) => [type, ["civicplus-pages"]]));
+  const factAuthority = Object.fromEntries(["live-status", "facility-hours", "reservation-policy", "fee", "restriction", "contact", "submission", "event-date"].map((facet) => [facet, ["civicplus-pages"]]));
   return {
-    communityId: "alpha", name: "Alpha", website: "https://alpha.gov/", allowedHosts: ["alpha.gov"], authority,
+    communityId: "alpha", name: "Alpha", website: "https://alpha.gov/", allowedHosts: ["alpha.gov"], authority, factAuthority,
     connectors: [{ id: "site", type: "civicplus-pages", baseUrl: "https://alpha.gov/" }],
     ...overrides,
   };
@@ -45,6 +46,7 @@ test("community profiles enforce explicit source hosts and authority orders", ()
   assert.equal(validateCommunityProfile(profile()).communityId, "alpha");
   assert.throws(() => validateCommunityProfile(profile({ connectors: [{ id: "bad", type: "civicplus-pages", baseUrl: "https://evil.example/" }] })), /allowedHosts/);
   assert.throws(() => validateCommunityProfile(profile({ authority: {} })), /Authority order/);
+  assert.throws(() => validateCommunityProfile(profile({ factAuthority: {} })), /Fact authority order/);
 });
 
 test("a second real CivicPlus community is configured without core-code changes", () => {
@@ -92,6 +94,116 @@ test("action extraction keeps nearby meaning and recognizes official mobile-app 
   assert.match(actions[0].context, /WasteConnect.*pickup schedule/i);
 });
 
+test("collecting the same unreviewed candidate twice does not approve its facts", async () => {
+  const options = {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async () => new Response('<div data-cpRole="mainContentContainer"><h1>Facility fees</h1><p>The Great Hall reservation fee is $100 per hour. Residents must use the official booking process.</p></div>', { headers: { "content-type": "text/html" } }),
+  };
+  const first = await crawlCommunity(profile(), options);
+  const second = await crawlCommunity(profile(), { ...options, previousIndex: first });
+  assert.ok(first.factLedger.length);
+  assert.ok(second.factLedger.length);
+  assert.ok(second.factLedger.every(fact => fact.reviewStatus !== "approved"));
+});
+
+test('scanned PDF page counters do not count as indexed or duplicate content', async () => {
+  const { hasReadableDocumentText } = require('../lib/community-ingest');
+  const counters = Array.from({ length: 16 }, (_, n) => `-- ${n + 1} of 16 --`).join(' ');
+  assert.equal(hasReadableDocumentText(counters), false);
+  assert.equal(hasReadableDocumentText(''), false);
+  assert.equal(hasReadableDocumentText('Resident application instructions -- 1 of 1 --'), true);
+  const url = 'https://alpha.gov/DocumentCenter/View/100/Scanned-Policy';
+  const index = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { sources: [], pages: [], inventory: { eligibleUrls: [url] } },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and resident services are available from this official website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async () => counters,
+  });
+  assert.equal(index.sources.some(s => s.sourceUrl === url), false);
+  assert.ok(index.failures.some(f => /OCR or manual/.test(f.error || f.message || '')));
+  assert.ok(index.inventory.pendingUrls.includes(url));
+  const retained = { id: 'old-scanned', communityId: 'alpha', title: 'Scanned Policy', sourceUrl: url,
+    text: counters, contentHash: 'counter-hash', connectorType: 'official-pdf', facts: [], actions: [] };
+  const repeated = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { ...index, sources: [retained], pages: [{ url, indexed: true, contentFingerprint: 'old-counter-fingerprint', chunkContentHashes: ['counter-hash'] }] },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and resident services are available from this official website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async () => counters,
+  });
+  assert.ok(repeated.inventory.pendingUrls.includes(url));
+  assert.equal(repeated.pages.find(p => p.url === url)?.indexed, false);
+});
+
+test('PDF browser-print headers do not establish readable document body', () => {
+  const { hasReadableDocumentText } = require('../lib/community-ingest');
+  const headers = '12/23/24, 10:15 AM Landmark Web Official Records Search https://apps.douglas.co.us/LandmarkWeb/search/index?theme=.blue 1/6 -- 1 of 6 --';
+  assert.equal(hasReadableDocumentText(headers.repeat(6)), false);
+  assert.equal(hasReadableDocumentText(headers + 'Resolution forming Subdistrict B.'), true);
+});
+
+test('PDF deduplication requires full document identity and preserves image-only changes for review', async () => {
+  const urls = ['https://alpha.gov/DocumentCenter/View/100/Policy-A', 'https://alpha.gov/DocumentCenter/View/101/Policy-B'];
+  const text = 'Official policy: The facility deposit is $250. The attached map and scanned resolution identify which district this policy covers.';
+  const common = { maxPages: 1, maxDocuments: 2, discoverSitemap: false,
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response(`<main>Official community services and policies. ${urls.map(url => `<a href="${url}">Official policy</a>`).join(' ')}</main>`, { headers: { 'content-type': 'text/html' } }) };
+  const separate = await crawlCommunity(profile(), { ...common, extractPdfText: async (url, options) => {
+    options.onDocumentFingerprint(url.endsWith('Policy-A') ? 'binary-a' : 'binary-b'); return text;
+  } });
+  const documents = separate.sources.filter(s => urls.includes(s.sourceUrl));
+  assert.equal(documents.length, 2);
+  assert.equal(new Set(documents.map(s => s.contentHash)).size, 2);
+  assert.ok(separate.pages.filter(p => urls.includes(p.url)).every(p => p.indexed && !p.duplicateOf));
+  const identical = await crawlCommunity(profile(), { ...common, extractPdfText: async (url, options) => {
+    options.onDocumentFingerprint('same-binary'); return text;
+  } });
+  assert.equal(identical.sources.filter(s => urls.includes(s.sourceUrl)).length, 1);
+  assert.equal(identical.pages.filter(p => p.duplicateOf).length, 1);
+  const unverified = await crawlCommunity(profile(), { ...common, extractPdfText: async () => text });
+  assert.equal(unverified.sources.filter(s => urls.includes(s.sourceUrl)).length, 2);
+  const changed = await crawlCommunity(profile(), { ...common, previousIndex: separate, extractPdfText: async (url, options) => {
+    options.onDocumentFingerprint(url.endsWith('Policy-A') ? 'binary-a-new-map' : 'binary-b'); return text;
+  } });
+  assert.notEqual(changed.sources.find(s => s.sourceUrl === urls[0]).contentHash, documents.find(s => s.sourceUrl === urls[0]).contentHash);
+  const items = require('../lib/community-source-review').buildReviewItems(separate, changed, profile());
+  assert.ok(items.some(item => item.proposedSourceUrl === urls[0] && item.requiresReview));
+});
+
+test('old PDF text-only aliases remain pending when their document is not fetched', async () => {
+  const owner = 'https://alpha.gov/DocumentCenter/View/100/Policy-A';
+  const alias = 'https://alpha.gov/DocumentCenter/View/101/Policy-B';
+  const retained = source({ sourceUrl: owner, connectorType: 'official-pdf' });
+  const result = await crawlCommunity(profile(), { maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { sources: [retained], pages: [{ url: owner, indexed: true, contentFingerprint: 'same', chunkContentHashes: ['abc'] },
+      { url: alias, duplicateOf: owner, indexed: false, contentFingerprint: 'same', chunkContentHashes: ['abc'] }],
+      inventory: { eligibleUrls: [owner, alias], pendingUrls: [owner] } },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and services for residents are provided on this website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async () => retained.text });
+  assert.ok(result.inventory.pendingUrls.includes(alias));
+  assert.equal(result.pages.find(p => p.url === alias).indexed, false);
+  assert.equal(result.pages.find(p => p.url === alias).duplicateOf, undefined);
+});
+
+test("saved page metadata without retained content remains pending when a crawl budget is reached", async () => {
+  const urls = ["https://alpha.gov/DocumentCenter/View/100/First", "https://alpha.gov/DocumentCenter/View/101/Second"];
+  const index = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    previousIndex: { sources: [], pages: urls.map(url => ({ url, canonicalUrl: url, indexed: true, title: "Application", lastCheckedAt: "2026-09-06" })), inventory: { eligibleUrls: urls } },
+    lookup: async () => [{ address: "203.0.113.10", family: 4 }],
+    fetchImpl: async () => new Response('<div data-cpRole="mainContentContainer"><h1>Home</h1><p>Official applications and resident information for the community are available here.</p></div>', { headers: { "content-type": "text/html" } }),
+    extractPdfText: async () => "Official application instructions: Submit the completed property owner application and supporting site plans to the community office.",
+  });
+  const omitted = urls.find(url => !index.sources.some(source => source.sourceUrl === url));
+  assert.ok(omitted);
+  assert.ok(index.inventory.pendingUrls.includes(omitted));
+  assert.equal(index.pages.find(page => page.url === omitted).indexed, false);
+  assert.equal(index.inventory.complete, false);
+});
+
 test("official PDFs linked from a crawled page receive a separate crawl budget and become searchable sources", async () => {
   const rootHtml = `<html><div data-cpRole="mainContentContainer"><h1>Design Review Documents</h1><p>Official standards and applications for residents are available here.</p><a href="/DocumentCenter/View/618/Standard-3-Rail-Fencing-">Standard 3 Rail Fencing</a></div></html>`;
   const index = await crawlCommunity(profile(), {
@@ -122,8 +234,9 @@ test("discovery inventories every safe same-site content page instead of filteri
     fetchImpl: async (url) => new Response(pages[new URL(url).pathname] || "missing", { status: pages[new URL(url).pathname] ? 200 : 404, headers: { "content-type": "text/html" } }),
   });
   assert.equal(index.inventory.complete, true);
-  assert.equal(index.inventory.eligibleCount, 2);
+  assert.equal(index.inventory.eligibleCount, 1);
   assert.ok(index.inventory.exclusions.some((item) => /FormCenter/.test(item.url) && item.reason === "technical-or-transaction-route"));
+  assert.ok(index.inventory.exclusions.some((item) => item.reason === "insufficient-resident-content"));
   assert.ok(index.sources.some((item) => /Pickleball Courts/i.test(item.title)));
 });
 
@@ -146,6 +259,19 @@ test("page budgets resume from persistent inventory and preserve already approve
   assert.equal(second.inventory.complete, true);
   assert.ok(second.sources.some((item) => item.title === "Home"));
   assert.ok(second.sources.some((item) => item.title === "Pickleball Courts"));
+});
+
+test("missing trusted pages require two checks at least 24 hours apart before retirement", async () => {
+  const okay = `<html><title>Courts</title><div data-cpRole="mainContentContainer"><h1>Courts</h1><p>Residents may reserve the courts during the published operating hours. The official facility page provides current reservation and access details.</p></div></html>`;
+  const options = { maxPages: 1, maxDocuments: 1, discoverSitemap: false, lookup: async () => [{ address: "203.0.113.10", family: 4 }] };
+  const trusted = await crawlCommunity(profile(), { ...options, now: "2026-09-01T12:00:00Z", fetchImpl: async () => new Response(okay, { status: 200, headers: { "content-type": "text/html" } }) });
+  const firstMissing = await crawlCommunity(profile(), { ...options, previousIndex: trusted, now: "2026-09-02T12:00:00Z", fetchImpl: async () => new Response("missing", { status: 404 }) });
+  assert.equal(firstMissing.pages[0].lifecycle, "retirement-pending");
+  assert.equal(firstMissing.pages[0].retirementConfirmedAt, "");
+  assert.equal(firstMissing.sources.length, trusted.sources.length);
+  const confirmed = await crawlCommunity(profile(), { ...options, previousIndex: firstMissing, now: "2026-09-03T13:00:00Z", fetchImpl: async () => new Response("missing", { status: 404 }) });
+  assert.equal(confirmed.pages[0].retirementConfirmedAt, "2026-09-03T13:00:00.000Z");
+  assert.equal(confirmed.sources.length, trusted.sources.length);
 });
 
 test("unchanged pages use conditional requests and duplicate page bodies are indexed once", async () => {
@@ -841,4 +967,179 @@ test("source freshness tracks retrieved evidence but not connector or action poi
   const stale = communitySourceStatus(index, now);
   assert.equal(stale.stale, true);
   assert.equal(stale.staleSourceCount, 1);
+});
+
+test("rediscovered excluded documents are not also reported as crawl-limit omissions", async()=>{
+ const missing='https://alpha.gov/DocumentCenter/View/999/Missing';
+ const index=await crawlCommunity(profile(),{
+  maxPages:1,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[],inventory:{eligibleUrls:[missing],pendingUrls:[missing],exclusions:[{url:missing,reason:'unavailable-official-link'}]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async()=>new Response('<div data-cpRole="mainContentContainer"><h1>Official resources</h1><p>Official community applications and complete property-owner instructions are listed below for residents.</p><a href="'+missing+'">Old application</a></div>',{headers:{'content-type':'text/html'}}),
+  extractPdfText:async()=>{throw new Error('The website returned 404.');}
+ });
+ assert.ok(index.inventory.exclusions.some(e=>e.url===missing));
+ assert.equal(index.inventory.pendingUrls.includes(missing),false);
+ assert.equal(index.inventory.eligibleUrls.includes(missing),false);
+ assert.equal(new Set([...index.inventory.eligibleUrls,...index.inventory.exclusions.map(e=>e.url)]).size,index.inventory.discoveredCount);
+});
+
+test('official redirects preserve excluded-route coverage and conditional refresh content', async()=>{
+ const root='https://alpha.gov/', mobile='https://alpha.gov/m/directory';
+ const html='<main><h1>Staff Directory</h1><p>Resident Services provides official community assistance and resident resources. Contact the resident service desk for help with community applications.</p><a href="/m/directory">Staff directory</a></main>';
+ const options={maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async url=>String(url)===root
+  ? new Response(null,{status:302,headers:{location:mobile}})
+  : new Response(html,{headers:{'content-type':'text/html',etag:'directory-v1'}})};
+ const first=await crawlCommunity(profile(),options);
+ assert.ok(first.sources.length>0);
+ assert.ok(first.sources.every(s=>s.sourceUrl===mobile));
+ assert.ok(!first.inventory.exclusions.some(e=>e.url===mobile));
+ assert.equal(first.pages.find(p=>p.url===mobile).duplicateOf,root);
+ assert.equal(first.inventory.pendingCount,0);
+ const second=await crawlCommunity(profile(),{...options,previousIndex:first,fetchImpl:async()=>new Response(null,{status:304})});
+ assert.deepEqual(second.sources.map(s=>[s.id,s.contentHash]),first.sources.map(s=>[s.id,s.contentHash]));
+ assert.equal(second.inventory.pendingCount,0);
+ assert.ok(!second.inventory.exclusions.some(e=>e.url===mobile));
+});
+
+test('directory ingestion separates people while detecting a changed contact for one person',async()=>{
+ const row=(id,name,email)=>`<li class="list-group-item"><a href="/m/directory/employee?eid=${id}">${name}</a><div>Community Manager</div><a href="mailto:${email}">Email ${name}</a></li>`;
+ const make=async html=>crawlCommunity(profile({connectors:[{id:'site',type:'civicplus-pages',baseUrl:'https://alpha.gov/Directory.aspx'}]}),{
+  maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async()=>new Response(`<main><h1>Staff Directory</h1><ul>${html}</ul></main>`,{headers:{'content-type':'text/html'}})
+ });
+ const first=await make(row(1,'Person One','one@alpha.gov')+row(2,'Person Two','two@alpha.gov'));
+ assert.equal(first.sources.length,2);
+ assert.equal(new Set(first.sources.map(s=>s.subjectKey)).size,2);
+ assert.ok(first.sources.every(s=>/Community Manager/.test(s.text)));
+ assert.equal(first.pages[0].chunkContentHashes.length,2);
+ assert.equal(first.inventory.pendingCount,0);
+ const {resolveFactLedger}=require('../lib/community-truth');
+ assert.equal(resolveFactLedger(first.factLedger,profile()).unresolved.length,0);
+ const changed=await make(row(1,'Person One','changed@alpha.gov')+row(2,'Person Two','two@alpha.gov'));
+ const conflict=resolveFactLedger([...first.factLedger,...changed.factLedger],profile()).unresolved;
+ assert.equal(conflict.length,1);
+ assert.match(conflict[0].claimKey,/directory-person-1/);
+ assert.ok(changed.factLedger.every(f=>f.reviewStatus==='candidate'));
+});
+
+test('FAQ ingestion keeps each question with its own contact and action link',async()=>{
+ const row=(id,title,email,path)=>`<li class="faq-question-item" id="question-${id}"><h3><button>${title}</button></h3><div class="accordion-text"><p>Contact ${email} for official help with this request.</p><a href="${path}">Submit this request</a></div></li>`;
+ const html=`<main><h1>Frequently Asked Questions</h1><ul>${row(1,'How do I apply?','apply@alpha.gov','/apply')}${row(2,'How do I pay?','billing@alpha.gov','/pay')}</ul></main>`;
+ const result=await crawlCommunity(profile({connectors:[{id:'site',type:'civicplus-pages',baseUrl:'https://alpha.gov/FAQ.aspx'}]}),{
+  maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async()=>new Response(html,{headers:{'content-type':'text/html'}})
+ });
+ assert.equal(result.sources.length,2);
+ const apply=result.sources.find(s=>s.subjectKey==='faq-question-1');
+ const pay=result.sources.find(s=>s.subjectKey==='faq-question-2');
+ assert.deepEqual(apply.actions.map(a=>a.url),['https://alpha.gov/apply']);
+ assert.deepEqual(pay.actions.map(a=>a.url),['https://alpha.gov/pay']);
+ assert.doesNotMatch(apply.text,/billing/);
+ assert.doesNotMatch(pay.text,/apply@/);
+ assert.equal(require('../lib/community-truth').resolveFactLedger(result.factLedger,profile()).unresolved.length,0);
+ assert.ok(result.factLedger.every(f=>f.reviewStatus==='candidate'));
+});
+
+test('truncated FAQ and staff rows retain later visible content through ordinary ingestion',async()=>{
+ const cases=[
+  ['FAQ.aspx','<li class="faq-question-item" id="question-1"><h3><button>How do I apply?</button></h3><div class="accordion-text">Contact apply@alpha.gov for application assistance.</div></li><li class="faq-question-item" id="question-2"><h3><button>How do I pay?</button></h3><div class="accordion-text">Contact billing@alpha.gov for billing assistance.</div>'],
+  ['Directory.aspx','<li class="list-group-item"><a href="/m/directory/employee?eid=1">Applications</a><p>Official application assistance for residents.</p><a href="mailto:apply@alpha.gov">apply@alpha.gov</a></li><li class="list-group-item"><a href="/m/directory/employee?eid=2">Billing</a><a href="mailto:billing@alpha.gov">billing@alpha.gov</a>']
+ ];
+ for(const [path,rows] of cases){
+  const result=await crawlCommunity(profile({connectors:[{id:'site',type:'civicplus-pages',baseUrl:`https://alpha.gov/${path}`}]}),{
+   maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async()=>new Response(`<main><h1>Resident assistance</h1><ul>${rows}`,{headers:{'content-type':'text/html'}})
+  });
+  const text=result.sources.map(s=>s.text).join(' ');
+  assert.match(text,/apply@alpha.gov/);
+  assert.match(text,/billing@alpha.gov/);
+  assert.ok(result.sources.every(s=>s.reviewStatus!=='approved'));
+  assert.ok(result.factLedger.every(f=>f.reviewStatus==='candidate'));
+ }
+});
+
+test("chunk deduplication preserves verifiable coverage for every collected page", async()=>{
+ const other='https://alpha.gov/other';
+ const a='Official resident information '+ 'alpha '.repeat(230)+'.';
+ const b='Official facility information '+ 'bravo '.repeat(230)+'.';
+ const c='Official service information '+ 'charlie '.repeat(220)+'.';
+ const index=await crawlCommunity(profile(),{
+  maxPages:2,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[],inventory:{eligibleUrls:[other]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async url=>new Response('<div data-cpRole="mainContentContainer"><p>'+([a,...(String(url).includes('/other')?[c,b]:[b,c])].join(' '))+'</p></div>',{headers:{'content-type':'text/html'}})
+ });
+ assert.equal(index.sources.length,3);
+ for(const page of index.pages){
+  assert.equal(page.indexed,true);
+  assert.equal(page.chunkContentHashes.length,3);
+  assert.equal(page.indexedSourceIds.length,3);
+  assert.ok(page.indexedSourceIds.every(id=>index.sources.some(s=>s.id===id)));
+ }
+ assert.equal(index.inventory.pendingCount,0);
+ assert.ok(index.factLedger.every(f=>f.reviewStatus!=='approved'));
+});
+
+test("a reused page with one missing recorded chunk stays pending", async()=>{
+ const root='https://alpha.gov/';
+ const retained=source({id:'retained',sourceUrl:root});
+ const index=await crawlCommunity(profile(),{
+  maxPages:1,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[retained],pages:[{url:root,canonicalUrl:root,indexed:true,etag:'old',chunkContentHashes:['abc','missing-chunk']}],inventory:{eligibleUrls:[root]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async()=>new Response(null,{status:304})
+ });
+ assert.equal(index.pages[0].indexed,false);
+ assert.ok(index.inventory.pendingUrls.includes(root));
+});
+
+test("FAQ accordion controls are not application actions but real answer links remain",()=>{
+ const links=linksFromHtml('<a href="#question-88">How do I submit an application for Design Review?</a><a href="/Faq.aspx?QID=88">How do I submit an application for Design Review?</a><a href="/DocumentCenter/View/1964/Packet">Landscape application packet</a>','https://alpha.gov/m/faq?cat=15');
+ const actions=extractActions(links);
+ assert.equal(actions.length,2);
+ assert.ok(actions.some(a=>a.url==='https://alpha.gov/Faq.aspx?QID=88'));
+ assert.ok(actions.some(a=>a.url==='https://alpha.gov/DocumentCenter/View/1964/Packet'));
+ assert.equal(actions.some(a=>a.url==='https://alpha.gov/m/faq?cat=15'),false);
+});
+
+test("real application anchors retain the section needed to complete the action",()=>{
+ const actions=extractActions(linksFromHtml('<a href="#apply-now">Submit application</a>','https://alpha.gov/application'));
+ assert.equal(actions[0].url,'https://alpha.gov/application#apply-now');
+});
+
+test("old metadata without retained text cannot suppress newly fetched duplicate content", async()=>{
+ const body='Official community application instructions explain the required property-owner documents and where residents should submit their completed forms.';
+ const {normalizedContentFingerprint}=require('../lib/community-ingest');
+ const index=await crawlCommunity(profile(),{
+  maxPages:1,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[{url:'https://alpha.gov/old-alias',canonicalUrl:'https://alpha.gov/old-alias',indexed:false,contentFingerprint:normalizedContentFingerprint(body)}],inventory:{}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async()=>new Response('<div data-cpRole="mainContentContainer"><p>'+body+'</p></div>',{headers:{'content-type':'text/html'}})
+ });
+ assert.ok(index.sources.some(s=>s.text===body));
+ const root=index.pages.find(p=>p.url==='https://alpha.gov/');
+ assert.equal(root.indexed,true);
+ assert.equal(root.duplicateOf,undefined);
+});
+
+test("duplicate aliases remain accounted when their owner chunks are retained under another URL",async()=>{
+ const other='https://alpha.gov/other',alias='https://alpha.gov/alias';
+ const a='Official application information '+ 'alpha '.repeat(230)+'.';
+ const b='Official facility information '+ 'bravo '.repeat(230)+'.';
+ const c='Official service information '+ 'charlie '.repeat(220)+'.';
+ const index=await crawlCommunity(profile(),{
+  maxPages:3,maxDocuments:1,discoverSitemap:false,
+  previousIndex:{sources:[],pages:[],inventory:{eligibleUrls:[other,alias]}},
+  lookup:async()=>[{address:'203.0.113.10',family:4}],
+  fetchImpl:async url=>new Response('<div data-cpRole="mainContentContainer"><p>'+[a,...(String(url)==='https://alpha.gov/'?[b,c]:[c,b])].join(' ')+'</p></div>',{headers:{'content-type':'text/html'}})
+ });
+ assert.equal(index.sources.length,3);
+ assert.ok(index.pages.some(p=>p.duplicateOf));
+ assert.equal(index.inventory.pendingCount,0);
+ for(const page of index.pages)assert.equal(page.indexedSourceIds.length,3);
+});
+
+test('contact extraction preserves ampersands and spaced phone separators from the official text',()=>{
+ const facts=extractFacts('D&D Landscaping: d&d.landscaping@gmail.com. JS Enterprises: 720-254 -8148.');
+ assert.ok(facts.some(f=>f.type==='email'&&f.value==='d&d.landscaping@gmail.com'));
+ assert.equal(facts.some(f=>f.value==='d.landscaping@gmail.com'),false);
+ assert.ok(facts.some(f=>f.type==='phone'&&f.value==='720-254 -8148'));
 });

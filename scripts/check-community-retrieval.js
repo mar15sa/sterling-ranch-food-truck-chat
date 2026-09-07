@@ -10,10 +10,11 @@ const CASES = [
   ["What fees do residents pay?", /water, sanitary sewer, and stormwater/i],
   ["What are the rules for parks and open spaces?", /17-54/i],
   ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i],
-  ["Who do I contact about water billing?", /Water Billing/i],
-  // The current official court page controls court hours, fees and booking.
-  // Section 17-54 is the general park rule and gives different park hours.
-  ["What are the neighborhood pickleball court rules?", /^Pickleball Courts$/i],
+  ["Who do I contact about water billing?", /Water Billing/i, false],
+  // The current court-page version is withheld while its conflicting hours,
+  // fee, and booking claims are reviewed. Generic park rules can still use the
+  // separate governing section; operational questions cannot.
+  ["What are the neighborhood pickleball court rules?", /17-54|General rules/i],
   ["What is the maximum height a freestanding flag pole can be?", /2024 CAB Code amendments/i],
   ["What trees can we plant?", /5-131|Preapproved plant list/i],
   ["What are the rules for yard art?", /2024 CAB Code amendments/i],
@@ -23,15 +24,15 @@ const CASES = [
   ["Dogs?", /1-33|Pets and livestock/i],
   ["Can I park on the street?", /1-37|Vehicles; parking/i],
   ["Can I build a greenhouse?", /Greenhouses/i],
-  ["What day is trash pickup?", /Trash & Recycling/i],
-  ["Who do I contact about internet service?", /Important Contact Information/i],
-  ["What email do I use for design review questions?", /21-21|design review process/i],
+  ["What day is trash pickup?", /Trash & Recycling/i, false],
+  ["Who do I contact about internet service?", /Important Contact Information/i, false],
+  ["What email do I use for design review questions?", /Attachment A-3/i],
 ];
 
 async function main() {
   let passed = 0;
   const failures = [];
-  for (const [question, expected] of CASES) {
+  for (const [question, expected, expectedCanAnswer = true] of CASES) {
     const answer = await answerCommunityQuestion(question, {
       index: communityIndex,
       communityId: "sterling-ranch",
@@ -41,8 +42,13 @@ async function main() {
       synthesizeCommunityAnswer: false,
     });
     const firstSource = answer.sources?.[0]?.title || "";
-    if (expected.test(firstSource) && answer.confidence?.canAnswer === true) passed += 1;
-    else failures.push({ question, expected: String(expected), firstSource, reason: answer.confidence?.reason });
+    const safeOutcome = expectedCanAnswer
+      ? answer.confidence?.canAnswer === true
+      : answer.confidence?.canAnswer === false
+        && answer.answerMode === "community-freshness-withheld"
+        && answer.confidence?.reason === "source-review-required";
+    if (expected.test(firstSource) && safeOutcome) passed += 1;
+    else failures.push({ question, expected: String(expected), expectedCanAnswer, firstSource, reason: answer.confidence?.reason });
   }
   const recall = passed / CASES.length;
   console.log(`Community controlling-source retrieval: ${passed}/${CASES.length} (${Math.round(recall * 100)}%).`);

@@ -275,7 +275,7 @@ test("AI phrasing does not erase a mature rule engine decision for the named pro
   assert.match(answer.answer, /DRC approval.*five feet/i);
 });
 
-test("official service pages rescue questions the rulebook cannot answer", async () => {
+test("conflicted official contact versions do not expose the prior internet number", async () => {
   const answer = await answerCommunityQuestion("Who do I contact about internet service?", {
     index: communityIndex,
     communityId: "sterling-ranch",
@@ -284,12 +284,15 @@ test("official service pages rescue questions the rulebook cannot answer", async
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(answer.confidence.canAnswer, true);
-  assert.match(answer.directAnswer, /833-926-1289/);
+  assert.equal(answer.confidence.canAnswer, false);
+  assert.equal(answer.answerMode, "community-freshness-withheld");
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(answer.answer, /833-926-1289/);
   assert.match(answer.sources[0].title, /Important Contact Information/);
+  assert.match(answer.actions[0].url, /\/324\/Important-Contact-Information/);
 });
 
-test("recurring service schedules are structured instead of returned as raw page text", async () => {
+test("conflicted trash-page versions do not expose village pickup days", async () => {
   const answer = await answerCommunityQuestion("What day is trash pickup?", {
     index: communityIndex,
     communityId: "sterling-ranch",
@@ -298,8 +301,9 @@ test("recurring service schedules are structured instead of returned as raw page
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
   });
-  assert.match(answer.directAnswer, /depends on your village/i);
-  assert.deepEqual(answer.keyDetails.map((detail) => detail.match(/Monday|Tuesday|Thursday/)[0]), ["Monday", "Tuesday", "Thursday"]);
+  assert.equal(answer.answerMode, "community-freshness-withheld");
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(answer.answer, /Monday|Tuesday|Thursday/);
   assert.match(answer.actions[0].url, /\/247\/Trash-Recycling/);
 });
 
@@ -312,19 +316,10 @@ test("alternating recycling questions disclose the missing date anchor and link 
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(answer.answerMode, "community-recurring-schedule");
-  assert.match(answer.directAnswer, /can(?:not|’t|'t) reliably tell.*this week or next/i);
-  assert.deepEqual(answer.keyDetails, [
-    "Providence Village: recycling every other Monday",
-    "Ascent Village: recycling every other Tuesday",
-    "Prospect Village: recycling every other Thursday",
-  ]);
-  assert.deepEqual(answer.actions.map((action) => action.label), [
-    "Open WasteConnect for Android",
-    "Open WasteConnect for iPhone",
-    "Open official Trash & Recycling information",
-  ]);
-  assert.doesNotMatch(JSON.stringify(answer.actions), /Submit-Your-Feedback|Bulk Item|Recycling Tips/i);
+  assert.equal(answer.answerMode, "community-freshness-withheld");
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(answer.answer, /every other Monday|every other Tuesday|every other Thursday/i);
+  assert.match(answer.actions[0].url, /\/247\/Trash-Recycling/);
 
   const pageOnlyResult = unanchoredRecurringScheduleAnswer("When is recycling week?", {
     index: communityIndex,
@@ -519,6 +514,21 @@ test("automatic release decisions hold, promote, and roll back safely", () => {
   assert.equal(sourceReleaseDecision({ candidateValid: true, stagingChecksPassed: true }), "promote-production");
   assert.equal(sourceReleaseDecision({ candidateValid: true, stagingChecksPassed: true, productionChecksPassed: false }), "rollback-production");
   assert.equal(sourceReleaseDecision({ candidateValid: true, stagingChecksPassed: true, productionChecksPassed: true }), "release-complete");
+});
+
+test('inventory exclusion cannot hide retained static source content', () => {
+  const trusted = { communityId:'sterling-ranch', sources:[source('one','same')] };
+  const profile = { communityId:'sterling-ranch', allowedHosts:['sterlingranchcab.com'] };
+  for (const inventory of [
+    { exclusions:[{ url:trusted.sources[0].sourceUrl, reason:'technical-route' }] },
+    { dispositions:[{ url:trusted.sources[0].sourceUrl, status:'excluded', reason:'technical-route' }] }
+  ]) {
+    const result = validateCommunityCandidate(trusted,{ ...trusted, inventory },profile);
+    assert.ok(result.errors.some(error => /retained from an excluded inventory URL/.test(error)));
+  }
+  const action = source('action','same',{ connectorType:'official-action', facts:[] });
+  const result = validateCommunityCandidate({ ...trusted,sources:[action] },{ ...trusted,sources:[action], inventory:{ exclusions:[{url:action.sourceUrl,reason:'transactional-action'}] } },profile);
+  assert.ok(!result.errors.some(error => /retained from an excluded inventory URL/.test(error)));
 });
 
 test("answer traces expose operational metadata without storing question text", () => {

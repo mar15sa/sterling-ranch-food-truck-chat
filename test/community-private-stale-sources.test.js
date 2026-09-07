@@ -17,7 +17,7 @@ const index = { communityId: "test", releaseFingerprint: "f".repeat(64), sources
   overdue,
   { ...overdue, id: "fresh", staleAfter: "2099-01-01T00:00:00.000Z" },
   { ...overdue, id: "pointer-connector-calendar" },
-  { ...overdue, id: "event", sourceType: "events" },
+  { ...overdue, id: "event", sourceType: "events", connectorType: "civicplus-calendar" },
   { ...overdue, id: "action", connectorType: "official-action" },
 ] };
 const fields = ["id", "sourceUrl", "contentHash", "checkedAt", "staleAfter"];
@@ -54,6 +54,7 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
     getRulesSearchMetrics: () => ({}), getRulesLlmMetrics: () => ({}),
     getCommunitySearchMetrics: () => ({}), getCommunityLlmMetrics: () => ({}), communityAnswerMetrics: () => ({}),
     communitySourceStatus: (_, now, options) => { statusReads++; return communitySourceStatus(index, now, options); },
+    liveMonitor: { status: () => ({}) },
   });
   vm.runInContext(["requireQuestionAdmin", "handleCommunitySourceHealth", "handleHealth"].map(name => functionSource(server, name)).join("\n"), context);
   for (const cookie of ["", sessionCookie(`${createSessionToken("local-test-only")}tampered`)]) {

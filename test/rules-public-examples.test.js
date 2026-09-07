@@ -45,9 +45,8 @@ const EXAMPLES = [
   },
   {
     question: "Who do I contact about water billing?",
-    verdict: "informational",
-    includes: ["American Conservation and Billing Solutions", "AmCoBi", "833", "ClientCare@AmCoBi.com"],
-    requiresSections: false,
+    withheldConflict: true,
+    forbidden: ["American Conservation and Billing Solutions", "AmCoBi", "ClientCare@AmCoBi.com"],
   },
   {
     question: "Which food truck is here tomorrow?",
@@ -59,7 +58,7 @@ const EXAMPLES = [
 ];
 
 for (const example of EXAMPLES) {
-  test(`public example stays useful: ${example.question}`, async () => {
+  test(`${example.withheldConflict ? "public example safely withholds a conflicted source" : "public example stays useful"}: ${example.question}`, async () => {
     const result = await answerCommunityQuestion(example.question, {
       index: communityIndex,
       communityId: "sterling-ranch",
@@ -75,6 +74,14 @@ for (const example of EXAMPLES) {
         menu: { links: [], items: [] },
       }) : undefined,
     });
+    if (example.withheldConflict) {
+      assert.equal(result.confidence?.canAnswer, false);
+      assert.equal(result.answerMode, "community-freshness-withheld");
+      assert.equal(result.answerStatus, "source-unavailable");
+      for (const phrase of example.forbidden) assert.doesNotMatch(result.answer, new RegExp(phrase, "i"));
+      assert.match(result.actions[0].url, /\/206\/Water-Billing/);
+      return;
+    }
     assert.equal(result.confidence?.canAnswer, true);
     assert.equal(result.answerVerdict, example.verdict);
     assert.ok(result.answer.length <= 1000, `Answer is ${result.answer.length} characters long.`);

@@ -1,6 +1,33 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { reconcileCommunityIndex } = require('../lib/community-source-manager');
+const { buildFactLedger } = require('../lib/community-truth');
+
+test('refresh preserves exact fact decisions but cannot approve newly interpreted claims', () => {
+  const source = { id: 'fees', communityId: 'sterling-ranch', sourceUrl: 'https://example.gov/fees', contentHash: 'v1',
+    reviewStatus: 'approved', reviewedAt: '2026-09-01', reviewedBy: 'Owner',
+    facts: [{ type: 'money', value: '$20', scopeKey: 'monthly-fee' }] };
+  const original = { communityId: 'sterling-ranch', sources: [source] };
+  const factLedger = buildFactLedger(original, { trusted: true });
+  const trusted = { ...original, factLedger };
+  const unchanged = reconcileCommunityIndex(trusted, original).index.factLedger;
+  assert.equal(unchanged[0].id, factLedger[0].id);
+  assert.equal(unchanged[0].reviewStatus, 'approved');
+  const revised = { ...trusted, sources: [{ ...source, facts: [{ ...source.facts[0], scopeKey: 'annual-fee' }] }] };
+  const changed = reconcileCommunityIndex(revised, revised).index.factLedger[0];
+  assert.notEqual(changed.id, factLedger[0].id);
+  assert.equal(changed.reviewStatus, 'candidate');
+  assert.equal(changed.reviewedAt, '');
+  assert.equal(changed.reviewedBy, '');
+});
+
+test('unchanged source hashes do not import a proposed ledger or altered facts', () => {
+  const source={id:'policy',communityId:'sterling-ranch',sourceUrl:'https://example.gov/policy',contentHash:'same',text:'Approved policy',actions:[],facts:[]};
+  const result=reconcileCommunityIndex({communityId:'sterling-ranch',sources:[source],factLedger:[]},
+    {communityId:'sterling-ranch',sources:[{...source,facts:[{type:'money',value:'$999'}]}],factLedger:[{id:'injected',reviewStatus:'approved'}]});
+  assert.deepEqual(result.index.factLedger,[]);
+  assert.deepEqual(result.index.sources[0].facts,[]);
+});
 test('freshness follows official URL and content, never a reused title ID', () => {
   const source={ id:'same-title',sourceUrl:'https://example.gov/fees',contentHash:'h',checkedAt:'2026-01-01',staleAfter:'2026-01-02',text:'approved',actions:[] };
   const index={sources:[source]};
@@ -12,4 +39,13 @@ test('freshness follows official URL and content, never a reused title ID', () =
   assert.equal(refreshed.id,source.id);
   assert.deepEqual(refreshed.actions,source.actions);
   assert.equal(reconcileCommunityIndex(index,{sources:[{...renamed,contentHash:'changed'}]}).index.sources[0].checkedAt,source.checkedAt);
+});
+
+test('freshness requires one unique canonical URL and exact hash match', () => {
+  const source={id:'trusted',sourceUrl:'https://EXAMPLE.gov/fees/?b=2&a=1#old',contentHash:'same',checkedAt:'old',staleAfter:'old-stale',text:'approved',actions:[]};
+  const refreshed={...source,id:'new-id',sourceUrl:'https://example.gov/fees?a=1&b=2',checkedAt:'new',staleAfter:'new-stale'};
+  assert.equal(reconcileCommunityIndex({sources:[source]},{sources:[refreshed]}).index.sources[0].checkedAt,'new');
+  const ambiguous=reconcileCommunityIndex({sources:[source]},{sources:[refreshed,{...refreshed,id:'second'}]}).index.sources[0];
+  assert.equal(ambiguous.checkedAt,'old');
+  assert.equal(ambiguous.staleAfter,'old-stale');
 });
