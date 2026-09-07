@@ -2,6 +2,11 @@ name: Rules answer quality monitor
 
 on:
   workflow_dispatch:
+    inputs:
+      connectors_only:
+        description: Validate only facility and calendar monitoring; manual runs never change alert issues
+        type: boolean
+        default: false
   schedule:
     - cron: "15 15 * * *"
     - cron: "7 * * * *"
@@ -28,33 +33,36 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        id: dependencies
         run: npm ci
 
       - name: Verify live facility and calendar connectors
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: node scripts/check-community-live-monitor.js
 
       - name: Check local rules retrieval and uncertainty handling
-        if: github.event.schedule != '7 * * * *'
+        id: local_checks
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run check
 
       - name: Re-audit every captured resident wording
-        if: github.event.schedule != '7 * * * *'
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:eval:residents
 
       - name: Verify official resident-resource links
-        if: github.event.schedule != '7 * * * *'
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:resources:check:live
 
       - name: Refresh and audit official community sources
-        if: github.event.schedule != '7 * * * *'
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run community:check -- --live
 
       - name: Check the live rules assistant
-        if: github.event.schedule != '7 * * * *'
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:monitor:live
 
       - name: Check live food-truck lookups
-        if: github.event.schedule != '7 * * * *'
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         env:
           FAIL_ON_UNREACHABLE_SITE: "true"
         run: npm run check:live
@@ -64,14 +72,21 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: resident-monitor-${{ github.run_id }}
+          path: data/community-live-monitor-report.json
+          retention-days: 35
+
+      - name: Preserve newly completed local audit evidence
+        if: ${{ !cancelled() && steps.local_checks.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: resident-audit-${{ github.run_id }}
           path: |
-            data/community-live-monitor-report.json
             data/community-assistant-eval.json
             data/community-retrieval-report.json
           retention-days: 35
 
       - name: Open or update the review issue when checks fail
-        if: failure()
+        if: ${{ failure() && github.event_name == 'schedule' }}
         uses: actions/github-script@v7
         with:
           script: |
@@ -101,7 +116,7 @@ jobs:
             }
 
       - name: Close the review issue after recovery
-        if: success()
+        if: ${{ success() && github.event_name == 'schedule' }}
         uses: actions/github-script@v7
         with:
           script: |
