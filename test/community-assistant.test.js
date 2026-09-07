@@ -122,8 +122,12 @@ test('scanned PDF page counters do not count as indexed or duplicate content', a
     extractPdfText: async () => counters,
   });
   assert.equal(index.sources.some(s => s.sourceUrl === url), false);
-  assert.ok(index.failures.some(f => /OCR or manual/.test(f.error || f.message || '')));
-  assert.ok(index.inventory.pendingUrls.includes(url));
+  assert.equal(index.failureCount, 0);
+  assert.equal(index.failures.length, 0);
+  assert.equal(index.inventory.complete, true);
+  assert.equal(index.inventory.pendingUrls.includes(url), false);
+  assert.ok(index.inventory.exclusions.some(item => item.url === url
+    && item.reason === 'no-readable-text-layer-manual-review-required'));
   const retained = { id: 'old-scanned', communityId: 'alpha', title: 'Scanned Policy', sourceUrl: url,
     text: counters, contentHash: 'counter-hash', connectorType: 'official-pdf', facts: [], actions: [] };
   const repeated = await crawlCommunity(profile(), {
@@ -133,8 +137,33 @@ test('scanned PDF page counters do not count as indexed or duplicate content', a
     fetchImpl: async () => new Response('<main>Official community information and resident services are available from this official website.</main>', { headers: { 'content-type': 'text/html' } }),
     extractPdfText: async () => counters,
   });
-  assert.ok(repeated.inventory.pendingUrls.includes(url));
-  assert.equal(repeated.pages.find(p => p.url === url)?.indexed, false);
+  assert.equal(repeated.failureCount, 0);
+  assert.equal(repeated.sources.some(s => s.sourceUrl === url), false);
+  assert.equal(repeated.inventory.pendingUrls.includes(url), false);
+  assert.ok(repeated.inventory.exclusions.some(item => item.url === url
+    && item.reason === 'no-readable-text-layer-manual-review-required'));
+  assert.equal(repeated.pages.some(p => p.url === url), false);
+});
+
+test('unreadable PDFs are excluded without hiding unrelated document collection failures', async () => {
+  const scanned = 'https://alpha.gov/DocumentCenter/View/100/Scanned-Policy';
+  const broken = 'https://alpha.gov/DocumentCenter/View/101/Broken-Policy';
+  const index = await crawlCommunity(profile(), {
+    maxPages: 1, maxDocuments: 2, discoverSitemap: false,
+    previousIndex: { sources: [], pages: [], inventory: { eligibleUrls: [scanned, broken] } },
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('<main>Official community information and resident services are available from this official website.</main>', { headers: { 'content-type': 'text/html' } }),
+    extractPdfText: async url => {
+      if (url === scanned) return '-- 1 of 5 -- -- 2 of 5 -- -- 3 of 5 --';
+      throw new Error('The document service timed out.');
+    },
+  });
+  assert.equal(index.failureCount, 1);
+  assert.deepEqual(index.failures, [{ url: broken, error: 'The document service timed out.' }]);
+  assert.ok(index.inventory.exclusions.some(item => item.url === scanned
+    && item.reason === 'no-readable-text-layer-manual-review-required'));
+  assert.equal(index.inventory.exclusions.some(item => item.url === broken), false);
+  assert.equal(index.sources.some(source => source.sourceUrl === scanned), false);
 });
 
 test('PDF browser-print headers do not establish readable document body', () => {
