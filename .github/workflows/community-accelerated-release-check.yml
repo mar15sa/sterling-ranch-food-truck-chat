@@ -65,8 +65,10 @@ jobs:
           EXPECTED_COMMUNITY_FINGERPRINT: ${{ inputs.fingerprint }}
           RULES_LIVE_BASE_URL: ${{ inputs.environment == 'staging' && (vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app') || (vars.PRODUCTION_BASE_URL || 'https://sterlingranchsociety.com') }}
         run: |
+          set -o pipefail
           mkdir -p trial-evidence
-          node scripts/check-community-application-soak.js --duration-hours 1 --checks 5 --interval-ms 900000 --routing-benchmark --report trial-evidence/report.json --write 2>&1 | tee trial-evidence/accelerated-gate.log
+          node scripts/check-community-application-soak.js --accelerated --duration-hours 1 --checks 5 --interval-ms 900000 --routing-benchmark --report trial-evidence/report.json --write 2>&1 | tee trial-evidence/accelerated-gate.log
+          node -e 'const fs = require("node:fs"); const report = JSON.parse(fs.readFileSync("trial-evidence/report.json", "utf8")); const elapsed = Date.parse(report.completedAt) - Date.parse(report.startedAt); if (report.result !== "passed" || report.completedChecks !== 5 || !Number.isFinite(elapsed) || elapsed < 60 * 60 * 1000) { console.error(JSON.stringify({ result: report.result, completedChecks: report.completedChecks, elapsed })); process.exit(1); }'
       - uses: actions/upload-artifact@v4
         if: always()
         with:

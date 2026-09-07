@@ -19,7 +19,8 @@ const writeReport = process.argv.includes("--write");
 const expectedFingerprint = String(process.env.EXPECTED_COMMUNITY_FINGERPRINT || "").trim();
 const expectedRevision = String(process.env.EXPECTED_APPLICATION_REVISION || "").trim();
 const segmentChecks = Math.max(1, Number(option("--segment-checks", String(checks))) || checks);
-const identity = { baseUrl, durationHours, checkCount: checks, intervalMs, expectedFingerprint, expectedRevision };
+const accelerated = process.argv.includes("--accelerated");
+const identity = { baseUrl, durationHours, checkCount: checks, intervalMs, expectedFingerprint, expectedRevision, accelerated };
 const prior = process.argv.includes("--resume") ? resumeEvidence(JSON.parse(fs.readFileSync(reportPath, "utf8")), identity) : null;
 identity.configurationFingerprint = prior?.configurationFingerprint || '';
 const startedAt = prior?.startedAt || new Date().toISOString();
@@ -108,6 +109,16 @@ function percentile(values, percent) {
   return sorted[Math.min(sorted.length - 1, Math.ceil(sorted.length * percent) - 1)];
 }
 
+function checkpointDueAt({ number, startedAt, lastCheckedAt, intervalMs, accelerated }) {
+  const anchor = accelerated ? Date.parse(startedAt) : Date.parse(lastCheckedAt);
+  return anchor + (accelerated ? number - 1 : 1) * intervalMs;
+}
+
+function questionSetForCheck(number, accelerated) {
+  const index = accelerated ? number - 1 : Math.floor((number - 1) / 4);
+  return questionSets[index % questionSets.length];
+}
+
 async function checkOnce(number) {
   const { body: health } = await json(`${baseUrl}/api/health`);
   if (!health.deploymentReady || health.status !== "ok") throw new Error(`Check ${number}: staging is not deployment-ready.`);
@@ -123,9 +134,8 @@ async function checkOnce(number) {
   if (expectedFingerprint && health.communitySources?.activeFingerprint !== expectedFingerprint) {
     throw new Error(`Check ${number}: community source fingerprint changed during the soak.`);
   }
-  if (number === 1 || (number - 1) % 4 === 0) {
-    const setIndex = Math.floor((number - 1) / 4) % questionSets.length;
-    for (const item of questionSets[setIndex]) await ask(item);
+  if (accelerated || number === 1 || (number - 1) % 4 === 0) {
+    for (const item of questionSetForCheck(number, accelerated)) await ask(item);
   }
   if (number === 1 || number === Math.ceil(checks / 2) || number === checks) await verifyLiveEvents();
   if (process.argv.includes("--routing-benchmark") && (number === 1 || number === Math.ceil(checks / 2) || number === checks)) {
@@ -142,7 +152,10 @@ async function checkOnce(number) {
 async function main() {
   const finalSegmentCheck = Math.min(checks, completedChecks + segmentChecks);
   for (let number = completedChecks + 1; number <= finalSegmentCheck; number += 1) {
-    if (number > 1) await new Promise((resolve) => setTimeout(resolve, Math.max(0, Date.parse(lastCheckedAt) + intervalMs - Date.now())));
+    if (number > 1) {
+      const dueAt = checkpointDueAt({ number, startedAt, lastCheckedAt, intervalMs, accelerated });
+      await new Promise((resolve) => setTimeout(resolve, Math.max(0, dueAt - Date.now())));
+    }
     await checkOnce(number);
     completedChecks = number;
     lastCheckedAt = new Date().toISOString();
@@ -184,8 +197,12 @@ async function main() {
   console.log(`AI-first staging soak passed: ${checks} checks, ${durations.length} answer requests, p95 ${p95DurationMs}ms.`);
 }
 
-main().catch((error) => {
-  if (writeReport) writeEvidence(reportPath, { ...identity, startedAt, completedAt: new Date().toISOString(), completedChecks, result: "failed", error: error.message, rows });
-  console.error(error.message);
-  process.exitCode = 1;
-});
+if (require.main === module) {
+  main().catch((error) => {
+    if (writeReport) writeEvidence(reportPath, { ...identity, startedAt, completedAt: new Date().toISOString(), completedChecks, result: "failed", error: error.message, rows });
+    console.error(error.message);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { checkpointDueAt, questionSetForCheck };
