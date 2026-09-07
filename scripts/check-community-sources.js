@@ -41,7 +41,7 @@ async function main() {
   const index = live ? await crawlCommunity(profile) : bundled;
   const before = new Map(bundled.sources.map((source) => [source.id, source]));
   const after = new Map(index.sources.map((source) => [source.id, source]));
-  const identity = (source) => ({ id: source.id, title: source.title, url: source.url, contentHash: source.contentHash });
+  const identity = (source) => ({ id: source.id, title: source.title, sourceUrl: source.sourceUrl, contentHash: source.contentHash });
   const report = {
     checkedAt: new Date().toISOString(),
     mode: live ? "live" : "bundled",
