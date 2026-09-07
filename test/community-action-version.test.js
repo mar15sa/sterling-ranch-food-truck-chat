@@ -37,6 +37,28 @@ test('configured connector and action destinations are included in source versio
   }
 });
 
+test('a reused page never carries an obsolete configured action into the current review batch', async () => {
+  const p = structuredClone(profile);
+  p.actions = [{ id: 'apply', label: 'Old application action', url: 'https://alpha.gov/', sourceType: 'forms' }];
+  const htmlBody = '<title>Applications</title><main>Residents should use the official application page for architectural requests and project approval before beginning work.</main>';
+  const first = await crawlCommunity(p, { maxPages: 1, maxDocuments: 1, discoverSitemap: false,
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response(htmlBody, { headers: { 'content-type': 'text/html', etag: 'page-v1' } }) });
+  const oldAction = first.sources.find((record) => record.connectorType === 'official-action');
+  const legacyPageMetadata = { ...first, pages: first.pages.map((page) => ({ ...page, indexedSourceIds: undefined })) };
+  p.actions[0].label = 'Current application action';
+  const refreshed = await crawlCommunity(p, { maxPages: 1, maxDocuments: 1, discoverSitemap: false, previousIndex: legacyPageMetadata,
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response(null, { status: 304, headers: { etag: 'page-v1' } }) });
+
+  const actions = refreshed.sources.filter((record) => record.connectorType === 'official-action');
+  assert.equal(actions.length, 1);
+  assert.equal(actions[0].title, 'Current application action');
+  assert.notEqual(actions[0].contentHash, oldAction.contentHash);
+  assert.equal(refreshed.sources.some((record) => record.connectorType === 'official-action' && record.contentHash === oldAction.contentHash), false);
+  assert.equal(new Set(refreshed.sources.map((record) => record.id)).size, refreshed.sources.length);
+});
+
 test('pages with identical text and different action targets are not treated as duplicate content',async()=>{
   const p=structuredClone(profile);p.connectors[0].seedUrls=['https://alpha.gov/Second'];
   const result=await crawlCommunity(p,{...options(''),maxPages:2,fetchImpl:async url=>new Response(html(String(url).endsWith('/Second')?'/FormCenter/Apply-2':'/FormCenter/Apply-1'),{headers:{'content-type':'text/html'}})});

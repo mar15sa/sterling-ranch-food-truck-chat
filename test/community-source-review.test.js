@@ -11,6 +11,7 @@ const {
   syncReviewItems,
 } = require("../lib/community-source-review");
 const { buildFactLedger } = require('../lib/community-truth');
+const { disambiguateSourceIds } = require('../lib/community-ingest');
 
 test('private review configuration can be checked with injected dummy values', () => {
   assert.deepEqual(sourceReviewStatus({ token: '', databaseId: '', dataSourceId: '' }), { configured: false, storage: 'notion' });
@@ -197,6 +198,21 @@ test('batch review refuses duplicate source identifiers instead of silently disc
     assert.throws(() => compileReviewedCandidate(trusted, candidate, profile), { code: 'AMBIGUOUS_SOURCE_ID' });
   }
   assert.equal(JSON.stringify(ambiguous), original);
+});
+
+test('source identity collision keeps distinct versions reviewable and coalesces only an exact duplicate', () => {
+  const page = { ...source('page-version'), id: 'alpha-action-approved-landscapers', sourceUrl: 'https://alpha.gov/approved-landscapers',
+    title: 'Approved landscapers', facts: [{ id: 'alpha-action-approved-landscapers-fee', sourceId: 'alpha-action-approved-landscapers', type: 'money', value: '$10', context: 'The fee is $10.' }] };
+  const action = { ...page, connectorType: 'official-action', sourceType: 'services', contentHash: 'action-version',
+    title: 'Open approved landscapers', text: 'Open the approved landscapers list.', excerpt: 'Open the approved landscapers list.', facts: [] };
+  const exactActionCopy = structuredClone(action);
+  const records = disambiguateSourceIds([page, action, exactActionCopy]);
+
+  assert.equal(records.length, 2);
+  assert.deepEqual(new Set(records.map((record) => record.contentHash)), new Set(['page-version', 'action-version']));
+  assert.equal(new Set(records.map((record) => record.id)).size, 2);
+  assert.ok(records.every((record) => (record.facts || []).every((fact) => fact.sourceId === record.id)));
+  assert.doesNotThrow(() => buildReviewItems({ sources: [] }, { sources: records }, profile));
 });
 
 test('later escalation overrides source and fact approval regardless of returned record order', () => {
