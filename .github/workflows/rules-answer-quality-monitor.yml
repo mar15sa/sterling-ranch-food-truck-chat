@@ -53,6 +53,15 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:resources:check:live
 
+      - name: Check all unresolved owner-marked questions
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
+        env:
+          NODE_OPTIONS: --require ./scripts/source-review-readonly.cjs
+          RULES_QUESTION_NOTION_TOKEN: ${{ secrets.RULES_QUESTION_NOTION_TOKEN }}
+          RULES_QUESTION_NOTION_DATABASE_ID: ${{ secrets.RULES_QUESTION_NOTION_DATABASE_ID }}
+          RULES_QUESTION_NOTION_DATA_SOURCE_ID: ${{ secrets.RULES_QUESTION_NOTION_DATA_SOURCE_ID }}
+        run: node scripts/check-community-owner-marks.js
+
       - name: Refresh and audit official community sources
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run community:check -- --live --write
@@ -105,6 +114,7 @@ jobs:
               "The scheduled resident-tools quality check failed.",
               "",
               `Review the failed run: ${workflowUrl}`,
+              "Owner-marked answers: https://sterlingranchsociety.com/community-assistant/questions (owner sign-in required).",
               "",
               "Review source changes, broken links, stale answers, and any Railway entries beginning with `uncertain answer recorded`. Fix the reusable retrieval, grounding, or source-coverage cause and add representative wording to the evaluation set before closing this issue.",
             ].join("\n");
