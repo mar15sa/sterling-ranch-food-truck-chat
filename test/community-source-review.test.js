@@ -1,11 +1,91 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { buildReviewItems, compileReviewedCandidate, reviewCoverage, sourceReviewStatus } = require("../lib/community-source-review");
+const {
+  buildReviewItems,
+  compileReviewedCandidate,
+  listReviewRecords,
+  resetSourceReviewCachesForTest,
+  reviewCoverage,
+  saveReviewDecision,
+  sourceReviewStatus,
+  syncReviewItems,
+} = require("../lib/community-source-review");
 const { buildFactLedger } = require('../lib/community-truth');
 
 test('private review configuration can be checked with injected dummy values', () => {
   assert.deepEqual(sourceReviewStatus({ token: '', databaseId: '', dataSourceId: '' }), { configured: false, storage: 'notion' });
   assert.deepEqual(sourceReviewStatus({ token: 'dummy-test-token', dataSourceId: 'dummy-test-source' }), { configured: true, storage: 'notion' });
+});
+
+function configuredSourceReview(t) {
+  const settings = {
+    COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: 'dummy-test-token',
+    COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: 'dummy-test-source',
+    COMMUNITY_SOURCE_REVIEW_NOTION_TITLE_PROPERTY: 'Owner review',
+  };
+  for (const [name, value] of Object.entries(settings)) {
+    const prior = process.env[name];
+    process.env[name] = value;
+    t.after(() => { if (prior === undefined) delete process.env[name]; else process.env[name] = prior; });
+  }
+  resetSourceReviewCachesForTest();
+  t.after(resetSourceReviewCachesForTest);
+}
+
+function validReviewSchema() {
+  const select = options => ({ type: 'select', select: { options: options.map(name => ({ name })) } });
+  const richText = () => ({ type: 'rich_text', rich_text: {} });
+  return { properties: {
+    'Owner review': { type: 'title', title: {} },
+    'Review ID': richText(),
+    'Record type': select(['review-item', 'decision']),
+    Status: select(['pending', 'approved', 'kept-current', 'superseded', 'excluded', 'escalated']),
+    Topic: richText(), Risk: select(['low', 'medium', 'high']), Conflict: { type: 'checkbox', checkbox: {} },
+    'Source URL': { type: 'url', url: {} }, 'Source version': richText(), 'Fact ID': richText(),
+    'Candidate fingerprint': richText(),
+    Decision: select(['approve-proposed', 'keep-current', 'mark-current-superseded', 'exclude-page', 'escalate']),
+    Reviewer: richText(), Note: richText(), Payload: richText(), 'Created at': { type: 'date', date: {} },
+  } };
+}
+
+function response(body = {}) { return { ok: true, status: 200, json: async () => body }; }
+
+test('source-review reads, syncs, and decisions only validate the Notion schema', async t => {
+  configuredSourceReview(t);
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, method: options.method || 'GET' });
+    if (/\/data_sources\/dummy-test-source$/.test(url)) return response(validReviewSchema());
+    if (/\/query$/.test(url)) return response({ results: [], has_more: false });
+    if (/\/pages$/.test(url)) return response({ id: 'created' });
+    assert.fail(`Unexpected request: ${url}`);
+  };
+
+  await listReviewRecords({}, fetchImpl);
+  await syncReviewItems([{ id: 'review-1', recordType: 'review-item', topic: 'Fees', kind: 'fact-change', sourceVersion: 'v1' }], fetchImpl);
+  await saveReviewDecision({ reviewId: 'review-1', sourceVersion: 'v1', sourceUrl: 'https://example.test/fees', decision: 'keep-current' }, fetchImpl);
+
+  assert.equal(calls.some(call => call.method === 'PATCH'), false);
+  assert.equal(calls.filter(call => /\/pages$/.test(call.url) && call.method === 'POST').length, 2);
+});
+
+test('source-review setup failures stop dashboard reads, syncs, and decisions before any page write', async t => {
+  configuredSourceReview(t);
+  const actions = [];
+  const fetchImpl = async (url, options = {}) => {
+    actions.push({ url, method: options.method || 'GET' });
+    if (/\/data_sources\/dummy-test-source$/.test(url)) return response({ properties: { 'Owner review': { type: 'title', title: {} } } });
+    assert.fail(`Schema validation should stop this request: ${url}`);
+  };
+  const missingSchema = /needs one-time setup.*Review ID.*Regular dashboard use will not change/i;
+
+  await assert.rejects(listReviewRecords({}, fetchImpl), missingSchema);
+  resetSourceReviewCachesForTest();
+  await assert.rejects(syncReviewItems([{ id: 'review-1', recordType: 'review-item', topic: 'Fees', kind: 'fact-change', sourceVersion: 'v1' }], fetchImpl), missingSchema);
+  resetSourceReviewCachesForTest();
+  await assert.rejects(saveReviewDecision({ reviewId: 'review-1', sourceVersion: 'v1', sourceUrl: 'https://example.test/fees', decision: 'keep-current' }, fetchImpl), missingSchema);
+
+  assert.equal(actions.some(action => action.method === 'PATCH' || /\/pages$|\/query$/.test(action.url)), false);
 });
 
 test('routine calendar changes create no static source review and preserve the release identity', () => {
