@@ -521,6 +521,21 @@ test("automatic release decisions hold, promote, and roll back safely", () => {
   assert.equal(sourceReleaseDecision({ candidateValid: true, stagingChecksPassed: true, productionChecksPassed: true }), "release-complete");
 });
 
+test('inventory exclusion cannot hide retained static source content', () => {
+  const trusted = { communityId:'sterling-ranch', sources:[source('one','same')] };
+  const profile = { communityId:'sterling-ranch', allowedHosts:['sterlingranchcab.com'] };
+  for (const inventory of [
+    { exclusions:[{ url:trusted.sources[0].sourceUrl, reason:'technical-route' }] },
+    { dispositions:[{ url:trusted.sources[0].sourceUrl, status:'excluded', reason:'technical-route' }] }
+  ]) {
+    const result = validateCommunityCandidate(trusted,{ ...trusted, inventory },profile);
+    assert.ok(result.errors.some(error => /retained from an excluded inventory URL/.test(error)));
+  }
+  const action = source('action','same',{ connectorType:'official-action', facts:[] });
+  const result = validateCommunityCandidate({ ...trusted,sources:[action] },{ ...trusted,sources:[action], inventory:{ exclusions:[{url:action.sourceUrl,reason:'transactional-action'}] } },profile);
+  assert.ok(!result.errors.some(error => /retained from an excluded inventory URL/.test(error)));
+});
+
 test("answer traces expose operational metadata without storing question text", () => {
   const answerId = recordCommunityAnswer({ answer: { answerMode: "community-source", answerStatus: "verified", communityIntent: "services", confidence: { confidence: "high", canAnswer: true }, sources: [], claims: [], _interpretation: { mode: "structured", outcome: "ai", appliedFilters: [{ field: "location", value: "private location wording" }] }, _connectorDiagnostics: { sourceOutcome: "ok", beforeFilterCount: 5, afterFilterCount: 2 } }, resolvedQuestion: "private resident wording", usedPriorContext: true, durationMs: 25 });
   assert.match(answerId, /^[0-9a-f-]{36}$/);
