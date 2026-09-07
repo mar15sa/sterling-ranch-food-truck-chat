@@ -43,3 +43,11 @@ test('ambiguous single-letter days do not acquire invented hours scopes', () => 
   const times = extractFacts('Hours T: 7am - 10pm S: 7am - 8pm').filter(f => f.type === 'time');
   assert.ok(times.every(f => !f.scopeKey));
 });
+
+test('time extraction preserves complete timestamps and rejects impossible clock values', () => {
+  const times = text => extractFacts(text).filter(f => f.type === 'time').map(f => f.value);
+  assert.deepEqual(times('Saturday:7:00 AM - 8:00 PM'), ['7:00 AM', '8:00 PM']);
+  assert.deepEqual(times('Signed at 8:53:31 AM; completed at 12:30:34 PM.'), ['8:53:31 AM', '12:30:34 PM']);
+  assert.deepEqual(times('Invalid 53:31 AM, 30:34 PM, 0am, 13pm, 9:75 AM, 8:30:99 PM.'), []);
+  assert.deepEqual(times('Open 7am to 10:30 pm; Saturday 12 PM.'), ['7am', '10:30 pm', '12 PM']);
+});
