@@ -20,3 +20,9 @@ test('incomplete or unrelated FAQ layouts fall back without dropping unknown con
  assert.equal(faqRows(row(1,'How?','Answer.'),'https://alpha.gov/other'),null);
  assert.equal(faqRows(row(1,'How?','Answer.')+row(2,'Where?',''),'https://alpha.gov/m/faq'),null);
 });
+test('a truncated later FAQ row cannot silently disappear from structured collection',()=>{
+ const first=row(1,'How?','First answer.');
+ const second=row(2,'Where?','Second answer.');
+ assert.equal(faqRows(first+second.replace(/<\/li>$/,''),'https://alpha.gov/m/faq'),null);
+ assert.equal(faqRows(first+second.replace('</div>',''),'https://alpha.gov/m/faq'),null);
+});

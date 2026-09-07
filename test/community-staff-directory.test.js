@@ -24,3 +24,10 @@ test('unknown pages and ambiguous contact identities fall back without guessing'
  assert.equal(staffDirectoryRows(person(2,'Person One','one@alpha.gov'),'https://alpha.gov/unrelated'),null);
  assert.equal(staffDirectoryRows('<li class="list-group-item"><a href="mailto:one@alpha.gov">Email</a></li>',url),null);
 });
+test('incomplete later people or departments prevent partial directory collection',()=>{
+ const first=person(2,'Person One','one@alpha.gov');
+ const second=person(3,'Person Two','two@alpha.gov');
+ assert.equal(staffDirectoryRows(first+second.replace(/<\/li>$/,''),url),null);
+ const department='<div class="directory-table-row"><a href="/m/directory/department?did=1">Resident Services</a>';
+ assert.equal(staffDirectoryRows(first+department,url),null);
+});

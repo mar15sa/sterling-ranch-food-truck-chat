@@ -1039,6 +1039,23 @@ test('FAQ ingestion keeps each question with its own contact and action link',as
  assert.ok(result.factLedger.every(f=>f.reviewStatus==='candidate'));
 });
 
+test('truncated FAQ and staff rows retain later visible content through ordinary ingestion',async()=>{
+ const cases=[
+  ['FAQ.aspx','<li class="faq-question-item" id="question-1"><h3><button>How do I apply?</button></h3><div class="accordion-text">Contact apply@alpha.gov for application assistance.</div></li><li class="faq-question-item" id="question-2"><h3><button>How do I pay?</button></h3><div class="accordion-text">Contact billing@alpha.gov for billing assistance.</div>'],
+  ['Directory.aspx','<li class="list-group-item"><a href="/m/directory/employee?eid=1">Applications</a><p>Official application assistance for residents.</p><a href="mailto:apply@alpha.gov">apply@alpha.gov</a></li><li class="list-group-item"><a href="/m/directory/employee?eid=2">Billing</a><a href="mailto:billing@alpha.gov">billing@alpha.gov</a>']
+ ];
+ for(const [path,rows] of cases){
+  const result=await crawlCommunity(profile({connectors:[{id:'site',type:'civicplus-pages',baseUrl:`https://alpha.gov/${path}`}]}),{
+   maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async()=>new Response(`<main><h1>Resident assistance</h1><ul>${rows}`,{headers:{'content-type':'text/html'}})
+  });
+  const text=result.sources.map(s=>s.text).join(' ');
+  assert.match(text,/apply@alpha.gov/);
+  assert.match(text,/billing@alpha.gov/);
+  assert.ok(result.sources.every(s=>s.reviewStatus!=='approved'));
+  assert.ok(result.factLedger.every(f=>f.reviewStatus==='candidate'));
+ }
+});
+
 test("chunk deduplication preserves verifiable coverage for every collected page", async()=>{
  const other='https://alpha.gov/other';
  const a='Official resident information '+ 'alpha '.repeat(230)+'.';
