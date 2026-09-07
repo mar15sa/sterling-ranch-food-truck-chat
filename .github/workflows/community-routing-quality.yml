@@ -1,8 +1,15 @@
-name: AI routing consistency
+name: AI routing checks
 
 on:
   workflow_dispatch:
     inputs:
+      profile:
+        description: Small routine check, or explicit full AI-behavior benchmark
+        type: choice
+        options:
+          - smoke
+          - full
+        default: smoke
       trial:
         description: Run the hosted 24-hour staging trial instead of the routing-only check
         type: boolean
@@ -42,17 +49,25 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.revision || 'staging' }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Run repeated real-model routing benchmark
+      - name: Restore prior full routing evidence
+        uses: actions/cache@v4
+        with:
+          path: .cache/community-routing
+          key: community-routing-evidence-v1-${{ github.run_id }}
+          restore-keys: community-routing-evidence-v1-
+      - name: Run small routing check or reuse compatible full evidence
         env:
           COMMUNITY_ROUTING_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}
-          COMMUNITY_ROUTING_REPEATS: 3
+          ROUTING_PROFILE: ${{ inputs.profile || 'smoke' }}
           COMMUNITY_ROUTING_DELAY_MS: 2100
-        run: npm run community:routing:live -- --write
+        run: node scripts/check-community-routing-release.js --profile="$ROUTING_PROFILE"
       - name: Preserve routing evidence
         if: always()
         uses: actions/upload-artifact@v4

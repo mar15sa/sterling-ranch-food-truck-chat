@@ -46,6 +46,7 @@ jobs:
           RULES_LIVE_BASE_URL: https://sterling-ranch-food-truck-chat-staging.up.railway.app
           TRIAL_PREVIOUS: ${{ inputs.previous }}
         run: |
+          set -o pipefail
           mkdir -p trial-evidence
           resume=""
           if [ "$TRIAL_PREVIOUS" -gt 0 ]; then resume="--resume"; fi

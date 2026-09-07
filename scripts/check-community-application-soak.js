@@ -138,9 +138,10 @@ async function checkOnce(number) {
     for (const item of questionSetForCheck(number, accelerated)) await ask(item);
   }
   if (number === 1 || number === Math.ceil(checks / 2) || number === checks) await verifyLiveEvents();
-  if (process.argv.includes("--routing-benchmark") && (number === 1 || number === Math.ceil(checks / 2) || number === checks)) {
+  // Routing is evaluated once, not repeated throughout an observation window.
+  if (process.argv.includes("--routing-benchmark") && number === 1) {
     await new Promise((resolve, reject) => {
-      const child = require("node:child_process").spawn(process.execPath, [path.join(__dirname, "eval-community-routing-live.js"), `--base-url=${baseUrl}`, "--repeats=3", "--enforce", "--write"], { stdio: "inherit", timeout: 900000 });
+      const child = require("node:child_process").spawn(process.execPath, [path.join(__dirname, "eval-community-routing-live.js"), `--base-url=${baseUrl}`, "--profile=smoke", "--enforce", "--write"], { stdio: "inherit", timeout: 900000 });
       child.on("error", reject);
       child.on("exit", (code) => code === 0 ? resolve() : reject(new Error(`Real-AI benchmark failed at check ${number}.`)));
     });

@@ -4504,7 +4504,15 @@ async function handleCommunityRoutingEval(req, res) {
     return;
   }
   let diagnostic = null;
-  const rawPlan = await planCommunitySearch(question, { cache: false, onDiagnostic: (value) => { diagnostic = value; } });
+  const usage = { inputTokens: 0, outputTokens: 0, model: "" };
+  const rawPlan = await planCommunitySearch(question, { cache: false, onDiagnostic: (value) => {
+    diagnostic = value;
+    if (value.usage) {
+      usage.inputTokens += value.usage.inputTokens;
+      usage.outputTokens += value.usage.outputTokens;
+      usage.model = value.usage.model;
+    }
+  } });
   const plan = normalizedRoutingPlan(rawPlan, question);
   sendJson(res, 200, {
     accepted: Boolean(plan),
@@ -4512,6 +4520,7 @@ async function handleCommunityRoutingEval(req, res) {
     reason: plan ? "structured-plan-accepted" : "planner-unavailable-or-incompatible",
     deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
     evaluation: { isTest: true, cacheDisabled: true },
+    usage,
     plan,
     diagnostic: plan ? undefined : diagnostic,
   });
