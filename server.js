@@ -53,6 +53,7 @@ const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/comm
 const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
 const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
+const { latestReviewDecision } = require("./lib/community-review-queue");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
   normalizeTruckName,
@@ -4949,10 +4950,9 @@ async function communityReviewRecords() {
   const records = await listReviewRecords();
   const decisions = records.filter((record) => record.recordType === "decision");
   return records.filter((record) => record.recordType === "review-item").map((item) => {
-    const matching = decisions
-      .filter((decision) => decision.reviewId === item.id && decision.sourceVersion === item.sourceVersion)
-      .sort((left, right) => String(right.decidedAt || right.createdAt).localeCompare(String(left.decidedAt || left.createdAt)))[0];
-    return matching ? { ...item, status: matching.status, latestDecision: matching } : item;
+    const matching = latestReviewDecision(decisions
+      .filter((decision) => decision.reviewId === item.id && decision.sourceVersion === item.sourceVersion));
+    return matching ? { ...item, status: matching.status, latestDecision: matching } : { ...item, status: 'pending' };
   });
 }
 

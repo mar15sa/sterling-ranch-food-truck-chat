@@ -76,6 +76,7 @@ test('a source-only decision does not approve new sensitive facts omitted from t
   const result = compileReviewedCandidate(trusted, candidate, profile, [{
     reviewId: item.id, sourceId: item.sourceId, sourceVersion: item.sourceVersion,
     sourceUrl: item.proposedSourceUrl, decision: 'approve-proposed',
+    decidedAt: '2026-09-06T00:00:00Z',
   }]);
   assert.equal(result.candidate.sources[0].reviewStatus, 'approved');
   assert.equal(result.candidate.factLedger[0].reviewStatus, 'candidate');
@@ -111,4 +112,59 @@ test('batch review refuses duplicate source identifiers instead of silently disc
     assert.throws(() => compileReviewedCandidate(trusted, candidate, profile), { code: 'AMBIGUOUS_SOURCE_ID' });
   }
   assert.equal(JSON.stringify(ambiguous), original);
+});
+
+test('later escalation overrides source and fact approval regardless of returned record order', () => {
+  const trusted = { communityId: 'alpha', sources: [], factLedger: [] };
+  const candidate = { communityId: 'alpha', sources: [source('new')] };
+  const preview = compileReviewedCandidate(trusted, candidate, profile);
+  const decisions = preview.items.flatMap(item => ['approve-proposed', 'escalate'].map((decision, index) => ({
+    reviewId: item.id, sourceId: item.sourceId, sourceUrl: item.proposedSourceUrl,
+    sourceVersion: item.sourceVersion, factId: item.factId, decision,
+    decidedAt: `2026-09-0${index + 1}T00:00:00Z`,
+  })));
+  for (const history of [decisions, [...decisions].reverse()]) {
+    const result = compileReviewedCandidate(trusted, candidate, profile, history);
+    assert.equal(result.coverage.escalated.length, preview.items.length);
+    assert.notEqual(result.candidate.sources[0].reviewStatus, 'approved');
+    assert.equal(result.candidate.factLedger[0].reviewStatus, 'escalated');
+  }
+});
+
+test('ambiguous decision ordering cannot approve source content or facts', () => {
+  const trusted = { communityId: 'alpha', sources: [], factLedger: [] };
+  const candidate = { communityId: 'alpha', sources: [source('new')] };
+  const preview = compileReviewedCandidate(trusted, candidate, profile);
+  for (const date of ['2026-09-01T00:00:00Z', 'invalid-date']) {
+    const decisions = preview.items.flatMap(item => ['approve-proposed', 'escalate'].map(decision => ({
+      reviewId: item.id, sourceId: item.sourceId, sourceUrl: item.proposedSourceUrl,
+      sourceVersion: item.sourceVersion, factId: item.factId, decision, decidedAt: date,
+    })));
+    const result = compileReviewedCandidate(trusted, candidate, profile, decisions);
+    assert.equal(result.coverage.pending.length, preview.items.length);
+    assert.notEqual(result.candidate.sources[0].reviewStatus, 'approved');
+    assert.notEqual(result.candidate.factLedger[0].reviewStatus, 'approved');
+  }
+});
+
+test('a later exact-version resolution is applied even when stale decisions are returned last', () => {
+  const trusted = { communityId: 'alpha', sources: [], factLedger: [] };
+  const candidate = { communityId: 'alpha', sources: [source('new')] };
+  const preview = compileReviewedCandidate(trusted, candidate, profile);
+  const decisions = preview.items.flatMap(item => {
+    const base = { reviewId: item.id, sourceId: item.sourceId, sourceUrl: item.proposedSourceUrl,
+      sourceVersion: item.sourceVersion, factId: item.factId };
+    return [
+      { ...base, decision: 'escalate', decidedAt: '2026-09-01T00:00:00Z' },
+      { ...base, decision: 'approve-proposed', decidedAt: '2026-09-02T00:00:00Z' },
+      { ...base, sourceVersion: 'other-version', decision: 'escalate', decidedAt: '2026-09-03T00:00:00Z' },
+    ];
+  });
+  for (const history of [decisions, [...decisions].reverse()]) {
+    const result = compileReviewedCandidate(trusted, candidate, profile, history);
+    assert.equal(result.coverage.pending.length, 0);
+    assert.equal(result.coverage.escalated.length, 0);
+    assert.equal(result.candidate.sources[0].reviewStatus, 'approved');
+    assert.equal(result.candidate.factLedger[0].reviewStatus, 'approved');
+  }
 });
