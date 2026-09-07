@@ -4869,7 +4869,7 @@ async function handleCommunitySourceHealth(req, res) {
       ...rules,
       refreshing: Boolean(rulesRefreshPromise),
     },
-    community: communitySourceStatus(),
+    community: communitySourceStatus(undefined, Date.now(), { includeStaleSources: true }),
   });
 }
 
