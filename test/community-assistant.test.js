@@ -984,6 +984,24 @@ test("rediscovered excluded documents are not also reported as crawl-limit omiss
  assert.equal(new Set([...index.inventory.eligibleUrls,...index.inventory.exclusions.map(e=>e.url)]).size,index.inventory.discoveredCount);
 });
 
+test('official redirects preserve excluded-route coverage and conditional refresh content', async()=>{
+ const root='https://alpha.gov/', mobile='https://alpha.gov/m/directory';
+ const html='<main><h1>Staff Directory</h1><p>Resident Services provides official community assistance and resident resources. Contact the resident service desk for help with community applications.</p><a href="/m/directory">Staff directory</a></main>';
+ const options={maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async url=>String(url)===root
+  ? new Response(null,{status:302,headers:{location:mobile}})
+  : new Response(html,{headers:{'content-type':'text/html',etag:'directory-v1'}})};
+ const first=await crawlCommunity(profile(),options);
+ assert.ok(first.sources.length>0);
+ assert.ok(first.sources.every(s=>s.sourceUrl===mobile));
+ assert.ok(!first.inventory.exclusions.some(e=>e.url===mobile));
+ assert.equal(first.pages.find(p=>p.url===mobile).duplicateOf,root);
+ assert.equal(first.inventory.pendingCount,0);
+ const second=await crawlCommunity(profile(),{...options,previousIndex:first,fetchImpl:async()=>new Response(null,{status:304})});
+ assert.deepEqual(second.sources.map(s=>[s.id,s.contentHash]),first.sources.map(s=>[s.id,s.contentHash]));
+ assert.equal(second.inventory.pendingCount,0);
+ assert.ok(!second.inventory.exclusions.some(e=>e.url===mobile));
+});
+
 test("chunk deduplication preserves verifiable coverage for every collected page", async()=>{
  const other='https://alpha.gov/other';
  const a='Official resident information '+ 'alpha '.repeat(230)+'.';
