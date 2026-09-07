@@ -2,6 +2,7 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const { listReviewRecords } = require("../lib/community-source-review");
+const { pendingReviewItems } = require("../lib/community-review-queue");
 
 function option(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -12,11 +13,8 @@ async function main() {
   const output = path.resolve(option("--output", path.join(__dirname, "..", "data", "community-review-decisions.json")));
   const records = await listReviewRecords();
   const decisions = records.filter((record) => record.recordType === "decision");
-  const reviewed = new Set(decisions.map((decision) => `${decision.reviewId}:${decision.sourceVersion}`));
-  const overdue = records.filter((record) =>
-    record.recordType === "review-item"
-    && !reviewed.has(`${record.id}:${record.sourceVersion}`)
-    && Date.now() - new Date(record.createdAt || 0).getTime() > 7 * 24 * 60 * 60 * 1000
+  const overdue = pendingReviewItems(records).filter((record) =>
+    Date.now() - new Date(record.createdAt || 0).getTime() > 7 * 24 * 60 * 60 * 1000
   );
   await fs.writeFile(output, `${JSON.stringify(decisions, null, 2)}\n`, "utf8");
   console.log(`Exported ${decisions.length} immutable source-review decisions to ${output}.`);

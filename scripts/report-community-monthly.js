@@ -1,14 +1,13 @@
 const fs=require('node:fs');
 const {listReviewRecords,sourceReviewStatus}=require('../lib/community-source-review');
 const {factLedgerStatus}=require('../lib/community-truth');
+const {pendingReviewItems}=require('../lib/community-review-queue');
 async function main(){
   if(!sourceReviewStatus().configured) throw new Error('Monthly review requires the private source-review connection.');
   const now=new Date(),since=new Date(now.getTime()-30*86400000).toISOString();
   const index=require('../data/community-index.json');
   const records=await listReviewRecords();
-  const decisions=records.filter(r=>r.recordType==='decision');
-  const decided=new Set(decisions.map(r=>`${r.reviewId}:${r.sourceVersion}`));
-  const pending=records.filter(r=>r.recordType==='review-item'&&!decided.has(`${r.id}:${r.sourceVersion}`));
+  const pending=pendingReviewItems(records);
   const ages=pending.map(r=>Math.max(0,(now-Date.parse(r.createdAt))/86400000)).filter(Number.isFinite);
   const repository=process.env.GITHUB_REPOSITORY||'mar15sa/sterling-ranch-food-truck-chat';
   if(!/^[\w.-]+\/[\w.-]+$/.test(repository)) throw new Error('Invalid repository');
