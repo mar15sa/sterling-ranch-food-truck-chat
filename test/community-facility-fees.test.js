@@ -35,3 +35,15 @@ test('unrelated pages and unlabeled numbers do not acquire rental fees', () => {
   const count = source('y', 'https://sterlingranchcab.com/188/Indoor-Facilities', 'Great Hall The clubhouse has 250 guests and a 2026 event.');
   assert.deepEqual(scopeFacilityFees([count]), [count]);
 });
+
+test('fee proposals keep the literal amount in their evidence and record the hourly unit separately', () => {
+  const originals = [source('wording', 'https://sterlingranchcab.com/269/Rent-the-Facility',
+    'Great Hall The Overlook Clubhouse is available. Hourly Pricing $100.00 per hour. A refundable security deposit of 250.00 will be due. Outdoor Pavilions The clubhouse has spaces. Hourly Pricing $25 per hour.')];
+  const facts = scopeFacilityFees(originals).flatMap(record => record.facts).filter(fact => fact.subjectKey);
+  assert.equal(facts.length, 3);
+  assert.ok(facts.every(fact => fact.context.includes(fact.value)));
+  assert.deepEqual(facts.map(fact => fact.value), ['$100.00', '250.00', '$25']);
+  assert.deepEqual(facts.map(fact => fact.unit), ['hour', '', 'hour']);
+  assert.deepEqual(facts.map(fact => fact.normalizedValue), [100, 250, 25]);
+  assert.ok(facts.every(fact => fact.currency === 'USD' && fact.reviewStatus === 'candidate'));
+});
