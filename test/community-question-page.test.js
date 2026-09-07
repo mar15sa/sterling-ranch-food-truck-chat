@@ -79,8 +79,9 @@ test("source review dashboard is private, version-bound, and has no analytics", 
   const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.html"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.js"), "utf8");
   assert.match(html, /Source review/);
-  assert.match(`${html}\n${script}`, /Current approved/);
-  assert.match(`${html}\n${script}`, /Proposed/);
+  assert.match(`${html}\n${script}`, /Before this review/);
+  assert.match(`${html}\n${script}`, /Proposed change/);
+  assert.match(script, /does not confirm production deployment/);
   assert.match(html, /noindex, nofollow, noarchive/);
   assert.match(script, /\/api\/community-sources\/review/);
   assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
