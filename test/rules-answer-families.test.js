@@ -127,6 +127,35 @@ test("missing retrieval cannot be presented as proof that an official list does 
   assert.doesNotMatch(explicitlySupported.join(" "), /unsupported-resource-absence-claim/);
 });
 
+test("everyday wording for movable outdoor belongings routes to the household-items rule", async () => {
+  for (const question of [
+    "How far can my stuff go off my porch?",
+    "Can I leave chairs just past my front porch?",
+    "Where can I keep my bike by the patio?",
+    "Can I leave my furnture by the porhc?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.answerMode, "source-derived-structured", question);
+    assert.match(result.sources?.[0]?.title || "", /^Sec\. 1-38\. - Household items/i, question);
+    assert.match(result.answer, /does not use a set distance from the porch/i, question);
+    assert.match(result.answer, /stay on your lot/i, question);
+    assert.match(result.answer, /roadway or walkway/i, question);
+    assert.doesNotMatch(result.answer, /could not verify|could not find/i, question);
+  }
+});
+
+test("outdoor belongings do not swallow permanent projects, decorations, or lighting", async () => {
+  const permanent = await answer("How far can I extend my porch?");
+  assert.doesNotMatch(permanent.sources?.[0]?.title || "", /^Sec\. 1-38\./i);
+
+  const decoration = await answer("What size decorations can I place in my front yard?");
+  assert.match(decoration.sources?.[0]?.title || "", /2024 CAB Code amendments|Sec\. 21-22/i);
+  assert.match(decoration.answer, /12 inches/i);
+
+  const lighting = await answer("Can I hang lights from my porch?");
+  assert.match(lighting.sources?.[0]?.title || "", /Updated exterior lighting policy/i);
+});
+
 test("yard-art questions retain a readable summary while using current source limits", async () => {
   for (const question of ["Yard art?", "What are the rules for yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
     const result = await answer(question);
@@ -264,4 +293,28 @@ test("current source text controls changing landscaping and rental requirements"
   const rear = await answer("What plants are required in the rear landscaping?");
   assert.match(rear.answer, /2 trees: 1 deciduous tree and 1 evergreen tree/i);
   assert.match(rear.answer, /30 percent live plant material/i);
+});
+
+test("yard completion deadlines use the controlling installation-date rule", async () => {
+  for (const question of [
+    "How many months do I have to finish my backyard?",
+    "How many months after our house is done being built do we have to finish the yard",
+    "How long do I have to complete rear-yard landscaping after closing?",
+    "When must my back yard be finshed after the CO?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.confidence?.canAnswer, true, `${question}\n${JSON.stringify(result, null, 2)}`);
+    assert.match(result.answer, /120 days/i, question);
+    assert.match(result.answer, /closing|CO|TCO/i, question);
+    assert.match(result.answer, /November 1.*April 30|winter deferral/is, question);
+    assert.match(result.sources?.[0]?.title || "", /^Sec\. 9-145\. - Completion\/installation dates/i, question);
+    assert.doesNotMatch(result.answer, /rules (?:do not|don't) set a deadline/i, question);
+  }
+
+  const front = await answer("How long does the builder have to finish the front yard after the certificate of occupancy?");
+  assert.match(front.answer, /30 days/i);
+  assert.doesNotMatch(front.answer, /homeowner has 120 days/i);
+
+  const unrelated = await answer("How long do I have to finish painting my garage door?");
+  assert.doesNotMatch(unrelated.answer, /rear yard landscaping must be completed within 120 days/i);
 });

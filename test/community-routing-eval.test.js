@@ -16,6 +16,11 @@ test("routing benchmark covers every supported goal plus prompt injection", () =
   assert.deepEqual(new Set(counts.keys()), expectedGoals);
   for (const goal of expectedGoals) assert.ok(counts.get(goal) >= 3, `${goal} needs at least three cases.`);
   assert.ok(cases.filter((item) => item.expectedClassification === "prompt-injection").length >= 4);
+  assert.ok(cases.filter((item) => item.expectedDateKind).length >= 4);
+  assert.ok(cases.some((item) => item.expectedNoFilters));
+  assert.ok(cases.some((item) => item.expectedFilter));
+  assert.ok(cases.some((item) => item.expectedGoalsInclude?.length > 1));
+  assert.ok(cases.some((item) => item.expectedClarification));
   assert.equal(new Set(cases.map((item) => item.id)).size, cases.length);
 });
 
@@ -43,6 +48,7 @@ test("routing scorer checks goal, subject, intent, consistency, and safety indep
   assert.equal(summary.consistency, 0.5);
   assert.deepEqual(summary.driftCaseIds, ["payment-water"]);
   assert.ok(releaseFailures(summary, ROUTING_THRESHOLDS).some((failure) => /consistency/i.test(failure)));
+  assert.ok(Object.hasOwn(summary, "structuredAccuracy"));
 });
 
 test("production routing visibility detects drift without retaining question text", () => {
@@ -70,4 +76,12 @@ test("staging-only real-model endpoint and scheduled benchmark stay wired", () =
   assert.match(workflow, /schedule:/);
   assert.match(workflow, /COMMUNITY_ROUTING_REPEATS:\s*3/);
   assert.match(workflow, /community:routing:live/);
+});
+
+test("live answer and soak traffic is marked as testing for the private review log", () => {
+  const root = path.join(__dirname, "..");
+  for (const file of ["eval-community-answers-live.js", "check-community-application-soak.js"]) {
+    const script = fs.readFileSync(path.join(root, "scripts", file), "utf8");
+    assert.match(script, /JSON\.stringify\(\{ question(?:: item\.question)?, isTest: true \}\)/, file);
+  }
 });

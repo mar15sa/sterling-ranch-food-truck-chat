@@ -2,11 +2,23 @@ name: AI routing consistency
 
 on:
   workflow_dispatch:
+    inputs:
+      trial:
+        description: Run the hosted 24-hour staging trial instead of the routing-only check
+        type: boolean
+        default: false
+      revision:
+        description: Exact staging revision (required for trial)
+        type: string
+      fingerprint:
+        description: Approved source fingerprint (required for trial)
+        type: string
   schedule:
     - cron: "23 14 * * *"
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: community-routing-quality
@@ -14,12 +26,11 @@ concurrency:
 
 jobs:
   live-routing:
+    if: ${{ !inputs.trial }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: staging
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -30,4 +41,17 @@ jobs:
           COMMUNITY_ROUTING_BASE_URL: ${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}
           COMMUNITY_ROUTING_REPEATS: 3
           COMMUNITY_ROUTING_DELAY_MS: 2100
-        run: npm run community:routing:live
+        run: npm run community:routing:live -- --write
+      - name: Preserve routing evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: routing-evidence-${{ github.run_id }}
+          path: data/community-routing-live-report.json
+          retention-days: 30
+  hosted-trial:
+    if: ${{ inputs.trial }}
+    uses: ./.github/workflows/community-hosted-trial.yml
+    with:
+      revision: ${{ inputs.revision }}
+      fingerprint: ${{ inputs.fingerprint }}
