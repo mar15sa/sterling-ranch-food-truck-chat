@@ -7,6 +7,14 @@ on:
         description: Also record the monthly review
         type: boolean
         default: false
+      skip_review_sync:
+        description: Read-only validation; do not create or modify Notion review records
+        type: boolean
+        default: false
+      force_content:
+        description: Force official content refresh for weekly-check validation
+        type: boolean
+        default: false
   schedule:
     - cron: "35 8 * * *"
 
@@ -33,12 +41,14 @@ jobs:
       - run: npm ci
       - name: Collect source inventory
         id: inventory
+        env:
+          FORCE_CONTENT: ${{ inputs.force_content }}
         run: |
           force=""
-          if [ "$(date -u +%u)" = "7" ]; then force="--force-content"; fi
+          if [ "$(date -u +%u)" = "7" ] || [ "$FORCE_CONTENT" = "true" ]; then force="--force-content"; fi
           npm run ingest:community -- --max-pages 500 --max-documents 250 --output data/community-index.candidate.json $force
       - name: Sync review evidence
-        if: always() && steps.inventory.outcome == 'success'
+        if: always() && steps.inventory.outcome == 'success' && !inputs.skip_review_sync
         env:
           COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
           COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
@@ -47,6 +57,7 @@ jobs:
       - name: Export decisions and check overdue reviews
         if: always()
         env:
+          NODE_OPTIONS: ${{ inputs.skip_review_sync && '--require ./scripts/source-review-readonly.cjs' || '' }}
           COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
           COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
           COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
@@ -57,6 +68,7 @@ jobs:
       - name: Record monthly accuracy and review outcomes
         if: always()
         env:
+          NODE_OPTIONS: ${{ inputs.skip_review_sync && '--require ./scripts/source-review-readonly.cjs' || '' }}
           RUN_MONTHLY: ${{ inputs.monthly }}
           COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
           COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
@@ -78,7 +90,7 @@ jobs:
             data/community-monthly-report.json
           retention-days: 30
       - name: Open or update an exception issue
-        if: failure()
+        if: failure() && github.event_name == 'schedule'
         uses: actions/github-script@v7
         with:
           script: |
@@ -89,7 +101,7 @@ jobs:
             const existing = issues.find((issue) => !issue.pull_request && issue.title === title);
             if (!existing) await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
       - name: Close the exception issue after recovery
-        if: success()
+        if: success() && github.event_name == 'schedule'
         uses: actions/github-script@v7
         with:
           script: |
