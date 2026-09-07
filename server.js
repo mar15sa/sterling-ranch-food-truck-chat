@@ -66,7 +66,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v36";
+const MENU_CACHE_VERSION = "menus-v37";
 const FETCH_TIMEOUT_MS = 8000;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -233,6 +233,104 @@ const KNOWN_TRUCK_LINKS = {
         description: "Black beans, cheese, and homemade sauce in a Venezuelan arepa.",
         price: "$13.00",
         url: "https://d-maracuchos.com/shop/",
+      },
+    ],
+  },
+  "ecos de mexico": {
+    official: {
+      title: "Ecos de Mexico",
+      url: "https://www.ecosdemexico24.com/",
+    },
+    facebook: {
+      title: "Ecos de Mexico - Facebook",
+      url: "https://www.facebook.com/profile.php?id=61578712978966",
+    },
+    instagram: {
+      title: "Ecos de Mexico - Instagram",
+      url: "https://www.instagram.com/ecosdemexico24/",
+    },
+    menu: [
+      {
+        title: "Ecos de Mexico menu",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+    ],
+    items: [
+      {
+        name: "Carnitas Taco",
+        description:
+          "Homemade guacamole, carnitas, pico de gallo, pickled onions, sliced radish, cotija cheese, and microgreens.",
+        price: "$6.50",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Asada Taco",
+        description:
+          "Guacamole, marinated steak asada, pico de gallo, cotija cheese, pickled onions, and microgreens.",
+        price: "$6.50",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Chicken Tinga Taco",
+        description:
+          "Chicken tinga with cabbage, cilantro crema, cotija cheese, radish, and microgreens.",
+        price: "$6.00",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Chile Relleno Taco",
+        description:
+          "Roasted chile poblano with melted mozzarella cheese, guajillo drizzle, pico de gallo, cotija cheese, and microgreens.",
+        price: "$6.00",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Al Pastor Taco",
+        description:
+          "Marinated pork with pineapple relish, pickled onions, sliced radish, and microgreens.",
+        price: "$6.00",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Mexican Brisket Taco",
+        description:
+          "Brisket with meat macha sauce, guajillo drizzle, cabbage, cotija cheese, and microgreens.",
+        price: "$7.50",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Asada Fries",
+        description:
+          "French fries with green chile queso, asada meat, cabbage, cilantro crema, chipotle aioli, cotija cheese, microgreens, and pickled onion.",
+        price: "$15",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Nachos",
+        description:
+          "Corn tortilla chips with green chile queso, fresh jalapenos, cabbage, cilantro crema, chipotle aioli, pickled onion, and choice of protein.",
+        price: "$15",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Quesadillas",
+        description:
+          "Flour tortilla with melted mozzarella cheese, cabbage, chipotle aioli, cilantro crema, fresh jalapenos, and choice of protein.",
+        price: "$15",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Aztec Bowl",
+        description:
+          "Cilantro-lime rice, black beans, roasted corn, pico de gallo, cilantro crema, cotija cheese, pickled onions, microgreens, and choice of protein.",
+        price: "$16",
+        url: "https://www.ecosdemexico24.com/menu-1",
+      },
+      {
+        name: "Churros",
+        description: "Cinnamon sugar churros filled with caramel.",
+        price: "$5",
+        url: "https://www.ecosdemexico24.com/menu-1",
       },
     ],
   },
