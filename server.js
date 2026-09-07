@@ -4,6 +4,11 @@ const path = require("node:path");
 const { spawn } = require("node:child_process");
 const { URL } = require("node:url");
 const { isJunkMenuItem } = require("./lib/menu-quality");
+const liveMonitor = require('./lib/community-live-monitor').createLiveMonitor({
+  getPoolStatus: (...args) => getPoolStatus(...args),
+  getCommunityEvents: (...args) => getCommunityEvents(...args),
+  notify: (...args) => require('./lib/rules-alerts').alertCommunityMonitorChanged(...args),
+});
 const { createFoodTruckService } = require("./lib/food-truck-service");
 const {
   answerRulesQuestion,
@@ -27,6 +32,7 @@ const {
   createSessionToken,
   expiredSessionCookie,
   isAuthorizedRequest,
+  isSameOriginRequest,
   safeEqual,
   sessionCookie,
 } = require("./lib/community-question-admin");
@@ -46,6 +52,8 @@ const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedul
 const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
 const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
 const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
+const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
+const { latestReviewDecision } = require("./lib/community-review-queue");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
   normalizeTruckName,
@@ -4636,6 +4644,7 @@ async function handleHealth(req, res) {
     uptimeSeconds: Math.round(process.uptime()),
     deploymentReady: healthy,
     deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    liveMonitoring: liveMonitor.status(),
     configurationFingerprint: require('./lib/community-soak-evidence').configurationFingerprint(),
     rules: {
       exists: rules.exists,
@@ -4937,6 +4946,64 @@ async function handleCommunityQuestionReview(req, res) {
     });
   }
 }
+async function communityReviewRecords() {
+  const records = await listReviewRecords();
+  const decisions = records.filter((record) => record.recordType === "decision");
+  return records.filter((record) => record.recordType === "review-item").map((item) => {
+    const matching = latestReviewDecision(decisions
+      .filter((decision) => decision.reviewId === item.id && decision.sourceVersion === item.sourceVersion));
+    return matching ? { ...item, status: matching.status, latestDecision: matching } : { ...item, status: 'pending' };
+  });
+}
+
+async function handleCommunitySourceReview(req, res, url, reviewId = "") {
+  if (!requireQuestionAdmin(req, res)) return;
+  if (!sourceReviewStatus().configured) {
+    sendJson(res, 503, { error: "The private source-review database is not configured yet." });
+    return;
+  }
+  try {
+    if (req.method === "GET") {
+      const items = await communityReviewRecords();
+      if (reviewId) {
+        const item = items.find((record) => record.id === reviewId);
+        if (!item) return sendJson(res, 404, { error: "That review item was not found." });
+        return sendJson(res, 200, { item });
+      }
+      const topic = String(url.searchParams.get("topic") || "").trim();
+      const risk = String(url.searchParams.get("risk") || "").trim();
+      const status = String(url.searchParams.get("status") || "").trim();
+      const conflict = url.searchParams.get("conflict");
+      const filtered = items.filter((item) =>
+        (!topic || item.topic === topic)
+        && (!risk || item.risk === risk)
+        && (!status || item.status === status)
+        && (conflict === null || Boolean(item.conflict) === (conflict === "true"))
+      );
+      return sendJson(res, 200, { items: filtered, counts: communitySourceStatus() });
+    }
+    if (req.method !== "POST" || !reviewId) return sendJson(res, 405, { error: "Use GET, or POST on a specific review item." });
+    if (!isSameOriginRequest(req)) return sendJson(res, 403, { error: "Source-review decisions must come from the private owner dashboard." });
+    const items = await communityReviewRecords();
+    const item = items.find((record) => record.id === reviewId);
+    if (!item) return sendJson(res, 404, { error: "That review item was not found." });
+    const body = await readJsonBody(req);
+    const decision = await saveReviewDecision({
+      ...body,
+      reviewId: item.id,
+      factId: item.factId,
+      sourceId: item.sourceId,
+      sourceUrl: item.proposedSourceUrl || item.currentSourceUrl,
+      sourceVersion: item.sourceVersion,
+      candidateFingerprint: item.candidateFingerprint,
+      reviewer: "owner",
+    });
+    return sendJson(res, 201, { decision });
+  } catch (error) {
+    console.warn(`Community source review failed: ${error.message || "unknown error"}`);
+    return sendJson(res, /required|unknown/i.test(error.message || "") ? 400 : 503, { error: error.message || "The source-review database could not be reached." });
+  }
+}
 
 function serveStatic(req, res, url) {
   if (url.pathname === "/" && url.searchParams.has("date")) {
@@ -4957,6 +5024,8 @@ function serveStatic(req, res, url) {
     "/community-assistant/": "/rules-assistant.html",
     "/community-assistant/questions": "/community-questions.html",
     "/community-assistant/questions/": "/community-questions.html",
+    "/community-assistant/sources": "/community-sources.html",
+    "/community-assistant/sources/": "/community-sources.html",
     "/pool": "/pool.html",
     "/pool/": "/pool.html",
     "/pool-status": "/pool.html",
@@ -5057,6 +5126,21 @@ const server = http.createServer(async (req, res) => {
       await handleCommunitySourceHealth(req, res);
       return;
     }
+    if (url.pathname === "/api/community-sources/review") {
+      await handleCommunitySourceReview(req, res, url);
+      return;
+    }
+
+    const communityReviewMatch = url.pathname.match(/^\/api\/community-sources\/review\/([^/]+)(?:\/decision)?$/);
+    if (communityReviewMatch) {
+      const reviewId = decodeURIComponent(communityReviewMatch[1]);
+      if (req.method === "POST" && !url.pathname.endsWith("/decision")) {
+        sendJson(res, 405, { error: "Post decisions to the /decision endpoint." });
+        return;
+      }
+      await handleCommunitySourceReview(req, res, url, reviewId);
+      return;
+    }
 
     if (url.pathname === "/api/community/route-eval") {
       await handleCommunityRoutingEval(req, res);
@@ -5107,7 +5191,9 @@ warmRulesIndex()
       console.log(`Food truck chat is running on ${HOST}:${PORT}`);
       scheduleRulesRefreshChecks();
       scheduleCommunityRefresh();
+      liveMonitor.start();
       scheduleOpeningsRadar();
     });
   });
+
 

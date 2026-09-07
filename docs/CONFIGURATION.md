@@ -12,7 +12,8 @@ This file describes the settings a future owner needs to run the site. Keep real
 - Set `RULES_LLM_MODE=selective` for AI help only on supported questions that need synthesis. Use `off` to disable AI or `all` for the older rewrite-every-supported-answer behavior. Every mode falls back to the grounded source-built answer when AI is unavailable or rejected.
 - `ANTHROPIC_API_KEY` is shared by the rules and broader community paths. `COMMUNITY_LLM_MODEL`, `COMMUNITY_LLM_TIMEOUT_MS`, and `COMMUNITY_LLM_MAX_TOKENS` optionally tune the broader path.
 - `COMMUNITY_INTERPRETATION_MODE` controls the shared question interpreter. `legacy` keeps the current production path, `shadow` records a structured interpretation without changing the answer, and `structured` makes the validated interpretation drive every substantive question. Staging defaults to `structured` when the setting is omitted; production defaults to `legacy` for a safe rollout and instant rollback. In every mode, facts still come only from connected official sources.
-- `COMMUNITY_REFRESH_INTERVAL_MS` controls background checks (six hours by default); `COMMUNITY_AUTO_REFRESH=false` disables them. Background checks refresh unchanged evidence but quarantine changed, new, or removed material until it is reviewed and released through staging.
+- `COMMUNITY_REFRESH_INTERVAL_MS` controls incremental checks (six hours by default), `COMMUNITY_INVENTORY_INTERVAL_MS` controls complete inventory reconciliation (daily), and `COMMUNITY_FORCED_RECONCILIATION_INTERVAL_MS` controls forced content checks (weekly); `COMMUNITY_AUTO_REFRESH=false` disables them. Background checks refresh unchanged evidence but quarantine changed, new, or removed material until it is reviewed and released through staging.
+- The private source-review dashboard at `/community-assistant/sources` uses the existing owner session plus a separate Notion database configured with `COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN`, `COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID`, and optionally `COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID` and `COMMUNITY_SOURCE_REVIEW_NOTION_TITLE_PROPERTY`.
 - `COMMUNITY_LLM_INPUT_COST_PER_MILLION` and `COMMUNITY_LLM_OUTPUT_COST_PER_MILLION` optionally override the approximate token-cost rates reported in answer traces. Their defaults are estimates, not billing records.
 - `COMMUNITY_TRACE_SALT` is the private HMAC salt used to create non-reversible question and subject fingerprints for routing consistency monitoring. Set the same stable secret on each instance in an environment; never commit its real value.
 - Follow-up context is not configured server-side: the browser keeps at most three exchanges in session storage and sends them with the next question. The server does not persist the full thread.
@@ -50,3 +51,13 @@ Keep `COMMUNITY_AUTO_PROMOTE=false` during reconciliation. Production promotion 
 ## Ownership checklist
 
 Keep a private record of the owner and renewal/billing location for Railway, GitHub, the domain/Cloudflare, Google Analytics, Gmail, Notion, Resend, and Anthropic. Also keep the most recent monthly cost snapshot and domain renewal date. Those records should not contain passwords or API keys.
+
+## Reconciled source monitoring
+
+The source inventory workflow is a monitor only: it checks nightly, forces content refresh weekly, records monthly accuracy/coverage/conflict/review-delay/release summaries, and preserves reports. It does not push staging or auto-merge production. Disabling automatic promotion cannot disable these checks. Publishing stays with the integration release task and protected review process.
+
+The existing quality workflow now includes hourly calendar and facility verification. The hosted app records facility checks every minute and calendar checks hourly; normal successful checks go to durable hosting logs, while failure and recovery transitions use the existing alert channel. Every question-based check remains labeled as a test.
+
+`RULES_FETCH_RETRY_ATTEMPTS` (default 3, capped at 5) and `RULES_FETCH_RETRY_DELAY_MS` (default 500) recover temporary official-source failures. All retries share the existing `RULES_FETCH_TIMEOUT_MS` time budget, rather than multiplying it. Missing pages and invalid JSON fail directly.
+
+The separate Source Review Notion database is connected in staging and in encrypted scheduled-job settings. Production identifiers must be added only as part of the approved Release 2 promotion. Public source batches remain candidates until the exact content receives an owner decision.

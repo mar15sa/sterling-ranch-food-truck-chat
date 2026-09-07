@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Community Source Review</title>
+    <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260901-4" />
+    <link rel="stylesheet" href="/community-sources.css?v=20260907-mobile" />
+  </head>
+  <body>
+    <main class="owner-shell">
+      <section class="login-panel" id="loginPanel" aria-labelledby="loginTitle">
+        <img src="/rules-icon.svg" alt="" class="owner-mark" />
+        <p class="eyebrow">Sterling Ranch Community Assistant</p>
+        <h1 id="loginTitle">Source review</h1>
+        <p class="intro">Enter the private owner password to review proposed source changes.</p>
+        <form id="loginForm">
+          <label for="ownerPassword">Owner password</label>
+          <input id="ownerPassword" name="password" type="password" autocomplete="current-password" required />
+          <button type="submit">Sign in</button>
+          <p class="form-message" id="loginMessage" role="alert"></p>
+        </form>
+      </section>
+
+      <section class="dashboard" id="dashboard" hidden>
+        <header class="owner-header">
+          <div>
+            <p class="eyebrow">Sterling Ranch Community Assistant</p>
+            <h1>Source review</h1>
+            <p class="intro">Nothing shown here can change resident answers until it passes review and release checks.</p>
+          </div>
+          <div class="header-actions">
+            <a href="/community-assistant/questions" class="secondary-action">Question log</a>
+            <button type="button" class="quiet-button" id="logoutButton">Sign out</button>
+          </div>
+        </header>
+
+        <section class="summary" aria-label="Source review summary">
+          <div><span>Pending reviews</span><strong id="pendingCount">0</strong></div>
+          <div><span>Sensitive</span><strong id="sensitiveCount">0</strong></div>
+          <div class="review-summary"><span>Conflicts</span><strong id="conflictCount">0</strong></div>
+          <div><span>Retirement pending</span><strong id="retirementCount">0</strong></div>
+        </section>
+
+        <section class="filters" aria-label="Source filters">
+          <label>Risk<select id="riskFilter"><option value="">All risks</option><option value="high">Sensitive</option><option value="medium">Standard</option></select></label>
+          <label>Status<select id="statusFilter"><option value="pending">Pending</option><option value="">All statuses</option><option value="approved">Approved</option><option value="kept-current">Kept current</option><option value="escalated">Escalated</option></select></label>
+          <label class="test-toggle"><input id="conflictFilter" type="checkbox" /><span>Conflicts only</span></label>
+          <button type="button" class="refresh-button" id="refreshButton">Refresh</button>
+        </section>
+        <p class="error-message" id="listError" role="alert"></p>
+        <section class="source-list" id="sourceList" aria-label="Source review cards"></section>
+        <div class="empty-state" id="emptyState" hidden><h2>No matching reviews</h2><p>The current filter has no review items.</p></div>
+      </section>
+    </main>
+    <script src="/community-sources.js?v=20260907-mobile"></script>
+  </body>
+</html>
+

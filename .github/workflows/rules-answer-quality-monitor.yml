@@ -2,8 +2,14 @@ name: Rules answer quality monitor
 
 on:
   workflow_dispatch:
+    inputs:
+      connectors_only:
+        description: Validate only facility and calendar monitoring; manual runs never change alert issues
+        type: boolean
+        default: false
   schedule:
     - cron: "15 15 * * *"
+    - cron: "7 * * * *"
 
 permissions:
   contents: read
@@ -27,34 +33,73 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        id: dependencies
         run: npm ci
 
+      - name: Verify live facility and calendar connectors
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: node scripts/check-community-live-monitor.js
+
       - name: Check local rules retrieval and uncertainty handling
+        id: local_checks
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run check
 
       - name: Re-audit every captured resident wording
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:eval:residents
 
       - name: Verify official resident-resource links
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:resources:check:live
 
       - name: Refresh and audit official community sources
-        run: npm run community:check -- --live
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
+        run: npm run community:check -- --live --write
 
       - name: Check the live rules assistant
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         run: npm run rules:monitor:live
 
       - name: Check live food-truck lookups
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' && github.event.schedule != '7 * * * *' && !inputs.connectors_only }}
         env:
           FAIL_ON_UNREACHABLE_SITE: "true"
         run: npm run check:live
 
+      - name: Preserve completed monitoring evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resident-monitor-${{ github.run_id }}
+          path: data/community-live-monitor-report.json
+          retention-days: 35
+
+      - name: Preserve newly completed local audit evidence
+        if: ${{ !cancelled() && steps.local_checks.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: resident-audit-${{ github.run_id }}
+          path: |
+            data/community-assistant-eval.json
+            data/community-retrieval-report.json
+          retention-days: 35
+
+      - name: Preserve source crawl review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-check-${{ github.run_id }}
+          path: data/community-source-check-report.json
+          if-no-files-found: ignore
+          retention-days: 35
+
       - name: Open or update the review issue when checks fail
-        if: failure()
+        if: ${{ failure() && github.event_name == 'schedule' }}
         uses: actions/github-script@v7
         with:
           script: |
-            const title = "Resident tools quality monitor needs review";
+            const title = context.payload.schedule === "7 * * * *" ? "Live community connector monitor needs review" : "Resident tools quality monitor needs review";
             const workflowUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const body = [
               "The scheduled resident-tools quality check failed.",
@@ -70,14 +115,7 @@ jobs:
               per_page: 100,
             });
             const existing = issues.find((issue) => !issue.pull_request && issue.title === title);
-            if (existing) {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: existing.number,
-                body,
-              });
-            } else {
+            if (!existing) {
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -87,11 +125,11 @@ jobs:
             }
 
       - name: Close the review issue after recovery
-        if: success()
+        if: ${{ success() && github.event_name == 'schedule' }}
         uses: actions/github-script@v7
         with:
           script: |
-            const title = "Resident tools quality monitor needs review";
+            const title = context.payload.schedule === "7 * * * *" ? "Live community connector monitor needs review" : "Resident tools quality monitor needs review";
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,

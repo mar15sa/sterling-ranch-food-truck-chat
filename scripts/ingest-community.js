@@ -19,7 +19,7 @@ async function main() {
   const profile = validateCommunityProfile(JSON.parse(await fs.readFile(profilePath, "utf8")));
   let previousIndex = null;
   try { previousIndex = JSON.parse(await fs.readFile(previousPath, "utf8")); } catch { /* first collection */ }
-  const index = await crawlCommunity(profile, { maxPages, maxDocuments, previousIndex });
+  const index = await crawlCommunity(profile, { maxPages, maxDocuments, previousIndex, forceContent: process.argv.includes("--force-content") });
   await fs.writeFile(outputPath, `${JSON.stringify(index, null, 2)}\n`, "utf8");
   console.log(`Wrote ${outputPath} with ${index.sourceCount} source records. Checked ${index.pageCount} pages; inventory: ${index.inventory?.indexedPageCount || 0} indexed, ${index.inventory?.pendingCount || 0} pending, ${index.inventory?.excludedCount || 0} explicitly excluded (${index.failureCount} failures).`);
   if (index.failureCount) {
