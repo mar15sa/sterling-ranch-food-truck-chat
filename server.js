@@ -39,7 +39,7 @@ const { getRulesLlmMetrics } = require("./lib/rules-llm");
 const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
-const { communityAnswerMetrics, recordCommunityAnswer } = require("./lib/community-observability");
+const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { getCommunityEvents } = require("./lib/community-events");
 const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community-llm");
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
@@ -4504,12 +4504,23 @@ async function handleCommunityRoutingEval(req, res) {
     return;
   }
   let diagnostic = null;
-  const rawPlan = await planCommunitySearch(question, { onDiagnostic: (value) => { diagnostic = value; } });
+  const usage = { inputTokens: 0, outputTokens: 0, model: "" };
+  const rawPlan = await planCommunitySearch(question, { cache: false, onDiagnostic: (value) => {
+    diagnostic = value;
+    if (value.usage) {
+      usage.inputTokens += value.usage.inputTokens;
+      usage.outputTokens += value.usage.outputTokens;
+      usage.model = value.usage.model;
+    }
+  } });
   const plan = normalizedRoutingPlan(rawPlan, question);
   sendJson(res, 200, {
     accepted: Boolean(plan),
     classification: classification.classification,
     reason: plan ? "structured-plan-accepted" : "planner-unavailable-or-incompatible",
+    deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    evaluation: { isTest: true, cacheDisabled: true },
+    usage,
     plan,
     diagnostic: plan ? undefined : diagnostic,
   });
@@ -4568,7 +4579,13 @@ async function handleRulesAsk(req, res, url) {
     getPoolStatus,
     getCommunityEvents,
     getWasteSchedule: getSterlingRanchWasteSchedule,
-    getFoodTruckAnswer: async (foodTruckQuestion) => getAnswerForDate(foodTruckQuestion, parseAskedDate(foodTruckQuestion)),
+    getFoodTruckAnswer: async (foodTruckRequest, originalQuestion) => {
+      const dateFromInterpretation = typeof foodTruckRequest === "object"
+        ? parseIsoDateParam(foodTruckRequest.dateRange?.start)
+        : null;
+      const foodTruckQuestion = originalQuestion || (typeof foodTruckRequest === "string" ? foodTruckRequest : "food truck schedule");
+      return getAnswerForDate(foodTruckQuestion, dateFromInterpretation || parseAskedDate(foodTruckQuestion));
+    },
     index: getCommunityIndex(),
     communityId: "sterling-ranch",
     }
@@ -4579,7 +4596,8 @@ async function handleRulesAsk(req, res, url) {
   logRulesQuestion(question, answer, req, { isTest: request.isTest });
   if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false && answer?.answerStatus !== "safety-rejected") {
     recordRulesLowConfidence({
-      question: cleanQuestionForLog(question),
+      questionFingerprint: privacyFingerprint(question),
+      questionLength: String(question || "").length,
       reason: answer.confidence.reason,
       topSource: answer.sources?.[0]?.title || "",
     });
@@ -4602,6 +4620,8 @@ async function handleRulesAsk(req, res, url) {
       outputTokens: Math.max(0, llmAfter.outputTokens - llmBefore.outputTokens),
     },
   });
+  delete answer._interpretation;
+  delete answer._connectorDiagnostics;
   sendJson(res, 200, answer);
 }
 
@@ -4624,6 +4644,8 @@ async function handleHealth(req, res) {
     status: healthy ? "ok" : "not-ready",
     uptimeSeconds: Math.round(process.uptime()),
     deploymentReady: healthy,
+    deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    configurationFingerprint: require('./lib/community-soak-evidence').configurationFingerprint(),
     rules: {
       exists: rules.exists,
       isStale: rules.isStale,
@@ -4847,7 +4869,7 @@ async function handleCommunitySourceHealth(req, res) {
       ...rules,
       refreshing: Boolean(rulesRefreshPromise),
     },
-    community: communitySourceStatus(),
+    community: communitySourceStatus(undefined, Date.now(), { includeStaleSources: true }),
   });
 }
 

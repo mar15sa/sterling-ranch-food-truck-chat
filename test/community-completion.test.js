@@ -410,6 +410,23 @@ test("Waste Connections service reads dated recycling events without a resident 
   assert.equal(villageDatesForAnchor("2026-09-08", [{ day: "2026-09-07", type: "holiday" }])[2].date, "2026-09-11");
 });
 
+test("Waste Connections uses one total deadline across its sequential requests", async () => {
+  let calls = 0;
+  const fetchImpl = async (url, options = {}) => {
+    calls += 1;
+    if (String(url).includes("address-suggest")) {
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE" }] };
+    }
+    return new Promise((resolve, reject) => {
+      options.signal.addEventListener("abort", () => reject(Object.assign(new Error("aborted"), { name: "AbortError" })), { once: true });
+    });
+  };
+  const started = Date.now();
+  await assert.rejects(() => getSterlingRanchWasteSchedule({ fetchImpl, timeoutMs: 40 }), /aborted/i);
+  assert.equal(calls, 2);
+  assert.ok(Date.now() - started < 250);
+});
+
 test("unrelated community-page actions are not attached to grounded rule answers", async () => {
   const cases = [
     ["Can we have chickens?", /Water-Sewer|Resident-Amenity|Submit-Your-Feedback/i],
@@ -492,6 +509,8 @@ test("candidate releases report changes and reject collection regressions", () =
   assert.equal(validation.review.level, "high");
   assert.equal(validation.review.requiresHumanReview, true);
   assert.equal(validateCommunityCandidate(trusted, { ...candidate, failureCount: 1 }, profile).valid, false);
+  assert.equal(validateCommunityCandidate(trusted, { ...candidate, sources: [candidate.sources[0], candidate.sources[0]] }, profile).valid, false);
+  assert.equal(validateCommunityCandidate({ ...trusted, sources: [trusted.sources[0], trusted.sources[0]] }, candidate, profile).valid, true);
 });
 
 test("automatic release decisions hold, promote, and roll back safely", () => {
@@ -503,9 +522,16 @@ test("automatic release decisions hold, promote, and roll back safely", () => {
 });
 
 test("answer traces expose operational metadata without storing question text", () => {
-  const answerId = recordCommunityAnswer({ answer: { answerMode: "community-source", answerStatus: "verified", communityIntent: "services", confidence: { confidence: "high", canAnswer: true }, sources: [], claims: [] }, resolvedQuestion: "private resident wording", usedPriorContext: true, durationMs: 25 });
+  const answerId = recordCommunityAnswer({ answer: { answerMode: "community-source", answerStatus: "verified", communityIntent: "services", confidence: { confidence: "high", canAnswer: true }, sources: [], claims: [], _interpretation: { mode: "structured", outcome: "ai", appliedFilters: [{ field: "location", value: "private location wording" }] }, _connectorDiagnostics: { sourceOutcome: "ok", beforeFilterCount: 5, afterFilterCount: 2 } }, resolvedQuestion: "private resident wording", usedPriorContext: true, durationMs: 25 });
   assert.match(answerId, /^[0-9a-f-]{36}$/);
   const trace = communityAnswerMetrics().recent.at(-1);
   assert.equal(trace.usedPriorContext, true);
+  assert.equal(trace.interpretationMode, "structured");
+  assert.equal(trace.interpretationOutcome, "ai");
+  assert.equal(trace.appliedFilterCount, 1);
+  assert.equal(trace.connectorOutcome, "ok");
+  assert.equal(trace.beforeFilterCount, 5);
+  assert.equal(trace.afterFilterCount, 2);
   assert.equal(Object.hasOwn(trace, "question"), false);
+  assert.equal(JSON.stringify(trace).includes("private location wording"), false);
 });

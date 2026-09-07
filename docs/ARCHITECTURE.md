@@ -29,11 +29,12 @@ flowchart LR
 
 ## Failure boundaries
 
-- Anthropic helps interpret unfamiliar wording and may rewrite a weak draft, but it never supplies the governing facts. If it is disabled, unavailable, or fails grounding checks, the source-built answer still works.
+- Anthropic converts each substantive resident question into a validated request containing intent, goals, subject, requested details, date range, and explicit filters. It may also rewrite a weak grounded draft, but it never supplies governing facts, links, prices, dates, or contacts. If it is disabled, unavailable, or fails validation, broad source retrieval continues without guessed filters.
 - Strong source-built answers bypass rewriting, reducing cost and avoiding unnecessary answer drift.
 - Prompt-injection screening runs before source search or Anthropic, including attempts to disclose prompts, credentials, tokens, environment variables, or webhook URLs.
 - Missing or conflicting current rule facts fail closed instead of being guessed.
-- The intent layer normalizes common wording and typo variants, keeps unrelated meanings separate, and records the requested answer facet before retrieval.
+- The shared interpretation layer normalizes common wording and typo variants, keeps unrelated meanings separate, records every requested answer facet before retrieval, and applies a live-source filter only when the resident explicitly requested one.
+- A live connector may report an authoritative empty result only after the source and parser validate successfully. Filtered misses retain the unfiltered alternatives; partial or unavailable sources cannot produce a verified “none found” answer.
 - The model proposes the route, while a topic-neutral semantic contract enforces explicit question forms such as permission, payment, cost, schedule, status, contact, and account access. This corrects inconsistent model labels without hard-coding Sterling Ranch topics or answers.
 - The coverage gate rejects answers that cite a relevant-looking section but omit the resident's requested price, limit, process, link, definition, duration, or permission decision.
 - All 116 historical resident wordings, broader family variants, a separate unseen-question set, and a 228-question old-versus-upgraded comparison run before release. Any regression blocks release.

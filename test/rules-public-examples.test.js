@@ -324,6 +324,27 @@ test("AI search expansion preserves strong answers the original wording already 
   }
 });
 
+test("shared rules interpretation cannot be overridden by a conflicting facility search plan", async () => {
+  const question = "Can I buy the lot behind me and tear the house down for a bigger yard";
+  const result = await answerRulesQuestion(question, {
+    searchMode: "ai-hybrid",
+    llmMode: "off",
+    interpretation: { intent: "rules", goal: "permission", subject: "adjacent-lot demolition" },
+    planRulesSearch: async () => ({
+      inScope: "yes",
+      intent: "facility_reservation",
+      normalizedQuestion: "landscaping a bigger yard",
+      searchQueries: ["landscape plan", "irrigation plan"],
+      entities: [],
+    }),
+    rerankRulesSources: async (_question, sources) => sources,
+  });
+  assert.match(result.answer, /does not grant permission/i);
+  assert.match(result.answer, /DRC review/i);
+  assert.match(result.answer, /county officials/i);
+  assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
+});
+
 test("compound questions keep a grounded source for each requested topic", async () => {
   let rewriteSources = [];
   const result = await answerRulesQuestion("Can I add a fence and a shed?", {

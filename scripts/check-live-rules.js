@@ -33,8 +33,8 @@ const CHECKS = [
   },
   {
     question: "What are the neighborhood pickleball court rules?",
-    firstSourceIncludes: "Sec. 17-54",
-    answerIncludes: ["neighborhood pickleball courts", "5:00 a.m.", "11:00 p.m.", "private court"],
+    firstSourceIncludes: "Pickleball Courts",
+    answerIncludes: ["weekdays from 7 a.m. to dusk", "weekends from 8 a.m. to dusk", "two hours per day", "CourtReserve"],
     maxAnswerLength: 1000,
   },
   {

@@ -32,7 +32,7 @@ test("resident source details stay simple while owner diagnostics receive full h
   assert.match(ownerScript, /renderSourceHealth/);
   assert.match(ownerScript, /\/api\/community-source-health/);
   assert.match(ownerScript, /pendingSourceCount|pendingPageCount/);
-  assert.match(server, /handleCommunitySourceHealth[\s\S]*rules:[\s\S]*community: communitySourceStatus\(\)/);
+  assert.match(server, /handleCommunitySourceHealth[\s\S]*rules:[\s\S]*community: communitySourceStatus\(undefined, Date.now\(\), \{ includeStaleSources: true \}\)/);
   assert.match(server, /\/api\/community-source-health/);
 });
 

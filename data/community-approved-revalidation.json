@@ -1,0 +1,770 @@
+{
+  "checkedAt": "2026-09-07T17:22:38.951Z",
+  "mode": "exact-content-hash-only",
+  "checks": [
+    {
+      "url": "https://sterlingranchcab.com/",
+      "checkedAt": "2026-09-07T17:22:31.681Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-sterling-ranch-community-authority-board-co-1",
+          "contentHash": "8c28cbf913c93acfe778047469de73b69205742aa9cf49c5203e7847a47eb007"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-",
+      "checkedAt": "2026-09-07T17:22:32.563Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-configured-official-source-1",
+          "contentHash": "f20382a315327533d195136476f8a9971774facf2acf6535545c78d3128121a1"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-2",
+          "contentHash": "a5d0b9340b9d7f743e7b4281537adae90305c4dbad41c4fd261091ede9c1f93f"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-3",
+          "contentHash": "963b00d8820f2de0a6e76fad8b62317617ab60cd10aa08a8bb3afbc5412d375c"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-4",
+          "contentHash": "202371a0a984ee14492b369bbbf2bf68ba16ad05754aa241d28c971a363eee82"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-5",
+          "contentHash": "87e1e6c4d799de72ddb5010fc4ee3290c5d0223dd94d06470ff6e045374e8bd5"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-6",
+          "contentHash": "9ff15f32d26f3b29302c623e342cbd9c1003aa46e7f97efc9f94c9d8011b2ce4"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-7",
+          "contentHash": "e548967488c77b783a0056841d50df2a111fbf1851250582838380ee635ce1e4"
+        },
+        {
+          "id": "sterling-ranch-configured-official-source-8",
+          "contentHash": "204630062c8cc60ff5ebb8af4ac69dbbea779eb14f1d42f72628eaaaba3406b6"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/311/Park-Shelters",
+      "checkedAt": "2026-09-07T17:22:32.937Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-park-shelters-1",
+          "contentHash": "1e0ed362c8fc600b12725c365dbb4215fe01b079c1b90f9534eaae1cb8a035c1"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/324/Important-Contact-Information",
+      "checkedAt": "2026-09-07T17:22:33.188Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-important-contact-information-1",
+          "contentHash": "72f62d15a1f23a3096cbdade9eccb9ff2eba32ca9ab8ff16774ed6608820be68"
+        },
+        {
+          "id": "sterling-ranch-important-contact-information-2",
+          "contentHash": "953ab6c70aff0555c68df54d542ebc8e2b231fea41abed14e06d87399aeee94c"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "checkedAt": "2026-09-07T17:22:33.460Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-trash-recycling-1",
+          "contentHash": "99861cd15d2165024b659c779c7f8a8cfa329978270ce7a63d28f72d63d44d98"
+        },
+        {
+          "id": "sterling-ranch-trash-recycling-2",
+          "contentHash": "a64125c2d460e3a80d002730b559816b98944d09a4ff5c781a09c1ad679059fb"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+      "checkedAt": "2026-09-07T17:22:33.785Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-waste-connection-recycling-tips-pdf-1",
+          "contentHash": "ecc1b61cfdf5c26a35073ce931e39ea8c3a2376b8a017200737b1e13adf033b2"
+        },
+        {
+          "id": "sterling-ranch-waste-connection-recycling-tips-pdf-2",
+          "contentHash": "338643772ba9964c9e3b4038524f823e0b6bde26e8a79e486ae898c8b1bf86ea"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/520/Waste-Connections-Recycling-Right-Presentation-PDF",
+      "checkedAt": "2026-09-07T17:22:33.992Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-waste-connections-recycling-right-presentation-pdf-1",
+          "contentHash": "b8c24b8001e7e291ec706a2794d50901a1342cf91f20ba3cf238f639e684b826"
+        },
+        {
+          "id": "sterling-ranch-waste-connections-recycling-right-presentation-pdf-2",
+          "contentHash": "53a80d4bc1def1f77d7ae3e6b7f2d8fbe30cf188ae342b2dea8b230cc3f2e598"
+        },
+        {
+          "id": "sterling-ranch-waste-connections-recycling-right-presentation-pdf-3",
+          "contentHash": "d3709043c33cb05beba8c982b6ba41e4647eb74b63a8502745d5496e352ac89a"
+        },
+        {
+          "id": "sterling-ranch-waste-connections-recycling-right-presentation-pdf-4",
+          "contentHash": "102a5f7c99df8e455246446c44aed97cedf0f87cf4291a3da513e0cb8cf7179d"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/248/Water-Sewer",
+      "checkedAt": "2026-09-07T17:22:34.254Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-water-sewer-1",
+          "contentHash": "b0b5365f14f9288f382b14508314efd9a783cd957fb06ac264139381640c4402"
+        },
+        {
+          "id": "sterling-ranch-water-sewer-2",
+          "contentHash": "f66efa5d3a1ccf0352384ec2c36274e0660544975536a40decd0faf45a55db0e"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/1870",
+      "checkedAt": "2026-09-07T17:22:34.402Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-official-link-1",
+          "contentHash": "1606a272aa99a316c08281880e9cffe52dfd052925995972579d824af755b40a"
+        },
+        {
+          "id": "sterling-ranch-official-link-2",
+          "contentHash": "b30a0e0df2e3526eb5ea21f3a08f622e16a6d0af08c536278b7261ce7e11523c"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/187/Pool",
+      "checkedAt": "2026-09-07T17:22:34.676Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-overlook-outdoor-pool-1",
+          "contentHash": "fed1566d049710cbed3b74f6adafe1b039a265269578081044b3ff42eedcba99"
+        },
+        {
+          "id": "sterling-ranch-overlook-outdoor-pool-2",
+          "contentHash": "6fbb0250645841a5f35cc9e327e825b37e4967335cd69a9e320225e5bc91c306"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/206/Water-Billing",
+      "checkedAt": "2026-09-07T17:22:35.059Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-water-billing-1",
+          "contentHash": "d07bd94e45f080cb9523aaa1fe98966c8e751f6f1f4155a14fc58492df6748ba"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/269/Rent-the-Facility",
+      "checkedAt": "2026-09-07T17:22:35.329Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-rent-the-facility-1",
+          "contentHash": "0303d628841d2704c91379acace3651fe129512fa5d20c08ca43d405c3ab8ad5"
+        },
+        {
+          "id": "sterling-ranch-rent-the-facility-2",
+          "contentHash": "3eb78f68b31cac8c5e9283c830fc75e528658ff3c3c4c618218620562b30a6df"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/m/faq?cat=16",
+      "checkedAt": "2026-09-07T17:22:35.411Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "28dae75d37e0b00752049057a9baad7cf97ffbd36822768cb98e285db8db9430"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "c87a1ed9d5b99f80ec1cacd005b411c01b0664149665a46b078db58dae7d490d"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "28dae75d37e0b00752049057a9baad7cf97ffbd36822768cb98e285db8db9430"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "c87a1ed9d5b99f80ec1cacd005b411c01b0664149665a46b078db58dae7d490d"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "28dae75d37e0b00752049057a9baad7cf97ffbd36822768cb98e285db8db9430"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "c87a1ed9d5b99f80ec1cacd005b411c01b0664149665a46b078db58dae7d490d"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/m/faq?cat=21",
+      "checkedAt": "2026-09-07T17:22:35.462Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "af5593a8bd934ce7d3a9b5956cd091c8d2c6cb7938b74103dbcc8f54f54999c4"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "b33e6cdd6f2f98ec9d26f41d585b8e8c80b1c4ec95e31fe8625f91f295ccc416"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "abe025c5d6546e1e0b6183b9e02a6c8fe1f625ff688f15fecce550598a8724c7"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-4",
+          "contentHash": "a21f3e133ac27c80e31662942842f45f5e8b804855cbfbae2220f232ca82647a"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-5",
+          "contentHash": "e293a94cd44f7f83e57f867accccdf5854a4a5283d121446d44f87c10c6ce2a9"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "af5593a8bd934ce7d3a9b5956cd091c8d2c6cb7938b74103dbcc8f54f54999c4"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "b33e6cdd6f2f98ec9d26f41d585b8e8c80b1c4ec95e31fe8625f91f295ccc416"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "abe025c5d6546e1e0b6183b9e02a6c8fe1f625ff688f15fecce550598a8724c7"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-4",
+          "contentHash": "a21f3e133ac27c80e31662942842f45f5e8b804855cbfbae2220f232ca82647a"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-5",
+          "contentHash": "e293a94cd44f7f83e57f867accccdf5854a4a5283d121446d44f87c10c6ce2a9"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "af5593a8bd934ce7d3a9b5956cd091c8d2c6cb7938b74103dbcc8f54f54999c4"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "b33e6cdd6f2f98ec9d26f41d585b8e8c80b1c4ec95e31fe8625f91f295ccc416"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "abe025c5d6546e1e0b6183b9e02a6c8fe1f625ff688f15fecce550598a8724c7"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-4",
+          "contentHash": "a21f3e133ac27c80e31662942842f45f5e8b804855cbfbae2220f232ca82647a"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-5",
+          "contentHash": "e293a94cd44f7f83e57f867accccdf5854a4a5283d121446d44f87c10c6ce2a9"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "af5593a8bd934ce7d3a9b5956cd091c8d2c6cb7938b74103dbcc8f54f54999c4"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "b33e6cdd6f2f98ec9d26f41d585b8e8c80b1c4ec95e31fe8625f91f295ccc416"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "abe025c5d6546e1e0b6183b9e02a6c8fe1f625ff688f15fecce550598a8724c7"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-4",
+          "contentHash": "a21f3e133ac27c80e31662942842f45f5e8b804855cbfbae2220f232ca82647a"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-5",
+          "contentHash": "e293a94cd44f7f83e57f867accccdf5854a4a5283d121446d44f87c10c6ce2a9"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/m/faq",
+      "checkedAt": "2026-09-07T17:22:35.527Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "74db9d30a0c805ab3b0708c9b5398ffa0ba978b37a1522bb82aa7dc8217d24fd"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "686878b7308e7c0225aa35cba54c0b16f9061f4d3ed7727f70199f11bd919ca3"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "c02c2499bb7a105dfdff9c903cb30645637a72da9119da1c4a6b8b2fbe86a985"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-4",
+          "contentHash": "bec2fe68e42c880df233cfd790320cfec9b916be2f7279dd4dd203853e8b8500"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-5",
+          "contentHash": "518bf3eaa5bee3744bc7129b7950dda50de642fecfafc5e2da6109f4e6ca4488"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-6",
+          "contentHash": "a6108a957cc41fed0d5d6102b788a7d12b4278ff8e7ce37e8de4ac2c5647252a"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-7",
+          "contentHash": "b23193c9d7f3143d7a83cfdef29495f9dcab9a6fda1b346a4526618d6b6a2806"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-8",
+          "contentHash": "f2dfbc4119948dd52854e4b6366f70875e99344adb209f31f22ea82b07d20bdc"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-9",
+          "contentHash": "85002bd14c474707d7afa59f721295174d94f275a7944d4623ef99e9f68dbdbe"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-10",
+          "contentHash": "7df9780828e5e8a3d61582653525a36582db58c7deefdde611a8c8615c9bbf43"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-11",
+          "contentHash": "ee8c98f2c5b539ba7aaabc2e05bbb846f5cf2bfe721fc9c2d138fb263e303215"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-12",
+          "contentHash": "07f80e7028b9a210cb43a92b73c074aeae0e8866a258e80b61d2f051b2351fd2"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-13",
+          "contentHash": "3e0f7ab2f01b66f1c1b29f3fc2ee4d2e9d2c3b83d4060303455d52fa7655c5a4"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-14",
+          "contentHash": "96490792b0660037d57baebbc4ef8e30ec5863f8d37def3be3af5f0479ea2127"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-15",
+          "contentHash": "eaf77fbf6b53f5c428dd2a6a4cae9aa4b457b26763aea42f30bc6623c952f7b9"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-16",
+          "contentHash": "52c0b85f561ba6926bb6e46678f7a5c7df285ff58319d28ecc02ec8094f0919e"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-17",
+          "contentHash": "5403f28b062cb8aeb347bf80c19a9feba6cc5265c82a2210286f728d15e4bc66"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-18",
+          "contentHash": "5b37873e90b47046266314350df14f3df7c07350035263ff4e51a68c3a5f4bdb"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-19",
+          "contentHash": "eaa4fb24d15b21d04a3f2cf83606442441fea0669b3fcfa9f7844d68232aceeb"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-20",
+          "contentHash": "4ab36eb4ffa2e7c5ed7003fab05100a728305bbeeab9af56a315b078a99572e0"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+      "checkedAt": "2026-09-07T17:22:35.817Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-architectural-community-standards-1",
+          "contentHash": "3668a5325bca0c7883c79e726d3f65a7aaf9f4fafee715a11a38db1cb6255c2e"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/612/Water-Rear-Yard-Establishment-Notification_2021_August",
+      "checkedAt": "2026-09-07T17:22:35.919Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-water-rear-yard-establishment-notification-2021-august-1",
+          "contentHash": "69861126fafd57a20a2351a9a24e87eb0d3127d3e3cf888504c7415c51f57c8b"
+        },
+        {
+          "id": "sterling-ranch-water-rear-yard-establishment-notification-2021-august-2",
+          "contentHash": "f62fd5146d393c8904e47e0c875d70b5a47fa29f3ad7777519be72d927dff56d"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/628/Instructions-for-Landscape-Inspections_2020_Aug",
+      "checkedAt": "2026-09-07T17:22:36.037Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-instructions-for-landscape-inspections-2020-aug-1",
+          "contentHash": "9c0bbd0e6a6c252cd56e8589bde21bb4df19d783a81e10414b95d9dff4c59e77"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/1350/Application-Landscape-Professional_2023",
+      "checkedAt": "2026-09-07T17:22:36.156Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-application-landscape-professional-2023-1",
+          "contentHash": "0a38e51aba216956343fbb0fa736b34c5b5514e2c39bd8cf7fac7f48ba7daeb1"
+        },
+        {
+          "id": "sterling-ranch-application-landscape-professional-2023-2",
+          "contentHash": "f69c9eddebf0e02b622f8c79759232cfc9ab20e87ddd2ac5c23f0c1e6649e56d"
+        },
+        {
+          "id": "sterling-ranch-application-landscape-professional-2023-3",
+          "contentHash": "cc78398c8c32fb30256cc1c39c1974a13056c0241cde0bcdb81ee644b550c490"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/770/Calculating-Outdoor-Water-Usage",
+      "checkedAt": "2026-09-07T17:22:36.249Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-calculating-outdoor-water-usage-1",
+          "contentHash": "d2d9dd6264f9b50fcb2c3ab6e37db996586f4a6a26832a405810dbf3b2394c3b"
+        },
+        {
+          "id": "sterling-ranch-calculating-outdoor-water-usage-2",
+          "contentHash": "aec78d3d0a6b239285904398ab40ea6a73fe58573a019c2dc09d9da96feb2657"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/626/Backyard-Utility-Sheds",
+      "checkedAt": "2026-09-07T17:22:36.377Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-backyard-utility-sheds-1",
+          "contentHash": "a5f5862481f6b1415e71078b364ad3b9012fb739f66aad117111d60a2929f1dd"
+        },
+        {
+          "id": "sterling-ranch-backyard-utility-sheds-2",
+          "contentHash": "de568a9eb15b35e9f42cb8aba7569bf1fc87b8e234577c344a256c2f059ad842"
+        },
+        {
+          "id": "sterling-ranch-backyard-utility-sheds-3",
+          "contentHash": "9e7725549c478b9471b5cdc6f4d5ed67cdd668a9957b5bc434b72d910bbc6f42"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/625/Controlled-Pet-Areas-",
+      "checkedAt": "2026-09-07T17:22:36.534Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-controlled-pet-areas-1",
+          "contentHash": "7bf01df73941ec1802344b4baab3679133f0ce75916646128725fc0a9b4b7db1"
+        },
+        {
+          "id": "sterling-ranch-controlled-pet-areas-2",
+          "contentHash": "11b00fdf42e1c8cf38ac144626ae00dce38bdaa84d8ddd1836bff0d2e7507354"
+        },
+        {
+          "id": "sterling-ranch-controlled-pet-areas-3",
+          "contentHash": "d012a18a033a81ca63d3b8cb392dd3b59f8471706adc0e5f93c15dcd5a3bd4ed"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/624/Landscape-Screens-",
+      "checkedAt": "2026-09-07T17:22:36.728Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-landscape-screens-1",
+          "contentHash": "6cfc982c47f6679b94e13d1a12f8c62259a63da681dd4f8b02ffa5b89f729140"
+        },
+        {
+          "id": "sterling-ranch-landscape-screens-2",
+          "contentHash": "fd7bc1bfc605286a3337e68d80ede0ec232099bf65afea27a4c0d27b192231c2"
+        },
+        {
+          "id": "sterling-ranch-landscape-screens-3",
+          "contentHash": "b43419f2eaecba3ebe085d09ac1b34b01f67c022ff64f1b376e396147a65f47d"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/623/Rear-Patio-Lights-",
+      "checkedAt": "2026-09-07T17:22:36.863Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-rear-patio-lights-1",
+          "contentHash": "0bdb73e2fe27eee079f1148c35b45125df269150e4973358efbb0f3e60d5477d"
+        },
+        {
+          "id": "sterling-ranch-rear-patio-lights-2",
+          "contentHash": "241afcd456e2b0bec9d0bfdbe076902207a92cbb8e10b85dbe28381f25c25d3f"
+        },
+        {
+          "id": "sterling-ranch-rear-patio-lights-3",
+          "contentHash": "3ec548c0a79788a35796233e58823330af36fde397872a98105053c6f7005742"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/622/Trash-Screening-",
+      "checkedAt": "2026-09-07T17:22:37.086Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-trash-screening-1",
+          "contentHash": "ef90de349f199fe8d6f0d8a800a7fe026e7d9f88b5bdfbab019b122a1241f4d7"
+        },
+        {
+          "id": "sterling-ranch-trash-screening-2",
+          "contentHash": "f2edbd89074ac3207051af41c3e621c1386a2a76f3f8acbee9bcb6732397f645"
+        },
+        {
+          "id": "sterling-ranch-trash-screening-3",
+          "contentHash": "0b42f7dcc4a584a62daec2775e09f7300ccdc0c7c04cd572b160f2f3e6e542d0"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/621/Exterior-Light-Replacement",
+      "checkedAt": "2026-09-07T17:22:37.263Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-exterior-light-replacement-1",
+          "contentHash": "a75f7db3f233a4057f819ee8b9c67e7f5bef1a62303c243862cec5a09daa1db6"
+        },
+        {
+          "id": "sterling-ranch-exterior-light-replacement-2",
+          "contentHash": "1d84dc21419e8e36abaa572f3b74b88e3fd06404d9bb1ed8a6d2bf8a54dabb07"
+        },
+        {
+          "id": "sterling-ranch-exterior-light-replacement-3",
+          "contentHash": "0b42f7dcc4a584a62daec2775e09f7300ccdc0c7c04cd572b160f2f3e6e542d0"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/620/Storm-Doors-",
+      "checkedAt": "2026-09-07T17:22:37.376Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-storm-doors-1",
+          "contentHash": "acab6e59625affd5c55fcc02d3a1b0853505d06b9446f2d65141609ef25a56a7"
+        },
+        {
+          "id": "sterling-ranch-storm-doors-2",
+          "contentHash": "5f00a07868530e420d3465632f5bcab1753516c0bdebf3e45c8409a3f465020a"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-",
+      "checkedAt": "2026-09-07T17:22:37.486Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-solar-panels-1",
+          "contentHash": "99d5eb15242e7a0c9743d18ca3aa0411e62c95e0025a18cab0859c434d6dd05e"
+        },
+        {
+          "id": "sterling-ranch-solar-panels-2",
+          "contentHash": "bf903b0ed044d977fb13676efeaaada477a4d1d305c7fb58193cbbdca11b0850"
+        },
+        {
+          "id": "sterling-ranch-solar-panels-3",
+          "contentHash": "e022477e6eddff3ae3b66ea31bb5582db769111ea1b670922559afd5f9f284bd"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-",
+      "checkedAt": "2026-09-07T17:22:37.635Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-standard-3-rail-fencing-1",
+          "contentHash": "107c3bf87a4d6876bb3e620728f26340b11339d1975b18e578233d1a0ae0a2d7"
+        },
+        {
+          "id": "sterling-ranch-standard-3-rail-fencing-2",
+          "contentHash": "840d8a2b0facb4bb480140fb6a5c30b1a9322654d247b7cccf2cf2cf9fb581e0"
+        },
+        {
+          "id": "sterling-ranch-standard-3-rail-fencing-3",
+          "contentHash": "0b42f7dcc4a584a62daec2775e09f7300ccdc0c7c04cd572b160f2f3e6e542d0"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-",
+      "checkedAt": "2026-09-07T17:22:37.745Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-fencing-elements-providence-1",
+          "contentHash": "633924b1b2a37d7fa2bbefa798a6177eabca21a76fe1881c11db1484bc40128a"
+        },
+        {
+          "id": "sterling-ranch-fencing-elements-providence-2",
+          "contentHash": "b43419f2eaecba3ebe085d09ac1b34b01f67c022ff64f1b376e396147a65f47d"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/748/Roll-Off-Containers",
+      "checkedAt": "2026-09-07T17:22:37.889Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-roll-off-containers-1",
+          "contentHash": "263d2d55cd1e7c0af87a0c02b0783f8334e8666a080f5c88e6a1b7dfde5ab673"
+        },
+        {
+          "id": "sterling-ranch-roll-off-containers-2",
+          "contentHash": "3e119acf75a4f2cfff23c34408b6f4f8dedfd0931ff13de227e28e80e9c03c57"
+        },
+        {
+          "id": "sterling-ranch-roll-off-containers-3",
+          "contentHash": "0b42f7dcc4a584a62daec2775e09f7300ccdc0c7c04cd572b160f2f3e6e542d0"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/257/Amenity-Rentals",
+      "checkedAt": "2026-09-07T17:22:38.141Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-amenity-rentals-1",
+          "contentHash": "375def52d3f238a810ba927466f5c8df0306a1d4c7175498e02e7a57c4dc9fb6"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+      "checkedAt": "2026-09-07T17:22:38.425Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-approved-landscapers-list-1",
+          "contentHash": "d7ef8100507ef3c999c454f1e63f6ecda9fa338475797725e6bdd37e174a12f2"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/m/faq?cat=15",
+      "checkedAt": "2026-09-07T17:22:38.478Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-1",
+          "contentHash": "74db9d30a0c805ab3b0708c9b5398ffa0ba978b37a1522bb82aa7dc8217d24fd"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-2",
+          "contentHash": "686878b7308e7c0225aa35cba54c0b16f9061f4d3ed7727f70199f11bd919ca3"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-3",
+          "contentHash": "c02c2499bb7a105dfdff9c903cb30645637a72da9119da1c4a6b8b2fbe86a985"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-4",
+          "contentHash": "bec2fe68e42c880df233cfd790320cfec9b916be2f7279dd4dd203853e8b8500"
+        },
+        {
+          "id": "sterling-ranch-faqs-civicplus-cms-faq-5",
+          "contentHash": "e49546b56f9b1d676d2b72287799379f04197b7eec11b520c83e879c4f8e4919"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/245/STEWARD-Home-Automation-System",
+      "checkedAt": "2026-09-07T17:22:38.718Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-steward-home-automation-system-1",
+          "contentHash": "2edd40fe71ac38ee3dfa087a28300717da73949d3c6dd46bdb773854a68bb871"
+        }
+      ],
+      "requiresReview": []
+    },
+    {
+      "url": "https://sterlingranchcab.com/418/Pickleball-Courts",
+      "checkedAt": "2026-09-07T17:22:38.951Z",
+      "renewed": [
+        {
+          "id": "sterling-ranch-pickleball-courts-1",
+          "contentHash": "d0868fed7a93b85f274e4d776c8fa9fb1320839a4a477450bdb476370e2823fd"
+        },
+        {
+          "id": "sterling-ranch-pickleball-courts-2",
+          "contentHash": "d8eb0c4dac9c1f7e0fca85f78d66d3bf5c0bb3e109396ec471009097ec53db1f"
+        }
+      ],
+      "requiresReview": []
+    }
+  ]
+}

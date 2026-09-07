@@ -1,13 +1,13 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildAnswerContract, detectFactConflicts, validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
-const { canonicalPageUrl, contentHtml, crawlCommunity, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
+const { canonicalPageUrl, contentHtml, crawlCommunity, disambiguateSourceIds, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
 const { verifyStructuredDraft } = require("../lib/community-grounding");
 const { parseJson, planCommunitySearch } = require("../lib/community-llm");
 const { actionSupportsGoal, classifyCommunityIntent, normalizedRoutingPlan, requestedDetails, searchCommunityIndex, sourceSupportsGoal } = require("../lib/community-search");
 const { eventDateRange, parseCivicPlusEvents } = require("../lib/community-events");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
-const { reconcileCommunityIndex } = require("../lib/community-source-manager");
+const { communitySourceStatus, reconcileCommunityIndex } = require("../lib/community-source-manager");
 const castleRockProfile = require("../data/communities/castle-rock.json");
 const portabilityProof = require("../data/portability-proof.json");
 
@@ -64,6 +64,17 @@ test("source and answer contracts retain claim-level evidence", () => {
   assert.equal(answer.claims[0].verified, true);
   const incomplete = buildAnswerContract({ directAnswer: "It costs $90.", sources: [item], status: "verified", claims: [{ text: "It costs $90." }] });
   assert.equal(incomplete.answerStatus, "verified-incomplete");
+});
+
+test("source ingestion gives same-title pages stable unique ids", () => {
+  const first = source({ id: "alpha-faq-1", sourceUrl: "https://alpha.gov/faq?cat=16", facts: [{ id: "alpha-faq-1-link", sourceId: "alpha-faq-1" }] });
+  const second = source({ id: "alpha-faq-1", sourceUrl: "https://alpha.gov/faq?cat=21", facts: [{ id: "alpha-faq-1-link", sourceId: "alpha-faq-1" }] });
+  const duplicate = JSON.parse(JSON.stringify(second));
+  const records = disambiguateSourceIds([first, second, duplicate]);
+  assert.equal(records.length, 2);
+  assert.equal(new Set(records.map((item) => item.id)).size, 2);
+  assert.ok(records.every((item) => item.facts[0].sourceId === item.id));
+  assert.ok(records.every((item) => item.facts[0].id.startsWith(`${item.id}-`)));
 });
 
 test("CivicPlus cleaning keeps resident content and removes page chrome and configuration", () => {
@@ -182,31 +193,39 @@ test("AI routing returns a structured goal and subject without answering the res
         content: [{ type: "text", text: JSON.stringify({
           intent: "services",
           goal: "payment",
+          goals: ["payment"],
           subject: "water bill",
+          requestedDetails: ["action"],
+          dateRange: null,
+          filters: { audience: "", category: "", facility: "", location: "" },
           searchQueries: ["pay water bill online", "water bill payment portal"],
+          scope: "community",
+          needsClarification: false,
+          clarificationQuestion: "",
         }) }],
       }), { status: 200, headers: { "content-type": "application/json" } });
     },
   });
-  assert.deepEqual(plan, {
-    intent: "services",
-    goal: "payment",
-    subject: "water bill",
-    searchQueries: ["pay water bill online", "water bill payment portal"],
-  });
+  assert.equal(plan.intent, "services");
+  assert.equal(plan.goal, "payment");
+  assert.deepEqual(plan.goals, ["payment"]);
+  assert.equal(plan.subject, "water bill");
+  assert.deepEqual(plan.requestedDetails, ["action"]);
+  assert.deepEqual(plan.filters, { audience: "", category: "", facility: "", location: "" });
+  assert.deepEqual(plan.searchQueries, ["pay water bill online", "water bill payment portal"]);
   assert.match(requestBody.system, /Do not answer the question/i);
   assert.match(requestBody.system, /consequences/i);
   assert.match(requestBody.system, /Are backyard chickens allowed/i);
   assert.equal(requestBody.temperature, 0);
   assert.equal(requestBody.tool_choice.name, "route_community_question");
-  assert.deepEqual(requestBody.tools[0].input_schema.required, ["intent", "goal", "subject", "searchQueries"]);
+  assert.deepEqual(requestBody.tools[0].input_schema.required, ["intent", "goal", "goals", "subject", "requestedDetails", "dateRange", "filters", "searchQueries", "scope", "needsClarification", "clarificationQuestion"]);
   assert.deepEqual(normalizedRoutingPlan(plan), plan);
   assert.equal(normalizedRoutingPlan({ intent: "services", searchQueries: ["pay bill"] }), null);
-  assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "permission");
-  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "cost");
-  assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "status");
-  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "schedule");
-  assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "backyard spa", searchQueries: ["spa approval"] }, "What approval and setbacks apply to a backyard spa?").goal, "permission");
+  assert.equal(normalizedRoutingPlan({ intent: "rules", goal: "information", subject: "backyard chickens", searchQueries: ["chicken rules"] }, "Are backyard chickens allowed?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "water rates", searchQueries: ["water rates"] }, "What are the current residential water rates?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "status", goal: "information", subject: "pool", searchQueries: ["pool status"] }, "Is the pool open today?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "services", goal: "information", subject: "recycling", searchQueries: ["recycling pickup"] }, "When is recycling pickup?").goal, "information");
+  assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "backyard spa", searchQueries: ["spa approval"] }, "What approval and setbacks apply to a backyard spa?").goal, "application");
   assert.equal(normalizedRoutingPlan({ intent: "forms", goal: "application", subject: "landscape", searchQueries: ["landscape application"] }, "How do I apply for landscape design approval?").goal, "application");
 
   const toolPlan = await planCommunitySearch("When is recycling pickup?", {
@@ -220,7 +239,10 @@ test("AI routing returns a structured goal and subject without answering the res
       } }],
     }), { status: 200, headers: { "content-type": "application/json" } }),
   });
-  assert.deepEqual(toolPlan, { intent: "services", goal: "schedule", subject: "recycling pickup", searchQueries: ["recycling pickup schedule"] });
+  assert.equal(toolPlan.intent, "services");
+  assert.equal(toolPlan.goal, "schedule");
+  assert.equal(toolPlan.subject, "recycling pickup");
+  assert.deepEqual(toolPlan.searchQueries, ["recycling pickup schedule"]);
 
   let retryCalls = 0;
   const retriedPlan = await planCommunitySearch("When is recycling pickup?", {
@@ -429,6 +451,56 @@ test("contact answers preserve exact structured details even when AI synthesis w
   assert.equal(synthesisCalls, 0);
   assert.equal(answer.answerMode, "community-source-extractive");
   assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i);
+  assert.match(answer.answer, /\(833\) 772-2240/);
+  assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
+});
+
+test("structured service contacts skip the unrelated rules lookup after shared interpretation", async () => {
+  const billing = source({
+    id: "alpha-water-billing-fast-path",
+    title: "Water & Sewer",
+    sourceType: "services",
+    text: "American Conservation and Billing Solutions (AmCoBi) administers the monthly water bill. For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com.",
+    facts: [
+      { id: "billing-phone", factKey: "water-billing-phone", type: "phone", value: "(833) 772-2240", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+      { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
+    ],
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  let rulesCalls = 0;
+  let interpretationCalls = 0;
+  const answer = await answerCommunityQuestion("Who handles questions about my monthly water charge?", {
+    index,
+    communityId: "alpha",
+    interpretationMode: "structured",
+    planCommunitySearch: async () => {
+      interpretationCalls += 1;
+      return {
+        intent: "services",
+        goal: "contact",
+        goals: ["contact"],
+        subject: "water billing",
+        requestedDetails: ["contact"],
+        dateRange: null,
+        filters: {},
+        searchQueries: ["water billing contact"],
+        scope: "community",
+        needsClarification: false,
+        clarificationQuestion: "",
+      };
+    },
+    answerRulesQuestion: async () => {
+      rulesCalls += 1;
+      throw new Error("non-rules contact questions must not reach the rules engine");
+    },
+    synthesizeCommunityAnswer: async () => {
+      throw new Error("exact structured contacts must not need a second AI call");
+    },
+  });
+
+  assert.equal(interpretationCalls, 1);
+  assert.equal(rulesCalls, 0);
+  assert.equal(answer.answerMode, "community-source-extractive");
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });
@@ -697,4 +769,76 @@ test("an exact facility page outranks a contradictory generic rulebook answer fo
   assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is);
   assert.equal(result.actions[0].url, "https://alpha.gov/courtreserve");
   assert.equal(result.sources[0].sourceUrl, "https://alpha.gov/418/Pickleball-Courts");
+});
+test("static page indexing excludes the rotating CivicPlus calendar widget", () => {
+  const html = `<main data-cpRole="mainContentContainer"><h1>Resident information</h1><p>Static official guidance stays indexed.</p><div data-widget-id="calendar" data-widget-controller-path="/Calendar/Widget"><div id="widgetCalendar"><li data-event-i-d="123"><a href="/Calendar.aspx?EID=123">Tomorrow's changing event</a></li><div class="addItemModal hidden"><div class="url hidden">/Calendar.aspx</div></div></div></div></div><p>Static contact information also stays indexed.</p></main>`;
+  const cleaned = contentHtml(html);
+  assert.match(cleaned, /Static official guidance stays indexed/);
+  assert.match(cleaned, /Static contact information also stays indexed/);
+  assert.doesNotMatch(cleaned, /changing event|Calendar\.aspx\?EID/);
+});
+
+test("background refreshes accept changing official events without approving static source changes", () => {
+  const oldEvent = source({ id: "event-old", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "old-event" });
+  const newEvent = source({ id: "event-new", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "new-event" });
+  const trusted = { communityId: "alpha", generatedAt: "2026-08-25T00:00:00.000Z", failureCount: 0, failures: [], sources: [source(), oldEvent] };
+  const candidate = { ...trusted, generatedAt: "2026-08-26T00:00:00.000Z", sources: [source({ checkedAt: "2026-08-26T00:00:00.000Z" }), newEvent] };
+  const safe = reconcileCommunityIndex(trusted, candidate);
+  assert.equal(safe.pendingReview, null);
+  assert.deepEqual(safe.index.sources.map((item) => item.id), ["alpha-rentals", "event-new"]);
+
+  const staticChange = { ...candidate, sources: [source({ contentHash: "changed" }), newEvent] };
+  const held = reconcileCommunityIndex(trusted, staticChange);
+  assert.deepEqual(held.pendingReview.changedSourceIds, ["alpha-rentals"]);
+  assert.ok(held.index.sources.some((item) => item.id === "event-new"));
+  assert.ok(!held.index.sources.some((item) => item.id === "event-old"));
+});
+
+test("background refreshes keep the reviewed release fingerprint stable when live events rotate", () => {
+  const oldEvent = source({ id: "event-old", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "old-event" });
+  const newEvent = source({ id: "event-new", sourceType: "events", connectorType: "civicplus-calendar", contentHash: "new-event" });
+  const trusted = {
+    communityId: "alpha",
+    generatedAt: "2026-08-25T00:00:00.000Z",
+    promotedAt: "2026-08-25T00:01:00.000Z",
+    releaseFingerprint: "reviewed-release",
+    failureCount: 0,
+    failures: [],
+    sources: [source(), oldEvent],
+  };
+  const candidate = {
+    ...trusted,
+    generatedAt: "2026-08-26T00:00:00.000Z",
+    releaseFingerprint: undefined,
+    sources: [source({ checkedAt: "2026-08-26T00:00:00.000Z" }), newEvent],
+  };
+
+  const refreshed = reconcileCommunityIndex(trusted, candidate);
+  assert.equal(refreshed.pendingReview, null);
+  assert.equal(refreshed.index.releaseFingerprint, "reviewed-release");
+  assert.equal(communitySourceStatus(refreshed.index).activeFingerprint, "reviewed-release");
+  assert.ok(refreshed.index.sources.some((item) => item.id === "event-new"));
+});
+
+test("source freshness tracks retrieved evidence but not connector or action pointers", () => {
+  const expired = "2026-08-01T00:00:00.000Z";
+  const now = Date.parse("2026-09-02T12:00:00.000Z");
+  const index = {
+    communityId: "alpha",
+    generatedAt: expired,
+    failureCount: 0,
+    sources: [
+      source({ id: "alpha-connector-facility-rentals", connectorType: "civicrec", staleAfter: expired }),
+      source({ id: "alpha-action-booking", connectorType: "official-action", staleAfter: expired }),
+      source({ id: "alpha-current-page", connectorType: "civicplus-pages", staleAfter: future }),
+    ],
+  };
+  const healthy = communitySourceStatus(index, now);
+  assert.equal(healthy.stale, false);
+  assert.equal(healthy.staleSourceCount, 0);
+
+  index.sources[2].staleAfter = expired;
+  const stale = communitySourceStatus(index, now);
+  assert.equal(stale.stale, true);
+  assert.equal(stale.staleSourceCount, 1);
 });

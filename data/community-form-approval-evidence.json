@@ -1,0 +1,34 @@
+{
+  "reviewedAt": "2026-09-06T18:47:12.016Z",
+  "reviewer": "Marissa",
+  "scope": "staging only",
+  "reviews": [
+    {
+      "documentId": 1574,
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/1574/Attachment-A-3-General-Arch-Improvement-2026",
+      "hashes": [
+        "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61"
+      ],
+      "reviewedAt": "2026-09-06T18:47:12.016Z",
+      "reviewedBy": "Marissa",
+      "scope": "staging sources only"
+    },
+    {
+      "documentId": 1964,
+      "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026",
+      "hashes": [
+        "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6",
+        "3f788b598cea9644333e5941754e55845ae83631745e018997eead7c6d4c8374",
+        "746f08bb6205dcd2a714c44aba22605a1e11f87636b7a57cd0514e194e9ac9b2",
+        "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00"
+      ],
+      "reviewedAt": "2026-09-06T18:47:12.016Z",
+      "reviewedBy": "Marissa",
+      "scope": "staging sources only"
+    }
+  ],
+  "listing": {
+    "id": "sterling-ranch-documents-applications-and-forms-1",
+    "hash": "09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b"
+  }
+}

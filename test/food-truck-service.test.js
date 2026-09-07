@@ -73,7 +73,8 @@ test("both public APIs are wired to the same extracted food-truck service", () =
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
   assert.match(server, /createFoodTruckService\(\{/);
   assert.match(server, /sendJson\(res, 200, await getAnswerForDate\(question, targetDate\)\)/);
-  assert.match(server, /getFoodTruckAnswer:\s*async[^=]*=>\s*getAnswerForDate/);
+  assert.match(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getAnswerForDate/);
+  assert.match(server, /dateFromInterpretation/);
   assert.doesNotMatch(server, /async function getAnswerForDate/);
 });
 

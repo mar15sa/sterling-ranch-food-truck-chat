@@ -42,6 +42,7 @@ const communityPromotion = document.querySelector("#communityPromotion");
 const communityFingerprint = document.querySelector("#communityFingerprint");
 const communityCandidateFingerprint = document.querySelector("#communityCandidateFingerprint");
 const sourceHealthCaptured = document.querySelector("#sourceHealthCaptured");
+const staleSourceList = document.querySelector("#staleSourceList");
 
 let refreshTimer = null;
 let searchTimer = null;
@@ -50,6 +51,7 @@ let items = [];
 const expandedQuestionIds = new Set();
 
 function showLogin(message = "") {
+  staleSourceList.replaceChildren();
   loginPanel.hidden = false;
   dashboard.hidden = true;
   loginMessage.textContent = message;
@@ -89,9 +91,33 @@ function formatDateTime(value) {
   }).format(date);
 }
 
+function renderStaleSources(sources) {
+  staleSourceList.replaceChildren();
+  if (!Array.isArray(sources) || !sources.length) {
+    const message = document.createElement("p");
+    message.textContent = Array.isArray(sources) ? "No approved sources are overdue." : "Record details are not available.";
+    staleSourceList.append(message);
+    return;
+  }
+  for (const source of sources) {
+    const record = document.createElement("dl");
+    for (const [label, key] of [["Record ID", "id"], ["Official source URL", "sourceUrl"], ["Stored content hash", "contentHash"], ["Last checked (UTC)", "checkedAt"], ["Freshness deadline (UTC)", "staleAfter"]]) {
+      const row = document.createElement("div");
+      const name = document.createElement("dt");
+      const value = document.createElement("dd");
+      name.textContent = label;
+      value.textContent = source[key] || "Not available";
+      row.append(name, value);
+      record.append(row);
+    }
+    staleSourceList.append(record);
+  }
+}
+
 function renderSourceHealth(sourceHealth = {}) {
   const rules = sourceHealth.rules || {};
   const community = sourceHealth.community || {};
+  renderStaleSources(community.staleSources);
   const pendingReview = community.pendingReview || null;
   const hasError = !rules.exists || Boolean(community.lastRefreshError) || Number(community.failureCount || 0) > 0;
   const isWorking = Boolean(rules.refreshing || community.refreshing);
@@ -343,10 +369,14 @@ async function loadSourceHealth() {
   try {
     const response = await fetch("/api/community-source-health");
     const data = await response.json();
-    if (response.status === 401) return;
+    if (response.status === 401) {
+      staleSourceList.replaceChildren();
+      return;
+    }
     if (!response.ok) throw new Error(data.error || "Could not load source health.");
     renderSourceHealth(data);
   } catch {
+    renderStaleSources(undefined);
     sourceHealthState.textContent = "Unavailable";
     sourceHealthState.dataset.state = "error";
   }

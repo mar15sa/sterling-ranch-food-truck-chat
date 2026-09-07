@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-06T10:30:00-06:00",
+  "updatedAt": "2026-09-07T08:15:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2855,10 +2855,10 @@
       "community": "Littleton",
       "area": "Alkire Street",
       "address": "5869 South Alkire Street, Suite B, Littleton, CO 80127",
-      "status": "opening-soon",
-      "openingWindow": "Opening August 31, 2026",
-      "summary": "The steakhouse plans to open August 31 with an in-house butcher shop, dry-aged beef, a full bar, and dinner service.",
-      "verifiedAt": "2026-08-30",
+      "status": "open",
+      "openingWindow": "Opened August 31, 2026",
+      "summary": "The steakhouse is open with an in-house butcher shop, dry-aged beef, a full bar, and nightly dinner service.",
+      "verifiedAt": "2026-09-07",
       "confidence": "business-confirmed",
       "sources": [
         {

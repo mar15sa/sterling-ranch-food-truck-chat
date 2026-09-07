@@ -33,6 +33,7 @@
   document.title = "[STAGING] " + document.title;
   document.addEventListener("DOMContentLoaded", function () {
     var banner = document.createElement("div");
+    banner.className = 'staging-environment-banner';
     banner.setAttribute("role", "status");
     banner.textContent = "STAGING — TEST SITE — CHANGES HERE ARE NOT LIVE";
     Object.assign(banner.style, {
@@ -50,6 +51,9 @@
       letterSpacing: "0.04em",
       pointerEvents: "none",
     });
-    document.body.appendChild(banner);
+    var mobileStyle = document.createElement('style');
+    mobileStyle.textContent = '@media(max-width:600px){.staging-environment-banner{position:static!important;border-radius:0!important;text-align:center;flex-shrink:0;box-shadow:none!important;padding:7px 10px!important}}';
+    document.head.appendChild(mobileStyle);
+    document.body.prepend(banner);
   });
 })();
