@@ -1002,6 +1002,26 @@ test('official redirects preserve excluded-route coverage and conditional refres
  assert.ok(!second.inventory.exclusions.some(e=>e.url===mobile));
 });
 
+test('directory ingestion separates people while detecting a changed contact for one person',async()=>{
+ const row=(id,name,email)=>`<li class="list-group-item"><a href="/m/directory/employee?eid=${id}">${name}</a><div>Community Manager</div><a href="mailto:${email}">Email ${name}</a></li>`;
+ const make=async html=>crawlCommunity(profile({connectors:[{id:'site',type:'civicplus-pages',baseUrl:'https://alpha.gov/Directory.aspx'}]}),{
+  maxPages:1,discoverSitemap:false,lookup:async()=>[{address:'203.0.113.10',family:4}],fetchImpl:async()=>new Response(`<main><h1>Staff Directory</h1><ul>${html}</ul></main>`,{headers:{'content-type':'text/html'}})
+ });
+ const first=await make(row(1,'Person One','one@alpha.gov')+row(2,'Person Two','two@alpha.gov'));
+ assert.equal(first.sources.length,2);
+ assert.equal(new Set(first.sources.map(s=>s.subjectKey)).size,2);
+ assert.ok(first.sources.every(s=>/Community Manager/.test(s.text)));
+ assert.equal(first.pages[0].chunkContentHashes.length,2);
+ assert.equal(first.inventory.pendingCount,0);
+ const {resolveFactLedger}=require('../lib/community-truth');
+ assert.equal(resolveFactLedger(first.factLedger,profile()).unresolved.length,0);
+ const changed=await make(row(1,'Person One','changed@alpha.gov')+row(2,'Person Two','two@alpha.gov'));
+ const conflict=resolveFactLedger([...first.factLedger,...changed.factLedger],profile()).unresolved;
+ assert.equal(conflict.length,1);
+ assert.match(conflict[0].claimKey,/directory-person-1/);
+ assert.ok(changed.factLedger.every(f=>f.reviewStatus==='candidate'));
+});
+
 test("chunk deduplication preserves verifiable coverage for every collected page", async()=>{
  const other='https://alpha.gov/other';
  const a='Official resident information '+ 'alpha '.repeat(230)+'.';
