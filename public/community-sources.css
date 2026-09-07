@@ -1,4 +1,5 @@
 .source-list { display: grid; gap: 18px; }
+.source-card, .comparison section, .evidence { min-width: 0; overflow-wrap: anywhere; }
 .source-card { background: #fff; border: 1px solid #dedbd1; border-radius: 16px; padding: 22px; box-shadow: 0 8px 24px rgba(32, 57, 47, .07); }
 .source-card header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
 .source-card h2 { margin: 4px 0 8px; font-size: 1.35rem; }

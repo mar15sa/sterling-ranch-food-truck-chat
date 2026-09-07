@@ -100,6 +100,7 @@ function reviewCard(item) {
     const actions = document.createElement("div"); actions.className = "decision-actions";
     const choices = [["Approve proposed", "approve-proposed", ""], ["Keep current", "keep-current", "secondary"], ["Mark superseded", "mark-current-superseded", "warning"], ["Exclude page", "exclude-page", "secondary"], ["Ask CAB", "escalate", "secondary"]];
     const status = textElement("p", "", "decision-status");
+    status.textContent = "";
     let saving = false;
     const buttons = [];
     choices.forEach(([label, value, className]) => {
