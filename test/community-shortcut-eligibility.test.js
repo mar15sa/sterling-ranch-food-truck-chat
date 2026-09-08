@@ -77,6 +77,61 @@ test("the exact Labor Day pool-hours question bypasses current-status data and r
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
 });
 
+test("a confident rental fallback cannot replace pool hours after live status is rejected", async () => {
+  let poolCalls = 0;
+  let rulesCalls = 0;
+  const routingPlan = plan({
+    intent: "status",
+    goal: "schedule",
+    subject: "pool operating hours on Labor Day",
+    requestedDetails: ["hours", "date"],
+    dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" },
+    filters: { audience: "", category: "", facility: "pool", location: "" },
+    searchQueries: ["pool hours Labor Day", "Overlook Outdoor Pool hours"],
+  });
+  const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
+    interpretationMode: "structured",
+    now: NOW,
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    planCommunitySearch: async () => routingPlan,
+    synthesizeCommunityAnswer: false,
+    getPoolStatus: async () => {
+      poolCalls += 1;
+      return { headline: "Green", summary: "The pool is currently open.", residentAction: "Come swim.", sourceUrl: "https://sterlingranchcab.com/pool", checkedAt: NOW.toISOString() };
+    },
+    answerRulesQuestion: async () => {
+      rulesCalls += 1;
+      return {
+        answer: "Short answer: To reserve an Overlook space, use the rental catalog.\n\nWhat I found:\n- The Great Hall is $100 per hour.\n- A security deposit applies.",
+        directAnswer: "To reserve an Overlook space, use the rental catalog.",
+        keyDetails: ["The Great Hall is $100 per hour.", "A security deposit applies."],
+        answerMode: "source-derived-structured",
+        answerStatus: "verified",
+        confidence: { canAnswer: true, confidence: "high", reason: "supported" },
+        actions: [{ label: "Open rental catalog", url: "https://sterlingranchcab.com/rentals" }],
+        sources: [
+          { title: "Community facility rental fees", sourceUrl: "https://sterlingranchcab.com/rental-fees" },
+          { title: "Specific facility rental rules", sourceUrl: "https://sterlingranchcab.com/rental-rules" },
+          { title: "Overlook Outdoor Pool", sourceUrl: "https://sterlingranchcab.com/412/Overlook-Outdoor-Pool" },
+        ],
+      };
+    },
+  });
+  assert.equal(poolCalls, 0);
+  assert.equal(rulesCalls, 1);
+  assert.notEqual(answer.answerMode, "source-derived-structured");
+  assert.doesNotMatch(answer.answer, /reserve an Overlook space|security deposit/i);
+  assert.match(answer.answer, /5:00 am/i);
+  assert.match(answer.answer, /9:00 am/i);
+  assert.match(answer.answer, /8:45 pm/i);
+  assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) =>
+    item.connector === "grounded-fallback"
+      && item.reasons.includes("requested-hours-missing")
+      && item.reasons.includes("date-range-not-covered")
+  ));
+});
+
 test("a current pool-status question still uses the live status connector", async () => {
   let poolCalls = 0;
   const answer = await answerCommunityQuestion("Is the pool open right now?", {
