@@ -33,12 +33,24 @@ function canonical(value) {
   return canonicalPageUrl(value);
 }
 
-async function observeCanonicalSource(sourceUrl, approvedSources, { fetchImpl = globalThis.fetch } = {}) {
+async function observeCanonicalSource(sourceUrl, approvedSources, { fetchImpl = globalThis.fetch, extractPdfTextImpl = extractPdfText } = {}) {
   if (!approvedSources.length) throw new Error("No approved evidence was found for the due URL.");
   const expectedUrl = canonical(sourceUrl);
   let text;
   let observedActions = [];
-  if (isDocumentUrl(sourceUrl)) text = await extractPdfText(sourceUrl);
+  if (isDocumentUrl(sourceUrl)) {
+    const requests = [];
+    const trackedFetch = async (requestedUrl, options) => {
+      const requested = String(requestedUrl);
+      requests.push(requested);
+      if (new URL(requested).origin !== new URL(sourceUrl).origin) throw new Error("Document redirected outside the official website.");
+      return fetchImpl(requested, options);
+    };
+    text = await extractPdfTextImpl(sourceUrl, { fetchImpl: trackedFetch });
+    const finalRequest = requests.at(-1);
+    if (!finalRequest) throw new Error("PDF extraction did not fetch the canonical document.");
+    if (canonical(finalRequest) !== expectedUrl) throw new Error("Canonical URL changed during PDF revalidation.");
+  }
   else {
     const response = await fetchImpl(sourceUrl, { redirect: "follow", signal: AbortSignal.timeout(30_000), headers: { "user-agent": "Sterling Ranch approved-evidence verifier" } });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);

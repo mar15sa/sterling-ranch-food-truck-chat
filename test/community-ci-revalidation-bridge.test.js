@@ -79,3 +79,29 @@ test("a changed approved fingerprint is an explicit bridge failure", async () =>
   assert.equal(result.valid, false);
   assert.match(result.attestation.gateErrors.join(" "), /fingerprint changed/);
 });
+
+test("PDF proof accepts the same canonical document and rejects a same-origin redirect to another document", async () => {
+  const pdfUrl = "https://alpha.gov/DocumentCenter/View/100";
+  const source = { ...index().sources[0], id: "pdf-rules", sourceUrl: pdfUrl, connectorType: "official-pdf", actions: [], contentHash: "pdf-proof" };
+  const extractText = async (url, { fetchImpl }) => {
+    let response = await fetchImpl(url, { redirect: "manual" });
+    if (response.status >= 300 && response.status < 400) response = await fetchImpl(new globalThis.URL(response.headers.get("location"), url).href, { redirect: "manual" });
+    assert.equal(response.ok, true);
+    return "approved PDF text";
+  };
+  const same = await observeCanonicalSource(pdfUrl, [source], {
+    extractPdfTextImpl: extractText,
+    fetchImpl: async () => ({ ok: true, status: 200, headers: new Headers() }),
+  });
+  assert.deepEqual(same.observedHashes, [require("node:crypto").createHash("sha256").update("approved PDF text").digest("hex")]);
+  assert.equal(same.actionMismatch, false);
+  await assert.rejects(
+    observeCanonicalSource(pdfUrl, [source], {
+      extractPdfTextImpl: extractText,
+      fetchImpl: async (url) => String(url).endsWith("/100")
+        ? { ok: false, status: 302, headers: new Headers({ location: "/DocumentCenter/View/101" }) }
+        : { ok: true, status: 200, headers: new Headers() },
+    }),
+    /Canonical URL changed during PDF revalidation/,
+  );
+});
