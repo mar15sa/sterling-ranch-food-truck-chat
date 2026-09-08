@@ -6,6 +6,7 @@ const {
   createSessionToken,
   expiredSessionCookie,
   isAuthorizedRequest,
+  isSameOriginRequest,
   parseCookies,
   safeEqual,
   sessionCookie,
@@ -54,4 +55,11 @@ test("login limiter blocks repeated failures and clears after success", () => {
   assert.equal(limiter.check("owner", 1003).allowed, false);
   limiter.clear("owner");
   assert.equal(limiter.check("owner", 1004).allowed, true);
+});
+
+test("source review writes require an exact same-origin request", () => {
+  const request = { headers: { origin: "https://assistant.example", host: "assistant.example", "x-forwarded-proto": "https" } };
+  assert.equal(isSameOriginRequest(request), true);
+  assert.equal(isSameOriginRequest({ ...request, headers: { ...request.headers, origin: "https://evil.example" } }), false);
+  assert.equal(isSameOriginRequest({ headers: { host: "assistant.example" } }), false);
 });

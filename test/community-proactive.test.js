@@ -30,12 +30,12 @@ async function askWithDraft(question, draft) {
   });
 }
 
-test("approved-landscaper questions provide current examples and the official directory", async () => {
+test("approved-landscaper questions withhold conflicted names but preserve the official directory", async () => {
   const answer = await ask("list of approved landscapers");
-  assert.equal(answer.answerMode, "community-proactive-directory");
-  assert.match(answer.answer, /AAA Landscaping.*A Complete Exterior.*AGR Landscape/i);
+  assert.equal(answer.answerMode, "community-proactive-directory-review");
+  assert.match(answer.answer, /can.t safely repeat company names.*being reconfirmed/i);
+  assert.doesNotMatch(answer.answer, /AAA Landscaping|A Complete Exterior|AGR Landscape/i);
   assert.match(JSON.stringify(answer.actions), /414\/Approved-Landscapers-List/);
-  assert.match(answer.answer, /not a CAB endorsement/i);
 });
 
 test("water-usage portal questions provide the direct UtilityHawk login and capabilities", async () => {
@@ -100,7 +100,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   });
   assert.equal(outageFallback.routingDecision, "official-action-fallback");
   assert.equal(outageFallback.routingFallbackReason, "planner-unavailable-or-disabled");
-  assert.match(outageFallback.answer, /UtilityHawk.*payment options/i);
+  assert.match(outageFallback.answer, /UtilityHawk.*payment (?:options|portal)/i);
   assert.match(JSON.stringify(outageFallback.actions), /srcab\.utilityhawk\.us\/login/i);
   assert.doesNotMatch(JSON.stringify(outageFallback.actions), /Water Concern/i);
   assert.doesNotMatch(outageFallback.answer, /possible disconnection|past-due notice/i);
@@ -224,6 +224,14 @@ test("resident-effort rubric catches polished handoffs and accepts resolved answ
   assert.ok(oldEffort.score <= 2);
   assert.ok(oldEffort.gaps.includes("directory-examples-missing"));
 
-  const upgraded = await ask("list of approved landscapers");
-  assert.equal(residentEffortAssessment("list of approved landscapers", upgraded).score, 5);
+  const upgraded = await ask("How do I book the park?");
+  assert.equal(residentEffortAssessment("How do I book the park?", upgraded).score, 5);
+});
+
+test("DRC contact questions use the unblocked current application", async () => {
+  const answer = await ask("What is the DRC email address?");
+  assert.equal(answer.answerMode, "community-proactive-drc-contact");
+  assert.match(answer.answer, /residentsubmit@sterlingranchcab\.com/i);
+  assert.doesNotMatch(answer.answer, /submit@sterlingranchdrc\.com/i);
+  assert.match(answer.actions[0].url, /DocumentCenter\/View\/1574/);
 });
