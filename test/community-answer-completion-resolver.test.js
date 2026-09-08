@@ -164,6 +164,11 @@ test("pool status alone and dated Labor Day hours remain verified", async () => 
   });
   assert.equal(status.answerStatus, "verified");
   assert.match(status.directAnswer, /currently open/i);
+  assert.deepEqual(status.completion.requestedDetails, ["status"]);
+  assert.deepEqual(status.completion.resolvedDetails, ["status"]);
+  assert.deepEqual(status.completion.missingDetails, []);
+  assert.equal(status.sources[0].connectorType, "live-status");
+  assert.equal(status.sources[0].sourceType, "status");
 
   const holidayHours = await answerCommunityQuestion("What are the pool hours for Labor Day?", {
     interpretationMode: "structured",
