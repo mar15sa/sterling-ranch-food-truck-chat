@@ -1,28 +1,12 @@
 # Douglas County openings radar
 
-Scan completed: 2026-09-07T14:02:21.405Z
+Scan completed: 2026-09-08T14:12:38.453Z
 Sources tracked: 54
 Automatically checked: 38
 Manual research lookups: 16
-Changed: 2
-Errors: 1
+Changed: 0
+Errors: 0
 New structured leads: 0
-
-## Changed: Aspen Grove tenant directory
-
-https://aspengrovecenter.com/shop/
-
-The page changed, but the text filter did not isolate a new business signal. Review the page manually.
-
-## Changed: Outlets at Castle Rock store directory
-
-https://www.outletsatcastlerock.com/
-
-The page changed, but the text filter did not isolate a new business signal. Review the page manually.
-
-## Sources needing attention
-
-- Castle Rock Chamber ribbon cuttings: The operation was aborted due to timeout
 
 ## Review rule
 
