@@ -3,6 +3,7 @@ const test = require("node:test");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { resolveAnswerCompletion } = require("../lib/community-completion");
 const { buildAnswerContract } = require("../lib/community-contracts");
+const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
 
 const TEST_NOW = new Date("2026-09-08T18:00:00Z");
@@ -227,6 +228,58 @@ test("held-out shed permission and fee variants preserve the rule and expose the
     assert.match(answer.answer, /could not verify the current fee or price/i, question);
     assert.ok(answer.completion.nextBestMove.url, question);
   }
+});
+
+test("authoritative conditional rule answers resolve the permission facet across wording variants", async () => {
+  const questions = [
+    "Do I need permission to change my backyard fencing?",
+    "Does changing a fence in my backyard require approval?",
+    "Are basketball hoops allowed?",
+    "May I put a basketball hoop by my driveway?",
+  ];
+  for (const question of questions) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+        ...options,
+        searchMode: "legacy",
+        llmMode: "off",
+      }),
+    });
+    assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim", question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.answerVerdict, "conditional", question);
+    assert.equal(answer.completion.outcome, "complete", question);
+    assert.deepEqual(answer.completion.requestedDetails, ["permission"], question);
+    assert.deepEqual(answer.completion.resolvedDetails, ["permission"], question);
+    assert.deepEqual(answer.completion.missingDetails, [], question);
+    assert.equal(answer.qualityChecks.requestedFacetCoverage, true, question);
+    assert.doesNotMatch(answer.qualityChecks.issues.join(" "), /direct-permission-answer-missing/, question);
+    assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+  }
+});
+
+test("a conditional verdict without a controlling rule source cannot resolve permission", async () => {
+  const answer = await answerCommunityQuestion("Is a patio change allowed?", {
+    planCommunitySearch: false,
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: Approval is required.",
+      answerVerdict: "conditional",
+      answerMode: "source-derived-structured",
+      confidence: { canAnswer: true, confidence: "high", reason: "claimed-rule" },
+      controllingSourceOnly: true,
+      sources: [{ title: "General facility page", sourceUrl: "https://sterlingranchcab.com/facilities", sourceType: "facilities" }],
+      qualityChecks: { requestedFacetCoverage: false, issues: ["direct-permission-answer-missing"] },
+    }),
+  });
+  assert.notEqual(answer.answerStatus, "verified");
+  assert.equal(answer.completion.outcome, "missing-evidence");
+  assert.deepEqual(answer.completion.resolvedDetails, []);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["permission"]);
 });
 
 test("single-facet verified families remain complete", () => {
