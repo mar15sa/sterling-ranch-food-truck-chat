@@ -2,10 +2,10 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { fingerprint } = require('../lib/community-release');
 const { canonicalPageUrl } = require('../lib/community-ingest');
-const { isDynamicSource } = require('../lib/community-source-identity');
+const { isDynamicSource, isFreshnessTrackedSource } = require('../lib/community-source-identity');
 const { buildReviewItems } = require('../lib/community-source-review');
 const { sourceReviewGate } = require('../lib/community-source-answerability');
-const { isFreshnessTrackedSource } = require('../lib/community-source-manager');
+const { calculateConfidence } = require('../lib/community-contracts');
 
 test('static event education and meeting documents retain fingerprints and review requirements', () => {
   for (const sourceUrl of ['https://sterlingranchcab.com/372/Energy-Crash-Course-Education-Program',
@@ -36,6 +36,18 @@ test('live calendar changes do not alter the approved static fingerprint', () =>
   const live = { id:'event', contentHash:'today', connectorType:'civicplus-calendar' };
   assert.equal(fingerprint({sources:[staticSource,live]}), fingerprint({sources:[staticSource,{...live,contentHash:'tomorrow'}]}));
   assert.notEqual(fingerprint({sources:[staticSource]}), fingerprint({sources:[{...staticSource,contentHash:'two'}]}));
+});
+test('routing pointers never make a verified factual answer look stale', () => {
+  const expired = '2020-01-01T00:00:00.000Z';
+  const future = '2099-01-01T00:00:00.000Z';
+  const civicrec = { id: 'alpha-connector-facility-rentals', connectorType: 'civicrec', staleAfter: expired };
+  const action = { id: 'alpha-action-booking', connectorType: 'official-action', staleAfter: expired };
+  const page = { id: 'alpha-facility-page', connectorType: 'civicplus-pages', staleAfter: future };
+  assert.equal(isFreshnessTrackedSource(civicrec), false);
+  assert.equal(isFreshnessTrackedSource(action), false);
+  assert.equal(isFreshnessTrackedSource(page), true);
+  assert.equal(calculateConfidence({ sources: [civicrec, action, page] }).reason, 'official-source-supported');
+  assert.equal(calculateConfidence({ sources: [civicrec, { ...page, staleAfter: expired }] }).reason, 'source-stale');
 });
 test('FAQ categories stay distinct while tracking parameters are removed', () => {
   assert.notEqual(canonicalPageUrl('https://example.gov/m/faq?cat=16'),canonicalPageUrl('https://example.gov/m/faq?cat=21'));

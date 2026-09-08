@@ -140,8 +140,8 @@ test("park and clubhouse rentals give prices, terms, and a live booking path", a
 
   const clubhouse = await ask("Can I rent the clubhouse?");
   assert.match(clubhouse.directAnswer, /^Yes\b/i);
-  assert.match(clubhouse.answer, /\$200 minimum rental.*\$250 refundable security deposit/i);
-  assert.match(clubhouse.answer, /pavilions.*\$25 per hour/i);
+  assert.match(clubhouse.answer, /separate rentable spaces and conditions/i);
+  assert.doesNotMatch(clubhouse.answer, /\$100|\$25|\$200|\$250/i);
 
   const overlook = await ask("How do I reserve an Overlook space?");
   assert.equal(overlook.answerVerdict, "informational");
@@ -149,13 +149,13 @@ test("park and clubhouse rentals give prices, terms, and a live booking path", a
   assert.match(overlook.directAnswer, /open the live rental catalog.*choose.*select/i);
 
   const cost = await ask("How much does the Overlook Great Hall cost?");
-  assert.match(cost.directAnswer, /\$100 per hour.*\$200 minimum.*\$250 refundable/i);
+  assert.match(cost.directAnswer, /\$100(?:\.00)? per hour.*\$200 minimum.*\$250 refundable/i);
 });
 
 test("verified proactive facts can be AI-composed around the resident's actual question", async () => {
   const tailored = await askWithDraft("How do I reserve an Overlook space?", {
     directAnswer: "Open the live rental catalog, choose the Overlook space you want, and select an available date and time.",
-    keyDetails: ["The Great Hall is $100 per hour with a two-hour minimum ($200 minimum rental)."],
+    keyDetails: ["The official facility page lists separate rentable spaces and conditions."],
     nextStep: "Use the live rental catalog to start the reservation.",
   });
   assert.equal(tailored.answerMode, "community-proactive-grounded-ai");
