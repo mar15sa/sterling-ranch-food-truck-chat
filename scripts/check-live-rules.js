@@ -228,15 +228,24 @@ async function main() {
           routingSynthesisFallbacks: health.communityAnswers.routingSynthesisFallbacks,
           routingGoalDrifts: health.communityAnswers.routingGoalDrifts,
           lastRoutingGoalDriftAt: health.communityAnswers.lastRoutingGoalDriftAt,
+          routingContractFailures: health.communityAnswers.routingContractFailures,
+          lastRoutingContractFailureAt: health.communityAnswers.lastRoutingContractFailureAt,
         } : undefined,
       })}`);
       const lastRoutingDriftAt = Date.parse(health.communityAnswers?.lastRoutingGoalDriftAt || "");
-      if ((health.communityAnswers?.routingGoalDrifts || 0) > 0
+      const lastRoutingContractFailureAt = Date.parse(health.communityAnswers?.lastRoutingContractFailureAt || "");
+      if (((health.communityAnswers?.routingGoalDrifts || 0) > 0
         && Number.isFinite(lastRoutingDriftAt)
-        && Date.now() - lastRoutingDriftAt <= 24 * 60 * 60 * 1000) {
+        && Date.now() - lastRoutingDriftAt <= 24 * 60 * 60 * 1000)
+        || ((health.communityAnswers?.routingContractFailures || 0) > 0
+          && Number.isFinite(lastRoutingContractFailureAt)
+          && Date.now() - lastRoutingContractFailureAt <= 24 * 60 * 60 * 1000)) {
         failures.push({
           question: "AI routing consistency",
-          issues: [`${health.communityAnswers.routingGoalDrifts} anonymized repeated-question routing drift event(s) detected.`],
+          issues: [
+            `${health.communityAnswers.routingGoalDrifts || 0} anonymized repeated-question routing drift event(s) detected.`,
+            `${health.communityAnswers.routingContractFailures || 0} supported live-service routing contract failure(s) detected.`,
+          ],
         });
       }
       if ((health.openings?.errors || 0) > 0) {

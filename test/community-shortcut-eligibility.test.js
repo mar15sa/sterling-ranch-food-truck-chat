@@ -1,6 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { answerCommunityQuestion, datedFacilityHoursAnswer, sourcedAnswer } = require("../lib/community-assistant");
 const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { shortcutEligibility } = require("../lib/community-shortcut-eligibility");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
@@ -14,6 +14,68 @@ const REPORTED_QUESTION = "What are the pool hours for Labor Day?";
 test("the reported website-source question belongs only to the Community Assistant evaluation", () => {
   assert.ok(communityEvalCases.some((item) => item.question === REPORTED_QUESTION));
   assert.ok(!rulesEvalCases.some((item) => item.question === REPORTED_QUESTION));
+});
+
+test("supported live-service plans cannot be discarded by an unrelated scope label", async () => {
+  const cases = [
+    ["Which food truck is here tomorrow?", plan({
+      // Exact production route: correct subject/goal/date but mistaken scope
+      // and status intent.
+      scope: "unrelated", intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck", requestedDetails: ["date"],
+      dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
+    })],
+    ["Who is the food truck tomorrow?", plan({
+      scope: "unrelated", intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck schedule", requestedDetails: ["date"],
+      dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
+    })],
+  ];
+  for (const [question, routingPlan] of cases) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch",
+      planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
+      getFoodTruckAnswer: async () => ({ date: "2026-09-02", friendlyDate: "Wednesday, September 2, 2026", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx" }),
+      answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),
+    });
+    assert.equal(answer.answerMode, "community-live-food-truck", question);
+    assert.match(answer.directAnswer, /Example Eats/, question);
+    assert.equal(answer.routingPlan.scope, "community", question);
+    assert.equal(answer.routingPlan.intent, "events", question);
+  }
+});
+
+test("trash holiday schedules use the live Waste Connections path without taking over storage rules", async () => {
+  const liveSchedule = async () => ({
+    service: "garbage", date: "2026-09-08", range: { start: "2026-09-07", end: "2026-09-07" }, timing: "this week", anchorDate: "2026-09-08",
+    villageDates: [{ village: "Providence Village", date: "2026-09-08" }, { village: "Ascent Village", date: "2026-09-09" }, { village: "Prospect Village", date: "2026-09-11" }],
+    holidayNote: "Labor Day: Collection may be delayed.", checkedAt: NOW.toISOString(), sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+  });
+  for (const question of ["Is there trash pickup on Labor Day?", "Is trash pickup delayed for Labor Day?", "What is the garbage collection schedule for Labor Day?"]) {
+    const delayedStatus = question === "Is trash pickup delayed for Labor Day?";
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({
+        // The delayed-pickup case is the exact production status/status
+        // route; the other phrasings preserve the ordinary schedule route.
+        intent: delayedStatus ? "status" : "services", goal: delayedStatus ? "status" : "schedule", goals: [delayedStatus ? "status" : "schedule"], subject: "trash pickup Labor Day", requestedDetails: [delayedStatus ? "status" : "date"],
+        dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["trash pickup Labor Day"],
+      }),
+      getWasteSchedule: liveSchedule,
+    });
+    assert.equal(answer.answerMode, "community-live-trash", question);
+    assert.match(answer.answer, /Labor Day|September 8/i, question);
+    assert.doesNotMatch(answer.answer, /screened|garage/i, question);
+    assert.equal(answer.routingPlan.intent, "services", question);
+    assert.equal(answer.routingPlan.goal, delayedStatus ? "status" : "schedule", question);
+  }
+  let calls = 0;
+  const storage = await answerCommunityQuestion("Do trash cans need to be screened?", {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => plan({ intent: "rules", goal: "information", goals: ["information"], subject: "trash can storage rules", requestedDetails: ["permission"], searchQueries: ["trash can screening rules"] }),
+    getWasteSchedule: async () => { calls += 1; throw new Error("must not run"); }, answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(calls, 0);
+  assert.doesNotMatch(storage.answerMode, /community-live-trash/);
 });
 
 function plan(overrides = {}) {
@@ -75,6 +137,58 @@ test("the exact Labor Day pool-hours question bypasses current-status data and r
   assert.match(answer.answer, /9:00 am/i);
   assert.match(answer.answer, /8:45 pm/i);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
+});
+
+test("dated facility hours reject a supported weekend AI answer for a Monday holiday", async () => {
+  const routingPlan = plan({ intent: "status", goal: "schedule", subject: "pool operating hours on Labor Day", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, filters: { audience: "", category: "", facility: "pool", location: "" }, searchQueries: ["pool hours Labor Day"] });
+  const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", planCommunitySearch: async () => routingPlan,
+    synthesizeCommunityAnswer: async () => ({ directAnswer: "Saturday and Sunday hours are 7:00 am to 8:45 pm.", keyDetails: [], nextStep: "Go swim." }),
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours");
+  assert.match(answer.answer, /published weekday hours/i);
+  assert.match(answer.answer, /5:00 am/i);
+  assert.match(answer.answer, /Open Swim/i);
+  assert.doesNotMatch(answer.answer, /maintenance|cleaning/i);
+  assert.doesNotMatch(answer.answer, /Saturday and Sunday hours are 7:00 am/i);
+  assert.match(answer.answer, /does not publish separate holiday hours/i);
+});
+
+test("dated facility hours retain a narrower Tuesday and Thursday maintenance clause", () => {
+  const pool = communityIndex.sources.find((source) => source.id === "sterling-ranch-overlook-outdoor-pool-1");
+  const answer = datedFacilityHoursAnswer("What are pool hours Tuesday, September 8?", { sources: [pool] }, {
+    routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-08", end: "2026-09-08", label: "September 8" }, searchQueries: ["pool hours Tuesday"] }),
+  });
+  assert.match(answer.answer, /Tuesday & Thursday/i);
+  assert.match(answer.answer, /7:00 am - 8:45 am/i);
+  assert.match(answer.answer, /cleaning and maintenance/i);
+});
+
+test("dated facility hours bind a Sunday request to Sunday rather than weekday hours", () => {
+  const source = {
+    id: "alpha-clubhouse", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), staleAfter: "2099-01-01T00:00:00Z", contentHash: "hours", actions: [], facts: [],
+    text: "Clubhouse operating hours. Clubhouse hours Monday-Friday: 8:00 am - 6:00 pm Saturday: 9:00 am - 4:00 pm Sunday: 10:00 am - 2:00 pm Guest passes.", excerpt: "Clubhouse hours Monday-Friday: 8:00 am - 6:00 pm Saturday: 9:00 am - 4:00 pm Sunday: 10:00 am - 2:00 pm.",
+  };
+  const answer = datedFacilityHoursAnswer("What are the clubhouse hours on Sunday, September 13?", { sources: [source] }, {
+    routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "clubhouse hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-13", end: "2026-09-13", label: "September 13" }, searchQueries: ["clubhouse hours Sunday"] }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours");
+  assert.match(answer.answer, /Sunday: 10:00 am - 2:00 pm/i);
+  assert.doesNotMatch(answer.answer, /Monday-Friday: 8:00 am/i);
+});
+
+test("dated facility hours retain the conflict boundary and prefer an exact weekday heading", async () => {
+  const planForMonday = plan({ intent: "facilities", goal: "schedule", subject: "clubhouse hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["clubhouse hours Monday"] });
+  const base = { id: "one", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), contentHash: "one", actions: [], text: "Monday: 8:00 am - 6:00 pm Tuesday-Friday: 9:00 am - 5:00 pm Saturday: 10:00 am - 2:00 pm.", excerpt: "Monday: 8:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "8:00 am", context: "Monday: 8:00 am - 6:00 pm" }] };
+  const exact = datedFacilityHoursAnswer("What are clubhouse hours on Labor Day?", { sources: [base] }, { routingPlan: planForMonday });
+  assert.match(exact.answer, /Monday: 8:00 am - 6:00 pm/i);
+  assert.doesNotMatch(exact.answer, /Tuesday-Friday/i);
+  const conflict = { ...base, id: "two", sourceUrl: "https://alpha.gov/clubhouse-new", contentHash: "two", text: "Monday: 9:00 am - 6:00 pm", excerpt: "Monday: 9:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "9:00 am", context: "Monday: 9:00 am - 6:00 pm" }] };
+  const answer = await sourcedAnswer("What are clubhouse hours on Labor Day?", { sources: [{ ...base, score: 50 }, { ...conflict, score: 49 }], requestedDetails: ["hours", "date"] }, { routingPlan: planForMonday, synthesizeCommunityAnswer: false });
+  assert.equal(answer.answerMode, "community-source-conflict");
+  assert.notEqual(answer.answerStatus, "verified");
 });
 
 test("a confident rental fallback cannot replace pool hours after live status is rejected", async () => {
