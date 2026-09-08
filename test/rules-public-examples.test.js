@@ -39,8 +39,9 @@ const EXAMPLES = [
   {
     question: "How do I reserve the Overlook Clubhouse?",
     verdict: "informational",
-    includes: ["live rental catalog", "$100", "$250"],
+    includes: ["live rental catalog", "Overlook Clubhouse"],
     requiresAction: true,
+    facilityBooking: true,
     maxLineLength: 320,
   },
   {
@@ -100,6 +101,12 @@ for (const example of EXAMPLES) {
     }
     if (example.requiresAction) {
       assert.ok(result.actions?.some((action) => /^https?:\/\//i.test(action.url || "")));
+    }
+    if (example.facilityBooking) {
+      assert.match(result.directAnswer, /live rental catalog.*choose.*Overlook Clubhouse.*select/i);
+      assert.ok(result.actions.some((action) => action.actionType === "booking" && /secure\.rec1\.com/i.test(action.url || "")));
+      assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl || "")));
+      assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i);
     }
     const longestLine = Math.max(...result.answer.split("\n").map((line) => line.length));
     assert.ok(
