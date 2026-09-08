@@ -3,10 +3,21 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { crawlCommunity } = require("../lib/community-ingest");
 const { validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
+const { isFreshnessTrackedSource } = require("../lib/community-source-manager");
+const { factLedgerStatus } = require("../lib/community-truth");
 
 const root = path.join(__dirname, "..");
 const profile = validateCommunityProfile(JSON.parse(fs.readFileSync(path.join(root, "data", "communities", "sterling-ranch.json"), "utf8")));
 const bundled = JSON.parse(fs.readFileSync(path.join(root, "data", "community-index.json"), "utf8"));
+
+function freshnessSummary(index, now = Date.now()) {
+  return {
+    inventoryBacklog: Number(index.inventory?.pendingCount || 0),
+    expiredApprovedSourceCount: index.sources.filter((source) => isFreshnessTrackedSource(source)
+      && source.staleAfter && new Date(source.staleAfter).getTime() < now).length,
+    expiredApprovedFactCount: factLedgerStatus(index, now).staleFactCount,
+  };
+}
 
 function audit(index) {
   if (index.communityId !== profile.communityId) throw new Error("Index community does not match its profile.");
@@ -33,7 +44,22 @@ function audit(index) {
   if (brokenActions.length) throw new Error(`${brokenActions.length} resident action links point to sources that failed this crawl.`);
   const failureRate = Number(index.failureCount || 0) / Math.max(1, Number(index.pageCount || index.sources.length));
   if (failureRate > 0.25) throw new Error(`Source failure rate is too high (${Math.round(failureRate * 100)}%).`);
-  return { sourceCount: index.sources.length, failureCount: Number(index.failureCount || 0), brokenActionCount: 0, sourceTypes: [...present].sort() };
+  const { inventoryBacklog, expiredApprovedSourceCount, expiredApprovedFactCount } = freshnessSummary(index);
+  // A nonempty inventory backlog is a coverage signal, not proof that current
+  // approved evidence is unsafe. Expired approved records are a release gate.
+  if (expiredApprovedSourceCount || expiredApprovedFactCount) {
+    throw new Error(`Approved evidence is expired (${expiredApprovedSourceCount} source records, ${expiredApprovedFactCount} facts).`);
+  }
+  return {
+    sourceCount: index.sources.length,
+    failureCount: Number(index.failureCount || 0),
+    brokenActionCount: 0,
+    sourceTypes: [...present].sort(),
+    inventoryBacklog,
+    expiredApprovedSourceCount,
+    expiredApprovedFactCount,
+    releaseReady: true,
+  };
 }
 
 async function main() {
@@ -74,4 +100,8 @@ async function main() {
   }
 }
 
-main().catch((error) => { console.error(`Community source check failed: ${error.message}`); process.exitCode = 1; });
+if (require.main === module) {
+  main().catch((error) => { console.error(`Community source check failed: ${error.message}`); process.exitCode = 1; });
+}
+
+module.exports = { audit, freshnessSummary };

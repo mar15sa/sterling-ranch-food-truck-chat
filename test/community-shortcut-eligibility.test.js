@@ -179,6 +179,23 @@ test("dated facility hours bind a Sunday request to Sunday rather than weekday h
   assert.doesNotMatch(answer.answer, /Monday-Friday: 8:00 am/i);
 });
 
+test("the full ask route never labels stale dated facility hours as verified", async () => {
+  const stalePool = {
+    ...communityIndex.sources.find((source) => source.id === "sterling-ranch-overlook-outdoor-pool-1"),
+    checkedAt: "2026-08-01T00:00:00.000Z", staleAfter: "2026-08-02T00:00:00.000Z",
+  };
+  const routingPlan = plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["pool hours Monday"] });
+  const answer = await answerCommunityQuestion("What are the pool hours for Labor Day?", {
+    interpretationMode: "structured", now: NOW, communityId: "sterling-ranch", index: { communityId: "sterling-ranch", sources: [stalePool] },
+    planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({ confidence: { canAnswer: false, reason: "no-rule-answer" } }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours");
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.notEqual(answer.answerStatus, "verified");
+  assert.match(answer.answer, /awaiting a fresh confirmation/i);
+});
+
 test("dated facility hours retain the conflict boundary and prefer an exact weekday heading", async () => {
   const planForMonday = plan({ intent: "facilities", goal: "schedule", subject: "clubhouse hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["clubhouse hours Monday"] });
   const base = { id: "one", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), contentHash: "one", actions: [], text: "Monday: 8:00 am - 6:00 pm Tuesday-Friday: 9:00 am - 5:00 pm Saturday: 10:00 am - 2:00 pm.", excerpt: "Monday: 8:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "8:00 am", context: "Monday: 8:00 am - 6:00 pm" }] };

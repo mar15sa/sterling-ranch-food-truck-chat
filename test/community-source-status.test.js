@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const { communitySourceStatus } = require("../lib/community-source-manager");
+const { freshnessSummary } = require("../scripts/check-community-sources");
 
 test("community answers preserve the complete rulebook source status", () => {
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
@@ -27,4 +28,26 @@ test("community source status reports page coverage separately from searchable c
   assert.equal(status.pendingPageCount, 12);
   assert.equal(status.inventoryAvailable, true);
   assert.equal(status.inventoryComplete, false);
+  assert.equal(status.inventoryBacklog, 12);
+  assert.equal(status.releaseReady, true);
+});
+
+test("inventory backlog and expired approved evidence are separate release signals", () => {
+  const expired = "2026-09-01T00:00:00.000Z";
+  const index = {
+    communityId: "alpha", sources: [{ id: "approved-page", sourceUrl: "https://alpha.gov/hours", staleAfter: expired }],
+    inventory: { pendingCount: 875 },
+    factLedger: [{ reviewStatus: "approved", staleAfter: expired }],
+  };
+  const now = Date.parse("2026-09-02T00:00:00.000Z");
+  const status = communitySourceStatus(index, now);
+  assert.equal(status.inventoryBacklog, 875);
+  assert.equal(status.expiredApprovedSourceCount, 1);
+  assert.equal(status.expiredApprovedFactCount, 1);
+  assert.equal(status.releaseReady, false);
+  assert.deepEqual(freshnessSummary(index, now), {
+    inventoryBacklog: 875,
+    expiredApprovedSourceCount: 1,
+    expiredApprovedFactCount: 1,
+  });
 });
