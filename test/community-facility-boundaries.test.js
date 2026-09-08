@@ -16,6 +16,42 @@ function plan(goal, facility) {
     scope: 'community', needsClarification: false };
 }
 
+const liveStagingAccessPlan = {
+  intent: 'facilities',
+  goal: 'permission',
+  goals: ['permission', 'account-access'],
+  subject: 'Overlook Clubhouse',
+  requestedDetails: ['action', 'permission'],
+  dateRange: null,
+  filters: { audience: '', category: '', facility: 'Overlook Clubhouse', location: '' },
+  searchQueries: ['Overlook Clubhouse access'],
+  scope: 'community',
+  needsClarification: false,
+};
+
+test('live permission and account-access plans keep clubhouse access on the reviewed amenity-form boundary', async () => {
+  const realTimestampIndex = { ...storedIndex };
+  const cases = [
+    ['How do I get access to the Overlook Clubhouse?', liveStagingAccessPlan],
+    ['Where can I request access to the Overlook Clubhouse?', { ...liveStagingAccessPlan, goal: 'permission', goals: ['permission'] }],
+    ['I need an Overlook Clubhouse access card.', { ...liveStagingAccessPlan, goal: 'account-access', goals: ['account-access'], requestedDetails: ['action'] }],
+  ];
+  for (const [question, routingPlan] of cases) {
+    const result = await answerCommunityQuestion(question, {
+      now: new Date('2026-09-08T20:00:00Z'), index: realTimestampIndex, communityId: 'sterling-ranch',
+      planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
+      answerRulesQuestion: unavailableRules,
+    });
+    assert.equal(result.answerStatus, 'source-unavailable', question);
+    assert.equal(result.answerMode, 'community-proactive-clubhouse-access-partial', question);
+    assert.match(result.directAnswer, /can’t currently confirm the access requirements/i, question);
+    assert.ok(result.sources.some((source) => source.id === 'sterling-ranch-faqs-civicplus-cms-faq-3-f4189bf538'), question);
+    assert.ok(result.actions.some((action) => action.actionType === 'form' && /Resident-Amenity-Form-56/i.test(action.url)), question);
+    assert.doesNotMatch(JSON.stringify(result), /secure\.rec1\.com|rental catalog|\$100|\$250/i, question);
+    assert.notEqual(result.answerStatus, 'verified', question);
+  }
+});
+
 test('clubhouse access wording never falls into rental or pricing', async () => {
   for (const question of ['How do I get access to the Overlook Clubhouse?', 'Where do I sign up for clubhouse access?', 'I need an access card for the clubhouse.']) {
     const result = await answerCommunityQuestion(question, { now, index, communityId: 'sterling-ranch',
