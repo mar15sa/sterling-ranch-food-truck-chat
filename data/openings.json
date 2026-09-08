@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-07T08:15:00-06:00",
+  "updatedAt": "2026-09-08T08:45:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -3190,6 +3190,234 @@
         "lng": -104.98469,
         "precision": "address",
         "geocodedFrom": "2669 Larimer Street, Denver, CO 80205"
+      }
+    },
+    {
+      "id": "hoka-outlets-castle-rock",
+      "name": "HOKA",
+      "category": "Shopping",
+      "community": "Castle Rock",
+      "area": "Outlets at Castle Rock",
+      "address": "5050 Factory Shops Boulevard, Castle Rock, CO 80108",
+      "status": "opening-soon",
+      "openingWindow": "Coming soon; opening date not announced",
+      "summary": "The performance footwear brand is opening an outlet store at Outlets at Castle Rock; the center has not announced the grand-opening date.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Outlets at Castle Rock official HOKA announcement",
+          "url": "https://www.outletsatcastlerock.com/event/43117-hoka-coming-soon"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.415867,
+        "lng": -104.873041,
+        "precision": "approximate",
+        "geocodedFrom": "5050 Factory Shops Boulevard, Castle Rock, CO 80108"
+      }
+    },
+    {
+      "id": "leaves-on-main-littleton",
+      "name": "Leaves on Main",
+      "category": "Shopping",
+      "community": "Littleton",
+      "area": "Downtown Littleton",
+      "address": "2699 West Main Street, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Grand opening September 5–7, 2026",
+      "summary": "The new downtown plant shop is open with houseplants, handcrafted pottery, curated gifts, and home décor.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Leaves on Main official grand-opening announcement",
+          "url": "https://leavesonmain.com/"
+        },
+        {
+          "label": "Downtown Littleton official directory listing",
+          "url": "https://littletondda.org/explore/shopping/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.613698,
+        "lng": -105.015036,
+        "precision": "address",
+        "geocodedFrom": "2699 West Main Street, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "midnight-toad-littleton",
+      "name": "The Midnight Toad",
+      "category": "Entertainment & restaurant",
+      "community": "Littleton",
+      "area": "South Federal Circle",
+      "address": "5302 South Federal Circle, Suite A, Littleton, CO 80123",
+      "status": "open",
+      "openingWindow": "Opened July 10, 2026",
+      "summary": "The live-music bar opened in the former Toad Tavern with free shows, comedy, karaoke, pool, darts, beer, and cocktails.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "The Midnight Toad official opening history and hours",
+          "url": "https://themidnighttoad.com/"
+        },
+        {
+          "label": "City of Littleton August business newsletter",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/4256c6d"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.619458,
+        "lng": -105.028599,
+        "precision": "address",
+        "geocodedFrom": "5302 South Federal Circle, Suite A, Littleton, CO 80123"
+      }
+    },
+    {
+      "id": "lewis-and-cluck-littleton",
+      "name": "Lewis & Cluck Feed & Supplies",
+      "category": "Grocery & retail",
+      "community": "Littleton",
+      "area": "Downtown Littleton",
+      "address": "5827 South Rapp Street, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Relocated under new ownership in 2026",
+      "summary": "The longtime backyard-chicken supply shop is open at its new Rapp Street location under new ownership.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "official",
+      "sources": [
+        {
+          "label": "Lewis & Cluck official location and hours",
+          "url": "https://www.lewisandcluckfeed.com/"
+        },
+        {
+          "label": "City of Littleton relocation announcement",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/4256c6d"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.611362,
+        "lng": -105.019934,
+        "precision": "address",
+        "geocodedFrom": "5827 South Rapp Street, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "port-of-subs-littleton",
+      "name": "Port of Subs",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Littleton Boulevard",
+      "address": "40 West Littleton Boulevard, Suite 204A, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened June 2, 2026",
+      "summary": "The sandwich chain opened its new Littleton shop with sliced-to-order subs, wraps, salads, breakfast, and catering.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Port of Subs official Littleton location",
+          "url": "https://portofsubs.com/locations/co/littleton/"
+        },
+        {
+          "label": "Port of Subs official grand-opening report",
+          "url": "https://franchising.portofsubs.com/port-of-subs-celebrates-grand-opening/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.611888,
+        "lng": -104.988663,
+        "precision": "address",
+        "geocodedFrom": "40 West Littleton Boulevard, Suite 204A, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "tonic-zero-proof-bar-littleton",
+      "name": "Tonic Zero Proof Bar",
+      "category": "Entertainment & restaurant",
+      "community": "Littleton",
+      "area": "Downtown Littleton",
+      "address": "5767 South Rapp Street, Littleton, CO 80120",
+      "status": "open",
+      "openingWindow": "Opened May 2026",
+      "summary": "The alcohol-free bar is open with crafted mocktails, kava, botanical drinks, coffee, events, and late-night hours.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Tonic Zero Proof Bar official website and hours",
+          "url": "https://toniczeroproofbar.com/"
+        },
+        {
+          "label": "Downtown Littleton official business listing",
+          "url": "https://littletondda.org/business/tonic-zero-proof-bar/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.61251,
+        "lng": -105.020281,
+        "precision": "address",
+        "geocodedFrom": "5767 South Rapp Street, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "hujra-kebab-gyros-littleton",
+      "name": "Hujra Kebab & Gyros",
+      "category": "Restaurant",
+      "community": "Littleton",
+      "area": "Belleview and Federal",
+      "address": "2897 West Belleview Avenue, Suite A, Littleton, CO 80123",
+      "status": "open",
+      "openingWindow": "Opened in early 2026",
+      "summary": "The casual halal restaurant is open with Afghan, Pakistani, Indian, Mediterranean, and Middle Eastern kebabs, gyros, platters, and wraps.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Hujra Kebab & Gyros official website and hours",
+          "url": "https://www.hujrakebabgyros.com/"
+        },
+        {
+          "label": "City of Littleton new-business announcement",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/42174a2"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.624468,
+        "lng": -105.022894,
+        "precision": "address",
+        "geocodedFrom": "2897 West Belleview Avenue, Suite A, Littleton, CO 80123"
+      }
+    },
+    {
+      "id": "prime-proper-butcher-littleton",
+      "name": "Prime & Proper Butcher Shop",
+      "category": "Grocery & retail",
+      "community": "Littleton",
+      "area": "County Line Road",
+      "address": "131 West County Line Road, Littleton, CO 80129",
+      "status": "open",
+      "openingWindow": "Opened in 2026",
+      "summary": "The independent butcher shop is open with premium beef, poultry, pork, house-made sausage, special orders, and knife sharpening.",
+      "verifiedAt": "2026-09-08",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Prime & Proper official location and hours",
+          "url": "https://primeandproperbutcher.com/contact"
+        },
+        {
+          "label": "City of Littleton new-business announcement",
+          "url": "https://content.govdelivery.com/accounts/COLITTLETON/bulletins/42174a2"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.567457,
+        "lng": -104.989009,
+        "precision": "address",
+        "geocodedFrom": "131 West County Line Road, Littleton, CO 80129"
       }
     }
   ]
