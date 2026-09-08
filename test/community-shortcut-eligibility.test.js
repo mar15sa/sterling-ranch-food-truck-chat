@@ -157,7 +157,7 @@ test("dated facility hours reject a supported weekend AI answer for a Monday hol
 });
 
 test("dated facility hours retain a narrower Tuesday and Thursday maintenance clause", () => {
-  const pool = communityIndex.sources.find((source) => source.id === "sterling-ranch-overlook-outdoor-pool-1");
+  const pool = { ...communityIndex.sources.find((source) => source.id === "sterling-ranch-overlook-outdoor-pool-1"), staleAfter: "2099-01-01T00:00:00.000Z" };
   const answer = datedFacilityHoursAnswer("What are pool hours Tuesday, September 8?", { sources: [pool] }, {
     routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-08", end: "2026-09-08", label: "September 8" }, searchQueries: ["pool hours Tuesday"] }),
   });
@@ -177,6 +177,39 @@ test("dated facility hours bind a Sunday request to Sunday rather than weekday h
   assert.equal(answer.answerMode, "community-dated-facility-hours");
   assert.match(answer.answer, /Sunday: 10:00 am - 2:00 pm/i);
   assert.doesNotMatch(answer.answer, /Monday-Friday: 8:00 am/i);
+});
+
+test("the full ask route withholds stale dated facility hours instead of repeating them as current", async () => {
+  const stalePool = {
+    ...communityIndex.sources.find((source) => source.id === "sterling-ranch-overlook-outdoor-pool-1"),
+    checkedAt: "2026-08-01T00:00:00.000Z", staleAfter: "2026-08-02T00:00:00.000Z",
+  };
+  const routingPlan = plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["pool hours Monday"] });
+  const answer = await answerCommunityQuestion("What are the pool hours for Labor Day?", {
+    interpretationMode: "structured", now: NOW, communityId: "sterling-ranch", index: { communityId: "sterling-ranch", sources: [stalePool] },
+    planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({ confidence: { canAnswer: false, reason: "no-rule-answer" } }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours-stale");
+  assert.equal(answer.answerStatus, "could-not-verify");
+  assert.equal(answer.answerVerdict, "unverified");
+  assert.equal(answer.confidence.reason, "source-stale");
+  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm|Open Swim/i);
+  assert.equal(answer.sources[0].text, undefined);
+});
+
+test("fresh dated facility hours still return a verified answer", () => {
+  const source = {
+    ...communityIndex.sources.find((item) => item.id === "sterling-ranch-overlook-outdoor-pool-1"),
+    staleAfter: "2026-09-02T00:00:00.000Z",
+  };
+  const answer = datedFacilityHoursAnswer("What are pool hours on Labor Day?", { sources: [source] }, {
+    now: NOW,
+    routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["pool hours Monday"] }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours");
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.answer, /5:00 am/i);
 });
 
 test("dated facility hours retain the conflict boundary and prefer an exact weekday heading", async () => {
