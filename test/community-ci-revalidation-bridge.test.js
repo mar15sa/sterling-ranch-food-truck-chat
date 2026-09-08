@@ -98,6 +98,22 @@ test("PDF proof accepts the same canonical document and rejects a same-origin re
   await assert.rejects(
     observeCanonicalSource(pdfUrl, [source], {
       extractPdfTextImpl: extractText,
+      // The extractor asked for /100, but its fetch implementation followed a
+      // same-origin redirect and returned /101. This must not renew /100.
+      fetchImpl: async () => ({ ok: true, status: 200, url: "https://alpha.gov/DocumentCenter/View/101", headers: new Headers() }),
+    }),
+    /Canonical URL changed during PDF revalidation/,
+  );
+  await assert.rejects(
+    observeCanonicalSource(pdfUrl, [source], {
+      extractPdfTextImpl: extractText,
+      fetchImpl: async () => ({ ok: true, status: 200, url: "https://outside.example/DocumentCenter/View/100", headers: new Headers() }),
+    }),
+    /Document redirected outside the official website/,
+  );
+  await assert.rejects(
+    observeCanonicalSource(pdfUrl, [source], {
+      extractPdfTextImpl: extractText,
       fetchImpl: async (url) => String(url).endsWith("/100")
         ? { ok: false, status: 302, headers: new Headers({ location: "/DocumentCenter/View/101" }) }
         : { ok: true, status: 200, headers: new Headers() },
