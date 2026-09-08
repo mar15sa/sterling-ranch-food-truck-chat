@@ -58,7 +58,7 @@ function audit(index) {
     inventoryBacklog,
     expiredApprovedSourceCount,
     expiredApprovedFactCount,
-    releaseReady: true,
+    approvedEvidenceCurrent: true,
   };
 }
 

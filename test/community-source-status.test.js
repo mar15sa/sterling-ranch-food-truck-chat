@@ -29,7 +29,7 @@ test("community source status reports page coverage separately from searchable c
   assert.equal(status.inventoryAvailable, true);
   assert.equal(status.inventoryComplete, false);
   assert.equal(status.inventoryBacklog, 12);
-  assert.equal(status.releaseReady, true);
+  assert.equal(status.approvedEvidenceCurrent, false, "an empty index cannot be current evidence");
 });
 
 test("inventory backlog and expired approved evidence are separate release signals", () => {
@@ -44,10 +44,17 @@ test("inventory backlog and expired approved evidence are separate release signa
   assert.equal(status.inventoryBacklog, 875);
   assert.equal(status.expiredApprovedSourceCount, 1);
   assert.equal(status.expiredApprovedFactCount, 1);
-  assert.equal(status.releaseReady, false);
+  assert.equal(status.approvedEvidenceCurrent, false);
   assert.deepEqual(freshnessSummary(index, now), {
     inventoryBacklog: 875,
     expiredApprovedSourceCount: 1,
     expiredApprovedFactCount: 1,
   });
+});
+
+test("approved evidence is current only when evidence exists without crawl failures or expiry", () => {
+  const now = Date.parse("2026-09-02T00:00:00.000Z");
+  const fresh = { communityId: "alpha", failureCount: 0, sources: [{ id: "approved-page", sourceUrl: "https://alpha.gov/hours", staleAfter: "2026-09-03T00:00:00.000Z" }], factLedger: [] };
+  assert.equal(communitySourceStatus(fresh, now).approvedEvidenceCurrent, true);
+  assert.equal(communitySourceStatus({ ...fresh, failureCount: 1 }, now).approvedEvidenceCurrent, false);
 });
