@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
+const { answerRulesQuestion, loadRulesIndex } = require('../lib/rules-assistant');
 
 const decisions = JSON.parse(fs.readFileSync(
   path.join(__dirname, '..', 'data', 'community-owner-decisions-batch-1-2026-09-08.json'),
@@ -35,4 +36,46 @@ test('rules supplements reference only the four owner decisions they govern', ()
     'cab-fees-effective-date', 'delinquency-policy', 'tap-facility-2026', 'water-rates-2026',
   ]);
   assert.ok(reviewed.every((entry) => entry.ownerReview.withheldScope.length > 0));
+});
+
+test('reviewed supplement sections expose only the approved evidence', async () => {
+  const index = await loadRulesIndex();
+  const water = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-water-sewer-stormwater-rates-2026::1');
+  const tap = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-tap-facility-fees-2026::1');
+  const cab = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-cab-service-fees-2026::1');
+  const delinquency = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-delinquent-fee-collection-2025-06-20::1');
+
+  assert.ok(water.length && tap.length && cab.length && delinquency.length);
+  for (const entry of [...water, ...tap, ...cab, ...delinquency]) assert.equal(entry.ownerReviewApplied, true);
+  assert.match(water[0].text, /\$50\.20/);
+  assert.doesNotMatch(water.map((entry) => entry.text).join(' '), /master[ -]?meter|nonresidential|construction water|public school|irrigation/i);
+  assert.match(tap[0].text, /single-family detached \$27,430/i);
+  assert.doesNotMatch(tap.map((entry) => entry.text).join(' '), /commercial|school|irrigation|master[ -]?meter|large[ -]?meter|pool/i);
+  assert.match(cab[0].text, /trash charge is \$14\.17/i);
+  assert.doesNotMatch(cab.map((entry) => entry.text).join(' '), /effective|take effect/i);
+  assert.match(delinquency[0].text, /this resolution's fee schedule/i);
+  assert.doesNotMatch(delinquency.map((entry) => entry.text).join(' '), /no newer amendment/i);
+});
+
+test('answers allow approved fee rows and withhold unapproved scopes', async () => {
+  const options = { searchMode: 'legacy', llmMode: 'off' };
+  const residentialWater = await answerRulesQuestion('What is the residential water base rate?', options);
+  assert.match(residentialWater.answer, /\$50\.20/);
+
+  const commercialWater = await answerRulesQuestion('What is the nonresidential water rate?', options);
+  assert.equal(commercialWater.answerMode, 'owner-review-scope-unavailable');
+  assert.doesNotMatch(commercialWater.answer, /\$\d/);
+
+  const commercialTap = await answerRulesQuestion('What is the commercial tap fee?', options);
+  assert.equal(commercialTap.answerMode, 'owner-review-scope-unavailable');
+  assert.doesNotMatch(commercialTap.answer, /\$\d/);
+
+  const cabDate = await answerRulesQuestion('When do the 2026 CAB fees take effect?', options);
+  assert.equal(cabDate.answerMode, 'owner-review-scope-unavailable');
+  assert.match(cabDate.answer, /can.t verify a standalone effective date/i);
+
+  const unpaidWater = await answerRulesQuestion('What happens if my water bill is unpaid?', options);
+  assert.match(unpaidWater.answer, /Disconnect Notice|last Wednesday/i);
+  assert.match(unpaidWater.sources[0].text, /this resolution's fee schedule/i);
+  assert.doesNotMatch(unpaidWater.answer, /no newer amendment/i);
 });
