@@ -1,6 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { renewExactApprovedEvidence } = require("../scripts/revalidate-approved-community");
+const { renewExactApprovedEvidence, selectRevalidationTargetUrls } = require("../scripts/revalidate-approved-community");
 
 const url = "https://alpha.gov/pool";
 const old = "2026-09-01T00:00:00.000Z";
@@ -35,4 +35,15 @@ test("exact URL and hash renewal updates only matching approved source and fact 
   assert.equal(value.factLedger[0].staleAfter, staleAfter);
   assert.equal(value.factLedger[1].lastObservedAt, old);
   assert.equal(value.factLedger[2].lastObservedAt, old);
+});
+
+test("an expired approved fact targets its active exact source version even when the source is fresh", () => {
+  const value = index();
+  value.sources[0].staleAfter = "2026-09-10T00:00:00.000Z";
+  value.sources[1].staleAfter = "2026-09-10T00:00:00.000Z";
+  value.factLedger[0].staleAfter = old;
+  assert.deepEqual(selectRevalidationTargetUrls(value, Date.parse("2026-09-08T12:00:00.000Z")), [url]);
+
+  const missingVersion = { ...value, factLedger: [{ ...value.factLedger[0], sourceVersion: "different" }] };
+  assert.deepEqual(selectRevalidationTargetUrls(missingVersion, Date.parse("2026-09-08T12:00:00.000Z")), []);
 });

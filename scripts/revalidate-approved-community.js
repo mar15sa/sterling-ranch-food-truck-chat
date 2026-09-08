@@ -12,6 +12,23 @@ function isApprovedSource(source = {}) {
     && !["candidate", "excluded", "escalated", "rejected"].includes(source.reviewStatus);
 }
 
+function selectRevalidationTargetUrls(index = {}, now = Date.now()) {
+  const activeSources = (index.sources || []).filter(isApprovedSource);
+  const activeByVersion = new Map(activeSources.map((source) => [`${source.id}:${source.contentHash}`, source]));
+  const urls = new Set(activeSources
+    .filter((source) => Date.parse(source.staleAfter) < now)
+    .map((source) => source.sourceUrl));
+  // A fact can have its own earlier deadline. Recheck the exact active source
+  // version that supports it, even when the page-level source record is fresh.
+  // A missing or changed source version cannot be renewed through this path.
+  for (const fact of index.factLedger || []) {
+    if (!APPROVED_REVIEW_STATUSES.has(fact.reviewStatus) || !(Date.parse(fact.staleAfter) < now)) continue;
+    const source = activeByVersion.get(`${fact.sourceId}:${fact.sourceVersion}`);
+    if (source) urls.add(source.sourceUrl);
+  }
+  return [...urls].sort();
+}
+
 function renewExactApprovedEvidence(index = {}, { sourceUrl, observedHashes = [], checkedAt, staleAfter } = {}) {
   const hashes = new Set(observedHashes);
   const renewedSources = (index.sources || []).filter((source) =>
@@ -33,9 +50,8 @@ function renewExactApprovedEvidence(index = {}, { sourceUrl, observedHashes = []
 async function main() {
   const file = "data/community-index.json";
   const index = JSON.parse(await fs.readFile(file, "utf8"));
-  const overdue = index.sources.filter((source) => isApprovedSource(source) && Date.parse(source.staleAfter) < Date.now());
   const checks = [];
-  for (const sourceUrl of [...new Set(overdue.map((source) => source.sourceUrl))]) {
+  for (const sourceUrl of selectRevalidationTargetUrls(index)) {
     try {
       let content;
       if (isDocumentUrl(sourceUrl)) content = await extractPdfText(sourceUrl);
@@ -71,4 +87,4 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error.message); process.exitCode = 1; });
 
-module.exports = { isApprovedSource, renewExactApprovedEvidence };
+module.exports = { isApprovedSource, renewExactApprovedEvidence, selectRevalidationTargetUrls };
