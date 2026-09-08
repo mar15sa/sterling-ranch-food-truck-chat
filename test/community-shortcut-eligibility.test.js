@@ -5,8 +5,16 @@ const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { shortcutEligibility } = require("../lib/community-shortcut-eligibility");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
+const communityEvalCases = require("../scripts/community-eval-cases.json");
+const rulesEvalCases = require("../scripts/rules-eval-cases.json");
 
 const NOW = new Date("2026-09-01T18:00:00Z");
+const REPORTED_QUESTION = "What are the pool hours for Labor Day?";
+
+test("the reported website-source question belongs only to the Community Assistant evaluation", () => {
+  assert.ok(communityEvalCases.some((item) => item.question === REPORTED_QUESTION));
+  assert.ok(!rulesEvalCases.some((item) => item.question === REPORTED_QUESTION));
+});
 
 function plan(overrides = {}) {
   return {
@@ -47,7 +55,7 @@ test("the exact Labor Day pool-hours question bypasses current-status data and r
     filters: { audience: "", category: "", facility: "pool", location: "" },
     searchQueries: ["pool hours Labor Day", "Overlook Outdoor Pool hours"],
   });
-  const answer = await answerCommunityQuestion("What are the pool hours for Labor Day?", {
+  const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
     interpretationMode: "structured",
     now: NOW,
     index: communityIndex,

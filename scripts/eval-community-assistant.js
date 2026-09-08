@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const residentQuestions = require("./resident-rules-corpus.json");
 const authoredCases = require("./rules-eval-cases.json");
+const communityCases = require("./community-eval-cases.json");
 const unseenCases = require("./rules-unseen-eval-cases.json");
 const communityIndex = require("../data/community-index.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
@@ -16,10 +17,14 @@ const expectationByQuestion = new Map();
 for (const item of authoredCases) {
   for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(question.toLowerCase().trim(), item);
 }
+for (const item of communityCases) {
+  for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(question.toLowerCase().trim(), item);
+}
 for (const item of unseenCases) expectationByQuestion.set(item.question.toLowerCase().trim(), item);
 const allQuestions = [...new Set([
   ...residentQuestions,
   ...authoredCases.flatMap((item) => [item.question, ...(item.variants || [])]),
+  ...communityCases.flatMap((item) => [item.question, ...(item.variants || [])]),
   ...unseenCases.map((item) => item.question),
 ].map((question) => String(question).trim()).filter(Boolean))];
 

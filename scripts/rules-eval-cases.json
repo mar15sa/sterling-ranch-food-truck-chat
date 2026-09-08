@@ -203,11 +203,6 @@
     "expectedFirstAny": ["Sec. 17-159"]
   },
   {
-    "question": "What are the pool hours for Labor Day?",
-    "expectedFirstAny": ["Overlook Outdoor Pool"],
-    "answerIncludesAll": ["5:00 am", "9:00 am", "8:45 pm"]
-  },
-  {
     "question": "What are the watering restrictions?",
     "variants": [
       "When am I allowed to water my lawn?"
