@@ -3,73 +3,14 @@
 // never changes the owner-approved community-index.json file.
 const fs = require("node:fs/promises");
 const path = require("node:path");
-const crypto = require("node:crypto");
 const { execFileSync } = require("node:child_process");
-const { contentHtml, extractActions, extractPdfText, isDocumentUrl, linksFromHtml, pageText, stripEmbeddedInstructions, chunkText, canonicalPageUrl } = require("../lib/community-ingest");
+const { actionDigest, actionIdentity, observeCanonicalSource, sourceHash } = require("../lib/community-approved-revalidation");
 const { audit } = require("./check-community-sources");
 const { VERIFIER_VERSION, approvedFingerprint, inputFingerprint, revalidateApprovedEvidence } = require("./revalidate-approved-community");
 
 function argument(flag, fallback = "") {
   const position = process.argv.indexOf(flag);
   return position >= 0 && process.argv[position + 1] ? process.argv[position + 1] : fallback;
-}
-
-function actionIdentity(actions = []) {
-  return actions.length ? JSON.stringify(actions.map(action => [action.label, action.url, action.actionType || "", [...(action.keywords || [])].sort()])
-    .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))) : "";
-}
-
-function sourceHash(text) {
-  // Approved chunks predate action-aware page identities. Keep their established
-  // text-only hash exactly intact; actions are verified as separate evidence.
-  return crypto.createHash("sha256").update(text).digest("hex");
-}
-
-function actionDigest(actions = []) {
-  return crypto.createHash("sha256").update(actionIdentity(actions)).digest("hex");
-}
-
-function canonical(value) {
-  return canonicalPageUrl(value);
-}
-
-async function observeCanonicalSource(sourceUrl, approvedSources, { fetchImpl = globalThis.fetch, extractPdfTextImpl = extractPdfText } = {}) {
-  if (!approvedSources.length) throw new Error("No approved evidence was found for the due URL.");
-  const expectedUrl = canonical(sourceUrl);
-  let text;
-  let observedActions = [];
-  if (isDocumentUrl(sourceUrl)) {
-    const requests = [];
-    const trackedFetch = async (requestedUrl, options) => {
-      const requested = String(requestedUrl);
-      requests.push(requested);
-      if (new URL(requested).origin !== new URL(sourceUrl).origin) throw new Error("Document redirected outside the official website.");
-      return fetchImpl(requested, options);
-    };
-    text = await extractPdfTextImpl(sourceUrl, { fetchImpl: trackedFetch });
-    const finalRequest = requests.at(-1);
-    if (!finalRequest) throw new Error("PDF extraction did not fetch the canonical document.");
-    if (canonical(finalRequest) !== expectedUrl) throw new Error("Canonical URL changed during PDF revalidation.");
-  }
-  else {
-    const response = await fetchImpl(sourceUrl, { redirect: "follow", signal: AbortSignal.timeout(30_000), headers: { "user-agent": "Sterling Ranch approved-evidence verifier" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    if (canonical(response.url || sourceUrl) !== expectedUrl) throw new Error("Canonical URL changed during revalidation.");
-    const html = await response.text();
-    text = stripEmbeddedInstructions(pageText(html));
-    observedActions = extractActions(linksFromHtml(contentHtml(html), response.url || sourceUrl));
-  }
-  if (!String(text || "").trim()) throw new Error("Extraction returned no usable text.");
-  const expectedActionIdentity = new Set(approvedSources.map((source) => actionIdentity(source.actions || [])));
-  const observedActionIdentity = actionIdentity(observedActions);
-  return {
-    observedHashes: chunkText(text).map((chunk) => sourceHash(chunk)),
-    actionMismatch: expectedActionIdentity.size !== 1 || !expectedActionIdentity.has(observedActionIdentity),
-    actionProof: {
-      expected: approvedSources.map((source) => ({ id: source.id, digest: actionDigest(source.actions || []), actions: source.actions || [] })),
-      observed: { digest: actionDigest(observedActions), actions: observedActions },
-    },
-  };
 }
 
 function gitCommit() {
