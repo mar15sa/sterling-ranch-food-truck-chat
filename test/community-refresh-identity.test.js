@@ -2,6 +2,16 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { reconcileCommunityIndex } = require('../lib/community-source-manager');
 const { buildFactLedger } = require('../lib/community-truth');
+const { crawlCommunity } = require('../lib/community-ingest');
+const { fingerprint } = require('../lib/community-release');
+
+const crawlProfile = {
+  schemaVersion: 1, communityId: 'alpha', name: 'Alpha', shortName: 'Alpha', website: 'https://alpha.gov/',
+  platform: 'civicplus-web-central', timezone: 'America/Denver', status: 'active', allowedHosts: ['alpha.gov'], actions: [],
+  connectors: [{ id: 'website', type: 'civicplus-pages', baseUrl: 'https://alpha.gov/', refreshMinutes: 1440, maxPages: 1, seedUrls: [] }],
+  authority: { rules: ['civicplus-pages'], facilities: ['civicplus-pages'], forms: ['civicplus-pages'], events: ['civicplus-pages'], alerts: ['civicplus-pages'], status: ['civicplus-pages'], services: ['civicplus-pages'] },
+  factAuthority: { 'live-status': ['civicplus-pages'], 'facility-hours': ['civicplus-pages'], 'reservation-policy': ['civicplus-pages'], fee: ['civicplus-pages'], restriction: ['civicplus-pages'], contact: ['civicplus-pages'], submission: ['civicplus-pages'], 'event-date': ['civicplus-pages'] },
+};
 
 test('refresh preserves exact fact decisions but cannot approve newly interpreted claims', () => {
   const source = { id: 'fees', communityId: 'sterling-ranch', sourceUrl: 'https://example.gov/fees', contentHash: 'v1',
@@ -68,4 +78,36 @@ test('freshness requires one unique canonical URL and exact hash match', () => {
   const ambiguous=reconcileCommunityIndex({sources:[source]},{sources:[refreshed,{...refreshed,id:'second'}]}).index.sources[0];
   assert.equal(ambiguous.checkedAt,'old');
   assert.equal(ambiguous.staleAfter,'old-stale');
+});
+
+test('crawl never mutates the reviewed snapshot when retained duplicate IDs are disambiguated', async () => {
+  const url = 'https://alpha.gov/services';
+  const source = (contentHash) => ({
+    id: 'alpha-trash-recycling-1', communityId: 'alpha', title: 'Trash and recycling', sourceUrl: url,
+    sourceType: 'services', connectorType: 'civicplus-pages', authorityScore: 0.9,
+    text: `Official trash service details ${contentHash}.`, excerpt: 'Official trash service details.', actions: [], facts: [],
+    contentHash, checkedAt: '2026-09-01T00:00:00.000Z', staleAfter: '2026-09-02T00:00:00.000Z', lifecycle: 'current',
+  });
+  const trusted = {
+    communityId: 'alpha', generatedAt: '2026-09-01T00:00:00.000Z', sources: [source('first'), source('second')], factLedger: [],
+    pages: [{ url, canonicalUrl: url, title: 'Trash and recycling', indexed: true, contentFingerprint: 'retained-page', chunkContentHashes: ['first', 'second'], indexedSourceIds: ['alpha-trash-recycling-1'] }],
+    inventory: { eligibleUrls: [url], pendingUrls: [], pendingCount: 0 },
+  };
+  trusted.releaseFingerprint = fingerprint(trusted);
+  const original = structuredClone(trusted);
+  const originalFingerprint = fingerprint(trusted);
+
+  const candidate = await crawlCommunity(crawlProfile, {
+    previousIndex: trusted, maxPages: 1, discoverSitemap: false, now: '2026-09-08T12:00:00.000Z',
+    lookup: async () => [{ address: '203.0.113.10', family: 4 }],
+    fetchImpl: async () => new Response('Missing', { status: 404 }),
+  });
+
+  assert.deepEqual(trusted, original);
+  assert.equal(fingerprint(trusted), originalFingerprint);
+  assert.ok(candidate.sources.every((item) => item.id !== 'alpha-trash-recycling-1'));
+  const reconciled = reconcileCommunityIndex(trusted, candidate);
+  assert.ok(reconciled.pendingReview);
+  assert.equal(reconciled.index.releaseFingerprint, originalFingerprint);
+  assert.equal(fingerprint(reconciled.index), originalFingerprint);
 });
