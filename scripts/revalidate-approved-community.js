@@ -63,7 +63,7 @@ function inputFingerprint(value) {
 function reviewRecord(sourceUrl, sources, outcome, details = {}) {
   return {
     sourceUrl,
-    sources: sources.map(({ id, contentHash, actions = [] }) => ({ id, contentHash, actionCount: actions.length })),
+    sources: sources.map(({ id, contentHash, actions = [] }) => ({ id, contentHash, actionCount: actions.length, actionIdentity: JSON.stringify(actions.map(action => [action.label, action.url, action.actionType || "", [...(action.keywords || [])].sort()]).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))) })),
     outcome,
     ...details,
   };
@@ -88,6 +88,7 @@ async function revalidateApprovedEvidence(index, { now = Date.now(), fetchObserv
         checks.push(reviewRecord(sourceUrl, approvedSources, "review-required", {
           reason: observation?.actionMismatch ? "action-identity-changed" : !observedHashes.length ? "no-valid-proof" : extraHashes.length ? "extra-source-identity-or-content-hash" : "source-identity-or-content-hash-changed",
           observedHashes,
+          actionProof: observation?.actionProof || null,
           extraHashes,
           missing: missing.map(({ id, contentHash }) => ({ id, contentHash })),
           requiresReview: renewal.requiresReview.map(({ id, contentHash }) => ({ id, contentHash })),
@@ -96,7 +97,7 @@ async function revalidateApprovedEvidence(index, { now = Date.now(), fetchObserv
         }));
         continue;
       }
-      checks.push(reviewRecord(sourceUrl, approvedSources, "renewed", { observedHashes, checkedAt, staleAfter }));
+      checks.push(reviewRecord(sourceUrl, approvedSources, "renewed", { observedHashes, actionProof: observation?.actionProof || null, checkedAt, staleAfter }));
     } catch (error) {
       checks.push(reviewRecord(sourceUrl, approvedSources, "review-required", { reason: "fetch-or-extraction-failed", error: error.message, checkedAt, staleAfter }));
     }

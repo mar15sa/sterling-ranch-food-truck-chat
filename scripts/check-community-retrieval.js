@@ -2,7 +2,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const inputPosition = process.argv.indexOf("--input");
-const inputPath = inputPosition >= 0 ? process.argv[inputPosition + 1] : "";
+const inputPath = inputPosition >= 0 ? process.argv[inputPosition + 1] : process.env.COMMUNITY_EVIDENCE_INDEX || "";
 const communityIndex = inputPath ? JSON.parse(fs.readFileSync(inputPath, "utf8")) : require("../data/community-index.json");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
@@ -57,7 +57,9 @@ async function main() {
   const recall = passed / CASES.length;
   console.log(`Community controlling-source retrieval: ${passed}/${CASES.length} (${Math.round(recall * 100)}%).`);
   const outputPosition = process.argv.indexOf("--output");
-  const outputPath = outputPosition >= 0 ? process.argv[outputPosition + 1] : path.join(__dirname, '../data/community-retrieval-report.json');
+  const outputPath = outputPosition >= 0 ? process.argv[outputPosition + 1] : process.env.COMMUNITY_EVIDENCE_REPORT_DIR
+    ? path.join(process.env.COMMUNITY_EVIDENCE_REPORT_DIR, "community-retrieval-report.json")
+    : path.join(__dirname, '../data/community-retrieval-report.json');
   fs.writeFileSync(outputPath, JSON.stringify({checkedAt:new Date().toISOString(),passed,total:CASES.length,failures},null,2)+'\n');
   if (recall < 1) {
     for (const failure of failures) console.error(JSON.stringify(failure));

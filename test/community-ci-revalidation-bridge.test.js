@@ -2,7 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { fingerprint } = require("../lib/community-release");
 const { sourceReviewGate } = require("../lib/community-source-answerability");
-const { runBridge } = require("../scripts/check-approved-community-revalidation");
+const { observeCanonicalSource, runBridge } = require("../scripts/check-approved-community-revalidation");
 
 const NOW = Date.parse("2026-09-08T12:00:00.000Z");
 const URL = "https://alpha.gov/rules";
@@ -51,4 +51,31 @@ test("action changes, stale versions, and replayed expiry cannot make temporary 
   assert.equal(missingProof.valid, false);
   const replay = await runBridge({ index: index(), now: NOW, staleAfterMs: -1, fetchObservedHashes: observer, auditFn: normalGate });
   assert.equal(replay.valid, false);
+});
+
+test("a realistic unchanged HTML page and actions renew, while an action-only URL change fails", async () => {
+  const html = "<main><h1>Rules</h1><p>Apply by Friday.</p><a href='/apply'>Apply now</a></main>";
+  const response = (body) => async () => ({ ok: true, url: URL, text: async () => body });
+  const proof = await observeCanonicalSource(URL, [{ actions: [] }], { fetchImpl: response(html) });
+  const approved = index();
+  approved.sources[0].contentHash = proof.observedHashes[0];
+  approved.factLedger[0].sourceVersion = proof.observedHashes[0];
+  approved.sources[0].actions = proof.actionProof.observed.actions;
+  const unchanged = await runBridge({ index: approved, now: NOW, fetchObservedHashes: async (url, sources) => observeCanonicalSource(url, sources, { fetchImpl: response(html) }), auditFn: normalGate });
+  assert.equal(unchanged.valid, true);
+  assert.equal(unchanged.attestation.checks[0].actionProof.observed.digest.length, 64);
+  const actionOnlyChange = html.replace("href='/apply'", "href='/apply-later'");
+  const changed = await runBridge({ index: approved, now: NOW, fetchObservedHashes: async (url, sources) => observeCanonicalSource(url, sources, { fetchImpl: response(actionOnlyChange) }), auditFn: normalGate });
+  assert.equal(changed.valid, false);
+  assert.equal(changed.checks[0].reason, "action-identity-changed");
+});
+
+test("a changed approved fingerprint is an explicit bridge failure", async () => {
+  const result = await runBridge({
+    index: index(), now: NOW,
+    fetchObservedHashes: async (url, sources) => { sources[0].contentHash = "tampered"; return { observedHashes: ["tampered"], actionMismatch: false }; },
+    auditFn: () => {},
+  });
+  assert.equal(result.valid, false);
+  assert.match(result.attestation.gateErrors.join(" "), /fingerprint changed/);
 });

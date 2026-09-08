@@ -19,9 +19,14 @@ function actionIdentity(actions = []) {
     .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))) : "";
 }
 
-function sourceHash(text, actions = []) {
-  const identity = actionIdentity(actions);
-  return crypto.createHash("sha256").update(`${text}${identity ? `\nactions:${identity}` : ""}`).digest("hex");
+function sourceHash(text) {
+  // Approved chunks predate action-aware page identities. Keep their established
+  // text-only hash exactly intact; actions are verified as separate evidence.
+  return crypto.createHash("sha256").update(text).digest("hex");
+}
+
+function actionDigest(actions = []) {
+  return crypto.createHash("sha256").update(actionIdentity(actions)).digest("hex");
 }
 
 function canonical(value) {
@@ -46,8 +51,12 @@ async function observeCanonicalSource(sourceUrl, approvedSources, { fetchImpl = 
   const expectedActionIdentity = new Set(approvedSources.map((source) => actionIdentity(source.actions || [])));
   const observedActionIdentity = actionIdentity(observedActions);
   return {
-    observedHashes: chunkText(text).map((chunk) => sourceHash(chunk, observedActions)),
+    observedHashes: chunkText(text).map((chunk) => sourceHash(chunk)),
     actionMismatch: expectedActionIdentity.size !== 1 || !expectedActionIdentity.has(observedActionIdentity),
+    actionProof: {
+      expected: approvedSources.map((source) => ({ id: source.id, digest: actionDigest(source.actions || []), actions: source.actions || [] })),
+      observed: { digest: actionDigest(observedActions), actions: observedActions },
+    },
   };
 }
 
@@ -61,12 +70,14 @@ async function runBridge({ index, now = Date.now(), fetchObservedHashes, auditFn
   const gateErrors = [];
   try { auditFn(result.temporaryIndex); } catch (error) { gateErrors.push(error.message); }
   if (result.checks.some((check) => check.outcome !== "renewed")) gateErrors.push("Approved evidence requires owner review.");
+  const afterFingerprint = approvedFingerprint(result.temporaryIndex);
+  if (beforeFingerprint !== afterFingerprint) gateErrors.push("Approved evidence fingerprint changed during revalidation.");
   const attestation = {
     verifierVersion: VERIFIER_VERSION,
     commit: gitCommit(),
     inputFingerprint: inputFingerprint(index),
     beforeApprovedFingerprint: beforeFingerprint,
-    afterApprovedFingerprint: approvedFingerprint(result.temporaryIndex),
+    afterApprovedFingerprint: afterFingerprint,
     checkedAt: new Date(now).toISOString(),
     status: gateErrors.length ? "failed" : "passed",
     checks: result.checks,
@@ -93,4 +104,4 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error.message); process.exitCode = 1; });
 
-module.exports = { actionIdentity, observeCanonicalSource, runBridge, sourceHash };
+module.exports = { actionDigest, actionIdentity, observeCanonicalSource, runBridge, sourceHash };

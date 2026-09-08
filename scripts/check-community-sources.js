@@ -69,7 +69,7 @@ function audit(index) {
 
 async function main() {
   const live = process.argv.includes("--live");
-  const inputPath = valueAfter("--input", "");
+  const inputPath = valueAfter("--input", process.env.COMMUNITY_EVIDENCE_INDEX || "");
   const index = live ? await crawlCommunity(profile) : inputPath ? JSON.parse(fs.readFileSync(path.resolve(inputPath), "utf8")) : bundled;
   const before = new Map(bundled.sources.map((source) => [source.id, source]));
   const after = new Map(index.sources.map((source) => [source.id, source]));
