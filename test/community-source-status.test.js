@@ -57,4 +57,25 @@ test("approved evidence is current only when evidence exists without crawl failu
   const fresh = { communityId: "alpha", failureCount: 0, sources: [{ id: "approved-page", sourceUrl: "https://alpha.gov/hours", staleAfter: "2026-09-03T00:00:00.000Z" }], factLedger: [] };
   assert.equal(communitySourceStatus(fresh, now).approvedEvidenceCurrent, true);
   assert.equal(communitySourceStatus({ ...fresh, failureCount: 1 }, now).approvedEvidenceCurrent, false);
+  assert.equal(communitySourceStatus(fresh, now, { refreshError: "refresh timed out" }).approvedEvidenceCurrent, false);
+});
+
+test("fact-only expiry marks community source health stale", () => {
+  const now = Date.parse("2026-09-02T00:00:00.000Z");
+  const status = communitySourceStatus({
+    communityId: "alpha", failureCount: 0,
+    sources: [{ id: "fresh-page", sourceUrl: "https://alpha.gov/hours", staleAfter: "2026-09-03T00:00:00.000Z" }],
+    factLedger: [{ reviewStatus: "approved", staleAfter: "2026-09-01T00:00:00.000Z" }],
+  }, now);
+  assert.equal(status.expiredApprovedSourceCount, 0);
+  assert.equal(status.expiredApprovedFactCount, 1);
+  assert.equal(status.stale, true);
+  assert.equal(status.approvedEvidenceCurrent, false);
+});
+
+test("source audit never returns a current-evidence pass when the crawl has failures", () => {
+  const bundled = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "community-index.json"), "utf8"));
+  bundled.failureCount = 1;
+  bundled.failures = [{ url: "https://sterlingranchcab.com/unavailable", error: "HTTP 503" }];
+  assert.throws(() => require("../scripts/check-community-sources").audit(bundled), /crawl reported 1 failure/i);
 });

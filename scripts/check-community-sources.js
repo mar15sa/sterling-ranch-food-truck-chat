@@ -44,6 +44,7 @@ function audit(index) {
   if (brokenActions.length) throw new Error(`${brokenActions.length} resident action links point to sources that failed this crawl.`);
   const failureRate = Number(index.failureCount || 0) / Math.max(1, Number(index.pageCount || index.sources.length));
   if (failureRate > 0.25) throw new Error(`Source failure rate is too high (${Math.round(failureRate * 100)}%).`);
+  if (Number(index.failureCount || 0) > 0) throw new Error(`Community crawl reported ${Number(index.failureCount)} failure(s).`);
   const { inventoryBacklog, expiredApprovedSourceCount, expiredApprovedFactCount } = freshnessSummary(index);
   // A nonempty inventory backlog is a coverage signal, not proof that current
   // approved evidence is unsafe. Expired approved records are a release gate.
