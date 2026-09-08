@@ -16,7 +16,7 @@ test("the reported website-source question belongs only to the Community Assista
   assert.ok(!rulesEvalCases.some((item) => item.question === REPORTED_QUESTION));
 });
 
-test("supported live-service plans cannot be discarded by an unrelated scope label", async () => {
+test("food-truck schedule, menu, and cost requests normalize status plans before the live connector", async () => {
   const cases = [
     ["Which food truck is here tomorrow?", plan({
       // Exact production route: correct subject/goal/date but mistaken scope
@@ -28,18 +28,46 @@ test("supported live-service plans cannot be discarded by an unrelated scope lab
       scope: "unrelated", intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck schedule", requestedDetails: ["date"],
       dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
     })],
+    ["What food truck is here today?", plan({
+      scope: "community", intent: "status", goal: "status", goals: ["status"], subject: "food truck", requestedDetails: ["date"],
+      dateRange: { kind: "today", start: "2026-09-01", end: "2026-09-01", label: "today" }, searchQueries: ["food truck today"],
+    })],
+    ["Which truck is here on 2026-09-02?", plan({
+      scope: "unrelated", intent: "status", goal: "status", goals: ["status"], subject: "food truck", requestedDetails: ["date"],
+      dateRange: { kind: "explicit-date", start: "2026-09-02", end: "2026-09-02", label: "2026-09-02" }, searchQueries: ["food truck 2026-09-02"],
+    })],
+    ["What does the food truck menu cost tomorrow?", plan({
+      scope: "unrelated", intent: "status", goal: "cost", goals: ["cost"], subject: "food truck menu", requestedDetails: ["price", "date"],
+      dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck menu cost tomorrow"],
+    })],
   ];
   for (const [question, routingPlan] of cases) {
     const answer = await answerCommunityQuestion(question, {
       interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch",
       planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
-      getFoodTruckAnswer: async () => ({ date: "2026-09-02", friendlyDate: "Wednesday, September 2, 2026", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx" }),
+      getFoodTruckAnswer: async () => ({ date: routingPlan.dateRange.start, friendlyDate: "Wednesday, September 2, 2026", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx", menu: { links: [{ title: "Example Eats menu", url: "https://example.test/menu" }], items: [{ name: "Taco", price: "$12", url: "https://example.test/menu" }] } }),
       answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),
     });
     assert.equal(answer.answerMode, "community-live-food-truck", question);
     assert.match(answer.directAnswer, /Example Eats/, question);
     assert.equal(answer.routingPlan.scope, "community", question);
     assert.equal(answer.routingPlan.intent, "events", question);
+    assert.notEqual(answer.routingPlan.goal, "status", question);
+  }
+});
+
+test("food-truck business-rule questions do not enter the live schedule connector", async () => {
+  for (const scope of ["unrelated", "community"]) {
+    let calls = 0;
+    const answer = await answerCommunityQuestion("Can I run a food truck from my driveway?", {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({ scope, intent: "status", goal: "status", goals: ["status"], subject: "operating a food truck business", requestedDetails: ["status"], searchQueries: ["food truck driveway"], }),
+      getFoodTruckAnswer: async () => { calls += 1; throw new Error("live schedule connector must not run for a business-rule question"); },
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    });
+    assert.equal(calls, 0, scope);
+    assert.doesNotMatch(answer.answerMode, /community-live-food-truck/, scope);
   }
 });
 
