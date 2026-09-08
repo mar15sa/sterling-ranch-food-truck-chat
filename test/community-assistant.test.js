@@ -952,6 +952,8 @@ test("held-out collision: a partial binding answer stays partial when a form mat
   assert.equal(answer.answerStatus, "verified-incomplete");
   assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim");
   assert.deepEqual(answer.sources.map((item) => item.id), ["adopted-shed-rule"]);
+  assert.equal(answer.claimAuthorityBoundary.completion, "not-derived-by-this-slice");
+  assert.deepEqual(answer.supportingSources.map((item) => item.id), ["alpha-shed-form"]);
 });
 
 test("held-out action boundary: reservation wording cannot replace the configured booking action", async () => {
@@ -963,7 +965,10 @@ test("held-out action boundary: reservation wording cannot replace the configure
   const action = source({
     id: "alpha-civicrec", title: "Official Great Hall booking", sourceType: "facilities", connectorType: "official-action",
     text: "Configured official booking handoff.",
-    actions: [{ id: "civicrec", label: "Book the Great Hall in CivicRec", url: "https://alpha.gov/civicrec/great-hall", actionType: "booking" }],
+    actions: [
+      { id: "unrelated", label: "Pay a water bill", url: "https://alpha.gov/pay-water", actionType: "payment" },
+      { id: "civicrec", label: "Book the Great Hall in CivicRec", url: "https://alpha.gov/civicrec/great-hall", actionType: "booking" },
+    ],
   });
   const answer = await answerCommunityQuestion("How do I reserve the Great Hall?", {
     index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [prose, action] },
