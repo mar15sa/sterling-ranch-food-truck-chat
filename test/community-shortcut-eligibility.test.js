@@ -1,6 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { answerCommunityQuestion, datedFacilityHoursAnswer, sourcedAnswer } = require("../lib/community-assistant");
 const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { shortcutEligibility } = require("../lib/community-shortcut-eligibility");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
@@ -137,6 +137,46 @@ test("the exact Labor Day pool-hours question bypasses current-status data and r
   assert.match(answer.answer, /9:00 am/i);
   assert.match(answer.answer, /8:45 pm/i);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
+});
+
+test("dated facility hours reject a supported weekend AI answer for a Monday holiday", async () => {
+  const routingPlan = plan({ intent: "status", goal: "schedule", subject: "pool operating hours on Labor Day", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, filters: { audience: "", category: "", facility: "pool", location: "" }, searchQueries: ["pool hours Labor Day"] });
+  const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", planCommunitySearch: async () => routingPlan,
+    synthesizeCommunityAnswer: async () => ({ directAnswer: "Saturday and Sunday hours are 7:00 am to 8:45 pm.", keyDetails: [], nextStep: "Go swim." }),
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours");
+  assert.match(answer.answer, /Monday-Friday/i);
+  assert.match(answer.answer, /5:00 am/i);
+  assert.doesNotMatch(answer.answer, /Saturday and Sunday hours are 7:00 am/i);
+  assert.match(answer.answer, /does not publish separate holiday hours/i);
+});
+
+test("dated facility hours bind a Sunday request to Sunday rather than weekday hours", () => {
+  const source = {
+    id: "alpha-clubhouse", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), staleAfter: "2099-01-01T00:00:00Z", contentHash: "hours", actions: [], facts: [],
+    text: "Clubhouse operating hours. Clubhouse hours Monday-Friday: 8:00 am - 6:00 pm Saturday: 9:00 am - 4:00 pm Sunday: 10:00 am - 2:00 pm Guest passes.", excerpt: "Clubhouse hours Monday-Friday: 8:00 am - 6:00 pm Saturday: 9:00 am - 4:00 pm Sunday: 10:00 am - 2:00 pm.",
+  };
+  const answer = datedFacilityHoursAnswer("What are the clubhouse hours on Sunday, September 13?", { sources: [source] }, {
+    routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "clubhouse hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-13", end: "2026-09-13", label: "September 13" }, searchQueries: ["clubhouse hours Sunday"] }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours");
+  assert.match(answer.answer, /Sunday: 10:00 am - 2:00 pm/i);
+  assert.doesNotMatch(answer.answer, /Monday-Friday: 8:00 am/i);
+});
+
+test("dated facility hours retain the conflict boundary and prefer an exact weekday heading", async () => {
+  const planForMonday = plan({ intent: "facilities", goal: "schedule", subject: "clubhouse hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["clubhouse hours Monday"] });
+  const base = { id: "one", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), contentHash: "one", actions: [], text: "Monday: 8:00 am - 6:00 pm Tuesday-Friday: 9:00 am - 5:00 pm Saturday: 10:00 am - 2:00 pm.", excerpt: "Monday: 8:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "8:00 am", context: "Monday: 8:00 am - 6:00 pm" }] };
+  const exact = datedFacilityHoursAnswer("What are clubhouse hours on Labor Day?", { sources: [base] }, { routingPlan: planForMonday });
+  assert.match(exact.answer, /Monday: 8:00 am - 6:00 pm/i);
+  assert.doesNotMatch(exact.answer, /Tuesday-Friday/i);
+  const conflict = { ...base, id: "two", sourceUrl: "https://alpha.gov/clubhouse-new", contentHash: "two", text: "Monday: 9:00 am - 6:00 pm", excerpt: "Monday: 9:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "9:00 am", context: "Monday: 9:00 am - 6:00 pm" }] };
+  const answer = await sourcedAnswer("What are clubhouse hours on Labor Day?", { sources: [{ ...base, score: 50 }, { ...conflict, score: 49 }], requestedDetails: ["hours", "date"] }, { routingPlan: planForMonday, synthesizeCommunityAnswer: false });
+  assert.equal(answer.answerMode, "community-source-conflict");
+  assert.notEqual(answer.answerStatus, "verified");
 });
 
 test("a confident rental fallback cannot replace pool hours after live status is rejected", async () => {
