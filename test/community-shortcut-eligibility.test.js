@@ -16,6 +16,68 @@ test("the reported website-source question belongs only to the Community Assista
   assert.ok(!rulesEvalCases.some((item) => item.question === REPORTED_QUESTION));
 });
 
+test("supported live-service plans cannot be discarded by an unrelated scope label", async () => {
+  const cases = [
+    ["Which food truck is here tomorrow?", plan({
+      // Exact production route: correct subject/goal/date but mistaken scope
+      // and status intent.
+      scope: "unrelated", intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck", requestedDetails: ["date"],
+      dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
+    })],
+    ["Who is the food truck tomorrow?", plan({
+      scope: "unrelated", intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck schedule", requestedDetails: ["date"],
+      dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
+    })],
+  ];
+  for (const [question, routingPlan] of cases) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch",
+      planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
+      getFoodTruckAnswer: async () => ({ date: "2026-09-02", friendlyDate: "Wednesday, September 2, 2026", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx" }),
+      answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),
+    });
+    assert.equal(answer.answerMode, "community-live-food-truck", question);
+    assert.match(answer.directAnswer, /Example Eats/, question);
+    assert.equal(answer.routingPlan.scope, "community", question);
+    assert.equal(answer.routingPlan.intent, "events", question);
+  }
+});
+
+test("trash holiday schedules use the live Waste Connections path without taking over storage rules", async () => {
+  const liveSchedule = async () => ({
+    service: "garbage", date: "2026-09-08", range: { start: "2026-09-07", end: "2026-09-07" }, timing: "this week", anchorDate: "2026-09-08",
+    villageDates: [{ village: "Providence Village", date: "2026-09-08" }, { village: "Ascent Village", date: "2026-09-09" }, { village: "Prospect Village", date: "2026-09-11" }],
+    holidayNote: "Labor Day: Collection may be delayed.", checkedAt: NOW.toISOString(), sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+  });
+  for (const question of ["Is there trash pickup on Labor Day?", "Is trash pickup delayed for Labor Day?", "What is the garbage collection schedule for Labor Day?"]) {
+    const delayedStatus = question === "Is trash pickup delayed for Labor Day?";
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({
+        // The delayed-pickup case is the exact production status/status
+        // route; the other phrasings preserve the ordinary schedule route.
+        intent: delayedStatus ? "status" : "services", goal: delayedStatus ? "status" : "schedule", goals: [delayedStatus ? "status" : "schedule"], subject: "trash pickup Labor Day", requestedDetails: [delayedStatus ? "status" : "date"],
+        dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["trash pickup Labor Day"],
+      }),
+      getWasteSchedule: liveSchedule,
+    });
+    assert.equal(answer.answerMode, "community-live-trash", question);
+    assert.match(answer.answer, /Labor Day|September 8/i, question);
+    assert.doesNotMatch(answer.answer, /screened|garage/i, question);
+    assert.equal(answer.routingPlan.intent, "services", question);
+    assert.equal(answer.routingPlan.goal, delayedStatus ? "status" : "schedule", question);
+  }
+  let calls = 0;
+  const storage = await answerCommunityQuestion("Do trash cans need to be screened?", {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => plan({ intent: "rules", goal: "information", goals: ["information"], subject: "trash can storage rules", requestedDetails: ["permission"], searchQueries: ["trash can screening rules"] }),
+    getWasteSchedule: async () => { calls += 1; throw new Error("must not run"); }, answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(calls, 0);
+  assert.doesNotMatch(storage.answerMode, /community-live-trash/);
+});
+
 function plan(overrides = {}) {
   return {
     intent: "events",

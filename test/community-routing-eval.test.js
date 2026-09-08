@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const cases = require("../data/community-routing-benchmark.json");
-const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("../lib/community-observability");
+const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer, supportedLiveRoutingPlan } = require("../lib/community-observability");
 const { ROUTING_PROFILES, ROUTING_THRESHOLDS, buildReport, evaluateRoutingResult, isProviderBillingOrCreditError, parseArgs, profileCases, releaseFailures, requestRoute, runBenchmark, safeDiagnostic, safeUsage, spendForRuns, summarizeRoutingRuns } = require("../scripts/eval-community-routing-live");
 
 test("routing profiles use a small one-pass smoke check by default and reserve the full benchmark for explicit use", () => {
@@ -118,6 +118,19 @@ test("production routing visibility detects drift without retaining question tex
   assert.match(trace.questionFingerprint, /^[a-f0-9]{16}$/);
   assert.equal(privacyFingerprint("Same wording"), privacyFingerprint("same wording"));
   assert.notEqual(privacyFingerprint("Same wording"), privacyFingerprint("different wording"));
+});
+
+test("a supported live-service route ending out of scope is an observable release failure", () => {
+  const before = communityAnswerMetrics();
+  const plan = { intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck", searchQueries: ["food truck tomorrow"] };
+  assert.equal(supportedLiveRoutingPlan(plan), true);
+  assert.equal(supportedLiveRoutingPlan({ intent: "services", goal: "information", subject: "weather", searchQueries: ["weather"] }), false);
+  recordCommunityAnswer({ answer: {
+    answerMode: "conversation", answerStatus: "out-of-scope", inputClassification: "unrelated", confidence: { canAnswer: false }, sources: [], claims: [], routingDecision: "ai-planned", routingPlan: plan,
+  }, resolvedQuestion: "private food truck wording", durationMs: 10 });
+  const after = communityAnswerMetrics();
+  assert.equal(after.routingContractFailures, before.routingContractFailures + 1);
+  assert.ok(Date.parse(after.lastRoutingContractFailureAt));
 });
 
 test("staging-only real-model endpoint and scheduled benchmark stay wired", () => {
