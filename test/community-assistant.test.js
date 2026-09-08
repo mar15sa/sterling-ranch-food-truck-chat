@@ -925,6 +925,59 @@ test("an exact facility page outranks a contradictory generic rulebook answer fo
   assert.equal(result.actions[0].url, "https://alpha.gov/courtreserve");
   assert.equal(result.sources[0].sourceUrl, "https://alpha.gov/418/Pickleball-Courts");
 });
+
+test("held-out collision: a facility or form cannot become rule evidence", () => {
+  const rule = source({ id: "alpha-rule", sourceType: "rules", connectorType: "municode", title: "Adopted parking rule", text: "Vehicles may not be stored in the street overnight." });
+  const facility = source({ id: "alpha-pool", sourceType: "facilities", title: "Pool rules", text: "Pool guests must reserve a time slot.", connectorType: "civicplus-pages" });
+  const form = source({ id: "alpha-request", sourceType: "forms", title: "Parking request form", text: "Request parking approval here.", connectorType: "civicplus-pages" });
+  const result = searchCommunityIndex("Can I park overnight?", {
+    index: { communityId: "alpha", sources: [rule, facility, form] }, communityId: "alpha", intent: "rules",
+  });
+  assert.deepEqual(result.sources.map((item) => item.id), ["alpha-rule"]);
+});
+
+test("held-out collision: a partial binding answer stays partial when a form matches its words", async () => {
+  const form = source({ id: "alpha-shed-form", sourceType: "forms", title: "Shed approval form", text: "Apply to build a shed with this form.", connectorType: "civicplus-pages" });
+  const ruleSource = { id: "adopted-shed-rule", title: "Adopted shed rule", sourceUrl: "https://alpha.gov/rules/sheds", sourceType: "rules", connectorType: "municode", text: "Sheds require approval." };
+  const answer = await answerCommunityQuestion("Can I build a shed and how do I apply?", {
+    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [form] },
+    communityId: "alpha", planCommunitySearch: false,
+    answerRulesQuestion: async () => ({
+      answer: "Sheds require approval, but the adopted rule does not list the current application steps.",
+      answerStatus: "verified-incomplete", answerMode: "source-derived-structured",
+      inputClassification: "rules-question", confidence: { canAnswer: true, confidence: "high" }, sources: [ruleSource],
+      qualityChecks: { issues: ["requested-action-missing"] },
+    }),
+  });
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim");
+  assert.deepEqual(answer.sources.map((item) => item.id), ["adopted-shed-rule"]);
+  assert.equal(answer.claimAuthorityBoundary.completion, "not-derived-by-this-slice");
+  assert.equal(Object.hasOwn(answer, "supportingSources"), false);
+  assert.equal(answer.sources.some((item) => item.id === "alpha-shed-form"), false);
+});
+
+test("held-out action boundary: reservation wording cannot replace the configured booking action", async () => {
+  const prose = source({
+    id: "alpha-clubhouse-faq", title: "Clubhouse FAQ", sourceType: "facilities",
+    text: "You can reserve the Great Hall for gatherings. Review the facility information before booking.",
+    actions: [{ id: "incidental", label: "Reserve information", url: "https://alpha.gov/faq/reserve", actionType: "booking" }],
+  });
+  const action = source({
+    id: "alpha-civicrec", title: "Official Great Hall booking", sourceType: "facilities", connectorType: "official-action",
+    text: "Configured official booking handoff.",
+    actions: [
+      { id: "unrelated", label: "Pay a water bill", url: "https://alpha.gov/pay-water", actionType: "payment" },
+      { id: "civicrec", label: "Book the Great Hall in CivicRec", url: "https://alpha.gov/civicrec/great-hall", actionType: "booking" },
+    ],
+  });
+  const answer = await answerCommunityQuestion("How do I reserve the Great Hall?", {
+    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [prose, action] },
+    communityId: "alpha", synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => ({ intent: "facilities", goal: "booking", goals: ["booking"], subject: "Great Hall", searchQueries: ["reserve Great Hall"] }),
+  });
+  assert.equal(answer.actions[0].url, "https://alpha.gov/civicrec/great-hall");
+});
 test("static page indexing excludes the rotating CivicPlus calendar widget", () => {
   const html = `<main data-cpRole="mainContentContainer"><h1>Resident information</h1><p>Static official guidance stays indexed.</p><div data-widget-id="calendar" data-widget-controller-path="/Calendar/Widget"><div id="widgetCalendar"><li data-event-i-d="123"><a href="/Calendar.aspx?EID=123">Tomorrow's changing event</a></li><div class="addItemModal hidden"><div class="url hidden">/Calendar.aspx</div></div></div></div></div><p>Static contact information also stays indexed.</p></main>`;
   const cleaned = contentHtml(html);
