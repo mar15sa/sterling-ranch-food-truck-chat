@@ -8,7 +8,30 @@ Keep specialist connections when they supply current structured facts or a dedic
 
 The current `data/communities/sterling-ranch.json` and `data/communities/castle-rock.json` profiles already demonstrate the right starting boundary: community identity, allowed official hosts, connectors, authority order, fact authority, and actions are configuration. Castle Rock's passed configuration-only portability proof shows that CivicPlus pages, calendars, and Municode can operate from a second profile without a core-code change. It does not yet prove that every Sterling-specific connector is portable.
 
-## Current connector audit
+## Current-state audit: implemented versus pending
+
+The table below records behavior verified in the September 8 staging audit. It is a description of the current runtime, not a statement that the target contract is already enforced.
+
+| Connection | Current contribution | Needed after migration? | Current invocation | What it may authoritatively support | Implemented boundary and remaining gap |
+| --- | --- | --- | --- | --- | --- |
+| Food trucks | Reads the official calendar for confirmed truck dates and locations; may add vendor menu context. | Yes. Keep as event enrichment. | `lib/community-assistant.js` calls `foodTruckAnswer`; server-side food-truck lookup supplies the date result. | The official calendar controls event date, time, and place. A truck's official menu controls only that truck's menu claims. | Calendar-first schedule behavior exists. Menu and schedule evidence are not yet represented as separate claim/facet authorities in final assembly. |
+| Waste and recycling | Uses Waste Connections/ReCollect data for pickup dates and holidays, then adds a CAB trash/recycling page. | Yes. Keep for live collection timing. | `lib/community-assistant.js` calls `getWasteSchedule`; `lib/community-waste-schedule.js` resolves the current schedule. | The live provider controls current pickup date and holiday changes. The controlling rulebook controls cart-storage restrictions. An official information page may explain stable collection instructions. | The live-date path exists and excludes obvious storage-rule wording. It still combines live timing with a hand-created static instruction, and its village resolution is a Sterling-specific anchor-address mapping. |
+| Pool status | Parses CAB's pool-status page and maps its displayed state to open/closed/limited. | Yes. Keep for current operational status. | `lib/community-assistant.js` calls `getPoolStatus`; parsing and cache logic live in `server.js`. | Live status and official alerts control whether the pool is open now. An official facility page controls normal hours. A rulebook controls restrictions. | The live-status path and stale-result downgrade exist. The page/color interpretation remains hard-coded in the server, and a combined status-plus-hours question is not yet composed by facet. |
+| Calendar and events | Fetches and filters the official CivicPlus calendar and exposes parser health. | Yes. Keep for current event facts. | `lib/community-assistant.js` calls `getCommunityEvents`; `lib/community-events.js` parses the calendar. | Official calendar controls event dates, times, locations, and registration links. | The connector safely avoids a verified empty result when parsing fails. It is not yet a normalized adapter with declared, enforceable claim boundaries. |
+| Official actions and forms | Provides configured official destinations such as CivicRec, forms, accounts, and contacts. | Yes. Keep as the resident's next step. | Planned and fallback action selection is in `lib/community-assistant.js`. | An official action supports a submission, booking, payment, or contact step only. It cannot establish a binding restriction, fee, availability, or eligibility claim. | Action records and source-version tracking exist. Generic goal matching still treats ordinary prose containing words such as “reserve” or “booking” as potential process support, so a page can displace the correct official action. |
+| Facilities and CivicRec | Uses facility/rental pages and a configured CivicRec action; a proactive rental shortcut formats common answers. | Yes. Keep for current rental process, fees, hours, availability, and booking handoff. | Proactive rental logic runs in `lib/community-proactive.js`; operational facility retrieval runs in `lib/community-assistant.js`. | A current facility/transaction system controls rental process, fees, availability, and booking. It cannot control private-improvement or other binding restrictions. | The current shortcut runs before the rules route. Its exact-filter test examines displayed text rather than cited evidence, which caused the verified Overlook Clubhouse reservation failure and fallback to mixed generic retrieval. |
+
+### Authority enforcement status
+
+**Implemented now:** source review/freshness checks, fact-authority ranking in the Fact Ledger, connector-specific collision guards for several known questions, and safe degradation for calendar parsing and stale pool status.
+
+**Pending runtime enforcement:** the target central authority gate, a normalized adapter contract, per-claim source roles in the final answer, and completion status derived from every required claim.
+
+The important distinction is that current fact authority is sometimes a **ranking preference**, rather than a hard final-answer rule. In particular, community search still permits `facilities` and `forms` sources for a `rules` search. After a rules answer is produced, the dispatcher may retrieve community sources, replace a rule answer it considers incomplete, merge extra sources/actions, and mark the result verified. This can be correct for a separately labeled process detail, but is not yet a safe way to prove a binding requirement.
+
+Until the migration is complete, no facility page, FAQ, calendar, vendor page, form, or action link may be described as authority for a binding rule. If such a source is included, the response must make clear that it supports only its own operational or process claim and must preserve the controlling adopted rule as the source for the requirement.
+
+## Target direction per connector
 
 | Connection | Keep? | Assistant behavior | Specialist-page handoff | Authority boundary |
 | --- | --- | --- | --- | --- |
@@ -32,6 +55,20 @@ The redundant behavior to remove is duplicated decision-making: a specialist sho
 3. **Process and actions:** use the current official action after the controlling rule or verified process is established. A process page cannot silently answer a binding rule question.
 4. **Conflicts:** preserve both source identities, decline to merge incompatible claims, and give the official resolution path.
 5. **Staleness and failure:** stale evidence cannot produce a verified claim. An unavailable live connector gives a clear limited answer only if independently verified static evidence covers it; otherwise it says that current status could not be verified and links the official live source.
+
+### Required claim/facet authority model
+
+Every answer must separate the resident's requested details into claims before it decides whether the answer is complete. A source is authoritative only for the claim type it owns:
+
+| Requested claim/facet | Controlling source | Allowed supporting source | Must never control the claim |
+| --- | --- | --- | --- |
+| Binding permission, prohibition, approval, or restriction | Adopted rule, code, policy, amendment, or other controlling rulebook source | Official form or contact for the next step | Facility page, FAQ, calendar, vendor, live-status page, or action link |
+| Current pickup, pool, alert, availability, event date/time/place | Matching current official connector or current official operational record | Official information page for stable instructions | Old static schedule, unrelated facility page, or rulebook used as a substitute for a current state |
+| Rental fee, booking availability, reservation steps | Current official facility or transaction system, including CivicRec where configured | Official action record pointing to that system | FAQ or rulebook used as a substitute for current transaction information |
+| Submission, payment, registration, or contact next step | Configured official action/form/account/contact | Controlling rule or verified process statement explaining why it applies | Search-result prose merely containing an action-like word |
+| Vendor menu | Vendor's official menu | Official calendar only for the event connection | Calendar, facility page, or resident discussion used as the menu authority |
+
+The final response must retain this mapping internally and expose it in its source presentation. A response becomes `verified` only when every required claim has a current, reviewed controlling source. A process/action source may complete a process claim; it must never upgrade an unsupported binding-rule claim to verified.
 
 ## Current Sterling-specific assumptions that must move out of shared code
 
@@ -72,27 +109,37 @@ ConnectorAdapter
 
 The core selects an adapter only from declared profile capabilities, applies profile authority before formatting, and combines its normalized evidence with the common answer contract. A connector cannot write a final verified answer, bypass freshness, or cross community boundaries by itself.
 
-## Staged migration
+## Phased migration order
 
-1. **Inventory and freeze behavior.** List every hard-coded Sterling decision, map it to profile, adapter, or core, and add characterization tests before moving it.
-2. **Normalize existing connections.** Wrap food trucks, waste, pool status, calendar/events, and actions behind one adapter response contract while preserving current resident behavior.
-3. **Move configuration.** Transfer endpoints, labels, vocabulary, service-area mappings, menus, facility facts, and fallback language into the Sterling profile or content pack. Keep secrets out of profiles.
-4. **Enforce authority centrally.** Route rule, operational, and process questions through the same authority/freshness/conflict gate before any connector response is formatted.
-5. **Prove portability.** Configure a second CivicPlus community with only profile and adapter-supported values. Expand the existing Castle Rock proof from pages/calendar/rules to the capabilities that community actually supports; do not invent unsupported equivalents.
-6. **Retire duplicated shortcuts.** Remove old connector-specific answer formatting only after the shared contract has family-level parity evidence.
+The order is deliberately bounded: it first makes the source role visible, then moves specialized behavior without changing resident-facing claims, and only then removes duplicate shortcuts.
 
-## Required collision and degradation tests
+1. **Freeze the current behavior and source roles.** Add characterization tests for every active specialist path, including its source list, completion status, applied filters, and degradation outcome. Record every hard-coded Sterling decision as profile, adapter, or core ownership.
+2. **Introduce a normalized evidence envelope.** Make food trucks, waste, pool status, events, official actions, and facilities/CivicRec return the same evidence fields: capability, claim/facet, controlling-source role, freshness, coverage, action, and degradation state. This is an internal contract; it does not itself change the answer wording.
+3. **Centralize claim/facet authority and completion.** Select a controlling source separately for rule, operational, transaction, and action claims. Disallow facility/forms/calendar/action evidence from controlling a binding-rule claim. Derive final completion and `verified` status from all required claims; remove any unconditional verified upgrade after merging sources.
+4. **Migrate specialist configuration.** Move Waste Connections address/village handling, CAB pool parsing metadata, food-truck aliases/menu links, facility vocabulary, CivicRec action metadata, labels, and fallback wording into the Sterling profile or connector configuration. Keep secrets out of profiles.
+5. **Replace shortcuts only after parity.** Rewrite proactive rental and other specialty formatting to consume the evidence envelope. Do not remove a current specialist path until its held-out family passes both normal and degraded cases.
+6. **Prove portability.** Expand the Castle Rock configuration-only proof only for capabilities the profile declares. Verify that hosts, vocabulary, actions, source records, and authority order cannot leak between profiles.
+
+Implementation ownership is expected to begin in `lib/community-assistant.js`, `lib/community-search.js`, `lib/community-proactive.js`, `lib/community-source-identity.js`, and the specialist connector modules. The server-side pool and food-truck integrations must move behind the same contract. This document does not authorize or claim any runtime change.
+
+## Required held-out collision and degradation tests
 
 Each connector migration must add tests for the following, using test-marked assistant requests for any hosted verification:
 
-- A waste schedule question versus a waste-storage rule: current pickup timing comes from the schedule; storage restrictions come from the controlling rule.
-- A current pool-status question versus regular facility hours: current live status wins and stale hours cannot show as verified.
-- A food-truck menu question versus event logistics: the official calendar controls when and where; the official truck menu controls menu claims.
-- A public pickleball use question versus a private-court construction question: public operations and binding improvement rules remain separate.
-- An unavailable connector: no invented current answer, clear status, and an official handoff that still works.
-- Conflicting rule and process sources: the controlling rule is identified and the conflict is not silently blended.
+- **Waste date plus rule:** “When is pickup, and where may I store my carts?” The live connector controls the date; the adopted rule controls storage. The answer must show two claim/source roles and may not let a static schedule answer the rule.
+- **Pool status plus hours:** “Is the pool open today, and what are the normal hours?” Live status controls today; the official facility page controls normal hours. A stale status or stale-hours record cannot make the complete answer verified.
+- **Food truck logistics plus menu:** “Which truck is here Friday, where is it, and what does it serve?” The official calendar controls truck/date/place; the vendor's official menu controls menu claims. An absent menu does not invalidate a confirmed calendar event.
+- **Public operations versus private rule:** Compare “Can we play pickleball in the neighborhood?” with “Can I build a pickleball court in my yard?” Public-facility operations and binding private-improvement rules remain separate.
+- **Facility reservation family:** Test “How do I reserve the Overlook Clubhouse?”, “Can I book the Overlook clubhouse?”, “What does it cost to rent the Overlook Clubhouse?”, and “Can I reserve the Overlook clubhouse pool for a party?” The answer must preserve the named facility, distinguish clubhouse rental from pool-party FAQ material, use current facility evidence for process/fee, and provide the configured CivicRec action.
+- **Mixed event and reservation request:** “Is there a food truck Friday, and can I reserve the clubhouse?” Calendar evidence controls the event claim; facility/CivicRec evidence controls the reservation claim. Neither source may be presented as authority for the other.
+- **Unavailable connector:** For each of waste, pool, calendar, and food trucks, simulate provider failure or unhealthy parsing. The answer must not invent a current fact, must mark only the affected claim incomplete/unavailable, and must offer the official handoff.
+- **Conflicting rule and process source:** Give a controlling rule and a conflicting facility/form statement. The controlling rule must be identified; the process source may provide a next step but cannot silently change the requirement or upgrade completion.
+- **Action-source boundary:** A page that says “reserve” or “booking” but has no configured official action must not displace the official CivicRec/form action for a booking request.
+- **Rule-source boundary:** A rules query whose keywords also match a facility, FAQ, form, or calendar page must not cite that non-rule source as support for the binding conclusion.
 - Cross-community isolation: two profiles with different connectors, hosts, vocabulary, and authority orders cannot leak source records, actions, or labels into each other.
 - Configuration-only portability: a supported second CivicPlus profile can pass its declared evaluation set without changing core routing code.
+
+For hosted checks, every request must use the existing test marker (`isTest: true` for direct API requests or the Test mode page) so evaluation traffic never enters the resident question list.
 
 ## Next implementation worktrees
 
