@@ -9,12 +9,29 @@ const PAYMENT_QUESTIONS = new Set([
   "Pay utility bill",
   "What's the online place for settling my monthly utility charge?",
 ]);
+const POOL_HOURS_QUESTIONS = new Set([
+  "What are the pool hours for Labor Day?",
+]);
 
 function hasAiEvalFixture(question) {
-  return PAYMENT_QUESTIONS.has(String(question).trim());
+  const normalized = String(question).trim();
+  return PAYMENT_QUESTIONS.has(normalized) || POOL_HOURS_QUESTIONS.has(normalized);
 }
 
 async function planCommunitySearchFixture(question) {
+  if (POOL_HOURS_QUESTIONS.has(String(question).trim())) return {
+    intent: "status",
+    goal: "schedule",
+    goals: ["schedule"],
+    subject: "pool operating hours on Labor Day",
+    requestedDetails: ["hours", "date"],
+    dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" },
+    filters: { audience: "", category: "", facility: "pool", location: "" },
+    searchQueries: ["pool hours Labor Day", "Overlook Outdoor Pool hours"],
+    scope: "community",
+    needsClarification: false,
+    clarificationQuestion: "",
+  };
   if (!hasAiEvalFixture(question)) return null;
   return {
     intent: "services",
@@ -25,6 +42,7 @@ async function planCommunitySearchFixture(question) {
 }
 
 async function synthesizeCommunityAnswerFixture(question) {
+  if (POOL_HOURS_QUESTIONS.has(String(question).trim())) return null;
   if (!hasAiEvalFixture(question)) return null;
   return {
     directAnswer: "Pay your Sterling Ranch water bill through UtilityHawk. Sign in, then select “Pay Online.”",

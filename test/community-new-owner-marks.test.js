@@ -22,8 +22,8 @@ test('owner pool-event discovery reaches the calendar even when a planner propos
   const answer = await answerCommunityQuestion(poolQuestion, { now, index: { sources: [] }, interpretationMode: 'structured',
     planCommunitySearch: async () => ({ intent: 'status', goal: 'status', scope: 'community', subject: 'pool', searchQueries: ['pool events'] }),
     getPoolStatus: async () => { poolChecks++; return { status: 'open' }; },
-    getCommunityEvents: async () => { calendars++; return { events: [], range: { label: 'today' },
-      diagnostics: { parserHealthy: true }, sourceUrl: 'https://sterlingranchcab.com/Calendar.aspx', checkedAt: now.toISOString() }; } });
+    getCommunityEvents: async () => { calendars++; return { events: [], range: { kind: 'today', start: '2026-09-06', end: '2026-09-06', label: 'today' },
+      diagnostics: { parserHealthy: true, appliedFilters: [{ field: 'location', value: 'pool' }] }, sourceUrl: 'https://sterlingranchcab.com/Calendar.aspx', checkedAt: now.toISOString() }; } });
   assert.equal(answer.answerMode, 'community-live-events');
   assert.equal(calendars, 1);
   assert.equal(poolChecks, 0);

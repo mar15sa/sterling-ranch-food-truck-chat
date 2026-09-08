@@ -103,10 +103,12 @@ test("only genuinely dependent follow-ups reuse the previous turn", () => {
 test("the 228-question corpus does not inherit landscaping except for intentionally incomplete follow-ups", () => {
   const resident = require("../scripts/resident-rules-corpus.json");
   const authored = require("../scripts/rules-eval-cases.json");
+  const community = require("../scripts/community-eval-cases.json");
   const unseen = require("../scripts/rules-unseen-eval-cases.json");
   const questions = [...new Set([
     ...resident,
     ...authored.flatMap((item) => [item.question, ...(item.variants || [])]),
+    ...community.flatMap((item) => [item.question, ...(item.variants || [])]),
     ...unseen.map((item) => item.question),
   ])];
   const context = [{ question: "What are the landscaping and yard rules?", answer: "Plans need DRC review." }];
