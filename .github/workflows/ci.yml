@@ -25,3 +25,33 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+
+  approved-evidence-revalidation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Revalidate due approved evidence into a temporary snapshot
+        run: |
+          node scripts/check-approved-community-revalidation.js \
+            --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
+            --attestation artifacts/community-approved-revalidation-attestation.json \
+            --review-output artifacts/community-approved-revalidation-review.json
+      - name: Run source and answer gates against temporary evidence
+        run: |
+          node scripts/check-community-sources.js --input "$RUNNER_TEMP/community-index.revalidated.json"
+          node scripts/eval-community-assistant.js --enforce --input "$RUNNER_TEMP/community-index.revalidated.json" --output artifacts/community-assistant-temp-eval.json
+          node scripts/check-community-retrieval.js --input "$RUNNER_TEMP/community-index.revalidated.json" --output artifacts/community-retrieval-temp-report.json
+      - name: Preserve evidence revalidation records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-evidence-revalidation
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 30
