@@ -143,6 +143,12 @@
     "effectiveYear": 2025,
     "documentCenterIds": ["2615"],
     "sourcePriority": 255,
+    "ownerReview": {
+      "decisionId": "delinquency-policy",
+      "approvedScope": "Controlling June 2025 collection-process source; listed charges are this resolution's fee schedule.",
+      "withheldScope": ["Any claim that no newer amendment exists."],
+      "freshnessBoundary": "Use only unless a newer amendment is confirmed."
+    },
     "currentForTopics": ["delinquent-fees", "late-fees", "collections", "water-disconnect", "liens", "payment-plans"],
     "requiredCoveragePhrases": [
       "supersedes prior collection policies",
@@ -172,6 +178,12 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2473"],
     "sourcePriority": 275,
+    "ownerReview": {
+      "decisionId": "water-rates-2026",
+      "approvedScope": "Clearly labeled residential 2026 water, sanitary sewer, and stormwater rates only.",
+      "withheldScope": ["master-meter", "nonresidential", "public-school", "construction-water", "irrigation", "unlabelled or clipped row"],
+      "historicalBoundary": "Use 2025 material only when the resident explicitly asks about 2025."
+    },
     "replacesSections": ["13-174", "13-175", "13-176", "13-177", "13-178"],
     "requiredCoveragePhrases": [
       "All prior rates, fees, or charges adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A",
@@ -202,6 +214,11 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2472"],
     "sourcePriority": 280,
+    "ownerReview": {
+      "decisionId": "tap-facility-2026",
+      "approvedScope": "Complete, clearly labeled residential tap and facility-fee rows only.",
+      "withheldScope": ["commercial", "school", "irrigation", "master-meter", "large-meter", "pool", "clipped-footnote case", "incomplete or unlabelled row"]
+    },
     "replacesSections": ["13-124", "13-3"],
     "requiredCoveragePhrases": [
       "All prior tap fees, service charges, and facility fees adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A",
@@ -233,6 +250,12 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2474"],
     "sourcePriority": 270,
+    "ownerReview": {
+      "decisionId": "cab-fees-effective-date",
+      "approvedScope": "Clearly labeled 2026 CAB fee amounts.",
+      "withheldScope": ["standalone effective-date claim"],
+      "conflict": "The source has conflicting 2025/2026 effective-date wording."
+    },
     "replacesSections": ["13-179", "13-25", "13-73", "13-74", "13-48"],
     "requiredCoveragePhrases": [
       "Exhibit A 2026 CAB Service Fees",
