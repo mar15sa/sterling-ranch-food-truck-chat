@@ -5,6 +5,8 @@ const { pageText, stripEmbeddedInstructions, extractPdfText, chunkText, isDocume
 const { isFreshnessTrackedSource } = require("../lib/community-source-manager");
 const { APPROVED_REVIEW_STATUSES } = require("../lib/community-truth");
 
+const VERIFIER_VERSION = "approved-evidence-ci-bridge-v1";
+
 function isApprovedSource(source = {}) {
   // The active index is the reviewed source snapshot. An explicit non-approved
   // review status is still never renewable through this unattended path.
@@ -47,6 +49,62 @@ function renewExactApprovedEvidence(index = {}, { sourceUrl, observedHashes = []
   return { renewedSources, renewedFacts, requiresReview };
 }
 
+function approvedFingerprint(index = {}) {
+  // This deliberately delegates to the release fingerprint instead of adding a
+  // second interpretation of "approved" evidence. Dynamic records remain out
+  // of the release identity exactly as they do for an owner-approved release.
+  return require("../lib/community-release").fingerprint(index);
+}
+
+function inputFingerprint(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(value)).digest("hex");
+}
+
+function reviewRecord(sourceUrl, sources, outcome, details = {}) {
+  return {
+    sourceUrl,
+    sources: sources.map(({ id, contentHash, actions = [] }) => ({ id, contentHash, actionCount: actions.length, actionIdentity: JSON.stringify(actions.map(action => [action.label, action.url, action.actionType || "", [...(action.keywords || [])].sort()]).sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)))) })),
+    outcome,
+    ...details,
+  };
+}
+
+async function revalidateApprovedEvidence(index, { now = Date.now(), fetchObservedHashes, staleAfterMs = 86_400_000 } = {}) {
+  if (typeof fetchObservedHashes !== "function") throw new Error("A canonical source observer is required.");
+  const temporaryIndex = structuredClone(index);
+  const checks = [];
+  for (const sourceUrl of selectRevalidationTargetUrls(temporaryIndex, now)) {
+    const approvedSources = temporaryIndex.sources.filter((source) => source.sourceUrl === sourceUrl && isApprovedSource(source));
+    const checkedAt = new Date(now).toISOString();
+    const staleAfter = new Date(now + staleAfterMs).toISOString();
+    try {
+      const observation = await fetchObservedHashes(sourceUrl, approvedSources);
+      const observedHashes = Array.isArray(observation?.observedHashes) ? observation.observedHashes : [];
+      const expectedHashes = new Set(approvedSources.map((source) => source.contentHash));
+      const extraHashes = observedHashes.filter((hash) => !expectedHashes.has(hash));
+      const renewal = renewExactApprovedEvidence(temporaryIndex, { sourceUrl, observedHashes, checkedAt, staleAfter });
+      const missing = approvedSources.filter((source) => !renewal.renewedSources.some((item) => item.id === source.id && item.contentHash === source.contentHash));
+      if (observation?.actionMismatch || !observedHashes.length || extraHashes.length || missing.length || renewal.requiresReview.length) {
+        checks.push(reviewRecord(sourceUrl, approvedSources, "review-required", {
+          reason: observation?.actionMismatch ? "action-identity-changed" : !observedHashes.length ? "no-valid-proof" : extraHashes.length ? "extra-source-identity-or-content-hash" : "source-identity-or-content-hash-changed",
+          observedHashes,
+          actionProof: observation?.actionProof || null,
+          extraHashes,
+          missing: missing.map(({ id, contentHash }) => ({ id, contentHash })),
+          requiresReview: renewal.requiresReview.map(({ id, contentHash }) => ({ id, contentHash })),
+          checkedAt,
+          staleAfter,
+        }));
+        continue;
+      }
+      checks.push(reviewRecord(sourceUrl, approvedSources, "renewed", { observedHashes, actionProof: observation?.actionProof || null, checkedAt, staleAfter }));
+    } catch (error) {
+      checks.push(reviewRecord(sourceUrl, approvedSources, "review-required", { reason: "fetch-or-extraction-failed", error: error.message, checkedAt, staleAfter }));
+    }
+  }
+  return { temporaryIndex, checks };
+}
+
 async function main() {
   const file = "data/community-index.json";
   const index = JSON.parse(await fs.readFile(file, "utf8"));
@@ -87,4 +145,4 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error.message); process.exitCode = 1; });
 
-module.exports = { isApprovedSource, renewExactApprovedEvidence, selectRevalidationTargetUrls };
+module.exports = { VERIFIER_VERSION, approvedFingerprint, inputFingerprint, isApprovedSource, renewExactApprovedEvidence, revalidateApprovedEvidence, selectRevalidationTargetUrls };

@@ -24,4 +24,22 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - run: npm run check
+      - name: Revalidate due approved evidence into a temporary snapshot
+        run: |
+          node scripts/check-approved-community-revalidation.js \
+            --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
+            --attestation artifacts/community-approved-revalidation-attestation.json \
+            --review-output artifacts/community-approved-revalidation-review.json
+          echo "COMMUNITY_EVIDENCE_INDEX=$RUNNER_TEMP/community-index.revalidated.json" >> "$GITHUB_ENV"
+          echo "COMMUNITY_EVIDENCE_REPORT_DIR=$GITHUB_WORKSPACE/artifacts" >> "$GITHUB_ENV"
+      - name: Run the comprehensive quality gate against temporary evidence
+        run: |
+          npm run check
+      - name: Preserve evidence revalidation records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: approved-evidence-revalidation
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 30
