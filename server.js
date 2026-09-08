@@ -54,6 +54,7 @@ const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input
 const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
 const { latestReviewDecision } = require("./lib/community-review-queue");
+const { paginateReviews } = require("./lib/community-review-pagination");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
   normalizeTruckName,
@@ -5078,17 +5079,7 @@ async function handleCommunitySourceReview(req, res, url, reviewId = "") {
         if (!item) return sendJson(res, 404, { error: "That review item was not found." });
         return sendJson(res, 200, { item });
       }
-      const topic = String(url.searchParams.get("topic") || "").trim();
-      const risk = String(url.searchParams.get("risk") || "").trim();
-      const status = String(url.searchParams.get("status") || "").trim();
-      const conflict = url.searchParams.get("conflict");
-      const filtered = items.filter((item) =>
-        (!topic || item.topic === topic)
-        && (!risk || item.risk === risk)
-        && (!status || item.status === status)
-        && (conflict === null || Boolean(item.conflict) === (conflict === "true"))
-      );
-      return sendJson(res, 200, { items: filtered, counts: communitySourceStatus() });
+      return sendJson(res, 200, { ...paginateReviews(items, url.searchParams), counts: communitySourceStatus() });
     }
     if (req.method !== "POST" || !reviewId) return sendJson(res, 405, { error: "Use GET, or POST on a specific review item." });
     if (!isSameOriginRequest(req)) return sendJson(res, 403, { error: "Source-review decisions must come from the private owner dashboard." });

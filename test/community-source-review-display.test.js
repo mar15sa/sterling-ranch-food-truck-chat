@@ -103,3 +103,52 @@ test('approved review history does not claim the old comparison is current appro
   assert.ok(nodes.some(n => String(n.textContent).includes('Release at review creation: earlier-release')));
   assert.ok(!nodes.some(n => n.textContent === 'Not currently approved' || n.textContent === 'Current approved'));
 });
+
+test('rendering a large inventory page keeps full totals but only mounts 25 cards', () => {
+  const { paginateReviews } = require('../lib/community-review-pagination');
+  const context = display();
+  const inventory = Array.from({ length: 1969 }, (_, i) => ({ id: String(i), status: 'pending', risk: i < 1185 ? 'high' : 'medium' }));
+  context.render(paginateReviews(inventory, new URLSearchParams()));
+  assert.equal(vm.runInContext('sourceList.children.length', context), 25);
+  assert.equal(vm.runInContext('$("#pendingCount").textContent', context), '1969');
+  assert.equal(vm.runInContext('$("#sensitiveCount").textContent', context), '1185');
+  assert.equal(vm.runInContext('$("#previousPage").disabled', context), true);
+  assert.equal(vm.runInContext('$("#nextPage").disabled', context), false);
+  context.render(paginateReviews(inventory, new URLSearchParams('page=79')));
+  assert.equal(vm.runInContext('sourceList.children.length', context), 19);
+  assert.equal(vm.runInContext('$("#nextPage").disabled', context), true);
+});
+
+test('older filter responses and failures cannot replace the latest page or reopen a signed-out dashboard', async () => {
+  const pending = [];
+  const context = display(() => new Promise((resolve, reject) => pending.push({ resolve, reject })));
+  const first = context.loadReviews(2);
+  const second = context.loadReviews(1);
+  pending[1].resolve({ ok: true, json: async () => ({ items: [{ id: 'new', topic: 'Latest result' }] }) });
+  await second;
+  pending[0].reject(new Error('Old request failed'));
+  await first;
+  assert.equal(vm.runInContext('items[0].id', context), 'new');
+  const third = context.loadReviews();
+  context.showLogin('Signed out');
+  pending[2].resolve({ ok: true, json: async () => ({ items: [{ id: 'private' }] }) });
+  await third;
+  assert.equal(vm.runInContext('dashboard.hidden', context), true);
+  assert.equal(vm.runInContext('sourceList.children.length', context), 0);
+});
+
+test('page requests preserve filters and recover when the last pending card leaves a page', async () => {
+  let requested;
+  const context = display(async url => {
+    requested = new URL(url, 'https://example.test');
+    return { ok: true, json: async () => ({ items: [{ id: 'remaining', status: 'pending' }], pagination: { page: 1, pageCount: 1, pageSize: 25, total: 1 } }) };
+  });
+  vm.runInContext('$("#riskFilter").value = "high"; $("#statusFilter").value = "pending"; $("#conflictFilter").checked = true;', context);
+  await context.loadReviews(2);
+  assert.equal(requested.searchParams.get('page'), '2');
+  assert.equal(requested.searchParams.get('risk'), 'high');
+  assert.equal(requested.searchParams.get('status'), 'pending');
+  assert.equal(requested.searchParams.get('conflict'), 'true');
+  assert.equal(vm.runInContext('currentPage', context), 1);
+  assert.equal(vm.runInContext('$("#nextPage").disabled', context), true);
+});

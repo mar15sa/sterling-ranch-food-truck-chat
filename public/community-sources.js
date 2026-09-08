@@ -5,6 +5,9 @@ const sourceList = $("#sourceList");
 const emptyState = $("#emptyState");
 const listError = $("#listError");
 let items = [];
+let currentPage = 1;
+let pageCount = 1;
+let loadVersion = 0;
 
 function textElement(tag, value, className = "") {
   const node = document.createElement(tag);
@@ -14,6 +17,9 @@ function textElement(tag, value, className = "") {
 }
 
 function showLogin(message = "") {
+  loadVersion++;
+  sourceList.replaceChildren();
+  items = [];
   loginPanel.hidden = false; dashboard.hidden = true; $("#loginMessage").textContent = message;
 }
 function showDashboard() { loginPanel.hidden = true; dashboard.hidden = false; }
@@ -124,29 +130,57 @@ function reviewCard(item) {
 function render(data = {}) {
   items = data.items || [];
   sourceList.replaceChildren(...items.map(reviewCard)); emptyState.hidden = items.length > 0;
-  $("#pendingCount").textContent = String(items.filter((item) => item.status === "pending").length);
-  $("#sensitiveCount").textContent = String(items.filter((item) => item.risk === "high").length);
-  $("#conflictCount").textContent = String(items.filter((item) => item.conflict).length);
+  currentPage = data.pagination?.page || 1;
+  pageCount = data.pagination?.pageCount || 1;
+  const total = data.pagination?.total ?? items.length;
+  const start = total ? (currentPage - 1) * (data.pagination?.pageSize || 25) + 1 : 0;
+  $("#pageStatus").textContent = `Showing ${start}-${total ? start + items.length - 1 : 0} of ${total} matching reviews | Page ${currentPage} of ${pageCount}`;
+  $("#previousPage").disabled = currentPage <= 1;
+  $("#nextPage").disabled = currentPage >= pageCount;
+  $("#pendingCount").textContent = String(data.summary?.pending ?? items.filter(item => item.status === "pending").length);
+  $("#sensitiveCount").textContent = String(data.summary?.sensitive ?? items.filter(item => item.risk === "high").length);
+  $("#conflictCount").textContent = String(data.summary?.conflicts ?? items.filter(item => item.conflict).length);
   $("#retirementCount").textContent = String(data.counts?.retirementPendingPageCount || 0);
 }
 
-async function loadReviews() {
+async function loadReviews(page = currentPage) {
+  const version = ++loadVersion;
   listError.textContent = "";
+  $("#pageStatus").textContent = "Loading reviews...";
+  $("#previousPage").disabled = true;
+  $("#nextPage").disabled = true;
+  sourceList.setAttribute("aria-busy", "true");
+  sourceList.replaceChildren();
+  emptyState.hidden = true;
   const params = new URLSearchParams();
+  params.set("page", String(page));
   if ($("#riskFilter").value) params.set("risk", $("#riskFilter").value);
   if ($("#statusFilter").value) params.set("status", $("#statusFilter").value);
   if ($("#conflictFilter").checked) params.set("conflict", "true");
-  const response = await fetch(`/api/community-sources/review?${params}`); const data = await response.json();
-  if (response.status === 401) return showLogin("Your private session expired. Please sign in again.");
-  if (!response.ok) throw new Error(data.error || "Reviews could not be loaded.");
-  showDashboard(); render(data);
+  try {
+    const response = await fetch(`/api/community-sources/review?${params}`);
+    const data = await response.json();
+    if (version !== loadVersion) return;
+    if (response.status === 401) return showLogin("Your private session expired. Please sign in again.");
+    if (!response.ok) throw new Error(data.error || "Reviews could not be loaded.");
+    showDashboard(); render(data);
+  } catch (error) {
+    if (version !== loadVersion) return;
+    $("#pageStatus").textContent = "Reviews could not be loaded. Use Refresh to try again.";
+    throw error;
+  } finally {
+    if (version === loadVersion) sourceList.setAttribute("aria-busy", "false");
+  }
 }
 
 $("#loginForm").addEventListener("submit", async (event) => {
   event.preventDefault(); $("#loginMessage").textContent = "Signing in…";
-  try { const response = await fetch("/api/community-questions/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ password: $("#ownerPassword").value }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error); $("#ownerPassword").value = ""; await loadReviews(); } catch (error) { $("#loginMessage").textContent = error.message || "Could not sign in."; }
+  try { const response = await fetch("/api/community-questions/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ password: $("#ownerPassword").value }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error); $("#ownerPassword").value = ""; await loadReviews(1); } catch (error) { $("#loginMessage").textContent = error.message || "Could not sign in."; }
 });
-$("#logoutButton").addEventListener("click", async () => { await fetch("/api/community-questions/logout", { method: "POST" }).catch(() => {}); showLogin("You have been signed out."); });
-[$("#riskFilter"), $("#statusFilter"), $("#conflictFilter")].forEach((control) => control.addEventListener("change", () => loadReviews().catch((error) => { listError.textContent = error.message; })));
+$("#logoutButton").addEventListener("click", async () => { showLogin("You have been signed out."); await fetch("/api/community-questions/logout", { method: "POST" }).catch(() => {}); });
+[$("#riskFilter"), $("#statusFilter"), $("#conflictFilter")].forEach((control) => control.addEventListener("change", () => { currentPage = 1; return loadReviews(1).catch((error) => { listError.textContent = error.message; }); }));
 $("#refreshButton").addEventListener("click", () => loadReviews().catch((error) => { listError.textContent = error.message; }));
 loadReviews().catch((error) => { listError.textContent = error.message; });
+
+$("#previousPage").addEventListener("click", () => loadReviews(currentPage - 1).catch(error => { listError.textContent = error.message; }));
+$("#nextPage").addEventListener("click", () => loadReviews(currentPage + 1).catch(error => { listError.textContent = error.message; }));

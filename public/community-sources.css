@@ -19,3 +19,8 @@
 .decision-actions .warning { background: #8a4a35; }
 .decision-status { color: #56625c; font-weight: 700; }
 @media (max-width: 720px) { .comparison { grid-template-columns: 1fr; } .source-card header { flex-direction: column; } }
+
+.review-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; }
+.review-pagination button { width: auto; }
+.review-pagination p { flex: 1; min-width: 160px; }
+.review-pagination button:disabled { opacity: .5; cursor: default; }
