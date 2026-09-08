@@ -953,7 +953,8 @@ test("held-out collision: a partial binding answer stays partial when a form mat
   assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim");
   assert.deepEqual(answer.sources.map((item) => item.id), ["adopted-shed-rule"]);
   assert.equal(answer.claimAuthorityBoundary.completion, "not-derived-by-this-slice");
-  assert.deepEqual(answer.supportingSources.map((item) => item.id), ["alpha-shed-form"]);
+  assert.equal(Object.hasOwn(answer, "supportingSources"), false);
+  assert.equal(answer.sources.some((item) => item.id === "alpha-shed-form"), false);
 });
 
 test("held-out action boundary: reservation wording cannot replace the configured booking action", async () => {
