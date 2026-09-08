@@ -5,14 +5,18 @@ const residentQuestions = require("./resident-rules-corpus.json");
 const authoredCases = require("./rules-eval-cases.json");
 const communityCases = require("./community-eval-cases.json");
 const unseenCases = require("./rules-unseen-eval-cases.json");
-const communityIndex = require("../data/community-index.json");
+const inputPosition = process.argv.indexOf("--input");
+const inputPath = inputPosition >= 0 ? process.argv[inputPosition + 1] : process.env.COMMUNITY_EVIDENCE_INDEX || "";
+const communityIndex = inputPath ? JSON.parse(fs.readFileSync(inputPath, "utf8")) : require("../data/community-index.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { classifyCommunityIntent } = require("../lib/community-search");
 const { planCommunitySearchFixture, synthesizeCommunityAnswerFixture } = require("./community-ai-eval-fixtures");
 const { residentEffortAssessment, scoreCommunityAnswer } = require("../lib/community-answer-quality");
 
-const outputPath = path.join(__dirname, "..", "data", "community-assistant-eval.json");
+const outputPath = process.env.COMMUNITY_EVIDENCE_REPORT_DIR
+  ? path.join(process.env.COMMUNITY_EVIDENCE_REPORT_DIR, "community-assistant-eval.json")
+  : path.join(__dirname, "..", "data", "community-assistant-eval.json");
 const expectationByQuestion = new Map();
 for (const item of authoredCases) {
   for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(question.toLowerCase().trim(), item);
@@ -85,7 +89,9 @@ async function main() {
     upgradedResidentEffort: effortSummary(rows, "upgraded"),
     rows,
   };
-  if (process.argv.includes("--write")) fs.writeFileSync(outputPath, `${JSON.stringify(report, null, 2)}\n`);
+  const outputPosition = process.argv.indexOf("--output");
+  const requestedOutput = outputPosition >= 0 ? process.argv[outputPosition + 1] : "";
+  if (process.argv.includes("--write") || requestedOutput) fs.writeFileSync(requestedOutput || outputPath, `${JSON.stringify(report, null, 2)}\n`);
   console.log(`Community Assistant audit: ${report.questionCount} unique questions.`);
   console.log(`Current: ${JSON.stringify(report.current)}.`);
   console.log(`Upgraded: ${JSON.stringify(report.upgraded)}.`);

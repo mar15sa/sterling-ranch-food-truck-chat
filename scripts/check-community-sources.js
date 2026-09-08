@@ -9,6 +9,10 @@ const { factLedgerStatus } = require("../lib/community-truth");
 const root = path.join(__dirname, "..");
 const profile = validateCommunityProfile(JSON.parse(fs.readFileSync(path.join(root, "data", "communities", "sterling-ranch.json"), "utf8")));
 const bundled = JSON.parse(fs.readFileSync(path.join(root, "data", "community-index.json"), "utf8"));
+const valueAfter = (flag, fallback) => {
+  const position = process.argv.indexOf(flag);
+  return position >= 0 && process.argv[position + 1] ? process.argv[position + 1] : fallback;
+};
 
 function freshnessSummary(index, now = Date.now()) {
   return {
@@ -65,13 +69,14 @@ function audit(index) {
 
 async function main() {
   const live = process.argv.includes("--live");
-  const index = live ? await crawlCommunity(profile) : bundled;
+  const inputPath = valueAfter("--input", process.env.COMMUNITY_EVIDENCE_INDEX || "");
+  const index = live ? await crawlCommunity(profile) : inputPath ? JSON.parse(fs.readFileSync(path.resolve(inputPath), "utf8")) : bundled;
   const before = new Map(bundled.sources.map((source) => [source.id, source]));
   const after = new Map(index.sources.map((source) => [source.id, source]));
   const identity = (source) => ({ id: source.id, title: source.title, sourceUrl: source.sourceUrl, contentHash: source.contentHash });
   const report = {
     checkedAt: new Date().toISOString(),
-    mode: live ? "live" : "bundled",
+    mode: live ? "live" : inputPath ? "temporary-evidence" : "bundled",
     status: "pending",
     publicationApproved: false,
     failures: index.failures || [],
