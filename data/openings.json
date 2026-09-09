@@ -228,10 +228,14 @@
       "address": "Dawson Trails, Castle Rock, CO",
       "status": "confirmed",
       "openingWindow": "Opening date not announced",
-      "summary": "A planned 75,000-square-foot youth field house will include six basketball courts convertible to twelve volleyball courts.",
-      "verifiedAt": "2026-08-05",
+      "summary": "Douglas County approved funding for an approximately 65,000-square-foot youth field house with six basketball courts, twelve overlapping volleyball courts, and flexible program space.",
+      "verifiedAt": "2026-09-09",
       "confidence": "official",
       "sources": [
+        {
+          "label": "Douglas County funding announcement",
+          "url": "https://www.douglasco.gov/recreation-opportunities-for-kids-expand-thanks-to-voter-funding-and-partnerships/"
+        },
         {
           "label": "DougCo Social and county funding record",
           "url": "https://dougcosocial.com/news/gold-crown-foundation-field-house-castle-rock"
@@ -2026,9 +2030,9 @@
       "area": "Mineral Place",
       "address": "700 W. Mineral Avenue, Littleton, CO 80120",
       "status": "under-construction",
-      "openingWindow": "Projected 2026",
-      "summary": "A new Costco warehouse and fuel station is approved and under construction as an anchor of Mineral Place.",
-      "verifiedAt": "2026-08-13",
+      "openingWindow": "Mineral Place completion listed for November 2026; Costco opening date not separately announced",
+      "summary": "A new Costco warehouse and 32-pump fuel station is approved and under construction as an anchor of Mineral Place. The project team lists November 2026 as the development's completion date.",
+      "verifiedAt": "2026-09-09",
       "confidence": "official",
       "sources": [
         {
@@ -2038,6 +2042,10 @@
         {
           "label": "City of Littleton 2026 development roundup",
           "url": "https://visitlittleton.org/whats-new-in-littleton-2026/"
+        },
+        {
+          "label": "Galloway Mineral Place project page",
+          "url": "https://gallowayus.com/project/mineral-place-development/"
         }
       ],
       "coordinates": {
@@ -2273,11 +2281,11 @@
       "category": "Fitness & wellness",
       "community": "Parker",
       "area": "The Juniper on Mainstreet",
-      "address": "19865 Mainstreet, Suite 110, Parker, CO 80138",
+      "address": "19865 Mainstreet, Suite 100, Parker, CO 80134",
       "status": "opening-soon",
-      "openingWindow": "Targeting late August 2026",
+      "openingWindow": "Coming soon; opening date not announced",
       "summary": "The boutique Pilates and wellness studio is in pre-launch with reformer and mat classes plus infrared and red-light services.",
-      "verifiedAt": "2026-08-13",
+      "verifiedAt": "2026-09-09",
       "confidence": "business-confirmed",
       "sources": [
         {
@@ -2293,7 +2301,7 @@
         "lat": 39.51745,
         "lng": -104.758609,
         "precision": "address",
-        "geocodedFrom": "19865 Mainstreet, Suite 110, Parker, CO 80138"
+        "geocodedFrom": "19865 Mainstreet, Suite 100, Parker, CO 80134"
       }
     },
     {
