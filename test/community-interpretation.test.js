@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const {
+  deterministicRequestedDetails,
   highConfidenceDateRange,
   normalizeInterpretation,
   resolveInterpretationMode,
@@ -31,6 +32,15 @@ function interpretation(overrides = {}) {
     ...overrides,
   };
 }
+
+test("specification detection distinguishes requested paint details from the act of painting", () => {
+  assert.deepEqual(deterministicRequestedDetails("Do I need DRC approval to paint my house?"), ["permission"]);
+  assert.deepEqual(deterministicRequestedDetails("House paint"), []);
+  assert.deepEqual(deterministicRequestedDetails("What specific paint color is approved?"), ["specification"]);
+  assert.ok(deterministicRequestedDetails("What fence stain should I use?").includes("specification"));
+  assert.deepEqual(deterministicRequestedDetails("Is every backyard fence allowed to be the same height?"), ["specification"]);
+  assert.deepEqual(deterministicRequestedDetails("What color can I paint my garage door?"), ["specification"]);
+});
 
 function calendarHtml(events = []) {
   return events.map((event) => `<h2 class="title">${event.category || "Community Events"}</h2>
