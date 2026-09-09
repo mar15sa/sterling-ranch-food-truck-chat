@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { factApprovalIsExplicit, factIsAnswerable } = require('../lib/community-truth');
 const { isDynamicSource } = require('../lib/community-source-identity');
+const { canonicalProjectionEntries } = require('../lib/community-source-answerability');
 
 const indexFlag = process.argv.indexOf('--index');
 const indexPath = path.resolve(indexFlag >= 0 && process.argv[indexFlag + 1]
@@ -17,6 +18,8 @@ const currentVersions = new Set((index.sources || []).map(source => `${source.id
 const staticVersions = new Set((index.sources || []).filter(source => !isDynamicSource(source))
   .map(source => `${source.id}:${source.contentHash}`));
 const explicitVersions = new Set(explicit.map(entry => `${entry.sourceId}:${entry.sourceVersion}`));
+const canonicalProjections = (index.sources || []).filter(source => !isDynamicSource(source))
+  .flatMap(source => canonicalProjectionEntries(source, index));
 
 console.log(JSON.stringify({
   indexPath,
@@ -28,6 +31,8 @@ console.log(JSON.stringify({
   reviewMetadataWithoutDecisionCount: metadataWithoutDecision.length,
   baselineLabelOnlyCount: approvedLabels.length - explicit.length - metadataWithoutDecision.length,
   answerableFactCountNow: ledger.filter(entry => factIsAnswerable(entry)).length,
+  canonicalClaimActionProjectionCount: canonicalProjections.length,
+  canonicalActionProjectionCount: canonicalProjections.filter(entry => entry.factType === 'link').length,
   staleOrChangedDecisionCount: explicit.filter(entry => !currentVersions.has(`${entry.sourceId}:${entry.sourceVersion}`)).length,
   staticSourceVersionCount: staticVersions.size,
   staticSourceVersionsWithApprovedClaims: [...staticVersions].filter(version => explicitVersions.has(version)).length,
