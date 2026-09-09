@@ -38,14 +38,15 @@ test("approved-landscaper questions withhold unapproved directory prose and comp
   assert.ok(answer.actions.some((action) => /\/414\/Approved-Landscapers-List/.test(action.url)));
 });
 
-test("legacy water-usage wording withholds the pending monitoring source instead of borrowing payment approval", async () => {
+test("approved water-usage monitoring instructions do not borrow payment facts", async () => {
   const answer = await ask("Internet access for water usage");
-  assert.equal(answer.answerMode, "community-access-withheld");
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.equal(answer.confidence?.canAnswer, false);
+  assert.equal(answer.answerMode, "community-approved-operational-instruction");
+  assert.equal(answer.answerStatus, "verified");
+  assert.equal(answer.confidence?.canAnswer, true);
   assert.ok(answer.sources.some((source) => /\/m\/faq\?cat=16/.test(source.sourceUrl || "")));
-  assert.doesNotMatch(answer.answer, /Utility ?Hawk|threshold|usage alerts?/i);
-  assert.doesNotMatch(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
+  assert.match(answer.answer, /select Registration/i);
+  assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
+  assert.doesNotMatch(answer.answer, /Pay Online|rate|billing help|AmCoBi/i);
 });
 
 test("structured routing separates online water-usage access from billing and payment", async () => {
@@ -81,13 +82,13 @@ test("structured routing separates online water-usage access from billing and pa
     assert.equal(answer.routingPlan.subject, "water usage monitoring account access", question);
     assert.deepEqual(answer.routingPlan.searchQueries, ["water usage monitoring", "water usage account access"], question);
     assert.deepEqual(answer.routingPlan.requestedDetails, ["action"], question);
-    assert.equal(answer.answerMode, "community-access-withheld", question);
-    assert.equal(answer.answerStatus, "source-unavailable", question);
-    assert.equal(answer.confidence?.canAnswer, false, question);
+    assert.equal(answer.answerMode, "community-approved-operational-instruction", question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.confidence?.canAnswer, true, question);
     assert.ok(answer.sources.some((source) => /\/m\/faq\?cat=16/.test(source.sourceUrl || "")), question);
-    assert.doesNotMatch(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i, question);
-    assert.doesNotMatch(answer.answer, /ClientCare@AmCoBi\.com|833[-)\s]772[-\s]2240/i, question);
-    assert.doesNotMatch(answer.answer, /Utility ?Hawk|threshold|usage alerts?|view (?:your|my) water usage|monitor (?:your|my) water usage/i, question);
+    assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i, question);
+    assert.match(answer.answer, /Registration/i, question);
+    assert.doesNotMatch(answer.answer, /ClientCare@AmCoBi\.com|833[-)\s]772[-\s]2240|Pay Online|water rate/i, question);
   }
 
   const paymentPageOnlyIndex = {
@@ -420,4 +421,54 @@ test("approved operational contact priority is profile-driven and fails closed w
   });
   assert.notEqual(changed.answerStatus, "verified");
   assert.doesNotMatch(changed.answer, /permits@beta\.example\.gov/i);
+});
+
+test("approved pool hours answer a holiday schedule without claiming live pool status", async () => {
+  for (const question of ["What are the pool hours for Labor Day?", "Is the pool open on Labor Day, and what are the hours?"]) {
+    const answer = await ask(question, new Date("2026-09-01T12:00:00Z"));
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.answerMode, "community-approved-operational", question);
+    assert.match(answer.answer, /Memorial Day weekend through Labor Day/i, question);
+    assert.match(answer.answer, /Monday-Friday: 5:00 am - 9:00 am/i, question);
+    assert.doesNotMatch(answer.answer, /depends on your village|current hours cannot be verified/i, question);
+    assert.deepEqual(answer.sources.map((source) => source.id), ["approved-pool-hours-current-page"], question);
+  }
+});
+
+test("approved conditional instruction claims preserve their boundary and do not invent a form", async () => {
+  for (const question of ["Do I submit a rain barrel application to the DRC?", "Where do I send a rain barrel application if approval is required?"]) {
+    const answer = await ask(question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.answerMode, "community-approved-operational-instruction", question);
+    assert.match(answer.answer, /If the controlling rain-barrel rule says approval is needed/i, question);
+    assert.match(answer.answer, /ResidentSubmit@SterlingRanchCAB\.com/i, question);
+    assert.doesNotMatch(answer.answer, /rain-barrel form|approval is required/i, question);
+    assert.ok(answer.actions.some((action) => /\/201\/Design-Review-Documents/.test(action.url)), question);
+  }
+});
+
+test("approved instruction claims work for a second community and withdraw when their version changes", async () => {
+  const sourceUrl = "https://beta.example.gov/permits/register";
+  const sourceVersion = "c".repeat(64);
+  const source = {
+    id: "beta-permit-registration", communityId: "beta", title: "Permit conditional submission", sourceUrl,
+    sourceType: "services", connectorType: "civicplus-pages", authorityScore: 1,
+    text: "If your permit requires approval, go to https://beta.example.gov/permit-portal and select Registration.",
+    excerpt: "If your permit requires approval, go to https://beta.example.gov/permit-portal and select Registration.", actions: [],
+    facts: [{ type: "information", value: "If your permit requires approval, go to https://beta.example.gov/permit-portal and select Registration.", context: "If your permit requires approval, go to https://beta.example.gov/permit-portal and select Registration.", approvalClaim: "permit-registration" }],
+    contentHash: sourceVersion, checkedAt: "2026-09-09T00:00:00Z", staleAfter: "2099-01-01T00:00:00Z", lifecycle: "current",
+  };
+  const index = {
+    communityId: "beta", communityName: "Beta", website: "https://beta.example.gov", sources: [source], factLedger: [],
+    canonicalSourceLedger: { records: [{ key: `${sourceUrl}#sha256:${sourceVersion}`, canonicalUrl: sourceUrl, contentHash: sourceVersion,
+      approvals: [{ status: "approved", communityId: "beta", decisionId: "beta-permit-registration", scopeKind: "scoped-claims", approvedClaims: ["permit-registration"], withheldClaims: [] }] }] },
+  };
+  const options = { index, communityId: "beta", answerRulesQuestion: false, planCommunitySearch: false, synthesizeCommunityAnswer: false, now: new Date("2026-09-09T12:00:00Z") };
+  const approved = await answerCommunityQuestion("Where do I submit a permit form if approval is required?", options);
+  assert.equal(approved.answerStatus, "verified");
+  assert.match(approved.answer, /permit-portal/i);
+  assert.doesNotMatch(JSON.stringify(approved), /Sterling|UtilityHawk/i);
+  const changed = await answerCommunityQuestion("Where do I submit a permit form if approval is required?", { ...options, index: { ...index, sources: [{ ...source, contentHash: "d".repeat(64) }] } });
+  assert.notEqual(changed.answerStatus, "verified");
+  assert.doesNotMatch(changed.answer, /permit-portal/i);
 });
