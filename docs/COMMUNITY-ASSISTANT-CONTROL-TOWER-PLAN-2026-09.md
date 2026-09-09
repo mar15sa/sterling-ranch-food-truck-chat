@@ -8,6 +8,19 @@ The Assistant should answer the resident's actual question as fully as current o
 
 For resident-facing static claims, approval is tied to the community, exact URL, exact SHA-256 content version, and exact claim or action. A crawl, trusted-baseline label, full-page review record, keyword match, AI draft, or specialist connector cannot broaden that approval. Dynamic connectors may control only their declared current operational facets. Binding rules come from controlling rule sources.
 
+## Fixed progress ledger
+
+The audited baseline is 63 of 100 points. The denominator stays fixed; newly discovered risks are recorded separately instead of silently lowering completed work. Points increase only after the change is integrated and its required checks pass.
+
+| Area | Complete | Closure still required |
+| --- | ---: | --- |
+| Answer quality and ambiguity | 16/25 | Remove or evidence-gate every reachable static answer path; pass the family, collision, degradation, and hosted checks. |
+| Durable engineering priorities | 14/15 | Keep the permanent rules enforced in every implementation and release review. |
+| Reusable connector architecture | 11/20 | Finish food-truck, pool-status, and facility parity without Sterling-only answer logic. |
+| Source completeness and decisions | 8/25 | Import only approved exact decisions, resolve or withhold conflicts, and work down the eligible-page disposition backlog. |
+| Approved UI and feedback controls | 14/15 | Promote the already approved staging implementation with the accuracy release after its gates pass. |
+| **Total** | **63/100** | |
+
 ## Workstream 1: answer quality, ambiguity, and incorrect shortcuts
 
 **Resident problem:** A simple or ambiguous question can be misrouted, answered from unrelated text, or receive an incomplete handoff. Older topic templates can bypass the intended grounded-AI path.
@@ -23,7 +36,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 - Keep live connector answers narrow to current facts they actually observed.
 - Reject unsupported AI language and unsupported template language sentence by sentence.
 
-**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, removal of unapproved static answer shortcuts, and the shared water-usage-versus-billing routing repair are integrated in release candidate PR #65. The broad local gate passes 525 tests, 140 rules evaluations, and 7 unseen evaluations. The exact monitoring source remains withheld pending owner approval, so water-monitoring questions fail closed instead of borrowing payment authority. Production still uses the earlier baseline behavior.
+**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, and the shared water-usage-versus-billing routing repair are integrated in release candidate PR #65. The broad local gate passes 525 tests, 140 rules evaluations, and 7 unseen evaluations. A later public-path audit proved that the earlier shortcut-removal claim was incomplete: a hard-coded pickleball answer, a legacy static food-truck data path, and fixed pool-color interpretations remain release blockers. Food-truck remediation is in final review; pickleball removal and a profile-driven pool-status envelope are queued in that order because they overlap in the Assistant core. The exact monitoring source remains withheld pending owner approval, so water-monitoring questions fail closed instead of borrowing payment authority. Production still uses the earlier baseline behavior.
 
 **Completion evidence:** Former shortcut families cannot be unlocked by full-page approval; changed hashes withdraw claims; partial compound answers retain independent verified parts; representative rule, facility, payment, contact, status, event, food-truck, and trash families pass normal and degraded tests; exact staging test traffic passes with AI composition observed where expected.
 
@@ -33,7 +46,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 
 **Target behavior:** Every plan, pull request, implementation, review, and release identifies the failure mechanism, affected question family, authority decision, reusable boundary, degraded behavior, and family-level proof.
 
-**Current status:** The root-cause, resident-outcome, authority, and CivicPlus rules are active in `AGENTS.md`, the pull-request template, and `docs/COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md`. The release candidate adds an explicit permanent rule that resident-facing facts and fixed answer wording cannot live in application code; routing may recognize intent but cannot supply the answer.
+**Current status:** The root-cause, resident-outcome, authority, and CivicPlus rules are active in `AGENTS.md`, the pull-request template, and `docs/COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md`. The release candidate adds an explicit permanent rule that resident-facing facts and fixed answer wording cannot live in application code; routing may recognize intent but cannot supply the answer. The active Daily Community Assistant improvement fixer now repeats this exact boundary in its saved instructions, requires family-level repairs and broad regressions, and cannot publish when evidence or checks are incomplete.
 
 **Ongoing gate:** Reject phrase-specific fixes unless the evidence or interface is genuinely unique. Reject changes that omit a current-vs-proposed resident outcome, authority mapping, failure behavior, or portability explanation.
 
@@ -50,7 +63,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 - Current transaction or process source: booking, payment, registration, submission, and current operational fees.
 - Action link: where to complete the already established step; it cannot prove the underlying rule or amount.
 
-**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. Waste scheduling now uses the same contract: Sterling-specific endpoints, locations, offsets, labels, actions, and degradation behavior live in the community profile; every displayed area date requires fresh operational evidence; unsupported holiday wording and the uncited fixed bin instruction are withheld. Food-truck, pool, and facility migrations still need full envelope parity and held-out degradation tests.
+**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. Waste scheduling now uses the same contract: Sterling-specific endpoints, locations, offsets, labels, actions, and degradation behavior live in the community profile; every displayed area date requires fresh operational evidence; unsupported holiday wording and the uncited fixed bin instruction are withheld. The food-truck migration has passed its first broad checks and is being tightened so the Assistant cannot use legacy event overrides, static menu data, an unrelated same-site page, an out-of-year schedule, or an unrecognized calendar layout as verified evidence. Pool status and facilities still need full envelope parity and held-out degradation tests.
 
 **Completion evidence:** Each active connector emits the common evidence envelope; every final claim retains its controlling source role; source/action data cannot cross communities; mixed-claim tests preserve separate authorities; specialist handoffs remain useful; no Sterling Ranch URL, label, village mapping, or facility assumption is required in shared core logic.
 
