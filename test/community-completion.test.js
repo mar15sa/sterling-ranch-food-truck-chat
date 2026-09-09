@@ -240,7 +240,7 @@ test("negative controls cannot become unrelated confident answers", async () => 
     ["Who is Diane Smethills?", /reliably identify/i, /clubhouse|water billing/i],
     ["Can I run a food truck from my driveway?", /could not verify.*operating a food-truck business/i, /pool deck|listed food truck/i],
     ["Can I remove a tree?", /could not verify blanket permission/i, /VPN hardware/i],
-    ["Can I paint my mailbox purple?", /could not verify permission to repaint/i, /same colors as the original/i],
+    ["Can I paint my mailbox purple?", /could not verify permission to repaint/i, /same colors as the original|nonpotable water/i],
     ["What is the CAB Instagram account?", /could not verify.*Instagram/i, /clubhouse|trash carts/i],
     ["Can I build a helipad in my yard?", /could not verify.*helipad/i, /utility shed.*8/i],
   ];

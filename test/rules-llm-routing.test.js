@@ -141,7 +141,7 @@ test("public examples stay on the tested source-built path in selective mode", a
       return "This should never be returned.";
     },
   });
-  assert.equal(result.answerMode, "source-derived-extractive");
+  assert.equal(result.answerMode, "source-derived-structured");
   assert.equal(rewriteCalls, 0);
   assert.match(result.answer, /fixed charges/i);
 });

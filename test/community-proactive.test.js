@@ -178,7 +178,7 @@ test("a price-heavy AI draft also cannot bypass the static approval boundary", a
 
 test("trash-return questions retain the official storage limit when no removal time is published", async () => {
   const answer = await ask("When do I need to bring my recycling cans in?");
-  assert.equal(answer.answerMode, "source-derived-extractive");
+  assert.equal(answer.answerMode, "source-derived-structured");
   assert.match(answer.answer, /does not give a specific curb-placement or removal time/i);
   assert.match(answer.answer, /screened area behind the wing fence/i);
   assert.ok(answer.sources.some((source) => /Resolution-No-2024-11-02/.test(source.sourceUrl || "")));
