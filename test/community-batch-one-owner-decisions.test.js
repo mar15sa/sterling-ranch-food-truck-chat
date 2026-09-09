@@ -96,3 +96,18 @@ test('answers allow approved fee rows and withhold unapproved scopes', async () 
   assert.match(unpaidWater.sources[0].text, /this resolution's fee schedule/i);
   assert.doesNotMatch(unpaidWater.answer, /no newer amendment/i);
 });
+
+test('approved owner-reviewed evidence renders the allowed water and delinquency details', async () => {
+  const options = { searchMode: 'legacy', llmMode: 'off' };
+  const water = await answerRulesQuestion('What are water rates?', options);
+  assert.match(water.answer, /2026/i);
+  assert.match(water.answer, /\$50\.20/);
+  assert.match(water.answer, /\$9\.70/);
+  assert.doesNotMatch(water.answer, /master[ -]?meter|nonresidential|irrigation|construction water/i);
+
+  const delinquency = await answerRulesQuestion('What happens if I do not pay my water bill?', options);
+  assert.match(delinquency.answer, /three days/i);
+  assert.match(delinquency.answer, /seven calendar days/i);
+  assert.match(delinquency.answer, /last Wednesday/i);
+  assert.doesNotMatch(delinquency.answer, /no newer amendment/i);
+});
