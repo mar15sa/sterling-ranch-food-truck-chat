@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "connectorAdapterContractVersion": 1,
   "communityId": "sterling-ranch",
   "name": "Sterling Ranch Community Authority Board",
   "shortName": "Sterling Ranch",
@@ -12,6 +13,7 @@
       "id": "official-website",
       "type": "civicplus-pages",
       "baseUrl": "https://sterlingranchcab.com/",
+      "adapter": { "capabilities": ["pages", "forms", "services"], "facets": ["contact", "submission", "action"], "controllingSourceRoles": ["operational", "action"], "actionTypes": ["information", "form", "account", "download", "list"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/", "purpose": "official-website" }], "freshness": { "refreshMinutes": 1440, "staleAfterMinutes": 2880 }, "degradation": { "policy": "retain-last-known" }, "vocabulary": { "amenity": ["facility", "rental"] } },
       "refreshMinutes": 1440,
       "maxPages": 80,
       "seedUrls": [
@@ -36,24 +38,28 @@
       "id": "official-calendar",
       "type": "civicplus-calendar",
       "baseUrl": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
+      "adapter": { "capabilities": ["events"], "facets": ["event-date", "date", "action"], "controllingSourceRoles": ["operational"], "actionTypes": ["information", "registration"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list", "purpose": "official-calendar" }], "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 }, "degradation": { "policy": "retain-last-known" }, "labels": { "calendarTitle": "Official Sterling Ranch Calendar", "openAction": "Open official community calendar" }, "vocabulary": { "event": ["calendar", "meeting"] } },
       "refreshMinutes": 60
     },
     {
       "id": "official-rules",
       "type": "municode",
       "baseUrl": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+      "adapter": { "capabilities": ["rules"], "facets": ["permission", "restriction", "specification"], "controllingSourceRoles": ["governing"], "actionTypes": ["information"], "sourceHosts": ["library.municode.com"], "endpoints": [{ "id": "primary", "url": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations", "purpose": "governing-rules" }], "freshness": { "refreshMinutes": 1440, "staleAfterMinutes": 2880 }, "degradation": { "policy": "withhold" }, "vocabulary": { "rule": ["regulation", "standard"] } },
       "refreshMinutes": 1440
     },
     {
       "id": "facility-rentals",
       "type": "civicrec",
       "baseUrl": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog",
+      "adapter": { "capabilities": ["facilities", "availability"], "facets": ["availability", "facility", "price", "action"], "controllingSourceRoles": ["operational", "action"], "actionTypes": ["booking", "information"], "sourceHosts": ["secure.rec1.com"], "endpoints": [{ "id": "catalog", "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog", "purpose": "facility-rentals" }], "freshness": { "refreshMinutes": 360, "staleAfterMinutes": 720 }, "degradation": { "policy": "fallback" }, "vocabulary": { "reservation": ["booking", "rental"] } },
       "refreshMinutes": 360
     },
     {
       "id": "pool-status",
       "type": "live-status",
       "baseUrl": "https://sterlingranchcab.com/187/Pool",
+      "adapter": { "capabilities": ["status"], "facets": ["status", "hours"], "controllingSourceRoles": ["operational"], "actionTypes": ["information"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/187/Pool", "purpose": "pool-status" }], "freshness": { "refreshMinutes": 1, "staleAfterMinutes": 5 }, "degradation": { "policy": "withhold" }, "vocabulary": { "pool": ["aquatics", "swim"] } },
       "refreshMinutes": 1
     }
   ],

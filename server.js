@@ -6,7 +6,7 @@ const { URL } = require("node:url");
 const { isJunkMenuItem } = require("./lib/menu-quality");
 const liveMonitor = require("./lib/community-live-monitor").createLiveMonitor({
   getPoolStatus: (...args) => getPoolStatus(...args),
-  getCommunityEvents: (...args) => getCommunityEvents(...args),
+  getCommunityEvents: (...args) => getConfiguredCommunityEvents(...args),
   notify: (...args) => require("./lib/rules-alerts").alertCommunityMonitorChanged(...args),
 });
 const { createFoodTruckService } = require("./lib/food-truck-service");
@@ -47,11 +47,12 @@ const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { getCommunityEvents } = require("./lib/community-events");
+const { createConnectorAdapters } = require("./lib/community-connector-adapter");
 const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community-llm");
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
 const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
 const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
-const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
+const { communitySourceStatus, getCommunityIndex, getCommunityProfile, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
 const { latestReviewDecision } = require("./lib/community-review-queue");
 const { paginateReviews } = require("./lib/community-review-pagination");
@@ -66,6 +67,13 @@ const {
   submitOpeningTip,
 } = require("./lib/openings");
 const { previewCommunitySetup } = require("./lib/community-onboarding");
+
+function getConfiguredCommunityEvents(request, options = {}) {
+  const profile = options.profile || getCommunityProfile();
+  const adapter = createConnectorAdapters(profile).find((item) => item.family === "civicplus-calendar" && item.capabilities.includes("events"));
+  if (!adapter) throw new Error("No official calendar connector is configured for this community.");
+  return getCommunityEvents(request, { ...options, profile, adapter });
+}
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -4684,7 +4692,7 @@ async function handleRulesAsk(req, res, url) {
     {
     answerRulesQuestion,
     getPoolStatus,
-    getCommunityEvents,
+    getCommunityEvents: getConfiguredCommunityEvents,
     getWasteSchedule: getSterlingRanchWasteSchedule,
     getFoodTruckAnswer: async (foodTruckRequest, originalQuestion) => {
       const dateFromInterpretation = typeof foodTruckRequest === "object"
@@ -4694,6 +4702,7 @@ async function handleRulesAsk(req, res, url) {
       return getAnswerForDate(foodTruckQuestion, dateFromInterpretation || parseAskedDate(foodTruckQuestion));
     },
     index: getCommunityIndex(),
+    communityProfile: getCommunityProfile(),
     communityId: "sterling-ranch",
     }
   );
