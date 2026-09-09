@@ -28,11 +28,18 @@ test("unsupported static topics use one generic boundary with no resident facts 
 });
 
 test("a current selected source can be used for the boundary, while stale and unrelated sources cannot supply facts", () => {
-  const current = { title: "Ridgeview contact page", sourceUrl: "https://ridgeview.example/contact", lifecycle: "current" };
+  const current = { title: "Ridgeview contact page", sourceUrl: "https://ridgeview.example/contact", lifecycle: "current", isOfficialResource: true, canonicalScopedProjection: true };
   const stale = { title: "Old directory", sourceUrl: "https://old.example/contact", lifecycle: "stale" };
   const answer = genericEvidenceBoundary("What is the HOA phone number?", {}, { website: profile.website }, profile, [stale, current]);
   assert.equal(answer.sources[0].sourceUrl, current.sourceUrl);
   assert.doesNotMatch(answer.answer, /Old directory|phone number/i);
+});
+
+test("an arbitrary external HTTPS candidate cannot replace the active official resource", () => {
+  const external = { title: "Search result", sourceUrl: "https://outside.example/contact", lifecycle: "current", reviewStatus: "approved" };
+  const answer = genericEvidenceBoundary("What is the HOA phone number?", {}, { website: profile.website }, profile, [external]);
+  assert.equal(answer.sources[0].sourceUrl, profile.website);
+  assert.equal(answer.actions[0].url, profile.website);
 });
 
 test("event connector failures use the active community calendar configuration", () => {

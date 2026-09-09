@@ -533,12 +533,28 @@ test("official rule documents remain usable action links even without display me
         title: "2026 CAB service fees",
         sourceUrl: "https://sterlingranchcab.com/DocumentCenter/View/2474/current-fees",
         text: "Current official CAB service fee schedule.",
+        isOfficialResource: true,
       }],
     }),
     synthesizeCommunityAnswer: false,
   });
   assert.equal(result.actions[0]?.url, "https://sterlingranchcab.com/DocumentCenter/View/2474/current-fees");
   assert.doesNotMatch(result.actions[0]?.label || "", /FAQ/i);
+});
+
+test("an unmarked HTTPS rules source cannot become an official action", async () => {
+  const result = await answerCommunityQuestion("What fees do residents pay?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: The fee schedule has the current charges.",
+      answerMode: "source-derived-extractive",
+      confidence: { canAnswer: true, confidence: "high" },
+      sources: [{ title: "Unmarked external schedule", sourceUrl: "https://outside.example/fees", text: "Unverified fee schedule." }],
+    }),
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal((result.actions || []).some((action) => action.url === "https://outside.example/fees"), false);
 });
 
 test("answer contracts cap resident-facing details at three", () => {
