@@ -16,6 +16,7 @@ const {
   answerRulesQuestion,
   createRulesIndex,
   getRulesIndexStatus,
+  OFFICIAL_SOURCE_URL,
   warmRulesIndex,
 } = require("./lib/rules-assistant");
 const {
@@ -5076,6 +5077,15 @@ const server = http.createServer(async (req, res) => {
     res.once("finish", () => {
       recordRequest(url.pathname, res.statusCode, Date.now() - requestStartedAt);
     });
+    if (url.pathname === "/rulebook") {
+      res.writeHead(302, {
+        ...SECURITY_HEADERS,
+        location: OFFICIAL_SOURCE_URL,
+        "cache-control": "no-store",
+      });
+      res.end();
+      return;
+    }
     if (url.pathname === "/api/health") {
       await handleHealth(req, res);
       return;
