@@ -145,3 +145,30 @@ test("an AI-added unsupported claim is rejected and never reaches the resident",
   assert.equal(answer.answerMode, "community-approved-operational");
   assert.doesNotMatch(answer.answer, /free downtown parking/i);
 });
+
+test("high-overlap unsupported promises still trigger the deterministic fallback", async () => {
+  for (const unsupportedClaim of [
+    "The parking permit renewal form is free.",
+    "Parking permit renewal approval is guaranteed.",
+  ]) {
+    const data = fixture();
+    const answer = await composeApprovedOperationalProjection(
+      "How do I renew my parking permit, and who can help?",
+      data,
+      {
+        routingPlan,
+        preferredAction: data.sources[1].actions[0],
+        synthesizeCommunityAnswer: async () => ({
+          directAnswer: "Open the parking permit renewal form to renew your permit.",
+          keyDetails: [
+            "For renewal help, email permits@beta.example.gov.",
+            unsupportedClaim,
+          ],
+          nextStep: "Use the parking permit renewal form.",
+        }),
+      },
+    );
+    assert.equal(answer.answerMode, "community-approved-operational");
+    assert.doesNotMatch(answer.answer, /\b(?:free|guaranteed)\b/i);
+  }
+});
