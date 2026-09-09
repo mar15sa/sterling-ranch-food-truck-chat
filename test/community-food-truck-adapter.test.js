@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const sterling = require("../data/communities/sterling-ranch.json");
 const { foodTruckAnswer } = require("../lib/community-food-trucks");
+const { getCommunityFoodTruckSchedule } = require("../lib/community-food-truck-live");
 
 function secondCommunityProfile() {
   const connector = structuredClone(sterling.connectors.find((item) => item.type === "food-truck-schedule"));
@@ -11,7 +12,7 @@ function secondCommunityProfile() {
   connector.adapter.sourceHosts = ["riverton.example", "menus.riverton.example"];
   connector.adapter.endpoints = [{ id: "schedule", url: "https://riverton.example/calendar", purpose: "official-food-truck-schedule" }];
   connector.adapter.labels = { calendarTitle: "Riverton market calendar", calendarAction: "View Riverton market schedule", fullAnswerAction: "Open Riverton truck details" };
-  connector.adapter.foodTruck = { fullAnswerPath: "/market-trucks", menuSourceHosts: ["menus.riverton.example"] };
+  connector.adapter.foodTruck = { fullAnswerPath: "/market-trucks", vendorSources: [{ id: "riverton-bites", aliases: ["Riverton Bites"], menuUrls: ["https://menus.riverton.example/bites"] }] };
   return profile;
 }
 
@@ -25,6 +26,26 @@ test("a second community changes food-truck schedule, labels, actions, and evide
   assert.equal(answer.evidenceEnvelope.adapterId, "riverton:market-trucks");
   assert.deepEqual(answer.sources.map((source) => source.sourceUrl), ["https://riverton.example/calendar", "https://menus.riverton.example/bites"]);
   assert.deepEqual(answer.actions.map((action) => action.label), ["Open Riverton truck details", "View Riverton Bites menu", "View Riverton market schedule"]);
+});
+
+test("the Community Assistant live path ignores historic local overrides and static menu registries", async () => {
+  const result = await getCommunityFoodTruckSchedule({ dateRange: { start: "2026-06-06", end: "2026-06-06" } }, {
+    profile: sterling,
+    stripHtml: (value) => value,
+    fetchImpl: async () => new Response("6/6 - Live Calendar Kitchen"),
+  });
+  assert.deepEqual(result.trucks.map((truck) => truck.name), ["Live Calendar Kitchen"]);
+  assert.equal(Object.hasOwn(result, "menu"), false);
+  assert.equal(result.menuEnrichment.status, "degraded");
+});
+
+test("an explicit vendor identity accepts only its exact configured menu source", () => {
+  const profile = secondCommunityProfile();
+  const approved = foodTruckAnswer({ date: "2026-09-10", truck: "Riverton Bites", sourceUrl: "https://riverton.example/calendar", menu: { links: [{ title: "Menu", url: "https://menus.riverton.example/bites" }], items: [{ name: "Soup", price: "$8", url: "https://menus.riverton.example/bites" }] } }, { profile, routingPlan: { requestedDetails: ["date", "price"] } });
+  const unrelated = foodTruckAnswer({ date: "2026-09-10", truck: "Riverton Bites", sourceUrl: "https://riverton.example/calendar", menu: { links: [{ title: "Unrelated", url: "https://menus.riverton.example/other-account" }], items: [{ name: "Fake soup", price: "$1", url: "https://menus.riverton.example/other-account" }] } }, { profile, routingPlan: { requestedDetails: ["date", "price"] } });
+  assert.equal(approved.evidenceEnvelope.coverage.covered.includes("price"), true);
+  assert.equal(unrelated.evidenceEnvelope.coverage.covered.includes("price"), false);
+  assert.doesNotMatch(JSON.stringify(unrelated), /Fake soup|other-account/);
 });
 
 test("an unapproved menu host cannot create menu or price claims", () => {

@@ -86,7 +86,7 @@ test("the Community Assistant returns the official food-truck schedule when menu
   assert.equal(answer.answerStatus, "verified");
   assert.match(answer.directAnswer, /Example Eats/);
   assert.deepEqual(answer.menuEnrichment, { status: "degraded", failures: [{ truck: "Example Eats", component: "menu-profile" }] });
-  assert.ok(answer.actions.some((action) => action.actionType === "calendar" && action.url === "https://sterlingranchcab.com/Calendar.aspx"));
+  assert.ok(answer.actions.some((action) => action.actionType === "calendar" && action.url === "https://sterlingranchcab.com/Calendar.aspx?EID=6150"));
 });
 
 test("food-truck business-rule questions do not enter the live schedule connector", async () => {

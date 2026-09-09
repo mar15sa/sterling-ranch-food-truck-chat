@@ -10,6 +10,18 @@ const communityIndex = require("../data/community-index.json");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
 const { diffCommunityIndexes, sourceReleaseDecision, validateCommunityCandidate } = require("../lib/community-release");
 const { getWasteSchedule, scheduleTimingLabel, configuredAreaDates } = require("../lib/community-waste-schedule");
+function foodTruckProfile() {
+  const profile = structuredClone(communityProfile);
+  const connector = profile.connectors.find((item) => item.type === "food-truck-schedule");
+  connector.adapter.sourceHosts.push("www.facebook.com", "www.instagram.com");
+  connector.adapter.foodTruck.vendorSources = [
+    { id: "example-eats", aliases: ["Example Eats"], menuUrls: ["https://www.facebook.com/example-eats/menu"] },
+    { id: "tulas", aliases: ["Tula's Tapas"], menuUrls: ["https://www.facebook.com/tulas/menu"] },
+    { id: "hippops", aliases: ["HipPops"], menuUrls: ["https://www.instagram.com/hippops/menu"] },
+  ];
+  profile.allowedHosts.push("www.facebook.com", "www.instagram.com");
+  return profile;
+}
 function liveWasteEvidence(date, checkedAt) {
   return {
     degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
@@ -196,7 +208,7 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
     sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
     checkedAt: "2026-08-28T00:00:00.000Z",
     menu: { links: [{ title: "Example Eats official menu", url: "https://www.facebook.com/example-eats/menu" }], items: [{ name: "Tacos", price: "$12.00", url: "https://www.facebook.com/example-eats/menu" }] },
-  }, { profile: communityProfile });
+  }, { profile: foodTruckProfile() });
   assert.equal(answer.answerMode, "community-live-food-truck");
   assert.match(answer.directAnswer, /Example Eats at Prospect Park/);
   assert.match(answer.keyDetails[0], /Tacos.*\$12/);
@@ -234,7 +246,7 @@ test("food-truck answers keep each truck's menu, source, and action separate", (
         },
       },
     ],
-  }, { profile: communityProfile });
+  }, { profile: foodTruckProfile() });
 
   assert.match(answer.directAnswer, /Tula's Tapas and HipPops/);
   assert.deepEqual(answer.presentation.truckCards.map((truck) => truck.name), ["Tula's Tapas", "HipPops"]);

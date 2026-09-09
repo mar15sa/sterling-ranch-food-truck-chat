@@ -10,6 +10,7 @@ const liveMonitor = require("./lib/community-live-monitor").createLiveMonitor({
   notify: (...args) => require("./lib/rules-alerts").alertCommunityMonitorChanged(...args),
 });
 const { createFoodTruckService } = require("./lib/food-truck-service");
+const { getCommunityFoodTruckSchedule } = require("./lib/community-food-truck-live");
 const { createMonthlyScheduleCache } = require("./lib/food-truck-calendar-cache");
 const {
   answerRulesQuestion,
@@ -4687,7 +4688,8 @@ async function handleRulesAsk(req, res, url) {
         ? parseIsoDateParam(foodTruckRequest.dateRange?.start)
         : null;
       const foodTruckQuestion = originalQuestion || (typeof foodTruckRequest === "string" ? foodTruckRequest : "food truck schedule");
-      return getAnswerForDate(foodTruckQuestion, dateFromInterpretation || parseAskedDate(foodTruckQuestion));
+      const date = formatIso(dateFromInterpretation || parseAskedDate(foodTruckQuestion));
+      return getCommunityFoodTruckSchedule({ dateRange: { start: date, end: date } }, { profile: getCommunityProfile(), fetchImpl: fetch, stripHtml });
     },
     index: getCommunityIndex(),
     communityProfile: getCommunityProfile(),

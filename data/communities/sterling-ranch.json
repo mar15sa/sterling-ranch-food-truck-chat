@@ -44,14 +44,14 @@
     {
       "id": "food-truck-schedule",
       "type": "food-truck-schedule",
-      "baseUrl": "https://sterlingranchcab.com/Calendar.aspx",
+      "baseUrl": "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
       "adapter": {
         "capabilities": ["events", "menu"],
         "facets": ["event-date", "date", "menu", "price", "action"],
         "controllingSourceRoles": ["operational"],
         "actionTypes": ["information"],
-        "sourceHosts": ["sterlingranchcab.com", "www.facebook.com", "facebook.com", "m.facebook.com", "www.instagram.com", "instagram.com"],
-        "endpoints": [{ "id": "schedule", "url": "https://sterlingranchcab.com/Calendar.aspx", "purpose": "official-food-truck-schedule" }],
+        "sourceHosts": ["sterlingranchcab.com"],
+        "endpoints": [{ "id": "schedule", "url": "https://sterlingranchcab.com/Calendar.aspx?EID=6150", "purpose": "official-food-truck-schedule" }],
         "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 },
         "degradation": { "policy": "retain-last-known" },
         "labels": {
@@ -62,7 +62,7 @@
         "vocabulary": { "food-truck": ["food truck", "food trucks", "mobile food"] },
         "foodTruck": {
           "fullAnswerPath": "/food-truck",
-          "menuSourceHosts": ["www.facebook.com", "facebook.com", "m.facebook.com", "www.instagram.com", "instagram.com"]
+          "vendorSources": []
         }
       },
       "refreshMinutes": 60
@@ -155,12 +155,7 @@
     "apps.apple.com",
     "srcab.utilityhawk.us",
     "ebill.sterlingranchco.com",
-    "lumiere.technology",
-    "www.facebook.com",
-    "facebook.com",
-    "m.facebook.com",
-    "www.instagram.com",
-    "instagram.com"
+    "lumiere.technology"
     ,"www.wasteconnections.com"
     ,"api.recollect.net"
   ],
