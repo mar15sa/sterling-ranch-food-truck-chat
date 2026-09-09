@@ -44,6 +44,7 @@ test("approved water-usage monitoring instructions do not borrow payment facts",
   assert.equal(answer.answerStatus, "verified");
   assert.equal(answer.confidence?.canAnswer, true);
   assert.ok(answer.sources.some((source) => /\/m\/faq\?cat=16/.test(source.sourceUrl || "")));
+  assert.deepEqual(answer.sources.map((source) => source.id), ["approved-utilityhawk-water-monitoring-2026"]);
   assert.match(answer.answer, /select Registration/i);
   assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
   assert.doesNotMatch(answer.answer, /Pay Online|rate|billing help|AmCoBi/i);
