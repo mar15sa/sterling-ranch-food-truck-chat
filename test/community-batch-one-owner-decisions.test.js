@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
-const { answerRulesQuestion, loadRulesIndex } = require('../lib/rules-assistant');
+const { answerRulesQuestion, loadRulesIndex, sourceDerivedAnswerParts } = require('../lib/rules-assistant');
 
 const decisions = JSON.parse(fs.readFileSync(
   path.join(__dirname, '..', 'data', 'community-owner-decisions-batch-1-2026-09-08.json'),
@@ -111,4 +111,48 @@ test('approved owner-reviewed evidence renders the allowed water and delinquency
   assert.match(delinquency.answer, /last Wednesday/i);
   assert.doesNotMatch(delinquency.answer, /\bCAB\b/i);
   assert.doesNotMatch(delinquency.answer, /no newer amendment/i);
+});
+
+test('money and enforcement wording variants use the reviewed source projections', async () => {
+  const options = { searchMode: 'legacy', llmMode: 'off' };
+  const cases = [
+    ['How much is stormwater each month for a townhome?', /\$17\.50/],
+    ['What is the residential water base rate?', /\$50\.20/],
+    ['What is the CAB trash charge?', /\$14\.17/],
+    ['What is the facility fee for a single-family detached home?', /\$12,395/],
+    ['When does a late fee start for an unpaid monthly bill?', /seven calendar days/i],
+    ['What are the first three fine amounts for a continuing violation?', /\$100\.00.*\$250\.00.*\$500\.00/i],
+  ];
+  for (const [question, expected] of cases) {
+    const result = await answerRulesQuestion(question, options);
+    assert.match(result.answer, expected, question);
+    assert.ok(result.answerMode.startsWith('source-derived'), question);
+  }
+});
+
+test('annual schedules and excluded tap rows stay withheld instead of borrowing a related amount', async () => {
+  const options = { searchMode: 'legacy', llmMode: 'off' };
+  for (const question of [
+    'What were the 2025 residential water rates?',
+    'What will 2027 residential water rates be?',
+    'What is the commercial tap fee?',
+    'What is the large-meter tap fee?',
+    'What is the pool tap fee?',
+  ]) {
+    const result = await answerRulesQuestion(question, options);
+    assert.equal(result.answerMode, 'owner-review-scope-unavailable', question);
+    assert.doesNotMatch(result.answer, /\$\d/, question);
+  }
+});
+
+test('the source-derived rate composer reads a second community’s reviewed schedule', () => {
+  const result = sourceDerivedAnswerParts('What is the water rate?', [{
+    title: '2029 water, sanitary sewer, and stormwater rates',
+    text: 'Monthly Fee Residential Single Family Detached $62.75. Tier residential and non-residential Fee per 1,000 gallons Tier 1 $7.25.',
+  }]);
+  assert.equal(result.available, true);
+  assert.match(result.answer, /2029/);
+  assert.match(result.answer, /\$62\.75/);
+  assert.match(result.answer, /\$7\.25/);
+  assert.doesNotMatch(result.answer, /\$50\.20|\$9\.70/);
 });
