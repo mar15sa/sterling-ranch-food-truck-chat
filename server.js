@@ -16,7 +16,6 @@ const {
   answerRulesQuestion,
   createRulesIndex,
   getRulesIndexStatus,
-  OFFICIAL_SOURCE_URL,
   warmRulesIndex,
 } = require("./lib/rules-assistant");
 const {
@@ -56,6 +55,7 @@ const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
 const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
 const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
+const { rulebookDestination } = require("./lib/community-rulebook");
 const { communitySourceStatus, getCommunityIndex, getCommunityProfile, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
 const { latestReviewDecision } = require("./lib/community-review-queue");
@@ -5080,7 +5080,7 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === "/rulebook") {
       res.writeHead(302, {
         ...SECURITY_HEADERS,
-        location: OFFICIAL_SOURCE_URL,
+        location: rulebookDestination(getCommunityProfile()),
         "cache-control": "no-store",
       });
       res.end();

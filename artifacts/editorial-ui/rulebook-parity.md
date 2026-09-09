@@ -18,3 +18,9 @@ The link uses `/rulebook`; the server redirects using the existing `OFFICIAL_SOU
 
 Application: `public/index.html`, `server.js`.
 Evidence: this note, `rulebook-ui.cjs`, `rulebook-ui-results.json`, `rulebook-tests.txt`, `rulebook-check.txt`, and the two updated homepage screenshots.
+
+## Profile-driven destination correction
+
+The prior constant was Sterling-specific even though it was already shared with the rules engine. The redirect now reads `getCommunityProfile()` and resolves its Municode/rules-capable connector in `lib/community-rulebook.js`. It prefers the configured primary governing-rules endpoint, then a governing endpoint, or the connector base URL when no governing endpoint is configured. HTTPS and the profile allowlist are required; adapter source-host restrictions apply when present. Missing or unsafe destinations fall back to that profile's website. No rules-engine constant is imported by the server.
+
+Five focused tests cover Sterling Ranch and Castle Rock, a rules-capability fixture with a primary endpoint, missing connectors, unsafe URLs, and adapter host restrictions. This profile navigation boundary changes no evidence or answer logic. Existing evidence-expiry limitations above remain applicable.

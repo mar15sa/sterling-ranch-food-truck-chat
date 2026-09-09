@@ -1,0 +1,13 @@
+✔ rulebook destination uses each community's configured rules connector (1.4523ms)
+✔ rules capability prefers the configured primary governing endpoint (0.31ms)
+✔ missing rules connector falls back to this community's website (0.2429ms)
+✔ unsafe endpoints fail to the active website (0.3644ms)
+✔ legacy connector baseUrl is also constrained by the profile allowlist (0.5355ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.4885

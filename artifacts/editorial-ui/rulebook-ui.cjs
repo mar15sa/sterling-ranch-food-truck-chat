@@ -3,7 +3,9 @@ const fs = require("node:fs");
 const {
   chromium,
 } = require("C:/Users/mar15/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright");
-const { OFFICIAL_SOURCE_URL } = require("../../lib/rules-assistant");
+const { rulebookDestination } = require("../../lib/community-rulebook");
+const { getCommunityProfile } = require("../../lib/community-source-manager");
+const configuredRulebook = rulebookDestination(getCommunityProfile());
 (async () => {
   const browser = await chromium.launch({ headless: true, channel: "chrome" });
   const results = [];
@@ -20,7 +22,7 @@ const { OFFICIAL_SOURCE_URL } = require("../../lib/rules-assistant");
     context.on("request", (r) => {
       if (/\/api\/(community|rules)\/ask/.test(r.url())) questions++;
     });
-    await context.route(OFFICIAL_SOURCE_URL, (route) =>
+    await context.route(configuredRulebook, (route) =>
       route.fulfill({
         contentType: "text/html",
         body: "<title>Rulebook destination test</title><h1>Configured official destination reached</h1>",
@@ -48,13 +50,13 @@ const { OFFICIAL_SOURCE_URL } = require("../../lib/rules-assistant");
       maxRedirects: 0,
     });
     assert.equal(response.status(), 302);
-    assert.equal(response.headers().location, OFFICIAL_SOURCE_URL);
+    assert.equal(response.headers().location, configuredRulebook);
     await link.focus();
     const opened = context.waitForEvent("page");
     await link.press("Enter");
     const popup = await opened;
     await popup.waitForLoadState();
-    assert.equal(popup.url(), OFFICIAL_SOURCE_URL);
+    assert.equal(popup.url(), configuredRulebook);
     await popup.close();
     if (mode !== "no-javascript") {
       await page
