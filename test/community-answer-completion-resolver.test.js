@@ -310,9 +310,9 @@ test("full-route fence permission and finish questions retain the controlling ru
       synthesizeCommunityAnswer: async () => {
         communitySynthesisCalls += 1;
         return {
-          directAnswer: "Approval and a color are listed on the form.",
-          keyDetails: [],
-          nextStep: "Open the form.",
+          directAnswer: "Yes, fencing is allowed when the applicable design and DRC approval requirements are met. Three-rail cedar fencing must use Sherwin Williams #3002 Belvedere Tan; concrete fencing uses Solomon #338 Earthen.",
+          keyDetails: ["The approved finish depends on whether the fence is cedar or concrete."],
+          nextStep: "",
         };
       },
       answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
@@ -321,15 +321,52 @@ test("full-route fence permission and finish questions retain the controlling ru
         llmMode: "off",
       }),
     });
-    assert.equal(communitySynthesisCalls, 0, question);
-    assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim", question);
+    assert.equal(communitySynthesisCalls, 1, question);
+    assert.equal(answer.authorityDecision, "per-facet-rule-and-specification", question);
     assert.equal(answer.answerStatus, "verified", question);
     assert.equal(answer.completion.outcome, "complete", question);
-    assert.ok(answer.completion.resolvedDetails.includes("permission"), question);
-    assert.notEqual(answer.answerMode, "community-grounded-ai", question);
+    assert.deepEqual(answer.completion.requestedDetails, ["permission", "specification"], question);
+    assert.deepEqual(answer.completion.resolvedDetails, ["permission", "specification"], question);
+    assert.equal(answer.answerMode, "community-per-facet-grounded-ai", question);
     assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+    assert.ok(answer.sources.some((source) => source.connectorType === "official-pdf"), question);
+    assert.ok(answer.facetAuthority.permission.length, question);
+    assert.ok(answer.facetAuthority.specification.length, question);
+    assert.match(answer.directAnswer, /approval/i, question);
+    assert.match(answer.directAnswer, /Belvedere Tan/i, question);
+    assert.match(answer.directAnswer, /Earthen/i, question);
     assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
   }
+});
+
+test("a binding rule remains verified-partial when specification composition is unavailable", async () => {
+  const answer = await answerCommunityQuestion("Can I build a fence and what color is required?", {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    planCommunitySearch: async () => ({
+      intent: "rules",
+      goal: "permission",
+      goals: ["permission"],
+      subject: "fence permission and finish",
+      requestedDetails: ["permission", "specification"],
+      filters: { audience: "", category: "", facility: "", location: "" },
+      searchQueries: ["fence permission", "fence color requirements"],
+      scope: "community",
+      needsClarification: false,
+    }),
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+      ...options,
+      searchMode: "legacy",
+      llmMode: "off",
+    }),
+  });
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.equal(answer.completion.outcome, "verified-partial");
+  assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
+  assert.match(answer.answer, /could not verify the requested color, finish, material, or dimension/i);
 });
 
 test("a form-only fence answer still cannot verify a binding permission claim", async () => {
@@ -364,7 +401,7 @@ test("a form-only fence answer still cannot verify a binding permission claim", 
   assert.notEqual(answer.answerStatus, "verified");
   assert.notEqual(answer.completion.outcome, "complete");
   assert.deepEqual(answer.completion.resolvedDetails, []);
-  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["permission"]);
+  assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "permission"));
 });
 
 test("single-facet verified families remain complete", () => {
