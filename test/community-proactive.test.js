@@ -2,7 +2,7 @@ const assert = require("node:assert/strict");
 const test = require("node:test");
 const { answerCommunityQuestion, directlyAnswersQuestionForm } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
-const { nextDrcReview } = require("../lib/community-proactive");
+const { nextDrcReview, proactiveCommunityAnswer } = require("../lib/community-proactive");
 const { residentEffortAssessment } = require("../scripts/eval-community-assistant");
 const communityIndex = require("../data/community-index.json");
 
@@ -43,6 +43,14 @@ test("water-usage portal questions distinguish meter capabilities from a current
   assert.equal(answer.answerMode, "source-derived-structured");
   assert.match(answer.answer, /does not provide a resident login link or current app instructions/i);
   assert.ok(answer.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
+});
+
+test("operational portal questions no longer use a topic-specific proactive answer", () => {
+  const answer = proactiveCommunityAnswer("Internet access for water usage", {
+    index: communityIndex,
+    now: new Date("2026-08-31T18:00:00Z"),
+  });
+  assert.equal(answer, null);
 });
 
 test("AI goal-and-subject routing sends payment questions to the current portal, not delinquency policy", async () => {

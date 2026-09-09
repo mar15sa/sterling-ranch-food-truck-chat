@@ -112,25 +112,35 @@ test('generic exact-version action composition works for a second community and 
     intent: 'forms', goal: 'application', goals: ['application'], subject: 'parking permit renewal',
     requestedDetails: ['action', 'contact'], filters: {}, searchQueries: ['parking permit renewal form'], scope: 'community', needsClarification: false,
   });
+  let composedSources;
   const answer = await answerCommunityQuestion('How do I renew my parking permit, and who can help?', {
     index,
-    communityId: 'beta', now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+    communityId: 'beta', now, interpretationMode: 'structured',
+    synthesizeCommunityAnswer: async (_question, sources) => {
+      composedSources = sources;
+      return {
+        directAnswer: 'Open the parking permit renewal form to renew your permit.',
+        keyDetails: ['For renewal help, email permits@beta.example.gov.'],
+        nextStep: 'Use the parking permit renewal form.',
+      };
+    },
     planCommunitySearch,
   });
   assert.equal(answer.answerStatus, 'verified');
-  assert.equal(answer.answerMode, 'community-approved-operational');
+  assert.equal(answer.answerMode, 'community-approved-operational-grounded-ai');
   assert.equal(answer.authorityDecision, 'exact-version-approved-claims');
-  assert.match(answer.answer, /Open parking permit renewal form/);
+  assert.match(answer.answer, /Open (?:the )?parking permit renewal form/);
   assert.match(answer.answer, /permits@beta\.example\.gov/);
   assert.deepEqual(answer.actions.map((action) => action.url), ['https://permits.beta.example.gov/renew']);
   assert.doesNotMatch(answer.answer, /555-0100/);
   assert.deepEqual(new Set(answer.sources.map((source) => source.id)), new Set([guide.id, action.id]));
-  const actionClaim = answer.claims.find((claim) => /Open parking permit renewal form/.test(claim.text));
+  const actionClaim = answer.claims.find((claim) => /Open the parking permit renewal form/.test(claim.text));
   const contactClaim = answer.claims.find((claim) => /permits@beta\.example\.gov/.test(claim.text));
-  assert.deepEqual(actionClaim.evidenceSourceIds, [action.id]);
+  assert.ok(actionClaim.evidenceSourceIds.includes(action.id));
   assert.deepEqual(contactClaim.evidenceSourceIds, [guide.id]);
   const displayedSourceIds = new Set(answer.sources.map((source) => source.id));
   assert.ok(answer.claims.every((claim) => claim.evidenceSourceIds.every((sourceId) => displayedSourceIds.has(sourceId))));
+  assert.equal(composedSources.some((source) => /555-0100/.test(source.text || '')), false);
 
   const missingContact = await answerCommunityQuestion('How do I renew my parking permit, and who can help?', {
     index: { ...index, sources: [action] }, communityId: 'beta', now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
