@@ -417,6 +417,15 @@ test("pool cost actions exclude unrelated downloads that only share generic fee 
   assert.ok(actions.every((action) => !/direct debit/i.test(action.label)));
 });
 
+test("a sole generic form remains available when its source itself matches the facility topic", () => {
+  const actions = relevantActions("How do I reserve the Great Hall?", [{
+    title: "Great Hall amenity rentals", sourceUrl: "https://alpha.gov/rentals",
+    text: "Residents can reserve the Great Hall for private events.",
+    actions: [{ label: "Rental request form", url: "https://alpha.gov/forms/rental", actionType: "booking" }],
+  }], 3, plan({ intent: "facilities", goal: "booking", goals: ["booking"], subject: "Great Hall rental", requestedDetails: ["action"] }));
+  assert.deepEqual(actions.map((action) => action.url), ["https://alpha.gov/forms/rental"]);
+});
+
 test("live recycling, event, and food-truck connectors do not run for adjacent questions", async () => {
   const cases = [
     {
