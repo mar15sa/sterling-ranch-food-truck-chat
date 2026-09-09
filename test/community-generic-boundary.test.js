@@ -36,8 +36,15 @@ test("a current selected source can be used for the boundary, while stale and un
 });
 
 test("an arbitrary external HTTPS candidate cannot replace the active official resource", () => {
-  const external = { title: "Search result", sourceUrl: "https://outside.example/contact", lifecycle: "current", reviewStatus: "approved" };
+  const external = { title: "Search result", sourceUrl: "https://outside.example/contact", lifecycle: "current", isOfficialResource: true, canonicalScopedProjection: true };
   const answer = genericEvidenceBoundary("What is the HOA phone number?", {}, { website: profile.website }, profile, [external]);
+  assert.equal(answer.sources[0].sourceUrl, profile.website);
+  assert.equal(answer.actions[0].url, profile.website);
+});
+
+test("full-page review status alone cannot make a source an answerable boundary projection", () => {
+  const pageOnly = { title: "Reviewed page", sourceUrl: "https://ridgeview.example/contact", lifecycle: "current", isOfficialResource: true, reviewStatus: "approved" };
+  const answer = genericEvidenceBoundary("What is the HOA phone number?", {}, { website: profile.website }, profile, [pageOnly]);
   assert.equal(answer.sources[0].sourceUrl, profile.website);
   assert.equal(answer.actions[0].url, profile.website);
 });
