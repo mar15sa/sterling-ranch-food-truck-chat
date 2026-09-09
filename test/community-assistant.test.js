@@ -8,6 +8,7 @@ const { actionSupportsGoal, classifyCommunityIntent, normalizedRoutingPlan, requ
 const { eventDateRange, parseCivicPlusEvents } = require("../lib/community-events");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { communitySourceStatus, reconcileCommunityIndex } = require("../lib/community-source-manager");
+const { buildFactLedger } = require("../lib/community-truth");
 const castleRockProfile = require("../data/communities/castle-rock.json");
 const portabilityProof = require("../data/portability-proof.json");
 
@@ -30,6 +31,62 @@ function source(overrides = {}) {
     staleAfter: future,
     ...overrides,
   };
+}
+
+// Static test pages must model the same claim-level decision evidence required
+// in production.  This keeps retrieval tests focused on their intended
+// ranking/routing behavior rather than relying on the retired baseline label.
+function approvedFixtureIndex(sources, overrides = {}) {
+  const reviewedAt = "2026-08-26T12:00:00.000Z";
+  const reviewedSources = sources.map((item) => {
+    const decision = `fixture-decision-${item.id}-${item.contentHash}`;
+    const provenance = {
+      reviewStatus: "approved",
+      sourceVersion: item.contentHash,
+      reviewedAt,
+      reviewedBy: "fixture-owner",
+      reviewDecisionId: decision,
+    };
+    const proseFact = {
+      id: `${item.id}-fixture-prose`,
+      factKey: `${item.id}-fixture-prose`,
+      scopeKey: `${item.id}-fixture-prose`,
+      type: "information",
+      value: item.text,
+      context: item.text,
+      ...provenance,
+    };
+    const actionFacts = (item.actions || []).map((action) => ({
+      id: `${item.id}-fixture-action-${action.id || action.url}`,
+      factKey: `${item.id}-fixture-action-${action.id || action.url}`,
+      scopeKey: `${item.id}-fixture-action-${action.id || action.url}`,
+      type: "link",
+      value: action.url,
+      context: action.context || `${action.label || "Official action"}: ${action.url}`,
+      actionLabel: action.label || "Official action",
+      ...provenance,
+    }));
+    return {
+      ...item,
+      reviewStatus: "approved",
+      reviewDecisionId: decision,
+      reviewedAt,
+      reviewedBy: "fixture-owner",
+      reviewedSourceVersion: item.contentHash,
+      facts: [...(item.facts || []).map((fact) => ({
+        ...fact,
+        scopeKey: fact.scopeKey || fact.factKey || fact.id,
+        context: fact.context || String(fact.value || ""),
+        ...provenance,
+      })), proseFact, ...actionFacts],
+    };
+  });
+  const index = {
+    communityId: "alpha",
+    sources: reviewedSources,
+    ...overrides,
+  };
+  return { ...index, factLedger: buildFactLedger(index) };
 }
 
 function profile(overrides = {}) {
@@ -509,7 +566,7 @@ test("the assistant can detect two official sources disagreeing on one changing 
 });
 
 test("hybrid retrieval maps resident language to the correct official transaction source", () => {
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [source(), source({ id: "alpha-trash", title: "Trash and Recycling", sourceUrl: "https://alpha.gov/trash", sourceType: "services", text: "Trash carts are collected Friday.", actions: [], facts: [] })] };
+  const index = approvedFixtureIndex([source(), source({ id: "alpha-trash", title: "Trash and Recycling", sourceUrl: "https://alpha.gov/trash", sourceType: "services", text: "Trash carts are collected Friday.", actions: [], facts: [] })], { communityName: "Alpha", website: "https://alpha.gov/" });
   assert.equal(classifyCommunityIntent("How do I rent the overlook?"), "facilities");
   const result = searchCommunityIndex("How do I book the Great Hall and what does it cost?", { index, communityId: "alpha" });
   assert.equal(result.sources[0].id, "alpha-rentals");
@@ -539,7 +596,7 @@ test("object-aware retrieval ranks a directly relevant official PDF over generic
     facts: [],
   });
   const result = searchCommunityIndex("What is the fence paint color?", {
-    index: { communityId: "alpha", sources: [genericPaint, fence] }, communityId: "alpha", intent: "rules",
+    index: approvedFixtureIndex([genericPaint, fence]), communityId: "alpha", intent: "rules",
   });
   assert.equal(result.sources[0].id, "fence-pdf");
   assert.ok(result.sources.every((item) => item.id !== "exterior-paint"));
@@ -556,7 +613,7 @@ test("contact answers choose the fact whose context matches the requested servic
       { id: "parks", factKey: "parks-maintenance-phone", type: "phone", value: "720-222-2222", context: "For parks maintenance questions, call 720-222-2222." },
     ],
   });
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [faq] };
+  const index = approvedFixtureIndex([faq], { communityName: "Alpha", website: "https://alpha.gov/" });
   const answer = await answerCommunityQuestion("Who do I contact about parks maintenance?", { index, communityId: "alpha", planCommunitySearch: false, synthesizeCommunityAnswer: false });
   assert.match(answer.answer, /720-222-2222/);
   assert.doesNotMatch(answer.answer, /720-111-1111/);
@@ -574,7 +631,7 @@ test("contact answers honor whether the resident asked for email or phone", asyn
       { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
     ],
   });
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  const index = approvedFixtureIndex([billing], { communityName: "Alpha", website: "https://alpha.gov/" });
   const answer = await answerCommunityQuestion("What email should I use for water billing?", { index, communityId: "alpha", planCommunitySearch: false, synthesizeCommunityAnswer: false });
   assert.match(answer.directAnswer, /ClientCare@AmCoBi\.com/i);
   assert.doesNotMatch(answer.directAnswer, /call\s+\d/i);
@@ -591,7 +648,7 @@ test("contact answers preserve exact structured details even when AI synthesis w
       { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
     ],
   });
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  const index = approvedFixtureIndex([billing], { communityName: "Alpha", website: "https://alpha.gov/" });
   let synthesisCalls = 0;
   const answer = await answerCommunityQuestion("Who do I contact about water billing?", {
     index,
@@ -621,7 +678,7 @@ test("structured service contacts skip the unrelated rules lookup after shared i
       { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
     ],
   });
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  const index = approvedFixtureIndex([billing], { communityName: "Alpha", website: "https://alpha.gov/" });
   let rulesCalls = 0;
   let interpretationCalls = 0;
   const answer = await answerCommunityQuestion("Who handles questions about my monthly water charge?", {
@@ -671,7 +728,7 @@ test("structured contacts outrank an earlier confident rules or AI answer that o
       { id: "billing-email", factKey: "water-billing-email", type: "email", value: "ClientCare@AmCoBi.com", context: "For billing questions, call (833) 772-2240 or email ClientCare@AmCoBi.com." },
     ],
   });
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [billing] };
+  const index = approvedFixtureIndex([billing], { communityName: "Alpha", website: "https://alpha.gov/" });
   const answer = await answerCommunityQuestion("Who do I contact about water billing?", {
     index,
     communityId: "alpha",
@@ -721,7 +778,7 @@ test("an exact contact already grounded by the rules path is not replaced by a r
 });
 
 test("tenant filtering prevents one community's sources leaking into another", () => {
-  const index = { communityId: "alpha", sources: [source(), source({ id: "beta-rentals", communityId: "beta", sourceUrl: "https://beta.gov/rentals", text: "The Beta Hall costs $25 per hour." })] };
+  const index = approvedFixtureIndex([source(), source({ id: "beta-rentals", communityId: "beta", sourceUrl: "https://beta.gov/rentals", text: "The Beta Hall costs $25 per hour." })]);
   const result = searchCommunityIndex("How much does the hall cost?", { index, communityId: "beta" });
   assert.deepEqual(result.sources.map((item) => item.communityId), ["beta"]);
 });
@@ -736,7 +793,7 @@ test("CivicPlus event parser and Denver date ranges retain live event details", 
 
 test("unified assistant uses grounded synthesis, official actions, and safe refusal", async () => {
   const item = source();
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [item] };
+  const index = approvedFixtureIndex([item], { communityName: "Alpha", website: "https://alpha.gov/" });
   const answer = await answerCommunityQuestion("How do I book the Great Hall and what does it cost?", {
     index, communityId: "alpha",
     synthesizeCommunityAnswer: async () => ({ directAnswer: "The Great Hall costs $100 per hour.", keyDetails: ["A $250 deposit is required."], nextStep: "Use the rental request form.", answerMode: "community-grounded-ai", claims: [
@@ -768,7 +825,7 @@ test("a directly relevant official PDF overrides a generic rules answer for the 
     actions: [],
     facts: [],
   });
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [fence] };
+  const index = approvedFixtureIndex([fence], { communityName: "Alpha", website: "https://alpha.gov/" });
   const wrongRulesAnswer = {
     answer: "The exterior-painting rule does not publish a garage-door color list.",
     answerMode: "source-derived-structured",
@@ -798,7 +855,7 @@ test("a directly relevant official PDF overrides a generic rules answer for the 
 
 test("AI search planning can rescue unfamiliar wording but evidence still controls the answer", async () => {
   const item = source();
-  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [item] };
+  const index = approvedFixtureIndex([item], { communityName: "Alpha", website: "https://alpha.gov/" });
   const answer = await answerCommunityQuestion("Where can I hold my kid's celebration?", {
     index,
     communityId: "alpha",
@@ -908,7 +965,7 @@ test("an exact facility page outranks a contradictory generic rulebook answer fo
     ],
   });
   const result = await answerCommunityQuestion("What are the pickleball court rules?", {
-    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [pickleball] },
+    index: approvedFixtureIndex([pickleball], { communityName: "Alpha", website: "https://alpha.gov/" }),
     communityId: "alpha",
     answerRulesQuestion: async () => ({
       answer: "The general park rules apply from 5:00 a.m. to 11:00 p.m.",
@@ -931,7 +988,7 @@ test("held-out collision: a facility or form cannot become rule evidence", () =>
   const facility = source({ id: "alpha-pool", sourceType: "facilities", title: "Pool rules", text: "Pool guests must reserve a time slot.", connectorType: "civicplus-pages" });
   const form = source({ id: "alpha-request", sourceType: "forms", title: "Parking request form", text: "Request parking approval here.", connectorType: "civicplus-pages" });
   const result = searchCommunityIndex("Can I park overnight?", {
-    index: { communityId: "alpha", sources: [rule, facility, form] }, communityId: "alpha", intent: "rules",
+    index: approvedFixtureIndex([rule, facility, form]), communityId: "alpha", intent: "rules",
   });
   assert.deepEqual(result.sources.map((item) => item.id), ["alpha-rule"]);
 });
@@ -972,7 +1029,7 @@ test("held-out action boundary: reservation wording cannot replace the configure
     ],
   });
   const answer = await answerCommunityQuestion("How do I reserve the Great Hall?", {
-    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [prose, action] },
+    index: approvedFixtureIndex([prose, action], { communityName: "Alpha", website: "https://alpha.gov/" }),
     communityId: "alpha", synthesizeCommunityAnswer: false,
     planCommunitySearch: async () => ({ intent: "facilities", goal: "booking", goals: ["booking"], subject: "Great Hall", searchQueries: ["reserve Great Hall"] }),
   });
