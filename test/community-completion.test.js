@@ -30,7 +30,7 @@ function source(id, hash, overrides = {}) {
   };
 }
 
-test("fence-color wording variants use the searchable official one-sheet, even without AI", async () => {
+test("fence-color wording variants do not use an unapproved static one-sheet as the answer", async () => {
   for (const question of [
     "What is the fence paint color?",
     "What color should I paint my fence?",
@@ -49,9 +49,19 @@ test("fence-color wording variants use the searchable official one-sheet, even w
       }),
     });
 
-    assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
-    assert.match(answer.sources[0]?.sourceUrl || "", /DocumentCenter\/View\/618/i, question);
-    assert.doesNotMatch(answer.answer, /garage-door color list/i, question);
+    if (/3-rail/i.test(question)) {
+      assert.equal(answer.answerStatus, "verified", question);
+      assert.equal(answer.completion.outcome, "complete", question);
+      assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
+    } else {
+      assert.equal(answer.answerStatus, "source-unavailable", question);
+      assert.equal(answer.completion.outcome, "missing-evidence", question);
+      assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "specification"), question);
+      assert.doesNotMatch(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
+      assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)), question);
+    }
+    assert.doesNotMatch(answer.answer, /trash enclosure/i, question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
   }
 });
 

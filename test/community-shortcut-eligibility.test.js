@@ -189,7 +189,7 @@ test("the exact Labor Day pool-hours question bypasses current status and withho
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
 });
 
-test("dated facility hours reject a supported weekend AI answer for a Monday holiday", async () => {
+test("dated facility hours do not revive raw pool-page prose after rejecting an AI answer", async () => {
   const routingPlan = plan({ intent: "status", goal: "schedule", subject: "pool operating hours on Labor Day", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, filters: { audience: "", category: "", facility: "pool", location: "" }, searchQueries: ["pool hours Labor Day"] });
   const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
     interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", planCommunitySearch: async () => routingPlan,
@@ -197,28 +197,23 @@ test("dated facility hours reject a supported weekend AI answer for a Monday hol
     answerRulesQuestion,
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
   });
-  assert.equal(answer.answerMode, "community-dated-facility-hours");
-  assert.match(answer.answer, /published weekday hours/i);
-  assert.match(answer.answer, /5:00 am/i);
-  assert.match(answer.answer, /Open Swim/i);
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm|Open Swim/i);
   assert.doesNotMatch(answer.answer, /maintenance|cleaning/i);
   assert.doesNotMatch(answer.answer, /Saturday and Sunday hours are 7:00 am/i);
-  assert.match(answer.answer, /does not publish separate holiday hours/i);
 });
 
-test("dated facility hours retain a narrower Tuesday and Thursday maintenance clause", () => {
+test("dated facility hours reject raw current page prose without an approved claim projection", () => {
   const pool = { ...communityIndex.sources.find((source) => source.id === "sterling-ranch-overlook-outdoor-pool-1"), staleAfter: "2099-01-01T00:00:00.000Z" };
   const answer = datedFacilityHoursAnswer("What are pool hours Tuesday, September 8?", { sources: [pool] }, {
     routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-08", end: "2026-09-08", label: "September 8" }, searchQueries: ["pool hours Tuesday"] }),
   });
-  assert.match(answer.answer, /Tuesday & Thursday/i);
-  assert.match(answer.answer, /7:00 am - 8:45 am/i);
-  assert.match(answer.answer, /cleaning and maintenance/i);
+  assert.equal(answer, null);
 });
 
 test("dated facility hours bind a Sunday request to Sunday rather than weekday hours", () => {
   const source = {
-    id: "alpha-clubhouse", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), staleAfter: "2099-01-01T00:00:00Z", contentHash: "hours", actions: [], facts: [],
+    id: "alpha-clubhouse", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), staleAfter: "2099-01-01T00:00:00Z", contentHash: "hours", canonicalScopedProjection: true, approvalClaimIds: ["clubhouse-hours"], actions: [], facts: [],
     text: "Clubhouse operating hours. Clubhouse hours Monday-Friday: 8:00 am - 6:00 pm Saturday: 9:00 am - 4:00 pm Sunday: 10:00 am - 2:00 pm Guest passes.", excerpt: "Clubhouse hours Monday-Friday: 8:00 am - 6:00 pm Saturday: 9:00 am - 4:00 pm Sunday: 10:00 am - 2:00 pm.",
   };
   const answer = datedFacilityHoursAnswer("What are the clubhouse hours on Sunday, September 13?", { sources: [source] }, {
@@ -255,7 +250,7 @@ test("the full ask route withholds stale dated facility hours instead of repeati
   assert.equal(answer.sources[0].text, undefined);
 });
 
-test("fresh dated facility hours still return a verified answer", () => {
+test("fresh raw dated facility hours still require an approved claim projection", () => {
   const source = {
     ...communityIndex.sources.find((item) => item.id === "sterling-ranch-overlook-outdoor-pool-1"),
     staleAfter: "2026-09-02T00:00:00.000Z",
@@ -264,14 +259,12 @@ test("fresh dated facility hours still return a verified answer", () => {
     now: NOW,
     routingPlan: plan({ intent: "facilities", goal: "schedule", subject: "pool hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["pool hours Monday"] }),
   });
-  assert.equal(answer.answerMode, "community-dated-facility-hours");
-  assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.answer, /5:00 am/i);
+  assert.equal(answer, null);
 });
 
 test("dated facility hours retain the conflict boundary and prefer an exact weekday heading", async () => {
   const planForMonday = plan({ intent: "facilities", goal: "schedule", subject: "clubhouse hours", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, searchQueries: ["clubhouse hours Monday"] });
-  const base = { id: "one", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), contentHash: "one", actions: [], text: "Monday: 8:00 am - 6:00 pm Tuesday-Friday: 9:00 am - 5:00 pm Saturday: 10:00 am - 2:00 pm.", excerpt: "Monday: 8:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "8:00 am", context: "Monday: 8:00 am - 6:00 pm" }] };
+  const base = { id: "one", title: "Clubhouse", sourceUrl: "https://alpha.gov/clubhouse", sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1, checkedAt: NOW.toISOString(), contentHash: "one", canonicalScopedProjection: true, approvalClaimIds: ["clubhouse-monday-hours"], actions: [], text: "Monday: 8:00 am - 6:00 pm Tuesday-Friday: 9:00 am - 5:00 pm Saturday: 10:00 am - 2:00 pm.", excerpt: "Monday: 8:00 am - 6:00 pm", facts: [{ factKey: "clubhouse-monday-hours", type: "time", value: "8:00 am", context: "Monday: 8:00 am - 6:00 pm" }] };
   const exact = datedFacilityHoursAnswer("What are clubhouse hours on Labor Day?", { sources: [base] }, { routingPlan: planForMonday });
   assert.match(exact.answer, /Monday: 8:00 am - 6:00 pm/i);
   assert.doesNotMatch(exact.answer, /Tuesday-Friday/i);
@@ -326,9 +319,8 @@ test("a confident rental fallback cannot replace pool hours after live status is
   assert.equal(rulesCalls, 1);
   assert.notEqual(answer.answerMode, "source-derived-structured");
   assert.doesNotMatch(answer.answer, /reserve an Overlook space|security deposit/i);
-  assert.match(answer.answer, /5:00 am/i);
-  assert.match(answer.answer, /9:00 am/i);
-  assert.match(answer.answer, /8:45 pm/i);
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) =>
     item.connector === "grounded-fallback"
       && item.reasons.includes("requested-hours-missing")
@@ -388,7 +380,7 @@ test("shortcut profiles reject semantic collisions before a narrow connector can
     candidate: candidate({ answerMode: "community-proactive-account", directAnswer: "Open the UtilityHawk payment portal." }),
   });
   assert.equal(generalService.eligible, false);
-  assert.ok(generalService.reasons.includes("subject-not-supported"));
+  assert.ok(generalService.reasons.includes("unknown-shortcut-profile"));
 });
 
 test("candidate validation catches missing details, dates, and filters after connector retrieval", () => {
@@ -420,19 +412,20 @@ test("candidate validation catches missing details, dates, and filters after con
   assert.ok(facilityDecision.reasons.includes("requested-price-missing"));
 });
 
-test("an explicit evidence-backed unavailable price satisfies a cost shortcut, but an unsupported refusal does not", () => {
+test("retired proactive price shortcuts stay ineligible even when old candidates carry evidence metadata", () => {
   const costPlan = plan({ intent: "facilities", goal: "cost", goals: ["cost"], subject: "pool rental", requestedDetails: ["price"] });
   const supported = shortcutEligibility("proactive", {
     question: "What is the pool rental fee?", plan: costPlan,
     candidate: candidate({ answerMode: "community-proactive-pool-party", directAnswer: "There is no pool rental fee because the official pool FAQ says the pool is not available for rental.", sources: [{ id: "pool-faq", title: "Pool FAQ" }], detailResolutions: { price: { status: "not-applicable", evidenceSourceIds: ["pool-faq"] } } }),
   });
-  assert.equal(supported.eligible, true);
+  assert.equal(supported.eligible, false);
+  assert.ok(supported.reasons.includes("unknown-shortcut-profile"));
   const unsupported = shortcutEligibility("proactive", {
     question: "What is the pool rental fee?", plan: costPlan,
     candidate: candidate({ answerMode: "community-proactive-pool-party", directAnswer: "The pool is not available for rental.", sources: [{ id: "pool-faq", title: "Pool FAQ" }] }),
   });
   assert.equal(unsupported.eligible, false);
-  assert.ok(unsupported.reasons.includes("requested-price-missing"));
+  assert.ok(unsupported.reasons.includes("unknown-shortcut-profile"));
 });
 
 test("pool cost actions exclude unrelated downloads that only share generic fee language", () => {

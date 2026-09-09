@@ -10,13 +10,10 @@ test("non-payment consequences cannot gain a payment-action detail", () => {
   assert.deepEqual(normalizeInterpretation(base,"What happens if I do not pay my water bill?").requestedDetails,[]);
 });
 
-test("landscape application requests use complete current packet instructions without another synthesis", () => {
+test("raw landscape packet prose cannot create an application shortcut", () => {
   for (const question of ["Landscaping application", "Where do I submit my yard landscaping form?", "How do I apply for irrigation approval?"]) {
     const answer=proactiveCommunityAnswer(question,{index,now:new Date("2026-09-06T20:00:00Z")});
-    assert.match(answer.directAnswer,/Landscape Submittal Packet/);
-    assert.match(answer.answer,/B-1/);
-    assert.match(answer.answer,/B-2/);
-    assert.match(answer.actions[0].url,/\/1964\/Landscape-Submittal-Packet-2026/);
+    assert.equal(answer, null);
   }
   assert.equal(proactiveCommunityAnswer("What is the landscaping application fee?",{index}),null);
 });
@@ -29,7 +26,7 @@ test("invented open-ended dates cannot narrow a general process or recurring sch
   }
 });
 
-test("plant establishment billing uses the current official FAQ, even with a payment interpretation", () => {
+test("raw FAQ prose cannot create a plant-establishment billing shortcut", () => {
   for (const question of [
     "Can i get a discount on my water while trying to establish plants",
     "Are water charges reduced for new sod?",
@@ -39,11 +36,7 @@ test("plant establishment billing uses the current official FAQ, even with a pay
       index, now: new Date("2026-09-06T20:00:00Z"),
       routingPlan: { goal: "payment", subject: "water bill" },
     });
-    assert.match(answer.directAnswer, /45-day/);
-    assert.match(answer.directAnswer, /first-tier/);
-    assert.match(answer.directAnswer, /does not count against your water budget/);
-    assert.doesNotMatch(answer.answer, /delinquen|unpaid|disconnection/i);
-    assert.match(answer.sources[0].sourceUrl, /faq\?cat=16/);
+    assert.equal(answer, null);
   }
 });
 

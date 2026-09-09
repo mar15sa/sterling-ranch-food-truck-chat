@@ -357,7 +357,7 @@ test("an existing authoritative specification limitation is not repeated as a ge
   assert.doesNotMatch(answer.answer, /could not verify/i);
 });
 
-test("an exact official specification sheet resolves a specification-only question", async () => {
+test("freshness alone cannot authorize an exact static specification sheet", async () => {
   const freshIndex = structuredClone(communityIndex);
   const sourceUrl = "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-";
   for (const source of freshIndex.sources || []) {
@@ -378,15 +378,15 @@ test("an exact official specification sheet resolves a specification-only questi
       llmMode: "off",
     }),
   });
-  assert.equal(answer.answerStatus, "verified");
-  assert.equal(answer.completion.outcome, "complete");
-  assert.deepEqual(answer.completion.resolvedDetails, ["specification"]);
-  assert.match(answer.answer, /#3002.*Belvedere Tan/i);
-  assert.doesNotMatch(answer.answer, /could not verify/i);
-  assert.ok(answer.sources.some((source) => (source.authorityFacets || []).includes("specification")));
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.completion.outcome, "missing-evidence");
+  assert.deepEqual(answer.completion.resolvedDetails, []);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
+  assert.doesNotMatch(answer.answer, /#3002.*Belvedere Tan/i);
+  assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)));
 });
 
-test("full-route fence permission and finish questions retain the controlling rule answer", async () => {
+test("full-route fence questions retain permission while an unapproved finish stays unresolved", async () => {
   const questions = [
     "Can I build a fence and what color does it need to be?",
     "Can I install backyard fencing, and which stain color is required?",
@@ -425,20 +425,19 @@ test("full-route fence permission and finish questions retain the controlling ru
         llmMode: "off",
       }),
     });
-    assert.equal(communitySynthesisCalls, 1, question);
-    assert.equal(answer.authorityDecision, "per-facet-rule-and-specification", question);
-    assert.equal(answer.answerStatus, "verified", question);
-    assert.equal(answer.completion.outcome, "complete", question);
-    assert.deepEqual(answer.completion.requestedDetails, ["permission", "specification"], question);
-    assert.deepEqual(answer.completion.resolvedDetails, ["permission", "specification"], question);
-    assert.equal(answer.answerMode, "community-per-facet-grounded-ai", question);
+    assert.equal(communitySynthesisCalls, 0, question);
+    assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim", question);
+    assert.equal(answer.answerStatus, "verified-incomplete", question);
+    assert.equal(answer.answerVerdict, "conditional", question);
+    assert.equal(answer.completion.outcome, "verified-partial", question);
+    assert.ok(answer.completion.requestedDetails.includes("permission"), question);
+    assert.ok(answer.completion.requestedDetails.includes("specification"), question);
+    assert.ok(answer.completion.resolvedDetails.includes("permission"), question);
+    assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "specification"), question);
+    assert.notEqual(answer.answerMode, "community-per-facet-grounded-ai", question);
     assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
-    assert.ok(answer.sources.some((source) => source.connectorType === "official-pdf"), question);
-    assert.ok(answer.facetAuthority.permission.length, question);
-    assert.ok(answer.facetAuthority.specification.length, question);
-    assert.match(answer.directAnswer, /approval/i, question);
-    assert.match(answer.directAnswer, /Belvedere Tan/i, question);
-    assert.match(answer.directAnswer, /Earthen/i, question);
+    assert.match(answer.answer, /DRC approval|approval requirements/i, question);
+    assert.match(answer.answer, /Still to confirm:.*requested color, finish, material, or dimension/i, question);
     assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
   }
 });

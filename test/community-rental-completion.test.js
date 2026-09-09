@@ -21,7 +21,7 @@ async function ask(question, facility) {
   });
 }
 
-test("held-out rental wording completes with the resolved facility and official booking action", async () => {
+test("held-out rental wording is withheld until the exact booking action is approved", async () => {
   const cases = [
     ["Can I reserve the clubhouse for a meeting?", "Clubhouse"],
     ["How do I book the Great Hall?", "Great Hall"],
@@ -31,53 +31,48 @@ test("held-out rental wording completes with the resolved facility and official 
   ];
   for (const [question, facility] of cases) {
     const result = await ask(question, facility);
-    assert.equal(result.answerStatus, "verified", question);
-    assert.equal(result.confidence.canAnswer, true, question);
-    assert.match(result.directAnswer, new RegExp(facility, "i"), question);
+    assert.equal(result.answerStatus, "source-unavailable", question);
+    assert.equal(result.confidence.canAnswer, false, question);
     assert.ok(result.sources.some((source) => /Rent-the-Facility|Park-Shelters/i.test(source.sourceUrl)), question);
-    assert.ok(result.actions.some((action) => action.actionType === "booking" && /secure\.rec1\.com/i.test(action.url)), question);
+    assert.ok(result.actions.every((action) => !/secure\.rec1\.com/i.test(action.url)), question);
     assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i, question);
   }
 });
 
-test("a canonical facility filter is rendered only when the cited page proves it", async () => {
+test("a canonical facility name cannot make an unapproved rental action answerable", async () => {
   const result = await ask("Can I reserve the clubhouse for a meeting?", "Overlook Clubhouse");
-  assert.equal(result.answerStatus, "verified");
-  assert.match(result.directAnswer, /Overlook Clubhouse/i);
-  assert.ok(result.sources.some((source) => /Overlook Clubhouse/i.test(source.text || "")));
+  assert.equal(result.answerStatus, "source-unavailable");
+  assert.doesNotMatch(result.answer, /secure\.rec1\.com|select Overlook Clubhouse/i);
 });
 
-test("facility prices stay attached to the named rentable space", () => {
+test("raw facility prices cannot create a proactive rental shortcut", () => {
   const cases = [
     ["How much does the Great Hall cost?", /Great Hall.*\$100(?:\.00)? per hour/i, /\$25 per hour/i],
     ["How much does the North Pavilion cost?", /North Pavilion.*\$25 per hour/i, /\$100 per hour/i],
     ["How much does the South Pavilion cost?", /South Pavilion.*\$25 per hour/i, /\$100 per hour/i],
     ["How much does a park shelter cost?", /park shelter.*\$15 per hour/i, /\$100 per hour|\$25 per hour/i],
   ];
-  for (const [question, expected, absent] of cases) {
+  for (const [question] of cases) {
     const result = proactiveCommunityAnswer(question, { index, now });
-    assert.match(result.directAnswer, expected, question);
-    assert.doesNotMatch(result.directAnswer, absent, question);
+    assert.equal(result, null, question);
   }
   for (const question of ["How much does the clubhouse cost?", "How much does Overlook cost?"]) {
     const result = proactiveCommunityAnswer(question, { index, now });
-    assert.match(result.directAnswer, /Great Hall.*\$100(?:\.00)? per hour.*pavilions.*\$25 per hour/i, question);
-    assert.match(result.nextStep, /choose|availability/i, question);
+    assert.equal(result, null, question);
   }
 });
 
-test("generic clubhouse prices stay on the approved facility shortcut with a canonical plan", async () => {
+test("generic clubhouse prices remain withheld without exact approved claims", async () => {
   for (const question of ["How much does the clubhouse cost?", "How much does Overlook cost?"]) {
     const result = await answerCommunityQuestion(question, {
       now, index, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
       planCommunitySearch: async () => ({ ...plan("Overlook Clubhouse"), goal: "cost", goals: ["cost"], requestedDetails: ["price", "action"] }),
       answerRulesQuestion: async () => ({ confidence: { canAnswer: false } }),
     });
-    assert.equal(result.answerStatus, "verified", question);
-    assert.match(result.directAnswer, /Overlook Clubhouse.*Great Hall.*\$100(?:\.00)? per hour.*pavilions.*\$25 per hour/i, question);
-    assert.match(result.nextStep, /choose|availability/i, question);
-    assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl)), question);
-    assert.ok(result.actions.some((action) => action.actionType === "booking" && /secure\.rec1\.com/i.test(action.url)), question);
+    assert.equal(result.answerStatus, "source-unavailable", question);
+    assert.doesNotMatch(result.answer, /\$100|\$25/i, question);
+    assert.ok(result.sources.some((source) => /^https:\/\/sterlingranchcab\.com/i.test(source.sourceUrl)), question);
+    assert.ok(result.actions.every((action) => !/secure\.rec1\.com/i.test(action.url)), question);
     assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i, question);
   }
 });

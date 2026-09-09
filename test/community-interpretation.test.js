@@ -299,25 +299,33 @@ test("structured validation keeps holiday lighting schedules out of live events"
 });
 
 test("permission plus application questions consult the controlling rule before forms", async () => {
-  const answer = await answerCommunityQuestion("I need to submit for rainwater harvesting barrels", {
-    interpretationMode: "structured",
-    index: communityIndex,
-    communityId: "sterling-ranch",
-    answerRulesQuestion,
-    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  const ask = (question, subject) => answerCommunityQuestion(question, {
+    interpretationMode: "structured", index: communityIndex, communityId: "sterling-ranch",
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
     planCommunitySearch: async () => interpretation({
-      intent: "forms",
-      goal: "application",
-      goals: ["application"],
-      subject: "rainwater harvesting barrels",
+      intent: "forms", goal: "application", goals: ["application"], subject,
       requestedDetails: ["action", "permission"],
       dateRange: { kind: "none", start: "", end: "", label: "" },
-      searchQueries: ["rainwater harvesting barrels application"],
+      searchQueries: [`${subject} application`],
     }),
   });
-  assert.match(answer.answer, /55 gallons/i);
-  assert.match(answer.answer, /may not need DRC approval/i);
-  assert.ok(answer.actions.some((action) => /^https:\/\//.test(action.url)));
+  const answer = await ask("I need to submit for rainwater harvesting barrels", "rainwater harvesting barrels");
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.equal(answer.answerVerdict, "conditional");
+  assert.match(answer.answer, /55-gallon/i);
+  assert.match(answer.answer, /do not require approval/i);
+  assert.match(answer.nextStep, /could not verify the application or submission step/i);
+  assert.ok(answer.actions.some((action) => action.actionType === "information" && /library\.municode\.com/i.test(action.url)));
+  assert.ok(answer.sources.every((source) => /library\.municode\.com/i.test(source.sourceUrl)));
+
+  const trampoline = await ask("I need to submit for a trampoline", "trampoline");
+  assert.equal(trampoline.answerMode, "community-rule-partial");
+  assert.match(trampoline.directAnswer, /DRC approval is required/i);
+  assert.match(trampoline.nextStep, /could not verify the application or submission step/i);
+
+  const gazebo = await ask("I need to submit for a gazebo", "gazebo");
+  assert.equal(gazebo.answerStatus, "source-unavailable");
+  assert.doesNotMatch(gazebo.answer, /lighting must be strung.*gazebo/i);
 });
 
 test("structured rules retry the deterministic index before a community-page fallback", async () => {
@@ -580,7 +588,7 @@ test("AI unrelated scope cannot reject a clear state-parks-pass process question
       clarificationQuestion: "",
     }),
   });
-  assert.equal(answer.answerMode, "source-derived-structured");
+  assert.match(answer.answerMode, /^source-derived-(?:structured|extractive)$/);
   assert.equal(answer.confidence?.canAnswer, true);
   assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i);
 });

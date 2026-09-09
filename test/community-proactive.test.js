@@ -30,19 +30,20 @@ async function askWithDraft(question, draft) {
   });
 }
 
-test("approved-landscaper questions preserve the registration requirement without naming unverified companies", async () => {
+test("approved-landscaper questions withhold unapproved directory prose and company names", async () => {
   const answer = await ask("list of approved landscapers");
-  assert.equal(answer.answerMode, "source-derived-structured");
-  assert.match(answer.answer, /official approved-landscapers directory/i);
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.answerMode, "community-freshness-withheld");
   assert.doesNotMatch(answer.answer, /AAA Landscaping|A Complete Exterior|AGR Landscape/i);
-  assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
+  assert.ok(answer.actions.some((action) => /\/414\/Approved-Landscapers-List/.test(action.url)));
 });
 
-test("water-usage portal questions distinguish meter capabilities from a current resident-login process", async () => {
+test("legacy water-usage wording uses approved projections without inventing a missing portal claim", async () => {
   const answer = await ask("Internet access for water usage");
-  assert.equal(answer.answerMode, "source-derived-structured");
-  assert.match(answer.answer, /does not provide a resident login link or current app instructions/i);
-  assert.ok(answer.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
+  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.equal(answer.answerStatus, "verified");
+  assert.doesNotMatch(answer.answer, /does not provide a resident login link|no (?:portal|login)/i);
+  assert.ok(answer.sources.filter((source) => !source.connectorType?.includes("live")).every((source) => source.canonicalScopedProjection));
 });
 
 test("operational portal questions no longer use a topic-specific proactive answer", () => {
@@ -137,49 +138,42 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   assert.notEqual(rates.routingDecision, "ai-planned");
 });
 
-test("park and clubhouse rentals give prices, terms, and a live booking path", async () => {
-  const park = await ask("How do I book the park?");
-  assert.doesNotMatch(park.directAnswer, /^(?:yes|no)\b/i);
-  assert.match(park.directAnswer, /open the official rental catalog.*choose.*select/i);
-  assert.match(park.answer, /\$15 per hour/i);
-  assert.match(park.answer, /playgrounds and grassy areas are not reserved exclusively/i);
-  assert.match(JSON.stringify(park.actions), /secure\.rec1\.com/);
-
-  const clubhouse = await ask("Can I rent the clubhouse?");
-  assert.match(clubhouse.directAnswer, /^Yes\b/i);
-  assert.match(clubhouse.answer, /separate rentable spaces and conditions/i);
-  assert.doesNotMatch(clubhouse.answer, /\$100|\$25|\$200|\$250/i);
-
-  const overlook = await ask("How do I reserve an Overlook space?");
-  assert.equal(overlook.answerVerdict, "informational");
-  assert.doesNotMatch(overlook.directAnswer, /^(?:yes|no)\b/i);
-  assert.match(overlook.directAnswer, /open the live rental catalog.*choose.*select/i);
-
-  const cost = await ask("How much does the Overlook Great Hall cost?");
-  assert.match(cost.directAnswer, /\$100(?:\.00)? per hour.*\$200 minimum.*\$250 refundable/i);
+test("unapproved facility rental facts and booking actions stay withheld", async () => {
+  for (const question of [
+    "How do I book the park?",
+    "Can I rent the clubhouse?",
+    "How do I reserve an Overlook space?",
+    "How much does the Overlook Great Hall cost?",
+  ]) {
+    const answer = await ask(question);
+    assert.equal(answer.answerStatus, "source-unavailable", question);
+    assert.equal(answer.answerMode, "community-freshness-withheld", question);
+    assert.ok(answer.actions.every((action) => action.actionType === "information"), question);
+    assert.doesNotMatch(JSON.stringify(answer), /secure\.rec1\.com|\$15 per hour|\$100 per hour|\$250 refundable/i, question);
+  }
 });
 
-test("verified proactive facts can be AI-composed around the resident's actual question", async () => {
+test("an AI draft cannot restore a retired static rental shortcut", async () => {
   const tailored = await askWithDraft("How do I reserve an Overlook space?", {
     directAnswer: "Open the live rental catalog, choose the Overlook space you want, and select an available date and time.",
     keyDetails: ["The official facility page lists separate rentable spaces and conditions."],
     nextStep: "Use the live rental catalog to start the reservation.",
   });
-  assert.equal(tailored.answerMode, "community-proactive-grounded-ai");
-  assert.doesNotMatch(tailored.directAnswer, /^(?:yes|no)\b/i);
-  assert.match(tailored.directAnswer, /^Open the live rental catalog/i);
-  assert.ok(tailored.claims.every((claim) => claim.verified));
+  assert.equal(tailored.answerStatus, "source-unavailable");
+  assert.equal(tailored.answerMode, "community-freshness-withheld");
+  assert.doesNotMatch(tailored.answer, /live rental catalog|select an available date/i);
+  assert.doesNotMatch(JSON.stringify(tailored.actions), /secure\.rec1\.com/i);
 });
 
-test("a grounded but question-mismatched AI draft falls back safely", async () => {
+test("a price-heavy AI draft also cannot bypass the static approval boundary", async () => {
   const mismatched = await askWithDraft("How do I reserve an Overlook space?", {
     directAnswer: "Yes. The Great Hall is $100 per hour with a two-hour minimum ($200 minimum rental).",
     keyDetails: ["North and South outdoor pavilions are currently listed at $25 per hour."],
     nextStep: "Open the live catalog to check your date and start the reservation.",
   });
-  assert.equal(mismatched.answerMode, "community-proactive-rental");
-  assert.doesNotMatch(mismatched.directAnswer, /^(?:yes|no)\b/i);
-  assert.match(mismatched.directAnswer, /open the live rental catalog.*choose.*select/i);
+  assert.equal(mismatched.answerStatus, "source-unavailable");
+  assert.equal(mismatched.answerMode, "community-freshness-withheld");
+  assert.doesNotMatch(mismatched.answer, /\$100|\$25|live catalog/i);
 });
 
 test("trash-return questions retain the official storage limit when no removal time is published", async () => {
@@ -200,24 +194,30 @@ test("generic DRC submission questions give the approved application destination
   assert.deepEqual(nextDrcReview(new Date("2026-08-31T18:00:00Z")), { meeting: "2026-09-17", deadline: "2026-09-11" });
 });
 
-test("watering and seasonal-light answers state what the date means now", async () => {
+test("rule answers remain grounded after post-answer topic templates are retired", async () => {
   const watering = await ask("When am I allowed to water my lawn?");
-  assert.match(watering.answer, /currently in effect.*not allowed right now/i);
+  assert.match(watering.answer, /before 10:00 a\.m\. or after 6:00 p\.m\..*May 1 through September 30/i);
+  assert.ok(watering.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
   const lights = await ask("When can I put up holiday lights?");
-  assert.match(lights.answer, /not currently.*next allowed window begins October 1/i);
+  assert.match(lights.answer, /June 18 to July 7.*October 1 through January 31/i);
+  assert.match(lights.answer, /off by 10:00 p\.m\./i);
 });
 
-test("tap-fee, water-rate, and delinquency answers offer a calculation follow-up", async () => {
-  assert.match((await ask("What are utility tap fees?")).answer, /property type, lot size, meter size/i);
-  assert.match((await ask("What are water rates?")).answer, /usage is indoor or outdoor.*gallons/i);
-  assert.match((await ask("What happens if I do not pay my water bill?")).answer, /Tell me the due date.*calculate/i);
+test("approved fee, rate, and delinquency evidence no longer receives canned calculation prompts", async () => {
+  const cases = [
+    ["What are utility tap fees?", /DocumentCenter\/View\/2472/],
+    ["What are water rates?", /DocumentCenter\/View\/2473/],
+    ["What happens if I do not pay my water bill?", /DocumentCenter\/View\/2615/],
+  ];
+  for (const [question, sourcePattern] of cases) {
+    const answer = await ask(question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.ok(answer.sources.some((source) => sourcePattern.test(source.sourceUrl || "")), question);
+    assert.doesNotMatch(answer.answer, /Tell me (?:the property type|whether the usage|the due date).*I’ll calculate/i, question);
+  }
 });
 
-test("question-form checks require the requested value in the opening answer", async () => {
-  const fees = await ask("How much are trash and streetlight fees?");
-  assert.match(fees.directAnswer, /streetlight is \$9\.90.*trash is \$14\.17/i);
-  assert.equal(directlyAnswersQuestionForm("How much are trash and streetlight fees?", fees), true);
-
+test("question-form checks still accept a grounded missing-time answer", async () => {
   const storage = await ask("When does trash need to be stored?");
   const storageDirect = storage.directAnswer || storage.answer.match(/^Short answer:\s*([^\n]+)/i)?.[1] || "";
   assert.match(storageDirect, /does not give a specific.*time/i);
@@ -233,14 +233,14 @@ test("resident-effort rubric catches polished handoffs and accepts resolved answ
   assert.ok(oldEffort.score <= 2);
   assert.ok(oldEffort.gaps.includes("directory-examples-missing"));
 
-  const upgraded = await ask("How do I book the park?");
-  assert.equal(residentEffortAssessment("How do I book the park?", upgraded).score, 5);
+  const upgraded = await ask("Who do I contact about water billing?");
+  assert.equal(residentEffortAssessment("Who do I contact about water billing?", upgraded).score, 5);
 });
 
-test("DRC contact questions use the unblocked current application", async () => {
+test("DRC contact questions withhold the unapproved contact shortcut", async () => {
   const answer = await ask("What is the DRC email address?");
-  assert.equal(answer.answerMode, "community-proactive-drc-contact");
-  assert.match(answer.answer, /residentsubmit@sterlingranchcab\.com/i);
-  assert.doesNotMatch(answer.answer, /submit@sterlingranchdrc\.com/i);
-  assert.match(answer.actions[0].url, /DocumentCenter\/View\/1574/);
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.answerMode, "community-freshness-withheld");
+  assert.doesNotMatch(answer.answer, /residentsubmit@sterlingranchcab\.com|submit@sterlingranchdrc\.com/i);
+  assert.ok(answer.actions.every((action) => action.actionType === "information"));
 });
