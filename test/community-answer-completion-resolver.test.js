@@ -146,7 +146,7 @@ test("pool status and holiday-hours variants cannot use a static season page as 
   }
 });
 
-test("live pool status remains verified while unapproved dated hours are withheld", async () => {
+test("live pool status remains separate from approved dated pool hours", async () => {
   const status = await answerCommunityQuestion("Is the pool open right now?", {
     interpretationMode: "structured",
     now: TEST_NOW,
@@ -189,9 +189,9 @@ test("live pool status remains verified while unapproved dated hours are withhel
     }),
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(holidayHours.answerStatus, "source-unavailable");
-  assert.equal(holidayHours.completion.outcome, "missing-evidence");
-  assert.doesNotMatch(holidayHours.answer, /5:00 am|8:45 pm/i);
+  assert.equal(holidayHours.answerStatus, "verified");
+  assert.match(holidayHours.answer, /5:00 am|8:45 pm/i);
+  assert.match(holidayHours.answer, /does not publish separate holiday hours/i);
 });
 
 test("only an active live-status source can resolve a current-status facet", () => {

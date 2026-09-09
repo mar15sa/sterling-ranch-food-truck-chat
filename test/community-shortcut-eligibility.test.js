@@ -194,8 +194,8 @@ test("the exact Labor Day pool-hours question bypasses current status and withho
   });
   assert.equal(poolCalls, 0);
   assert.notEqual(answer.answerMode, "community-live-status");
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
 });
 
@@ -207,9 +207,9 @@ test("dated facility hours do not revive raw pool-page prose after rejecting an 
     answerRulesQuestion,
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
   });
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm|Open Swim/i);
-  assert.doesNotMatch(answer.answer, /maintenance|cleaning/i);
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.answer, /5:00 am|9:00 am|8:45 pm|Open Swim/i);
+  assert.doesNotMatch(answer.answer, /Tuesday|Thursday|maintenance|cleaning/i);
   assert.doesNotMatch(answer.answer, /Saturday and Sunday hours are 7:00 am/i);
 });
 
@@ -329,8 +329,8 @@ test("a confident rental fallback cannot replace pool hours after live status is
   assert.equal(rulesCalls, 1);
   assert.notEqual(answer.answerMode, "source-derived-structured");
   assert.doesNotMatch(answer.answer, /reserve an Overlook space|security deposit/i);
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) =>
     item.connector === "grounded-fallback"
       && item.reasons.includes("requested-hours-missing")

@@ -64,10 +64,10 @@ test("one source version can serve multiple communities without sharing approval
 test("A/B/C/D reconciliation preserves packet work and exact approvals remain version-scoped", () => {
   const ledger = buildLedger();
   assert.deepEqual(ledger.reconciliation.historicalSnapshots.map(snapshot => snapshot.count), [222, 917]);
-  assert.equal(ledger.summary.uniqueVersions, 27);
+  assert.equal(ledger.summary.uniqueVersions, 30);
   assert.equal(ledger.summary.approvedEvidence, 5);
   assert.equal(ledger.unmatchedLegacyDecisions.length, 0);
-  assert.equal(ledger.records.filter(record => record.packetRefs.some(ref => /batch-[bc]/.test(ref))).every(record => record.approvals.length === 0), true);
+  assert.equal(ledger.records.filter(record => record.packetRefs.some(ref => /batch-[bc]/.test(ref)) && !record.canonicalUrl.endsWith('/187/Pool')).every(record => record.approvals.length === 0), true);
   const batchD = ledger.records.filter(record => record.packetRefs.includes("resident-navigation-batch-d-2026-09-09"));
   assert.equal(batchD.length, 4);
   assert.equal(batchD.every(record => record.disposition === "pending-review" && record.approvals.length === 0), true);
@@ -76,10 +76,11 @@ test("A/B/C/D reconciliation preserves packet work and exact approvals remain ve
 test("Decision Swipe approvals are exact-version, community-scoped claim boundaries", () => {
   const ledger = buildLedger();
   assert.deepEqual(new Set(ledger.decisionApplications.map(item => item.decisionId)), new Set([
+    "pool-hours-current-page", "drc-contact-current", "rain-barrel-conditional-submission", "utilityhawk-water-monitoring-2026",
     "water-rates-2026", "tap-facility-2026", "cab-fees-effective-date", "delinquency-policy", "monthly-fee-overview",
     "water-payment-primary-page", "water-payment-direct-link", "card-processing-fee", "water-bill-explanation", "monthly-fee-payment-page",
   ]));
-  assert.equal(ledger.decisionApplications.length, 11);
+  assert.equal(ledger.decisionApplications.length, 17);
   const paymentPage = ledger.records.find(record => record.canonicalUrl.endsWith("/334/Water-Billing-Payment-Options"));
   assert.equal(paymentPage.disposition, "pending-review");
   assert.equal(approvalForCommunity(paymentPage, "sterling-ranch", "water-payment-primary-page").scopeKind, "scoped-claims");

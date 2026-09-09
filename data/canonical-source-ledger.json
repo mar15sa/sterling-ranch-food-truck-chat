@@ -729,9 +729,240 @@
           ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "pool-hours-current-page",
+          "scope": "Pool season and regular published hours only; live pool status remains separate.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "pool-season-and-regular-hours"
+          ],
+          "withheldClaims": [
+            "pool-current-status",
+            "guest-passes",
+            "fees",
+            "capacity",
+            "concessions",
+            "rules",
+            "party-booking",
+            "closure-reasons"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
       "packetRefs": [
         "low-risk-navigation-batch-c-2026-09-09"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/175/Design-Review#sha256:863438e8fbeacb8b43ef4d128f216eb9e6b83fca7388e7189e9810842f548191",
+      "canonicalUrl": "https://sterlingranchcab.com/175/Design-Review",
+      "contentHash": "863438e8fbeacb8b43ef4d128f216eb9e6b83fca7388e7189e9810842f548191",
+      "title": "Design Review",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-09T21:44:12.406Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/175/Design-Review",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-release-source-approvals-v3-2026-09-09",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "drc-contact-current",
+          "scope": "Current DRC email, general email/drop-off method, Friday-before-meeting deadline, and application-directory action only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "drc-email",
+            "drc-general-submission-method",
+            "drc-friday-deadline",
+            "drc-application-directory"
+          ],
+          "withheldClaims": [
+            "project-specific-form",
+            "fees",
+            "mailing-address",
+            "meeting-date-calculation",
+            "review-time-promise",
+            "approval-requirement"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        },
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "rain-barrel-conditional-submission",
+          "scope": "General DRC route and directory action only after a controlling rain-barrel rule establishes approval is needed.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "rain-barrel-conditional-drc-submission",
+            "rain-barrel-conditional-application-directory"
+          ],
+          "withheldClaims": [
+            "all-rain-barrels-require-application",
+            "specific-rain-barrel-form",
+            "fees",
+            "review-timeline",
+            "address",
+            "installation-claim"
+          ],
+          "controllingSources": [
+            "rain-barrel-governing-rule"
+          ],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "community-release-source-approvals-v3-2026-09-09"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/201/Design-Review-Documents#sha256:09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b",
+      "canonicalUrl": "https://sterlingranchcab.com/201/Design-Review-Documents",
+      "contentHash": "09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b",
+      "title": "Documents, Applications, and Forms",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-09T21:44:12.406Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/201/Design-Review-Documents",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-release-source-approvals-v3-2026-09-09",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "drc-contact-current",
+          "scope": "Current DRC email, general email/drop-off method, Friday-before-meeting deadline, and application-directory action only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "drc-email",
+            "drc-general-submission-method",
+            "drc-friday-deadline",
+            "drc-application-directory"
+          ],
+          "withheldClaims": [
+            "project-specific-form",
+            "fees",
+            "mailing-address",
+            "meeting-date-calculation",
+            "review-time-promise",
+            "approval-requirement"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        },
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "rain-barrel-conditional-submission",
+          "scope": "General DRC route and directory action only after a controlling rain-barrel rule establishes approval is needed.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "rain-barrel-conditional-drc-submission",
+            "rain-barrel-conditional-application-directory"
+          ],
+          "withheldClaims": [
+            "all-rain-barrels-require-application",
+            "specific-rain-barrel-form",
+            "fees",
+            "review-timeline",
+            "address",
+            "installation-claim"
+          ],
+          "controllingSources": [
+            "rain-barrel-governing-rule"
+          ],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "community-release-source-approvals-v3-2026-09-09"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/m/faq?cat=16#sha256:5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514",
+      "canonicalUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+      "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514",
+      "title": "Water FAQ: monitor monthly water usage",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-09T21:44:12.406Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-release-source-approvals-v3-2026-09-09",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "utilityhawk-water-monitoring-2026",
+          "scope": "Water-usage monitoring registration and listed monitoring capabilities only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "utilityhawk-water-monitoring-registration",
+            "utilityhawk-water-monitoring-capabilities"
+          ],
+          "withheldClaims": [
+            "payment",
+            "billing-contact",
+            "rates",
+            "tiers",
+            "amounts",
+            "calculations",
+            "meter-or-valve-troubleshooting",
+            "electric-or-gas",
+            "steward",
+            "registration-guarantee",
+            "alert-guarantee"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "community-release-source-approvals-v3-2026-09-09"
       ]
     },
     {
@@ -1043,6 +1274,36 @@
   ],
   "decisionApplications": [
     {
+      "decisionId": "pool-hours-current-page",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/187/Pool#sha256:14b45b6b4f23a88e324faa20e50db7ca149a7348c8d164d3935cd6a1b17bb8f0"
+    },
+    {
+      "decisionId": "drc-contact-current",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/175/Design-Review#sha256:863438e8fbeacb8b43ef4d128f216eb9e6b83fca7388e7189e9810842f548191"
+    },
+    {
+      "decisionId": "drc-contact-current",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/201/Design-Review-Documents#sha256:09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b"
+    },
+    {
+      "decisionId": "rain-barrel-conditional-submission",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/175/Design-Review#sha256:863438e8fbeacb8b43ef4d128f216eb9e6b83fca7388e7189e9810842f548191"
+    },
+    {
+      "decisionId": "rain-barrel-conditional-submission",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/201/Design-Review-Documents#sha256:09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b"
+    },
+    {
+      "decisionId": "utilityhawk-water-monitoring-2026",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/m/faq?cat=16#sha256:5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514"
+    },
+    {
       "decisionId": "water-rates-2026",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees#sha256:3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6"
@@ -1123,17 +1384,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 27,
+    "uniqueVersions": 30,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 22,
+      "pending-review": 25,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 16,
-    "pendingReview": 22
+    "scopedApprovals": 22,
+    "pendingReview": 25
   }
 }
