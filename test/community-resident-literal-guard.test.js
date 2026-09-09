@@ -1,7 +1,10 @@
 const assert = require("node:assert/strict");
 const test = require("node:test");
 
-const { inspectSource } = require("../scripts/check-community-resident-literals");
+const { checkProject, fingerprint, inspectSource } = require("../scripts/check-community-resident-literals");
+const fs = require("node:fs");
+const os = require("node:os");
+const path = require("node:path");
 
 test("resident literal guard permits generic evidence boundaries", () => {
   assert.deepEqual(inspectSource(`
@@ -38,4 +41,27 @@ test("resident literal guard inventories a new rule-focused canned answer", () =
   `);
   assert.equal(findings.length, 2);
   assert.equal(findings[0].field, "directAnswer");
+});
+
+test("per-node baselines allow unrelated edits and removal but reject changed or new copy", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "resident-literal-guard-"));
+  const sourcePath = path.join(root, "lib", "fixture.js");
+  fs.mkdirSync(path.dirname(sourcePath), { recursive: true });
+  const fixed = "Mailboxes must be painted blue.";
+  const baseline = { findings: [{ filename: "lib/fixture.js", field: "answer", fingerprint: fingerprint({ filename: "lib/fixture.js", field: "answer", value: fixed }) }] };
+  fs.mkdirSync(path.join(root, "data"));
+  fs.writeFileSync(path.join(root, "data", "community-resident-literal-baseline.json"), JSON.stringify(baseline));
+  fs.writeFileSync(sourcePath, `const unused = 1; return { answer: ${JSON.stringify(fixed)} };`);
+  const original = require("../scripts/check-community-resident-literals").RESPONSE_FILES.splice(0);
+  const files = require("../scripts/check-community-resident-literals").RESPONSE_FILES;
+  files.splice(0, files.length, "lib/fixture.js");
+  assert.equal(checkProject(root), true, "unrelated code may change");
+  fs.writeFileSync(sourcePath, "const unused = 2; return {}; ");
+  assert.equal(checkProject(root), true, "debt removal may proceed");
+  fs.writeFileSync(sourcePath, 'return { answer: "Mailboxes must be painted green." };');
+  assert.equal(checkProject(root), false, "changed debt must fail");
+  fs.writeFileSync(sourcePath, 'return { answer: "Helipads are prohibited after 8:00 pm." };');
+  assert.equal(checkProject(root), false, "new debt must fail");
+  files.splice(0, files.length, ...original);
+  fs.rmSync(root, { recursive: true, force: true });
 });
