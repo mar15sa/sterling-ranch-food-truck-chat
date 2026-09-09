@@ -37,11 +37,11 @@ const EXAMPLES = [
     includes: ["fixed charges", "Charges that depend on usage", "home type"],
   },
   {
-    question: "How do I reserve the Overlook Clubhouse?",
+    question: "How do I pay my water bill online?",
     verdict: "informational",
-    includes: ["live rental catalog", "Overlook Clubhouse"],
+    includes: ["UtilityHawk", "payment portal", "sign in"],
     requiresAction: true,
-    facilityBooking: true,
+    waterPayment: true,
     maxLineLength: 320,
   },
   {
@@ -98,11 +98,10 @@ for (const example of EXAMPLES) {
     if (example.requiresAction) {
       assert.ok(result.actions?.some((action) => /^https?:\/\//i.test(action.url || "")));
     }
-    if (example.facilityBooking) {
-      assert.match(result.directAnswer, /live rental catalog.*choose.*Overlook Clubhouse.*select/i);
-      assert.ok(result.actions.some((action) => action.actionType === "booking" && /secure\.rec1\.com/i.test(action.url || "")));
-      assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl || "")));
-      assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i);
+    if (example.waterPayment) {
+      assert.match(result.directAnswer, /UtilityHawk.*payment portal/i);
+      assert.ok(result.actions.some((action) => action.url === "https://srcab.utilityhawk.us/login"));
+      assert.doesNotMatch(result.answer, /AmCoBi|rental catalog/i);
     }
     if (example.waterBillingContact) {
       assert.equal(result.answerMode, "community-approved-operational");
@@ -124,12 +123,13 @@ test("public example questions in the page are covered by the regression suite",
     path.join(__dirname, "..", "public", "rules-assistant.html"),
     "utf8"
   );
-  const buttons = [...html.matchAll(/<button type="button">([^<]+)<\/button>/g)].map(
-    (match) => match[1].trim()
+  const starters = html.match(/id="rulesStarters"[\s\S]*?<\/div>/)?.[0] || "";
+  const buttons = [...starters.matchAll(/<button\b[^>]*>([^<]+)<\/button\s*>/g)].map(
+    (match) => match[1].replace(/\s+/g, " ").trim()
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
   assert.match(html, /rules-assistant\.css\?v=20260901-resident-sources/);
-  assert.match(html, /rules-assistant\.js\?v=20260901-resident-sources/);
+  assert.match(html, /rules-assistant\.js\?v=20260909-editorial/);
 });
 
 test("park and amenity booking questions use the reservation process", async () => {

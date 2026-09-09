@@ -5128,6 +5128,8 @@ function serveStatic(req, res, url) {
     "/food-truck/": "/food-truck.html",
     "/rules-assistant": "/rules-assistant.html",
     "/rules-assistant/": "/rules-assistant.html",
+    "/calendar": "/calendar.html",
+    "/calendar/": "/calendar.html",
     "/community-assistant": "/rules-assistant.html",
     "/community-assistant/": "/rules-assistant.html",
     "/community-assistant/questions": "/community-questions.html",

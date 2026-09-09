@@ -650,9 +650,10 @@ function setLoading(isLoading) {
   rulesSend.classList.toggle("is-loading", isLoading);
 }
 
-async function askRules(question, source = "typed") {
+async function askRules(question, source = "typed", retryMessage = null) {
   startConversation();
-  addUserMessage(question);
+  if (retryMessage) retryMessage.remove();
+  else addUserMessage(question);
   const thinking = addThinking();
   setLoading(true);
   trackEvent("rules_question_submitted", {
@@ -702,7 +703,16 @@ async function askRules(question, source = "typed") {
       answer,
       error.message || "The community assistant is temporarily unavailable."
     );
-    thinking.replaceChildren(answer);
+    thinking.classList.add("rules-message-error");
+    thinking.setAttribute("role", "alert");
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.className = "rules-retry";
+    retry.textContent = "Try again";
+    retry.addEventListener("click", () => {
+      if (!rulesSend.disabled) askRules(question, "retry", thinking);
+    });
+    thinking.replaceChildren(answer, retry);
     scrollToMessageStart(thinking);
   } finally {
     setLoading(false);
@@ -755,7 +765,7 @@ rulesQuestion.addEventListener("blur", () => {
 });
 
 rulesQuestion.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && !event.shiftKey) {
+  if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
     event.preventDefault();
     rulesForm.requestSubmit();
   }

@@ -1,0 +1,186 @@
+{
+  "checks": [
+    "desktop: loading, preserved history and expanded sources, Shift+Enter, Enter, error, retry without duplicate question, status Escape/focus, email drafts, mobile menu, session history",
+    "mobile: loading, preserved history and expanded sources, Shift+Enter, Enter, error, retry without duplicate question, status Escape/focus, email drafts, mobile menu, session history",
+    "Openings search, clear filters and tip dialog open/close; no tip submitted",
+    "Briefing preserves test marker in Assistant form and shortcuts without submitting",
+    "Reduced motion removes message animation"
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "question": "Browser test: first question",
+      "context": [],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: follow-up",
+      "context": [
+        {
+          "question": "Browser test: first question",
+          "resolvedQuestion": "Browser test: first question",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        }
+      ],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: retry",
+      "context": [
+        {
+          "question": "Browser test: first question",
+          "resolvedQuestion": "Browser test: first question",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        },
+        {
+          "question": "Browser test: follow-up",
+          "resolvedQuestion": "Browser test: follow-up",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        }
+      ],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: retry",
+      "context": [
+        {
+          "question": "Browser test: first question",
+          "resolvedQuestion": "Browser test: first question",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        },
+        {
+          "question": "Browser test: follow-up",
+          "resolvedQuestion": "Browser test: follow-up",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        }
+      ],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: first question",
+      "context": [],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: follow-up",
+      "context": [
+        {
+          "question": "Browser test: first question",
+          "resolvedQuestion": "Browser test: first question",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        }
+      ],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: retry",
+      "context": [
+        {
+          "question": "Browser test: first question",
+          "resolvedQuestion": "Browser test: first question",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        },
+        {
+          "question": "Browser test: follow-up",
+          "resolvedQuestion": "Browser test: follow-up",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        }
+      ],
+      "isTest": true
+    },
+    {
+      "question": "Browser test: retry",
+      "context": [
+        {
+          "question": "Browser test: first question",
+          "resolvedQuestion": "Browser test: first question",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        },
+        {
+          "question": "Browser test: follow-up",
+          "resolvedQuestion": "Browser test: follow-up",
+          "answer": "Short answer: This is a browser test response.\n\nWhat I found:\n- The official source link is available below."
+        }
+      ],
+      "isTest": true
+    }
+  ],
+  "accessibility": [
+    {
+      "state": "assistant-sources-desktop",
+      "violations": []
+    },
+    {
+      "state": "assistant-error-desktop",
+      "violations": []
+    },
+    {
+      "state": "assistant-sources-mobile",
+      "violations": []
+    },
+    {
+      "state": "assistant-error-mobile",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "route": "/community-assistant?test=1",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "route": "/food-truck",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "route": "/calendar",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "route": "/openings",
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "route": "/pool",
+      "violations": []
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "violations": []
+    },
+    {
+      "width": 390,
+      "route": "/community-assistant?test=1",
+      "violations": []
+    },
+    {
+      "width": 390,
+      "route": "/food-truck",
+      "violations": []
+    },
+    {
+      "width": 390,
+      "route": "/calendar",
+      "violations": []
+    },
+    {
+      "width": 390,
+      "route": "/openings",
+      "violations": []
+    },
+    {
+      "width": 390,
+      "route": "/pool",
+      "violations": []
+    }
+  ]
+}
