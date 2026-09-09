@@ -1,6 +1,6 @@
 # Community Source Accuracy and Coverage Plan
 
-**Status: operating plan as of September 8, 2026.** This replaces the earlier plan's single release gate with two separate goals: keeping the already approved resident-answer bundle safe, and eventually accounting for the full official CAB/CivicPlus site.
+**Status: audited operating plan as of September 9, 2026.** This replaces the earlier plan's single release gate with two separate goals: keeping the exactly approved resident-answer bundle safe, and eventually accounting for the full official CAB/CivicPlus site. The exact claim-level answerability calculation is the reporting authority when it disagrees with a legacy trusted-baseline label.
 
 ## The rule that does not change
 
@@ -19,16 +19,16 @@ This distinction is intentional. It prevents a large discovery backlog from forc
 
 ## Verified current position
 
-The source-freshness repair is live in production at `0e39b7a843b064fadb9dfae0f9677aec9ee73311`. It has renewed matching approved evidence without changing its fingerprint.
+The earlier September 8 table described a transitional trusted-baseline bundle as if every extracted fact had explicit owner approval. That was inaccurate. The strict release candidate keeps the legacy labels for migration history, but the runtime answerability gate recognizes only exact claim decisions with reviewer, decision, URL, version, and scope metadata.
 
 | Area | Current evidence | Classification |
 | --- | --- | --- |
-| Approved resident evidence | 624 approved facts, zero candidate facts, unchanged approved fingerprint `fb565c382a87b34947fc8d3539dcde861f7eb1c53f92eca4197483a6c7840c40` | **Implemented** |
-| Approved-source freshness | 37 official URLs checked; 108 exact-matching source records and 611 expired approved facts renewed; no content/hash/action/approval change | **Implemented** |
+| Exact resident evidence | 642 extracted ledger rows exist. The strict runtime counts 18 as explicitly approved and treats the other 624 trusted-baseline rows as candidates. The legacy `truthStatus.approvedFactCount: 642` field is migration metadata and must not be used as the resident-answer approval count. | **Implemented, migration cleanup remaining** |
+| Approved-source freshness | The repaired verifier previously renewed 46 due exact approved URLs without changing the approved fingerprint. At the latest complete-gate attempt, 164 source records had crossed their freshness deadline; exact unchanged-version revalidation is running, and the release gate is red until it finishes. | **In progress** |
 | Safe refresh behavior | Approved URLs receive priority; only exact URL-plus-hash matches renew; changed/new/removed identities stay quarantined | **Implemented** |
 | Resident freshness behavior | Stale approved sources and dated hours are withheld rather than shown as verified | **Implemented** |
-| Candidate isolation | The most recent production crawl quarantined 67 changed, 331 new, and 36 removed source identities | **Implemented** |
-| Inventory accounting | The bundled candidate reports 222 pending pages; the later live crawl reports a 917-page backlog | **Partially implemented** |
+| Candidate isolation | An earlier labeled live-crawl snapshot quarantined 67 changed, 331 new, and 36 removed source identities instead of promoting them. | **Implemented** |
+| Inventory accounting | The bundled snapshot reports 267 source records, 1,140 discovered URLs, 757 eligible URLs, and 222 pending pages. A separate later live candidate reported 1,510 discovered URLs, 1,079 eligible URLs, and an 894-page backlog. These are different snapshots and must remain separately labeled. | **Partially implemented** |
 | Private review queue | The authenticated screen has pagination and shows pending evidence without changing answers | **Partially implemented** |
 | Material conflict resolution | 17 source/fact conflict groups remain for owner decision | **Missing** |
 | Full official-site coverage | Not yet claimed; pending sources include current operational pages, forms, rules, historic files, duplicate candidates, and unavailable documents | **Missing** |
@@ -66,7 +66,7 @@ When sources disagree, the assistant withholds the disputed value. A newer infor
 
 ## Staged coverage backlog
 
-The 917-page backlog is a queue, not a release candidate. Work one small batch at a time; a batch can be complete even while the next batch is waiting.
+The latest separately labeled live-candidate backlog is 894 pages. The bundled snapshot still reports 222 pending pages because it represents a different crawl boundary. Both are queues rather than resident-answer approval. Work one small batch at a time; a batch can be complete even while the next batch is waiting.
 
 | Batch | Scope and first owner-review set | Why first | Completion criteria |
 | --- | --- | --- | --- |
@@ -106,7 +106,7 @@ Report these separately each week and month:
 | Candidate facts in resident evidence | 0 | N/A |
 | Required action links broken | 0 | 0 in completed batches |
 | Open material conflicts used in answers | 0 | 0 |
-| Backlog disposition | N/A | 917 decreases only through recorded dispositions |
+| Backlog disposition | N/A | Each labeled snapshot decreases only through recorded dispositions; do not merge totals across crawl boundaries. |
 | Completed batch quality | N/A | 100% URL dispositions, exact-version decisions for material facts, family checks pass |
 | Critical retrieval and answer regression | 100% / zero regressions | Same for every approved coverage batch |
 
