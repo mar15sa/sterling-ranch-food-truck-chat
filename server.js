@@ -50,6 +50,7 @@ const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { getCommunityEvents } = require("./lib/community-events");
 const { createConnectorAdapters } = require("./lib/community-connector-adapter");
+const { getCommunityPoolStatus } = require("./lib/community-pool-status");
 const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community-llm");
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
 const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
@@ -113,45 +114,6 @@ const LOCAL_EVENT_OVERRIDES = {
   "2026-08-05": {
     location: "Prospect Park",
     trucks: ["Cousins Maine Lobster", "Muy Loco Tacos", "Kona Ice"],
-  },
-};
-const POOL_STATUS_DETAILS = {
-  green: {
-    state: "open",
-    colorName: "Green",
-    headline: "Open",
-    summary: "The pool is currently open for homeowners and guests.",
-    residentAction: "Normal entry rules still apply, including guest passes and capacity limits.",
-  },
-  yellow: {
-    state: "temporarily-closed",
-    colorName: "Yellow",
-    headline: "Temporarily closed",
-    summary:
-      "The pool is temporarily closed for weather or maintenance. Staff are in the building and may reopen when conditions allow.",
-    residentAction: "Check again before heading over.",
-  },
-  red: {
-    state: "closed",
-    colorName: "Red",
-    headline: "Closed for the day",
-    summary: "The pool is closed for the day with no access for homeowners or guests.",
-    residentAction: "Plan for another day unless the official CAB page changes.",
-  },
-  purple: {
-    state: "event-only",
-    colorName: "Purple",
-    headline: "Event access only",
-    summary:
-      "The pool is open only for people registered for the event currently happening.",
-    residentAction: "Visit the community calendar for event details and registration.",
-  },
-  blue: {
-    state: "at-capacity",
-    colorName: "Blue",
-    headline: "Open, but at capacity",
-    summary: "The pool is open but full. To enter, you will need to join the waitlist.",
-    residentAction: "Use the official CAB link for the waitlist or the latest entry instructions.",
   },
 };
 const KNOWN_TRUCK_LINKS = {
@@ -3769,7 +3731,9 @@ function parsePoolStatus(html) {
     getHtmlAttribute(imageMarkup, "alt") ||
     getHtmlAttribute(imageMarkup, "title");
   const color = label.match(/\b(green|yellow|red|purple|blue)\b/i)?.[1]?.toLowerCase();
-  const detail = POOL_STATUS_DETAILS[color];
+  // This is retained only for the standalone pool page's established display.
+  // Community Assistant uses the strict profile-driven adapter below instead.
+  const detail = getCommunityProfile()?.connectors?.find((connector) => connector.type === "live-status")?.adapter?.poolStatus?.legacyColorDisplay?.[color];
 
   if (!detail) return null;
 
@@ -3832,6 +3796,10 @@ async function getPoolStatus(options = {}) {
     });
 
   return poolStatusPromise;
+}
+
+async function getConfiguredCommunityPoolStatus(options = {}) {
+  return getCommunityPoolStatus({ profile: options.profile || getCommunityProfile(), fetchImpl: options.fetchImpl || fetch });
 }
 
 async function getSocialLinksFromOfficial(officialLink, truckName) {
@@ -4680,7 +4648,7 @@ async function handleRulesAsk(req, res, url) {
       : conversation.resolvedQuestion,
     {
     answerRulesQuestion,
-    getPoolStatus,
+    getPoolStatus: getConfiguredCommunityPoolStatus,
     getCommunityEvents: getConfiguredCommunityEvents,
     getWasteSchedule: getSterlingRanchWasteSchedule,
     getFoodTruckAnswer: async (foodTruckRequest, originalQuestion) => {
