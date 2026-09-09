@@ -335,10 +335,89 @@ test("resident-effort rubric catches polished handoffs and accepts resolved answ
   assert.equal(residentEffortAssessment("Who do I contact about water billing?", upgraded).score, 5);
 });
 
-test("DRC contact questions withhold the unapproved contact shortcut", async () => {
-  const answer = await ask("What is the DRC email address?");
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.equal(answer.answerMode, "community-freshness-withheld");
-  assert.doesNotMatch(answer.answer, /residentsubmit@sterlingranchcab\.com|submit@sterlingranchdrc\.com/i);
-  assert.ok(answer.actions.every((action) => action.actionType === "information"));
+test("current approved operational contacts outrank older general rulebook contact wording", async () => {
+  for (const question of [
+    "What is the DRC email address?",
+    "What email should I use for a DRC application?",
+    "How do I contact the DRC?",
+  ]) {
+    const answer = await ask(question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.answerMode, "community-approved-operational-contact", question);
+    assert.equal(answer.authorityDecision, "exact-version-approved-claims", question);
+    assert.match(answer.answer, /ResidentSubmit@SterlingRanchCAB\.com/i, question);
+    assert.doesNotMatch(answer.answer, /submit@sterlingranchdrc\.com/i, question);
+    assert.deepEqual(answer.sources.map((source) => source.id), ["approved-drc-contact-current"], question);
+    assert.ok(answer.claims.every((claim) => claim.approvalClaimIds?.includes("drc-email")), question);
+  }
+});
+
+test("approved operational contact priority is profile-driven and fails closed when its version changes", async () => {
+  const contactUrl = "https://beta.example.gov/permits/contact";
+  const approvedVersion = "a".repeat(64);
+  const contactSource = {
+    id: "beta-permit-office-contact",
+    communityId: "beta",
+    title: "Permit office contact",
+    sourceUrl: contactUrl,
+    sourceType: "forms",
+    connectorType: "civicplus-pages",
+    authorityScore: 1,
+    text: "For permit questions, email permits@beta.example.gov.",
+    excerpt: "For permit questions, email permits@beta.example.gov.",
+    actions: [],
+    facts: [{
+      id: "permit-office-email",
+      type: "email",
+      value: "permits@beta.example.gov",
+      context: "For permit questions, email permits@beta.example.gov.",
+      approvalClaim: "permit-office-email",
+    }],
+    contentHash: approvedVersion,
+    checkedAt: "2026-09-09T00:00:00Z",
+    staleAfter: "2099-01-01T00:00:00Z",
+    lifecycle: "current",
+  };
+  const betaIndex = {
+    communityId: "beta",
+    communityName: "Beta Civic",
+    website: "https://beta.example.gov",
+    sources: [contactSource],
+    factLedger: [],
+    canonicalSourceLedger: {
+      records: [{
+        key: `${contactUrl}#sha256:${approvedVersion}`,
+        canonicalUrl: contactUrl,
+        contentHash: approvedVersion,
+        approvals: [{
+          status: "approved",
+          communityId: "beta",
+          decisionId: "beta-permit-contact",
+          scopeKind: "scoped-claims",
+          approvedClaims: ["permit-office-email"],
+          withheldClaims: [],
+        }],
+      }],
+    },
+  };
+  const betaOptions = {
+    index: betaIndex,
+    communityId: "beta",
+    answerRulesQuestion: false,
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    now: new Date("2026-09-09T12:00:00Z"),
+  };
+  const approved = await answerCommunityQuestion("What is the permit office email?", betaOptions);
+  assert.equal(approved.answerStatus, "verified");
+  assert.equal(approved.answerMode, "community-approved-operational-contact");
+  assert.match(approved.answer, /permits@beta\.example\.gov/i);
+  assert.doesNotMatch(JSON.stringify(approved), /Sterling Ranch|ResidentSubmit/i);
+
+  const changed = await answerCommunityQuestion("What is the permit office email?", {
+    ...betaOptions,
+    index: { ...betaIndex, sources: [{ ...contactSource, contentHash: "b".repeat(64) }] },
+  });
+  assert.notEqual(changed.answerStatus, "verified");
+  assert.doesNotMatch(changed.answer, /permits@beta\.example\.gov/i);
 });
