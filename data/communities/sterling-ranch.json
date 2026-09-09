@@ -61,6 +61,44 @@
       "baseUrl": "https://sterlingranchcab.com/187/Pool",
       "adapter": { "capabilities": ["status"], "facets": ["status", "hours"], "controllingSourceRoles": ["operational"], "actionTypes": ["information"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/187/Pool", "purpose": "pool-status" }], "freshness": { "refreshMinutes": 1, "staleAfterMinutes": 5 }, "degradation": { "policy": "withhold" }, "vocabulary": { "pool": ["aquatics", "swim"] } },
       "refreshMinutes": 1
+    },
+    {
+      "id": "waste-schedule",
+      "type": "live-waste-schedule",
+      "baseUrl": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+      "adapter": {
+        "capabilities": ["services"],
+        "facets": ["date", "action"],
+        "controllingSourceRoles": ["operational"],
+        "actionTypes": ["information", "download"],
+        "sourceHosts": ["www.wasteconnections.com", "api.recollect.net", "play.google.com", "apps.apple.com"],
+        "endpoints": [
+          { "id": "pickup-calendar", "url": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#", "purpose": "live-pickup-calendar" },
+          { "id": "address-suggest", "url": "https://api.recollect.net/api/areas", "purpose": "reference-location-lookup" },
+          { "id": "calendar", "url": "https://api.recollect.net/api/places", "purpose": "live-service-events" },
+          { "id": "android-app", "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile", "purpose": "pickup-reminders" },
+          { "id": "iphone-app", "url": "https://apps.apple.com/app/id1442351850", "purpose": "pickup-reminders" }
+        ],
+        "freshness": { "refreshMinutes": 15, "staleAfterMinutes": 30 },
+        "degradation": { "policy": "withhold" },
+        "labels": { "sourceTitle": "Waste Connections live pickup calendar" },
+        "vocabulary": { "waste": ["trash", "garbage", "recycling", "pickup"] },
+        "wasteSchedule": {
+          "recollect": { "areaId": "WC-5311", "serviceId": 975 },
+          "referenceLocation": { "query": "7853 Piney River Avenue", "candidateTextPattern": "7853\\s+Piney\\s+River" },
+          "serviceAreas": [
+            { "label": "Providence Village", "offset": 0 },
+            { "label": "Ascent Village", "offset": 1 },
+            { "label": "Prospect Village", "offset": 3 }
+          ],
+          "actionLinks": [
+            { "id": "pickup-calendar", "type": "information", "label": "Check an address in the official pickup calendar", "url": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" },
+            { "id": "wasteconnect-android", "type": "download", "label": "Open WasteConnect for Android", "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile" },
+            { "id": "wasteconnect-iphone", "type": "download", "label": "Open WasteConnect for iPhone", "url": "https://apps.apple.com/app/id1442351850" }
+          ]
+        }
+      },
+      "refreshMinutes": 15
     }
   ],
   "authority": {
@@ -92,6 +130,8 @@
     "srcab.utilityhawk.us",
     "ebill.sterlingranchco.com",
     "lumiere.technology"
+    ,"www.wasteconnections.com"
+    ,"api.recollect.net"
   ],
   "actions": [
     {
@@ -119,24 +159,6 @@
       "sourceType": "forms",
       "actionType": "form",
       "keywords": ["DRC", "design review", "architectural application", "landscape application"],
-      "refreshMinutes": 1440
-    },
-    {
-      "id": "wasteconnect-android",
-      "label": "Open WasteConnect for Android",
-      "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile",
-      "sourceType": "services",
-      "actionType": "download",
-      "keywords": ["WasteConnect", "trash", "recycling", "pickup schedule", "collection reminders"],
-      "refreshMinutes": 1440
-    },
-    {
-      "id": "wasteconnect-iphone",
-      "label": "Open WasteConnect for iPhone",
-      "url": "https://apps.apple.com/app/id1442351850",
-      "sourceType": "services",
-      "actionType": "download",
-      "keywords": ["WasteConnect", "trash", "recycling", "pickup schedule", "collection reminders"],
       "refreshMinutes": 1440
     }
   ]

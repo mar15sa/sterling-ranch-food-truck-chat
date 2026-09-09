@@ -11,6 +11,15 @@ const rulesEvalCases = require("../scripts/rules-eval-cases.json");
 const NOW = new Date("2026-09-01T18:00:00Z");
 const REPORTED_QUESTION = "What are the pool hours for Labor Day?";
 
+function liveWasteEvidence(date) {
+  return {
+    degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
+    claims: [{ facet: "date", text: date, controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" }],
+    evidence: [{ evidenceId: "sterling-ranch:waste-schedule:live-calendar", sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#", checkedAt: NOW.toISOString(), staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+    actions: [{ type: "information", label: "Check an address in the official pickup calendar", url: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" }],
+  };
+}
+
 test("the reported website-source question belongs only to the Community Assistant evaluation", () => {
   assert.ok(communityEvalCases.some((item) => item.question === REPORTED_QUESTION));
   assert.ok(!rulesEvalCases.some((item) => item.question === REPORTED_QUESTION));
@@ -97,8 +106,8 @@ test("food-truck business-rule questions do not enter the live schedule connecto
 test("trash holiday schedules use the live Waste Connections path without taking over storage rules", async () => {
   const liveSchedule = async () => ({
     service: "garbage", date: "2026-09-08", range: { start: "2026-09-07", end: "2026-09-07" }, timing: "this week", anchorDate: "2026-09-08",
-    villageDates: [{ village: "Providence Village", date: "2026-09-08" }, { village: "Ascent Village", date: "2026-09-09" }, { village: "Prospect Village", date: "2026-09-11" }],
-    holidayNote: "Labor Day: Collection may be delayed.", checkedAt: NOW.toISOString(), sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+    serviceAreas: [{ label: "Providence Village", date: "2026-09-08" }, { label: "Ascent Village", date: "2026-09-09" }, { label: "Prospect Village", date: "2026-09-11" }],
+    holidayNote: "Labor Day: Collection may be delayed.", checkedAt: NOW.toISOString(), evidence: liveWasteEvidence("2026-09-08"),
   });
   for (const question of ["Is there trash pickup on Labor Day?", "Is trash pickup delayed for Labor Day?", "What is the garbage collection schedule for Labor Day?"]) {
     const delayedStatus = question === "Is trash pickup delayed for Labor Day?";
@@ -112,8 +121,8 @@ test("trash holiday schedules use the live Waste Connections path without taking
       }),
       getWasteSchedule: liveSchedule,
     });
-    assert.equal(answer.answerMode, "community-live-trash", question);
-    assert.match(answer.answer, /Labor Day|September 8/i, question);
+    assert.equal(answer.answerMode, delayedStatus ? "community-freshness-withheld" : "community-live-trash", question);
+    assert.match(answer.answer, delayedStatus ? /could not safely confirm/i : /September 8/i, question);
     assert.doesNotMatch(answer.answer, /screened|garage/i, question);
     assert.equal(answer.routingPlan.intent, "services", question);
     assert.equal(answer.routingPlan.goal, delayedStatus ? "status" : "schedule", question);
