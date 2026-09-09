@@ -1,7 +1,6 @@
 const crypto = require("node:crypto");
 const fs = require("node:fs/promises");
 const path = require("node:path");
-const { PDFParse } = require("pdf-parse");
 
 const DEFAULT_SUPPLEMENTS_PATH = path.join(__dirname, "..", "data", "rules-supplements.json");
 const DEFAULT_OUTPUT_PATH = path.join(__dirname, "..", "data", "rules-supplement-sections.json");
@@ -11,6 +10,7 @@ function parseArgs(argv) {
   const options = {
     outputPath: DEFAULT_OUTPUT_PATH,
     supplementsPath: DEFAULT_SUPPLEMENTS_PATH,
+    reuseExisting: false,
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -22,6 +22,8 @@ function parseArgs(argv) {
     } else if (arg === "--output" && next) {
       options.outputPath = path.resolve(next);
       index += 1;
+    } else if (arg === "--reuse-existing") {
+      options.reuseExisting = true;
     }
   }
 
@@ -68,6 +70,7 @@ async function extractOfficialText(document) {
   }
 
   try {
+    const { PDFParse } = require("pdf-parse");
     const parser = new PDFParse({ url: sourceUrl });
     const result = await parser.getText();
     await parser.destroy();
@@ -150,7 +153,11 @@ function sectionLabelFor(document, reference, chunkIndex, matchingReferences) {
 }
 
 function sectionRecordsForSupplement(document, extracted) {
-  const fullText = cleanText(extracted.text || document.text || "");
+  // A reviewed source may retain its full official extraction for audit, while
+  // the searchable sections and fact catalog receive only its approved evidence.
+  const approvedEvidence = document.ownerReview?.approvedAnswerEvidence;
+  const fullText = cleanText(approvedEvidence || extracted.text || document.text || "");
+  const extractionStatus = approvedEvidence ? "owner-reviewed-evidence" : extracted.extractionStatus;
   const references = [
     ...new Set(
       [
@@ -199,15 +206,17 @@ function sectionRecordsForSupplement(document, extracted) {
         ? document.supersedesConflictingPhrases
         : [],
       autoSupersedeSections: document.autoSupersedeSections,
+      ownerReview: document.ownerReview || null,
+      ownerReviewApplied: Boolean(approvedEvidence),
       searchable: document.searchable,
       supersededBy: document.supersededBy || "",
       isSupplementSection: true,
-      extractionStatus: extracted.extractionStatus,
+      extractionStatus,
       extractionError: extracted.extractionError || "",
       sourceTextHash: fullHash,
       chunkHash: hashText(chunk),
       text: collapseWhitespace(chunk),
-      summaryText: document.text || "",
+      summaryText: approvedEvidence || document.text || "",
     };
   });
 }
@@ -219,6 +228,27 @@ async function buildSupplementSections(options) {
   }
 
   const records = [];
+  const supplementsById = new Map(supplements.map((document) => [document.id, document]));
+  if (options.reuseExisting) {
+    const existing = JSON.parse(await fs.readFile(options.outputPath, "utf8"));
+    const reviewedRecords = existing.map((record) => {
+      const document = supplementsById.get(record.parentSupplementId);
+      const approvedEvidence = document?.ownerReview?.approvedAnswerEvidence;
+      if (!approvedEvidence) return record;
+      return {
+        ...record,
+        ownerReview: document.ownerReview,
+        ownerReviewApplied: true,
+        extractionStatus: "owner-reviewed-evidence",
+        sourceTextHash: hashText(approvedEvidence),
+        chunkHash: hashText(approvedEvidence),
+        text: collapseWhitespace(approvedEvidence),
+        summaryText: approvedEvidence,
+      };
+    });
+    await fs.writeFile(options.outputPath, `${JSON.stringify(reviewedRecords, null, 2)}\n`, "utf8");
+    return reviewedRecords;
+  }
   for (const document of supplements) {
     if (!document?.id) continue;
     const extracted = await extractOfficialText(document);

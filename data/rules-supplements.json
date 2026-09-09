@@ -143,6 +143,13 @@
     "effectiveYear": 2025,
     "documentCenterIds": ["2615"],
     "sourcePriority": 255,
+    "ownerReview": {
+      "decisionId": "delinquency-policy",
+      "approvedScope": "Controlling June 2025 collection-process source; listed charges are this resolution's fee schedule.",
+      "withheldScope": ["Any claim that no newer amendment exists."],
+      "freshnessBoundary": "Use only unless a newer amendment is confirmed.",
+      "approvedAnswerEvidence": "June 2025 Resolution No. 2025-06-01 is the collection-process source for delinquent utility, monthly, and covenant-enforcement fees. Its process provides a courtesy past-due notification three days after the invoice due date; a late fee after seven calendar days; a Late Notice Letter on day 15; and a Disconnect Notice or Lien Notice on the 10th day of the following month. Utility disconnection or a lien can follow if payment is not made by the last Wednesday of that month. Payment plans may be authorized for up to six months when the delinquent amount does not exceed $2,500. The listed charges are this resolution's fee schedule: Delinquent Account Late Fee 10% of the delinquent amount, up to $15; Late Notice Letter $5; Disconnect Notice/Lien Notice $25; 48 Hour Shut Off Notice $50; Disconnect $150; reconnect during 8:00 a.m.–3:00 p.m. $150; reconnect during 3:00 p.m.–9:00 p.m. $500; Statement of Lien Filing $250; Release of Statement of Lien $100; Payment Plan Administration $45 plus $10 per month; Returned Deposit $20."
+    },
     "currentForTopics": ["delinquent-fees", "late-fees", "collections", "water-disconnect", "liens", "payment-plans"],
     "requiredCoveragePhrases": [
       "supersedes prior collection policies",
@@ -172,6 +179,15 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2473"],
     "sourcePriority": 275,
+    "ownerReview": {
+      "decisionId": "water-rates-2026",
+      "approvedScope": "Clearly labeled residential 2026 water, sanitary sewer, and stormwater rates only.",
+      "withheldScope": ["master-meter", "nonresidential", "public-school", "construction-water", "irrigation", "unlabelled or clipped row"],
+      "historicalBoundary": "Use 2025 material only when the resident explicitly asks about 2025.",
+      "approvedAnswerEvidence": "2026 residential water, sanitary sewer, and stormwater schedule. Clearly labeled residential water base-rate rows: single-family detached, single-family attached/duplex, townhomes, and individually metered multifamily/apartments are $50.20 monthly for a 5/8-inch meter; the clearly labeled dual indoor-and-outdoor residential 3/4-inch-tap row is $74.95 per unit. Residential indoor-water tiers are $9.70, $11.70, and $18.55 per 1,000 gallons. Residential outdoor-water tiers are $11.65, $18.25, $24.80, and $30.55 per 1,000 gallons. Clearly labeled residential sanitary-sewer base-fee rows are $44.95 monthly, and residential indoor-water use is $12.50 per 1,000 gallons. Clearly labeled residential stormwater rows are $18.80 monthly for single-family detached and $17.50 for single-family attached/duplex, townhomes, and individually metered multifamily/apartments.",
+      "withheldQuestionPatterns": ["\\b(?:master[ -]?meter|nonresidential|commercial|public school|school|construction water|irrigation)\\b"],
+      "withheldAnswer": "The approved 2026 evidence only covers complete, clearly labeled residential rows, so I can’t provide that category’s amount."
+    },
     "replacesSections": ["13-174", "13-175", "13-176", "13-177", "13-178"],
     "requiredCoveragePhrases": [
       "All prior rates, fees, or charges adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A",
@@ -202,6 +218,14 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2472"],
     "sourcePriority": 280,
+    "ownerReview": {
+      "decisionId": "tap-facility-2026",
+      "approvedScope": "Complete, clearly labeled residential tap and facility-fee rows only.",
+      "withheldScope": ["commercial", "school", "irrigation", "master-meter", "large-meter", "pool", "clipped-footnote case", "incomplete or unlabelled row"],
+      "approvedAnswerEvidence": "2026 complete, clearly labeled residential tap and facility-fee rows. Dominion Water Resource Fee per unit: residential multifamily/apartments indoor-meter-only $6,150; single-family attached/duplex and townhomes $9,310; single-family detached under 5,000 square feet $9,870; single-family detached over 5,000 square feet $12,960. Total residential water-infrastructure fees: single-family detached $27,430; single-family attached/duplex, townhomes, and individually metered multifamily/apartments $18,420. Total residential sewer-tap fees: single-family detached $12,485; single-family attached/duplex, townhomes, and individually metered multifamily/apartments $8,360. Residential stormwater tap is $6,080 per unit. Residential facilities fees: single-family detached and duplex $12,395; townhomes and multifamily $10,880.",
+      "withheldQuestionPatterns": ["\\b(?:commercial|school|irrigation|master[ -]?meter|large[ -]?meter|pool|clipped|footnote|incomplete|unlabelled|unlabeled)\\b"],
+      "withheldAnswer": "The approved 2026 tap-and-facility evidence does not cover that row, so I can’t provide an amount."
+    },
     "replacesSections": ["13-124", "13-3"],
     "requiredCoveragePhrases": [
       "All prior tap fees, service charges, and facility fees adopted or referenced in the Rules and Regulations are deleted and replaced by Exhibit A",
@@ -233,6 +257,15 @@
     "effectiveYear": 2026,
     "documentCenterIds": ["2474"],
     "sourcePriority": 270,
+    "ownerReview": {
+      "decisionId": "cab-fees-effective-date",
+      "approvedScope": "Clearly labeled 2026 CAB fee amounts.",
+      "withheldScope": ["standalone effective-date claim"],
+      "conflict": "The source has conflicting 2025/2026 effective-date wording.",
+      "approvedAnswerEvidence": "2026 CAB service-fee amounts. Residential streetlight charge is $9.90 monthly for single-family, townhomes, and multifamily/apartments. Residential trash charge is $14.17 monthly for single-family and townhomes; multifamily/apartments with a separate contract are $0. Shared-driveway maintenance is $33.25 monthly and alley-load-home maintenance is $26.25 monthly. Disclosure and document fees: New Home Status Letter Bundle $225; Resale Status Letter Bundle $500; Resale Status Letter Only $175; Refinance Demand $125; Standard Questionnaire $75; Add-on Custom Questionnaire $40; Hard Copy $45; USB $30; Builder Floor Plan Review $5,000.",
+      "withheldQuestionPatterns": ["\\b(?:when|what date|effective date|take effect)\\b"],
+      "withheldAnswer": "I can share the approved 2026 CAB fee amounts, but I can’t verify a standalone effective date from that source."
+    },
     "replacesSections": ["13-179", "13-25", "13-73", "13-74", "13-48"],
     "requiredCoveragePhrases": [
       "Exhibit A 2026 CAB Service Fees",
