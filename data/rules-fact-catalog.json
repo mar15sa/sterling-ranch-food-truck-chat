@@ -7,10 +7,10 @@
     },
     "supplements": {
       "path": "data/rules-supplement-sections.json",
-      "sha256": "71ea2eee70eea50df929b2a7c6b83b389beeb888c1a723e272a859a2171a0ced"
+      "sha256": "5e71e7d1cdb3454b963253979d482bd8e2efdcc2de3daf6e0cc32be5cf803701"
     }
   },
-  "factCount": 1977,
+  "factCount": 1956,
   "facts": [
     {
       "kind": "year",
@@ -33998,99 +33998,270 @@
       "factKey": "supplement-cab-service-fees-2025::1:year:2024-11-07-of-the-board-of-directors-of-the-sterling-ranch-community-authority-board-modif"
     },
     {
-      "kind": "count",
-      "value": "November 21, 2025",
-      "context": "[SIGNATURE PAGE TO FOLLOW] -- 1 of 5 -- Page 2 of 4 [SIGNATURE PAGE TO RESOLUTION TO MODIFYING CERTAIN FEES AND CHARGES] RESOLUTION APPROVED AND ADOPTED ON November 21, 2025.",
+      "kind": "money",
+      "value": "$40",
+      "context": "Add-on Custom Questionnaire $40;",
       "sourceId": "supplement-cab-service-fees-2026::1",
       "sourceTitle": "2026 CAB service fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "eac419732604480fa1d688434915db676f1c126b3fd96eaa365da3349f8196d4",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
-      "sourceOffset": 2758,
+      "sourceOffset": 576,
       "normalizedValue": {
-        "amount": 212025,
-        "unit": "count"
+        "amount": 40,
+        "currency": "USD"
       },
-      "factKey": "supplement-cab-service-fees-2026::1:count:signature-page-to-follow-1-of-5-page-2-of-4-signature-page-to-resolution-to-modifying-cert"
+      "factKey": "supplement-cab-service-fees-2026::1:money:add-on-custom-questionnaire-40"
     },
     {
-      "kind": "count",
-      "value": "January 1, 2025",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 2 of 5 -- Page 3 of 4 [EXHIBIT A TO RESOLUTION TO MODIFYING CERTAIN FEES AND CHARGES] EXHIBIT A: 2026 CAB Service Fees -- 3 of 5 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2025: 2026 Streetlight Monthly Charge Residential (per unit) Single Family $9.90 Townhomes",
+      "kind": "money",
+      "value": "$5,000",
+      "context": "Builder Floor Plan Review $5,000.",
       "sourceId": "supplement-cab-service-fees-2026::1",
       "sourceTitle": "2026 CAB service fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "eac419732604480fa1d688434915db676f1c126b3fd96eaa365da3349f8196d4",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
-      "sourceOffset": 3196,
+      "sourceOffset": 631,
       "normalizedValue": {
-        "amount": 12025,
-        "unit": "count"
+        "amount": 5000,
+        "currency": "USD"
       },
-      "factKey": "supplement-cab-service-fees-2026::1:count:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
+      "factKey": "supplement-cab-service-fees-2026::1:money:builder-floor-plan-review-5-000"
+    },
+    {
+      "kind": "money",
+      "value": "$225",
+      "context": "Disclosure and document fees: New Home Status Letter Bundle $225;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 425,
+      "normalizedValue": {
+        "amount": 225,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:disclosure-and-document-fees-new-home-status-letter-bundle-225"
+    },
+    {
+      "kind": "money",
+      "value": "$45",
+      "context": "Hard Copy $45;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 591,
+      "normalizedValue": {
+        "amount": 45,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:hard-copy-45"
+    },
+    {
+      "kind": "money",
+      "value": "$0",
+      "context": "multifamily/apartments with a separate contract are $0.",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 264,
+      "normalizedValue": {
+        "amount": 0,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:multifamily-apartments-with-a-separate-contract-are-0"
+    },
+    {
+      "kind": "money",
+      "value": "$125",
+      "context": "Refinance Demand $125;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 514,
+      "normalizedValue": {
+        "amount": 125,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:refinance-demand-125"
+    },
+    {
+      "kind": "money",
+      "value": "$500",
+      "context": "Resale Status Letter Bundle $500;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 459,
+      "normalizedValue": {
+        "amount": 500,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:resale-status-letter-bundle-500"
+    },
+    {
+      "kind": "money",
+      "value": "$175",
+      "context": "Resale Status Letter Only $175;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 491,
+      "normalizedValue": {
+        "amount": 175,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:resale-status-letter-only-175"
     },
     {
       "kind": "money",
       "value": "$9.90",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 2 of 5 -- Page 3 of 4 [EXHIBIT A TO RESOLUTION TO MODIFYING CERTAIN FEES AND CHARGES] EXHIBIT A: 2026 CAB Service Fees -- 3 of 5 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2025: 2026 Streetlight Monthly Charge Residential (per unit) Single Family $9.90 Townhomes",
+      "context": "Residential streetlight charge is $9.90 monthly for single-family, townhomes, and multifamily/apartments.",
       "sourceId": "supplement-cab-service-fees-2026::1",
       "sourceTitle": "2026 CAB service fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "eac419732604480fa1d688434915db676f1c126b3fd96eaa365da3349f8196d4",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
-      "sourceOffset": 3282,
+      "sourceOffset": 64,
       "normalizedValue": {
         "amount": 9.9,
         "currency": "USD"
       },
-      "factKey": "supplement-cab-service-fees-2026::1:money:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
+      "factKey": "supplement-cab-service-fees-2026::1:money:residential-streetlight-charge-is-9-90-monthly-for-single-family-townhomes-and-multifamily"
     },
     {
-      "kind": "year",
-      "value": "2025",
-      "context": "2025-11-02 OF THE BOARD OF DIRECTORS OF THE STERLING RANCH COMMUNITY AUTHORITY BOARD MODIFYING CERTAIN FEES AND CHARGES FOR 2026 RECITALS A.",
+      "kind": "money",
+      "value": "$14.17",
+      "context": "Residential trash charge is $14.17 monthly for single-family and townhomes;",
       "sourceId": "supplement-cab-service-fees-2026::1",
       "sourceTitle": "2026 CAB service fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "eac419732604480fa1d688434915db676f1c126b3fd96eaa365da3349f8196d4",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
-      "sourceOffset": 27,
+      "sourceOffset": 164,
       "normalizedValue": {
-        "amount": 2025,
-        "unit": "year"
+        "amount": 14.17,
+        "currency": "USD"
       },
-      "factKey": "supplement-cab-service-fees-2026::1:year:2025-11-02-of-the-board-of-directors-of-the-sterling-ranch-community-authority-board-modif"
+      "factKey": "supplement-cab-service-fees-2026::1:money:residential-trash-charge-is-14-17-monthly-for-single-family-and-townhomes"
+    },
+    {
+      "kind": "money",
+      "value": "$33.25",
+      "context": "Shared-driveway maintenance is $33.25 monthly and alley-load-home maintenance is $26.25 monthly.",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 299,
+      "normalizedValue": {
+        "amount": 33.25,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:shared-driveway-maintenance-is-33-25-monthly-and-alley-load-home-maintenance-is-26-25-mont"
+    },
+    {
+      "kind": "money",
+      "value": "$75",
+      "context": "Standard Questionnaire $75;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 543,
+      "normalizedValue": {
+        "amount": 75,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:standard-questionnaire-75"
+    },
+    {
+      "kind": "money",
+      "value": "$30",
+      "context": "USB $30;",
+      "sourceId": "supplement-cab-service-fees-2026::1",
+      "sourceTitle": "2026 CAB service fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
+      "sourceOffset": 600,
+      "normalizedValue": {
+        "amount": 30,
+        "currency": "USD"
+      },
+      "factKey": "supplement-cab-service-fees-2026::1:money:usb-30"
     },
     {
       "kind": "year",
       "value": "2026",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 2 of 5 -- Page 3 of 4 [EXHIBIT A TO RESOLUTION TO MODIFYING CERTAIN FEES AND CHARGES] EXHIBIT A: 2026 CAB Service Fees -- 3 of 5 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2025: 2026 Streetlight Monthly Charge Residential (per unit) Single Family $9.90 Townhomes",
+      "context": "2026 CAB service-fee amounts.",
       "sourceId": "supplement-cab-service-fees-2026::1",
       "sourceTitle": "2026 CAB service fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "eac419732604480fa1d688434915db676f1c126b3fd96eaa365da3349f8196d4",
+      "sourceHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-179, 13-25, 13-73, 13-74, 13-48 > 2026 CAB service fees.",
-      "sourceOffset": 3026,
+      "sourceOffset": 0,
       "normalizedValue": {
         "amount": 2026,
         "unit": "year"
       },
-      "factKey": "supplement-cab-service-fees-2026::1:year:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
+      "factKey": "supplement-cab-service-fees-2026::1:year:2026-cab-service-fee-amounts"
     },
     {
       "kind": "count",
@@ -34374,469 +34545,359 @@
       "factKey": "supplement-code-amendments-2024-11-22::1:year:adopted-and-approved-this-22-nd-day-of-november-2024"
     },
     {
-      "kind": "count",
-      "value": "March 21, 2025",
-      "context": ", and that certain First Amendment to Second Amended and Restated Sterling Ranch Community Authority Board Establishment Agreement, dated March 21, 2025 and with an original effective date of January 6, 2014, as may be amended (the “CABEA”), by and among the Sterling Ranch Colorado Metropolitan District Nos.",
+      "kind": "date",
+      "value": "last Wednesday",
+      "context": "Utility disconnection or a lien can follow if payment is not made by the last Wednesday of that month.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
       "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 839,
-      "normalizedValue": {
-        "amount": 212025,
-        "unit": "count"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:count:and-that-certain-first-amendment-to-second-amended-and-restated-sterling-ranch-community-a"
-    },
-    {
-      "kind": "date",
-      "value": "last Wednesday",
-      "context": "(4) notify the addressee that failure to pay the Monthly Fees by the last Wednesday of the month will result in CAB filing a notice of lien against the Property for the outstanding Monthly Fees;",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 4 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 397,
+      "sourceOffset": 448,
       "normalizedValue": {
         "text": "last Wednesday"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:date:4-notify-the-addressee-that-failure-to-pay-the-monthly-fees-by-the-last-wednesday-of-the-m"
-    },
-    {
-      "kind": "date",
-      "value": "last Wednesday",
-      "context": "(4) notify the addressee that failure to pay the Utility Fees by the last Wednesday of the month will result in CAB disconnecting water service on that day;",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 3 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2534,
-      "normalizedValue": {
-        "text": "last Wednesday"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:date:4-notify-the-addressee-that-failure-to-pay-the-utility-fees-by-the-last-wednesday-of-the-m"
-    },
-    {
-      "kind": "date",
-      "value": "last Wednesday",
-      "context": "All water disconnections for unpaid Delinquent Accounts comprised of Utility Fees shall take place on the last Wednesday of each month (the “Disconnection Date”).",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 4 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 1252,
-      "normalizedValue": {
-        "text": "last Wednesday"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:date:all-water-disconnections-for-unpaid-delinquent-accounts-comprised-of-utility-fees-shall-ta"
-    },
-    {
-      "kind": "date",
-      "value": "last Wednesday",
-      "context": "If a Delinquent Account comprised of unpaid Monthly Fees and Enforcement Fees remains unpaid as of the last Wednesday of the month in which the Notice of Lien Letter was provide, CAB may record with the Douglas County Clerk and Recorder a “Statement of Lien” against the Property for the total amount of Delinquent Monthly Fees due and owing, including all late fees and charges assessed against the account, as of the date of recordation in the manner provided by §32-1-1001(1)(j) and § 38-22-101 et seq.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 5 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 1271,
-      "normalizedValue": {
-        "text": "last Wednesday"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:date:if-a-delinquent-account-comprised-of-unpaid-monthly-fees-and-enforcement-fees-remains-unpa"
-    },
-    {
-      "kind": "duration",
-      "value": "20 day",
-      "context": "2025-06-01] ADOPTED this 20 day of June, 2025.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2519,
-      "normalizedValue": {
-        "amount": 20,
-        "unit": "day"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:2025-06-01-adopted-this-20-day-of-june-2025"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:date:utility-disconnection-or-a-lien-can-follow-if-payment-is-not-made-by-the-last-wednesday-of"
     },
     {
       "kind": "duration",
       "value": "48 Hour",
-      "context": "Delinquent Account Late Fee 10% of the Delinquent Amount not to exceed $ 15.00 Late Notice Letter Fee $ 5.00 Disconnect Notice / Lien Notice $ 25.00 48 Hour Shut Off Notice Fee $ 50.00 Disconnect Fee $150.00 Reconnect Fees - 8:00 a.",
+      "context": "48 Hour Shut Off Notice $50;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3322,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 764,
       "normalizedValue": {
         "amount": 48,
         "unit": "hour"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:delinquent-account-late-fee-10-of-the-delinquent-amount-not-to-exceed-15-00-late-notice-le"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:48-hour-shut-off-notice-50"
     },
     {
       "kind": "duration",
-      "value": "seven (7) calendar days",
-      "context": "If a Delinquent Account is not paid within seven (7) calendar days after the invoice due date, a fee in the amount provided in",
+      "value": "seven calendar days",
+      "context": "a late fee after seven calendar days;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 2 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3350,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 243,
       "normalizedValue": {
-        "amount": 7,
+        "amount": 0,
         "unit": "calendar days"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:if-a-delinquent-account-is-not-paid-within-seven-7-calendar-days-after-the-invoice-due-dat"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:a-late-fee-after-seven-calendar-days"
     },
     {
       "kind": "duration",
-      "value": "48 hours",
-      "context": "If the Delinquent Account comprised of Utility Fees remains unpaid 48 hours prior to the Disconnection Date and the Property Owner has not requested a hearing as permitted by the Rules, CAB Staff shall post a notice in a prominent location on the Property informing the Owner or resident of the Disconnection Date on which the Delinquent Account must be paid or water service shall be disconnected.",
+      "value": "three days",
+      "context": "Its process provides a courtesy past-due notification three days after the invoice due date;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 4 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 1395,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 187,
       "normalizedValue": {
-        "amount": 48,
-        "unit": "hours"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:if-the-delinquent-account-comprised-of-utility-fees-remains-unpaid-48-hours-prior-to-the-d"
-    },
-    {
-      "kind": "duration",
-      "value": "6 months",
-      "context": "The Provider may authorize a payment plan over a term of up to 6 months in length so long as the total Delinquent Amount does not exceed Two Thousand Five Hundred Dollars ($2,500).",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 6 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2616,
-      "normalizedValue": {
-        "amount": 6,
-        "unit": "months"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:the-provider-may-authorize-a-payment-plan-over-a-term-of-up-to-6-months-in-length-so-long-"
-    },
-    {
-      "kind": "duration",
-      "value": "Three (3) days",
-      "context": "Three (3) days after the due date of any invoice, any Property Owner will be notified of past due balance by either text, email, or automated phone call.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 2 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3112,
-      "normalizedValue": {
-        "amount": 3,
+        "amount": 0,
         "unit": "days"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:three-3-days-after-the-due-date-of-any-invoice-any-property-owner-will-be-notified-of-past"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:its-process-provides-a-courtesy-past-due-notification-three-days-after-the-invoice-due-dat"
     },
     {
       "kind": "duration",
-      "value": "six (6) months",
-      "context": ", to the Douglas County Treasurer provided the amount owed exceeds one-hundred and fifty dollars ($150.00) and has been Delinquent for at least six (6) months.",
+      "value": "six months",
+      "context": "Payment plans may be authorized for up to six months when the delinquent amount does not exceed $2,500.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 5 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 384,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 520,
       "normalizedValue": {
-        "amount": 6,
+        "amount": 0,
         "unit": "months"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:to-the-douglas-county-treasurer-provided-the-amount-owed-exceeds-one-hundred-and-fifty-dol"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:duration:payment-plans-may-be-authorized-for-up-to-six-months-when-the-delinquent-amount-does-not-e"
     },
     {
       "kind": "money",
-      "value": "$150.00",
-      "context": "$150.00 - 3:00 p.",
+      "value": "$150",
+      "context": "$150;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3420,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 847,
       "normalizedValue": {
         "amount": 150,
         "currency": "USD"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:150-00-3-00-p"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:150"
     },
     {
       "kind": "money",
-      "value": "$500.00",
-      "context": "$500.00 - 9:00 p.",
+      "value": "$50",
+      "context": "48 Hour Shut Off Notice $50;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3452,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 788,
+      "normalizedValue": {
+        "amount": 50,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:48-hour-shut-off-notice-50"
+    },
+    {
+      "kind": "money",
+      "value": "$500",
+      "context": "$500;",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 890,
       "normalizedValue": {
         "amount": 500,
         "currency": "USD"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:500-00-9-00-p"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:500"
     },
     {
       "kind": "money",
-      "value": "$ 15.00",
-      "context": "Delinquent Account Late Fee 10% of the Delinquent Amount not to exceed $ 15.00 Late Notice Letter Fee $ 5.00 Disconnect Notice / Lien Notice $ 25.00 48 Hour Shut Off Notice Fee $ 50.00 Disconnect Fee $150.00 Reconnect Fees - 8:00 a.",
+      "value": "$150",
+      "context": "Disconnect $150;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3244,
-      "normalizedValue": {
-        "amount": 15,
-        "currency": "USD"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:delinquent-account-late-fee-10-of-the-delinquent-amount-not-to-exceed-15-00-late-notice-le"
-    },
-    {
-      "kind": "money",
-      "value": "$2,500",
-      "context": "The General Manager may authorize a payment plan for a longer term and for any amounts over Two Thousand Five Hundred Dollars ($2,500) if the General Manager finds that such a payment plan will result in the timely repayment of a Delinquent Account.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 6 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2861,
-      "normalizedValue": {
-        "amount": 2500,
-        "currency": "USD"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:the-general-manager-may-authorize-a-payment-plan-for-a-longer-term-and-for-any-amounts-ove"
-    },
-    {
-      "kind": "money",
-      "value": "$2,500",
-      "context": "The General Manager may, upon written request by a Delinquent Account, waive underlying CAB Fees comprising a Delinquent Account up to Two Thousand Five Hundred Dollars ($2,500) upon a finding of extraordinary circumstances and undue hardship.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 8 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 1494,
-      "normalizedValue": {
-        "amount": 2500,
-        "currency": "USD"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:the-general-manager-may-upon-written-request-by-a-delinquent-account-waive-underlying-cab-"
-    },
-    {
-      "kind": "money",
-      "value": "$2,500",
-      "context": "The Provider may authorize a payment plan over a term of up to 6 months in length so long as the total Delinquent Amount does not exceed Two Thousand Five Hundred Dollars ($2,500).",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 6 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2725,
-      "normalizedValue": {
-        "amount": 2500,
-        "currency": "USD"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:the-provider-may-authorize-a-payment-plan-over-a-term-of-up-to-6-months-in-length-so-long-"
-    },
-    {
-      "kind": "money",
-      "value": "$150.00",
-      "context": ", to the Douglas County Treasurer provided the amount owed exceeds one-hundred and fifty dollars ($150.00) and has been Delinquent for at least six (6) months.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 5 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 338,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 804,
       "normalizedValue": {
         "amount": 150,
         "currency": "USD"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:to-the-douglas-county-treasurer-provided-the-amount-owed-exceeds-one-hundred-and-fifty-dol"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:disconnect-150"
     },
     {
       "kind": "money",
-      "value": "$250.00",
-      "context": "Unavailable Curb Stop Repair/Replacement Fee Actual cost of repair or replacement, no less than $250.00 Statement of Lien Filing Fee $250.00 Release of Statement of Lien Fee $100.00 Payment Plan Administration Fee $ 45.00 plus $10.00 per month Returned Deposit Fee (insufficient funds, $ 20.00 declined card, reversed credit card charge, etc.",
+      "value": "$25",
+      "context": "Disconnect Notice/Lien Notice $25;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3580,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 759,
       "normalizedValue": {
-        "amount": 250,
+        "amount": 25,
         "currency": "USD"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:unavailable-curb-stop-repair-replacement-fee-actual-cost-of-repair-or-replacement-no-less-"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:disconnect-notice-lien-notice-25"
+    },
+    {
+      "kind": "money",
+      "value": "$5",
+      "context": "Late Notice Letter $5;",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 725,
+      "normalizedValue": {
+        "amount": 5,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:late-notice-letter-5"
+    },
+    {
+      "kind": "money",
+      "value": "$45",
+      "context": "Payment Plan Administration $45 plus $10 per month;",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 990,
+      "normalizedValue": {
+        "amount": 45,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:payment-plan-administration-45-plus-10-per-month"
     },
     {
       "kind": "money",
       "value": "$2,500",
-      "context": "Waiver of CAB Fees in excess of Two Thousand Five Hundred Dollars ($2,500) may only be made upon consultation and approval of the CAB Board chair.",
+      "context": "Payment plans may be authorized for up to six months when the delinquent amount does not exceed $2,500.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 8 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 1735,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 574,
       "normalizedValue": {
         "amount": 2500,
         "currency": "USD"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:waiver-of-cab-fees-in-excess-of-two-thousand-five-hundred-dollars-2-500-may-only-be-made-u"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:payment-plans-may-be-authorized-for-up-to-six-months-when-the-delinquent-amount-does-not-e"
+    },
+    {
+      "kind": "money",
+      "value": "$100",
+      "context": "Release of Statement of Lien $100;",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 956,
+      "normalizedValue": {
+        "amount": 100,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:release-of-statement-of-lien-100"
+    },
+    {
+      "kind": "money",
+      "value": "$20",
+      "context": "Returned Deposit $20.",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 1031,
+      "normalizedValue": {
+        "amount": 20,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:returned-deposit-20"
+    },
+    {
+      "kind": "money",
+      "value": "$250",
+      "context": "Statement of Lien Filing $250;",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 921,
+      "normalizedValue": {
+        "amount": 250,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:statement-of-lien-filing-250"
+    },
+    {
+      "kind": "money",
+      "value": "$15",
+      "context": "The listed charges are this resolution's fee schedule: Delinquent Account Late Fee 10% of the delinquent amount, up to $15;",
+      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
+      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
+      "approvedDate": "2025-06-20",
+      "effectiveDate": "2025-06-20",
+      "expirationDate": "",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 701,
+      "normalizedValue": {
+        "amount": 15,
+        "currency": "USD"
+      },
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:money:the-listed-charges-are-this-resolution-s-fee-schedule-delinquent-account-late-fee-10-of-th"
     },
     {
       "kind": "percentage",
       "value": "10%",
-      "context": "Delinquent Account Late Fee 10% of the Delinquent Amount not to exceed $ 15.00 Late Notice Letter Fee $ 5.00 Disconnect Notice / Lien Notice $ 25.00 48 Hour Shut Off Notice Fee $ 50.00 Disconnect Fee $150.00 Reconnect Fees - 8:00 a.",
+      "context": "The listed charges are this resolution's fee schedule: Delinquent Account Late Fee 10% of the delinquent amount, up to $15;",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3201,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 665,
       "normalizedValue": {
         "amount": 10,
         "unit": "percent"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:percentage:delinquent-account-late-fee-10-of-the-delinquent-amount-not-to-exceed-15-00-late-notice-le"
-    },
-    {
-      "kind": "percentage",
-      "value": "12%",
-      "context": "Interest on accounts with disconnected service shall accrue interest at the rate of 12% per annum as specified in Section 13-184 of the Rules.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 4 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2203,
-      "normalizedValue": {
-        "amount": 12,
-        "unit": "percent"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:percentage:interest-on-accounts-with-disconnected-service-shall-accrue-interest-at-the-rate-of-12-per"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:percentage:the-listed-charges-are-this-resolution-s-fee-schedule-delinquent-account-late-fee-10-of-th"
     },
     {
       "kind": "time",
       "value": "3:00 p.m",
-      "context": "$150.00 - 3:00 p.",
+      "context": "–3:00 p.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3430,
-      "normalizedValue": {
-        "text": "3:00 p.m"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:150-00-3-00-p"
-    },
-    {
-      "kind": "time",
-      "value": "3:00 p.m",
-      "context": "– 3:00 p.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3410,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 837,
       "normalizedValue": {
         "text": "3:00 p.m"
       },
@@ -34845,52 +34906,16 @@
     {
       "kind": "time",
       "value": "9:00 p.m",
-      "context": "$500.00 - 9:00 p.",
+      "context": "–9:00 p.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3462,
-      "normalizedValue": {
-        "text": "9:00 p.m"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:500-00-9-00-p"
-    },
-    {
-      "kind": "time",
-      "value": "8:00 a.m",
-      "context": "– 8:00 a.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3474,
-      "normalizedValue": {
-        "text": "8:00 a.m"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:8-00-a"
-    },
-    {
-      "kind": "time",
-      "value": "9:00 p.m",
-      "context": "– 9:00 p.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3442,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 880,
       "normalizedValue": {
         "text": "9:00 p.m"
       },
@@ -34899,113 +34924,76 @@
     {
       "kind": "time",
       "value": "3:00 p.m",
-      "context": "and 3:00 p.",
+      "context": "reconnect during 3:00 p.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 4 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3040,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 870,
       "normalizedValue": {
         "text": "3:00 p.m"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:and-3-00-p"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:reconnect-during-3-00-p"
     },
     {
       "kind": "time",
       "value": "8:00 a.m",
-      "context": "Delinquent Account Late Fee 10% of the Delinquent Amount not to exceed $ 15.00 Late Notice Letter Fee $ 5.00 Disconnect Notice / Lien Notice $ 25.00 48 Hour Shut Off Notice Fee $ 50.00 Disconnect Fee $150.00 Reconnect Fees - 8:00 a.",
+      "context": "reconnect during 8:00 a.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3398,
-      "normalizedValue": {
-        "text": "8:00 a.m"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:delinquent-account-late-fee-10-of-the-delinquent-amount-not-to-exceed-15-00-late-notice-le"
-    },
-    {
-      "kind": "time",
-      "value": "8:00 a.m",
-      "context": "Water reconnection shall take place during regular business hours of the CAB between 8:00 a.",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 4 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 3026,
-      "normalizedValue": {
-        "text": "8:00 a.m"
-      },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:water-reconnection-shall-take-place-during-regular-business-hours-of-the-cab-between-8-00-"
-    },
-    {
-      "kind": "year",
-      "value": "2023",
-      "context": "2023-03-01 (the “Prior Resolution”) approving a collections process for past due CAB Fees and by this Resolution (the “Resolution”), the CAB desires to amend, restate and set forth in its entirety updated guidelines for the processing and collection of delinquent CAB Fees, and assess interest, late fees, and collection fees and costs referenced herein, (collectively, the “Delinquent Fees”);",
-      "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
-      "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
-      "approvedDate": "2025-06-20",
-      "effectiveDate": "2025-06-20",
-      "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
       "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2374,
+      "sourceOffset": 827,
       "normalizedValue": {
-        "amount": 2023,
-        "unit": "year"
+        "text": "8:00 a.m"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:year:2023-03-01-the-prior-resolution-approving-a-collections-process-for-past-due-cab-fees-and-"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:time:reconnect-during-8-00-a"
     },
     {
       "kind": "year",
       "value": "2025",
-      "context": "2025-06-01] ADOPTED this 20 day of June, 2025.",
+      "context": "2025-06-01 is the collection-process source for delinquent utility, monthly, and covenant-enforcement fees.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
-      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 9 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 2494,
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
+      "sourceOffset": 25,
       "normalizedValue": {
         "amount": 2025,
         "unit": "year"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:year:2025-06-01-adopted-this-20-day-of-june-2025"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:year:2025-06-01-is-the-collection-process-source-for-delinquent-utility-monthly-and-covenant-en"
     },
     {
       "kind": "year",
       "value": "2025",
-      "context": "2025-06-01 of the Board of Directors of the Sterling Ranch Community Authority Board Establishing an Amended and Restated Collection Process for Delinquent Utility, Monthly, and Covenant Enforcement Fees and Adopting Collection Fees RESOLUTION NO.",
+      "context": "June 2025 Resolution No.",
       "sourceId": "supplement-delinquent-fee-collection-2025-06-20::1",
       "sourceTitle": "Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE?bidId=",
       "approvedDate": "2025-06-20",
       "effectiveDate": "2025-06-20",
       "expirationDate": "",
-      "sourceHash": "441368985dc731a2f07e78ed1366383348ba6eee98dcb571de133fb4b41dc1ac",
+      "sourceHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
       "scope": "Official CAB document supplement > Adopted June 20, 2025 - official text part 1 > Amended collection process for delinquent utility, monthly, and covenant enforcement fees.",
-      "sourceOffset": 15,
+      "sourceOffset": 5,
       "normalizedValue": {
         "amount": 2025,
         "unit": "year"
       },
-      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:year:2025-06-01-of-the-board-of-directors-of-the-sterling-ranch-community-authority-board-estab"
+      "factKey": "supplement-delinquent-fee-collection-2025-06-20::1:year:june-2025-resolution-no"
     },
     {
       "kind": "count",
@@ -35516,422 +35504,270 @@
       "factKey": "supplement-due-process-fines-2024-11-22::1:year:resolution-2024-11-03-sterling-ranch-community-authority-board-policy-governing-due-proces"
     },
     {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Actual fee to be determined on a case-by-case basis based upon projected indoor/outdoor water use The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2026: -- 6 of 8 --",
+      "kind": "measurement",
+      "value": "000 square feet",
+      "context": "single-family detached over 5,000 square feet $12,960.",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 3778,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:actual-fee-to-be-determined-on-a-case-by-case-basis-based-upon-projected-indoor-outdoor-wa"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Adoption of Facility Fees: The CAB hereby adopts the Facility Fees effective January 1, 2026, as documented on the attached Exhibit A.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 4574,
+      "sourceOffset": 306,
       "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
+        "amount": 0,
+        "unit": "square feet"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:adoption-of-facility-fees-the-cab-hereby-adopts-the-facility-fees-effective-january-1-2026"
+      "factKey": "supplement-tap-facility-fees-2026::1:measurement:single-family-detached-over-5-000-square-feet-12-960"
     },
     {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Adoption of Water and Sewer Tap Fees: The CAB hereby adopts the water and sewer Tap Fees effective January 1, 2026, as documented on the attached Exhibit A.",
+      "kind": "measurement",
+      "value": "000 square feet",
+      "context": "single-family detached under 5,000 square feet $9,870;",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 4200,
+      "sourceOffset": 252,
       "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
+        "amount": 0,
+        "unit": "square feet"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:adoption-of-water-and-sewer-tap-fees-the-cab-hereby-adopts-the-water-and-sewer-tap-fees-ef"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "- Facilities Fees (effective January 1, 2026) Commercial Facilities Fees shall be assessed proportionately at the rate of four times the rate of the applicable single- family detached Residential Facilities Fee per acre at the time of building permit issuance.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-3 > 2026 tap and facility fees.",
-      "sourceOffset": 1954,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:facilities-fees-effective-january-1-2026-commercial-facilities-fees-shall-be-assessed-prop"
-    },
-    {
-      "kind": "count",
-      "value": "November 21, 2025",
-      "context": ") shall be assessed proportionately at the rate of four times the rate of the applicable single-family detached Residential Facilities Fee per acre at the time of building permit issuance* -- 7 of 8 -- [CERTIFICATION PAGE TO RESOLUTION FOR TAP AND FACILITY FEES AND CHARGES] I, Susan Beckman, hereby certify that I am the duly appointed and acting Secretary of the Sterling Ranch Community Authority Board, and that the foregoing is a true and correct copy of the Resolution Modifying Tap and Facility Fees for the 2026 ",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-3 > 2026 tap and facility fees.",
-      "sourceOffset": 2862,
-      "normalizedValue": {
-        "amount": 212025,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:shall-be-assessed-proportionately-at-the-rate-of-four-times-the-rate-of-the-applicable-sin"
-    },
-    {
-      "kind": "count",
-      "value": "NOVEMBER 21, 2025",
-      "context": "[SIGNATURE PAGE TO FOLLOW] -- 3 of 8 -- [SIGNATURE PAGE TO RESOLUTION TO MODIFYING TAP AND FACILITY FEES AND CHARGES] RESOLUTION APPROVED AND ADOPTED ON NOVEMBER 21, 2025.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 1347,
-      "normalizedValue": {
-        "amount": 212025,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:signature-page-to-follow-3-of-8-signature-page-to-resolution-to-modifying-tap-and-facility"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Tap Fees (effective January 1, 2026) Dominion Water Resource Fee (collected as part of the Infrastructure and Tap Fees) Water Infrastructure Fee 2026 Tap & Facilities Fees Charges Exhibit A ** Fees to be based on square footage of landscape type to be installed and projected usage.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 3207,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:tap-fees-effective-january-1-2026-dominion-water-resource-fee-collected-as-part-of-the-inf"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "The fees shall take effect January 1, 2026, regardless of whether the updated Rules and Regulations have been published.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 5073,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:the-fees-shall-take-effect-january-1-2026-regardless-of-whether-the-updated-rules-and-regu"
-    },
-    {
-      "kind": "count",
-      "value": "November 15, 2016",
-      "context": "WHEREAS, pursuant to the terms of the Service Agreement and the Water, Wastewater and Stormwater Operations Intergovernmental Agreement (for Service to Sterling Ranch), dated November 15, 2016 (the \"Operations IGA\"), the CAB is responsible, inter alia, for the collection of the Dominion Tap Fees from End Users and for the remittance of the Dominion Tap Fees to Dominion;",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 1015,
-      "normalizedValue": {
-        "amount": 152016,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:whereas-pursuant-to-the-terms-of-the-service-agreement-and-the-water-wastewater-and-stormw"
-    },
-    {
-      "kind": "count",
-      "value": "January 6, 2014",
-      "context": "WHEREAS, the CAB and Dominion Water and Sanitation District (\"Dominion\") are parties to the Water and Wastewater Service Agreement for Sterling Ranch, dated January 6, 2014 (the \"Service Agreement\");",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 790,
-      "normalizedValue": {
-        "amount": 62014,
-        "unit": "count"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:count:whereas-the-cab-and-dominion-water-and-sanitation-district-dominion-are-parties-to-the-wat"
+      "factKey": "supplement-tap-facility-fees-2026::1:measurement:single-family-detached-under-5-000-square-feet-9-870"
     },
     {
       "kind": "money",
-      "value": "$6,150.00",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 4 of 8 -- [EXHIBIT A TO RESOLUTION TO MODIFYING TAP AND FACILITY FEES AND CHARGES] EXHIBIT A: 2026 Tap and Facility Fees -- 5 of 8 -- 2026 Fee per Unit Residential Multifamily/Apartments (Indoor Meter Only) $6,150.00 Single Family Attached / Duplex $9,310.00 Townhomes $9,310.00 Single Family Detached—Lot Size < 5,000 SF $9,870.00 Single Family Detached—Lot Size > 5,",
+      "value": "$6,150",
+      "context": "Dominion Water Resource Fee per unit: residential multifamily/apartments indoor-meter-only $6,150;",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 1725,
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 161,
       "normalizedValue": {
         "amount": 6150,
         "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:money:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:dominion-water-resource-fee-per-unit-residential-multifamily-apartments-indoor-meter-only-"
     },
     {
       "kind": "money",
-      "value": "$1,175.00",
-      "context": "Tap Size CAB Fees (for Retail Service) Dominion Fees (for Wholesale Service) Total Fees Residential (per Unit) Single Family Detached $1,175.00 $11,310.00 $12,485.00 Single Family Attached / Duplex $780.00 $7,580.00 $8,360.00 Townhomes $780.00 $7,580.00 $8,360.00 Multifamily/Apartments (individually metered) $780.00 $7,580.00 $8,360.00 Pool Tap * Meter Capacity Ratio Nonresidential **, Irrigation and 5/8\" 0.67 $780.00 $7,580.00 $8,360.00 Multifamily/Apartments master 3/4\" 1.00 $1,175.00 $11,310.00 $12,485.00 metere",
+      "value": "$12,395",
+      "context": "Residential facilities fees: single-family detached and duplex $12,395;",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-3 > 2026 tap and facility fees.",
-      "sourceOffset": 134,
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 781,
       "normalizedValue": {
-        "amount": 1175,
+        "amount": 12395,
         "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:money:tap-size-cab-fees-for-retail-service-dominion-fees-for-wholesale-service-total-fees-reside"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:residential-facilities-fees-single-family-detached-and-duplex-12-395"
     },
     {
       "kind": "money",
-      "value": "$2,230.00",
-      "context": "Tap Size CAB Water Infrastructure Fees (for Retail Service) Dominion Water Infrastructure Fees (for Wholesale Service) Total Water Infrastructure Fees Residential (per Unit) Single Family Detached $2,230.00 $25,200.00 $27,430.00 Single Family Attached Duplex $1,530.00 $16,890.00 $18,420.00 Townhomes $1,530.00 $16,890.00 $18,420.00 Multifamily/Apartments (individually metered) $1,530.00 $16,890.00 $18,420.00 Pool Tap * Nonresidential Indoor Water Tap (per EQR) $2,230.00 $25,200.00 $27,430.00 Meter Capacity Ratio Non",
+      "value": "$6,080 per unit",
+      "context": "Residential stormwater tap is $6,080 per unit.",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 2314,
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 701,
       "normalizedValue": {
-        "amount": 2230,
+        "amount": 6080,
         "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:money:tap-size-cab-water-infrastructure-fees-for-retail-service-dominion-water-infrastructure-fe"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:residential-stormwater-tap-is-6-080-per-unit"
     },
     {
       "kind": "money",
-      "value": "$3.22",
-      "context": "Weighted average using the SF equivalent imperviousness per Mile High Flood District/Douglas County ($3.22 pe *** The CAB reserves the right to waive the Stormwater Tap for Public Schools Fee per Unit Residential Single Family Detached—Lot Size < 5,000 SF $12,395.00 Single Family Detached—Lot Size > 5,000 SF $12,395.00 Single Family Attached (Duplex) $12,395.00 Single Family Attached (Townhomes more than 2 units) $10,880.00 Multifamily for sale $10,880.00 Multifamily for rent $10,880.00 Non-Residential * The CAB re",
+      "value": "$9,310",
+      "context": "single-family attached/duplex and townhomes $9,310;",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-3 > 2026 tap and facility fees.",
-      "sourceOffset": 1402,
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 213,
       "normalizedValue": {
-        "amount": 3.22,
+        "amount": 9310,
         "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:money:weighted-average-using-the-sf-equivalent-imperviousness-per-mile-high-flood-district-dougl"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:single-family-attached-duplex-and-townhomes-9-310"
     },
     {
-      "kind": "year",
-      "value": "2015",
-      "context": "2015-06-02 and Sections 32-1-1001(1)(j) and (k), C.",
+      "kind": "money",
+      "value": "$18,420",
+      "context": "single-family attached/duplex, townhomes, and individually metered multifamily/apartments $18,420.",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 1713,
+      "sourceOffset": 498,
       "normalizedValue": {
-        "amount": 2015,
-        "unit": "year"
+        "amount": 18420,
+        "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:2015-06-02-and-sections-32-1-1001-1-j-and-k-c"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:single-family-attached-duplex-townhomes-and-individually-metered-multifamily-apartments-18"
     },
     {
-      "kind": "year",
-      "value": "2025",
-      "context": "2025-11-04 OF THE BOARD OF DIRECTORS OF THE STERLING RANCH COMMUNITY AUTHORITY BOARD AMENDING AND ADOPTING TAP AND FACILITY FEES AND CHARGES FOR 2026 RECITALS A.",
+      "kind": "money",
+      "value": "$8,360",
+      "context": "single-family attached/duplex, townhomes, and individually metered multifamily/apartments $8,360.",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 15,
+      "sourceOffset": 663,
       "normalizedValue": {
-        "amount": 2025,
-        "unit": "year"
+        "amount": 8360,
+        "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:2025-11-04-of-the-board-of-directors-of-the-sterling-ranch-community-authority-board-amend"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:single-family-attached-duplex-townhomes-and-individually-metered-multifamily-apartments-8-"
     },
     {
-      "kind": "year",
-      "value": "2021",
-      "context": "(\"Carollo\") to update the 2021 rate study that was the basis of the Tap Fees and service charges previously adopted by the CAB (the \"Updated CAB Rate Study\") which study included prospective rates for 2026 - 2029;",
+      "kind": "money",
+      "value": "$12,960",
+      "context": "single-family detached over 5,000 square feet $12,960.",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 2894,
+      "sourceOffset": 322,
       "normalizedValue": {
-        "amount": 2021,
-        "unit": "year"
+        "amount": 12960,
+        "currency": "USD"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:carollo-to-update-the-2021-rate-study-that-was-the-basis-of-the-tap-fees-and-service-charg"
+      "factKey": "supplement-tap-facility-fees-2026::1:money:single-family-detached-over-5-000-square-feet-12-960"
+    },
+    {
+      "kind": "money",
+      "value": "$9,870",
+      "context": "single-family detached under 5,000 square feet $9,870;",
+      "sourceId": "supplement-tap-facility-fees-2026::1",
+      "sourceTitle": "2026 tap and facility fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 268,
+      "normalizedValue": {
+        "amount": 9870,
+        "currency": "USD"
+      },
+      "factKey": "supplement-tap-facility-fees-2026::1:money:single-family-detached-under-5-000-square-feet-9-870"
+    },
+    {
+      "kind": "money",
+      "value": "$12,485",
+      "context": "Total residential sewer-tap fees: single-family detached $12,485;",
+      "sourceId": "supplement-tap-facility-fees-2026::1",
+      "sourceTitle": "2026 tap and facility fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 564,
+      "normalizedValue": {
+        "amount": 12485,
+        "currency": "USD"
+      },
+      "factKey": "supplement-tap-facility-fees-2026::1:money:total-residential-sewer-tap-fees-single-family-detached-12-485"
+    },
+    {
+      "kind": "money",
+      "value": "$27,430",
+      "context": "Total residential water-infrastructure fees: single-family detached $27,430;",
+      "sourceId": "supplement-tap-facility-fees-2026::1",
+      "sourceTitle": "2026 tap and facility fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 399,
+      "normalizedValue": {
+        "amount": 27430,
+        "currency": "USD"
+      },
+      "factKey": "supplement-tap-facility-fees-2026::1:money:total-residential-water-infrastructure-fees-single-family-detached-27-430"
+    },
+    {
+      "kind": "money",
+      "value": "$10,880",
+      "context": "townhomes and multifamily $10,880.",
+      "sourceId": "supplement-tap-facility-fees-2026::1",
+      "sourceTitle": "2026 tap and facility fees.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
+      "sourceOffset": 816,
+      "normalizedValue": {
+        "amount": 10880,
+        "currency": "USD"
+      },
+      "factKey": "supplement-tap-facility-fees-2026::1:money:townhomes-and-multifamily-10-880"
     },
     {
       "kind": "year",
       "value": "2026",
-      "context": ") shall be assessed proportionately at the rate of four times the rate of the applicable single-family detached Residential Facilities Fee per acre at the time of building permit issuance* -- 7 of 8 -- [CERTIFICATION PAGE TO RESOLUTION FOR TAP AND FACILITY FEES AND CHARGES] I, Susan Beckman, hereby certify that I am the duly appointed and acting Secretary of the Sterling Ranch Community Authority Board, and that the foregoing is a true and correct copy of the Resolution Modifying Tap and Facility Fees for the 2026 ",
+      "context": "2026 complete, clearly labeled residential tap and facility-fee rows.",
       "sourceId": "supplement-tap-facility-fees-2026::1",
       "sourceTitle": "2026 tap and facility fees.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-3 > 2026 tap and facility fees.",
-      "sourceOffset": 2743,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:shall-be-assessed-proportionately-at-the-rate-of-four-times-the-rate-of-the-applicable-sin"
-    },
-    {
-      "kind": "year",
-      "value": "2026",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 4 of 8 -- [EXHIBIT A TO RESOLUTION TO MODIFYING TAP AND FACILITY FEES AND CHARGES] EXHIBIT A: 2026 Tap and Facility Fees -- 5 of 8 -- 2026 Fee per Unit Residential Multifamily/Apartments (Indoor Meter Only) $6,150.00 Single Family Attached / Duplex $9,310.00 Townhomes $9,310.00 Single Family Detached—Lot Size < 5,000 SF $9,870.00 Single Family Detached—Lot Size > 5,",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 1612,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
-    },
-    {
-      "kind": "year",
-      "value": "2026",
-      "context": "Tap Fees (effective January 1, 2026) Dominion Water Resource Fee (collected as part of the Infrastructure and Tap Fees) Water Infrastructure Fee 2026 Tap & Facilities Fees Charges Exhibit A ** Fees to be based on square footage of landscape type to be installed and projected usage.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-124 > 2026 tap and facility fees.",
-      "sourceOffset": 3332,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:tap-fees-effective-january-1-2026-dominion-water-resource-fee-collected-as-part-of-the-inf"
-    },
-    {
-      "kind": "year",
-      "value": "2024",
-      "context": "WHEREAS, in 2024 the CAB engaged Carollo Engineers, Inc.",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
+      "sourceHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 2823,
-      "normalizedValue": {
-        "amount": 2024,
-        "unit": "year"
-      },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:whereas-in-2024-the-cab-engaged-carollo-engineers-inc"
-    },
-    {
-      "kind": "year",
-      "value": "2026",
-      "context": "WHEREAS, the results of the Updated CAB Rate Study indicated that CAB should increase its rates, fees and charges for 2026 to keep pace with necessary system development and expanding operational capacity as they system continues to grow;",
-      "sourceId": "supplement-tap-facility-fees-2026::1",
-      "sourceTitle": "2026 tap and facility fees.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "742b910fcd51513feed66d9a4985e1dbfdb1dab7abb839aaf678415171eefd36",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 tap and facility fees.",
-      "sourceOffset": 3220,
+      "sourceOffset": 0,
       "normalizedValue": {
         "amount": 2026,
         "unit": "year"
       },
-      "factKey": "supplement-tap-facility-fees-2026::1:year:whereas-the-results-of-the-updated-cab-rate-study-indicated-that-cab-should-increase-its-r"
+      "factKey": "supplement-tap-facility-fees-2026::1:year:2026-complete-clearly-labeled-residential-tap-and-facility-fee-rows"
     },
     {
       "kind": "count",
@@ -37092,421 +36928,193 @@
     },
     {
       "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Adoption of Water and Sewer Rates, Fees, and Charges: The CAB hereby adopts the water and sewer rates, fees, and charges effective January 1, 2026, as documented on the attached Exhibit A.",
+      "value": "000 gallons",
+      "context": "Clearly labeled residential sanitary-sewer base-fee rows are $44.95 monthly, and residential indoor-water use is $12.50 per 1,000 gallons.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 3348,
+      "sourceOffset": 659,
       "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
+        "amount": 0,
+        "unit": "gallons"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:adoption-of-water-and-sewer-rates-fees-and-charges-the-cab-hereby-adopts-the-water-and-sew"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:clearly-labeled-residential-sanitary-sewer-base-fee-rows-are-44-95-monthly-and-residential"
     },
     {
       "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Indoor Water Consumption Fee (effective January 1, 2026) Table 13-176.",
+      "value": "000 gallons",
+      "context": "Residential indoor-water tiers are $9.70, $11.70, and $18.55 per 1,000 gallons.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2360,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:indoor-water-consumption-fee-effective-january-1-2026-table-13-176"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Sanitary Sewer Fees (effective January 1, 2026) - Continued -- 6 of 7 -- [CERTIFICATION PAGE TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES CERTAIN FEES] I, Susan Beckman, hereby certify that I am the duly appointed and acting Secretary of the Sterling Ranch Community Authority Board, and that the foregoing is a true and correct copy of the Resolution Modifying Water, Sanitary Sewer, and Stormwater Fees for the 2026 Year, duly adopted at a meeting of the Board of Directors of the Sterling Ranc",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 3352,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:sanitary-sewer-fees-effective-january-1-2026-continued-6-of-7-certification-page-to-resolu"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Sanitary Sewer Fees (effective January 1, 2026) Exhibit A 2026 Water & Sewer Service Charges -- 5 of 7 -- Fee per 1,000 gallons of Indoor Water Use Residential (per Unit) Single Family Detached $12.50 Single Family Attached / Duplex $12.50 Townhomes $12.50 Multifamily/Apartments (individually metered) $12.50 Residential (per EQR) Multifamily/Apartments (Master Metered) $12.50 Nonresidential $13.20 Monthly Charge Residential (per Unit) Single Family Detached $18.80 Single Family Attached / Duplex $17.50 Townhomes $1",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2492,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:sanitary-sewer-fees-effective-january-1-2026-exhibit-a-2026-water-sewer-service-charges-5-"
-    },
-    {
-      "kind": "count",
-      "value": "NOVEMBER 21, 2025",
-      "context": "[SIGNATURE PAGE TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES] RESOLUTION APPROVED AND ADOPTED ON NOVEMBER 21, 2025.",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 121,
-      "normalizedValue": {
-        "amount": 212025,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:signature-page-to-resolution-to-modifying-water-sanitary-sewer-and-stormwater-fees-resolut"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 3 of 7 -- [EXHIBIT A TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES CERTAIN FEES] EXHIBIT A 2026 Water, Sanitary Sewer, and Stormwater Fees -- 4 of 7 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2026: Monthly Fee Residential (per Unit) Single",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 602,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Stormwater Fees (effective January 1, 2026) Table 13-177.",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 3290,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:stormwater-fees-effective-january-1-2026-table-13-177"
-    },
-    {
-      "kind": "count",
-      "value": "January 1, 2026",
-      "context": "The fees shall take effect January 1, 2026, regardless of whether the updated Rules and Regulations have been published.",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 3866,
+      "sourceOffset": 430,
       "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
+        "amount": 0,
+        "unit": "gallons"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:the-fees-shall-take-effect-january-1-2026-regardless-of-whether-the-updated-rules-and-regu"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:residential-indoor-water-tiers-are-9-70-11-70-and-18-55-per-1-000-gallons"
     },
     {
       "kind": "count",
-      "value": "January 1, 2026",
-      "context": "Water Service Base Rates (effective January 1, 2026) Table 13-175.",
+      "value": "000 gallons",
+      "context": "Residential outdoor-water tiers are $11.65, $18.25, $24.80, and $30.55 per 1,000 gallons.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2289,
-      "normalizedValue": {
-        "amount": 12026,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:water-service-base-rates-effective-january-1-2026-table-13-175"
-    },
-    {
-      "kind": "count",
-      "value": "November 15, 2016",
-      "context": "WHEREAS, pursuant to the terms of the Service Agreement and the Water, Wastewater and Stormwater Operations Intergovernmental Agreement (for Service to Sterling Ranch), dated November 15, 2016 (the \"Operations IGA\"), Dominion provides wholesale water service to CAB and CAB provides retail water services to the residents and property owners within the boundaries of Sterling Ranch Districts;",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 1052,
+      "sourceOffset": 520,
       "normalizedValue": {
-        "amount": 152016,
-        "unit": "count"
+        "amount": 0,
+        "unit": "gallons"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:whereas-pursuant-to-the-terms-of-the-service-agreement-and-the-water-wastewater-and-stormw"
-    },
-    {
-      "kind": "count",
-      "value": "January 6, 2014",
-      "context": "WHEREAS, the CAB and Dominion Water and Sanitation District (\"Dominion\") are parties to the Water and Wastewater Service Agreement for Sterling Ranch, dated January 6, 2014 (the \"Service Agreement\");",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 827,
-      "normalizedValue": {
-        "amount": 62014,
-        "unit": "count"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:whereas-the-cab-and-dominion-water-and-sanitation-district-dominion-are-parties-to-the-wat"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:count:residential-outdoor-water-tiers-are-11-65-18-25-24-80-and-30-55-per-1-000-gallons"
     },
     {
       "kind": "money",
-      "value": "$12.50",
-      "context": "Sanitary Sewer Fees (effective January 1, 2026) Exhibit A 2026 Water & Sewer Service Charges -- 5 of 7 -- Fee per 1,000 gallons of Indoor Water Use Residential (per Unit) Single Family Detached $12.50 Single Family Attached / Duplex $12.50 Townhomes $12.50 Multifamily/Apartments (individually metered) $12.50 Residential (per EQR) Multifamily/Apartments (Master Metered) $12.50 Nonresidential $13.20 Monthly Charge Residential (per Unit) Single Family Detached $18.80 Single Family Attached / Duplex $17.50 Townhomes $1",
+      "value": "$44.95",
+      "context": "Clearly labeled residential sanitary-sewer base-fee rows are $44.95 monthly, and residential indoor-water use is $12.50 per 1,000 gallons.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2655,
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
+      "sourceOffset": 594,
       "normalizedValue": {
-        "amount": 12.5,
+        "amount": 44.95,
         "currency": "USD"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:sanitary-sewer-fees-effective-january-1-2026-exhibit-a-2026-water-sewer-service-charges-5-"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:clearly-labeled-residential-sanitary-sewer-base-fee-rows-are-44-95-monthly-and-residential"
+    },
+    {
+      "kind": "money",
+      "value": "$18.80",
+      "context": "Clearly labeled residential stormwater rows are $18.80 monthly for single-family detached and $17.50 for single-family attached/duplex, townhomes, and individually metered multifamily/apartments.",
+      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
+      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
+      "approvedDate": "2025-11-21",
+      "effectiveDate": "2026-01-01",
+      "expirationDate": "",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
+      "sourceOffset": 720,
+      "normalizedValue": {
+        "amount": 18.8,
+        "currency": "USD"
+      },
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:clearly-labeled-residential-stormwater-rows-are-18-80-monthly-for-single-family-detached-a"
     },
     {
       "kind": "money",
       "value": "$50.20",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 3 of 7 -- [EXHIBIT A TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES CERTAIN FEES] EXHIBIT A 2026 Water, Sanitary Sewer, and Stormwater Fees -- 4 of 7 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2026: Monthly Fee Residential (per Unit) Single",
+      "context": "Clearly labeled residential water base-rate rows: single-family detached, single-family attached/duplex, townhomes, and individually metered multifamily/apartments are $50.20 monthly for a 5/8-inch meter;",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 684,
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
+      "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
+      "sourceOffset": 233,
       "normalizedValue": {
         "amount": 50.2,
         "currency": "USD"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:clearly-labeled-residential-water-base-rate-rows-single-family-detached-single-family-atta"
     },
     {
-      "kind": "percentage",
-      "value": "100%",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 3 of 7 -- [EXHIBIT A TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES CERTAIN FEES] EXHIBIT A 2026 Water, Sanitary Sewer, and Stormwater Fees -- 4 of 7 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2026: Monthly Fee Residential (per Unit) Single",
+      "kind": "money",
+      "value": "$9.70",
+      "context": "Residential indoor-water tiers are $9.70, $11.70, and $18.55 per 1,000 gallons.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 1422,
-      "normalizedValue": {
-        "amount": 100,
-        "unit": "percent"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:percentage:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
-    },
-    {
-      "kind": "year",
-      "value": "2025",
-      "context": "2025-11-03 OF THE BOARD OF DIRECTORS OF THE STERLING RANCH COMMUNITY AUTHORITY BOARD AMENDING AND ADOPTING WATER, SANITARY SEWER AND STORMWATER RATES, FEES AND CHARGES FOR 2026 RECITALS A.",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 25,
+      "sourceOffset": 398,
       "normalizedValue": {
-        "amount": 2025,
-        "unit": "year"
+        "amount": 9.7,
+        "currency": "USD"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:2025-11-03-of-the-board-of-directors-of-the-sterling-ranch-community-authority-board-amend"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:residential-indoor-water-tiers-are-9-70-11-70-and-18-55-per-1-000-gallons"
     },
     {
-      "kind": "year",
-      "value": "2021",
-      "context": "(\"Carollo\") to update the 2021 rate study that was the basis of the Tap Fees and service charges previously adopted by the CAB (the \"Updated CAB Rate Study\") which study included prospective rates for 20206 - 2029;",
+      "kind": "money",
+      "value": "$11.65",
+      "context": "Residential outdoor-water tiers are $11.65, $18.25, $24.80, and $30.55 per 1,000 gallons.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2223,
+      "sourceOffset": 479,
       "normalizedValue": {
-        "amount": 2021,
-        "unit": "year"
+        "amount": 11.65,
+        "currency": "USD"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:carollo-to-update-the-2021-rate-study-that-was-the-basis-of-the-tap-fees-and-service-charg"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:residential-outdoor-water-tiers-are-11-65-18-25-24-80-and-30-55-per-1-000-gallons"
     },
     {
-      "kind": "year",
-      "value": "2026",
-      "context": "Outdoor Water Consumption Fee (effective January, 2026) Table 13-177.",
+      "kind": "money",
+      "value": "$74.95 per unit",
+      "context": "the clearly labeled dual indoor-and-outdoor residential 3/4-inch-tap row is $74.95 per unit.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2441,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:outdoor-water-consumption-fee-effective-january-2026-table-13-177"
-    },
-    {
-      "kind": "year",
-      "value": "2026",
-      "context": "Sanitary Sewer Fees (effective January 1, 2026) - Continued -- 6 of 7 -- [CERTIFICATION PAGE TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES CERTAIN FEES] I, Susan Beckman, hereby certify that I am the duly appointed and acting Secretary of the Sterling Ranch Community Authority Board, and that the foregoing is a true and correct copy of the Resolution Modifying Water, Sanitary Sewer, and Stormwater Fees for the 2026 Year, duly adopted at a meeting of the Board of Directors of the Sterling Ranc",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 3758,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:sanitary-sewer-fees-effective-january-1-2026-continued-6-of-7-certification-page-to-resolu"
-    },
-    {
-      "kind": "year",
-      "value": "2026",
-      "context": "Sanitary Sewer Fees (effective January 1, 2026) Exhibit A 2026 Water & Sewer Service Charges -- 5 of 7 -- Fee per 1,000 gallons of Indoor Water Use Residential (per Unit) Single Family Detached $12.50 Single Family Attached / Duplex $12.50 Townhomes $12.50 Multifamily/Apartments (individually metered) $12.50 Residential (per EQR) Multifamily/Apartments (Master Metered) $12.50 Nonresidential $13.20 Monthly Charge Residential (per Unit) Single Family Detached $18.80 Single Family Attached / Duplex $17.50 Townhomes $1",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2519,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:sanitary-sewer-fees-effective-january-1-2026-exhibit-a-2026-water-sewer-service-charges-5-"
-    },
-    {
-      "kind": "year",
-      "value": "2026",
-      "context": "STERLING RANCH COMMUNITY AUTHORITY BOARD By: /s/ Harold Smethills Harold Smethills, President Attest: By: /s/ Susan Beckman Susan Beckman, Secretary -- 3 of 7 -- [EXHIBIT A TO RESOLUTION TO MODIFYING WATER, SANITARY SEWER AND STORMWATER FEES CERTAIN FEES] EXHIBIT A 2026 Water, Sanitary Sewer, and Stormwater Fees -- 4 of 7 -- The following portions of the Code of Rules for Sterling Ranch Community Authority Board shall be updated to read as follows effective January 1, 2026: Monthly Fee Residential (per Unit) Single",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
-      "scope": "Official CAB document supplement > Effective January 1, 2026 - 13-174, 13-175, 13-176, 13-177, 13-178 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 406,
-      "normalizedValue": {
-        "amount": 2026,
-        "unit": "year"
-      },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:sterling-ranch-community-authority-board-by-s-harold-smethills-harold-smethills-president-"
-    },
-    {
-      "kind": "year",
-      "value": "2024",
-      "context": "WHEREAS, in 2024 the CAB engaged Carollo Engineers, Inc.",
-      "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
-      "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
-      "approvedDate": "2025-11-21",
-      "effectiveDate": "2026-01-01",
-      "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2152,
+      "sourceOffset": 346,
       "normalizedValue": {
-        "amount": 2024,
-        "unit": "year"
+        "amount": 74.95,
+        "currency": "USD"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:whereas-in-2024-the-cab-engaged-carollo-engineers-inc"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:money:the-clearly-labeled-dual-indoor-and-outdoor-residential-3-4-inch-tap-row-is-74-95-per-unit"
     },
     {
       "kind": "year",
       "value": "2026",
-      "context": "WHEREAS, the results of the Updated CAB Rate Study indicated that CAB should increase its rates, fees and charges for 2026 to keep pace with necessary system development and expanding operational capacity as they system continues to grow;",
+      "context": "2026 residential water, sanitary sewer, and stormwater schedule.",
       "sourceId": "supplement-water-sewer-stormwater-rates-2026::1",
       "sourceTitle": "2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
       "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees?bidId=",
       "approvedDate": "2025-11-21",
       "effectiveDate": "2026-01-01",
       "expirationDate": "",
-      "sourceHash": "45340c5246592fb42a8a283fbeeac23aaab6ac6945e8d1659656b63f978bf627",
+      "sourceHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
       "scope": "Official CAB document supplement > Effective January 1, 2026 - official text part 1 > 2026 water, sanitary sewer, and stormwater rates, fees, and charges.",
-      "sourceOffset": 2537,
+      "sourceOffset": 0,
       "normalizedValue": {
         "amount": 2026,
         "unit": "year"
       },
-      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:whereas-the-results-of-the-updated-cab-rate-study-indicated-that-cab-should-increase-its-r"
+      "factKey": "supplement-water-sewer-stormwater-rates-2026::1:year:2026-residential-water-sanitary-sewer-and-stormwater-schedule"
     }
   ]
 }

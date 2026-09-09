@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "decidedAt": "2026-09-08",
+  "decidedBy": "owner",
+  "scope": "Batch 1 priorities 1-5 only",
+  "decisions": [
+    {
+      "id": "water-rates-2026",
+      "status": "approved-with-boundaries",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees",
+      "approvedScope": "Clearly labeled residential 2026 water, sanitary sewer, and stormwater rates only.",
+      "withheldScope": ["master-meter", "nonresidential", "public-school", "construction-water", "irrigation", "unlabelled or clipped row"],
+      "historicalBoundary": "Use 2025 material only when the resident explicitly asks about 2025."
+    },
+    {
+      "id": "tap-facility-2026",
+      "status": "approved-with-boundaries",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees",
+      "approvedScope": "Complete, clearly labeled residential tap and facility-fee rows only.",
+      "withheldScope": ["commercial", "school", "irrigation", "master-meter", "large-meter", "pool", "clipped-footnote case", "incomplete or unlabelled row"]
+    },
+    {
+      "id": "cab-fees-effective-date",
+      "status": "approved-with-boundaries",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees",
+      "approvedScope": "Clearly labeled 2026 CAB fee amounts.",
+      "withheldScope": ["standalone effective-date claim"],
+      "conflict": "The source has conflicting 2025/2026 effective-date wording."
+    },
+    {
+      "id": "monthly-fee-overview",
+      "status": "approved-with-boundaries",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2502",
+      "approvedScope": "Helpful overview and action link only.",
+      "withheldScope": ["controlling fee evidence", "fee amounts"]
+    },
+    {
+      "id": "delinquency-policy",
+      "status": "approved-with-boundaries",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE",
+      "approvedScope": "Controlling June 2025 collection-process source; listed charges are that resolution's fee schedule.",
+      "withheldScope": ["claim that no newer amendment exists"],
+      "freshnessBoundary": "Use only unless a newer amendment is confirmed."
+    }
+  ]
+}

@@ -81,11 +81,11 @@ async function main() {
       failures.push(`${label}: missing official extracted supplement section chunks.`);
     }
 
-    const officialPdfSections = matchingSections.filter(
-      (section) => section.extractionStatus === "official-pdf"
+    const approvedSections = matchingSections.filter(
+      (section) => ["official-pdf", "owner-reviewed-evidence"].includes(section.extractionStatus)
     );
-    if (!officialPdfSections.length) {
-      failures.push(`${label}: no supplement section chunk has official-pdf extractionStatus.`);
+    if (!approvedSections.length) {
+      failures.push(`${label}: no supplement section chunk has official-pdf or owner-reviewed-evidence extractionStatus.`);
     }
 
     if (!listIsPopulated(document.replacesSections) && !listIsPopulated(document.currentForTopics)) {
