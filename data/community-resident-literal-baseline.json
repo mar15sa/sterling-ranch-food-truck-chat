@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Temporary migration-debt baseline; these nodes are not approved resident facts. Until they are migrated, any change to a listed response file requires the guard review.",
+  "byFile": {
+    "lib/community-assistant.js": 5,
+    "lib/community-food-trucks.js": 3,
+    "lib/community-proactive.js": 0,
+    "lib/rules-assistant.js": 88
+  },
+  "fileFingerprints": {
+    "lib/community-assistant.js": "fee97123f602503d0b78260dc53e50c45ea8703c89a020c3525ff88dfe33a590",
+    "lib/community-food-trucks.js": "4a93531b65f96bcfb0187ef7fce5b989637cbf8cc64b90f01a08249ab163c0c6",
+    "lib/community-proactive.js": "5ebb1b0017b12cb4581793385bbba7e082a8fe6af1c9ffbb3bbdfeea7cb7511a",
+    "lib/rules-assistant.js": "7d294894703f5ec476d7989039788dfa9bc6276dcc60e00b5803811bd05fd27b"
+  },
+  "findings": []
+}
