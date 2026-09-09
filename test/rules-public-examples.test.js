@@ -39,7 +39,7 @@ const EXAMPLES = [
   {
     question: "How do I pay my water bill online?",
     verdict: "informational",
-    includes: ["UtilityHawk", "payment portal", "sign in"],
+    includes: ["Utility Hawk", "Pay Online"],
     requiresAction: true,
     waterPayment: true,
     maxLineLength: 320,
@@ -99,8 +99,8 @@ for (const example of EXAMPLES) {
       assert.ok(result.actions?.some((action) => /^https?:\/\//i.test(action.url || "")));
     }
     if (example.waterPayment) {
-      assert.match(result.directAnswer, /UtilityHawk.*payment portal/i);
-      assert.ok(result.actions.some((action) => action.url === "https://srcab.utilityhawk.us/login"));
+      assert.match(result.directAnswer, /Utility Hawk.*continue/i);
+      assert.ok(result.actions.some((action) => action.url === "https://srcab.utilityhawk.us"));
       assert.doesNotMatch(result.answer, /AmCoBi|rental catalog/i);
     }
     if (example.waterBillingContact) {

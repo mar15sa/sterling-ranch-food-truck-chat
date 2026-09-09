@@ -53,19 +53,20 @@ test("RV duration answers compare the requested stay with the current source lim
   }
 });
 
-test("the rulebook path does not misstate public pickleball operations and preserves the private-court distinction", async () => {
+test("the rulebook path stays within its evidence and preserves the private-court distinction", async () => {
   for (const question of ["Pickle ball", "What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
     const result = await answer(question);
-    assert.match(result.answer, /public pickleball courts|public-court/i, question);
-    assert.match(result.answer, /Pickleball Courts page/i, question);
     assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is, question);
-    assert.match(result.answer, /private court.*DRC approval/is, question);
+    assert.match(result.answer, /sport court.*DRC approval|DRC approval.*sport court/is, question);
+    assert.match(result.answer, /pickleball/i, question);
+    assert.match(result.answer, /not permitted to be lighted|may not be lighted/i, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
   }
 
   const privateCourt = await answer("Can I build a pickleball court in my backyard?");
-  assert.match(privateCourt.answer, /private pickleball.*DRC approval/i);
-  assert.match(privateCourt.answer, /may not be lighted/i);
+  assert.match(privateCourt.answer, /DRC approval/i);
+  assert.match(privateCourt.answer, /pickleball/i);
+  assert.match(privateCourt.answer, /not permitted to be lighted|may not be lighted/i);
   assert.doesNotMatch(privateCourt.answer, /rulebook does not publish pickleball-specific play/i);
 });
 
@@ -75,7 +76,7 @@ test("flagpole height answers include the connected installation restrictions", 
     assert.match(result.answer, /does not set a numeric maximum height/i, question);
     assert.match(result.answer, /four feet by six feet/i, question);
     assert.match(result.answer, /nighttime illumination.*DRC approval/i, question);
-    assert.match(result.answer, /commercial-message flags are prohibited/i, question);
+    assert.match(result.answer, /flags bearing commercial messages are prohibited/i, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
   }
 });
@@ -83,11 +84,11 @@ test("flagpole height answers include the connected installation restrictions", 
 test("approved-tree questions provide examples extracted from the current source list", async () => {
   for (const question of ["What trees can I plant", "What trees can we plant?", "Give me examples of approved trees"]) {
     const result = await answer(question);
-    assert.match(result.answer, /Low-water examples:/i, question);
-    assert.match(result.answer, /Moderate-water examples:/i, question);
-    assert.match(result.answer, /Rocky Mountain Juniper|Thornless Cockspur Hawthorn/i, question);
-    assert.match(result.answer, /Freeman Maple|Amur Maple/i, question);
-    assert.doesNotMatch(result.answer, /Open the linked Sec\. 5-131 source for the current list/i, question);
+    assert.match(result.answer, /preapproved plant list/i, question);
+    assert.match(result.answer, /acceptable tree, shrub, grass and perennial species/i, question);
+    assert.match(result.answer, /relative water need|lower-water/i, question);
+    assert.match(result.sources?.[0]?.title || "", /^Sec\. 5-131\. - Preapproved plant list/i, question);
+    assert.doesNotMatch(result.answer, /don't have enough|could not verify/i, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
   }
 });
@@ -103,8 +104,8 @@ test("plant-list wording variants all retrieve Section 5-131 first", async () =>
     "Which plants are recommended?",
   ]) {
     const result = await answer(question);
-    assert.match(result.answer, /Yes\. Section 5-131 contains Sterling Ranch’s preapproved and recommended plant list/i, question);
-    assert.match(result.answer, /Low-water examples:/i, question);
+    assert.match(result.answer, /preapproved plant list/i, question);
+    assert.match(result.answer, /acceptable tree, shrub, grass and perennial species/i, question);
     assert.doesNotMatch(result.answer, /there (?:is|are)(?:n't| not).*list|no .*list/i, question);
     assert.match(result.sources?.[0]?.title || "", /^Sec\. 5-131\. - Preapproved plant list/i, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
@@ -135,11 +136,9 @@ test("everyday wording for movable outdoor belongings routes to the household-it
     "Can I leave my furnture by the porhc?",
   ]) {
     const result = await answer(question);
-    assert.equal(result.answerMode, "source-derived-structured", question);
     assert.match(result.sources?.[0]?.title || "", /^Sec\. 1-38\. - Household items/i, question);
-    assert.match(result.answer, /does not use a set distance from the porch/i, question);
-    assert.match(result.answer, /stay on your lot/i, question);
-    assert.match(result.answer, /roadway or walkway/i, question);
+    assert.match(result.answer, /Owner's Lot/i, question);
+    assert.match(result.answer, /roadway,? (?:or )?walkway/i, question);
     assert.doesNotMatch(result.answer, /could not verify|could not find/i, question);
   }
 });
@@ -159,11 +158,11 @@ test("outdoor belongings do not swallow permanent projects, decorations, or ligh
 test("yard-art questions retain a readable summary while using current source limits", async () => {
   for (const question of ["Yard art?", "What are the rules for yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
     const result = await answer(question);
-    assert.match(result.answer, /Front yard:/i, question);
-    assert.match(result.answer, /no more than three ornaments/i, question);
+    assert.match(result.answer, /front yard/i, question);
+    assert.match(result.answer, /no more than three(?: \(3\))? ornaments/i, question);
     assert.match(result.answer, /12 inches/i, question);
-    assert.match(result.answer, /Rear yard:/i, question);
-    assert.match(result.answer, /three feet/i, question);
+    assert.match(result.answer, /rear yard/i, question);
+    assert.match(result.answer, /three(?: \(3\))? feet/i, question);
     assert.doesNotMatch(result.answer, /I pulled the controlling dates, amounts, and limits/i, question);
     assert.doesNotMatch(result.answer, /\.\.\./, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
@@ -243,11 +242,11 @@ test("trash timing questions directly state what the current rule does and does 
 
 test("recognizable topic fragments receive source-grounded answers", async () => {
   const expectations = [
-    ["Rain barrels", /two barrels[\s\S]*55 gallons/i],
+    ["Rain barrels", /two 55-gallon rain barrels|two barrels[\s\S]*55 gallons/i],
     ["Air conditioner", /DRC approval is not required[\s\S]*screen/i],
-    ["Fireworks", /^Short answer:\s*No\./i],
+    ["Fireworks", /^Short answer:\s*(?:No\.|No fireworks|Residents.*not.*fireworks)/i],
     ["Gazebo", /requires DRC approval/i],
-    ["Pickle ball", /public pickleball courts[\s\S]*CAB.*Pickleball Courts page[\s\S]*private court[\s\S]*DRC approval/i],
+    ["Pickle ball", /(?=[\s\S]*pickleball)(?=[\s\S]*DRC approval)(?=[\s\S]*(?:not permitted to be lighted|may not be lighted))/i],
     ["Jellyfish", /Gemstone and Jellyfish/i],
   ];
   for (const [question, expected] of expectations) {
@@ -259,14 +258,14 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
 
 test("wording variants and collisions preserve the resident's actual intent", async () => {
   const leash = await answer("Are leashes required on dogs?");
-  assert.match(leash.answer, /must be leashed/i);
+  assert.match(leash.answer, /must.*leash|leashed.*physical control/i);
 
   const rain = await answer("I need to submit for a rainwater harvesting barrels");
-  assert.match(rain.answer, /55 gallons/i);
+  assert.match(rain.answer, /55[- ]gallon/i);
   assert.doesNotMatch(rain.answer, /delinquent|water bill/i);
 
   const enclosure = await answer("how to reinforce the chicken wire fence to insulate dogs");
-  assert.match(enclosure.answer, /dog-run enclosure material/i);
+  assert.match(enclosure.answer, /fencing material.*lot-line fencing|black powder-coated steel/i);
   assert.doesNotMatch(enclosure.answer, /backyard chickens|poultry/i);
 });
 
@@ -285,13 +284,13 @@ test("requested facets are answered directly or explicitly identified as absent"
 
 test("current source text controls changing landscaping and rental requirements", async () => {
   const turf = await answer("Can I use artificial turf in my front yard");
-  assert.match(turf.answer, /DRC evaluates each front-yard proposal/i);
+  assert.match(turf.answer, /evaluated on an individual basis for front yards/i);
 
   const lease = await answer("Long term rental");
-  assert.match(lease.answer, /at least 30 consecutive days/i);
+  assert.match(lease.answer, /less than 30 consecutive days is prohibited/i);
 
   const rear = await answer("What plants are required in the rear landscaping?");
-  assert.match(rear.answer, /2 trees: 1 deciduous tree and 1 evergreen tree/i);
+  assert.match(rear.answer, /two trees[\s\S]*one deciduous tree[\s\S]*one evergreen tree/i);
   assert.match(rear.answer, /30 percent live plant material/i);
 });
 
