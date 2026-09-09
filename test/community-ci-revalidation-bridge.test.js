@@ -2,7 +2,8 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { fingerprint } = require("../lib/community-release");
 const { sourceReviewState } = require("../lib/community-source-answerability");
-const { observeCanonicalSource, runBridge } = require("../scripts/check-approved-community-revalidation");
+const { actionIdentity, actionUrlIdentity, observeCanonicalSource } = require("../lib/community-approved-revalidation");
+const { runBridge } = require("../scripts/check-approved-community-revalidation");
 
 const NOW = Date.parse("2026-09-08T12:00:00.000Z");
 const URL = "https://alpha.gov/rules";
@@ -80,6 +81,53 @@ test("a changed approved fingerprint is an explicit bridge failure", async () =>
   });
   assert.equal(result.valid, false);
   assert.match(result.attestation.gateErrors.join(" "), /fingerprint changed/);
+});
+
+test("action identity ignores a destination fragment but preserves the resident-facing deep link", () => {
+  const base = { label: "Bulk Item Pick Up", url: "https://vendor.example/contact-us/", actionType: "form" };
+  const anchored = { ...base, url: "https://vendor.example/contact-us/#1010" };
+  assert.equal(actionIdentity([base]), actionIdentity([anchored]));
+  assert.equal(anchored.url.endsWith("#1010"), true);
+  assert.equal(actionUrlIdentity(anchored.url), base.url);
+});
+
+test("homepage calendar CTA is revalidated even when event cards are removed from stable page text", async () => {
+  const homepage = "https://alpha.gov/";
+  const html = `<main data-cpRole="mainContentContainer"><h1>Welcome</h1><div data-widget-controller-path="/Calendar/Widget"><a href="/calendar.aspx?CID=1">View All Events</a><div class="addItemModal hidden"></div></div></main>`;
+  const source = { id: "home", sourceUrl: homepage, contentHash: "unused", actions: [{ label: "View All Events", url: "https://alpha.gov/calendar.aspx?CID=1", actionType: "form" }] };
+  const proof = await observeCanonicalSource(homepage, [source], { fetchImpl: async () => ({ ok: true, url: homepage, text: async () => html }) });
+  assert.equal(proof.actionMismatch, false);
+  assert.deepEqual(proof.actionProof.observed.actions.map(action => action.label), ["View All Events"]);
+});
+
+test("FAQ fingerprint ignores copied page navigation and its self link, but preserves a local action boundary", async () => {
+  const faqUrl = "https://alpha.gov/m/faq?cat=15";
+  const shared = { label: "General Inquiries", url: "https://alpha.gov/contact", actionType: "form" };
+  const self = { label: "How do I apply?", url: faqUrl, actionType: "form" };
+  const local = { label: "Submit design request", url: "https://alpha.gov/FormCenter/DRC", actionType: "form" };
+  const sources = [
+    { id: "faq-1", sourceUrl: faqUrl, actions: [shared, self, local] },
+    { id: "faq-2", sourceUrl: faqUrl, actions: [shared, self] },
+  ];
+  const html = `<main><p>FAQ text.</p><a href="/contact">General Inquiries</a><a href="/m/faq?cat=15">How do I apply?</a><a href="/FormCenter/DRC">Submit design request</a></main>`;
+  const proof = await observeCanonicalSource(faqUrl, sources, { fetchImpl: async () => ({ ok: true, url: faqUrl, text: async () => html }) });
+  assert.equal(proof.actionMismatch, false);
+});
+
+test("a transient PDF failure is retried and remains a visible failure when both attempts fail", async () => {
+  const pdfUrl = "https://alpha.gov/DocumentCenter/View/100";
+  const source = { id: "pdf", sourceUrl: pdfUrl, actions: [], contentHash: "unused" };
+  let calls = 0;
+  const recovered = await observeCanonicalSource(pdfUrl, [source], {
+    extractPdfTextImpl: async (url, { fetchImpl }) => { calls += 1; if (calls === 1) throw new Error("temporary network error"); await fetchImpl(url, { redirect: "manual" }); return "approved PDF text"; },
+    fetchImpl: async () => ({ ok: true, status: 200, url: pdfUrl, headers: new Headers() }),
+  });
+  assert.equal(calls, 2);
+  assert.deepEqual(recovered.observedHashes, [require("node:crypto").createHash("sha256").update("approved PDF text").digest("hex")]);
+  await assert.rejects(
+    observeCanonicalSource(pdfUrl, [source], { extractPdfTextImpl: async (url, { fetchImpl }) => { await fetchImpl(url, { redirect: "manual" }); throw new Error("unavailable"); }, fetchImpl: async () => ({ ok: true, status: 200, url: pdfUrl, headers: new Headers() }) }),
+    /Official PDF extraction failed after 2 attempts: unavailable/,
+  );
 });
 
 test("PDF proof accepts the same canonical document and rejects a same-origin redirect to another document", async () => {
