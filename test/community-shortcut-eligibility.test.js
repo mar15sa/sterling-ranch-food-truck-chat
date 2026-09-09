@@ -157,7 +157,7 @@ function candidate(overrides = {}) {
   };
 }
 
-test("the exact Labor Day pool-hours question bypasses current-status data and retrieves operating hours", async () => {
+test("the exact Labor Day pool-hours question bypasses current status and withholds unapproved hours", async () => {
   let poolCalls = 0;
   const routingPlan = plan({
     intent: "status",
@@ -184,9 +184,8 @@ test("the exact Labor Day pool-hours question bypasses current-status data and r
   });
   assert.equal(poolCalls, 0);
   assert.notEqual(answer.answerMode, "community-live-status");
-  assert.match(answer.answer, /5:00 am/i);
-  assert.match(answer.answer, /9:00 am/i);
-  assert.match(answer.answer, /8:45 pm/i);
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
 });
 
