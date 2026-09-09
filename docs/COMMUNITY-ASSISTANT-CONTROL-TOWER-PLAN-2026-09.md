@@ -23,7 +23,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 - Keep live connector answers narrow to current facts they actually observed.
 - Reject unsupported AI language and unsupported template language sentence by sentence.
 
-**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, and mixed live/static authority test are implemented locally. Static proactive and rule-template escape hatches are being removed in an isolated difficult-code worktree. Four routing regressions are included in that repair. Production still uses the earlier baseline behavior.
+**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, removal of unapproved static answer shortcuts, and the shared water-usage-versus-billing routing repair are integrated in release candidate PR #65. The broad local gate passes 521 tests, 140 rules evaluations, and 7 unseen evaluations. The exact monitoring source remains withheld pending owner approval, so water-monitoring questions fail closed instead of borrowing payment authority. Production still uses the earlier baseline behavior.
 
 **Completion evidence:** Former shortcut families cannot be unlocked by full-page approval; changed hashes withdraw claims; partial compound answers retain independent verified parts; representative rule, facility, payment, contact, status, event, food-truck, and trash families pass normal and degraded tests; exact staging test traffic passes with AI composition observed where expected.
 
@@ -33,7 +33,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 
 **Target behavior:** Every plan, pull request, implementation, review, and release identifies the failure mechanism, affected question family, authority decision, reusable boundary, degraded behavior, and family-level proof.
 
-**Current status:** Complete and live in `AGENTS.md`, the pull-request template, and `docs/COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md`.
+**Current status:** The root-cause, resident-outcome, authority, and CivicPlus rules are active in `AGENTS.md`, the pull-request template, and `docs/COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md`. The release candidate adds an explicit permanent rule that resident-facing facts and fixed answer wording cannot live in application code; routing may recognize intent but cannot supply the answer.
 
 **Ongoing gate:** Reject phrase-specific fixes unless the evidence or interface is genuinely unique. Reject changes that omit a current-vs-proposed resident outcome, authority mapping, failure behavior, or portability explanation.
 
@@ -50,7 +50,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 - Current transaction or process source: booking, payment, registration, submission, and current operational fees.
 - Action link: where to complete the already established step; it cannot prove the underlying rule or amount.
 
-**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. Food-truck, waste, pool, and facility migrations still need full envelope parity and held-out degradation tests.
+**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. The waste migration is in an isolated worktree and is moving Sterling-specific endpoints, locations, offsets, labels, actions, and degradation behavior into the community profile while removing an uncited fixed instruction. Food-truck, pool, and facility migrations still need full envelope parity and held-out degradation tests.
 
 **Completion evidence:** Each active connector emits the common evidence envelope; every final claim retains its controlling source role; source/action data cannot cross communities; mixed-claim tests preserve separate authorities; specialist handoffs remain useful; no Sterling Ranch URL, label, village mapping, or facility assumption is required in shared core logic.
 
@@ -60,7 +60,7 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 
 **Decision:** Preserve safe approved answers while completing the larger source inventory in small evidence-bound batches. Captured, indexed, or official does not mean approved. Do not combine counts from different crawl snapshots.
 
-**Current status:** Production reports 264 source records, 1,519 discovered URLs, 1,091 eligible URLs, a 909-page backlog, 624 approved facts, 17 conflicts, and 1,845 pending review items including 1,087 sensitive items. Full coverage is not achieved. The strict local branch imports the owner's water, fee, payment, billing, and delinquency decisions only within their stated boundaries. A corrected packet contains 17 additional proposed decisions with visible exact evidence; four items remain not ready because their versions or controlling evidence are incomplete.
+**Current status:** The exact staging candidate reports 268 source records, 1,510 discovered URLs, 1,079 eligible URLs, an 894-page inventory backlog, 18 approved facts, 624 candidate facts, 17 conflicts, and 1,842 pending review items including 1,087 sensitive items. Full coverage is not achieved. The strict branch imports the owner's water, fee, payment, billing, and delinquency decisions only within their stated boundaries. The repaired exact-version verifier revalidated all 46 currently due approved URLs with no review-required result and without changing the approved fingerprint.
 
 **Review order:**
 
@@ -78,9 +78,9 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 
 **Target behavior:** Add accessible “Report a bug” and “Request a feature” controls to the shared approved page shell and the Assistant conversation area. Use the existing email-draft behavior with page-specific context; nothing sends automatically.
 
-**Current status:** A local proof exists, but it is based on an older page shell and is not approved for implementation. It must be rebased onto the final approved redesign. No UI or feedback controls are live.
+**Current status:** The owner approved the new editorial design and Society palette. The shared navigation, main page and subpage design, Community Assistant shell, and “Report a bug” / “Request a feature” controls are implemented in PR #65 and deployed to staging. Their email-draft behavior does not send automatically. Production still uses the previous interface.
 
-**Dependency and approval:** The owner must approve the corrected editorial mockup and palette before implementation. UI implementation uses a separate Astra-reviewed worktree, followed by desktop/mobile/accessibility checks. Publishing does not begin from a design decision alone.
+**Verification:** Desktop, mobile, interaction, loading, error, source-detail, and feedback states are included in the reviewed implementation evidence. Final production promotion remains tied to the same accuracy and source gates as the Assistant release.
 
 ## Integration and release order
 
@@ -91,13 +91,12 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 5. Re-run source, authority, grounding, ambiguity, connector, and resident-effort suites against the exact candidate.
 6. Push the feature branch and open a reviewable pull request. Deploy the exact commit to staging and test only through `/community-assistant?test=1` or API requests containing `"isTest": true`.
 7. Verify hosted source fingerprints, current-source freshness, AI-composer use, specialist degradation, and representative question families. Promote only the reviewed exact candidate through the protected release route.
-8. After design approval, implement and validate the shared shell and feedback controls in a separate worktree so visual work cannot block or contaminate the accuracy release.
+8. Promote the already approved and validated shared shell and feedback controls with the same exact candidate once the accuracy and source gates pass.
 
 ## Approval register
 
 Already authorized for exact import: the stated 2026 water/rate/fee decisions, delinquency policy, water-payment pages, card-processing fee, water-bill explanation, and monthly-fee payment page. Their exclusions remain binding.
 
-Still requires owner action: the 17 evidence-ready continuity proposals and the corrected UI direction.
+Still requires owner action for this release: the exact current pool-hours page, current DRC contact/general submission method, conditional rain-barrel submission route, and exact UtilityHawk water-monitoring FAQ. Other evidence-ready continuity proposals remain future source-review batches.
 
-Not ready for approval: pool published-hours version, amenity-form action, CivicRec facility booking/action evidence, and the controlling trash-screening rule. These stay withheld until revalidated or replaced with controlling evidence.
-
+Still withheld outside the four immediate decisions: amenity-form action, CivicRec facility booking/action evidence, the controlling trash-screening rule, and every other pending or conflicted record. These require their own exact evidence before approval.
