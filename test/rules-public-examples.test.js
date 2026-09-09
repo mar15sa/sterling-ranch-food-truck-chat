@@ -110,6 +110,13 @@ for (const example of EXAMPLES) {
       assert.equal(result.answerStatus, "verified");
       assert.ok(result.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
     }
+    if (example.question === "What fees do residents pay?") {
+      assert.equal(result.answerStatus, "verified");
+      assert.deepEqual(
+        result.sources.map((source) => source.ownerReview?.decisionId).sort(),
+        ["cab-fees-effective-date", "water-rates-2026"]
+      );
+    }
     const longestLine = Math.max(...result.answer.split("\n").map((line) => line.length));
     assert.ok(
       longestLine <= (example.maxLineLength || 260),
