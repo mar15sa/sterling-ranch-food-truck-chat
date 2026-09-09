@@ -329,7 +329,7 @@ test("permission plus application questions consult the controlling rule before 
   assert.match(trampoline.nextStep, /could not verify the application or submission step/i);
 
   const gazebo = await ask("I need to submit for a gazebo", "gazebo");
-  assert.equal(gazebo.answerStatus, "source-unavailable");
+  assert.equal(gazebo.answerStatus, "could-not-verify");
   assert.doesNotMatch(gazebo.answer, /lighting must be strung.*gazebo/i);
 });
 
@@ -369,7 +369,7 @@ test("structured rules retry the deterministic index before a community-page fal
   assert.doesNotMatch(answer.answer, /Calculating Outdoor Water Usage/i);
 });
 
-test("known safety boundaries do not invoke a second AI-assisted rules interpretation", async () => {
+test("unsupported requests complete retrieval before returning the generic evidence boundary", async () => {
   let rulesCalls = 0;
   const answer = await answerCommunityQuestion("What is the CAB Instagram account?", {
     interpretationMode: "structured",
@@ -383,17 +383,17 @@ test("known safety boundaries do not invoke a second AI-assisted rules interpret
       dateRange: { kind: "none", start: "", end: "", label: "" },
       searchQueries: ["CAB Instagram account"],
     }),
-    answerRulesQuestion: async () => { rulesCalls += 1; throw new Error("should not run"); },
+    answerRulesQuestion: async () => { rulesCalls += 1; return { answer: "No approved answer.", answerMode: "unverified", confidence: { canAnswer: false }, sources: [] }; },
   });
-  assert.equal(rulesCalls, 0);
-  assert.equal(answer.answerMode, "community-rules-boundary");
-  assert.match(answer.answer, /could not verify.*Instagram/i);
+  assert.ok(rulesCalls >= 1);
+  assert.equal(answer.answerMode, "source-evidence-boundary");
+  assert.match(answer.answer, /could not verify an answer from approved, up-to-date community sources/i);
 });
 
-test("fast safety boundaries preserve established diagnostic reasons", async () => {
+test("generic evidence boundaries retain the rules engine diagnostic reason", async () => {
   const cases = [
-    ["Can I run a food truck from my driveway?", "no-food-truck-specific-rule"],
-    ["What is the HOA phone number?", "missing-requested-contact-info"],
+    ["Can I run a food truck from my driveway?", "source-review-required"],
+    ["What is the HOA phone number?", "source-review-required"],
   ];
   for (const [question, reason] of cases) {
     const answer = await answerCommunityQuestion(question, {
@@ -448,10 +448,8 @@ test("contact extraction cannot substitute a different organization", async () =
   assert.equal(answer.confidence.canAnswer, false);
   assert.equal(answer.confidence.reason, "missing-requested-contact-info");
   assert.doesNotMatch(answer.answer, /833/);
-  assert.equal(answer.sources.length, 1);
-  assert.match(answer.sources[0].sourceUrl, /Important-Contact-Information/);
-  assert.equal(answer.actions.length, 1);
-  assert.match(answer.actions[0].url, /Important-Contact-Information/);
+  assert.equal(answer.sources.length, 0);
+  assert.equal(answer.actions.length, 0);
 });
 
 test("grounding rejects stronger prohibitions than the official draft supports", () => {

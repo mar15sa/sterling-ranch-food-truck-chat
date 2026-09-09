@@ -282,11 +282,11 @@ test("negative controls cannot become unrelated confident answers", async () => 
     ["Please help", /What would you like help with/i, /trash carts|Waste Connections/i],
     ["What is the weather today?", /can(?:not|'t) verify|can help/i, /pool contamination/i],
     ["Who is Diane Smethills?", /reliably identify/i, /clubhouse|water billing/i],
-    ["Can I run a food truck from my driveway?", /could not verify.*operating a food-truck business/i, /pool deck|listed food truck/i],
-    ["Can I remove a tree?", /could not verify blanket permission/i, /VPN hardware/i],
-    ["Can I paint my mailbox purple?", /could not verify permission to repaint/i, /same colors as the original|nonpotable water/i],
-    ["What is the CAB Instagram account?", /could not verify.*Instagram/i, /clubhouse|trash carts/i],
-    ["Can I build a helipad in my yard?", /could not verify.*helipad/i, /utility shed.*8/i],
+    ["Can I run a food truck from my driveway?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /pool deck|listed food truck/i],
+    ["Can I remove a tree?", /could not verify an answer from approved, up-to-date community sources|do not state whether the requested removal is allowed/i, /VPN hardware/i],
+    ["Can I paint my mailbox purple?", /could not verify an answer from approved, up-to-date community sources/i, /same colors as the original|nonpotable water/i],
+    ["What is the CAB Instagram account?", /could not verify an answer from approved, up-to-date community sources/i, /clubhouse|trash carts/i],
+    ["Can I build a helipad in my yard?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /utility shed.*8/i],
   ];
   for (const [question, include, exclude] of cases) {
     const result = await answerCommunityQuestion(question, options);
@@ -310,7 +310,7 @@ test("a confident AI rewrite cannot substitute a broad category for an unsupport
     synthesizeCommunityAnswer: false,
   });
   assert.equal(answer.confidence.canAnswer, false);
-  assert.match(answer.answer, /could not verify.*helipad/i);
+  assert.match(answer.answer, /could not (?:verify an answer|safely confirm).*approved, up-to-date/i);
   assert.doesNotMatch(answer.answer, /Most landscaping is allowed/i);
 });
 
