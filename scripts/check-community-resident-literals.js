@@ -93,9 +93,18 @@ function tokensFor(source) {
 function responseLiterals(source) {
   const tokens = tokensFor(source);
   const literals = [];
+  const literalBindings = new Map();
+  for (let index = 0; index < tokens.length - 3; index += 1) {
+    if (!["const", "let"].includes(tokens[index].value) || tokens[index + 1].type !== "identifier" || tokens[index + 2].value !== "=" || tokens[index + 3].type !== "string") continue;
+    literalBindings.set(tokens[index + 1].value, tokens[index + 3]);
+  }
   for (let index = 0; index < tokens.length - 1; index += 1) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value) || tokens[index + 1].value !== ":") continue;
     const field = tokens[index].value;
+    const bound = literalBindings.get(tokens[index + 2]?.value);
+    if (bound && [",", "}"].includes(tokens[index + 3]?.value)) {
+      literals.push({ field, value: bound.value, offset: bound.offset });
+    }
     const depth = { "(": 0, "[": 0, "{": 0 };
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
       const token = tokens[cursor];
@@ -109,6 +118,13 @@ function responseLiterals(source) {
       }
       if (token.value === "," && depth["("] === 0 && depth["["] === 0 && depth["{"] === 0) break;
     }
+  }
+  // Object shorthand is another direct response path: `return { answer }`.
+  for (let index = 1; index < tokens.length - 1; index += 1) {
+    if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value)) continue;
+    if (!["{", ","].includes(tokens[index - 1].value) || ![",", "}"].includes(tokens[index + 1].value)) continue;
+    const bound = literalBindings.get(tokens[index].value);
+    if (bound) literals.push({ field: tokens[index].value, value: bound.value, offset: bound.offset });
   }
   // The legacy rule engine's resident replies flow through this helper rather
   // than object fields. Treat its first and third arguments as direct answer
@@ -144,8 +160,7 @@ function fingerprint(finding) {
 function inspectSource(source, filename = "inline.js", { factsOnly = false } = {}) {
   return responseLiterals(source)
     .filter(({ value }) => value.trim() && !GENERIC_COPY.has(value) && (!factsOnly || looksLikeFact(value)))
-    .map(({ field, value, offset }) => ({ filename, field, value, line: lineAt(source, offset) }))
-    .filter((finding, index, all) => all.findIndex((other) => fingerprint(other) === fingerprint(finding)) === index);
+    .map(({ field, value, offset }) => ({ filename, field, value, line: lineAt(source, offset) }));
 }
 
 function checkProject(root = path.join(__dirname, "..")) {
@@ -155,11 +170,16 @@ function checkProject(root = path.join(__dirname, "..")) {
   });
   const baselineFile = path.join(root, "data", "community-resident-literal-baseline.json");
   const baseline = JSON.parse(fs.readFileSync(baselineFile, "utf8"));
-  const known = new Set((baseline.findings || []).map((finding) => finding.fingerprint));
-  const additions = findings.filter((finding) => !known.has(fingerprint(finding)));
+  const allowedCounts = new Map((baseline.findings || []).map((finding) => [finding.fingerprint, Number(finding.count) || 1]));
+  const observedCounts = new Map();
+  for (const finding of findings) {
+    const key = fingerprint(finding);
+    observedCounts.set(key, (observedCounts.get(key) || 0) + 1);
+  }
+  const additions = findings.filter((finding) => (observedCounts.get(fingerprint(finding)) || 0) > (allowedCounts.get(fingerprint(finding)) || 0));
   if (additions.length) {
     console.error("New resident-facing fixed copy must come from an approved claim/action projection:");
-    for (const finding of additions) console.error(`- ${finding.filename}:${finding.line} (${finding.field}) ${JSON.stringify(finding.value)}`);
+    for (const finding of additions.filter((finding, index, all) => all.findIndex((other) => fingerprint(other) === fingerprint(finding)) === index)) console.error(`- ${finding.filename}:${finding.line} (${finding.field}) ${JSON.stringify(finding.value)}`);
     return false;
   }
   console.log(`Community resident-literal guard passed (${findings.length} tracked migration-debt nodes).`);

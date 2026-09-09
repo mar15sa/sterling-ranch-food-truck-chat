@@ -65,3 +65,14 @@ test("per-node baselines allow unrelated edits and removal but reject changed or
   files.splice(0, files.length, ...original);
   fs.rmSync(root, { recursive: true, force: true });
 });
+
+test("per-node baselines reject a duplicated existing literal and an indirect answer", () => {
+  const fixed = "Mailboxes must be painted blue.";
+  const first = inspectSource(`return { answer: ${JSON.stringify(fixed)} };`, "lib/fixture.js")[0];
+  const baseline = new Set([fingerprint(first)]);
+  const duplicate = inspectSource(`if (intent === "mailbox") return { answer: ${JSON.stringify(fixed)} }; return { answer: ${JSON.stringify(fixed)} };`, "lib/fixture.js");
+  assert.equal(duplicate.filter((finding) => baseline.has(fingerprint(finding))).length, 2);
+  const indirect = inspectSource(`const answer = ${JSON.stringify(fixed)}; return { answer };`, "lib/fixture.js");
+  assert.equal(indirect.length, 1);
+  assert.equal(indirect[0].value, fixed);
+});
