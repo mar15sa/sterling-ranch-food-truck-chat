@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-08",
+  "purpose": "Decision Swipe approvals applied only to exact Batch A source versions. These are scoped decisions, not whole-page promotion.",
+  "decisions": [
+    {
+      "decisionId": "water-payment-primary-page",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Current CAB water-payment page role only.",
+      "approvedClaims": ["primary-current-water-payment-page"],
+      "withheldClaims": ["water-rate-amounts", "unapproved-payment-terms"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/334/Water-Billing-Payment-Options","contentHash":"711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75"}]
+    },
+    {
+      "decisionId": "water-payment-direct-link",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Direct water-payment link only.",
+      "approvedClaims": ["direct-water-payment-link"],
+      "withheldClaims": ["water-rate-amounts", "contacts", "payment-terms"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill","contentHash":"3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6"}]
+    },
+    {
+      "decisionId": "card-processing-fee",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Card-processing fee claim only, on these exact current page versions.",
+      "approvedClaims": ["card-processing-fee"],
+      "withheldClaims": ["all-other-page-claims", "water-rate-amounts"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [
+        {"canonicalUrl":"https://sterlingranchcab.com/334/Water-Billing-Payment-Options","contentHash":"711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75"},
+        {"canonicalUrl":"https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill","contentHash":"3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6"}
+      ]
+    },
+    {
+      "decisionId": "water-bill-explanation",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Current water-bill explanation only; DocumentCenter item 2419 remains deferred.",
+      "approvedClaims": ["water-bill-explanation"],
+      "withheldClaims": ["water-rate-amounts", "documentcenter-2419"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/333/Understanding-Your-Water-Bill","contentHash":"ec41579679b1969d6efb9ad9e402f743b6176132fb1c29baf384367573f4fa71"}]
+    },
+    {
+      "decisionId": "monthly-fee-payment-page",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Current monthly-fee operational payment-page role only; adopted resolutions control amounts.",
+      "approvedClaims": ["monthly-fee-operational-payment-page"],
+      "withheldClaims": ["cab-fee-amounts", "water-rate-amounts"],
+      "controllingSources": ["adopted-2026-cab-fee-resolution", "adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/390/Monthly-Fee-Billing-Payment-Options","contentHash":"01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e"}]
+    }
+  ],
+  "deferred": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2419","status":"deferred","reason":"Outside the approved Batch A scope; no content version or claim is approved."}]
+}

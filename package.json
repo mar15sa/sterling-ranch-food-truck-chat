@@ -33,6 +33,8 @@
     "community:soak": "node scripts/check-community-soak.js",
     "community:soak:24h": "node scripts/check-community-application-soak.js --duration-hours 24 --interval-ms 900000 --write",
     "community:portability:live": "node scripts/check-community-portability.js --write",
+    "community:ledger:build": "node scripts/build-canonical-source-ledger.js --write",
+    "community:ledger:check": "node scripts/build-canonical-source-ledger.js --check",
     "supplements:audit": "node scripts/audit-rule-supplements.js --from 1 --to 2800",
     "supplements:monitor": "node scripts/audit-rule-supplements.js --from-baseline --lookahead 600 --fail-on-candidates",
     "supplements:build-sections": "node scripts/build-rule-supplement-sections.js",
