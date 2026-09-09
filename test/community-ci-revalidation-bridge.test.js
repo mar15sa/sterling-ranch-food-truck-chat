@@ -100,7 +100,7 @@ test("homepage calendar CTA is revalidated even when event cards are removed fro
   assert.deepEqual(proof.actionProof.observed.actions.map(action => action.label), ["View All Events"]);
 });
 
-test("FAQ fingerprint ignores copied page navigation and its self link, but preserves a local action boundary", async () => {
+test("FAQ fingerprint ignores only its self link and keeps copied page actions monitored", async () => {
   const faqUrl = "https://alpha.gov/m/faq?cat=15";
   const shared = { label: "General Inquiries", url: "https://alpha.gov/contact", actionType: "form" };
   const self = { label: "How do I apply?", url: faqUrl, actionType: "form" };
@@ -112,6 +112,10 @@ test("FAQ fingerprint ignores copied page navigation and its self link, but pres
   const html = `<main><p>FAQ text.</p><a href="/contact">General Inquiries</a><a href="/m/faq?cat=15">How do I apply?</a><a href="/FormCenter/DRC">Submit design request</a></main>`;
   const proof = await observeCanonicalSource(faqUrl, sources, { fetchImpl: async () => ({ ok: true, url: faqUrl, text: async () => html }) });
   assert.equal(proof.actionMismatch, false);
+  const missingSharedAction = await observeCanonicalSource(faqUrl, sources, {
+    fetchImpl: async () => ({ ok: true, url: faqUrl, text: async () => html.replace('<a href="/contact">General Inquiries</a>', "") }),
+  });
+  assert.equal(missingSharedAction.actionMismatch, true);
 });
 
 test("a transient PDF failure is retried and remains a visible failure when both attempts fail", async () => {
