@@ -7,13 +7,14 @@ const source = { id: 'trash', contentHash: 'v1', reviewStatus: 'approved', lifec
   sourceUrl: 'https://sterlingranchcab.com/247/Trash-Recycling', staleAfter: '2027-01-01',
   text: 'Holiday Schedule Trash pickup will be delayed by one day for the following holidays: Labor Day Thanksgiving Christmas Opt-In for Service Notifications' };
 const fact = { sourceId: 'trash', sourceVersion: 'v1', reviewStatus: 'approved', lifecycle: 'current',
+  reviewDecisionId: 'trash-owner-decision', reviewedAt: '2026-09-01', reviewedBy: 'owner',
   staleAfter: '2027-01-01', claimKey: 'trash:restriction:delay', facet: 'restriction', normalizedValue: 1 };
 function ask(facts = [fact], overrides = {}) {
   return proactiveCommunityAnswer(question, { now, index: { sources: [source], factLedger: facts,
     truthStatus: { migrationMode: 'reviewed' }, ...overrides } });
 }
-test('proactive source prose cannot bypass pending, disputed, future, retired or changed-version fact review', () => {
-  assert.ok(ask());
+test('proactive full-page prose cannot inherit approval from a claim decision', () => {
+  assert.equal(ask(), null);
   for (const patch of [{ reviewStatus: 'candidate' }, { reviewStatus: 'escalated' }, { effectiveFrom: '2028-01-01' },
     { effectiveTo: '2025-01-01' }, { staleAfter: '2020-01-01' }, { supersededBy: 'new' }]) {
     assert.equal(ask([{ ...fact, ...patch }]), null, JSON.stringify(patch));

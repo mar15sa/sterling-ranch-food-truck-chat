@@ -15,7 +15,8 @@ function dueIndex(count = 51) {
   return {
     communityId: "alpha", failureCount: 0, sources,
     factLedger: sources.map((source) => ({ id: `fact-${source.id}`, sourceId: source.id,
-      sourceVersion: source.contentHash, reviewStatus: "approved", staleAfter: EXPIRED, lastObservedAt: EXPIRED })),
+      sourceVersion: source.contentHash, reviewStatus: "approved", reviewDecisionId: `decision-${source.id}`,
+      reviewedAt: EXPIRED, reviewedBy: 'owner', staleAfter: EXPIRED, lastObservedAt: EXPIRED })),
   };
 }
 

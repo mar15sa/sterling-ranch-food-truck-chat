@@ -112,12 +112,15 @@ function entry(overrides = {}) {
     sourceVersion: "v1",
     lifecycle: "current",
     reviewStatus: "approved",
+    reviewDecisionId: "owner-decision",
+    reviewedAt: "2026-08-31T00:00:00.000Z",
+    reviewedBy: "owner",
     staleAfter: "2099-01-01T00:00:00.000Z",
     ...overrides,
   };
 }
 
-test("fact ledger backfills trusted facts without changing their approval state", () => {
+test("fact ledger backfills trusted facts as candidates until a claim decision exists", () => {
   const index = {
     communityId: "alpha",
     generatedAt: "2026-09-01T00:00:00.000Z",
@@ -138,7 +141,8 @@ test("fact ledger backfills trusted facts without changing their approval state"
   assert.equal(fact.subjectKey, "pickleball-courts");
   assert.equal(fact.facet, "facility-hours");
   assert.equal(fact.scopeKey, "weekday");
-  assert.equal(fact.reviewStatus, "approved");
+  assert.equal(fact.reviewStatus, "candidate");
+  assert.equal(fact.reviewDecisionId, "");
   assert.equal(fact.sourceVersion, "source-version");
 });
 
@@ -170,6 +174,7 @@ test("facet authority resolves a generic rulebook disagreement but equal authori
 
 test("only approved, current, fresh facts can answer residents", () => {
   assert.equal(factIsAnswerable(entry(), Date.parse("2026-09-01")), true);
+  assert.equal(factIsAnswerable(entry({ reviewDecisionId: "", reviewedAt: "", reviewedBy: "" }), Date.parse("2026-09-01")), false);
   assert.equal(factIsAnswerable(entry({ reviewStatus: "candidate" }), Date.parse("2026-09-01")), false);
   assert.equal(factIsAnswerable(entry({ lifecycle: "future" }), Date.parse("2026-09-01")), false);
   assert.equal(factIsAnswerable(entry({ lifecycle: "superseded" }), Date.parse("2026-09-01")), false);

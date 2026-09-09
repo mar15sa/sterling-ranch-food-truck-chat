@@ -3,21 +3,24 @@ const assert = require('node:assert/strict');
 const { searchCommunityIndex } = require('../lib/community-search');
 const { sourceReviewGate } = require('../lib/community-source-answerability');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
+const { applyReviewDecisions, buildFactLedger } = require('../lib/community-truth');
 const now = new Date('2026-09-06T22:00:00Z');
 const source = { id: 'water', communityId: 'alpha', sourceUrl: 'https://alpha.gov/water-billing', title: 'Water billing prices',
   sourceType: 'services', connectorType: 'civicplus-pages', contentHash: 'v1', reviewStatus: 'approved',
   text: 'Water billing price is $20 per month. Contact new-office@example.com for billing.', authorityScore: 1,
   lifecycle: 'current', staleAfter: '2099-01-01', facts: [{ type: 'money', value: '$20 per month', normalizedValue: 20 }] };
-const fee = { sourceId: 'water', sourceVersion: 'v1', factType: 'money', facet: 'fee', claimKey: 'water:fee',
-  normalizedValue: 20, reviewStatus: 'approved', lifecycle: 'current', staleAfter: '2099-01-01' };
+const explicit = (entry, id) => ({ ...entry, reviewDecisionId: id, reviewedAt: '2026-09-06T20:00:00Z', reviewedBy: 'owner' });
+const fee = explicit({ sourceId: 'water', sourceVersion: 'v1', factType: 'money', facet: 'fee', scopeKey: 'money', claimKey: 'water:fee',
+  normalizedValue: 20, reviewStatus: 'approved', lifecycle: 'current', staleAfter: '2099-01-01', supportingText: 'Water billing price is $20 per month.' }, 'fee-decision');
 const contact = { ...fee, factType: 'email', facet: 'contact', claimKey: 'water:contact', normalizedValue: 'new-office@example.com' };
 const makeIndex = facts => ({ communityId: 'alpha', sources: [source], factLedger: facts, truthStatus: { migrationMode: 'reviewed' } });
-test('retrieval withholds whole source prose when another facet is pending', () => {
+test('retrieval keeps an approved claim but strips another pending facet from the source prose', () => {
   const approved = searchCommunityIndex('water billing price', { index: makeIndex([fee, contact]), now });
   assert.equal(approved.sources.length, 1);
   const pending = searchCommunityIndex('water billing price', { index: makeIndex([fee, { ...contact, reviewStatus: 'candidate' }]), now });
-  assert.equal(pending.sources.length, 0);
-  assert.equal(pending.withheldSources.length, 1);
+  assert.equal(pending.sources.length, 1);
+  assert.match(pending.sources[0].text, /\$20/);
+  assert.doesNotMatch(pending.sources[0].text, /new-office@example\.com/);
 });
 test('mixed fee approvals and stale source versions cannot leak through a matching approved fact', () => {
   for (const facts of [[fee, { ...fee, normalizedValue: 25, reviewStatus: 'candidate' }], [{ ...fee, sourceVersion: 'old' }]]) {
@@ -26,6 +29,55 @@ test('mixed fee approvals and stale source versions cannot leak through a matchi
 });
 test('static review rules leave live calendar identity separate', () => {
   assert.equal(sourceReviewGate(makeIndex([]), now.getTime())({ id: 'live-calendar', sourceType: 'events', connectorType: 'civicplus-calendar', lifecycle: 'current' }), true);
+});
+
+test('trusted-baseline labels without a claim decision are never owner approval', () => {
+  const inherited = { ...fee, reviewDecisionId: '', reviewedAt: '', reviewedBy: '' };
+  const index = { ...makeIndex([inherited]), truthStatus: { migrationMode: 'trusted-baseline' } };
+  assert.equal(sourceReviewGate(index, now.getTime())(source), false);
+  assert.equal(searchCommunityIndex('water billing price', { index, now }).sources.length, 0);
+});
+
+test('trash schedule family requires claim approval and mixed pages expose only approved claims and actions', () => {
+  const trash = {
+    id: 'trash', communityId: 'alpha', sourceUrl: 'https://alpha.gov/trash', title: 'Trash collection schedule',
+    sourceType: 'services', connectorType: 'civicplus-pages', contentHash: 'trash-v1', authorityScore: 1,
+    lifecycle: 'current', staleAfter: '2099-01-01',
+    text: 'Trash pickup is Tuesday. Recycling is secretly Wednesday. Contact hidden@example.com.',
+    excerpt: 'Trash pickup is Tuesday. Recycling is secretly Wednesday.',
+    facts: [
+      { type: 'schedule', value: 'Tuesday', context: 'Trash pickup is Tuesday.' },
+      { type: 'email', value: 'hidden@example.com', context: 'Contact hidden@example.com.' },
+      { type: 'link', value: 'https://alpha.gov/trash/calendar', context: 'Open trash calendar: https://alpha.gov/trash/calendar' },
+    ],
+    actions: [{ label: 'Open trash calendar', url: 'https://alpha.gov/trash/calendar', actionType: 'information' }],
+  };
+  const base = { communityId: 'alpha', sources: [trash], truthStatus: { migrationMode: 'trusted-baseline' } };
+  const pending = buildFactLedger(base, { trusted: true });
+  assert.ok(pending.every(entry => entry.reviewStatus === 'candidate'));
+  assert.equal(searchCommunityIndex('trash collection schedule', { index: { ...base, factLedger: pending }, now }).sources.length, 0);
+
+  const schedule = pending.find(entry => entry.factType === 'schedule');
+  const link = pending.find(entry => entry.factType === 'link');
+  const decisions = [schedule, link].map((entry, index) => ({
+    id: `trash-decision-${index}`, decision: 'approve-proposed', factId: entry.id,
+    sourceVersion: entry.sourceVersion, sourceUrl: entry.sourceUrl,
+    reviewer: 'owner', decidedAt: '2026-09-06T20:00:00Z',
+  }));
+  const approvedLedger = applyReviewDecisions(pending, decisions).ledger;
+  const result = searchCommunityIndex('trash collection schedule', { index: { ...base, factLedger: approvedLedger }, now });
+  assert.equal(result.sources.length, 1);
+  assert.match(result.sources[0].text, /Trash pickup is Tuesday/);
+  assert.doesNotMatch(result.sources[0].text, /Wednesday|hidden@example\.com/);
+  assert.equal(result.sources[0].facts.length, 2);
+  assert.equal(result.sources[0].actions.length, 1);
+
+  const changed = { ...trash, contentHash: 'trash-v2' };
+  const changedResult = searchCommunityIndex('trash collection schedule', {
+    index: { ...base, sources: [changed], factLedger: approvedLedger }, now,
+  });
+  assert.equal(changedResult.sources.length, 0);
+  assert.equal(changedResult.withheldSources[0].text, '');
 });
 
 test('trusted baseline still withholds every source participating in a sensitive conflict', () => {

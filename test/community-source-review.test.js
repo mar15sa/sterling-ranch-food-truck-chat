@@ -10,7 +10,7 @@ const {
   sourceReviewStatus,
   syncReviewItems,
 } = require("../lib/community-source-review");
-const { buildFactLedger } = require('../lib/community-truth');
+const { applyReviewDecisions, buildFactLedger } = require('../lib/community-truth');
 const { disambiguateSourceIds } = require('../lib/community-ingest');
 
 test('private review configuration can be checked with injected dummy values', () => {
@@ -143,7 +143,12 @@ test("old decisions become stale only when that same source changes again", () =
 test('batch assembly retains exact decisions but requires review for newly extracted facts on unchanged pages', () => {
   const original = { ...source('same'), reviewStatus: 'approved' };
   const trusted = { communityId: 'alpha', sources: [original] };
-  trusted.factLedger = buildFactLedger(trusted, { trusted: true });
+  const [feeEntry] = buildFactLedger(trusted, { trusted: true });
+  trusted.factLedger = applyReviewDecisions([feeEntry], [{
+    id: 'fee-owner-decision', decision: 'approve-proposed', factId: feeEntry.id,
+    sourceVersion: feeEntry.sourceVersion, sourceUrl: feeEntry.sourceUrl,
+    reviewer: 'owner', decidedAt: '2026-09-01T00:00:00Z',
+  }]).ledger;
   const proposed = { ...original, facts: [...original.facts,
     { type: 'email', value: 'billing@example.gov', context: 'Billing: billing@example.gov' }] };
   const result = compileReviewedCandidate(trusted, { ...trusted, sources: [proposed] }, profile);

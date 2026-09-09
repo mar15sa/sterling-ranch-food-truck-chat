@@ -1,20 +1,22 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { fingerprint } = require("../lib/community-release");
-const { sourceReviewGate } = require("../lib/community-source-answerability");
+const { sourceReviewState } = require("../lib/community-source-answerability");
 const { observeCanonicalSource, runBridge } = require("../scripts/check-approved-community-revalidation");
 
 const NOW = Date.parse("2026-09-08T12:00:00.000Z");
 const URL = "https://alpha.gov/rules";
 function index() {
   const source = { id: "rules", title: "Rules", sourceUrl: URL, sourceType: "rules", connectorType: "civicplus-pages", contentHash: "same", actions: [{ label: "Apply", url: "https://alpha.gov/apply", actionType: "submit" }], staleAfter: "2026-09-01T00:00:00.000Z", checkedAt: "2026-09-01T00:00:00.000Z" };
-  return { communityId: "alpha", sources: [source], factLedger: [{ id: "rule-fact", sourceId: "rules", sourceVersion: "same", reviewStatus: "approved", staleAfter: source.staleAfter, lastObservedAt: source.checkedAt }] };
+  return { communityId: "alpha", sources: [source], factLedger: [{ id: "rule-fact", sourceId: "rules", sourceVersion: "same", reviewStatus: "approved",
+    reviewDecisionId: 'rule-owner-decision', reviewedAt: '2026-08-31T00:00:00Z', reviewedBy: 'owner',
+    staleAfter: source.staleAfter, lastObservedAt: source.checkedAt }] };
 }
 const observer = async () => ({ observedHashes: ["same"], actionMismatch: false });
 const normalGate = (value) => {
   const source = value.sources[0];
   if (Date.parse(source.staleAfter) <= NOW || value.factLedger.some((fact) => fact.sourceVersion !== source.contentHash || Date.parse(fact.staleAfter) <= NOW)) throw new Error("stale fact/version");
-  if (!sourceReviewGate(value, NOW)(source)) throw new Error("answer gate withheld temporary evidence");
+  if (sourceReviewState(value, NOW).entriesFor(source).length !== 1) throw new Error("answer gate withheld temporary evidence");
 };
 
 test("unchanged proof renews only a temporary index and preserves the approved fingerprint", async () => {
