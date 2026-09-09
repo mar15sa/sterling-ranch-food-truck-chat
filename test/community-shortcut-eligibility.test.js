@@ -56,6 +56,29 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
   }
 });
 
+test("the Community Assistant returns the official food-truck schedule when menu enrichment is degraded", async () => {
+  const routingPlan = plan({
+    scope: "community", intent: "events", goal: "schedule", goals: ["schedule"], subject: "food truck", requestedDetails: ["date"],
+    dateRange: { kind: "explicit-date", start: "2026-09-09", end: "2026-09-09", label: "September 9" }, searchQueries: ["food truck September 9"],
+  });
+  const answer = await answerCommunityQuestion("What food truck is here on September 9?", {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => routingPlan,
+    getFoodTruckAnswer: async () => ({
+      date: "2026-09-09", friendlyDate: "Wednesday, September 9, 2026", truck: "Example Eats",
+      sourceUrl: "https://sterlingranchcab.com/Calendar.aspx", menu: { links: [], items: [] },
+      menuEnrichment: { status: "degraded", failures: [{ truck: "Example Eats", component: "menu-profile" }] },
+    }),
+    answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),
+  });
+
+  assert.equal(answer.answerMode, "community-live-food-truck");
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.match(answer.directAnswer, /Example Eats/);
+  assert.deepEqual(answer.menuEnrichment, { status: "degraded", failures: [{ truck: "Example Eats", component: "menu-profile" }] });
+  assert.ok(answer.actions.some((action) => action.actionType === "calendar" && action.url === "https://sterlingranchcab.com/Calendar.aspx"));
+});
+
 test("food-truck business-rule questions do not enter the live schedule connector", async () => {
   for (const scope of ["unrelated", "community"]) {
     let calls = 0;
