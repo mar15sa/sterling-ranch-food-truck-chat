@@ -12,7 +12,7 @@ function secondCommunityProfile() {
   connector.adapter.sourceHosts = ["riverton.example", "menus.riverton.example"];
   connector.adapter.endpoints = [{ id: "schedule", url: "https://riverton.example/calendar", purpose: "official-food-truck-schedule" }];
   connector.adapter.labels = { calendarTitle: "Riverton market calendar", calendarAction: "View Riverton market schedule", fullAnswerAction: "Open Riverton truck details" };
-  connector.adapter.foodTruck = { fullAnswerPath: "/market-trucks", vendorSources: [{ id: "riverton-bites", aliases: ["Riverton Bites"], menuUrls: ["https://menus.riverton.example/bites"] }] };
+  connector.adapter.foodTruck = { fullAnswerPath: "/market-trucks", calendarYears: [2026], vendorSources: [{ id: "riverton-bites", aliases: ["Riverton Bites"], menuUrls: ["https://menus.riverton.example/bites"] }] };
   return profile;
 }
 
@@ -39,6 +39,17 @@ test("the Community Assistant live path ignores historic local overrides and sta
   assert.equal(result.menuEnrichment.status, "degraded");
 });
 
+test("the live calendar rejects unsupported years and malformed successful responses, but permits a parsed unlisted date", async () => {
+  await assert.rejects(() => getCommunityFoodTruckSchedule({ dateRange: { start: "2027-06-06", end: "2027-06-06" } }, { profile: sterling, fetchImpl: async () => new Response("6/6 - stale") }), /does not cover that year/i);
+  await assert.rejects(() => getCommunityFoodTruckSchedule({ dateRange: { start: "2026-06-06", end: "2026-06-06" } }, { profile: sterling, fetchImpl: async () => new Response("Calendar temporarily unavailable") }), /parsed reliably/i);
+  const unlisted = await getCommunityFoodTruckSchedule({ dateRange: { start: "2026-06-07", end: "2026-06-07" } }, { profile: sterling, fetchImpl: async () => new Response("6/6 - Live Calendar Kitchen") });
+  assert.deepEqual(unlisted.trucks, []);
+});
+
+test("same-host schedule pages cannot be relabeled as configured calendar evidence", () => {
+  assert.throws(() => foodTruckAnswer({ date: "2026-09-10", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=9999" }, { profile: sterling, routingPlan: { requestedDetails: ["date"] } }), /configured official calendar/i);
+});
+
 test("an explicit vendor identity accepts only its exact configured menu source", () => {
   const profile = secondCommunityProfile();
   const approved = foodTruckAnswer({ date: "2026-09-10", truck: "Riverton Bites", sourceUrl: "https://riverton.example/calendar", menu: { links: [{ title: "Menu", url: "https://menus.riverton.example/bites" }], items: [{ name: "Soup", price: "$8", url: "https://menus.riverton.example/bites" }] } }, { profile, routingPlan: { requestedDetails: ["date", "price"] } });
@@ -50,7 +61,7 @@ test("an explicit vendor identity accepts only its exact configured menu source"
 
 test("an unapproved menu host cannot create menu or price claims", () => {
   const answer = foodTruckAnswer({
-    date: "2026-09-10", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    date: "2026-09-10", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
     menu: { links: [{ title: "Fake menu", url: "https://hostile.example/menu" }], items: [{ name: "Invented taco", price: "$1", url: "https://hostile.example/menu" }] },
   }, { profile: sterling, routingPlan: { requestedDetails: ["date", "price"], dateRange: { start: "2026-09-10", end: "2026-09-10" } } });
   assert.equal(answer.answerStatus, "verified-incomplete");
@@ -62,7 +73,7 @@ test("an unapproved menu host cannot create menu or price claims", () => {
 
 test("a degraded vendor menu keeps the calendar schedule claim while omitting only menu coverage", () => {
   const answer = foodTruckAnswer({
-    date: "2026-09-10", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    date: "2026-09-10", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
     menu: { links: [], items: [] }, menuEnrichment: { status: "degraded", failures: [{ truck: "Example Eats", component: "menu-profile" }] },
   }, { profile: sterling, routingPlan: { requestedDetails: ["date", "price"], dateRange: { start: "2026-09-10", end: "2026-09-10" } } });
   assert.equal(answer.answerStatus, "verified-incomplete");

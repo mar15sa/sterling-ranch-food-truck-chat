@@ -55,7 +55,7 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
     const answer = await answerCommunityQuestion(question, {
       interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
       planCommunitySearch: async () => routingPlan, synthesizeCommunityAnswer: false,
-      getFoodTruckAnswer: async () => ({ date: routingPlan.dateRange.start, friendlyDate: "Wednesday, September 2, 2026", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx", menu: { links: [{ title: "Example Eats menu", url: "https://www.facebook.com/example-eats/menu" }], items: [{ name: "Taco", price: "$12", url: "https://www.facebook.com/example-eats/menu" }] } }),
+      getFoodTruckAnswer: async () => ({ date: routingPlan.dateRange.start, friendlyDate: "Wednesday, September 2, 2026", truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150", menu: { links: [{ title: "Example Eats menu", url: "https://www.facebook.com/example-eats/menu" }], items: [{ name: "Taco", price: "$12", url: "https://www.facebook.com/example-eats/menu" }] } }),
       answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),
     });
     assert.equal(answer.answerMode, "community-live-food-truck", question);
@@ -76,7 +76,7 @@ test("the Community Assistant returns the official food-truck schedule when menu
     planCommunitySearch: async () => routingPlan,
     getFoodTruckAnswer: async () => ({
       date: "2026-09-09", friendlyDate: "Wednesday, September 9, 2026", truck: "Example Eats",
-      sourceUrl: "https://sterlingranchcab.com/Calendar.aspx", menu: { links: [], items: [] },
+      sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150", menu: { links: [], items: [] },
       menuEnrichment: { status: "degraded", failures: [{ truck: "Example Eats", component: "menu-profile" }] },
     }),
     answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),

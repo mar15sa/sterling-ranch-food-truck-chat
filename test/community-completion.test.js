@@ -205,7 +205,7 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
     friendlyDate: "Saturday, August 29",
     truck: "Example Eats",
     trucks: [{ name: "Example Eats", location: "Prospect Park" }],
-    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
     checkedAt: "2026-08-28T00:00:00.000Z",
     menu: { links: [{ title: "Example Eats official menu", url: "https://www.facebook.com/example-eats/menu" }], items: [{ name: "Tacos", price: "$12.00", url: "https://www.facebook.com/example-eats/menu" }] },
   }, { profile: foodTruckProfile() });
@@ -229,7 +229,7 @@ test("food-truck answers keep each truck's menu, source, and action separate", (
   const answer = foodTruckAnswer({
     date: "2026-09-04",
     friendlyDate: "Friday, September 4, 2026",
-    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
     trucks: [
       {
         name: "Tula's Tapas",

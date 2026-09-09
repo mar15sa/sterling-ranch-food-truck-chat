@@ -62,6 +62,7 @@
         "vocabulary": { "food-truck": ["food truck", "food trucks", "mobile food"] },
         "foodTruck": {
           "fullAnswerPath": "/food-truck",
+          "calendarYears": [2026],
           "vendorSources": []
         }
       },

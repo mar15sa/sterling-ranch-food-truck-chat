@@ -76,7 +76,7 @@ for (const example of EXAMPLES) {
         friendlyDate: "tomorrow",
         truck: "Example Eats",
         trucks: [{ name: "Example Eats", location: "Prospect Park" }],
-        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
         checkedAt: "2026-08-28T00:00:00.000Z",
         menu: { links: [], items: [] },
       }) : undefined,
