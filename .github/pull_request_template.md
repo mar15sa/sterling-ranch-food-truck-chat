@@ -21,6 +21,7 @@
 
 - [ ] Tests cover the reported case and its question family.
 - [ ] Tests cover authority selection and relevant collision/degradation behavior.
+- [ ] Resident-facing facts and fixed answer wording come from current approved evidence, not application code; routing logic supplies no answer content.
 - [ ] Automated Community Assistant checks use test mode (`?test=1` in the browser or `"isTest": true` in direct requests).
 - [ ] Live-source and action-link safety were checked where applicable.
 - [ ] The exact candidate build passed the required local, hosted, and staging checks.
