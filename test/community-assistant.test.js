@@ -983,37 +983,97 @@ test("background refreshes update unchanged evidence but quarantine changed or n
   assert.deepEqual(held.pendingReview.newSourceIds, ["new-page"]);
 });
 
-test("an exact facility page outranks a contradictory generic rulebook answer for public court operations", async () => {
+test("pickleball facilities use an exact approved reservation projection without a fixed operations shortcut", async () => {
   const pickleball = source({
     id: "alpha-pickleball",
     title: "Pickleball Courts",
     sourceUrl: "https://alpha.gov/418/Pickleball-Courts",
     sourceType: "facilities",
-    text: "Pickleball Courts Pickleball Facility Guidelines Hours and Reservations Hours: Weekdays 7 am-dusk; Weekends 8 am-dusk. Courts are available for reservations and drop-in play. Court reservations can be made for a maximum of two hours/day. Residents can make reservations up to seven days in advance. Non-residents can make reservations up to three days in advance. Residents: Free. Non-residents: $40/court for up to four players. Open play for non-residents: $20 for two players. Open play hours: Mon-Fri: 7-11 am, 5-8 pm. Sat-Sun: 8-11 am, 5-8 pm. Reservation hours: Mon-Fri: 11 am-5 pm. Sat-Sun: 11 am-5 pm.",
-    excerpt: "Pickleball court hours, reservations, and fees.",
+    text: "Use the official CourtReserve page to reserve a pickleball court.",
+    excerpt: "Official pickleball court reservation page.",
     actions: [{ id: "courtreserve", label: "Reserve through CourtReserve", url: "https://alpha.gov/courtreserve", actionType: "booking" }],
-    facts: [
-      { id: "weekday-hours", factKey: "pickleball-weekday-hours", type: "time", value: "7:00 a.m.", context: "Pickleball Courts are open weekdays from 7:00 a.m. to dusk." },
-      { id: "fee", factKey: "pickleball-nonresident-fee", type: "money", value: "$40 per court", context: "Non-residents pay $40 per court reservation." },
-    ],
+    facts: [],
   });
-  const result = await answerCommunityQuestion("What are the pickleball court rules?", {
+  const result = await answerCommunityQuestion("How do I reserve a pickle ball court?", {
     index: approvedFixtureIndex([pickleball], { communityName: "Alpha", website: "https://alpha.gov/" }),
     communityId: "alpha",
     answerRulesQuestion: async () => ({
-      answer: "The general park rules apply from 5:00 a.m. to 11:00 p.m.",
-      answerMode: "source-derived-extractive",
-      confidence: { canAnswer: true, confidence: "high" },
+      answer: "I could not verify public court reservations in the rulebook.",
+      answerMode: "source-evidence-boundary",
+      confidence: { canAnswer: false, confidence: "high" },
       sources: [],
     }),
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(result.authorityDecision, "current-facility-operations");
-  assert.match(result.answer, /7 a\.m\..*dusk|seven days|\$40|two hours/is);
-  assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is);
-  assert.equal(result.actions[0].url, "https://alpha.gov/courtreserve");
+  assert.notEqual(result.answerMode, "community-facility-operations");
+  assert.match(result.answer, /CourtReserve/i);
+  assert.doesNotMatch(result.answer, /7\s*(?:a\.m\.|am)|\$40|open play/i);
   assert.equal(result.sources[0].sourceUrl, "https://alpha.gov/418/Pickleball-Courts");
+  assert.equal(result.answerMode, "community-approved-operational");
+});
+
+test("pickleball operational variants with unapproved evidence withhold instead of repeating retired fixed details", async () => {
+  const unreviewed = source({
+    id: "alpha-pickleball-unreviewed",
+    title: "Pickleball Courts",
+    sourceUrl: "https://alpha.gov/418/Pickleball-Courts",
+    sourceType: "facilities",
+    text: "Weekdays 7 am-dusk. Weekends 8 am-dusk. Open play and reservations are available. Residents reserve seven days ahead. Non-residents pay $40 per court.",
+    staleAfter: future,
+  });
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [unreviewed] };
+  for (const question of [
+    "What hours are the pickleball courts open?",
+    "Is there weekend open play for pickle ball?",
+    "How do I reserve a pickleball court?",
+    "What are resident and nonresident pickleball prices?",
+  ]) {
+    const result = await answerCommunityQuestion(question, {
+      index, communityId: "alpha", planCommunitySearch: false, synthesizeCommunityAnswer: false,
+      answerRulesQuestion: async () => ({ answer: "I could not verify that in the rulebook.", answerMode: "source-evidence-boundary", confidence: { canAnswer: false }, sources: [] }),
+    });
+    assert.equal(result.answerStatus, "source-unavailable", question);
+    assert.doesNotMatch(result.answer, /7\s*(?:a\.m\.|am)[\s\S]*dusk|\$40|seven days ahead|open play/i, question);
+    assert.equal(result.actions[0].url, "https://alpha.gov/418/Pickleball-Courts", question);
+  }
+});
+
+test("pickleball retrieval does not collide with private-court rules or pool rental fees", async () => {
+  const courts = source({
+    id: "alpha-pickleball-unreviewed", title: "Pickleball Courts", sourceUrl: "https://alpha.gov/pickleball", sourceType: "facilities",
+    text: "Weekdays 7 am-dusk. Non-residents pay $40 per court.",
+  });
+  const pool = source({
+    id: "alpha-pool", title: "Pool rental", sourceUrl: "https://alpha.gov/pool", sourceType: "facilities",
+    text: "Pool rental costs $125 per hour.",
+  });
+  const privateRule = { id: "private-court-rule", title: "Private sport courts", sourceUrl: "https://alpha.gov/rules/courts", text: "Private backyard pickleball courts require DRC approval.", isOfficialResource: true };
+  const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [courts, pool] };
+  const privateResult = await answerCommunityQuestion("Can I build a pickleball court in my backyard?", {
+    index, communityId: "alpha", planCommunitySearch: false,
+    answerRulesQuestion: async () => ({ answer: "Private backyard pickleball courts require DRC approval.", answerMode: "source-derived-extractive", confidence: { canAnswer: true }, sources: [privateRule] }),
+  });
+  assert.match(privateResult.answer, /DRC approval/i);
+  assert.doesNotMatch(privateResult.answer, /7\s*(?:a\.m\.|am)|\$40|\$125/i);
+
+  const feeResult = await answerCommunityQuestion("What does pickleball cost?", {
+    index, communityId: "alpha", planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({ answer: "I could not verify that in the rulebook.", answerMode: "source-evidence-boundary", confidence: { canAnswer: false }, sources: [] }),
+  });
+  assert.equal(feeResult.answerStatus, "source-unavailable");
+  assert.doesNotMatch(feeResult.answer, /\$125/i);
+});
+
+test("approved pickleball claims do not leak between communities", async () => {
+  const alphaCourt = source({ id: "alpha-pickleball", communityId: "alpha", title: "Pickleball Courts", sourceUrl: "https://alpha.gov/pickleball", sourceType: "facilities", text: "Alpha pickleball hours are 7 a.m. to dusk." });
+  const betaIndex = approvedFixtureIndex([alphaCourt], { communityId: "beta", communityName: "Beta", website: "https://beta.gov/" });
+  const result = await answerCommunityQuestion("What are the pickleball court hours?", {
+    index: betaIndex, communityId: "beta", planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({ answer: "I could not verify that in the rulebook.", answerMode: "source-evidence-boundary", confidence: { canAnswer: false }, sources: [] }),
+  });
+  assert.doesNotMatch(result.answer, /7 a\.m\.|Alpha/i);
+  assert.equal(result.answerStatus, "could-not-verify");
 });
 
 test("held-out collision: a facility or form cannot become rule evidence", () => {
