@@ -1,9 +1,10 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { searchCommunityIndex } = require('../lib/community-search');
-const { sourceReviewGate } = require('../lib/community-source-answerability');
+const { canonicalProjectionEntries, sourceReviewGate } = require('../lib/community-source-answerability');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
 const { applyReviewDecisions, buildFactLedger } = require('../lib/community-truth');
+const canonicalLedger = require('../data/canonical-source-ledger.json');
 const now = new Date('2026-09-06T22:00:00Z');
 const source = { id: 'water', communityId: 'alpha', sourceUrl: 'https://alpha.gov/water-billing', title: 'Water billing prices',
   sourceType: 'services', connectorType: 'civicplus-pages', contentHash: 'v1', reviewStatus: 'approved',
@@ -36,6 +37,38 @@ test('trusted-baseline labels without a claim decision are never owner approval'
   const index = { ...makeIndex([inherited]), truthStatus: { migrationMode: 'trusted-baseline' } };
   assert.equal(sourceReviewGate(index, now.getTime())(source), false);
   assert.equal(searchCommunityIndex('water billing price', { index, now }).sources.length, 0);
+});
+
+test('canonical scoped water-payment approval projects only its matched action through strict search and answer routes', async () => {
+  const payment = {
+    id: 'water-payment-current', communityId: 'sterling-ranch', sourceType: 'services', connectorType: 'civicplus-pages',
+    sourceUrl: 'https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill',
+    title: 'View and Pay Your Water Bill', contentHash: '3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6',
+    staleAfter: '2099-01-01T00:00:00Z', authorityScore: 1,
+    text: 'Pay your water bill online. Call 303-555-0199 for billing help. Water rates are shown here.',
+    facts: [{ type: 'phone', value: '303-555-0199', context: 'Call 303-555-0199 for billing help.', approvalClaim: 'contacts' }],
+    actions: [
+      { label: 'Pay your water bill', url: 'https://payments.example.test/water', approvalClaim: 'direct-water-payment-link', actionType: 'payment' },
+      { label: 'Billing help', url: 'https://payments.example.test/help', approvalClaim: 'contacts', actionType: 'contact' },
+    ],
+  };
+  const index = { communityId: 'sterling-ranch', sources: [payment], factLedger: [], canonicalSourceLedger: canonicalLedger, truthStatus: { migrationMode: 'trusted-baseline' } };
+  assert.deepEqual(canonicalProjectionEntries(payment, index).map((entry) => ({ decision: entry.reviewDecisionId, version: entry.sourceVersion })), [{ decision: 'water-payment-direct-link', version: payment.contentHash }]);
+  const searched = searchCommunityIndex('Where can I pay my water bill?', { index, now });
+  assert.equal(searched.sources.length, 1);
+  assert.equal(searched.sources[0].text, 'Pay your water bill');
+  assert.deepEqual(searched.sources[0].facts, []);
+  assert.deepEqual(searched.sources[0].actions.map((action) => action.url), ['https://payments.example.test/water']);
+  const answer = await answerCommunityQuestion('Where can I pay my water bill?', {
+    index, communityId: 'sterling-ranch', isTest: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: () => ({ answer: 'No fallback.', sources: [], actions: [], confidence: { canAnswer: false } }),
+  });
+  assert.equal(answer.confidence.canAnswer, true);
+  assert.ok(answer.actions.some((action) => action.url === 'https://payments.example.test/water'));
+  assert.doesNotMatch(answer.answer, /303-555-0199|rates/i);
+  const changed = searchCommunityIndex('Where can I pay my water bill?', { index: { ...index, sources: [{ ...payment, contentHash: 'f'.repeat(64) }] }, now });
+  assert.equal(changed.sources.length, 0);
+  assert.equal(changed.withheldSources[0].text, '');
 });
 
 test('trash schedule family requires claim approval and mixed pages expose only approved claims and actions', () => {
