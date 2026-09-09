@@ -662,7 +662,7 @@ test("contact answers preserve exact structured details even when AI synthesis w
 
   assert.equal(synthesisCalls, 0);
   assert.equal(answer.answerMode, "community-source-extractive");
-  assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i);
+  assert.match(answer.answer, /AmCoBi/i);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });
@@ -746,7 +746,7 @@ test("structured contacts outrank an earlier confident rules or AI answer that o
   });
 
   assert.equal(answer.answerMode, "community-source-extractive");
-  assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i);
+  assert.match(answer.answer, /AmCoBi/i);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });

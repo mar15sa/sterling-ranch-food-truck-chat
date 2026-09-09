@@ -30,19 +30,19 @@ async function askWithDraft(question, draft) {
   });
 }
 
-test("approved-landscaper questions withhold conflicted names but preserve the official directory", async () => {
+test("approved-landscaper questions preserve the registration requirement without naming unverified companies", async () => {
   const answer = await ask("list of approved landscapers");
-  assert.equal(answer.answerMode, "community-proactive-directory-review");
-  assert.match(answer.answer, /can.t safely repeat company names.*being reconfirmed/i);
+  assert.equal(answer.answerMode, "source-derived-structured");
+  assert.match(answer.answer, /official approved-landscapers directory/i);
   assert.doesNotMatch(answer.answer, /AAA Landscaping|A Complete Exterior|AGR Landscape/i);
-  assert.match(JSON.stringify(answer.actions), /414\/Approved-Landscapers-List/);
+  assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
 });
 
-test("water-usage portal questions provide the direct UtilityHawk login and capabilities", async () => {
+test("water-usage portal questions distinguish meter capabilities from a current resident-login process", async () => {
   const answer = await ask("Internet access for water usage");
-  assert.equal(answer.answerMode, "community-proactive-account");
-  assert.match(answer.answer, /daily, weekly, or monthly usage thresholds/i);
-  assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us\/login/);
+  assert.equal(answer.answerMode, "source-derived-structured");
+  assert.match(answer.answer, /does not provide a resident login link or current app instructions/i);
+  assert.ok(answer.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
 });
 
 test("AI goal-and-subject routing sends payment questions to the current portal, not delinquency policy", async () => {
@@ -174,19 +174,21 @@ test("a grounded but question-mismatched AI draft falls back safely", async () =
   assert.match(mismatched.directAnswer, /open the live rental catalog.*choose.*select/i);
 });
 
-test("trash-return questions combine the collection page with the storage rule", async () => {
+test("trash-return questions retain the official storage limit when no removal time is published", async () => {
   const answer = await ask("When do I need to bring my recycling cans in?");
-  assert.equal(answer.answerMode, "community-proactive-trash-storage");
-  assert.match(answer.answer, /by the end of pickup day/i);
-  assert.match(answer.answer, /screened storage location/i);
+  assert.equal(answer.answerMode, "source-derived-extractive");
+  assert.match(answer.answer, /does not give a specific curb-placement or removal time/i);
+  assert.match(answer.answer, /screened area behind the wing fence/i);
+  assert.ok(answer.sources.some((source) => /Resolution-No-2024-11-02/.test(source.sourceUrl || "")));
 });
 
-test("generic DRC submission questions give the destination, form, and next normal deadline", async () => {
+test("generic DRC submission questions give the approved application destination and required materials", async () => {
   const answer = await ask("I need to submit something to the DRC. How do I do that?");
-  assert.equal(answer.answerMode, "community-proactive-drc");
-  assert.match(answer.answer, /residentsubmit@sterlingranchcab\.com/i);
-  assert.match(answer.answer, /Friday, September 11, 2026.*Thursday, September 17, 2026/i);
+  assert.equal(answer.answerMode, "official-resource");
+  assert.match(answer.answer, /official DRC application page/i);
+  assert.match(answer.answer, /site plan, dimensions, materials, colors/i);
   assert.match(JSON.stringify(answer.actions), /201\/Design-Review-Documents/);
+  assert.ok(answer.sources.some((source) => /\/201\/Design-Review-Documents/.test(source.sourceUrl || "")));
   assert.deepEqual(nextDrcReview(new Date("2026-08-31T18:00:00Z")), { meeting: "2026-09-17", deadline: "2026-09-11" });
 });
 

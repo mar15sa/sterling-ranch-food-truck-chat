@@ -46,8 +46,11 @@ const EXAMPLES = [
   },
   {
     question: "Who do I contact about water billing?",
-    withheldConflict: true,
-    forbidden: ["American Conservation and Billing Solutions", "AmCoBi", "ClientCare@AmCoBi.com"],
+    verdict: "informational",
+    includes: ["AmCoBi", "(833) 772-2240", "ClientCare@AmCoBi.com"],
+    requiresAction: true,
+    requiresSections: false,
+    waterBillingContact: true,
   },
   {
     question: "Which food truck is here tomorrow?",
@@ -75,14 +78,6 @@ for (const example of EXAMPLES) {
         menu: { links: [], items: [] },
       }) : undefined,
     });
-    if (example.withheldConflict) {
-      assert.equal(result.confidence?.canAnswer, false);
-      assert.equal(result.answerMode, "community-freshness-withheld");
-      assert.equal(result.answerStatus, "source-unavailable");
-      for (const phrase of example.forbidden) assert.doesNotMatch(result.answer, new RegExp(phrase, "i"));
-      assert.match(result.actions[0].url, /\/206\/Water-Billing/);
-      return;
-    }
     assert.equal(result.confidence?.canAnswer, true);
     assert.equal(result.answerVerdict, example.verdict);
     assert.ok(result.answer.length <= 1000, `Answer is ${result.answer.length} characters long.`);
@@ -107,6 +102,12 @@ for (const example of EXAMPLES) {
       assert.ok(result.actions.some((action) => action.actionType === "booking" && /secure\.rec1\.com/i.test(action.url || "")));
       assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl || "")));
       assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i);
+    }
+    if (example.waterBillingContact) {
+      assert.equal(result.answerMode, "community-source-extractive");
+      assert.equal(result.answerStatus, "verified");
+      assert.match(result.actions[0].url, /\/334\/Water-Billing-Payment-Options/);
+      assert.ok(result.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
     }
     const longestLine = Math.max(...result.answer.split("\n").map((line) => line.length));
     assert.ok(
