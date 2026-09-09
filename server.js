@@ -48,6 +48,7 @@ const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
+const { calendarConfiguration, upcomingCommunityEvents } = require("./lib/community-calendar-view");
 const { getCommunityEvents } = require("./lib/community-events");
 const { createConnectorAdapters } = require("./lib/community-connector-adapter");
 const { getCommunityPoolStatus } = require("./lib/community-pool-status");
@@ -5095,6 +5096,16 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (url.pathname === "/community-calendar") {
+      const { action } = calendarConfiguration(getCommunityProfile());
+      res.writeHead(302, { ...SECURITY_HEADERS, location: action.url, "cache-control": "no-store" });
+      res.end();
+      return;
+    }
+    if (url.pathname === "/api/community/events") {
+      sendJson(res, 200, await upcomingCommunityEvents(getCommunityProfile()));
+      return;
+    }
     if (url.pathname === "/api/schedule") {
       await handleSchedule(req, res, url);
       return;

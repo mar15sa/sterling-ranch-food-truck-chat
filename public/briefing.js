@@ -55,47 +55,55 @@
     link.append(copy, arrow);
     return link;
   }
+  function calendarFallback(container) {
+    const link = document.createElement("a");
+    link.href = "/community-calendar";
+    link.textContent = "Open official community calendar ↗";
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    container.append(" ", link);
+  }
   const events = document.querySelector("#briefing-events");
   if (events) {
-    const [year, month] = dateKey.split("-").map(Number);
-    const next = new Date(Date.UTC(year, month, 1));
-    Promise.all([
-      read(`/api/schedule?year=${year}&month=${month}`),
-      read(
-        `/api/schedule?year=${next.getUTCFullYear()}&month=${next.getUTCMonth() + 1}`,
-      ),
-    ])
-      .then((calendars) => {
-        const entries = new Map();
-        for (const data of calendars) {
-          for (const [date, name] of Object.entries(data.schedule || {}))
-            entries.set(date, name);
-          for (const [date, event] of Object.entries(data.localEvents || {}))
-            if (event.trucks?.length)
-              entries.set(date, event.trucks.join(" · "));
-        }
-        const upcoming = [...entries]
-          .filter(([date]) => date >= dateKey)
-          .sort(([a], [b]) => a.localeCompare(b))
-          .slice(0, events.hasAttribute("data-full-calendar") ? 7 : 3);
+    read("/api/community/events")
+      .then((data) => {
         events.replaceChildren();
-        for (const [date, name] of upcoming)
+        for (const event of (data.events || []).slice(
+          0,
+          events.hasAttribute("data-full-calendar") ? 7 : 3,
+        )) {
+          const time = /^\d{2}:\d{2}$/.test(event.time || "")
+            ? new Intl.DateTimeFormat("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+                timeZone: "UTC",
+              }).format(new Date(`2000-01-01T${event.time}:00Z`))
+            : "";
           events.append(
             row(
-              name,
-              "View schedule & truck details",
-              "/food-truck?date=" + encodeURIComponent(date),
-              date,
+              event.title,
+              [time, event.location].filter(Boolean).join(" · "),
+              event.url,
+              event.date,
             ),
           );
-        if (!upcoming.length)
-          events.textContent =
-            "No upcoming food truck dates were listed in the calendar months checked. Open the community calendar for other events.";
+        }
+        if (!data.events?.length || data.status === "partial") {
+          const note = document.createElement("p");
+          note.textContent =
+            data.status === "empty"
+              ? "No upcoming events are listed in the next seven days. Check the official calendar for updates."
+              : "Some calendar listings couldn’t load just now. Check the official calendar for the latest details.";
+          calendarFallback(note);
+          events.append(note);
+        }
       })
       .catch(() => {
         events.textContent =
-          "Upcoming dates couldn’t load just now. Open the community calendar or try again later.";
-      });
+          "Upcoming events couldn’t load just now. Try again later.";
+        calendarFallback(events);
+      })
+      .finally(() => events.setAttribute("aria-busy", "false"));
   }
   if (document.querySelector("#briefing-truck"))
     read("/api/ask?date=" + encodeURIComponent(dateKey))
