@@ -69,3 +69,27 @@ test("stale or degraded status evidence cannot produce a current-status answer",
   });
   assert.notEqual(answer.answerMode, "community-live-status");
 });
+
+test("Assistant requires same-community, current status evidence and a claim bound to that evidence", async () => {
+  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Open")) });
+  async function ask(status) {
+    return answerCommunityQuestion("Is the pool open right now?", {
+      interpretationMode: "structured", communityId: "sterling-ranch", communityProfile: sterling,
+      planCommunitySearch: async () => plan(), getPoolStatus: async () => status, synthesizeCommunityAnswer: false,
+    });
+  }
+  const healthy = await ask(live);
+  assert.equal(healthy.answerMode, "community-live-status");
+  const noEnvelope = { ...live, evidenceEnvelope: undefined };
+  assert.notEqual((await ask(noEnvelope)).answerMode, "community-live-status");
+  const wrongCommunity = structuredClone(live);
+  wrongCommunity.evidenceEnvelope.communityId = "riverton";
+  wrongCommunity.evidenceEnvelope.evidence[0].communityId = "riverton";
+  assert.notEqual((await ask(wrongCommunity)).answerMode, "community-live-status");
+  const expired = structuredClone(live);
+  expired.evidenceEnvelope.evidence[0].staleAfter = "2020-01-01T00:00:00.000Z";
+  assert.notEqual((await ask(expired)).answerMode, "community-live-status");
+  const mismatchedClaim = structuredClone(live);
+  mismatchedClaim.evidenceEnvelope.claims[0].controllingEvidenceId = "sterling-ranch:pool-status:other";
+  assert.notEqual((await ask(mismatchedClaim)).answerMode, "community-live-status");
+});

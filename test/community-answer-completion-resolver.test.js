@@ -163,6 +163,7 @@ test("live pool status remains verified while unapproved dated hours are withhel
       residentAction: "Normal entry rules apply.",
       sourceUrl: "https://sterlingranchcab.com/pool",
       checkedAt: TEST_NOW.toISOString(),
+      evidenceEnvelope: { communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" }, coverage: { covered: ["status"] }, evidence: [{ evidenceId: "sterling-ranch:pool-status:current", communityId: "sterling-ranch", staleAfter: "2026-09-08T19:00:00.000Z" }], claims: [{ facet: "status", text: "Green", controllingEvidenceId: "sterling-ranch:pool-status:current" }] },
     }),
   });
   assert.equal(status.answerStatus, "verified");

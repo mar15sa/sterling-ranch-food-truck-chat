@@ -343,13 +343,15 @@ test("a current pool-status question still uses the live status connector", asyn
   const answer = await answerCommunityQuestion("Is the pool open right now?", {
     interpretationMode: "structured",
     now: NOW,
+    communityId: "sterling-ranch",
+    communityProfile,
     planCommunitySearch: async () => plan({
       intent: "status", goal: "status", goals: ["status"], subject: "current pool status",
       requestedDetails: ["status"], searchQueries: ["current pool status"],
     }),
     getPoolStatus: async () => {
       poolCalls += 1;
-      return { headline: "Green", summary: "The pool is currently open.", residentAction: "Normal entry rules apply.", sourceUrl: "https://sterlingranchcab.com/pool", checkedAt: NOW.toISOString() };
+      return { headline: "Green", summary: "The pool is currently open.", residentAction: "Normal entry rules apply.", sourceUrl: "https://sterlingranchcab.com/pool", checkedAt: NOW.toISOString(), evidenceEnvelope: { communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" }, coverage: { covered: ["status"] }, evidence: [{ evidenceId: "sterling-ranch:pool-status:current", communityId: "sterling-ranch", staleAfter: "2026-09-01T19:00:00.000Z" }], claims: [{ facet: "status", text: "Green", controllingEvidenceId: "sterling-ranch:pool-status:current" }] } };
     },
   });
   assert.equal(poolCalls, 1);
