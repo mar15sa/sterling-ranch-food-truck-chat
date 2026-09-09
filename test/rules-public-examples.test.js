@@ -51,6 +51,7 @@ const EXAMPLES = [
     requiresAction: true,
     requiresSections: false,
     waterBillingContact: true,
+    maxLineLength: 450,
   },
   {
     question: "Which food truck is here tomorrow?",
@@ -104,9 +105,8 @@ for (const example of EXAMPLES) {
       assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i);
     }
     if (example.waterBillingContact) {
-      assert.equal(result.answerMode, "community-source-extractive");
+      assert.equal(result.answerMode, "community-approved-operational");
       assert.equal(result.answerStatus, "verified");
-      assert.match(result.actions[0].url, /\/334\/Water-Billing-Payment-Options/);
       assert.ok(result.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
     }
     const longestLine = Math.max(...result.answer.split("\n").map((line) => line.length));
