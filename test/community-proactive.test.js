@@ -38,13 +38,110 @@ test("approved-landscaper questions withhold unapproved directory prose and comp
   assert.ok(answer.actions.some((action) => /\/414\/Approved-Landscapers-List/.test(action.url)));
 });
 
-test("legacy water-usage wording uses approved projections without inventing a missing portal claim", async () => {
+test("legacy water-usage wording withholds the pending monitoring source instead of borrowing payment approval", async () => {
   const answer = await ask("Internet access for water usage");
-  assert.equal(answer.answerMode, "community-approved-operational");
-  assert.equal(answer.answerStatus, "verified");
-  assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
-  assert.doesNotMatch(answer.answer, /does not provide a resident login link|no (?:portal|login)/i);
-  assert.ok(answer.sources.filter((source) => !source.connectorType?.includes("live")).every((source) => source.canonicalScopedProjection));
+  assert.equal(answer.answerMode, "community-access-withheld");
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.confidence?.canAnswer, false);
+  assert.ok(answer.sources.some((source) => /\/m\/faq\?cat=16/.test(source.sourceUrl || "")));
+  assert.doesNotMatch(answer.answer, /Utility ?Hawk|threshold|usage alerts?/i);
+  assert.doesNotMatch(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
+});
+
+test("structured routing separates online water-usage access from billing and payment", async () => {
+  const structuredAnswer = (question, plan) => answerCommunityQuestion(question, {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: async () => plan,
+    synthesizeCommunityAnswer: false,
+    now: new Date("2026-09-09T02:00:00Z"),
+  });
+  const billingBiasedPlan = {
+    intent: "services",
+    goal: "contact",
+    goals: ["contact"],
+    subject: "Water Billing & Payment Options",
+    requestedDetails: ["contact"],
+    searchQueries: ["water billing payment options", "AmCoBi water billing contact"],
+    scope: "community",
+  };
+
+  for (const question of [
+    "Internet access for water usage",
+    "How can I view my water usage online?",
+    "Where is the portal for my water consumption?",
+    "How do I access my water use account?",
+    "Can I monitor our water consumption on the web?",
+  ]) {
+    const answer = await structuredAnswer(question, billingBiasedPlan);
+    assert.equal(answer.routingPlan.goal, "account-access", question);
+    assert.deepEqual(answer.routingPlan.goals, ["account-access"], question);
+    assert.equal(answer.routingPlan.subject, "water usage monitoring account access", question);
+    assert.deepEqual(answer.routingPlan.searchQueries, ["water usage monitoring", "water usage account access"], question);
+    assert.deepEqual(answer.routingPlan.requestedDetails, ["action"], question);
+    assert.equal(answer.answerMode, "community-access-withheld", question);
+    assert.equal(answer.answerStatus, "source-unavailable", question);
+    assert.equal(answer.confidence?.canAnswer, false, question);
+    assert.ok(answer.sources.some((source) => /\/m\/faq\?cat=16/.test(source.sourceUrl || "")), question);
+    assert.doesNotMatch(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i, question);
+    assert.doesNotMatch(answer.answer, /ClientCare@AmCoBi\.com|833[-)\s]772[-\s]2240/i, question);
+    assert.doesNotMatch(answer.answer, /Utility ?Hawk|threshold|usage alerts?|view (?:your|my) water usage|monitor (?:your|my) water usage/i, question);
+  }
+
+  const paymentPageOnlyIndex = {
+    ...communityIndex,
+    sources: communityIndex.sources.filter((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")),
+  };
+  const paymentPageOnly = await answerCommunityQuestion("How can I view my water usage online?", {
+    index: paymentPageOnlyIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion: false,
+    planCommunitySearch: async () => billingBiasedPlan,
+    synthesizeCommunityAnswer: false,
+    now: new Date("2026-09-09T02:00:00Z"),
+  });
+  assert.equal(paymentPageOnly.answerMode, "community-access-withheld");
+  assert.equal(paymentPageOnly.answerStatus, "source-unavailable");
+  assert.equal(paymentPageOnly.confidence?.canAnswer, false);
+  assert.doesNotMatch(paymentPageOnly.answer, /Utility ?Hawk|Pay Online|monitor|threshold|usage alerts?/i);
+  assert.doesNotMatch(JSON.stringify(paymentPageOnly.actions), /srcab\.utilityhawk\.us/i);
+
+  const secondCommunityIndex = {
+    ...paymentPageOnlyIndex,
+    communityId: "pine-creek",
+    communityName: "Pine Creek",
+    website: "https://pine-creek.example.test/",
+    sources: paymentPageOnlyIndex.sources.map((source) => ({ ...source, communityId: "pine-creek" })),
+  };
+  const secondCommunity = await answerCommunityQuestion("How can I view my water usage online?", {
+    index: secondCommunityIndex,
+    communityId: "pine-creek",
+    answerRulesQuestion: false,
+    planCommunitySearch: async () => billingBiasedPlan,
+    synthesizeCommunityAnswer: false,
+    now: new Date("2026-09-09T02:00:00Z"),
+  });
+  assert.equal(secondCommunity.answerMode, "community-access-withheld");
+  assert.equal(secondCommunity.answerStatus, "source-unavailable");
+  assert.equal(secondCommunity.authorityDecision, "source-approval-required");
+  assert.match(JSON.stringify(secondCommunity), /Pine Creek|pine-creek\.example\.test/);
+  assert.doesNotMatch(JSON.stringify(secondCommunity), /Sterling|Utility ?Hawk|srcab\.utilityhawk|AmCoBi/i);
+
+  const payment = await structuredAnswer("Can I pay my water bill online?", {
+    ...billingBiasedPlan,
+    goal: "payment",
+    goals: ["payment"],
+    requestedDetails: ["action"],
+    searchQueries: ["water bill online payment"],
+  });
+  assert.equal(payment.routingPlan.goal, "payment");
+  assert.match(payment.answer, /Utility Hawk[\s\S]*Pay Online/i);
+
+  const billingContact = await structuredAnswer("Who do I contact about water billing?", billingBiasedPlan);
+  assert.equal(billingContact.routingPlan.goal, "contact");
+  assert.match(billingContact.answer, /AmCoBi[\s\S]*ClientCare@AmCoBi\.com/i);
 });
 
 test("operational portal questions no longer use a topic-specific proactive answer", () => {

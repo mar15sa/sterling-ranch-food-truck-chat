@@ -42,6 +42,11 @@ test("specification detection distinguishes requested paint details from the act
   assert.deepEqual(deterministicRequestedDetails("What color can I paint my garage door?"), ["specification"]);
 });
 
+test("water-usage access detection preserves generic online utility portal actions", () => {
+  assert.deepEqual(deterministicRequestedDetails("How can I monitor my water usage online?"), ["action"]);
+  assert.deepEqual(deterministicRequestedDetails("Online access for my utility bill"), ["action"]);
+});
+
 function calendarHtml(events = []) {
   return events.map((event) => `<h2 class="title">${event.category || "Community Events"}</h2>
     <a id="eventTitle_${event.id}" href="/Calendar.aspx?EID=${event.id}"><span>${event.title}</span></a>
