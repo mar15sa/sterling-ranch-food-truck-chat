@@ -40,6 +40,8 @@ test('rules supplements reference only the four owner decisions they govern', ()
 
 test('reviewed supplement sections expose only the approved evidence', async () => {
   const index = await loadRulesIndex();
+  const generatedSections = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'rules-supplement-sections.json'), 'utf8'));
+  const factCatalog = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'rules-fact-catalog.json'), 'utf8'));
   const water = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-water-sewer-stormwater-rates-2026::1');
   const tap = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-tap-facility-fees-2026::1');
   const cab = index.documents.filter((entry) => entry.parentSupplementId === 'supplement-cab-service-fees-2026::1');
@@ -55,6 +57,16 @@ test('reviewed supplement sections expose only the approved evidence', async () 
   assert.doesNotMatch(cab.map((entry) => entry.text).join(' '), /effective|take effect/i);
   assert.match(delinquency[0].text, /this resolution's fee schedule/i);
   assert.doesNotMatch(delinquency.map((entry) => entry.text).join(' '), /no newer amendment/i);
+
+  const generatedReviewed = generatedSections.filter((entry) => [
+    'supplement-water-sewer-stormwater-rates-2026::1',
+    'supplement-tap-facility-fees-2026::1',
+    'supplement-cab-service-fees-2026::1',
+  ].includes(entry.parentSupplementId));
+  assert.ok(generatedReviewed.every((entry) => entry.ownerReviewApplied));
+  assert.doesNotMatch(generatedReviewed.map((entry) => entry.text).join(' '), /master[ -]?meter|commercial|nonresidential|irrigation|public school|pool/i);
+  const reviewedFacts = factCatalog.facts.filter((fact) => /supplement-(?:water-sewer-stormwater-rates|tap-facility-fees|cab-service-fees)-2026/.test(fact.sourceId || ''));
+  assert.doesNotMatch(JSON.stringify(reviewedFacts), /master[ -]?meter|commercial|nonresidential|irrigation|public school|pool/i);
 });
 
 test('answers allow approved fee rows and withhold unapproved scopes', async () => {
@@ -73,6 +85,11 @@ test('answers allow approved fee rows and withhold unapproved scopes', async () 
   const cabDate = await answerRulesQuestion('When do the 2026 CAB fees take effect?', options);
   assert.equal(cabDate.answerMode, 'owner-review-scope-unavailable');
   assert.match(cabDate.answer, /can.t verify a standalone effective date/i);
+
+  const poolRental = await answerRulesQuestion('What is the pool rental fee?', options);
+  assert.notEqual(poolRental.answerMode, 'owner-review-scope-unavailable');
+  assert.match(poolRental.answer, /Great Hall|Pavilions/i);
+  assert.ok(poolRental.sources.some((source) => /^Sec\. 13-2\. - Community facility use and rental fees/i.test(source.title)));
 
   const unpaidWater = await answerRulesQuestion('What happens if my water bill is unpaid?', options);
   assert.match(unpaidWater.answer, /Disconnect Notice|last Wednesday/i);
