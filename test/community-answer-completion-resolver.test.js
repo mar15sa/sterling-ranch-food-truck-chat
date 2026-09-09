@@ -137,7 +137,7 @@ test("pool status and holiday-hours variants cannot use a static season page as 
     });
     assert.notEqual(answer.answerStatus, "verified", question);
     assert.notEqual(answer.completion.outcome, "complete", question);
-    assert.deepEqual(answer.completion.requestedDetails, ["hours", "status"], question);
+    assert.deepEqual(answer.completion.requestedDetails, ["status", "hours"], question);
     assert.deepEqual(answer.completion.resolvedDetails, [], question);
     assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key).sort(), ["hours", "status"], question);
     assert.ok(answer.completion.missingDetails.every((detail) => detail.reason === "missing-evidence"), question);
@@ -191,6 +191,22 @@ test("pool status alone and dated Labor Day hours remain verified", async () => 
   assert.equal(holidayHours.answerStatus, "verified");
   assert.match(holidayHours.answer, /5:00 am/i);
   assert.match(holidayHours.answer, /8:45 pm/i);
+});
+
+test("only an active live-status source can resolve a current-status facet", () => {
+  const { sourceCanResolveRequestedDetail } = require("../lib/community-search");
+  const seasonalFacilityPage = {
+    connectorType: "civicplus-pages",
+    sourceType: "services",
+  };
+  const liveStatus = {
+    connectorType: "live-status",
+    sourceType: "status",
+  };
+
+  assert.equal(sourceCanResolveRequestedDetail(seasonalFacilityPage, "hours"), true);
+  assert.equal(sourceCanResolveRequestedDetail(seasonalFacilityPage, "status"), false);
+  assert.equal(sourceCanResolveRequestedDetail(liveStatus, "status"), true);
 });
 
 test("held-out shed permission and fee variants preserve the rule and expose the unresolved fee", async () => {
