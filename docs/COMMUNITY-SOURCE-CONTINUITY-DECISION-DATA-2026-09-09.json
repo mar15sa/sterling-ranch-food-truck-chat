@@ -130,7 +130,7 @@
       "proposalBoundary": "State only the captured threshold and alert capabilities. Do not use this card to establish payment terms, rates, or a separately approved payment/login scope.",
       "current": "The strict gate withholds UtilityHawk monitoring features.",
       "proposed": "Say UtilityHawk supports monthly dollar thresholds for water and irrigation, daily/weekly/monthly usage thresholds with trend notifications, and selectable text, email, or phone alerts.",
-      "source": { "url": "https://sterlingranchcab.com/m/faq", "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8", "contentHash": "f2dfbc4119948dd52854e4b6366f70875e99344adb209f31f22ea82b07d20bdc", "checkedAt": "2026-09-08T18:35:55.481Z", "excerpt": "Set monthly threshold values in dollars for water and irrigation usage. Set Daily/Weekly/Monthly usage thresholds and get notified if you are trending to exceed. Provides timely alerts when problems are detected." },
+      "source": { "url": "https://sterlingranchcab.com/m/faq", "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8", "contentHash": "f2dfbc4119948dd52854e4b6366f70875e99344adb209f31f22ea82b07d20bdc", "checkedAt": "2026-09-08T18:35:55.481Z", "excerpts": ["Set monthly threshold values in dollars for water and irrigation usage. Set Daily/Weekly/Monthly usage thresholds and get notified if you are trending to exceed. Provides timely alerts when problems are detected.", "You can specify how you want to be contacted - text, e-mail, or phone."] },
       "excludedAdjacentClaims": ["water rates", "payment terms", "billing contacts", "electric or gas service"],
       "authorityRole": "Official CAB FAQ; scoped account-feature statement"
     },
