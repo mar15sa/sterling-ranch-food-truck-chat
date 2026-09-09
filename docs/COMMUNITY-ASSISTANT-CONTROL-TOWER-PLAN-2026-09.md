@@ -10,16 +10,16 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 
 ## Fixed progress ledger
 
-The audited baseline is 63 of 100 points. The denominator stays fixed; newly discovered risks are recorded separately instead of silently lowering completed work. Points increase only after the change is integrated and its required checks pass.
+The current audited score is 69 of 100 points. The denominator stays fixed; newly discovered risks are recorded separately instead of silently lowering completed work. Points increase only after the change is integrated and its required checks pass. This update adds six points to the 63-point baseline: two for removing the reachable fixed pickleball path, three for completing the source-governed food-truck migration, and one for renewing the exact approved source versions without changing approval scope.
 
 | Area | Complete | Closure still required |
 | --- | ---: | --- |
-| Answer quality and ambiguity | 16/25 | Remove or evidence-gate every reachable static answer path; pass the family, collision, degradation, and hosted checks. |
+| Answer quality and ambiguity | 18/25 | Remove or evidence-gate the remaining reachable static answer paths; pass the family, collision, degradation, and hosted checks. |
 | Durable engineering priorities | 14/15 | Keep the permanent rules enforced in every implementation and release review. |
-| Reusable connector architecture | 11/20 | Finish food-truck, pool-status, and facility parity without Sterling-only answer logic. |
-| Source completeness and decisions | 8/25 | Import only approved exact decisions, resolve or withhold conflicts, and work down the eligible-page disposition backlog. |
+| Reusable connector architecture | 14/20 | Finish pool-status and facility parity without Sterling-only answer logic. |
+| Source completeness and decisions | 9/25 | Import only approved exact decisions, resolve or withhold conflicts, and work down the eligible-page disposition backlog. |
 | Approved UI and feedback controls | 14/15 | Promote the already approved staging implementation with the accuracy release after its gates pass. |
-| **Total** | **63/100** | |
+| **Total** | **69/100** | |
 
 ## Workstream 1: answer quality, ambiguity, and incorrect shortcuts
 
@@ -36,7 +36,7 @@ The audited baseline is 63 of 100 points. The denominator stays fixed; newly dis
 - Keep live connector answers narrow to current facts they actually observed.
 - Reject unsupported AI language and unsupported template language sentence by sentence.
 
-**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, and the shared water-usage-versus-billing routing repair are integrated in release candidate PR #65. The broad local gate passes 525 tests, 140 rules evaluations, and 7 unseen evaluations. A later public-path audit proved that the earlier shortcut-removal claim was incomplete: a hard-coded pickleball answer, a legacy static food-truck data path, and fixed pool-color interpretations remain release blockers. Food-truck remediation is in final review; pickleball removal and a profile-driven pool-status envelope are queued in that order because they overlap in the Assistant core. The exact monitoring source remains withheld pending owner approval, so water-monitoring questions fail closed instead of borrowing payment authority. Production still uses the earlier baseline behavior.
+**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, and the shared water-usage-versus-billing routing repair are integrated in release candidate PR #65. The reachable fixed pickleball answer has been removed. The Community Assistant food-truck path now ignores historical local event overrides and static menu registries and uses the configured official live calendar instead. The broad combined gate passes 535 tests, 140 rules evaluations, 7 unseen evaluations, and the 122-question resident corpus; the final Community Assistant release check correctly holds on four pending exact source decisions rather than inventing those answers. Fixed pool-color interpretations remain the next release blocker. The exact monitoring source remains withheld pending owner approval, so water-monitoring questions fail closed instead of borrowing payment authority. Production still uses the earlier baseline behavior.
 
 **Completion evidence:** Former shortcut families cannot be unlocked by full-page approval; changed hashes withdraw claims; partial compound answers retain independent verified parts; representative rule, facility, payment, contact, status, event, food-truck, and trash families pass normal and degraded tests; exact staging test traffic passes with AI composition observed where expected.
 
@@ -63,7 +63,7 @@ The audited baseline is 63 of 100 points. The denominator stays fixed; newly dis
 - Current transaction or process source: booking, payment, registration, submission, and current operational fees.
 - Action link: where to complete the already established step; it cannot prove the underlying rule or amount.
 
-**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. Waste scheduling now uses the same contract: Sterling-specific endpoints, locations, offsets, labels, actions, and degradation behavior live in the community profile; every displayed area date requires fresh operational evidence; unsupported holiday wording and the uncited fixed bin instruction are withheld. The food-truck migration has passed its first broad checks and is being tightened so the Assistant cannot use legacy event overrides, static menu data, an unrelated same-site page, an out-of-year schedule, or an unrecognized calendar layout as verified evidence. Pool status and facilities still need full envelope parity and held-out degradation tests.
+**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. Waste scheduling uses the same contract: Sterling-specific endpoints, locations, offsets, labels, actions, and degradation behavior live in the community profile; every displayed area date requires fresh operational evidence; unsupported holiday wording and the uncited fixed bin instruction are withheld. The Community Assistant food-truck path now uses its community profile and exact configured official calendar, rejects alternate same-host pages, unsupported years, and malformed schedule layouts, and withholds menus and prices until exact vendor identities and URLs are reviewed. The standalone food-truck page retains its existing service. Pool status and facilities still need full envelope parity and held-out degradation tests.
 
 **Completion evidence:** Each active connector emits the common evidence envelope; every final claim retains its controlling source role; source/action data cannot cross communities; mixed-claim tests preserve separate authorities; specialist handoffs remain useful; no Sterling Ranch URL, label, village mapping, or facility assumption is required in shared core logic.
 
@@ -73,7 +73,7 @@ The audited baseline is 63 of 100 points. The denominator stays fixed; newly dis
 
 **Decision:** Preserve safe approved answers while completing the larger source inventory in small evidence-bound batches. Captured, indexed, or official does not mean approved. Do not combine counts from different crawl snapshots.
 
-**Current status:** The exact staging candidate reports 268 source records, 1,510 discovered URLs, 1,079 eligible URLs, an 894-page inventory backlog, 18 approved facts, 624 candidate facts, 17 conflicts, and 1,842 pending review items including 1,087 sensitive items. Full coverage is not achieved. The strict branch imports the owner's water, fee, payment, billing, and delinquency decisions only within their stated boundaries. The repaired exact-version verifier revalidated all 46 currently due approved URLs with no review-required result and without changing the approved fingerprint.
+**Current status:** The reviewed release bundle has 267 source records, 1,140 discovered URLs, 757 eligible URLs, and a 222-page pending inventory. A separate later live inventory found 1,510 discovered URLs, 1,079 eligible URLs, and an 894-page backlog; those snapshot counts are tracked separately. The strict approval layer contains 18 explicitly approved fact projections. Another 624 trusted-baseline facts remain candidates rather than owner approvals. Seventeen conflicts remain. Full coverage is not achieved. The strict branch imports the owner's water, fee, payment, billing, and delinquency decisions only within their stated boundaries. The exact-version verifier revalidated all 46 approved URLs and renewed 164 due source records with no changed or held source, no broken action, and no change to the approved fingerprint.
 
 **Review order:**
 
