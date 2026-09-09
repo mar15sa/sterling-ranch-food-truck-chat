@@ -6,14 +6,14 @@
     <title>Sterling Ranch Pool Status</title>
     <meta
       name="description"
-      content="A colorblind-friendly Sterling Ranch Society page that translates the official CAB pool status light into plain text."
+      content="A Sterling Ranch Society page that displays the exact current status text from the official CAB source."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sterling Ranch Society" />
     <meta property="og:title" content="Sterling Ranch Pool Status" />
     <meta
       property="og:description"
-      content="Check the Overlook outdoor pool status with words first, color second."
+      content="Check the Overlook outdoor pool’s current official status text."
     />
     <meta property="og:url" content="https://sterlingranchsociety.com/pool" />
     <meta
@@ -24,7 +24,7 @@
     <meta name="twitter:title" content="Sterling Ranch Pool Status" />
     <meta
       name="twitter:description"
-      content="Check the Overlook outdoor pool status with words first, color second."
+      content="Check the Overlook outdoor pool’s current official status text."
     />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/pool.css?v=20260627-pool1" />
@@ -75,8 +75,7 @@
               <p class="pool-kicker">Overlook Outdoor Pool</p>
               <h2 id="poolStatusTitle">Checking status</h2>
               <p class="pool-summary" id="poolStatusSummary">
-                Reading the official CAB pool status and translating the color
-                into words.
+                Reading the exact current status from the official CAB page.
               </p>
               <p class="pool-action-note" id="poolResidentAction">
                 This page will show the status text as soon as it loads.
@@ -103,7 +102,7 @@
 
               <dl class="pool-status-meta" aria-label="Status details">
                 <div>
-                  <dt>CAB signal</dt>
+                  <dt>Official status</dt>
                   <dd id="poolSignalLabel">Checking</dd>
                 </div>
                 <div>
@@ -155,81 +154,6 @@
         </section>
 
         <section
-          class="pool-section pool-legend-section"
-          aria-labelledby="poolLegendTitle"
-        >
-          <div class="pool-section-inner">
-            <div class="pool-section-heading">
-              <p class="pool-kicker">Color key</p>
-              <h2 id="poolLegendTitle">What each CAB signal means</h2>
-            </div>
-            <ul class="pool-legend-list">
-              <li>
-                <span
-                  class="pool-legend-dot"
-                  data-state="open"
-                  aria-hidden="true"
-                ></span>
-                <div>
-                  <strong>Open</strong>
-                  <span>Green Light: open for homeowners and guests.</span>
-                </div>
-              </li>
-              <li>
-                <span
-                  class="pool-legend-dot"
-                  data-state="temporarily-closed"
-                  aria-hidden="true"
-                ></span>
-                <div>
-                  <strong>Temporarily closed</strong>
-                  <span
-                    >Yellow Light: closed for weather or maintenance, with staff
-                    ready to reopen when possible.</span
-                  >
-                </div>
-              </li>
-              <li>
-                <span
-                  class="pool-legend-dot"
-                  data-state="closed"
-                  aria-hidden="true"
-                ></span>
-                <div>
-                  <strong>Closed for the day</strong>
-                  <span>Red Light: no access for homeowners or guests.</span>
-                </div>
-              </li>
-              <li>
-                <span
-                  class="pool-legend-dot"
-                  data-state="event-only"
-                  aria-hidden="true"
-                ></span>
-                <div>
-                  <strong>Event access only</strong>
-                  <span
-                    >Purple Light: only registered event attendees can use the
-                    pool.</span
-                  >
-                </div>
-              </li>
-              <li>
-                <span
-                  class="pool-legend-dot"
-                  data-state="at-capacity"
-                  aria-hidden="true"
-                ></span>
-                <div>
-                  <strong>Open, but at capacity</strong>
-                  <span>Blue Light: join the waitlist before entering.</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        <section
           class="pool-section pool-info-section"
           aria-labelledby="poolInfoTitle"
         >
@@ -245,40 +169,7 @@
                 <span id="poolDetailsChecked">when this page loaded</span>.
               </p>
             </div>
-            <div class="pool-info-grid">
-              <article class="pool-info-card">
-                <h3>Hours</h3>
-                <p>
-                  Check today’s official schedule before leaving home. Lap swim,
-                  open swim, lifeguard, and cleaning hours can differ.
-                </p>
-              </article>
-              <article class="pool-info-card">
-                <h3>Guests</h3>
-                <p>
-                  Check the official page for the current guest-pass allowance,
-                  daily guest limit, and accompaniment requirements.
-                </p>
-              </article>
-              <article class="pool-info-card">
-                <h3>Closures</h3>
-                <p>
-                  The pool may close for lightning, weather, maintenance,
-                  contamination, or capacity.
-                </p>
-                <p>
-                  Use the live status above and the official page for current
-                  weather and reopening rules.
-                </p>
-              </article>
-              <article class="pool-info-card">
-                <h3>Reminders</h3>
-                <p>
-                  Food, glass, concessions, events, and facility rules can
-                  change. Confirm the current details on the official CAB page.
-                </p>
-              </article>
-            </div>
+            <p>For hours, access, events, rentals, and facility rules, use the official CAB page linked above.</p>
           </div>
         </section>
       </main>

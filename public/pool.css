@@ -368,8 +368,7 @@ a {
   padding: 13px 24px;
 }
 
-.pool-status-dot,
-.pool-legend-dot {
+.pool-status-dot {
   flex: 0 0 auto;
   width: 18px;
   height: 18px;
@@ -401,9 +400,6 @@ a {
   background: var(--pool-paper);
 }
 
-.pool-legend-section {
-  background: #fffefa;
-}
 
 .pool-section-inner {
   padding: 30px 24px;
@@ -426,46 +422,12 @@ a {
   letter-spacing: 0;
 }
 
-.pool-legend-list,
 .pool-info-grid {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.pool-legend-list {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.pool-legend-list li {
-  min-width: 0;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  border: 1px solid var(--pool-line);
-  border-radius: var(--pool-radius);
-  padding: 13px;
-  background: #fff;
-}
-
-.pool-legend-list strong,
-.pool-legend-list span {
-  display: block;
-}
-
-.pool-legend-list strong {
-  margin-bottom: 4px;
-  color: var(--pool-ink);
-  line-height: 1.2;
-}
-
-.pool-legend-list span {
-  color: var(--pool-muted);
-  font-size: 0.88rem;
-  line-height: 1.4;
-}
 
 .pool-info-section {
   background: var(--pool-paper);
@@ -549,58 +511,15 @@ a {
   height: 20px;
 }
 
-.pool-status-dot[data-state="open"],
-.pool-legend-dot[data-state="open"] {
-  background: #3f7d5f;
-}
-
-.pool-status-dot[data-state="temporarily-closed"],
-.pool-legend-dot[data-state="temporarily-closed"] {
-  background: var(--pool-gold);
-}
-
-.pool-status-dot[data-state="closed"],
-.pool-legend-dot[data-state="closed"] {
-  background: var(--pool-red);
-}
-
-.pool-status-dot[data-state="event-only"],
-.pool-legend-dot[data-state="event-only"] {
-  background: var(--pool-purple);
-}
-
-.pool-status-dot[data-state="at-capacity"],
-.pool-legend-dot[data-state="at-capacity"] {
-  background: var(--pool-blue);
-}
-
+.pool-status-dot[data-state="current"],
 .pool-status-dot[data-state="unknown"],
-.pool-status-dot[data-state="loading"],
-.pool-legend-dot[data-state="unknown"] {
+.pool-status-dot[data-state="loading"] {
   background: #8d9492;
-}
-
-body[data-pool-state="open"] .pool-status-panel {
-  border-color: rgba(63, 125, 95, 0.38);
-}
-
-body[data-pool-state="temporarily-closed"] .pool-status-panel,
-body[data-pool-state="at-capacity"] .pool-status-panel {
-  border-color: rgba(196, 138, 34, 0.42);
-}
-
-body[data-pool-state="closed"] .pool-status-panel {
-  border-color: rgba(180, 63, 53, 0.36);
-}
-
-body[data-pool-state="event-only"] .pool-status-panel {
-  border-color: rgba(118, 83, 166, 0.36);
 }
 
 @media (max-width: 980px) {
   .pool-status-inner,
-  .pool-info-grid,
-  .pool-legend-list {
+  .pool-info-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -624,8 +543,7 @@ body[data-pool-state="event-only"] .pool-status-panel {
   }
 
   .pool-status-inner,
-  .pool-info-grid,
-  .pool-legend-list {
+  .pool-info-grid {
     grid-template-columns: 1fr;
   }
 

@@ -3708,51 +3708,6 @@ function absoluteUrl(url, baseUrl) {
   }
 }
 
-function getHtmlAttribute(markup, attributeName) {
-  const pattern = new RegExp(`${attributeName}\\s*=\\s*(["\\'])([\\s\\S]*?)\\1`, "i");
-  const match = String(markup || "").match(pattern);
-  return match ? decodeHtml(match[2]).trim() : "";
-}
-
-function findPoolStatusLink(html) {
-  const linkPattern =
-    /<a\b[^>]*class=["'][^"']*\bwidgetGraphicLinksLink\b[^"']*["'][^>]*>[\s\S]*?<\/a>/gi;
-  const links = [...String(html || "").matchAll(linkPattern)].map((match) => match[0]);
-  return links.find((link) => /\b(green|yellow|red|purple|blue)\s+light\b/i.test(link)) || "";
-}
-
-function parsePoolStatus(html) {
-  const linkMarkup = findPoolStatusLink(html);
-  if (!linkMarkup) return null;
-
-  const imageMarkup = linkMarkup.match(/<img\b[^>]*>/i)?.[0] || "";
-  const label =
-    getHtmlAttribute(linkMarkup, "aria-label") ||
-    getHtmlAttribute(imageMarkup, "alt") ||
-    getHtmlAttribute(imageMarkup, "title");
-  const color = label.match(/\b(green|yellow|red|purple|blue)\b/i)?.[1]?.toLowerCase();
-  // This is retained only for the standalone pool page's established display.
-  // Community Assistant uses the strict profile-driven adapter below instead.
-  const detail = getCommunityProfile()?.connectors?.find((connector) => connector.type === "live-status")?.adapter?.poolStatus?.legacyColorDisplay?.[color];
-
-  if (!detail) return null;
-
-  const actionUrl = absoluteUrl(getHtmlAttribute(linkMarkup, "href") || POOL_STATUS_URL, POOL_STATUS_URL);
-  const imageUrl = getHtmlAttribute(imageMarkup, "src");
-
-  return {
-    ...detail,
-    color,
-    officialColorLabel: `${detail.colorName} Light`,
-    detectedLabel: label || `${detail.colorName} Light`,
-    sourceName: "Sterling Ranch CAB pool page",
-    sourceUrl: POOL_STATUS_URL,
-    actionUrl,
-    imageUrl: imageUrl ? absoluteUrl(imageUrl, POOL_STATUS_URL) : "",
-    checkedAt: new Date().toISOString(),
-  };
-}
-
 async function getPoolStatus(options = {}) {
   const force = Boolean(options.force);
   const now = Date.now();
@@ -3768,29 +3723,10 @@ async function getPoolStatus(options = {}) {
   if (!force && poolStatusPromise) return poolStatusPromise;
 
   poolStatusPromise = (async () => {
-    const html = await fetchText(POOL_STATUS_URL);
-    const parsed = parsePoolStatus(html);
-
-    if (!parsed) {
-      throw new Error("The CAB pool status button was not found on the source page.");
-    }
-
-    const data = { ...parsed, cached: false, stale: false };
+    const data = { ...await getConfiguredCommunityPoolStatus(), cached: false, stale: false };
     poolStatusCache = { data, savedAt: Date.now() };
     return data;
   })()
-    .catch((error) => {
-      if (poolStatusCache) {
-        return {
-          ...poolStatusCache.data,
-          cached: true,
-          stale: true,
-          error: "Could not refresh the CAB status just now.",
-        };
-      }
-
-      throw error;
-    })
     .finally(() => {
       poolStatusPromise = null;
     });
@@ -4468,7 +4404,6 @@ async function handlePoolStatus(req, res, url) {
   } catch (error) {
     sendJson(res, 502, {
       state: "unknown",
-      colorName: "Unknown",
       headline: "Status unavailable",
       summary: "The official CAB pool status could not be checked right now.",
       residentAction: "Open the official CAB pool page for the latest information.",
