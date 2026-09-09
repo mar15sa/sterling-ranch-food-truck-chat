@@ -109,5 +109,6 @@ test('approved owner-reviewed evidence renders the allowed water and delinquency
   assert.match(delinquency.answer, /three days/i);
   assert.match(delinquency.answer, /seven calendar days/i);
   assert.match(delinquency.answer, /last Wednesday/i);
+  assert.doesNotMatch(delinquency.answer, /\bCAB\b/i);
   assert.doesNotMatch(delinquency.answer, /no newer amendment/i);
 });
