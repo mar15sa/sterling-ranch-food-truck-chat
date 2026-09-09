@@ -282,6 +282,91 @@ test("a conditional verdict without a controlling rule source cannot resolve per
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["permission"]);
 });
 
+test("governing rules resolve rendered specification facets without an added fallback", async () => {
+  const cases = [
+    ["What are the backyard trampoline setback rules?", "Trampolines must be at least five feet from every property line."],
+    ["Is every backyard fence allowed to be the same height?", "It depends on the fence type; the standard single-family fence is 54 inches high."],
+  ];
+  for (const [question, directAnswer] of cases) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      now: TEST_NOW,
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: async () => ({
+        answer: `Short answer: ${directAnswer}`,
+        directAnswer,
+        answerStatus: "verified",
+        answerVerdict: "verified",
+        answerMode: "source-derived-extractive",
+        confidence: { canAnswer: true, confidence: "high", reason: "source-derived" },
+        sources: [{ title: "Community Standards", sourceUrl: "https://library.municode.com/community-standards", sourceType: "rules", excerpt: directAnswer }],
+        qualityChecks: { requestedFacetCoverage: true, issues: [] },
+      }),
+    });
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.completion.outcome, "complete", question);
+    assert.deepEqual(answer.completion.resolvedDetails, ["specification"], question);
+    assert.doesNotMatch(answer.answer, /could not verify/i, question);
+    assert.ok(answer.sources.some((source) => source.sourceType === "rules" || /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+  }
+});
+
+test("an existing authoritative specification limitation is not repeated as a generic fallback", async () => {
+  const directAnswer = "The cited exterior-painting rule explains the approval process without identifying a single community-wide garage-door color list.";
+  const answer = await answerCommunityQuestion("What color can I paint my garage door?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    now: TEST_NOW,
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({
+      answer: `Short answer: ${directAnswer}`,
+      directAnswer,
+      answerStatus: "verified",
+      answerVerdict: "verified",
+      answerMode: "source-derived-extractive",
+      confidence: { canAnswer: true, confidence: "high", reason: "source-derived" },
+      sources: [{ title: "Community Standards", sourceUrl: "https://library.municode.com/community-standards", sourceType: "rules", excerpt: directAnswer }],
+      qualityChecks: { requestedFacetCoverage: false, issues: ["requested-color-missing"] },
+    }),
+  });
+  assert.equal(answer.completion.outcome, "missing-evidence");
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
+  assert.match(answer.answer, /without identifying a single community-wide garage-door color list/i);
+  assert.doesNotMatch(answer.answer, /could not verify/i);
+});
+
+test("an exact official specification sheet resolves a specification-only question", async () => {
+  const freshIndex = structuredClone(communityIndex);
+  const sourceUrl = "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-";
+  for (const source of freshIndex.sources || []) {
+    if (source.sourceUrl !== sourceUrl) continue;
+    source.checkedAt = "2026-09-08T17:00:00.000Z";
+    source.staleAfter = "2026-09-10T17:00:00.000Z";
+    for (const fact of source.facts || []) fact.checkedAt = source.checkedAt;
+  }
+  const answer = await answerCommunityQuestion("What fence stain should I use?", {
+    index: freshIndex,
+    communityId: "sterling-ranch",
+    now: TEST_NOW,
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+      ...options,
+      searchMode: "legacy",
+      llmMode: "off",
+    }),
+  });
+  assert.equal(answer.answerStatus, "verified");
+  assert.equal(answer.completion.outcome, "complete");
+  assert.deepEqual(answer.completion.resolvedDetails, ["specification"]);
+  assert.match(answer.answer, /#3002.*Belvedere Tan/i);
+  assert.doesNotMatch(answer.answer, /could not verify/i);
+  assert.ok(answer.sources.some((source) => (source.authorityFacets || []).includes("specification")));
+});
+
 test("full-route fence permission and finish questions retain the controlling rule answer", async () => {
   const questions = [
     "Can I build a fence and what color does it need to be?",
@@ -366,7 +451,7 @@ test("a binding rule remains verified-partial when specification composition is 
   assert.equal(answer.completion.outcome, "verified-partial");
   assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
-  assert.match(answer.answer, /could not verify the requested color, finish, material, or dimension/i);
+  assert.match(answer.answer, /does not provide|could not verify the requested color, finish, material, or dimension/i);
 });
 
 test("a form-only fence answer still cannot verify a binding permission claim", async () => {
