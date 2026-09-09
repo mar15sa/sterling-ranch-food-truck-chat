@@ -286,6 +286,7 @@ test("governing rules resolve rendered specification facets without an added fal
   const cases = [
     ["What are the backyard trampoline setback rules?", "Trampolines must be at least five feet from every property line."],
     ["Is every backyard fence allowed to be the same height?", "It depends on the fence type; the standard single-family fence is 54 inches high."],
+    ["What is the maximum height a freestanding flag pole can be?", "The current rule does not set a numeric maximum height for a freestanding flagpole."],
   ];
   for (const [question, directAnswer] of cases) {
     const answer = await answerCommunityQuestion(question, {
