@@ -106,7 +106,7 @@ for (const example of EXAMPLES) {
       assert.doesNotMatch(result.answer, /AmCoBi|rental catalog/i);
     }
     if (example.waterBillingContact) {
-      assert.equal(result.answerMode, "community-approved-operational");
+      assert.equal(result.answerMode, "community-approved-operational-contact");
       assert.equal(result.answerStatus, "verified");
       assert.ok(result.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
     }

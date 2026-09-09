@@ -649,6 +649,8 @@ test("contact answers choose the fact whose context matches the requested servic
   assert.match(answer.answer, /720-222-2222/);
   assert.doesNotMatch(answer.answer, /720-111-1111/);
   assert.equal(answer.actions[0].url, faq.sourceUrl);
+  assert.deepEqual(answer.claims[0].evidenceSourceIds, ["alpha-faq"]);
+  assert.match(answer.claims[0].text, /720-222-2222/);
 });
 
 test("contact answers honor whether the resident asked for email or phone", async () => {
@@ -692,7 +694,7 @@ test("contact answers preserve exact structured details even when AI synthesis w
   });
 
   assert.equal(synthesisCalls, 0);
-  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.equal(answer.answerMode, "community-approved-operational-contact");
   assert.match(answer.answer, /AmCoBi/i);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
@@ -743,7 +745,7 @@ test("structured service contacts skip the unrelated rules lookup after shared i
 
   assert.equal(interpretationCalls, 1);
   assert.equal(rulesCalls, 0);
-  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.equal(answer.answerMode, "community-approved-operational-contact");
   assert.deepEqual(answer.completion.resolvedDetails, ["contact"]);
   assert.deepEqual(answer.completion.missingDetails, []);
   assert.match(answer.answer, /\(833\) 772-2240/);
@@ -776,7 +778,7 @@ test("structured contacts outrank an earlier confident rules or AI answer that o
     }),
   });
 
-  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.equal(answer.answerMode, "community-approved-operational-contact");
   assert.match(answer.answer, /AmCoBi/i);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);

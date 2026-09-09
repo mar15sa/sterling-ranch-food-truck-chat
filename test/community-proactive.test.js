@@ -472,4 +472,14 @@ test("approved instruction claims work for a second community and withdraw when 
   const changed = await answerCommunityQuestion("Where do I submit a permit form if approval is required?", { ...options, index: { ...index, sources: [{ ...source, contentHash: "d".repeat(64) }] } });
   assert.notEqual(changed.answerStatus, "verified");
   assert.doesNotMatch(changed.answer, /permit-portal/i);
+
+  const unrelated = await answerCommunityQuestion("What fees do residents pay?", options);
+  assert.doesNotMatch(unrelated.answer, /permit-portal|If your permit requires approval/i);
+});
+
+test("conditional instruction projections do not activate for unrelated fees or facilities", async () => {
+  for (const question of ["What fees do residents pay?", "How do I reserve a park shelter?"]) {
+    const answer = await ask(question);
+    assert.doesNotMatch(answer.answer, /rain-barrel|ResidentSubmit@SterlingRanchCAB\.com/i, question);
+  }
 });
