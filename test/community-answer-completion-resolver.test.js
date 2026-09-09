@@ -282,6 +282,91 @@ test("a conditional verdict without a controlling rule source cannot resolve per
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["permission"]);
 });
 
+test("full-route fence permission and finish questions retain the controlling rule answer", async () => {
+  const questions = [
+    "Can I build a fence and what color does it need to be?",
+    "Can I install backyard fencing, and which stain color is required?",
+    "Are fences permitted, and what finish should I use?",
+  ];
+  for (const question of questions) {
+    let communitySynthesisCalls = 0;
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured",
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      planCommunitySearch: async () => ({
+        intent: "rules",
+        goal: "permission",
+        goals: ["permission"],
+        subject: "fence permission and finish",
+        requestedDetails: ["permission"],
+        dateRange: null,
+        filters: { audience: "", category: "", facility: "", location: "" },
+        searchQueries: ["fence permission", "fence color requirements", "fence rules"],
+        scope: "community",
+        needsClarification: false,
+        clarificationQuestion: "",
+      }),
+      synthesizeCommunityAnswer: async () => {
+        communitySynthesisCalls += 1;
+        return {
+          directAnswer: "Approval and a color are listed on the form.",
+          keyDetails: [],
+          nextStep: "Open the form.",
+        };
+      },
+      answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+        ...options,
+        searchMode: "legacy",
+        llmMode: "off",
+      }),
+    });
+    assert.equal(communitySynthesisCalls, 0, question);
+    assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim", question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.completion.outcome, "complete", question);
+    assert.ok(answer.completion.resolvedDetails.includes("permission"), question);
+    assert.notEqual(answer.answerMode, "community-grounded-ai", question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+    assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
+  }
+});
+
+test("a form-only fence answer still cannot verify a binding permission claim", async () => {
+  const answer = await answerCommunityQuestion("Can I build a fence and what finish is required?", {
+    interpretationMode: "structured",
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    planCommunitySearch: async () => ({
+      intent: "rules",
+      goal: "permission",
+      goals: ["permission"],
+      subject: "fence permission and finish",
+      requestedDetails: ["permission"],
+      filters: { audience: "", category: "", facility: "", location: "" },
+      searchQueries: ["fence color requirements"],
+      scope: "community",
+      needsClarification: false,
+    }),
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: I could not verify the governing rule.",
+      answerMode: "fallback",
+      answerVerdict: "unverified",
+      confidence: { canAnswer: false, confidence: "low", reason: "no-rule-source" },
+      sources: [],
+    }),
+    synthesizeCommunityAnswer: async () => ({
+      directAnswer: "Yes, the application form says approval is required.",
+      keyDetails: ["Use the listed finish."],
+      nextStep: "Open the form.",
+    }),
+  });
+  assert.notEqual(answer.answerStatus, "verified");
+  assert.notEqual(answer.completion.outcome, "complete");
+  assert.deepEqual(answer.completion.resolvedDetails, []);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["permission"]);
+});
+
 test("single-facet verified families remain complete", () => {
   const examples = {
     date: "Pickup is Monday.", permission: "Yes, approval is required.", hours: "Open from 8 a.m. to 5 p.m.",
