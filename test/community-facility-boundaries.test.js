@@ -78,3 +78,17 @@ test('pool-party wording returns the official no-rental answer without clubhouse
     assert.doesNotMatch(JSON.stringify(result.actions), /secure\.rec1\.com|rental catalog/i, question);
   }
 });
+
+test('pool rental cost questions receive an evidence-backed not-applicable price answer', async () => {
+  for (const question of ['What is the pool rental fee?', 'How much does it cost to rent the pool?']) {
+    const result = await answerCommunityQuestion(question, { now, index, communityId: 'sterling-ranch',
+      planCommunitySearch: async () => ({ ...plan('cost', 'pool'), requestedDetails: ['price'], subject: 'pool rental', searchQueries: ['pool rental fee'] }),
+      synthesizeCommunityAnswer: false, answerRulesQuestion: unavailableRules });
+    assert.equal(result.answerStatus, 'verified', question);
+    assert.equal(result.answerMode, 'community-proactive-pool-party', question);
+    assert.match(result.directAnswer, /no pool rental fee.*not available for rental/i, question);
+    assert.equal(result.detailResolutions?.price?.status, 'not-applicable', question);
+    assert.ok(result.detailResolutions.price.evidenceSourceIds.length, question);
+    assert.doesNotMatch(JSON.stringify(result), /\$5(?:\.00)?(?: per guest)?|guest passes?|direct debit|secure\.rec1\.com|rental catalog/i, question);
+  }
+});
