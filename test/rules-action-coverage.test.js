@@ -18,6 +18,44 @@ test("action-link coverage detects instructions that lack a usable destination",
   );
 });
 
+test("action-link coverage recognizes instructions proved by an approved nested action", () => {
+  assert.deepEqual(
+    actionLinkIssues("Please register your account through Utility Hawk.", [
+      {
+        title: "Water Billing & Payment Options",
+        sourceUrl: "https://example.gov/water-billing",
+        actions: [{
+          label: "Utility Hawk",
+          url: "https://billing.example.gov",
+          actionType: "payment",
+          context: "Please register your account through Utility Hawk and select Pay Online.",
+          reviewStatus: "approved",
+        }],
+      },
+    ]),
+    []
+  );
+});
+
+test("action-link coverage does not trust an unapproved nested action", () => {
+  assert.deepEqual(
+    actionLinkIssues("Please register your account through Utility Hawk.", [
+      {
+        title: "Water Billing & Payment Options",
+        sourceUrl: "https://example.gov/water-billing",
+        actions: [{
+          label: "Utility Hawk",
+          url: "https://billing.example.gov",
+          actionType: "payment",
+          context: "Please register your account through Utility Hawk.",
+          reviewStatus: "candidate",
+        }],
+      },
+    ]),
+    ["register"]
+  );
+});
+
 test("park booking answers provide a current action path instead of naming an unlinked form", async () => {
   for (const question of ["How do I book the park?", "Can I reserve a park shelter?"]) {
     const result = await answerRulesQuestion(question);

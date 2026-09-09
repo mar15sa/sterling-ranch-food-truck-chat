@@ -54,7 +54,13 @@ test("RV duration answers compare the requested stay with the current source lim
 });
 
 test("the rulebook path stays within its evidence and preserves the private-court distinction", async () => {
-  for (const question of ["Pickle ball", "What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
+  const ambiguous = await answer("Pickle ball");
+  assert.equal(ambiguous.answerMode, "targeted-clarification");
+  assert.match(ambiguous.answer, /community pickleball court/i);
+  assert.match(ambiguous.answer, /private pickleball court/i);
+  assert.equal(ambiguous.sources.length, 0);
+
+  for (const question of ["What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
     const result = await answer(question);
     assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is, question);
     assert.match(result.answer, /sport court.*DRC approval|DRC approval.*sport court/is, question);
@@ -246,7 +252,6 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
     ["Air conditioner", /DRC approval is not required[\s\S]*screen/i],
     ["Fireworks", /^Short answer:\s*(?:No\.|No fireworks|Residents.*not.*fireworks)/i],
     ["Gazebo", /requires DRC approval/i],
-    ["Pickle ball", /(?=[\s\S]*pickleball)(?=[\s\S]*DRC approval)(?=[\s\S]*(?:not permitted to be lighted|may not be lighted))/i],
     ["Jellyfish", /Gemstone and Jellyfish/i],
   ];
   for (const [question, expected] of expectations) {
@@ -254,6 +259,45 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
     assert.match(result.answer, expected, question);
     assert.equal(result.qualityChecks?.requestedFacetCoverage, true, question);
   }
+});
+
+test("special-source rule families receive useful clause-composed answers without static profiles", async () => {
+  const cases = [
+    ["Can I hang stuff in my fence?", /household items.*may not be hung/i, "source-derived-extractive"],
+    ["Can I turf my front lawn?", /artificial turf.*individual basis.*front yards/i, "source-derived-extractive"],
+    ["What is a tree lawn", /between their property edge and the street/i, "source-derived-extractive"],
+    ["What is needed to redo backyard", /submitted for review and approval by the DRC/i, "source-derived-extractive"],
+    ["Fence stain color", /approved color.*concrete perimeter fence/i, "source-evidence-boundary"],
+  ];
+  for (const [question, expected, answerMode] of cases) {
+    const result = await answer(question);
+    assert.equal(result.answerMode, answerMode, question);
+    assert.match(result.answer, expected, question);
+    assert.doesNotMatch(result.answer, /I don't have enough|closest starting points/i, question);
+    assert.ok(result.sources.length > 0, question);
+  }
+});
+
+test("an illustrative source mention is presented as a boundary, not project permission", async () => {
+  const result = await answer("Can I build a pergola in my front yard?");
+  assert.match(result.answer, /mentions the requested project only as an example in a different rule/i);
+  assert.match(result.answer, /lighting must be strung.*such as pergolas/i);
+  assert.doesNotMatch(result.answer, /pergola.*(?:is allowed|requires DRC approval)/i);
+});
+
+test("a related property clause cannot answer a different removal request", async () => {
+  const result = await answer("Can I remove a tree?");
+  assert.equal(result.confidence.canAnswer, false);
+  assert.match(result.answer, /do not state whether the requested removal is allowed/i);
+  assert.doesNotMatch(result.answer, /^Short answer:.*(?:yes|DRC approval is required)/i);
+});
+
+test("an access question recognizes exact support evidence instead of a generic refusal", async () => {
+  const result = await answer("I lost access to home seer steward system. How do I restore it?");
+  assert.equal(result.confidence.canAnswer, true);
+  assert.match(result.answer, /Lumiere\.technology\/help/i);
+  assert.match(result.answer, /help@lumierefiber\.com/i);
+  assert.ok(result.sources.length > 0);
 });
 
 test("wording variants and collisions preserve the resident's actual intent", async () => {

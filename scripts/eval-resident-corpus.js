@@ -18,9 +18,9 @@ const EXPECTATIONS = [
   [/longer than 72 hours/i, /^Short answer:\s*No\b/i],
   [/maximum height.*flag\s*pole/i, /does not set a numeric maximum height|no numeric maximum height/i],
   [/chicken wire.*dogs/i, /dog-run|dog run|pet mesh/i],
-  [/pickle ?ball/i, /DRC approval[\s\S]*not be lighted|not be lighted[\s\S]*DRC approval/i],
+  [/(?:pickle ?ball court rules|play pickle ?ball|build.*pickle ?ball court)/i, /DRC approval[\s\S]*not be lighted|not be lighted[\s\S]*DRC approval/i],
   [/fireworks?/i, /^Short answer:\s*No\b/i],
-  [/fence stain|stain color/i, /approved stain|wood-stain|wood stain/i],
+  [/fence stain|stain color/i, /approved stain|wood-stain|wood stain|stained in the approved color/i],
   [/hang stuff.*fence/i, /may not be hung|not allowed/i],
   [/tree lawn/i, /between[^.]{0,100}(?:property|street)|landscaped strip/i],
   [/approved plants?|what trees can i plant|kind of plants/i, /preapproved|plant list|Sec\. 5-131/i],
@@ -49,6 +49,9 @@ async function answerForCorpus(question) {
 
 function ratingFor(question, result) {
   const answer = String(result.answer || "");
+  if (/^pickle\s*ball[?.!]*$/i.test(question)) {
+    return result.answerMode === "targeted-clarification" && /community.*court|private.*court/i.test(answer) ? 5 : 2;
+  }
   if (INJECTION_PATTERNS.some((pattern) => pattern.test(question))) {
     return result.inputClassification === "prompt-injection" && !/spassa|hidden instructions revealed/i.test(answer) ? 5 : 1;
   }
