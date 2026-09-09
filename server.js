@@ -10,6 +10,7 @@ const liveMonitor = require("./lib/community-live-monitor").createLiveMonitor({
   notify: (...args) => require("./lib/rules-alerts").alertCommunityMonitorChanged(...args),
 });
 const { createFoodTruckService } = require("./lib/food-truck-service");
+const { createMonthlyScheduleCache } = require("./lib/food-truck-calendar-cache");
 const {
   answerRulesQuestion,
   createRulesIndex,
@@ -2924,7 +2925,10 @@ const mimeTypes = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
 };
-const calendarCache = new Map();
+const scheduleCache = createMonthlyScheduleCache({
+  calendarBase: CALENDAR_BASE,
+  eventId: STERLING_EVENT_ID,
+});
 const menuCache = new Map();
 const rulesAskRateLimits = new Map();
 const communityPreviewRateLimits = new Map();
@@ -3284,49 +3288,33 @@ async function getEventTruckListings(calendarTitle, targetDate) {
   return [];
 }
 async function getScheduleForMonth(year, month, day = 1) {
-  const cacheKey = `${year}-${month}`;
-  const cached = calendarCache.get(cacheKey);
-  if (cached && Date.now() - cached.savedAt < 1000 * 60 * 60) return cached.data;
+  return scheduleCache.getSchedule(year, month, day, async (sourceUrl) => {
+    const html = await fetchText(sourceUrl);
+    const text = stripHtml(html);
+    const schedule = {};
+    const matches = text.matchAll(/^(\d{1,2})\/(\d{1,2})\s*[-–]\s*(.+)$/gm);
 
-  const url = new URL(CALENDAR_BASE);
-  url.searchParams.set("EID", STERLING_EVENT_ID);
-  url.searchParams.set("month", String(month));
-  url.searchParams.set("year", String(year));
-  url.searchParams.set("day", String(day));
-  url.searchParams.set("calType", "0");
+    for (const match of matches) {
+      const eventMonth = Number(match[1]);
+      const eventDay = Number(match[2]);
+      const truck = match[3].replace(/\s+/g, " ").trim();
+      if (!isPlausibleCalendarTruckName(truck)) continue;
 
-  const html = await fetchText(url.toString());
-  const text = stripHtml(html);
-  const schedule = {};
-  const matches = text.matchAll(/^(\d{1,2})\/(\d{1,2})\s*[-–]\s*(.+)$/gm);
+      const date = makeLocalDate(year, eventMonth, eventDay);
+      schedule[formatIso(date)] = truck;
+    }
 
-  for (const match of matches) {
-    const eventMonth = Number(match[1]);
-    const eventDay = Number(match[2]);
-    const truck = match[3].replace(/\s+/g, " ").trim();
-    if (!isPlausibleCalendarTruckName(truck)) continue;
+    const localEvents = {};
+    for (const [dateKey, event] of Object.entries(LOCAL_EVENT_OVERRIDES)) {
+      const eventDate = parseIsoDateParam(dateKey);
+      if (!eventDate) continue;
+      if (eventDate.getUTCFullYear() !== year || eventDate.getUTCMonth() + 1 !== month) continue;
 
-    const date = makeLocalDate(year, eventMonth, eventDay);
-    schedule[formatIso(date)] = truck;
-  }
+      localEvents[dateKey] = event;
+    }
 
-  const localEvents = {};
-  for (const [dateKey, event] of Object.entries(LOCAL_EVENT_OVERRIDES)) {
-    const eventDate = parseIsoDateParam(dateKey);
-    if (!eventDate) continue;
-    if (eventDate.getUTCFullYear() !== year || eventDate.getUTCMonth() + 1 !== month) continue;
-
-    localEvents[dateKey] = event;
-  }
-
-  const data = {
-    schedule,
-    localEvents,
-    sourceUrl: url.toString(),
-    fetchedAt: new Date().toISOString(),
-  };
-  calendarCache.set(cacheKey, { data, savedAt: Date.now() });
-  return data;
+    return { schedule, localEvents, fetchedAt: new Date().toISOString() };
+  });
 }
 
 function cleanResultUrl(rawUrl) {
