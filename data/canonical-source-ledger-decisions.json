@@ -5,6 +5,51 @@
   "purpose": "Decision Swipe approvals applied only to exact Batch A source versions. These are scoped decisions, not whole-page promotion.",
   "decisions": [
     {
+      "decisionId": "water-rates-2026",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Clearly labeled residential 2026 water, sanitary sewer, and stormwater rates only.",
+      "approvedClaims": ["clearly-labeled-residential-water-sewer-stormwater-rate-rows-2026"],
+      "withheldClaims": ["master-meter", "nonresidential", "public-school", "construction-water", "irrigation", "unlabelled-or-clipped-row", "generic-2025-rate"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees","contentHash":"3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6"}]
+    },
+    {
+      "decisionId": "tap-facility-2026",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Complete, clearly labeled residential tap and facility-fee rows only.",
+      "approvedClaims": ["complete-clearly-labeled-residential-tap-and-facility-fee-rows-2026"],
+      "withheldClaims": ["commercial", "school", "irrigation", "master-meter", "large-meter", "pool", "clipped-footnote-case", "incomplete-or-unlabelled-row"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees","contentHash":"a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f"}]
+    },
+    {
+      "decisionId": "cab-fees-effective-date",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Clearly labeled 2026 CAB fee amounts only.",
+      "approvedClaims": ["clearly-labeled-cab-fee-amounts-2026"],
+      "withheldClaims": ["standalone-effective-date-claim"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees","contentHash":"3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68"}]
+    },
+    {
+      "decisionId": "delinquency-policy",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Controlling June 2025 collection-process source; listed charges are that resolution's fee schedule.",
+      "approvedClaims": ["june-2025-delinquency-collection-process", "that-resolution-listed-fee-schedule"],
+      "withheldClaims": ["claim-that-no-newer-amendment-exists"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE","contentHash":"156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d"}]
+    },
+    {
+      "decisionId": "monthly-fee-overview",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Helpful overview and action link only.",
+      "approvedClaims": ["monthly-fee-overview-action-link"],
+      "withheldClaims": ["controlling-fee-evidence", "fee-amounts"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2502","contentHash":"3fe9b8e85b6a9d1b0e45d735beb1ba1bccb3a809dd33002ab6284d6a1c975d8c"}]
+    },
+    {
       "decisionId": "water-payment-primary-page",
       "decision": "approve-proposed",
       "scopeKind": "scoped-claims",

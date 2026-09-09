@@ -61,12 +61,12 @@ test("one source version can serve multiple communities without sharing approval
   assert.doesNotThrow(() => validateLedger(ledger));
 });
 
-test("A/B/C/D reconciliation preserves packet work and only exact legacy form evidence is approved", () => {
+test("A/B/C/D reconciliation preserves packet work and exact approvals remain version-scoped", () => {
   const ledger = buildLedger();
   assert.deepEqual(ledger.reconciliation.historicalSnapshots.map(snapshot => snapshot.count), [222, 917]);
-  assert.equal(ledger.summary.uniqueVersions, 22);
+  assert.equal(ledger.summary.uniqueVersions, 27);
   assert.equal(ledger.summary.approvedEvidence, 5);
-  assert.equal(ledger.unmatchedLegacyDecisions.length, 5);
+  assert.equal(ledger.unmatchedLegacyDecisions.length, 0);
   assert.equal(ledger.records.filter(record => record.packetRefs.some(ref => /batch-[bc]/.test(ref))).every(record => record.approvals.length === 0), true);
   const batchD = ledger.records.filter(record => record.packetRefs.includes("resident-navigation-batch-d-2026-09-09"));
   assert.equal(batchD.length, 4);
@@ -76,9 +76,10 @@ test("A/B/C/D reconciliation preserves packet work and only exact legacy form ev
 test("Decision Swipe approvals are exact-version, community-scoped claim boundaries", () => {
   const ledger = buildLedger();
   assert.deepEqual(new Set(ledger.decisionApplications.map(item => item.decisionId)), new Set([
+    "water-rates-2026", "tap-facility-2026", "cab-fees-effective-date", "delinquency-policy", "monthly-fee-overview",
     "water-payment-primary-page", "water-payment-direct-link", "card-processing-fee", "water-bill-explanation", "monthly-fee-payment-page",
   ]));
-  assert.equal(ledger.decisionApplications.length, 6);
+  assert.equal(ledger.decisionApplications.length, 11);
   const paymentPage = ledger.records.find(record => record.canonicalUrl.endsWith("/334/Water-Billing-Payment-Options"));
   assert.equal(paymentPage.disposition, "pending-review");
   assert.equal(approvalForCommunity(paymentPage, "sterling-ranch", "water-payment-primary-page").scopeKind, "scoped-claims");
@@ -88,4 +89,21 @@ test("Decision Swipe approvals are exact-version, community-scoped claim boundar
   const explanation = ledger.records.find(record => record.canonicalUrl.endsWith("/333/Understanding-Your-Water-Bill"));
   assert.ok(approvalForCommunity(explanation, "sterling-ranch", "water-bill-explanation").withheldClaims.includes("documentcenter-2419"));
   assert.equal(ledger.deferred[0].canonicalUrl, "https://sterlingranchcab.com/DocumentCenter/View/2419");
+});
+
+test("Batch 1 decisions bind only their approved claim scope to the exact source version", () => {
+  const ledger = buildLedger();
+  const byDecision = (decisionId) => ledger.records.find((record) => approvalForCommunity(record, "sterling-ranch", decisionId));
+  const water = byDecision("water-rates-2026");
+  assert.equal(water.contentHash, "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6");
+  assert.deepEqual(approvalForCommunity(water, "sterling-ranch", "water-rates-2026").withheldClaims, ["master-meter", "nonresidential", "public-school", "construction-water", "irrigation", "unlabelled-or-clipped-row", "generic-2025-rate"]);
+  const tap = byDecision("tap-facility-2026");
+  assert.ok(approvalForCommunity(tap, "sterling-ranch", "tap-facility-2026").withheldClaims.includes("commercial"));
+  assert.ok(approvalForCommunity(tap, "sterling-ranch", "tap-facility-2026").withheldClaims.includes("pool"));
+  const cab = byDecision("cab-fees-effective-date");
+  assert.deepEqual(approvalForCommunity(cab, "sterling-ranch", "cab-fees-effective-date").withheldClaims, ["standalone-effective-date-claim"]);
+  const monthly = byDecision("monthly-fee-overview");
+  assert.deepEqual(approvalForCommunity(monthly, "sterling-ranch", "monthly-fee-overview").approvedClaims, ["monthly-fee-overview-action-link"]);
+  assert.deepEqual(approvalForCommunity(monthly, "sterling-ranch", "monthly-fee-overview").withheldClaims, ["controlling-fee-evidence", "fee-amounts"]);
+  assert.equal(ledger.unmatchedLegacyDecisions.length, 0);
 });

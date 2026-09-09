@@ -1,8 +1,248 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-09T02:25:34.9661286Z",
+  "generatedAt": "2026-09-08",
   "source": "review-packets-a-b-c-and-explicit-form-evidence",
   "records": [
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees#sha256:3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees",
+      "contentHash": "3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6",
+      "title": "2026 Water, Sanitary Sewer, and Stormwater Fees",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-08",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "batch-1-owner-decisions-2026-09-08",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "water-rates-2026",
+          "scope": "Clearly labeled residential 2026 water, sanitary sewer, and stormwater rates only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "clearly-labeled-residential-water-sewer-stormwater-rate-rows-2026"
+          ],
+          "withheldClaims": [
+            "master-meter",
+            "nonresidential",
+            "public-school",
+            "construction-water",
+            "irrigation",
+            "unlabelled-or-clipped-row",
+            "generic-2025-rate"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "batch-1-owner-decisions-2026-09-08"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees#sha256:a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees",
+      "contentHash": "a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f",
+      "title": "2026 Tap and Facility Fees",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-08",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "batch-1-owner-decisions-2026-09-08",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "tap-facility-2026",
+          "scope": "Complete, clearly labeled residential tap and facility-fee rows only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "complete-clearly-labeled-residential-tap-and-facility-fee-rows-2026"
+          ],
+          "withheldClaims": [
+            "commercial",
+            "school",
+            "irrigation",
+            "master-meter",
+            "large-meter",
+            "pool",
+            "clipped-footnote-case",
+            "incomplete-or-unlabelled-row"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "batch-1-owner-decisions-2026-09-08"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees#sha256:3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees",
+      "contentHash": "3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68",
+      "title": "2026 CAB Fees",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-08",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "batch-1-owner-decisions-2026-09-08",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "cab-fees-effective-date",
+          "scope": "Clearly labeled 2026 CAB fee amounts only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "clearly-labeled-cab-fee-amounts-2026"
+          ],
+          "withheldClaims": [
+            "standalone-effective-date-claim"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "batch-1-owner-decisions-2026-09-08"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE#sha256:156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE",
+      "contentHash": "156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d",
+      "title": "Delinquent Utility Fees Collection Process",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-08",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "batch-1-owner-decisions-2026-09-08",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "delinquency-policy",
+          "scope": "Controlling June 2025 collection-process source; listed charges are that resolution's fee schedule.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "june-2025-delinquency-collection-process",
+            "that-resolution-listed-fee-schedule"
+          ],
+          "withheldClaims": [
+            "claim-that-no-newer-amendment-exists"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "batch-1-owner-decisions-2026-09-08"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2502#sha256:3fe9b8e85b6a9d1b0e45d735beb1ba1bccb3a809dd33002ab6284d6a1c975d8c",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2502",
+      "contentHash": "3fe9b8e85b6a9d1b0e45d735beb1ba1bccb3a809dd33002ab6284d6a1c975d8c",
+      "title": "2026 Monthly Fee Overview",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-06T16:44:58.937Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2502",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "batch-1-owner-decisions-2026-09-08",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "monthly-fee-overview",
+          "scope": "Helpful overview and action link only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "monthly-fee-overview-action-link"
+          ],
+          "withheldClaims": [
+            "controlling-fee-evidence",
+            "fee-amounts"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-08"
+        }
+      ],
+      "packetRefs": [
+        "batch-1-owner-decisions-2026-09-08"
+      ]
+    },
     {
       "key": "https://sterlingranchcab.com/334/Water-Billing-Payment-Options#sha256:711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
       "canonicalUrl": "https://sterlingranchcab.com/334/Water-Billing-Payment-Options",
@@ -803,6 +1043,31 @@
   ],
   "decisionApplications": [
     {
+      "decisionId": "water-rates-2026",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees#sha256:3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6"
+    },
+    {
+      "decisionId": "tap-facility-2026",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees#sha256:a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f"
+    },
+    {
+      "decisionId": "cab-fees-effective-date",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees#sha256:3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68"
+    },
+    {
+      "decisionId": "delinquency-policy",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE#sha256:156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d"
+    },
+    {
+      "decisionId": "monthly-fee-overview",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/2502#sha256:3fe9b8e85b6a9d1b0e45d735beb1ba1bccb3a809dd33002ab6284d6a1c975d8c"
+    },
+    {
       "decisionId": "water-payment-primary-page",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/334/Water-Billing-Payment-Options#sha256:711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75"
@@ -840,38 +1105,7 @@
       "reason": "Outside the approved Batch A scope; no content version or claim is approved."
     }
   ],
-  "unmatchedLegacyDecisions": [
-    {
-      "id": "water-rates-2026",
-      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees",
-      "status": "approved-with-boundaries",
-      "reason": "The decision has no content hash, so it cannot approve any URL version. Preserve its stated boundary until an exact-version decision is recorded."
-    },
-    {
-      "id": "tap-facility-2026",
-      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees",
-      "status": "approved-with-boundaries",
-      "reason": "The decision has no content hash, so it cannot approve any URL version. Preserve its stated boundary until an exact-version decision is recorded."
-    },
-    {
-      "id": "cab-fees-effective-date",
-      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees",
-      "status": "approved-with-boundaries",
-      "reason": "The decision has no content hash, so it cannot approve any URL version. Preserve its stated boundary until an exact-version decision is recorded."
-    },
-    {
-      "id": "monthly-fee-overview",
-      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2502",
-      "status": "approved-with-boundaries",
-      "reason": "The decision has no content hash, so it cannot approve any URL version. Preserve its stated boundary until an exact-version decision is recorded."
-    },
-    {
-      "id": "delinquency-policy",
-      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE",
-      "status": "approved-with-boundaries",
-      "reason": "The decision has no content hash, so it cannot approve any URL version. Preserve its stated boundary until an exact-version decision is recorded."
-    }
-  ],
+  "unmatchedLegacyDecisions": [],
   "reconciliation": {
     "historicalSnapshots": [
       {
@@ -889,17 +1123,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 22,
+    "uniqueVersions": 27,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 17,
+      "pending-review": 22,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 11,
-    "pendingReview": 17
+    "scopedApprovals": 16,
+    "pendingReview": 22
   }
 }

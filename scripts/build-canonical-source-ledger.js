@@ -60,7 +60,8 @@ function buildLedger() {
   }
   ledger.deferred = scopedDecisions.deferred || [];
 
-  ledger.unmatchedLegacyDecisions = (legacyDecisions.decisions || []).map((decision) => ({
+  const boundDecisionIds = new Set(ledger.decisionApplications.map((entry) => entry.decisionId));
+  ledger.unmatchedLegacyDecisions = (legacyDecisions.decisions || []).filter((decision) => !boundDecisionIds.has(decision.id)).map((decision) => ({
     id: decision.id,
     canonicalUrl: decision.sourceUrl,
     status: decision.status,
