@@ -55,6 +55,38 @@ test('real community index exposes approved payment/contact claims while raw and
   assert.equal(deferred.sources.some((source) => waterIds.has(source.id)), false);
 });
 
+test('water-payment routing uses only the exact-version approved process, methods, contacts, action, and requested card fee', async () => {
+  const baseOptions = {
+    index, communityId: 'sterling-ranch', now: NOW, isTest: true,
+    planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion: () => ({ answer: 'No rule answer.', sources: [], actions: [], confidence: { canAnswer: false } }),
+  };
+  const methods = await answerCommunityQuestion('What payment methods can I use for my water bill?', baseOptions);
+  assert.equal(methods.answerStatus, 'verified');
+  assert.equal(methods.answerMode, 'community-approved-operational');
+  assert.match(methods.answer, /UtilityHawk.*Pay Online/i);
+  assert.match(methods.answer, /ACH[\s\S]*debit or credit card[\s\S]*check or money order[\s\S]*bank bill pay[\s\S]*phone[\s\S]*email or text/i);
+  assert.deepEqual(methods.actions.map((action) => action.url), ['https://srcab.utilityhawk.us']);
+  assert.doesNotMatch(methods.answer, /2\.95%|threshold|alerts?|monitor|tier|water rate|Venmo|PayPal/i);
+
+  const help = await answerCommunityQuestion('Who can help me pay my water bill?', baseOptions);
+  assert.equal(help.answerStatus, 'verified');
+  assert.match(help.answer, /\(833\) 772-2240/);
+  assert.match(help.answer, /ClientCare@AmCoBi\.com/i);
+  assert.doesNotMatch(help.answer, /720-661-9694|threshold|alerts?|monitor|water rate/i);
+
+  const fee = await answerCommunityQuestion('What is the credit card fee for paying my water bill?', baseOptions);
+  assert.equal(fee.answerStatus, 'verified');
+  assert.match(fee.answer, /2\.95%.*Paymentus/i);
+  assert.doesNotMatch(fee.answer, /threshold|alerts?|monitor|tier|water rate/i);
+
+  const changed = JSON.parse(JSON.stringify(index));
+  changed.sources.find((source) => source.id === 'sterling-ranch-water-billing-payment-options-334').contentHash = 'e'.repeat(64);
+  const withdrawn = await answerCommunityQuestion('What payment methods can I use for my water bill?', { ...baseOptions, index: changed });
+  assert.equal(withdrawn.answerStatus, 'source-unavailable');
+  assert.doesNotMatch(withdrawn.answer, /ACH|debit or credit card|bank bill pay|payment-portal email or text/i);
+});
+
 test('a changed captured hash withdraws every approved water-billing projection', () => {
   const changed = JSON.parse(JSON.stringify(index));
   const page = changed.sources.find((source) => source.id === 'sterling-ranch-view-and-pay-water-bill-332');

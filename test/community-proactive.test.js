@@ -77,15 +77,14 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
         routingPlan: options.routingPlan,
       }),
     });
-    assert.match(answer.answerMode, /^community-(?:proactive-)?grounded-ai$/, question);
+    assert.equal(answer.answerMode, "community-approved-operational", question);
     assert.equal(answer.routingDecision, "ai-planned", question);
     assert.equal(answer.routingPlan.goal, "payment", question);
     assert.equal(answer.routingPlan.subject, "water bill", question);
-    assert.match(answer.directAnswer, /UtilityHawk.*select .Pay Online./i, question);
-    assert.match(answer.answer, /ACH.*free/i, question);
-    assert.match(answer.answer, /2\.95%.*Paymentus/i, question);
-    assert.match(answer.answer, /American Conservation and Billing Solutions \(AmCoBi\)/i, question);
-    assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us\\?\/login/i, question);
+    assert.match(answer.answer, /UtilityHawk.*Pay Online/i, question);
+    assert.doesNotMatch(answer.answer, /threshold|alerts?|monitor|water rate/i, question);
+    assert.doesNotMatch(answer.answer, /2\.95%/i, question);
+    assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i, question);
     assert.doesNotMatch(answer.answer, /possible disconnection|past-due notice/i, question);
   }
   assert.equal(plannerCalls, 6);
@@ -100,8 +99,8 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   });
   assert.equal(outageFallback.routingDecision, "official-action-fallback");
   assert.equal(outageFallback.routingFallbackReason, "planner-unavailable-or-disabled");
-  assert.match(outageFallback.answer, /UtilityHawk.*payment (?:options|portal)/i);
-  assert.match(JSON.stringify(outageFallback.actions), /srcab\.utilityhawk\.us\/login/i);
+  assert.match(outageFallback.answer, /Utility Hawk[\s\S]*Pay Online/i);
+  assert.match(JSON.stringify(outageFallback.actions), /srcab\.utilityhawk\.us/i);
   assert.doesNotMatch(JSON.stringify(outageFallback.actions), /Water Concern/i);
   assert.doesNotMatch(outageFallback.answer, /possible disconnection|past-due notice/i);
 
@@ -119,8 +118,8 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
     synthesizeCommunityAnswer: false,
   });
   assert.equal(rejectedSynthesisFallback.routingDecision, "ai-planned");
-  assert.match(rejectedSynthesisFallback.directAnswer, /UtilityHawk.*(?:Pay Online|payment options)/i);
-  assert.match(JSON.stringify(rejectedSynthesisFallback.actions), /srcab\.utilityhawk\.us\/login/i);
+  assert.match(rejectedSynthesisFallback.answer, /Utility Hawk[\s\S]*Pay Online/i);
+  assert.match(JSON.stringify(rejectedSynthesisFallback.actions), /srcab\.utilityhawk\.us/i);
 
   const late = await ask("What happens if I do not pay my water bill?");
   assert.notEqual(late.routingDecision, "ai-planned");

@@ -457,6 +457,64 @@ test("a binding rule remains verified-partial when specification composition is 
   assert.match(answer.answer, /does not provide|could not verify the requested color, finish, material, or dimension/i);
 });
 
+test("an unapproved specification match cannot discard an independently verified controlling fence permission", async () => {
+  const controllingUrl = "https://library.municode.com/co/sterling-ranch/codes/rules?nodeId=FENCES";
+  const answer = await answerCommunityQuestion("Can I build a fence and what color is required?", {
+    interpretationMode: "structured",
+    communityId: "alpha",
+    index: {
+      communityId: "alpha",
+      truthStatus: { migrationMode: "reviewed" },
+      factLedger: [],
+      sources: [{
+        id: "unapproved-fence-finish",
+        communityId: "alpha",
+        title: "Fence permission and finish",
+        sourceUrl: controllingUrl,
+        sourceType: "rules",
+        connectorType: "municode",
+        authorityScore: 1,
+        contentHash: "unapproved-v1",
+        lifecycle: "current",
+        staleAfter: "2099-01-01",
+        text: "Fences require approval. Use Secret Blue stain.",
+        excerpt: "Fences require approval. Use Secret Blue stain.",
+        facts: [],
+        actions: [],
+      }],
+    },
+    planCommunitySearch: async () => ({
+      intent: "rules",
+      goal: "permission",
+      goals: ["permission"],
+      subject: "fence permission and finish",
+      requestedDetails: ["permission", "specification"],
+      filters: {},
+      searchQueries: ["fence permission", "fence finish"],
+      scope: "community",
+      needsClarification: false,
+    }),
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: Fence installation is allowed only with prior design approval.",
+      answerMode: "source-derived-structured",
+      answerVerdict: "conditional",
+      controllingSourceOnly: true,
+      confidence: { canAnswer: true, confidence: "high", reason: "controlling-rule-supported" },
+      sources: [{ id: "fence-rule", title: "Fence rule", sourceUrl: controllingUrl, sourceType: "rules" }],
+      actions: [{ label: "Open the fence rule", url: controllingUrl, actionType: "information" }],
+      qualityChecks: { requestedFacetCoverage: false, issues: ["requested-specification-missing"] },
+    }),
+  });
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.equal(answer.completion.outcome, "verified-partial");
+  assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
+  assert.match(answer.answer, /prior design approval/i);
+  assert.match(answer.answer, /could not verify the requested color, finish, material, or dimension/i);
+  assert.doesNotMatch(answer.answer, /Secret Blue/i);
+});
+
 test("a form-only fence answer still cannot verify a binding permission claim", async () => {
   const answer = await answerCommunityQuestion("Can I build a fence and what finish is required?", {
     interpretationMode: "structured",

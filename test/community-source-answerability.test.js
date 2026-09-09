@@ -71,6 +71,75 @@ test('canonical scoped water-payment approval projects only its matched action t
   assert.equal(changed.withheldSources[0].text, '');
 });
 
+test('generic exact-version action composition works for a second community and non-water service', async () => {
+  const guideUrl = 'https://beta.example.gov/parking/permit-renewal';
+  const actionUrl = 'https://beta.example.gov/forms/parking-permit-renewal';
+  const guideHash = 'a'.repeat(64);
+  const actionHash = 'b'.repeat(64);
+  const guide = {
+    id: 'beta-parking-permit-guide', communityId: 'beta', sourceType: 'forms', connectorType: 'civicplus-pages',
+    sourceUrl: guideUrl, title: 'Parking Permit Renewal Guide', contentHash: guideHash, staleAfter: '2099-01-01T00:00:00Z', authorityScore: 1,
+    text: 'Renew your parking permit with the online renewal form. Unapproved neighboring phone: 555-0100.',
+    facts: [
+      { type: 'information', value: 'online-renewal', context: 'Renew your parking permit with the online renewal form.', approvalClaim: 'permit-renewal-process' },
+      { type: 'email', value: 'permits@beta.example.gov', context: 'For renewal help, email permits@beta.example.gov.', approvalClaim: 'permit-renewal-contact' },
+    ],
+    actions: [],
+  };
+  const action = {
+    id: 'beta-parking-permit-action', communityId: 'beta', sourceType: 'forms', connectorType: 'civicplus-pages',
+    sourceUrl: actionUrl, title: 'Parking Permit Renewal Form', contentHash: actionHash, staleAfter: '2099-01-01T00:00:00Z', authorityScore: 1,
+    text: 'Use the official parking permit renewal form.', facts: [],
+    actions: [{ label: 'Open parking permit renewal form', url: 'https://permits.beta.example.gov/renew', actionType: 'application', approvalClaim: 'permit-renewal-action' }],
+  };
+  const ledger = {
+    records: [{
+      key: `${guideUrl}#sha256:${guideHash}`, canonicalUrl: guideUrl, contentHash: guideHash,
+      approvals: [{
+        status: 'approved', communityId: 'beta', decisionId: 'beta-permit-renewal-guide', scopeKind: 'scoped-claims',
+        approvedClaims: ['permit-renewal-process', 'permit-renewal-contact'], withheldClaims: ['neighboring-phone'],
+      }],
+    }, {
+      key: `${actionUrl}#sha256:${actionHash}`, canonicalUrl: actionUrl, contentHash: actionHash,
+      approvals: [{
+        status: 'approved', communityId: 'beta', decisionId: 'beta-permit-renewal-action', scopeKind: 'scoped-claims',
+        approvedClaims: ['permit-renewal-action'], withheldClaims: [],
+      }],
+    }],
+  };
+  const index = { communityId: 'beta', communityName: 'Beta', website: 'https://beta.example.gov', sources: [guide, action], factLedger: [], canonicalSourceLedger: ledger };
+  const planCommunitySearch = async () => ({
+    intent: 'forms', goal: 'application', goals: ['application'], subject: 'parking permit renewal',
+    requestedDetails: ['action', 'contact'], filters: {}, searchQueries: ['parking permit renewal form'], scope: 'community', needsClarification: false,
+  });
+  const answer = await answerCommunityQuestion('How do I renew my parking permit, and who can help?', {
+    index,
+    communityId: 'beta', now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+    planCommunitySearch,
+  });
+  assert.equal(answer.answerStatus, 'verified');
+  assert.equal(answer.answerMode, 'community-approved-operational');
+  assert.equal(answer.authorityDecision, 'exact-version-approved-claims');
+  assert.match(answer.answer, /Open parking permit renewal form/);
+  assert.match(answer.answer, /permits@beta\.example\.gov/);
+  assert.deepEqual(answer.actions.map((action) => action.url), ['https://permits.beta.example.gov/renew']);
+  assert.doesNotMatch(answer.answer, /555-0100/);
+  assert.deepEqual(new Set(answer.sources.map((source) => source.id)), new Set([guide.id, action.id]));
+  const actionClaim = answer.claims.find((claim) => /Open parking permit renewal form/.test(claim.text));
+  const contactClaim = answer.claims.find((claim) => /permits@beta\.example\.gov/.test(claim.text));
+  assert.deepEqual(actionClaim.evidenceSourceIds, [action.id]);
+  assert.deepEqual(contactClaim.evidenceSourceIds, [guide.id]);
+  const displayedSourceIds = new Set(answer.sources.map((source) => source.id));
+  assert.ok(answer.claims.every((claim) => claim.evidenceSourceIds.every((sourceId) => displayedSourceIds.has(sourceId))));
+
+  const missingContact = await answerCommunityQuestion('How do I renew my parking permit, and who can help?', {
+    index: { ...index, sources: [action] }, communityId: 'beta', now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+    planCommunitySearch,
+  });
+  assert.notEqual(missingContact.answerStatus, 'verified');
+  assert.notEqual(missingContact.answerMode, 'community-approved-operational');
+});
+
 test('trash schedule family requires claim approval and mixed pages expose only approved claims and actions', () => {
   const trash = {
     id: 'trash', communityId: 'alpha', sourceUrl: 'https://alpha.gov/trash', title: 'Trash collection schedule',

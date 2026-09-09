@@ -13,6 +13,45 @@ const { scopedApprovalsForVersion } = require('../lib/canonical-source-ledger');
 const root = path.join(__dirname, '..');
 const defaultIndexPath = path.join(root, 'data', 'community-index.json');
 
+const PRIMARY_PAYMENT_FACTS = [
+  {
+    id: 'water-payment-334-process-register', type: 'information', value: 'register-through-utility-hawk',
+    context: 'Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us )',
+  },
+  {
+    id: 'water-payment-334-process-pay-online', type: 'information', value: 'select-pay-online-and-follow-instructions',
+    context: 'Select the "Pay Online" link on the home page. Follow the instructions.',
+  },
+  {
+    id: 'water-payment-334-method-ach', type: 'information', facet: 'method', value: 'ach-checking-or-savings',
+    context: "AmCoBi's ePay service allows you to pay your bill online with an automatic withdrawal from your checking/savings account (ACH) free of charge.",
+  },
+  {
+    id: 'water-payment-334-method-card', type: 'information', facet: 'method', value: 'debit-or-credit-card',
+    context: 'You can also use a debit or credit card',
+  },
+  {
+    id: 'water-payment-334-method-mail', type: 'information', facet: 'method', value: 'check-or-money-order-by-mail',
+    context: 'USPS Mail Pay by Check or Money Order - Send a check to the billing mailing address.',
+  },
+  {
+    id: 'water-payment-334-method-bank-bill-pay', type: 'information', facet: 'method', value: 'bank-bill-pay',
+    context: 'Bank Bill Pay - please make sure to update your bank bill pay with your new AMCoBi account number and remittance address to ensure proper delivery.',
+  },
+  {
+    id: 'water-payment-334-method-phone', type: 'information', facet: 'method', value: 'pay-by-phone',
+    context: 'Pay by Phone at 1-833-SRCAB-40 or (833) 772-2240',
+  },
+  {
+    id: 'water-payment-334-method-email-text', type: 'information', facet: 'method', value: 'pay-by-email-or-text',
+    context: 'Pay by Email or Text by replying to the received message from the Payment Portal.',
+  },
+].map((fact) => ({
+  ...fact,
+  approvalClaim: 'primary-current-water-payment-page',
+  decisionId: 'water-payment-primary-page',
+}));
+
 function hash(value) {
   return crypto.createHash('sha256').update(String(value || '')).digest('hex');
 }
@@ -49,7 +88,11 @@ function buildWaterBillingSources() {
     const approvals = scopedApprovalsForVersion(canonicalLedger, page, artifact.communityId);
     const decisionClaims = new Map(approvals.flatMap((approval) =>
       (approval.approvedClaims || []).map((claim) => [claim, approval.decisionId])));
-    for (const item of [...(page.facts || []), ...(page.actions || [])]) {
+    const facts = [
+      ...(page.facts || []),
+      ...(page.id === 'sterling-ranch-water-billing-payment-options-334' ? PRIMARY_PAYMENT_FACTS : []),
+    ];
+    for (const item of [...facts, ...(page.actions || [])]) {
       if (!page.text.includes(item.context || '')) throw new Error(`${page.id}:${item.id} is not an exact source excerpt.`);
       if (decisionClaims.get(item.approvalClaim) !== item.decisionId) {
         throw new Error(`${page.id}:${item.id} is not allowed by its exact canonical decision.`);
@@ -65,7 +108,7 @@ function buildWaterBillingSources() {
       authorityScore: 1,
       text: page.text,
       excerpt: '',
-      facts: (page.facts || []).map((item) => reviewedItem(item, page)),
+      facts: facts.map((item) => reviewedItem(item, page)),
       // A canonical claim decision does not override the community action
       // policy. Keep an action only when its stored destination is already a
       // permitted HTTPS destination; never guess an HTTP-to-HTTPS rewrite.
