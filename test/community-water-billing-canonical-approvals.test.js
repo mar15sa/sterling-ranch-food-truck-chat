@@ -6,6 +6,7 @@ const { buildWaterBillingSources } = require('../scripts/apply-water-billing-can
 const { searchCommunityIndex } = require('../lib/community-search');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
 const { sourceReviewState } = require('../lib/community-source-answerability');
+const { revalidateApprovedEvidence, selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
 
 const NOW = Date.parse('2026-09-09T12:00:00Z');
 const waterIds = new Set(artifact.pages.map((page) => page.id));
@@ -25,6 +26,11 @@ test('rebuild imports only exact reviewed water-billing excerpts with complete p
       assert.ok(source.text.includes(item.context));
     }
   }
+  const payment = rebuilt.find((source) => source.id === 'sterling-ranch-water-billing-payment-options-334');
+  assert.deepEqual(payment.actions.map((action) => action.id), ['water-payment-334-utility-hawk']);
+  assert.equal(payment.actions[0].url, 'https://srcab.utilityhawk.us');
+  assert.equal(payment.facts.some((fact) => fact.id === 'water-payment-334-help-email'), true);
+  assert.equal(payment.actions.some((action) => /amcobi/i.test(action.url)), false);
 });
 
 test('real community index exposes approved payment/contact claims while raw and adjacent claims stay withheld', async () => {
@@ -32,6 +38,9 @@ test('real community index exposes approved payment/contact claims while raw and
   const pages = index.sources.filter((source) => waterIds.has(source.id));
   assert.equal(pages.length, 4);
   for (const page of pages) assert.equal(state.canUseSource(page), false, `${page.id} raw page body must remain withheld`);
+  const paymentPage = pages.find((page) => page.id === 'sterling-ranch-water-billing-payment-options-334');
+  assert.deepEqual(paymentPage.actions.map((action) => action.url), ['https://srcab.utilityhawk.us']);
+  assert.equal(paymentPage.actions.some((action) => /amcobi/i.test(action.url)), false);
 
   const payment = searchCommunityIndex('AmCoBi water billing email', { index, communityId: 'sterling-ranch', now: NOW });
   assert.deepEqual(payment.sources.map((source) => source.id), ['sterling-ranch-water-billing-payment-options-334']);
@@ -52,4 +61,31 @@ test('a changed captured hash withdraws every approved water-billing projection'
   page.contentHash = 'f'.repeat(64);
   const result = searchCommunityIndex('Utility Hawk water bill payment', { index: changed, communityId: 'sterling-ranch', now: NOW });
   assert.equal(result.sources.some((source) => source.id === page.id), false);
+});
+
+test('real imported exact-version water-billing projections renew after their initial freshness deadline', async () => {
+  const expiredNow = Date.parse('2026-09-11T12:00:00Z');
+  const imported = JSON.parse(JSON.stringify(index));
+  const expired = {
+    ...imported,
+    sources: imported.sources.filter((source) => waterIds.has(source.id)),
+    factLedger: imported.factLedger.filter((fact) => waterIds.has(fact.sourceId)),
+  };
+  const pages = expired.sources;
+  assert.deepEqual(selectRevalidationTargetUrls(expired, expiredNow), pages.map((source) => source.sourceUrl).sort());
+
+  const result = await revalidateApprovedEvidence(expired, {
+    now: expiredNow,
+    fetchObservedHashes: async (_url, sources) => ({
+      observedHashes: sources.map((source) => source.contentHash), actionMismatch: false,
+    }),
+  });
+  assert.equal(result.checks.every((check) => check.outcome === 'renewed'), true);
+  for (const page of result.temporaryIndex.sources.filter((source) => waterIds.has(source.id))) {
+    assert.ok(Date.parse(page.staleAfter) > expiredNow, `${page.id} source freshness must renew`);
+    assert.equal(page.reviewStatus, 'candidate', `${page.id} raw body must stay withheld`);
+  }
+  for (const fact of result.temporaryIndex.factLedger.filter((fact) => waterIds.has(fact.sourceId))) {
+    assert.ok(Date.parse(fact.staleAfter) > expiredNow, `${fact.sourceId} projection freshness must renew`);
+  }
 });

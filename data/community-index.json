@@ -33202,22 +33202,6 @@
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
           "checkedAt": "2026-09-09T02:25:34.966Z"
-        },
-        {
-          "id": "water-payment-334-amcobi",
-          "label": "AmCoBi Pay Online",
-          "url": "http://www.amcobi.com/pay-online",
-          "actionType": "payment",
-          "approvalClaim": "primary-current-water-payment-page",
-          "decisionId": "water-payment-primary-page",
-          "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions.",
-          "sourceVersion": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
-          "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
-          "reviewStatus": "approved",
-          "reviewDecisionId": "water-payment-primary-page",
-          "reviewedBy": "owner",
-          "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
         }
       ],
       "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",

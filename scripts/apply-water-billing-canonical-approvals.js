@@ -5,6 +5,7 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const artifact = require('../data/community-water-billing-approved-sources.json');
+const communityProfile = require('../data/communities/sterling-ranch.json');
 const canonicalLedger = require('../data/canonical-source-ledger.json');
 const { buildFactLedger, resolveFactLedger } = require('../lib/community-truth');
 const { scopedApprovalsForVersion } = require('../lib/canonical-source-ledger');
@@ -27,6 +28,19 @@ function reviewedItem(item, page) {
     reviewedAt: artifact.reviewer.reviewedAt,
     checkedAt: artifact.capturedAt,
   };
+}
+
+function actionAllowedByCommunityPolicy(action = {}) {
+  try {
+    const url = new URL(action.url);
+    const allowedHosts = new Set([
+      new URL(communityProfile.website).hostname.toLowerCase(),
+      ...(communityProfile.allowedHosts || []).map((host) => String(host).toLowerCase()),
+    ]);
+    return url.protocol === 'https:' && allowedHosts.has(url.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
 }
 
 function buildWaterBillingSources() {
@@ -52,7 +66,10 @@ function buildWaterBillingSources() {
       text: page.text,
       excerpt: '',
       facts: (page.facts || []).map((item) => reviewedItem(item, page)),
-      actions: (page.actions || []).map((item) => reviewedItem(item, page)),
+      // A canonical claim decision does not override the community action
+      // policy. Keep an action only when its stored destination is already a
+      // permitted HTTPS destination; never guess an HTTP-to-HTTPS rewrite.
+      actions: (page.actions || []).filter(actionAllowedByCommunityPolicy).map((item) => reviewedItem(item, page)),
       contentHash: page.contentHash,
       checkedAt: artifact.capturedAt,
       staleAfter: artifact.staleAfter,
@@ -93,4 +110,4 @@ if (require.main === module) {
   console.log(JSON.stringify({ outputPath, sourcesImported: artifact.pages.length, approvedFacts: next.factLedger.filter((fact) => fact.reviewStatus === 'approved').length }, null, 2));
 }
 
-module.exports = { applyWaterBillingCanonicalApprovals, buildWaterBillingSources };
+module.exports = { actionAllowedByCommunityPolicy, applyWaterBillingCanonicalApprovals, buildWaterBillingSources };
