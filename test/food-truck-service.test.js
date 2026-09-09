@@ -150,11 +150,12 @@ test("one failed menu/profile enrichment does not remove other trucks on the off
   assert.deepEqual(answer.menuEnrichment.failures, [{ truck: "Example Eats", component: "menu-profile" }]);
 });
 
-test("both public APIs are wired to the same extracted food-truck service", () => {
+test("the standalone API keeps its service while the Community Assistant uses the source-governed connector", () => {
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
   assert.match(server, /createFoodTruckService\(\{/);
   assert.match(server, /sendJson\(res, 200, await getAnswerForDate\(question, targetDate\)\)/);
-  assert.match(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getAnswerForDate/);
+  assert.match(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getCommunityFoodTruckSchedule/);
+  assert.doesNotMatch(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getAnswerForDate/);
   assert.match(server, /dateFromInterpretation/);
   assert.doesNotMatch(server, /async function getAnswerForDate/);
 });
