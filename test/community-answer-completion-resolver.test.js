@@ -437,7 +437,7 @@ test("full-route fence questions retain permission while an unapproved finish st
     assert.notEqual(answer.answerMode, "community-per-facet-grounded-ai", question);
     assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
     assert.match(answer.answer, /DRC approval|approval requirements/i, question);
-    assert.match(answer.answer, /Still to confirm:.*requested color, finish, material, or dimension/i, question);
+    assert.match(answer.answer, /^Short answer: The cited current rules do not name one exact paint color or finish/i, question);
     assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
   }
 });
@@ -469,7 +469,7 @@ test("a binding rule remains verified-partial when specification composition is 
   assert.equal(answer.completion.outcome, "verified-partial");
   assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
-  assert.match(answer.answer, /does not provide|could not verify the requested color, finish, material, or dimension/i);
+  assert.match(answer.answer, /does not provide|do not name one exact paint color or finish|could not verify the requested color, finish, material, or dimension/i);
 });
 
 test("an unapproved specification match cannot discard an independently verified controlling fence permission", async () => {
@@ -526,7 +526,7 @@ test("an unapproved specification match cannot discard an independently verified
   assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
   assert.match(answer.answer, /prior design approval/i);
-  assert.match(answer.answer, /could not verify the requested color, finish, material, or dimension/i);
+  assert.match(answer.answer, /do not name one exact paint color or finish|could not verify the requested color, finish, material, or dimension/i);
   assert.doesNotMatch(answer.answer, /Secret Blue/i);
 });
 

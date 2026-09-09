@@ -40,8 +40,9 @@ test("approved-landscaper questions withhold unapproved directory prose and comp
 
 test("legacy water-usage wording uses approved projections without inventing a missing portal claim", async () => {
   const answer = await ask("Internet access for water usage");
-  assert.equal(answer.answerMode, "community-source-extractive");
+  assert.equal(answer.answerMode, "community-approved-operational");
   assert.equal(answer.answerStatus, "verified");
+  assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
   assert.doesNotMatch(answer.answer, /does not provide a resident login link|no (?:portal|login)/i);
   assert.ok(answer.sources.filter((source) => !source.connectorType?.includes("live")).every((source) => source.canonicalScopedProjection));
 });

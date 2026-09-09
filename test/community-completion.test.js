@@ -65,6 +65,29 @@ test("fence-color wording variants do not use an unapproved static one-sheet as 
   }
 });
 
+test("missing paint specifications lead with the evidence boundary without inventing a color", async () => {
+  for (const question of ["What specific paint color?", "What color can I paint my garage door?"]) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+        ...options,
+        searchMode: "legacy",
+        llmMode: "off",
+      }),
+    });
+
+    assert.equal(answer.answerStatus, "source-unavailable", question);
+    assert.equal(answer.completion.outcome, "missing-evidence", question);
+    assert.match(answer.answer, /^Short answer: The cited current rules do not name one exact paint color or finish/i, question);
+    assert.match(answer.answer, /manufacturer's paint chips indicating color number/i, question);
+    assert.match(answer.answer, /DRC approval is required/i, question);
+    assert.doesNotMatch(answer.answer, /Belvedere Tan|Earthen|Sherwin Williams|Solomon #/i, question);
+  }
+});
+
 test("visit-only context resolves pronouns but does not override an explicit new topic", () => {
   const context = [{ question: "Who is the food truck tomorrow?", resolvedQuestion: "Who is the food truck tomorrow?", answer: "The listed truck is Example Eats." }];
   const followUp = resolveConversationQuestion("What is on their menu?", context);
