@@ -713,6 +713,8 @@ test("structured service contacts skip the unrelated rules lookup after shared i
   assert.equal(interpretationCalls, 1);
   assert.equal(rulesCalls, 0);
   assert.equal(answer.answerMode, "community-source-extractive");
+  assert.deepEqual(answer.completion.resolvedDetails, ["contact"]);
+  assert.deepEqual(answer.completion.missingDetails, []);
   assert.match(answer.answer, /\(833\) 772-2240/);
   assert.match(answer.answer, /ClientCare@AmCoBi\.com/i);
 });
