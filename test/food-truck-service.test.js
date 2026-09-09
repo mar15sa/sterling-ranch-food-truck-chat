@@ -69,6 +69,60 @@ test("calendar aliases use the known public truck name for answers and menu look
   assert.match(answer.text, /Cousins Maine Lobster/);
 });
 
+test("a menu/profile enrichment failure keeps the official scheduled truck answer available", async () => {
+  const service = createFoodTruckService({
+    formatIso: () => "2026-08-29",
+    formatFriendly: () => "Saturday, August 29, 2026",
+    getScheduleForMonth: async () => ({
+      sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+      schedule: { "2026-08-29": "Example Eats" },
+      localEvents: {},
+    }),
+    getEventTruckListings: async () => [],
+    getMenuForTruck: async () => { throw new Error("vendor profile unavailable"); },
+    isNonTruckCalendarTitle: () => false,
+    normalizeTruckName: (name) => name,
+    splitListedTruckNames: (name) => [name],
+  });
+
+  const answer = await service.getAnswerForDate("Who is here?", new Date(Date.UTC(2026, 7, 29)));
+
+  assert.equal(answer.truck, "Example Eats");
+  assert.equal(answer.sourceUrl, "https://sterlingranchcab.com/Calendar.aspx");
+  assert.deepEqual(answer.menu, { links: [], items: [] });
+  assert.deepEqual(answer.menuEnrichment, {
+    status: "degraded",
+    failures: [{ truck: "Example Eats", component: "menu-profile" }],
+  });
+});
+
+test("one failed menu/profile enrichment does not remove other trucks on the official schedule", async () => {
+  const service = createFoodTruckService({
+    formatIso: () => "2026-08-29",
+    formatFriendly: () => "Saturday, August 29, 2026",
+    getScheduleForMonth: async () => ({
+      sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+      schedule: { "2026-08-29": "Example Eats & Sample Tacos" },
+      localEvents: {},
+    }),
+    getEventTruckListings: async () => [],
+    getMenuForTruck: async (name) => {
+      if (name === "Example Eats") throw new Error("vendor profile unavailable");
+      return { links: [{ title: "Sample Tacos menu", url: "https://example.test/menu" }], items: [{ name: "Taco", price: "$12" }] };
+    },
+    isNonTruckCalendarTitle: () => false,
+    normalizeTruckName: (name) => name,
+    splitListedTruckNames: () => ["Example Eats", "Sample Tacos"],
+  });
+
+  const answer = await service.getAnswerForDate("Who is here?", new Date(Date.UTC(2026, 7, 29)));
+
+  assert.equal(answer.truck, "Example Eats and Sample Tacos");
+  assert.deepEqual(answer.trucks.map((listing) => listing.name), ["Example Eats", "Sample Tacos"]);
+  assert.deepEqual(answer.trucks[1].menu.items, [{ name: "Taco", price: "$12" }]);
+  assert.deepEqual(answer.menuEnrichment.failures, [{ truck: "Example Eats", component: "menu-profile" }]);
+});
+
 test("both public APIs are wired to the same extracted food-truck service", () => {
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
   assert.match(server, /createFoodTruckService\(\{/);
