@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const storedCommunityIndex = require("../data/community-index.json");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 // Public-example regression tests verify answer behavior, not wall-clock source
 // freshness. The live source monitor covers expiration separately, so keep this
 // fixture current instead of letting the test change merely because a day passed.
@@ -66,6 +67,7 @@ for (const example of EXAMPLES) {
   test(`${example.withheldConflict ? "public example safely withholds a conflicted source" : "public example stays useful"}: ${example.question}`, async () => {
     const result = await answerCommunityQuestion(example.question, {
       index: communityIndex,
+      communityProfile,
       communityId: "sterling-ranch",
       answerRulesQuestion,
       synthesizeCommunityAnswer: false,

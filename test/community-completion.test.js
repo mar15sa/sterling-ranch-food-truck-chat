@@ -3,14 +3,13 @@ const test = require("node:test");
 const { buildAnswerContract } = require("../lib/community-contracts");
 const { resolveConversationQuestion } = require("../lib/community-conversation");
 const { foodTruckAnswer, isFoodTruckQuestion } = require("../lib/community-food-trucks");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion, cleanAnswerText, unanchoredRecurringScheduleAnswer } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
 const { diffCommunityIndexes, sourceReleaseDecision, validateCommunityCandidate } = require("../lib/community-release");
 const { getWasteSchedule, scheduleTimingLabel, configuredAreaDates } = require("../lib/community-waste-schedule");
-const communityProfile = require("../data/communities/sterling-ranch.json");
-
 function liveWasteEvidence(date, checkedAt) {
   return {
     degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
@@ -196,8 +195,8 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
     trucks: [{ name: "Example Eats", location: "Prospect Park" }],
     sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
     checkedAt: "2026-08-28T00:00:00.000Z",
-    menu: { links: [{ title: "Example Eats official menu", url: "https://sterlingranchcab.com/menu" }], items: [{ name: "Tacos", price: "$12.00" }] },
-  });
+    menu: { links: [{ title: "Example Eats official menu", url: "https://www.facebook.com/example-eats/menu" }], items: [{ name: "Tacos", price: "$12.00", url: "https://www.facebook.com/example-eats/menu" }] },
+  }, { profile: communityProfile });
   assert.equal(answer.answerMode, "community-live-food-truck");
   assert.match(answer.directAnswer, /Example Eats at Prospect Park/);
   assert.match(answer.keyDetails[0], /Tacos.*\$12/);
@@ -209,7 +208,7 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
   assert.deepEqual(answer.actions.map((action) => action.label), [
     "Open full food-truck answer",
     "View Example Eats menu",
-    "View food-truck schedule",
+    "View Sterling Ranch food-truck schedule",
   ]);
   assert.equal(answer.actions[0].url, "/food-truck?date=2026-08-29");
 });
@@ -223,19 +222,19 @@ test("food-truck answers keep each truck's menu, source, and action separate", (
       {
         name: "Tula's Tapas",
         menu: {
-          links: [{ title: "Tula's Tapas menu", url: "https://tulas.example/menu" }],
-          items: [{ name: "Tula's Tots", description: "Crispy tater tots." }],
+          links: [{ title: "Tula's Tapas menu", url: "https://www.facebook.com/tulas/menu" }],
+          items: [{ name: "Tula's Tots", description: "Crispy tater tots.", url: "https://www.facebook.com/tulas/menu" }],
         },
       },
       {
         name: "HipPops",
         menu: {
-          links: [{ title: "HipPops menu", url: "https://hippops.example/menu" }],
-          items: [{ name: "Gelato Pops", price: "$6" }],
+          links: [{ title: "HipPops menu", url: "https://www.instagram.com/hippops/menu" }],
+          items: [{ name: "Gelato Pops", price: "$6", url: "https://www.instagram.com/hippops/menu" }],
         },
       },
     ],
-  });
+  }, { profile: communityProfile });
 
   assert.match(answer.directAnswer, /Tula's Tapas and HipPops/);
   assert.deepEqual(answer.presentation.truckCards.map((truck) => truck.name), ["Tula's Tapas", "HipPops"]);
@@ -245,10 +244,10 @@ test("food-truck answers keep each truck's menu, source, and action separate", (
     "Open full food-truck answer",
     "View Tula's Tapas menu",
     "View HipPops menu",
-    "View food-truck schedule",
+    "View Sterling Ranch food-truck schedule",
   ]);
   assert.deepEqual(answer.sources.map((source) => source.title), [
-    "Official Sterling Ranch calendar",
+    "Official Sterling Ranch food-truck calendar",
     "Tula's Tapas menu",
     "HipPops menu",
   ]);

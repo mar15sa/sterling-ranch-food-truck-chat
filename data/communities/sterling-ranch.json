@@ -42,6 +42,32 @@
       "refreshMinutes": 60
     },
     {
+      "id": "food-truck-schedule",
+      "type": "food-truck-schedule",
+      "baseUrl": "https://sterlingranchcab.com/Calendar.aspx",
+      "adapter": {
+        "capabilities": ["events", "menu"],
+        "facets": ["event-date", "date", "menu", "price", "action"],
+        "controllingSourceRoles": ["operational"],
+        "actionTypes": ["information"],
+        "sourceHosts": ["sterlingranchcab.com", "www.facebook.com", "facebook.com", "m.facebook.com", "www.instagram.com", "instagram.com"],
+        "endpoints": [{ "id": "schedule", "url": "https://sterlingranchcab.com/Calendar.aspx", "purpose": "official-food-truck-schedule" }],
+        "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 },
+        "degradation": { "policy": "retain-last-known" },
+        "labels": {
+          "calendarTitle": "Official Sterling Ranch food-truck calendar",
+          "calendarAction": "View Sterling Ranch food-truck schedule",
+          "fullAnswerAction": "Open full food-truck answer"
+        },
+        "vocabulary": { "food-truck": ["food truck", "food trucks", "mobile food"] },
+        "foodTruck": {
+          "fullAnswerPath": "/food-truck",
+          "menuSourceHosts": ["www.facebook.com", "facebook.com", "m.facebook.com", "www.instagram.com", "instagram.com"]
+        }
+      },
+      "refreshMinutes": 60
+    },
+    {
       "id": "official-rules",
       "type": "municode",
       "baseUrl": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
@@ -129,7 +155,12 @@
     "apps.apple.com",
     "srcab.utilityhawk.us",
     "ebill.sterlingranchco.com",
-    "lumiere.technology"
+    "lumiere.technology",
+    "www.facebook.com",
+    "facebook.com",
+    "m.facebook.com",
+    "www.instagram.com",
+    "instagram.com"
     ,"www.wasteconnections.com"
     ,"api.recollect.net"
   ],
