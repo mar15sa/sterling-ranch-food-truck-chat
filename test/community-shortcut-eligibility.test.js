@@ -245,6 +245,13 @@ test("the full ask route withholds stale dated facility hours instead of repeati
   assert.equal(answer.answerStatus, "could-not-verify");
   assert.equal(answer.answerVerdict, "unverified");
   assert.equal(answer.confidence.reason, "source-stale");
+  assert.equal(answer.authorityDecision, "freshness-withheld");
+  assert.deepEqual(answer.completion.requestedDetails, ["date", "hours"]);
+  assert.deepEqual(answer.completion.resolvedDetails, []);
+  assert.deepEqual(answer.completion.missingDetails, [
+    { key: "date", reason: "missing-evidence" },
+    { key: "hours", reason: "missing-evidence" },
+  ]);
   assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm|Open Swim/i);
   assert.equal(answer.sources[0].text, undefined);
 });

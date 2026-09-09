@@ -137,8 +137,10 @@ test("pool status and holiday-hours variants cannot use a static season page as 
     });
     assert.notEqual(answer.answerStatus, "verified", question);
     assert.notEqual(answer.completion.outcome, "complete", question);
+    assert.deepEqual(answer.completion.requestedDetails, ["hours", "status"], question);
     assert.deepEqual(answer.completion.resolvedDetails, [], question);
     assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key).sort(), ["hours", "status"], question);
+    assert.ok(answer.completion.missingDetails.every((detail) => detail.reason === "missing-evidence"), question);
     assert.match(answer.answer, /holiday hours|hours/i, question);
     assert.match(answer.answer, /status/i, question);
   }
@@ -486,8 +488,12 @@ test("a form-only fence answer still cannot verify a binding permission claim", 
   });
   assert.notEqual(answer.answerStatus, "verified");
   assert.notEqual(answer.completion.outcome, "complete");
+  assert.ok(answer.completion.requestedDetails.includes("permission"));
   assert.deepEqual(answer.completion.resolvedDetails, []);
-  assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "permission"));
+  assert.deepEqual(
+    answer.completion.missingDetails.find((detail) => detail.key === "permission"),
+    { key: "permission", reason: "missing-evidence" },
+  );
 });
 
 test("single-facet verified families remain complete", () => {
