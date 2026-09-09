@@ -1,6 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { answerCommunityQuestion, datedFacilityHoursAnswer, sourcedAnswer } = require("../lib/community-assistant");
+const { answerCommunityQuestion, datedFacilityHoursAnswer, sourcedAnswer, relevantActions } = require("../lib/community-assistant");
 const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { shortcutEligibility } = require("../lib/community-shortcut-eligibility");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
@@ -389,6 +389,41 @@ test("candidate validation catches missing details, dates, and filters after con
   });
   assert.equal(facilityDecision.eligible, false);
   assert.ok(facilityDecision.reasons.includes("requested-price-missing"));
+});
+
+test("an explicit evidence-backed unavailable price satisfies a cost shortcut, but an unsupported refusal does not", () => {
+  const costPlan = plan({ intent: "facilities", goal: "cost", goals: ["cost"], subject: "pool rental", requestedDetails: ["price"] });
+  const supported = shortcutEligibility("proactive", {
+    question: "What is the pool rental fee?", plan: costPlan,
+    candidate: candidate({ answerMode: "community-proactive-pool-party", directAnswer: "There is no pool rental fee because the official pool FAQ says the pool is not available for rental.", sources: [{ id: "pool-faq", title: "Pool FAQ" }], detailResolutions: { price: { status: "not-applicable", evidenceSourceIds: ["pool-faq"] } } }),
+  });
+  assert.equal(supported.eligible, true);
+  const unsupported = shortcutEligibility("proactive", {
+    question: "What is the pool rental fee?", plan: costPlan,
+    candidate: candidate({ answerMode: "community-proactive-pool-party", directAnswer: "The pool is not available for rental.", sources: [{ id: "pool-faq", title: "Pool FAQ" }] }),
+  });
+  assert.equal(unsupported.eligible, false);
+  assert.ok(unsupported.reasons.includes("requested-price-missing"));
+});
+
+test("pool cost actions exclude unrelated downloads that only share generic fee language", () => {
+  const actions = relevantActions("What is the pool rental fee?", [{
+    title: "Pool FAQ", sourceUrl: "https://sterlingranchcab.com/faq", actions: [
+      { label: "Download and complete the direct debit authorization form.", url: "https://sterlingranchcab.com/direct-debit.pdf", context: "Quarterly CAB service fee payment options." },
+      { label: "Open the pool FAQ", url: "https://sterlingranchcab.com/pool-faq", context: "The pool is not available for rental." },
+    ],
+  }], 3, plan({ intent: "facilities", goal: "cost", goals: ["cost"], subject: "pool rental", requestedDetails: ["price"] }));
+  assert.ok(actions.some((action) => /pool FAQ/i.test(action.label)));
+  assert.ok(actions.every((action) => !/direct debit/i.test(action.label)));
+});
+
+test("a sole generic form remains available when its source itself matches the facility topic", () => {
+  const actions = relevantActions("How do I reserve the Great Hall?", [{
+    title: "Great Hall amenity rentals", sourceUrl: "https://alpha.gov/rentals",
+    text: "Residents can reserve the Great Hall for private events.",
+    actions: [{ label: "Rental request form", url: "https://alpha.gov/forms/rental", actionType: "booking" }],
+  }], 3, plan({ intent: "facilities", goal: "booking", goals: ["booking"], subject: "Great Hall rental", requestedDetails: ["action"] }));
+  assert.deepEqual(actions.map((action) => action.url), ["https://alpha.gov/forms/rental"]);
 });
 
 test("live recycling, event, and food-truck connectors do not run for adjacent questions", async () => {
