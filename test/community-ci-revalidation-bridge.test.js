@@ -149,6 +149,11 @@ test("PDF proof accepts the same canonical document and rejects a same-origin re
   });
   assert.deepEqual(same.observedHashes, [require("node:crypto").createHash("sha256").update("approved PDF text").digest("hex")]);
   assert.equal(same.actionMismatch, false);
+  const sameDocumentWithSlug = await observeCanonicalSource(pdfUrl, [source], {
+    extractPdfTextImpl: extractText,
+    fetchImpl: async () => ({ ok: true, status: 200, url: "https://alpha.gov/DocumentCenter/View/100/Official-Document?bidId=", headers: new Headers() }),
+  });
+  assert.equal(sameDocumentWithSlug.documentProof.retrievedUrl, "https://alpha.gov/DocumentCenter/View/100/Official-Document?bidId=");
   await assert.rejects(
     observeCanonicalSource(pdfUrl, [source], {
       extractPdfTextImpl: extractText,
