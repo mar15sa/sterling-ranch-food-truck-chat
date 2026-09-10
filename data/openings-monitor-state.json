@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "lastRunAt": "2026-09-09T14:37:28.338Z",
+  "lastRunAt": "2026-09-10T14:03:59.095Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.289Z",
-      "changedAt": "2026-09-06T14:09:59.234Z",
-      "fingerprint": "2fa32bd80e84ab98a6cb34ca8abffad7f87b4de3bd5b71d9f2b7267b0ddf1dd1",
+      "checkedAt": "2026-09-10T14:03:53.300Z",
+      "changedAt": "2026-09-10T14:01:28.920Z",
+      "fingerprint": "bd4a9c3fd1212689fd962c54f93d6830f42153d6cbc874c44ac2c99c9c8d1dbf",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -16,10 +16,10 @@
       "newSignals": []
     },
     "castle-rock-agendas": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.362Z",
-      "changedAt": "2026-09-09T14:37:23.362Z",
-      "fingerprint": "424f05fc2b5520380a3a9693f5b67a8b020ade55f99c8d01a0a120105c222fa0",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.351Z",
+      "changedAt": "2026-09-10T14:01:28.968Z",
+      "fingerprint": "31fa691186a9a2627b48ed75749fdc233e78d1a65dfde1ced0abef3548037202",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -30,7 +30,7 @@
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.364Z",
+      "checkedAt": "2026-09-10T14:03:53.352Z",
       "changedAt": "2026-09-04T14:37:29.410Z",
       "fingerprint": "d326dd7b6498d8fdb31e220c0015f6d36ffdfd3976b7e80c8235315f2ffa02b0",
       "finalUrl": "https://www.parkerco.gov/Planning",
@@ -44,7 +44,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.365Z",
+      "checkedAt": "2026-09-10T14:03:53.353Z",
       "changedAt": "2026-09-03T14:01:39.539Z",
       "fingerprint": "42a3e8c9e3e235dba1386bc933e881c178314825bc7947a92e259f988910eea6",
       "finalUrl": "https://www.parkered.com/",
@@ -57,10 +57,10 @@
       "newSignals": []
     },
     "lone-tree-projects": {
-      "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.367Z",
-      "changedAt": "2026-09-04T14:37:29.413Z",
-      "fingerprint": "5c868a765f92dcb127b07f6411db744a0dadd8568dffbdb0f6a6b08b61d2ac9f",
+      "status": "changed",
+      "checkedAt": "2026-09-10T14:03:53.354Z",
+      "changedAt": "2026-09-10T14:03:53.354Z",
+      "fingerprint": "95d4580eba4b7f13657e6e1686e6fa5839b7b4fafb0f6f7a7c3f43423f347a68",
       "finalUrl": "https://cityoflonetree.com/projects/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -71,7 +71,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.368Z",
+      "checkedAt": "2026-09-10T14:03:53.355Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -89,7 +89,7 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.369Z",
+      "checkedAt": "2026-09-10T14:03:53.356Z",
       "changedAt": "2026-09-06T14:09:59.322Z",
       "fingerprint": "802192e656a92f993e51bd2d29503fbd9574b89c7615915d67e691d479f6598a",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
@@ -137,13 +137,14 @@
       "newSignals": []
     },
     "douglas-county-recent-projects": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.370Z",
-      "changedAt": "2026-09-09T14:37:23.370Z",
-      "fingerprint": "df6579b7b626746436d9239bcf451edc65fd1f93331abe9f7c8127ea7cc64ca9",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.357Z",
+      "changedAt": "2026-09-10T14:01:28.974Z",
+      "fingerprint": "a349d5c2036db422df679fde24a8fd6f8882fe920b61ff225d487099cac0d497",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
       "contentType": "text/html; charset=utf-8",
       "signals": [
+        "Request for a Site Improvement Plan (SIP) for the construction of an office building with warehouse space and outdoor storage.",
         "Request for a Site Improvement Plan Modification to install three dual EV chargers across 6 existing parking spaces."
       ],
       "structuredLeads": [],
@@ -159,10 +160,10 @@
       "newSignals": []
     },
     "douglas-county-agendas": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.371Z",
-      "changedAt": "2026-09-09T14:37:23.371Z",
-      "fingerprint": "0c139550a524e1343781678c517ef64b481f62e1c045614c45732b426969d55f",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.358Z",
+      "changedAt": "2026-09-10T14:01:28.975Z",
+      "fingerprint": "2add56d96dcba65251d025e37c5e1e7361eb3c3c0291ac31b6db4711cf3447e4",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -173,7 +174,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.372Z",
+      "checkedAt": "2026-09-10T14:03:53.359Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -226,10 +227,10 @@
       "newSignals": []
     },
     "highlands-ranch-news-projects": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.374Z",
-      "changedAt": "2026-09-09T14:37:23.374Z",
-      "fingerprint": "d074bb295a6d268cb7653a2fdb8ae1bb062bde9543f9f02323232313bfb888ef",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.360Z",
+      "changedAt": "2026-09-10T14:01:28.977Z",
+      "fingerprint": "24f52816f50376e6a7d744bd229df2761dfb608d2e93e77463dc81678fad0ffc",
       "finalUrl": "https://www.highlandsranch.org/news-events",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -254,8 +255,8 @@
       "newSignals": []
     },
     "sterling-ranch-cab-news": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.375Z",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.360Z",
       "changedAt": "2026-09-09T14:37:23.375Z",
       "fingerprint": "03e710e9bf1af94adcbd2b809fb82b21144b27b09d1b15a445f18aab1266a0db",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
@@ -286,13 +287,11 @@
         "Sterling Ranch News 01-24-2025: Milkshake contest, planning for spring landscaping, Rave clinic opening"
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "Sterling Ranch News 9-4-2026: Waterwise community update, Stoke Social Run Club and M4M, Prospect monument update, library groundbreaking photo gallery, Sterling Ranch Days photo gallery, Farmers' Market."
-      ]
+      "newSignals": []
     },
     "sterling-ranch-cab-agendas": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.376Z",
+      "checkedAt": "2026-09-10T14:03:53.361Z",
       "changedAt": "2026-08-29T17:32:08.004Z",
       "fingerprint": "13ed0576511abd7720e2c1506ef99f86b8b820444ef1b43dc771096aef13e6ff",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
@@ -303,9 +302,9 @@
     },
     "sterling-ranch-developer-news": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.377Z",
-      "changedAt": "2026-09-06T14:09:59.330Z",
-      "fingerprint": "f8ef4d69ac4be14939eeb234f14df431ea9b4c24948d4028e6a887e79d071791",
+      "checkedAt": "2026-09-10T14:03:53.362Z",
+      "changedAt": "2026-09-10T14:01:28.979Z",
+      "fingerprint": "b5dc252e8c143699f5c4af54ef6c7fd410b0cbce41871bf5af662a195602c02b",
       "finalUrl": "https://sterlingranch.com/happenings/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -320,7 +319,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.378Z",
+      "checkedAt": "2026-09-10T14:03:53.362Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -347,9 +346,9 @@
     },
     "dougco-social": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.379Z",
-      "changedAt": "2026-09-06T14:09:59.331Z",
-      "fingerprint": "a4972717b8a634e9246ce8cfea921c0432cace37df6cb0e89a9d3acc44dea9f5",
+      "checkedAt": "2026-09-10T14:03:53.363Z",
+      "changedAt": "2026-09-10T14:01:28.980Z",
+      "fingerprint": "694a8fcb4a28840ee18830360df1cad47dab2b28bfab93ede6314d1099de32f6",
       "finalUrl": "https://dougcosocial.com/news",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -367,7 +366,7 @@
         "Egg Harbor Cafe Is Coming to Belleview Station in Denver",
         "The family-owned breakfast brand that opened in Highlands Ranch this spring is expanding — a second Colorado location is coming to Belleview Station in southeast Denver, now aiming for a late-September opening.",
         "Douglas County approved $7.5 million toward a 75,000-square-foot Gold Crown youth field house in Castle Rock&#x27;s Dawson Trails — six basketball courts, a dozen volleyball courts, and an early-2028 opening.",
-        "105 West Brewing&#x27;s all-inclusive Castle Rock Beer Fest Under the Stars returns Saturday, Sept 12, 2026, 4–9pm at the Philip S. Miller Park Amphitheater — 25+ Colorado breweries, 7+ food trucks, unlimited tastings, and live music. It sells out; no door sales.",
+        "105 West Brewing&#x27;s all-inclusive Castle Rock Beer Fest Under the Stars returns Saturday, Sept 12, 2026, 4–9pm at the Miller Park Amphitheater — 25+ Colorado breweries, 7+ food trucks, unlimited tastings, and live music. It sells out; no door sales.",
         "The 24th Annual Taste of Douglas County returns Thursday, Aug 20, 2026, 5–8pm — an indoor, air-conditioned evening of food samples from dozens of area restaurants, drinks, and live entertainment at the Douglas County Events Center in Castle Rock. $10 in advance, $20 at the door.",
         "GQue BBQ Coming to Parker — Taking Over the Former Freddy&#x27;s Space",
         "GQue BBQ, Colorado&#x27;s championship-BBQ chain, is coming to Parker&#x27;s Crown Point Center at 18424 Cottonwood Dr — the former Freddy&#x27;s Frozen Custard & Steakburgers space. A Town of Parker permit describes the remodel. No opening date yet.",
@@ -522,21 +521,13 @@
           "observedDate": "2026-07-01",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-theatre-of-dreams-reopens-in-sedalia-as-the-magic-manor",
-          "headline": "Theatre of Dreams Reopens in Sedalia as the Magic Manor",
-          "url": "https://dougcosocial.com/news/magic-manor-theatre-of-dreams-sedalia",
-          "observedDate": "2026-07-01",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
         }
       ],
       "newSignals": []
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.380Z",
+      "checkedAt": "2026-09-10T14:03:53.364Z",
       "changedAt": null,
       "fingerprint": "f9932a10f01669385a4ce321285afa4ad75ff64248ac2264de5a59451a1fbdba",
       "finalUrl": "https://discoverdougco.com/news",
@@ -622,8 +613,8 @@
       "newSignals": []
     },
     "littleton-business-development-news": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.381Z",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.365Z",
       "changedAt": "2026-09-09T14:37:23.381Z",
       "fingerprint": "369376013b4e772c670de383b3404bd492a799c9b07fce31dcf8261576cd2941",
       "finalUrl": "https://www.littletonco.gov/Government/City-News",
@@ -642,7 +633,7 @@
     },
     "littleton-public-meetings": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.382Z",
+      "checkedAt": "2026-09-10T14:03:53.366Z",
       "changedAt": "2026-09-06T14:09:59.335Z",
       "fingerprint": "83e5d4aea4beb60434b5e34c5c3b57f46bc87248e24009b10f0c77b9aad2ccba",
       "finalUrl": "https://littletongov.legistar.com/Calendar.aspx",
@@ -653,7 +644,7 @@
     },
     "riverpark-developer": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.383Z",
+      "checkedAt": "2026-09-10T14:03:53.366Z",
       "changedAt": null,
       "fingerprint": "876f3a41362172bb347970f369ec5f368984aec08a2fe0e56edacf769d5ef917",
       "finalUrl": "https://evgre.com/properties/mineral-santa-fe-littleton-co",
@@ -677,7 +668,7 @@
     },
     "naked-denver-mineral-place": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.384Z",
+      "checkedAt": "2026-09-10T14:03:53.367Z",
       "changedAt": null,
       "fingerprint": "870b881bbbaff28bb4fc14917fae35b0d651756fdf5cfedcfd49ec6fa94e6f8b",
       "finalUrl": "https://www.nakeddenver.com/projects/mineral-place",
@@ -693,8 +684,8 @@
       "newSignals": []
     },
     "galloway-mineral-place": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.385Z",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.368Z",
       "changedAt": "2026-09-09T14:37:23.385Z",
       "fingerprint": "2a81d2115f6cac96a873cea660a5abcfbb972ec125dd35820f9d3dca56ab6165",
       "finalUrl": "https://gallowayus.com/project/mineral-place-development/",
@@ -719,7 +710,7 @@
     },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.386Z",
+      "checkedAt": "2026-09-10T14:03:53.368Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -758,10 +749,10 @@
       "newSignals": []
     },
     "aspen-grove-directory": {
-      "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.386Z",
-      "changedAt": "2026-09-07T14:01:57.458Z",
-      "fingerprint": "f08866f4d6956a29573e97c691be9912ab297e18aff9ea8fbc12d8813cbcd83f",
+      "status": "changed",
+      "checkedAt": "2026-09-10T14:03:53.369Z",
+      "changedAt": "2026-09-10T14:03:53.369Z",
+      "fingerprint": "37cb9963fea6b118e28c7ecbeb59cbcfd442a239a4e4ffe628d39459b9e63e4f",
       "finalUrl": "https://aspengrovecenter.com/shop/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -777,7 +768,7 @@
     },
     "aspen-grove-leasing": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.387Z",
+      "checkedAt": "2026-09-10T14:03:53.369Z",
       "changedAt": null,
       "fingerprint": "d3d7b163cd55bcbac1e63c2e8824dc59733e9d44ef1c6024900a913115f63afd",
       "finalUrl": "https://www.gerrity.co/properties/aspen-grove",
@@ -817,7 +808,7 @@
     },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.388Z",
+      "checkedAt": "2026-09-10T14:03:53.370Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -830,7 +821,7 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.388Z",
+      "checkedAt": "2026-09-10T14:03:53.370Z",
       "changedAt": "2026-08-30T14:13:29.821Z",
       "fingerprint": "5fc5e6932dcc334cc83f8b5e3bb5a99450cad633af1d09d929652c9b250d8d9f",
       "finalUrl": "https://www.hogbackpost.com/",
@@ -846,7 +837,7 @@
     },
     "hogback-development-tracker": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.389Z",
+      "checkedAt": "2026-09-10T14:03:53.371Z",
       "changedAt": null,
       "fingerprint": "6fed996ae27ffa754c5265bdd91cb6c1d4976d02a609d50a9f1c0368fe9eb3da",
       "finalUrl": "https://www.hogbackpost.com/whats-going-in-there",
@@ -869,7 +860,7 @@
     },
     "hogback-new-restaurants": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.391Z",
+      "checkedAt": "2026-09-10T14:03:53.372Z",
       "changedAt": null,
       "fingerprint": "c4827905d511d336debc8a57764b52b207e6230e2f3769c4daede9adfee0fb4e",
       "finalUrl": "https://www.hogbackpost.com/new-restaurants-littleton-80127",
@@ -901,10 +892,10 @@
       "newSignals": []
     },
     "lone-tree-timberlines": {
-      "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.392Z",
-      "changedAt": "2026-09-04T14:37:29.431Z",
-      "fingerprint": "da1b0fe9bb48021ba189fb62fb793475727579f8e275989c16ee3e67e761f4dc",
+      "status": "changed",
+      "checkedAt": "2026-09-10T14:03:53.372Z",
+      "changedAt": "2026-09-10T14:03:53.372Z",
+      "fingerprint": "78b6b9e8197dbe15cab1bd3f03798a32b7a56a1161d2c4bce2008879be609e23",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -914,8 +905,8 @@
       "newSignals": []
     },
     "colorado-liquor-license-lists": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.393Z",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.373Z",
       "changedAt": "2026-09-09T14:37:23.393Z",
       "fingerprint": "909436297800a57ff6b7b47962d63e066da782fb58d1cbbc1e8ef8cf2d9fa145",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
@@ -934,18 +925,11 @@
         "Transparency Online"
       ],
       "structuredLeads": [],
-      "newSignals": [
-        "All-State Liquor Licenses (PDF) as of 9/8/2026",
-        "All-State Liquor Licenses (Excel) as of 9/8/2026",
-        "Recently Approved Liquor Licenses (PDF) as of 9/8/2026",
-        "Recently Approved Liquor Licenses(Excel) as of 9/8/2026",
-        "Recently Expired & Surrendered Liquor Licenses (PDF) as of 9/8/2026",
-        "Recently Expired & Surrendered Liquor Licenses (Excel) as of 9/8/2026"
-      ]
+      "newSignals": []
     },
     "westword-openings-closings": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.394Z",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.373Z",
       "changedAt": "2026-09-09T14:37:23.394Z",
       "fingerprint": "9624269cab5534c12ce1163949f537a98812e516b5e0f6418f1b31391a4805d0",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
@@ -985,7 +969,7 @@
     },
     "castle-rock-outlets-directory": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.394Z",
+      "checkedAt": "2026-09-10T14:03:53.374Z",
       "changedAt": "2026-09-08T14:06:47.234Z",
       "fingerprint": "d6f9f66f37ff839e8e3c8c4f25d9bc4781474b7bd6c0120f18c22b7fbc46d60a",
       "finalUrl": "https://www.outletsatcastlerock.com/",
@@ -1020,7 +1004,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.395Z",
+      "checkedAt": "2026-09-10T14:03:53.374Z",
       "changedAt": "2026-09-03T14:01:39.557Z",
       "fingerprint": "d859bde3eafa5b70fba544b9cdf4f60d27618c7bc5f9e8b82e8cea4cc17e5695",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -1032,10 +1016,10 @@
       "newSignals": []
     },
     "castle-rock-chamber-ribbon-cuttings": {
-      "status": "changed",
-      "checkedAt": "2026-09-09T14:37:23.397Z",
-      "changedAt": "2026-09-09T14:37:23.397Z",
-      "fingerprint": "c9d21f41f3591b069a4058dc9ce121178dcacd83f0e0bba1a5bc65abb2b36a8b",
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.374Z",
+      "changedAt": "2026-09-10T14:01:28.991Z",
+      "fingerprint": "de030e8bd35d1ef21579271636d71dd75fcef24401b00599ff8526bb3a75edf7",
       "finalUrl": "https://business.castlerock.org/events/calendar",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -1048,7 +1032,7 @@
     },
     "ziggis-ken-caryl": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.398Z",
+      "checkedAt": "2026-09-10T14:03:53.376Z",
       "changedAt": "2026-09-03T14:01:39.559Z",
       "fingerprint": "65e2a47eb1bd04c532be52d9b4a55c263139d7e83f04e603473722441fbd8b56",
       "finalUrl": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/",
@@ -1070,7 +1054,7 @@
     },
     "bodybar-colorado-studios": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.399Z",
+      "checkedAt": "2026-09-10T14:03:53.376Z",
       "changedAt": "2026-09-03T14:01:39.560Z",
       "fingerprint": "09855cf283298545830b8c07a0ea68360cca80c94525eed6055f5add91d06c17",
       "finalUrl": "https://bodybarpilates.com/studios/colorado/",
@@ -1101,7 +1085,7 @@
     },
     "denver-central-market-vendors": {
       "status": "ok",
-      "checkedAt": "2026-09-09T14:37:23.400Z",
+      "checkedAt": "2026-09-10T14:03:53.377Z",
       "changedAt": "2026-09-08T14:06:47.237Z",
       "fingerprint": "249d3f6b3d754276b0e2e5787ced7bc3dccb6a351868e8d61bd05d1e0e8ead2b",
       "finalUrl": "https://www.denvercentralmarket.com/vendors",
@@ -1118,6 +1102,25 @@
         "Market Parking",
         "tyler@denvercentralmarket.com",
         "Copyright 2027 &copy; The Denver Central Market."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "industrious-denver-locations": {
+      "status": "ok",
+      "checkedAt": "2026-09-10T14:03:53.377Z",
+      "changedAt": null,
+      "fingerprint": "5af23a8916f8fbcf81028fda847dcbe3b39d18a52ff5c0793243ecadb6b9b05b",
+      "finalUrl": "https://www.industriousoffice.com/m/denver",
+      "contentType": "text/html; charset=utf-8",
+      "signals": [
+        "Denver Coworking & Private Office Space | Industrious",
+        "Workspaces",
+        "Workspaces All Solutions",
+        "Find Your Ideal Office Space in Denver",
+        "Opening Summer 2027",
+        "Industrious is the premium coworking company of choice. Our professional atmosphere and thoughtfully-designed workspaces can accommodate companies of all sizes and stages — from startups to Fortune 500s.",
+        "With 5 convenient locations in the Denver area, plus access to our national network spanning 85+ cities, Industrious is everywhere you do business."
       ],
       "structuredLeads": [],
       "newSignals": []

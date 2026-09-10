@@ -878,8 +878,8 @@
         }
       ],
       "coordinates": {
-        "lat": 39.517666,
-        "lng": -104.758704,
+        "lat": 39.51745,
+        "lng": -104.758609,
         "precision": "address",
         "geocodedFrom": "19865 Mainstreet, Parker, CO"
       }
@@ -2298,8 +2298,8 @@
         }
       ],
       "coordinates": {
-        "lat": 39.51745,
-        "lng": -104.758609,
+        "lat": 39.517666,
+        "lng": -104.758704,
         "precision": "address",
         "geocodedFrom": "19865 Mainstreet, Suite 100, Parker, CO 80134"
       }
@@ -3426,6 +3426,31 @@
         "lng": -104.989009,
         "precision": "address",
         "geocodedFrom": "131 West County Line Road, Littleton, CO 80129"
+      }
+    },
+    {
+      "id": "indy-industrious-highlands-ranch",
+      "name": "Indy by Industrious",
+      "category": "Everyday services",
+      "community": "Highlands Ranch",
+      "area": "Highlands Ranch Town Center",
+      "address": "9325 Dorchester Street, Highlands Ranch, CO 80129",
+      "status": "confirmed",
+      "openingWindow": "Opening summer 2027",
+      "summary": "Industrious officially lists a new flexible workspace at Highlands Ranch Town Center as opening in summer 2027.",
+      "verifiedAt": "2026-09-10",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Industrious official Denver locations page",
+          "url": "https://www.industriousoffice.com/m/denver"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.546538,
+        "lng": -104.99927,
+        "precision": "address",
+        "geocodedFrom": "9325 Dorchester Street, Highlands Ranch, CO 80129"
       }
     }
   ]
