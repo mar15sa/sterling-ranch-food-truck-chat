@@ -3,7 +3,9 @@
   if (!dock) return;
   // Reserve the dock's actual height so even the last source/footer can scroll clear.
   const updateHeight = () => {
-    document.body.style.setProperty('--food-dock-height', `${dock.offsetHeight}px`);
+    const height = `${dock.offsetHeight + 12}px`;
+    document.body.style.setProperty('--food-dock-height', height);
+    document.documentElement.style.setProperty('--food-dock-height', height);
   };
   new ResizeObserver(updateHeight).observe(dock);
   updateHeight();
@@ -12,10 +14,8 @@
   const viewport = window.visualViewport;
   if (viewport) {
     const updateKeyboardInset = () => {
-      const inset = viewport.scale === 1
-        ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
-        : 0;
-      dock.style.bottom = `${inset}px`;
+      const inset = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+      dock.style.bottom = `${Math.ceil(inset) + 12}px`;
     };
     viewport.addEventListener('resize', updateKeyboardInset);
     viewport.addEventListener('scroll', updateKeyboardInset);

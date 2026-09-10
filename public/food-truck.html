@@ -52,8 +52,8 @@
     <link rel="stylesheet" href="/styles.css?v=20260910-mobile-scroll" />
     <script src="/environment.js"></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
-    <link rel="stylesheet" href="/food-truck-editorial.css?v=20260910-chat-dock" />
-    <script src="/food-chat-dock.js?v=20260910" defer></script>
+    <link rel="stylesheet" href="/food-truck-editorial.css?v=20260910-dock-clearance" />
+    <script src="/food-chat-dock.js?v=20260910-clearance" defer></script>
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
   </head>
   <body class="society-page food-chat-page">
@@ -97,26 +97,6 @@
 
             <div class="messages" id="messages" aria-live="polite"></div>
 
-            <div class="food-chat-dock">
-            <div class="food-chat-dock-inner">
-            <div
-              class="quick-actions"
-              id="quickActions"
-              aria-label="Quick questions"
-            ></div>
-
-            <form class="composer" id="chatForm">
-              <input
-                id="questionInput"
-                name="question"
-                autocomplete="off"
-                aria-label="Ask about a food truck date"
-                placeholder="Ask about today, tomorrow, or a date…"
-              />
-              <button type="submit" aria-label="Send question">→</button>
-            </form>
-            </div>
-            </div>
           </section>
         </div>
       </main>
@@ -169,7 +149,7 @@
         </article>
       </template>
 
-      <script src="/app.js?v=20260910-food-editorial"></script>
+      <script src="/app.js?v=20260910-food-editorial" defer></script>
       <footer class="society-footer">
         <div class="society-footer-brand">
           <span class="society-monogram" aria-hidden="true">SR</span>
@@ -195,6 +175,21 @@
           </div>
         </div>
       </footer>
+    </div>
+    <div class="food-chat-dock" role="region" aria-label="Food truck questions">
+      <div class="food-chat-dock-inner">
+        <div class="quick-actions" id="quickActions" aria-label="Quick questions"></div>
+        <form class="composer" id="chatForm">
+          <input
+            id="questionInput"
+            name="question"
+            autocomplete="off"
+            aria-label="Ask about a food truck date"
+            placeholder="Ask about today, tomorrow, or a date…"
+          />
+          <button type="submit" aria-label="Send question">→</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
