@@ -46,17 +46,20 @@
       content="Sterling Ranch Society resident tools preview"
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/home.css?v=20260814-tool-icons" />
     <script src="/environment.js"></script>
     <link rel="stylesheet" href="/society.css?v=20260909" />
+    <link rel="stylesheet" href="/briefing-home.css?v=20260910-mockup" />
     <script src="/society.js?v=20260909" defer></script>
   </head>
-  <body class="society-page">
+  <body class="society-page briefing-page">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
-        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
-        ><button
+        <a class="society-brand" href="/" aria-label="Sterling Ranch Society home">
+          <span class="briefing-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span>
+          <span class="briefing-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span>
+        </a>
+        <button
           class="society-menu"
           type="button"
           aria-expanded="false"
@@ -79,7 +82,7 @@
         <section class="briefing-masthead">
           <div>
             <h1>The Daily Briefing</h1>
-            <img src="/society-foothills.png" alt="" />
+            <img src="/society-mountains-v2.webp" width="2172" height="724" alt="" fetchpriority="high" />
           </div>
           <p class="briefing-date" id="briefing-date"></p>
         </section>
@@ -116,43 +119,45 @@
                 name="q"
                 required
                 placeholder="Ask about life at Sterling Ranch…"
-              /><button type="submit">Ask ↗</button>
+              /><button type="submit">Ask →</button>
             </form>
             <div class="briefing-tags">
               <a
                 href="/community-assistant?q=What%20are%20the%20landscaping%20and%20yard%20rules%3F"
-                >Home & yard</a
+                ><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#home"></use></svg>Home & yard</a
               ><a
                 href="/community-assistant?q=Where%20can%20I%20find%20trash%20and%20recycling%20information%3F"
-                >Trash & recycling</a
+                ><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#trash"></use></svg>Trash & recycling</a
               ><a href="/rulebook" target="_blank" rel="noreferrer"
-                >The rulebook ↗</a
+                ><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#book"></use></svg>The rulebook<span class="society-sr-only"> (opens in a new tab)</span></a
               >
             </div>
-            <a class="society-text-link" href="/community-assistant"
-              >Open the Community Assistant →</a
-            >
           </section>
         </div>
         <div class="briefing-columns">
           <section>
-            <p class="society-eyebrow">ON THE CALENDAR</p>
+            <div class="briefing-section-heading">
+              <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#calendar"></use></svg>ON THE CALENDAR</h2>
+              <a class="society-text-link" href="/calendar">View full calendar →</a>
+            </div>
             <div id="briefing-events" aria-live="polite" aria-busy="true">
               <p>Loading upcoming community events…</p>
             </div>
-            <a class="society-text-link" href="/calendar"
-              >View community calendar →</a
-            >
           </section>
           <section>
-            <p class="society-eyebrow">OPENINGS & ARRIVALS</p>
+            <div class="briefing-section-heading">
+              <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#megaphone"></use></svg>OPENINGS & ARRIVALS</h2>
+              <a class="society-text-link" href="/openings">See all openings →</a>
+            </div>
             <div id="briefing-openings" aria-live="polite">
               <p>Loading nearby openings…</p>
             </div>
-            <a class="society-text-link" href="/openings">See all openings →</a>
           </section>
-          <section>
-            <p class="society-eyebrow">POOL & AMENITIES</p>
+          <section class="briefing-pool">
+            <div class="briefing-section-heading">
+              <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#pool"></use></svg>POOL & AMENITIES</h2>
+            </div>
+            <img class="briefing-pool-art" src="/society-pool-v2.webp" width="1774" height="887" alt="Engraved illustration of a quiet pool with parasols and mountain views" />
             <span class="briefing-status">SEASONAL INFORMATION</span>
             <h3>A quieter season.</h3>
             <p>
@@ -160,18 +165,6 @@
               spaces.
             </p>
             <a class="society-text-link" href="/pool">Pool information →</a>
-            <div class="briefing-idea">
-              <p class="society-eyebrow">HAVE AN IDEA?</p>
-              <a
-                class="society-feedback-link"
-                href="mailto:hello@ideakitchen.ai?subject=Daily%20Briefing%20bug%20report&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AWhich%20page%20or%20listing%20were%20you%20viewing%3F%0A%0AWhat%20device%20and%20browser%20were%20you%20using%3F%0A%0APlease%20attach%20a%20screenshot%20if%20you%20can."
-                >Report a bug</a
-              ><a
-                class="society-feedback-link"
-                href="mailto:hello@ideakitchen.ai?subject=Daily%20Briefing%20feature%20request&amp;body=What%20would%20you%20like%20Daily%20Briefing%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F"
-                >Request a feature</a
-              >
-            </div>
           </section>
         </div>
       </main>
@@ -182,12 +175,6 @@
           <div><b>Sterling Ranch Society</b><br />Douglas County, Colorado</div>
         </div>
         <div class="society-footer-right">
-          <p>
-            Independent community resource.
-            <a href="https://ideakitchen.ai/" target="_blank" rel="noreferrer"
-              >Made by Idea Kitchen ↗</a
-            >
-          </p>
           <div class="society-feedback">
             <a
               class="society-feedback-link"
@@ -199,9 +186,9 @@
               >Request a feature</a
             >
           </div>
-          <small>Opens an email draft. You choose whether to send.</small>
         </div>
       </footer>
+      <p class="briefing-colophon">Independent community resource. <a href="https://ideakitchen.ai/" target="_blank" rel="noreferrer">Made by Idea Kitchen ↗</a></p>
     </div>
   </body>
 </html>
