@@ -5,7 +5,7 @@ const state = {
   map: null,
   markerLayer: null,
   page: 1,
-  pageSize: 15,
+  pageSize: 9,
 };
 
 const STATUS_LABELS = {
@@ -28,14 +28,14 @@ const EVIDENCE_LABELS = {
 };
 
 const MAP_STATUS_COLORS = {
-  "opening-soon": "#c7792e",
-  "under-construction": "#8d5b3d",
-  confirmed: "#2e6f84",
-  approved: "#5f6fa8",
-  proposed: "#7a6b82",
-  open: "#247456",
-  paused: "#777777",
-  closed: "#555555",
+  "opening-soon": "#a86f7c",
+  "under-construction": "#a86f7c",
+  confirmed: "#a86f7c",
+  approved: "#a86f7c",
+  proposed: "#a86f7c",
+  open: "#4f7d7b",
+  paused: "#34373d",
+  closed: "#34373d",
 };
 
 const els = {
@@ -199,36 +199,12 @@ function sortItems(items) {
   });
 }
 
-function listSection(title, items) {
-  const section = document.createElement("section");
-  section.className = "opening-group";
-  const heading = document.createElement("div");
-  heading.className = "opening-group-heading";
-  const name = document.createElement("h3");
-  name.textContent = title;
-  const count = document.createElement("span");
-  count.textContent = `${items.length} ${items.length === 1 ? "place" : "places"}`;
-  heading.append(name, count);
-  const rows = document.createElement("div");
-  rows.className = "opening-rows";
-  rows.append(...items.map(cardFor));
-  section.append(heading, rows);
-  return section;
-}
-
 function renderList() {
   const pageCount = Math.max(1, Math.ceil(state.items.length / state.pageSize));
   state.page = Math.min(state.page, pageCount);
   const start = (state.page - 1) * state.pageSize;
   const pageItems = state.items.slice(start, start + state.pageSize);
-  const upcoming = pageItems.filter((item) => item.status !== "open" && item.status !== "closed");
-  const recentlyOpen = pageItems.filter((item) => item.status === "open");
-  const other = pageItems.filter((item) => !upcoming.includes(item) && !recentlyOpen.includes(item));
-  const groups = [];
-  if (upcoming.length) groups.push(listSection("Coming up", upcoming));
-  if (recentlyOpen.length) groups.push(listSection("Recently opened", recentlyOpen));
-  if (other.length) groups.push(listSection("Other updates", other));
-  els.list.replaceChildren(...groups);
+  els.list.replaceChildren(...pageItems.map(cardFor));
   els.pager.hidden = state.items.length <= state.pageSize;
   els.pagePrevious.disabled = state.page === 1;
   els.pageNext.disabled = state.page === pageCount;
@@ -248,6 +224,7 @@ function renderItems() {
   els.empty.hidden = state.items.length > 0;
   els.list.hidden = state.items.length === 0;
   els.mapPanel.hidden = state.items.length === 0;
+  document.querySelector("#legend-other").hidden = !state.items.some((item) => ["paused", "closed"].includes(item.status));
   if (state.items.length) renderMap();
 }
 
