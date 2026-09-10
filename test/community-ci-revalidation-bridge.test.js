@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const { fingerprint } = require("../lib/community-release");
 const { sourceReviewState } = require("../lib/community-source-answerability");
 const { actionIdentity, actionUrlIdentity, observeCanonicalSource, sourceHash } = require("../lib/community-approved-revalidation");
+const { chunkText, pageText } = require("../lib/community-ingest");
 const { runBridge } = require("../scripts/check-approved-community-revalidation");
 
 const NOW = Date.parse("2026-09-08T12:00:00.000Z");
@@ -108,6 +109,58 @@ test("a scoped exact-version projection renews its full long page and semantic a
   assert.equal(changedDestination.actionMismatch, true);
   const missingDestination = await observed(htmlFor({ includePayment: false }));
   assert.equal(missingDestination.actionMismatch, true);
+});
+
+test("ordinary chunks and a scoped projection on the same unchanged page renew together", async () => {
+  const projectedUrl = "https://alpha.gov/pool";
+  const scheduleUrl = "https://alpha.gov/pool-schedule";
+  const context = "Pool schedule: use the official schedule page for current details.";
+  const longText = `${context} ${"Published pool information remains available. ".repeat(55)}`;
+  const htmlFor = ({ scheduleHref = scheduleUrl, text = longText } = {}) =>
+    `<main><p>${text}</p><a href="${scheduleHref}">View pool schedule</a></main>`;
+  const exactHtml = htmlFor();
+  const exactText = pageText(exactHtml);
+  assert.ok(exactText.length > 1800, "fixture must exercise both chunk and full-page identities");
+
+  const fetchHtml = (html) => async () => ({ ok: true, url: projectedUrl, text: async () => html });
+  const ordinaryProof = await observeCanonicalSource(projectedUrl, [{ actions: [] }], { fetchImpl: fetchHtml(exactHtml) });
+  const ordinaryActions = ordinaryProof.actionProof.observed.actions;
+  const expired = "2026-09-01T00:00:00.000Z";
+  const ordinarySources = chunkText(exactText).map((chunk, position) => ({
+    id: `pool-chunk-${position + 1}`, sourceUrl: projectedUrl, connectorType: "civicplus-pages", sourceType: "facilities",
+    contentHash: sourceHash(chunk), actions: ordinaryActions, staleAfter: expired, checkedAt: expired,
+  }));
+  const projection = {
+    id: "pool-hours-projection", sourceUrl: projectedUrl, connectorType: "civicplus-pages", sourceType: "facilities",
+    reviewStatus: "candidate", contentHash: sourceHash(exactText), staleAfter: expired, checkedAt: expired,
+    facts: [{ id: "pool-hours", reviewStatus: "approved" }],
+    actions: [{ id: "pool-schedule", label: "Official pool schedule", url: scheduleUrl, actionType: "information", context, reviewStatus: "approved" }],
+  };
+  const sources = [...ordinarySources, projection];
+  const factLedger = sources.map((source, position) => ({
+    id: `pool-fact-${position + 1}`, sourceId: source.id, sourceVersion: source.contentHash, reviewStatus: "approved",
+    reviewDecisionId: "owner", reviewedBy: "owner", reviewedAt: expired, staleAfter: expired, lastObservedAt: expired,
+  }));
+  const value = { communityId: "alpha", sources, factLedger };
+  const observe = (html) => (url, approvedSources) => observeCanonicalSource(url, approvedSources, { fetchImpl: fetchHtml(html) });
+
+  const unchanged = await runBridge({ index: value, now: NOW, fetchObservedHashes: observe(exactHtml), auditFn: () => {} });
+  assert.equal(unchanged.valid, true);
+  assert.deepEqual(new Set(unchanged.checks[0].observedHashes), new Set(sources.map((source) => source.contentHash)));
+  assert.ok(unchanged.temporaryIndex.sources.every((source) => Date.parse(source.staleAfter) > NOW));
+  assert.ok(unchanged.temporaryIndex.factLedger.every((fact) => Date.parse(fact.staleAfter) > NOW));
+
+  const changedText = await runBridge({
+    index: value, now: NOW, fetchObservedHashes: observe(htmlFor({ text: `${longText} Changed.` })), auditFn: () => {},
+  });
+  assert.equal(changedText.valid, false);
+  assert.equal(changedText.checks[0].outcome, "review-required");
+
+  const changedAction = await runBridge({
+    index: value, now: NOW, fetchObservedHashes: observe(htmlFor({ scheduleHref: "https://alpha.gov/new-pool-schedule" })), auditFn: () => {},
+  });
+  assert.equal(changedAction.valid, false);
+  assert.equal(changedAction.checks[0].reason, "action-identity-changed");
 });
 
 test("a changed approved fingerprint is an explicit bridge failure", async () => {
