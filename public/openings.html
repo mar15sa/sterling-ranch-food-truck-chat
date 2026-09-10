@@ -49,14 +49,17 @@
       data-page-path="/openings"
     ></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
+    <link rel="stylesheet" href="/openings-editorial.css?v=20260910" />
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
   </head>
-  <body class="society-page">
+  <body class="society-page openings-page">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
-        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
-        ><button
+        <a class="society-brand" href="/" aria-label="Sterling Ranch Society home">
+          <span class="openings-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span>
+          <span class="openings-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span>
+        </a><button
           class="society-menu"
           type="button"
           aria-expanded="false"
@@ -79,22 +82,14 @@
       <main id="main-content" tabindex="-1">
         <section class="hero">
           <div class="hero-copy">
-            <p class="society-breadcrumb">
-              <a href="/">The Briefing</a> / Openings
-            </p>
-            <h1>Local Openings</h1>
+            <p class="openings-eyebrow">The local pulse</p>
+            <h1>What’s new<br />around here?</h1>
             <p class="hero-lede">
               The latest verified restaurant, shop, coffee, entertainment, and
               service openings across Douglas County.
             </p>
-            <p class="hero-summary">
-              <span><strong id="hero-count">—</strong> verified places</span>
-              <span id="hero-update">Loading the latest update…</span>
-            </p>
-            <button class="tip-button" type="button" data-open-tip>
-              Share a local opening ↗
-            </button>
           </div>
+          <img class="openings-landscape" src="/society-mountains-v2.webp" alt="" />
         </section>
 
         <section class="stats" aria-label="Opening tracker statistics">
@@ -118,6 +113,7 @@
             <div>
               <h2 id="tracker-title">What’s opening near you</h2>
             </div>
+            <p>Explore upcoming and recently verified places across Douglas County.<br />Use the map and filters to find what’s new in your area.</p>
           </div>
 
           <div id="map-view" class="map-panel">
@@ -125,6 +121,11 @@
               id="openings-map"
               aria-label="Map of openings within the Douglas County and 80125-area coverage zone"
             ></div>
+            <div class="map-legend" aria-label="Map legend">
+              <span><i class="legend-coming" aria-hidden="true"></i>Upcoming</span>
+              <span><i class="legend-open" aria-hidden="true"></i>Recently open</span>
+              <span id="legend-other" hidden><i class="legend-other" aria-hidden="true"></i>Other updates</span>
+            </div>
             <p class="map-note">
               Each marker represents one listing and is placed from its
               published address or project location. Pinch to zoom; two-finger
@@ -195,6 +196,10 @@
             <button type="button" data-open-tip>Share what you know</button>
           </div>
         </section>
+        <div class="openings-catalog-note">
+          <p class="hero-summary"><span><strong id="hero-count">—</strong> verified places</span><span id="hero-update">Loading the latest update…</span></p>
+          <button class="text-button" type="button" data-open-tip>Share a local opening ↗</button>
+        </div>
       </main>
 
       <dialog id="tip-dialog">
@@ -283,7 +288,7 @@
             ><span class="verified-date"></span>
           </div>
           <details>
-            <summary>Evidence and location <span>+</span></summary>
+            <summary>Evidence and location <span aria-hidden="true">→</span></summary>
             <div class="details-body">
               <p class="address"></p>
               <div class="source-links"></div>
@@ -293,7 +298,7 @@
       </template>
 
       <script src="/vendor/leaflet/leaflet.js?v=1.9.4"></script>
-      <script src="/openings.js?v=20260814-analytics" defer></script>
+      <script src="/openings.js?v=20260910-editorial" defer></script>
       <footer class="society-footer">
         <div class="society-footer-brand">
           <span class="society-monogram" aria-hidden="true">SR</span>
