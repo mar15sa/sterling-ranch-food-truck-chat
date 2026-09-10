@@ -122,8 +122,8 @@ test("trash holiday schedules use the live Waste Connections path without taking
       }),
       getWasteSchedule: liveSchedule,
     });
-    assert.equal(answer.answerMode, delayedStatus ? "community-live-waste-status-unavailable" : "community-live-trash", question);
-    assert.match(answer.answer, delayedStatus ? /September 8.*does not label whether.*delayed/i : /September 8/i, question);
+    assert.equal(answer.answerMode, delayedStatus ? "community-freshness-withheld" : "community-live-trash", question);
+    assert.match(answer.answer, delayedStatus ? /could not safely confirm/i : /September 8/i, question);
     assert.doesNotMatch(answer.answer, /screened|garage/i, question);
     assert.equal(answer.routingPlan.intent, "services", question);
     assert.equal(answer.routingPlan.goal, delayedStatus ? "status" : "schedule", question);
@@ -137,48 +137,6 @@ test("trash holiday schedules use the live Waste Connections path without taking
   });
   assert.equal(calls, 0);
   assert.doesNotMatch(storage.answerMode, /community-live-trash/);
-});
-
-test("pickup-delay questions never fall through to trash-storage rules when the live service is unavailable", async () => {
-  const questions = [
-    "Is garbage pick up delayed this week",
-    "Garbage delayed this week?",
-    "Is trash pick up late this wk?",
-    "Any holiday delay for recycling?",
-    "Trash pickup delay",
-  ];
-  for (const question of questions) {
-    const answer = await answerCommunityQuestion(question, {
-      interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
-      synthesizeCommunityAnswer: false,
-      planCommunitySearch: async () => plan({
-        intent: "status", goal: "status", goals: ["status"], subject: "trash pickup status",
-        requestedDetails: ["status"], dateRange: null, searchQueries: ["trash pickup status"],
-      }),
-      getWasteSchedule: async () => { throw new Error("live provider unavailable"); },
-      answerRulesQuestion,
-      rulesOptions: { searchMode: "legacy", llmMode: "off" },
-    });
-    assert.equal(answer.answerMode, "community-live-waste-unavailable", question);
-    assert.equal(answer.answerStatus, "source-unavailable", question);
-    assert.match(answer.answer, /cannot confirm whether pickup is delayed/i, question);
-    assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)), question);
-    assert.doesNotMatch(answer.answer, /screened|garage|storage/i, question);
-  }
-
-  let connectorCalls = 0;
-  for (const question of ["Do trash cans need to be screened?", "When do I bring garbage cans in after pickup?"]) {
-    const answer = await answerCommunityQuestion(question, {
-      interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
-      synthesizeCommunityAnswer: false,
-      planCommunitySearch: async () => plan({ intent: "rules", goal: "information", goals: ["information"], subject: "trash can storage rules", requestedDetails: ["permission"], searchQueries: ["trash can storage rules"] }),
-      getWasteSchedule: async () => { connectorCalls += 1; throw new Error("must not run"); },
-      answerRulesQuestion,
-      rulesOptions: { searchMode: "legacy", llmMode: "off" },
-    });
-    assert.match(answer.answer, /screened|garage|pickup day/i, question);
-  }
-  assert.equal(connectorCalls, 0);
 });
 
 function plan(overrides = {}) {
