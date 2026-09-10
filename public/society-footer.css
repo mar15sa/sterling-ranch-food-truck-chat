@@ -1,0 +1,21 @@
+/* Identical footer presentation for all six public Society pages. */
+.society-page > .staging-environment-banner { position: static !important; width: fit-content; max-width: calc(100% - 16px); margin: 6px auto; border-radius: 3px !important; text-align: center; }
+body.society-page .society-footer.site-footer { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; gap: 20px 26px; width: 100%; max-width: none; margin: 0 !important; padding: 24px 0 42px !important; border: 0; border-top: 1px solid #aeb6c1; border-radius: 0; background: transparent; box-shadow: none; text-align: left; color: #24344b; font: 14px/1.4 "Times New Roman",serif; }
+.site-footer::before { content: ""; position: absolute; z-index: -1; inset: 0; background: url('/society-footer-botanicals.webp') center bottom / 100% 150px no-repeat; opacity: .3; pointer-events: none; }
+.site-footer .site-footer-brand { display: flex; flex-direction: column; min-width: 0; }
+.site-footer .site-footer-brand b { font: bold 21px/1.2 "Times New Roman",serif; }
+.site-footer .site-footer-brand span { margin-top: 3px; font-size: 14px; }
+.site-footer .site-footer-links { display: flex; flex-wrap: wrap; gap: 12px 18px; }
+body.society-page .site-footer a { color: #24344b; font: 14px/1.4 "Times New Roman",serif; text-decoration: underline; text-underline-offset: 3px; }
+body.society-page .site-footer .site-footer-credit { margin: 0; padding-left: 22px; border-left: 1px solid #aeb6c1; color: #24344b; font: italic 13px/1.5 "Times New Roman",serif; }
+.site-footer .site-footer-credit a { font-style: italic; font-size: 13px; }
+@media (max-width:1000px) {
+  body.society-page .society-footer.site-footer { grid-template-columns: 1fr auto; gap: 16px 24px; }
+  .site-footer .site-footer-brand { grid-column: 1/-1; }
+}
+@media (max-width:600px) {
+  body.society-page .society-footer.site-footer { grid-template-columns: 1fr; gap: 12px; padding-block: 22px 36px !important; }
+  body.society-page .site-footer .site-footer-credit { padding-left: 0; border-left: 0; }
+  .site-footer .site-footer-links a { display: inline-flex; align-items: center; min-height: 36px; }
+  .site-footer::before { background-size: auto 140px; opacity: .2; }
+}

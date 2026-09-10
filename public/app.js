@@ -37,14 +37,10 @@ function scrollToBottom() {
 }
 
 function scrollToMessageStart(message) {
-  if (document.body.classList.contains("food-chat-page")) {
-    message.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-    return;
-  }
   const target = message.offsetTop - messages.offsetTop - 12;
   messages.scrollTo({
     top: Math.max(target, 0),
-    behavior: "smooth",
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
   });
 }
 
