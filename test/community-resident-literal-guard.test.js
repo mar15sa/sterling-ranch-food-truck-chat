@@ -10,6 +10,9 @@ test("resident literal guard permits generic evidence boundaries", () => {
   assert.deepEqual(inspectSource(`
     buildAnswerContract({ directAnswer: "I could not verify an answer from approved, up-to-date community sources." });
   `), []);
+  assert.deepEqual(inspectSource(`
+    buildAnswerContract({ directAnswer: "I could not verify whether the requested detail is covered by the selected official source." });
+  `), []);
 });
 
 test("resident literal guard permits generic whole-sentence presentation and safety wrappers", () => {

@@ -70,6 +70,7 @@ const GENERIC_COPY = new Set([
   "Ask about a community rule, service, form, facility, event, or current status instead.",
   "I can verify official community information, but I can’t reliably identify or describe a person from the rulebook.",
   "Open the linked official section and confirm the current detail before acting.",
+  "I could not verify whether the requested detail is covered by the selected official source.",
   "Open the linked official section if you need the complete wording.",
   "Use these current source details for planning, and open the linked section if you need the complete wording.",
   "Use the linked sections to find the exact rule language, especially if you are planning a project or submitting something for review.",
