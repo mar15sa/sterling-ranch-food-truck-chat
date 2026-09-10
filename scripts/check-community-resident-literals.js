@@ -27,7 +27,7 @@ const RESPONSE_FIELDS = new Set(["directAnswer", "answer", "nextStep", "keyDetai
 const GENERIC_COPY = new Set([
   "I can’t currently confirm the access requirements from exact owner-approved claims.",
   "I could not verify an answer from approved, up-to-date community sources.",
-  "I could not confirm that exact section from the current official source.",
+  "I could not confirm that exact section from the current official source, so I won't substitute a different section.",
   "Check the official source for the current section wording or try the section title.",
   "I could not verify a current pickup date from the live collection service.",
   "I could not verify that from the connected official community sources.",
