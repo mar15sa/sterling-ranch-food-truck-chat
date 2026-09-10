@@ -218,11 +218,12 @@ function responseLiterals(source) {
     const bound = literalBindings.get(tokens[index].value);
     if (bound) literals.push({ field: tokens[index].value, value: bound.value, offset: bound.offset, dynamic: bound.dynamic });
   }
-  // The legacy rule engine's resident replies flow through this helper rather
-  // than object fields. Treat its first and third arguments as direct answer
-  // and next-step copy, so existing debt is inventoried and new routes fail.
+  // The legacy rule engine's resident replies flow through these helpers
+  // rather than object fields. Treat their first and third arguments as direct
+  // answer and next-step copy, so existing debt is inventoried and new routes
+  // fail regardless of the presentation helper used.
   for (let index = 0; index < tokens.length - 1; index += 1) {
-    if (tokens[index].value !== "helpfulAnswer" || tokens[index + 1].value !== "(") continue;
+    if (!['helpfulAnswer', 'structuredHelpfulAnswer'].includes(tokens[index].value) || tokens[index + 1].value !== "(") continue;
     let depth = 0;
     let argument = 0;
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {

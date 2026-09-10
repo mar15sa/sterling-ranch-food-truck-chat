@@ -96,6 +96,15 @@ test("resident literal guard reaches helpfulAnswer calls after regular expressio
   assert.match(findings[0].value, /pool closes/);
 });
 
+test("resident literal guard reaches structuredHelpfulAnswer calls", () => {
+  const findings = inspectSource(`
+    return structuredHelpfulAnswer("The pool closes at 9:00 pm.", details, "Check the pool page before you go.");
+  `);
+  assert.equal(findings.length, 2);
+  assert.equal(findings[0].field, "directAnswer");
+  assert.equal(findings[1].field, "nextStep");
+});
+
 test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
   assert.deepEqual(inspectSource('return { label: `Open ${source.title}` };'), []);
   const findings = inspectSource('return helpfulAnswer(`Parking is allowed after ${closingTime}.`, sources);');
