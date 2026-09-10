@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { answerRulesQuestion, currentSourceConflicts } = require("../lib/rules-assistant");
+const { answerRulesQuestion, currentSourceConflicts, sourceDerivedAnswerParts } = require("../lib/rules-assistant");
 const { answerCoverageIssues } = require("../lib/rules-intent");
 
 async function answer(question, options = {}) {
@@ -511,4 +511,22 @@ test("resident-specific variants use current clauses and withhold unavailable re
     assert.doesNotMatch(withheld.answer, /Official CAB page|Resident Clubs category|Atlas Coffee Wi-Fi.*access details/i, question);
     assert.deepEqual(withheld.sources, [], question);
   }
+});
+
+test("exterior painting uses the governing clause and its controlling source", async () => {
+  const result = await answer("Can I repaint my house the same color?");
+  assert.equal(result.answerMode, "source-derived-extractive");
+  assert.match(result.answer, /DRC approval is required, even if repainting is being done with the same colors as the original or previous paint color/i);
+  assert.match(result.answer, /DRC approval is not required for touch-up on small sections/i);
+  assert.match(result.sources?.[0]?.title || "", /^Sec\. 21-22\. - General community standards\. \(b\)\(64\) - Painting, exterior/i);
+  assert.equal(result.sources?.[0]?.questionSpecificExcerpt, true);
+});
+
+test("exterior painting without current source evidence stays behind the generic evidence boundary", () => {
+  const result = sourceDerivedAnswerParts("Can I repaint my house the same color?", []);
+  assert.equal(result.available, false);
+  assert.equal(result.strategy, "unavailable");
+  assert.deepEqual(result.sources, []);
+  assert.match(result.answer, /could not extract.*safely/i);
+  assert.doesNotMatch(result.answer, /DRC approval|touch-up|paint chips|preapproved colors/i);
 });
