@@ -30,7 +30,8 @@ const EXAMPLES = [
   {
     question: "What are the landscaping and yard rules?",
     verdict: "conditional",
-    includes: ["DRC review", "Yard design", "Ongoing care"],
+    includes: ["Landscape and irrigation plans", "must be submitted", "Landscaping is to be kept healthy"],
+    requiresSections: false,
   },
   {
     question: "What fees do residents pay?",
@@ -379,10 +380,12 @@ test("compound questions keep a grounded source for each requested topic", async
     },
   });
   assert.equal(result.confidence?.canAnswer, true);
-  assert.equal(rewriteSources.length, 0);
+  assert.equal(rewriteSources.length, 2);
+  assert.ok(rewriteSources.some((source) => /fenc/i.test(source.title || "")));
+  assert.ok(rewriteSources.some((source) => /shed/i.test(source.title || "")));
   assert.ok(result.sources.some((source) => /fenc/i.test(source.title || "")));
   assert.ok(result.sources.some((source) => /shed/i.test(source.title || "")));
-  assert.match(result.answerMode || "", /source-derived-extractive/);
+  assert.match(result.answerMode || "", /source-derived-llm-selective/);
 });
 
 test("compound questions keep every topic when the AI rewrite is rejected", async () => {
@@ -396,6 +399,6 @@ test("compound questions keep every topic when the AI rewrite is rejected", asyn
   assert.match(result.answer, /eight feet,\s*six inches/i);
   assert.match(result.answer, /150 square feet/i);
   assert.match(result.answer, /underground/i);
-  assert.match(result.answer, /three-rail concrete/i);
+  assert.match(result.answer, /three concrete rails/i);
   assert.match(result.answerMode || "", /source-derived-extractive/);
 });
