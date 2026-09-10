@@ -123,7 +123,8 @@ test("trash holiday schedules use the live Waste Connections path without taking
       getWasteSchedule: liveSchedule,
     });
     assert.equal(answer.answerMode, delayedStatus ? "community-live-waste-status-unavailable" : "community-live-trash", question);
-    assert.match(answer.answer, delayedStatus ? /September 8.*does not label whether.*delayed/i : /September 8/i, question);
+    assert.match(answer.answer, /September 8/i, question);
+    if (delayedStatus) assert.deepEqual(answer.completion.missingDetails.map(({ key }) => key), ["status"], question);
     assert.doesNotMatch(answer.answer, /screened|garage/i, question);
     assert.equal(answer.routingPlan.intent, "services", question);
     assert.equal(answer.routingPlan.goal, delayedStatus ? "status" : "schedule", question);
@@ -150,7 +151,7 @@ test("trash holiday schedules use the live Waste Connections path without taking
   });
   assert.equal(weekRangeMismatch.answerMode, "community-live-waste-unavailable");
   assert.equal(weekRangeMismatch.answerStatus, "source-unavailable");
-  assert.match(weekRangeMismatch.answer, /cannot confirm whether pickup is delayed/i);
+  assert.deepEqual(weekRangeMismatch.completion.missingDetails.map(({ key }) => key), ["status"]);
   assert.ok(weekRangeMismatch.actions.some((action) => /pickup calendar/i.test(action.label)));
   assert.doesNotMatch(weekRangeMismatch.answer, /screened|garage|Pickleball/i);
 });
@@ -177,7 +178,7 @@ test("pickup-delay questions never fall through to trash-storage rules when the 
     });
     assert.equal(answer.answerMode, "community-live-waste-unavailable", question);
     assert.equal(answer.answerStatus, "source-unavailable", question);
-    assert.match(answer.answer, /cannot confirm whether pickup is delayed/i, question);
+    assert.deepEqual(answer.completion.missingDetails.map(({ key }) => key), ["status"], question);
     assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)), question);
     assert.doesNotMatch(answer.answer, /screened|garage|storage/i, question);
   }
@@ -209,7 +210,7 @@ test("legacy production routing still sends pickup delays to the live waste boun
   assert.equal(calls, 1);
   assert.equal(answer.answerMode, "community-live-waste-unavailable");
   assert.equal(answer.answerStatus, "source-unavailable");
-  assert.match(answer.answer, /cannot confirm whether pickup is delayed/i);
+  assert.deepEqual(answer.completion.missingDetails.map(({ key }) => key), ["status"]);
   assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)));
   assert.doesNotMatch(answer.answer, /screened|garage|storage|Pickleball/i);
 
@@ -230,7 +231,8 @@ test("legacy production routing still sends pickup delays to the live waste boun
   });
   assert.equal(datedAnswer.answerMode, "community-live-waste-status-unavailable");
   assert.equal(datedAnswer.answerStatus, "source-unavailable");
-  assert.match(datedAnswer.answer, /does not label whether the service is delayed/i);
+  assert.match(datedAnswer.answer, /September 14/i);
+  assert.deepEqual(datedAnswer.completion.missingDetails.map(({ key }) => key), ["status"]);
   assert.doesNotMatch(datedAnswer.answer, /screened|garage|storage|Pickleball/i);
 });
 

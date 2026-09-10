@@ -176,6 +176,55 @@ test("ordinary chunks and a scoped projection on the same unchanged page renew t
   assert.equal(changedAction.checks[0].reason, "action-identity-changed");
 });
 
+test("an approved action that opens its exact current source page renews with the matching page version", async () => {
+  const sourceUrl = "https://alpha.gov/design-review-documents";
+  const html = "<main><h1>Design Review Documents</h1><p>Current applications and forms.</p></main>";
+  const text = pageText(html);
+  const expired = "2026-09-01T00:00:00.000Z";
+  const directPageAction = {
+    id: "approved-design-review-directory",
+    sourceUrl,
+    connectorType: "civicplus-pages",
+    sourceType: "forms",
+    reviewStatus: "candidate",
+    contentHash: sourceHash(text),
+    checkedAt: expired,
+    staleAfter: expired,
+    facts: [],
+    actions: [{
+      id: "open-design-review-directory",
+      label: "Open Design Review applications and forms",
+      url: sourceUrl,
+      actionType: "information",
+      context: "Open the official directory.",
+      reviewStatus: "approved",
+    }],
+  };
+  const result = await runBridge({
+    index: { communityId: "alpha", sources: [directPageAction], factLedger: [] },
+    now: NOW,
+    fetchObservedHashes: (url, approvedSources) => observeCanonicalSource(url, approvedSources, {
+      fetchImpl: async () => ({ ok: true, url: sourceUrl, text: async () => html }),
+    }),
+    auditFn: (temporaryIndex) => {
+      assert.ok(Date.parse(temporaryIndex.sources[0].staleAfter) > NOW);
+    },
+  });
+  assert.equal(result.valid, true);
+  assert.equal(result.checks[0].renewedSourceCount, 1);
+
+  const changed = await runBridge({
+    index: { communityId: "alpha", sources: [directPageAction], factLedger: [] },
+    now: NOW,
+    fetchObservedHashes: (url, approvedSources) => observeCanonicalSource(url, approvedSources, {
+      fetchImpl: async () => ({ ok: true, url: sourceUrl, text: async () => html.replace("Current", "Changed") }),
+    }),
+    auditFn: () => {},
+  });
+  assert.equal(changed.valid, false);
+  assert.equal(changed.checks[0].reason, "extra-source-identity-or-content-hash");
+});
+
 test("a changed approved fingerprint is an explicit bridge failure", async () => {
   const result = await runBridge({
     index: index(), now: NOW,
