@@ -12,6 +12,39 @@ test("resident literal guard permits generic evidence boundaries", () => {
   `), []);
 });
 
+test("resident literal guard permits generic whole-sentence presentation and safety wrappers", () => {
+  assert.deepEqual(inspectSource(`
+    return {
+      directAnswer: "I found a relevant official section, but I could not extract its current date, amount, or limit safely.",
+      keyDetails: ["The official facility page is awaiting a fresh source check."],
+    };
+  `), []);
+});
+
+test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
+  const findings = inspectSource(`
+    return {
+      directAnswer: "Sterling Ranch pool closes at 9:00 pm.",
+      nextStep: "Call the CAB at 720-555-0199 to reserve the pool.",
+    };
+  `);
+  assert.equal(findings.length, 2);
+});
+
+test("resident literal guard ignores a ternary branch selector but retains its fixed reply", () => {
+  const findings = inspectSource(`
+    return { answer: reason === "person-identity" ? "Sterling Ranch staff directory is at https://example.test." : "Ask a question." };
+  `);
+  assert.equal(findings.length, 2);
+  assert.ok(findings.every((finding) => finding.value !== "person-identity"));
+});
+
+test("resident literal guard ignores punctuation split from a dynamic reply", () => {
+  assert.deepEqual(inspectSource('return { directAnswer: `${headline}. ${summary}` };'), []);
+  const findings = inspectSource('return { directAnswer: "The pool closes at 9:00 pm." };');
+  assert.equal(findings.length, 1);
+});
+
 test("resident literal guard rejects a new untested fixed answer family", () => {
   const findings = inspectSource(`
     if (intent === "mailbox") return { answer: "Mailboxes must be painted blue before Friday." };

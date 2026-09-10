@@ -46,7 +46,22 @@ const GENERIC_COPY = new Set([
   "Check the controlling official page below while its access instructions are being reconfirmed.",
   "The latest refresh failed, so this may be an older status.",
   "The schedule may not be posted yet. Check the official calendar before making plans.",
+  "The official facility page is awaiting a fresh source check.",
+  "I found a relevant official section, but I could not extract its current date, amount, or limit safely.",
+  "I don't have enough rulebook evidence to answer that confidently.",
+  "I don't have enough rulebook evidence to give a definite answer. These sections look like the closest starting points.",
+  "The official material I found does not explicitly confirm whether the requested list exists, so I won't treat a search miss as proof that it is unavailable.",
+  "Chapter  appears to cover .",
+  " I pulled the changing dates, amounts, and limits from the current controlling source below.",
+  "I pulled the controlling dates, amounts, and limits from the current official source below.",
 ]);
+
+function isTernaryControlLiteral(tokens, index) {
+  // A literal immediately followed by `?` is the value being compared in a
+  // conditional expression (for example, `reason === "person-identity" ?`).
+  // It selects an answer branch; it is not itself resident-facing copy.
+  return tokens[index]?.type === "string" && tokens[index + 1]?.value === "?";
+}
 
 function lineAt(source, offset) {
   return source.slice(0, offset).split("\n").length;
@@ -161,7 +176,7 @@ function responseLiterals(source) {
     const depth = { "(": 0, "[": 0, "{": 0 };
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
       const token = tokens[cursor];
-      if (token.type === "string") literals.push({ field, value: token.value, offset: token.offset, dynamic: token.dynamic });
+      if (token.type === "string" && !isTernaryControlLiteral(tokens, cursor)) literals.push({ field, value: token.value, offset: token.offset, dynamic: token.dynamic });
       if (["(", "[", "{"].includes(token.value)) depth[token.value] += 1;
       if (token.value === ")") depth["("] -= 1;
       if (token.value === "]") depth["["] -= 1;
@@ -218,13 +233,20 @@ function isGenericDynamicFragment({ field, value, dynamic }) {
     && /^(?:Chapter\s+appears to cover\.|I found this contact detail in the rulebook:\s*\.|I (?:could not|can’t) (?:safely |currently |reliably )?(?:confirm|verify|read)|I did not find an event|I found\s+official calendar|The official calendar does not list|For\s*, the published\s+hours are:|Open\b|Use\b)/i.test(value.trim());
 }
 
+function isNonResidentStructuralFragment(value) {
+  // Template punctuation can be split out by the lightweight scanner (for
+  // example, `${headline}. ${summary}`). It cannot communicate a resident
+  // claim on its own, so retain only fragments that contain a letter or digit.
+  return !/[\p{L}\p{N}]/u.test(value);
+}
+
 function fingerprint(finding) {
   return crypto.createHash("sha256").update(`${finding.filename}\u0000${finding.field}\u0000${finding.value}`).digest("hex");
 }
 
 function inspectSource(source, filename = "inline.js", { factsOnly = false } = {}) {
   return responseLiterals(source)
-    .filter((literal) => literal.value.trim() && !GENERIC_COPY.has(literal.value) && !isGenericDynamicFragment(literal) && (!factsOnly || looksLikeFact(literal.value)))
+    .filter((literal) => literal.value.trim() && !isNonResidentStructuralFragment(literal.value) && !GENERIC_COPY.has(literal.value) && !isGenericDynamicFragment(literal) && (!factsOnly || looksLikeFact(literal.value)))
     .map(({ field, value, offset }) => ({ filename, field, value, line: lineAt(source, offset) }));
 }
 
