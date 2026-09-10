@@ -345,7 +345,7 @@ test("named-project authority guard preserves supported objects, synonyms, and c
 
   const religiousFlag = await answer("Can my neighbor put up a religious flag?");
   assert.equal(religiousFlag.confidence.canAnswer, true);
-  assert.match(religiousFlag.answer, /an Owner may display flags/i);
+  assert.match(religiousFlag.answer, /An Owner or Occupant may display a flag on a unit owner's property/i);
 });
 
 test("a related property clause cannot answer a different removal request", async () => {
