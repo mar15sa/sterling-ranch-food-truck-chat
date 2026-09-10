@@ -189,9 +189,12 @@ test("live pool status remains separate from approved dated pool hours", async (
     }),
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(holidayHours.answerStatus, "verified");
+  assert.equal(holidayHours.answerStatus, "verified-incomplete");
+  assert.equal(holidayHours.answerMode, "community-dated-facility-hours-holiday-boundary");
   assert.match(holidayHours.answer, /5:00 am|8:45 pm/i);
-  assert.match(holidayHours.answer, /does not publish separate holiday hours/i);
+  assert.match(holidayHours.answer, /does not publish separate Labor Day hours/i);
+  assert.deepEqual(holidayHours.completion.resolvedDetails, ["date"]);
+  assert.deepEqual(holidayHours.completion.missingDetails.map((detail) => detail.key), ["hours"]);
 });
 
 test("only an active live-status source can resolve a current-status facet", () => {

@@ -87,6 +87,7 @@ const GENERIC_COPY = new Set([
   "What would you like to know or do?",
   "Tell me the question, task, or problem you want help with.",
   "Use the applicable source path below for your situation.",
+  "These are the published hours for that weekday.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.
@@ -120,6 +121,9 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "The rulebook search does not define  or publish current access details.",
   "Open the linked official resource for .",
   "The published fee section lists",
+  "The approved source does not publish separate  hours, so I can’t verify that its regular  schedule applies on .",
+  "The approved source does not publish hours specifically for , so I can’t verify the holiday schedule.",
+  "The approved source does not publish separate  hours, so I can’t verify the holiday schedule for .",
 ]);
 
 function isTernaryControlLiteral(tokens, index) {

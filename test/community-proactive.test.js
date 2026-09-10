@@ -426,13 +426,15 @@ test("approved operational contact priority is profile-driven and fails closed w
   assert.doesNotMatch(changed.answer, /permits@beta\.example\.gov/i);
 });
 
-test("approved pool hours answer a holiday schedule without claiming live pool status", async () => {
+test("approved pool hours provide regular context without claiming an unproven holiday schedule", async () => {
   for (const question of ["What are the pool hours for Labor Day?", "Is the pool open on Labor Day, and what are the hours?"]) {
     const answer = await ask(question, new Date("2026-09-01T12:00:00Z"));
-    assert.equal(answer.answerStatus, "verified", question);
-    assert.equal(answer.answerMode, "community-approved-operational", question);
+    assert.equal(answer.answerStatus, "verified-incomplete", question);
     assert.match(answer.answer, /Memorial Day weekend through Labor Day/i, question);
     assert.match(answer.answer, /Monday-Friday: 5:00 am - 9:00 am/i, question);
+    assert.match(answer.answer, /does not publish separate Labor Day hours/i, question);
+    assert.deepEqual(answer.completion.resolvedDetails, ["date"], question);
+    assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["hours"], question);
     assert.doesNotMatch(answer.answer, /depends on your village|current hours cannot be verified/i, question);
     assert.deepEqual(answer.sources.map((source) => source.id), ["approved-pool-hours-current-page"], question);
   }

@@ -24,8 +24,11 @@ function foodTruckProfile() {
 }
 
 test("a named-project rulebook boundary outranks an unrelated withheld community form", async () => {
-  const question = "Can I put up a catio. Not attached to the house";
-  const answer = await answerCommunityQuestion(question, {
+  for (const question of [
+    "Can I put up a catio. Not attached to the house",
+    "Can I put up a catio not attached to the house?",
+  ]) {
+    const answer = await answerCommunityQuestion(question, {
     index: communityIndex,
     communityId: "sterling-ranch",
     communityProfile,
@@ -35,13 +38,14 @@ test("a named-project rulebook boundary outranks an unrelated withheld community
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
   });
 
-  assert.equal(answer.answerMode, "source-evidence-boundary");
-  assert.equal(answer.confidence.reason, "named-project-not-supported-by-cited-evidence");
-  assert.match(answer.answer, /official rules do not name catio specifically/i);
-  assert.match(answer.answer, /accessory buildings|outdoor pet areas/i);
-  assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
-  assert.ok(answer.sources.every((source) => !/DocumentCenter\/View\/1350/i.test(source.sourceUrl || "")));
-  assert.ok((answer.actions || []).every((action) => !/DocumentCenter\/View\/1350/i.test(action.url || "")));
+    assert.equal(answer.answerMode, "source-evidence-boundary", question);
+    assert.equal(answer.confidence.reason, "named-project-not-supported-by-cited-evidence", question);
+    assert.match(answer.answer, /official rules do not name catio specifically/i, question);
+    assert.match(answer.answer, /accessory buildings|outdoor pet areas/i, question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+    assert.ok(answer.sources.every((source) => !/DocumentCenter\/View\/1350/i.test(source.sourceUrl || "")), question);
+    assert.ok((answer.actions || []).every((action) => !/DocumentCenter\/View\/1350/i.test(action.url || "")), question);
+  }
 });
 function liveWasteEvidence(date, checkedAt) {
   return {
@@ -73,11 +77,12 @@ function source(id, hash, overrides = {}) {
 }
 
 test("fence-color wording variants use the exact current rule clauses for wood and concrete", async () => {
-  for (const question of [
-    "What is the fence paint color?",
-    "What color should I paint my fence?",
-    "Which stain color is approved for 3-rail fencing?",
-    "What colour is the wood fence supposed to be?",
+  for (const [question, expected, excluded] of [
+    ["What is the fence paint color?", /Sherwin Williams #3002.*Belvedere Tan[\s\S]*concrete fencing[^.]*Solomon #338.*Earthen/i, null],
+    ["What color should I paint my fence?", /Sherwin Williams #3002.*Belvedere Tan[\s\S]*concrete fencing[^.]*Solomon #338.*Earthen/i, null],
+    ["Which stain color is approved for 3-rail fencing?", /Sherwin Williams #3002.*Belvedere Tan/i, /Solomon #338|Earthen/i],
+    ["What colour is the wood fence supposed to be?", /Sherwin Williams #3002.*Belvedere Tan/i, /Solomon #338|Earthen/i],
+    ["What color is required for a concrete fence?", /Solomon #338.*Earthen/i, /Sherwin Williams #3002|Belvedere Tan/i],
   ]) {
     const answer = await answerCommunityQuestion(question, {
       index: communityIndex,
@@ -93,9 +98,9 @@ test("fence-color wording variants use the exact current rule clauses for wood a
 
     assert.equal(answer.answerStatus, "verified", question);
     assert.equal(answer.completion.outcome, "complete", question);
-    assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
-    if (!/3-rail/i.test(question)) {
-      assert.match(answer.answer, /concrete fencing[^.]*Solomon #338.*Earthen/i, question);
+    assert.match(answer.answer, expected, question);
+    if (excluded) assert.doesNotMatch(answer.answer, excluded, question);
+    if (!/\b(?:3-rail|wood|concrete)\b/i.test(question)) {
       assert.match(answer.answer, /which cited fence type applies/i, question);
     }
     assert.doesNotMatch(answer.answer, /trash enclosure/i, question);
