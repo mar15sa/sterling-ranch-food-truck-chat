@@ -22,6 +22,31 @@ function foodTruckProfile() {
   profile.allowedHosts.push("www.facebook.com", "www.instagram.com");
   return profile;
 }
+
+test("a named-project rulebook boundary outranks an unrelated withheld community form", async () => {
+  for (const question of [
+    "Can I put up a catio. Not attached to the house",
+    "Can I put up a catio not attached to the house?",
+  ]) {
+    const answer = await answerCommunityQuestion(question, {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile,
+    planCommunitySearch: async () => null,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+
+    assert.equal(answer.answerMode, "source-evidence-boundary", question);
+    assert.equal(answer.confidence.reason, "named-project-not-supported-by-cited-evidence", question);
+    assert.match(answer.answer, /official rules do not name catio specifically/i, question);
+    assert.match(answer.answer, /accessory buildings|outdoor pet areas/i, question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+    assert.ok(answer.sources.every((source) => !/DocumentCenter\/View\/1350/i.test(source.sourceUrl || "")), question);
+    assert.ok((answer.actions || []).every((action) => !/DocumentCenter\/View\/1350/i.test(action.url || "")), question);
+  }
+});
 function liveWasteEvidence(date, checkedAt) {
   return {
     degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
@@ -51,12 +76,13 @@ function source(id, hash, overrides = {}) {
   };
 }
 
-test("fence-color wording variants do not use an unapproved static one-sheet as the answer", async () => {
-  for (const question of [
-    "What is the fence paint color?",
-    "What color should I paint my fence?",
-    "Which stain color is approved for 3-rail fencing?",
-    "What colour is the wood fence supposed to be?",
+test("fence-color wording variants use the exact current rule clauses for wood and concrete", async () => {
+  for (const [question, expected, excluded] of [
+    ["What is the fence paint color?", /Sherwin Williams #3002.*Belvedere Tan[\s\S]*concrete fencing[^.]*Solomon #338.*Earthen/i, null],
+    ["What color should I paint my fence?", /Sherwin Williams #3002.*Belvedere Tan[\s\S]*concrete fencing[^.]*Solomon #338.*Earthen/i, null],
+    ["Which stain color is approved for 3-rail fencing?", /Sherwin Williams #3002.*Belvedere Tan/i, /Solomon #338|Earthen/i],
+    ["What colour is the wood fence supposed to be?", /Sherwin Williams #3002.*Belvedere Tan/i, /Solomon #338|Earthen/i],
+    ["What color is required for a concrete fence?", /Solomon #338.*Earthen/i, /Sherwin Williams #3002|Belvedere Tan/i],
   ]) {
     const answer = await answerCommunityQuestion(question, {
       index: communityIndex,
@@ -70,16 +96,12 @@ test("fence-color wording variants do not use an unapproved static one-sheet as 
       }),
     });
 
-    if (/3-rail/i.test(question)) {
-      assert.equal(answer.answerStatus, "verified", question);
-      assert.equal(answer.completion.outcome, "complete", question);
-      assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
-    } else {
-      assert.equal(answer.answerStatus, "source-unavailable", question);
-      assert.equal(answer.completion.outcome, "missing-evidence", question);
-      assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "specification"), question);
-      assert.doesNotMatch(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
-      assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)), question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.completion.outcome, "complete", question);
+    assert.match(answer.answer, expected, question);
+    if (excluded) assert.doesNotMatch(answer.answer, excluded, question);
+    if (!/\b(?:3-rail|wood|concrete)\b/i.test(question)) {
+      assert.match(answer.answer, /which cited fence type applies/i, question);
     }
     assert.doesNotMatch(answer.answer, /trash enclosure/i, question);
     assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
@@ -283,16 +305,17 @@ test("negative controls cannot become unrelated confident answers", async () => 
     ["What is the weather today?", /can(?:not|'t) verify|can help/i, /pool contamination/i],
     ["Who is Diane Smethills?", /reliably identify/i, /clubhouse|water billing/i],
     ["Can I run a food truck from my driveway?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /pool deck|listed food truck/i],
-    ["Can I remove a tree?", /could not verify an answer from approved, up-to-date community sources|do not state whether the requested removal is allowed/i, /VPN hardware/i],
+    ["Can I remove a tree?", /official passages do not state whether tree removal is allowed/i, /VPN hardware|^Short answer:\s*(?:Yes|No)\b|tree removal (?:is prohibited|requires)/i, /Tree lawn/i],
     ["Can I paint my mailbox purple?", /could not verify an answer from approved, up-to-date community sources/i, /same colors as the original|nonpotable water/i],
     ["What is the CAB Instagram account?", /could not verify an answer from approved, up-to-date community sources/i, /clubhouse|trash carts/i],
     ["Can I build a helipad in my yard?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /utility shed.*8/i],
   ];
-  for (const [question, include, exclude] of cases) {
+  for (const [question, include, exclude, sourceTitle] of cases) {
     const result = await answerCommunityQuestion(question, options);
     assert.match(result.answer, include, question);
     assert.doesNotMatch(result.answer, exclude, question);
     assert.equal(result.confidence.canAnswer, false, question);
+    if (sourceTitle) assert.match(result.sources.map((source) => source.title).join(" "), sourceTitle, question);
   }
 });
 
@@ -339,7 +362,7 @@ test("cautious rules boundaries retain a supported distinction while dropping un
   const cases = [
     [
       "Can i build pergola in my front yard",
-      /mentions the requested project only as an example in a different rule/i,
+      /mentions pergola only as an example in a different rule[\s\S]*does not establish whether the project itself is allowed/i,
       /Lighting/i,
     ],
     [

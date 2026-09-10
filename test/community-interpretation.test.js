@@ -82,6 +82,32 @@ test("interpretation schema removes unsupported fields and validates clarificati
   assert.equal(normalizeInterpretation(interpretation({ needsClarification: true, clarificationQuestion: "" }), "Which one?", { now: NOW }), null);
 });
 
+test("AI routing cannot invent a specification the resident did not request", () => {
+  const alto = normalizeInterpretation(interpretation({
+    intent: "facilities",
+    goal: "information",
+    goals: ["information"],
+    subject: "Alto facility",
+    requestedDetails: ["specification"],
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "Alto", location: "" },
+    searchQueries: ["Alto community facility"],
+  }), "Is Alto a community facility?", { now: NOW });
+  assert.deepEqual(alto.requestedDetails, []);
+
+  const fence = normalizeInterpretation(interpretation({
+    intent: "rules",
+    goal: "information",
+    goals: ["information"],
+    subject: "fence color",
+    requestedDetails: ["specification"],
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "", location: "" },
+    searchQueries: ["fence color"],
+  }), "What color should I paint my fence?", { now: NOW });
+  assert.deepEqual(fence.requestedDetails, ["specification"]);
+});
+
 test("AI interpreter returns the complete validated contract without factual fields", async () => {
   const modelPlan = interpretation({
     goals: ["booking", "cost"],
@@ -596,6 +622,10 @@ test("AI unrelated scope cannot reject a clear state-parks-pass process question
   assert.match(answer.answerMode, /^source-derived-(?:structured|extractive)$/);
   assert.equal(answer.confidence?.canAnswer, true);
   assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i);
+  assert.match(answer.answer, /Voucher path:/i);
+  assert.match(answer.answer, /Ownership-transfer path:/i);
+  assert.match(answer.answer, /Renewal path:/i);
+  assert.doesNotMatch(answer.answer, /^Short answer: The Voucher must be brought/i);
 });
 
 test("AI clarification cannot suppress a complete verified answer about resident fees", async () => {

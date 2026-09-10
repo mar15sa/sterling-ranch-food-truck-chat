@@ -10,6 +10,68 @@ test("resident literal guard permits generic evidence boundaries", () => {
   assert.deepEqual(inspectSource(`
     buildAnswerContract({ directAnswer: "I could not verify an answer from approved, up-to-date community sources." });
   `), []);
+  assert.deepEqual(inspectSource(`
+    buildAnswerContract({ directAnswer: "I could not verify whether the requested detail is covered by the selected official source." });
+  `), []);
+});
+
+test("resident literal guard permits generic whole-sentence presentation and safety wrappers", () => {
+  assert.deepEqual(inspectSource(`
+    return {
+      directAnswer: "I found a relevant official section, but I could not extract its current date, amount, or limit safely.",
+      keyDetails: ["The official facility page is awaiting a fresh source check."],
+      nextStep: "Open the linked official section if you need the complete wording.",
+    };
+  `), []);
+});
+
+test("resident literal guard permits only reviewed dynamic evidence frames", () => {
+  assert.deepEqual(inspectSource(`
+    return structuredHelpfulAnswer(
+      \`The cited official rule restricts this: \${selectedClause}\`,
+      [],
+      \`The controlling source does not specify the requested detail. \${selectedClause}\`
+    );
+  `), []);
+  const findings = inspectSource(`
+    return structuredHelpfulAnswer(\`Sterling Ranch restricts this: \${selectedClause}\`, [], "Check the rules.");
+  `);
+  assert.equal(findings.length, 2);
+  assert.match(findings[0].value, /Sterling Ranch/);
+});
+
+test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
+  const findings = inspectSource(`
+    return {
+      directAnswer: "Sterling Ranch pool closes at 9:00 pm.",
+      nextStep: "Call the CAB at 720-555-0199 to reserve the pool.",
+    };
+  `);
+  assert.equal(findings.length, 2);
+});
+
+test("resident literal guard keeps named services and rule instructions visible", () => {
+  const findings = inspectSource(`
+    return {
+      nextStep: "Use WasteConnect for your service address to see the next dated pickup and set a reminder.",
+      directAnswer: "Shed utilities must be underground before approval.",
+    };
+  `);
+  assert.equal(findings.length, 2);
+});
+
+test("resident literal guard ignores a ternary branch selector but retains its fixed reply", () => {
+  const findings = inspectSource(`
+    return { answer: reason === "person-identity" ? "Sterling Ranch staff directory is at https://example.test." : "Ask a question." };
+  `);
+  assert.equal(findings.length, 2);
+  assert.ok(findings.every((finding) => finding.value !== "person-identity"));
+});
+
+test("resident literal guard ignores punctuation split from a dynamic reply", () => {
+  assert.deepEqual(inspectSource('return { directAnswer: `${headline}. ${summary}` };'), []);
+  const findings = inspectSource('return { directAnswer: "The pool closes at 9:00 pm." };');
+  assert.equal(findings.length, 1);
 });
 
 test("resident literal guard rejects a new untested fixed answer family", () => {
@@ -41,6 +103,35 @@ test("resident literal guard inventories a new rule-focused canned answer", () =
   `);
   assert.equal(findings.length, 2);
   assert.equal(findings[0].field, "directAnswer");
+});
+
+test("resident literal guard reaches helpfulAnswer calls after regular expressions", () => {
+  const findings = inspectSource(`
+    const matches = /pool\\s+hours/i.test(query);
+    if (matches) return helpfulAnswer("The pool closes at 9:00 pm.", sources, "Check the pool page before you go.");
+  `);
+  assert.equal(findings.length, 2);
+  assert.match(findings[0].value, /pool closes/);
+});
+
+test("resident literal guard reaches structuredHelpfulAnswer calls", () => {
+  const findings = inspectSource(`
+    return structuredHelpfulAnswer("The pool closes at 9:00 pm.", details, "Check the pool page before you go.");
+  `);
+  assert.equal(findings.length, 2);
+  assert.equal(findings[0].field, "directAnswer");
+  assert.equal(findings[1].field, "nextStep");
+});
+
+test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
+  assert.deepEqual(inspectSource('return { label: `Open ${source.title}` };'), []);
+  const findings = inspectSource('return helpfulAnswer(`Parking is allowed after ${closingTime}.`, sources);');
+  assert.equal(findings.length, 1);
+  assert.match(findings[0].value, /Parking is allowed/);
+});
+
+test("resident literal guard permits the reviewed generic resource-navigation boundary", () => {
+  assert.deepEqual(inspectSource('return helpfulAnswer("The official material I found does not explicitly confirm whether the requested list exists, so I won\'t treat a search miss as proof that it is unavailable.", sources, "Open the linked official source to confirm the current resource.");'), []);
 });
 
 test("per-node baselines allow unrelated edits and removal but reject changed or new copy", () => {
@@ -75,4 +166,85 @@ test("per-node baselines reject a duplicated existing literal and an indirect an
   const indirect = inspectSource(`const answer = ${JSON.stringify(fixed)}; return { answer };`, "lib/fixture.js");
   assert.equal(indirect.length, 1);
   assert.equal(indirect[0].value, fixed);
+});
+
+test("resident literal guard follows waste-style conditional bindings into answer slots", () => {
+  const findings = inspectSource(`
+    const directAnswer = hasVerifiedDate
+      ? "The live calendar confirms Tuesday pickup, but it does not label a delay."
+      : asksAboutStatus
+        ? "I could not check the live pickup service, so I cannot confirm a delay."
+        : "I could not check the live pickup service, so I cannot confirm the pickup date.";
+    return buildAnswerContract({
+      directAnswer,
+      nextStep: action
+        ? "Check your address in the official pickup calendar before putting out bins."
+        : "Check with the official collection service before putting out bins.",
+    });
+  `);
+  assert.equal(findings.length, 5);
+  assert.ok(findings.every((finding) => !["verified", "status"].includes(finding.value)));
+  assert.ok(findings.some((finding) => /cannot confirm a delay/.test(finding.value)));
+  assert.ok(findings.some((finding) => /official pickup calendar/.test(finding.value)));
+});
+
+test("resident literal guard follows simple concatenation used through response helpers", () => {
+  const findings = inspectSource(`
+    const directAnswer = "Waste pickup is " + "scheduled for Tuesday.";
+    const nextStep = "Open the official " + "pickup calendar before putting out bins.";
+    return helpfulAnswer(directAnswer, sources, nextStep);
+  `);
+  assert.equal(findings.length, 4);
+  assert.ok(findings.some((finding) => finding.field === "directAnswer" && /scheduled/.test(finding.value)));
+  assert.ok(findings.some((finding) => finding.field === "nextStep" && /pickup calendar/.test(finding.value)));
+});
+
+test("resident literal guard resolves reused response names to the nearest earlier binding", () => {
+  const findings = inspectSource(`
+    function firstAnswer() {
+      const directAnswer = "Waste pickup is scheduled for Tuesday.";
+      return { directAnswer };
+    }
+    function secondAnswer() {
+      const directAnswer = "Waste pickup is scheduled for Friday.";
+      return { directAnswer };
+    }
+  `);
+  assert.deepEqual(findings.map((finding) => finding.value), [
+    "Waste pickup is scheduled for Tuesday.",
+    "Waste pickup is scheduled for Friday.",
+  ]);
+});
+
+test("resident literal guard follows computed answer keys and returned response wrappers", () => {
+  const findings = inspectSource(`
+    function finish(payload, residentCopy) { return { ...payload, ["answer"]: residentCopy }; }
+    return finish({}, "The pool closes at 9:00 pm.");
+  `);
+  assert.equal(findings.length, 1);
+  assert.equal(findings[0].field, "answer");
+  assert.match(findings[0].value, /pool closes/);
+});
+
+test("resident literal guard does not attribute a sibling function's metadata to an answer", () => {
+  const findings = inspectSource(`
+    function metadata() {
+      const answer = { status: "verified", answerMode: "internal-only" };
+      return answer;
+    }
+    function residentReply() {
+      const directAnswer = "The pool closes at 9:00 pm.";
+      return { directAnswer };
+    }
+  `);
+  assert.deepEqual(findings.map((finding) => finding.value), ["The pool closes at 9:00 pm."]);
+});
+
+test("resident literal guard ignores internal data filenames but still catches resident prose beside them", () => {
+  const findings = inspectSource(`
+    const indexPath = "rules-index.json";
+    const directAnswer = "The pool closes at 9:00 pm.";
+    return { directAnswer, indexPath };
+  `);
+  assert.deepEqual(findings.map((finding) => finding.value), ["The pool closes at 9:00 pm."]);
 });

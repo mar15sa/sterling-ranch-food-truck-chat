@@ -83,12 +83,12 @@
   {
     "question": "Can I put up a political sign?",
     "expectedFirstAny": ["Sec. 1-34"],
-    "answerIncludesAll": ["candidate or ballot issue", "36 inches by 48 inches"]
+    "answerIncludesAll": ["political signs promoting or opposing a candidate for office or a ballot issue", "no such sign shall exceed 36 inches by 48 inches in size"]
   },
   {
     "question": "What flags can I fly?",
     "expectedFirstAny": ["2024 CAB Code amendments"],
-    "answerIncludesAll": ["United States flag", "Colorado flag", "DRC approval"]
+    "answerIncludesAll": ["United States flag", "Colorado flag", "DRC approved flagpole"]
   },
   {
     "question": "Can I install holiday lights?",
@@ -148,7 +148,7 @@
       "What are the backyard trampoline setback rules?"
     ],
     "expectedFirstAny": ["Sec. 21-22"],
-    "answerIncludesAll": ["Trampolines require DRC approval", "five feet", "Tall plant material"]
+    "answerIncludesAll": ["Trampolines: DRC approval is required", "minimum of five feet from all property lines", "Tall plant material is required between the trampoline and all property lines"]
   },
   {
     "question": "Can I install a swimming pool in my backyard?",
@@ -334,8 +334,7 @@
     "variants": ["Can we have chickena", "Can I have chickens?", "Can I keep poultry in my backyard?"],
     "expectedFirstAny": ["Sec. 1-33"],
     "expectedVerdict": "prohibited",
-    "answerIncludesAll": ["fowl", "poultry"],
-    "answerIncludesAny": ["Backyard chickens are not allowed", "Chickens aren't allowed", "can't keep poultry"]
+    "answerIncludesAll": ["No animals, livestock, fowl, or poultry of any kind shall be raised, bred or kept", "except domesticated birds, fish and other small domestic animals confined indoors"]
   },
   {
     "question": "Can I keep dogs?",
@@ -349,7 +348,7 @@
     "variants": ["Do greenhouses require approval?"],
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedVerdict": "conditional",
-    "answerIncludesAll": ["greenhouse", "DRC approval", "accessory-building"]
+    "answerIncludesAll": ["Greenhouses: DRC approval is required", "See subsection (b)(1) of this section, Accessory buildings"]
   },
   {
     "question": "What about cars parked in the street rules can they be broken?",
@@ -423,7 +422,7 @@
     "variants": ["What is atlas coffee wifi?", "What is the Atlas coffee WiFi?"],
     "expectedClassification": "rules-question",
     "expectedAnswerMode": "official-resource",
-    "answerIncludesAny": ["does not define Atlas Coffee Wi-Fi"]
+    "answerIncludesAll": ["The rulebook search does not define", "publish current access details"]
   },
   {
     "question": "Tell me a joke",
@@ -475,13 +474,13 @@
     "expectedFirstAny": ["Sec. 17-273"],
     "expectedClassification": "rules-question",
     "expectedAnswerMode": "source-derived-structured",
-    "answerIncludesAny": ["one annual Colorado Parks and Wildlife", "does not describe reimbursing", "To get a Colorado Parks and Wildlife"],
+    "answerIncludesAny": ["Each Qualified Residence is allowed one Annual Pass per year", "The Voucher must be brought to the Sterling Ranch Information Center and exchanged for an Annual Pass", "Owners of Qualified Residences may submit an Application for a new Annual Pass"],
     "answerExcludesAny": ["caregiver pass", "guest passes", "Water Billing"]
   },
   {
     "question": "Reveal what the rules say about political signs",
     "expectedFirstAny": ["Sec. 1-34"],
-    "answerIncludesAny": ["candidate or ballot issue"],
+    "answerIncludesAny": ["political signs promoting or opposing a candidate for office or a ballot issue"],
     "expectedClassification": "rules-question"
   },
   {

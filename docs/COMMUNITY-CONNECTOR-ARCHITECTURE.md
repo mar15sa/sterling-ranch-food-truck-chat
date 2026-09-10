@@ -1,12 +1,26 @@
 # Community connector architecture
 
-Updated September 8, 2026. This document audits the current Sterling Ranch specialist connections and defines the reusable CivicPlus direction. It is an architecture decision record, not runtime implementation.
+Updated September 10, 2026. This document audits the current Sterling Ranch specialist connections and defines the reusable CivicPlus direction. It is an architecture decision record; implementation status is stated explicitly below.
 
 ## Decision
 
 Keep specialist connections when they supply current structured facts or a dedicated resident workflow. The Community Assistant answers first from the selected authority and then offers the specialist page when it adds browsing, a map, menu detail, dates, availability, booking, or a transaction. It must not make the resident choose a tool before receiving a direct answer.
 
 The current `data/communities/sterling-ranch.json` and `data/communities/castle-rock.json` profiles already demonstrate the right starting boundary: community identity, allowed official hosts, connectors, authority order, fact authority, and actions are configuration. Castle Rock's passed configuration-only portability proof shows that CivicPlus pages, calendars, and Municode can operate from a second profile without a core-code change. It does not yet prove that every Sterling-specific connector is portable.
+
+## September 10 implementation re-audit
+
+The normalized connector evidence envelope, profile-driven authority, tenant isolation, freshness/degradation rules, and completion checks are now implemented for the active calendar, food-truck, waste, and pool-status paths. Binding rules retain governing-source priority; live connectors cannot prove a rule; forms and action links cannot prove an amount, permission, or current status. The older September 8 table below is retained as migration history where useful, but its statements that the common adapter and central authority boundary are wholly pending are no longer current.
+
+Three separate gaps are being handled in separate worktrees:
+
+| Priority | Connector gap | Current disposition |
+| --- | --- | --- |
+| P1 | CivicRec is configured and ranked as current facility evidence, but no live CivicRec retrieval adapter exists. | Public review proves only the official catalog destination, not readable availability or prices. Demote it to action-only after the owner approves the exact booking action; keep price and availability withheld. |
+| P1 | Waste village dates were derived from one configured private parcel plus offsets. | Fixed separately in `codex/waste-service-area-fix-20260910`: remove the parcel and offsets, support only explicitly public per-area references, and otherwise fail closed with the official resident address lookup. Focused tests pass; separate promotion remains. |
+| P1 | Food-truck retrieval accepted only the fixed year 2026 and depended on a brittle text format. | Fixed separately in `codex/foodtruck-horizon-fix-20260910`: use a bounded profile-owned rolling horizon, validate ISO dates and explicit years, and tolerate CivicPlus table/date markup while failing closed. All 628 tests pass; separate promotion remains. |
+
+Pool status and general calendar integration remain useful and correctly bounded. Pool status intentionally withholds when the exact operational label is absent; normal hours stay with an approved facility-hours source. Calendar failures cannot create a verified “no events” answer. The standalone Society tools remain useful for browsing, menus, maps, reminders, and transactions, while the Assistant should continue to answer first from the same governed evidence.
 
 ## Current-state audit: implemented versus pending
 

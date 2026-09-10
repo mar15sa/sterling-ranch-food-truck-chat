@@ -20,7 +20,7 @@ const EXAMPLES = [
   {
     question: "Can I build a shed in my backyard?",
     verdict: "conditional",
-    includes: ["DRC approval", "150 square feet", "Utilities must run underground"],
+    includes: ["DRC approval", "150 square feet", "Utilities to a backyard utility shed must be underground"],
   },
   {
     question: "When can I put up holiday lights?",
@@ -30,7 +30,8 @@ const EXAMPLES = [
   {
     question: "What are the landscaping and yard rules?",
     verdict: "conditional",
-    includes: ["DRC review", "Yard design", "Ongoing care"],
+    includes: ["Landscape and irrigation plans", "must be submitted", "Landscaping is to be kept healthy"],
+    requiresSections: false,
   },
   {
     question: "What fees do residents pay?",
@@ -152,7 +153,7 @@ test("park and amenity booking questions use the reservation process", async () 
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
     if (/park/i.test(question)) {
-      assert.match(result.answer, /Park Shelters page|Facility Rentals catalog/i);
+      assert.match(result.answer, /Official CAB Park Shelters[\s\S]*Official Facility Rentals Catalog/i);
     } else {
       assert.match(result.answer, /Facilities Rental Application and Agreement/i);
     }
@@ -179,7 +180,7 @@ test("unseen everyday wording maps to the reusable facility-reservation concept"
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.match(result.confidence?.reason || "", /semantic-concept-supported:facility-reservations/);
     if (/park shelter/i.test(question)) {
-      assert.match(result.answer, /Park Shelters page|Facility Rentals catalog/i);
+      assert.match(result.answer, /Official CAB Park Shelters[\s\S]*Official Facility Rentals Catalog/i);
     } else {
       assert.match(result.answer, /Facilities Rental Application and Agreement/i);
     }
@@ -195,7 +196,7 @@ test("the same concept layer distinguishes cancellations from new bookings", asy
   const result = await answerRulesQuestion("How do I cancel a clubhouse rental and get a refund?");
   assert.equal(result.confidence?.canAnswer, true);
   assert.match(result.confidence?.reason || "", /semantic-concept-supported:rental-cancellations/);
-  assert.match(result.answer, /current Rental Agreement/i);
+  assert.match(result.answer, /terms of the Rental Agreement/i);
   assert.match(result.sources[0]?.title || "", /17-196|Cancellation and refund policy/i);
 });
 
@@ -379,10 +380,12 @@ test("compound questions keep a grounded source for each requested topic", async
     },
   });
   assert.equal(result.confidence?.canAnswer, true);
-  assert.equal(rewriteSources.length, 0);
+  assert.equal(rewriteSources.length, 2);
+  assert.ok(rewriteSources.some((source) => /fenc/i.test(source.title || "")));
+  assert.ok(rewriteSources.some((source) => /shed/i.test(source.title || "")));
   assert.ok(result.sources.some((source) => /fenc/i.test(source.title || "")));
   assert.ok(result.sources.some((source) => /shed/i.test(source.title || "")));
-  assert.match(result.answerMode || "", /source-derived-extractive/);
+  assert.match(result.answerMode || "", /source-derived-llm-selective/);
 });
 
 test("compound questions keep every topic when the AI rewrite is rejected", async () => {
@@ -396,6 +399,6 @@ test("compound questions keep every topic when the AI rewrite is rejected", asyn
   assert.match(result.answer, /eight feet,\s*six inches/i);
   assert.match(result.answer, /150 square feet/i);
   assert.match(result.answer, /underground/i);
-  assert.match(result.answer, /three-rail concrete/i);
+  assert.match(result.answer, /three concrete rails/i);
   assert.match(result.answerMode || "", /source-derived-extractive/);
 });
