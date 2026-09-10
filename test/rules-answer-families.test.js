@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 
-const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerRulesQuestion, currentSourceConflicts } = require("../lib/rules-assistant");
 const { answerCoverageIssues } = require("../lib/rules-intent");
 
 async function answer(question, options = {}) {
@@ -420,4 +420,42 @@ test("yard completion deadlines use the controlling installation-date rule", asy
 
   const unrelated = await answer("How long do I have to finish painting my garage door?");
   assert.doesNotMatch(unrelated.answer, /rear yard landscaping must be completed within 120 days/i);
+});
+
+test("generic fallback families use the shared evidence boundary without replacing supported answers", async () => {
+  for (const question of [
+    "What utility requirement applies?",
+    "Can I do that?",
+    "Do I need official approval?",
+    "Tell me about community rules",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.answerMode, "source-evidence-boundary", question);
+    assert.equal(result.confidence.canAnswer, false, question);
+    assert.match(result.answer, /don't have enough rulebook evidence to answer that confidently/i, question);
+    assert.doesNotMatch(result.answer, /these sections look|closest (?:matches|starting points)|definite utility answer/i, question);
+    assert.ok(result.sources.length > 0, question);
+  }
+
+  const supportedFee = await answer("How much is my water service fee?");
+  assert.equal(supportedFee.confidence.canAnswer, true);
+  assert.match(supportedFee.answer, /\$50\.20|\$9\.70|\$44\.95/i);
+  assert.notEqual(supportedFee.answerMode, "source-evidence-boundary");
+
+  const noEvidence = await answer("Can I build a helicopter landing pad in my yard?");
+  assert.equal(noEvidence.answerMode, "source-evidence-boundary");
+  assert.deepEqual(noEvidence.sources, []);
+
+  const exactSection = await answer("Can you find section 5-219?");
+  assert.equal(exactSection.answerMode, "exact-section-not-found");
+
+  const conflicts = currentSourceConflicts([
+    { title: "Current policy A", sourceUrl: "https://cab.example/a", isSupplemental: true, replacesSections: ["Sec. 1-1"] },
+    { title: "Current policy B", sourceUrl: "https://cab.example/b", isSupplemental: true, replacesSections: ["Sec. 1-1"] },
+  ]);
+  assert.deepEqual(conflicts, [{ section: "sec.1-1", sources: ["Current policy A", "Current policy B"] }]);
+
+  const collision = await answer("Can I build a shed in my backyard?");
+  assert.match(collision.answer, /DRC approval/i);
+  assert.doesNotMatch(collision.answer, /don't have enough rulebook evidence/i);
 });
