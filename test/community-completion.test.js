@@ -296,6 +296,38 @@ test("negative controls cannot become unrelated confident answers", async () => 
   }
 });
 
+test("withheld boundaries retain the reason and offer only question-specific handoffs", async () => {
+  const options = {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    synthesizeCommunityAnswer: false,
+  };
+  const foodTruck = await answerCommunityQuestion("Can I run a food truck from my driveway?", options);
+  assert.equal(foodTruck.confidence.reason, "no-food-truck-specific-rule");
+  assert.equal(foodTruck.answerMode, "source-evidence-boundary");
+  assert.doesNotMatch(foodTruck.answer, /(?:allowed|prohibited|approval is required)/i);
+  assert.doesNotMatch(foodTruck.sources.map((source) => source.title).join(" "), /vehicles|parking|food truck/i);
+
+  for (const [question, unrelated] of [
+    ["What are the quiet hours?", /Landscape Screens|Landscape Screens One-Sheet/i],
+    ["Can I build a helipad in my yard?", /Backyard Utility Sheds|Backyard Utility Sheds One-Sheet/i],
+  ]) {
+    const answer = await answerCommunityQuestion(question, options);
+    assert.equal(answer.answerMode, "source-evidence-boundary", question);
+    assert.equal(answer.confidence.canAnswer, false, question);
+    assert.doesNotMatch(answer.sources.map((source) => source.title).join(" "), unrelated, question);
+    assert.doesNotMatch(answer.actions.map((action) => action.label).join(" "), unrelated, question);
+  }
+
+  const contact = await answerCommunityQuestion("What is the HOA phone number?", options);
+  assert.equal(contact.answerMode, "community-contact-boundary");
+  assert.equal(contact.confidence.reason, "missing-requested-contact-info");
+  assert.doesNotMatch(contact.answer, /\b\d{3}[-.)\s]\d{3}[-.\s]\d{4}\b/);
+  assert.doesNotMatch(contact.sources.map((source) => source.title).join(" "), /Billing-related complaints|Owner complaints/i);
+});
+
 test("a confident AI rewrite cannot substitute a broad category for an unsupported named project", async () => {
   const answer = await answerCommunityQuestion("Can I build a helipad in my yard?", {
     index: communityIndex,

@@ -315,13 +315,13 @@ test("permission plus application questions consult the controlling rule before 
     }),
   });
   const answer = await ask("I need to submit for rainwater harvesting barrels", "rainwater harvesting barrels");
-  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.equal(answer.answerStatus, "verified");
   assert.equal(answer.answerVerdict, "conditional");
   assert.match(answer.answer, /55-gallon/i);
-  assert.match(answer.answer, /do not require approval/i);
-  assert.match(answer.nextStep, /could not verify the application or submission step/i);
-  assert.ok(answer.actions.some((action) => action.actionType === "information" && /library\.municode\.com/i.test(action.url)));
-  assert.ok(answer.sources.every((source) => /library\.municode\.com/i.test(source.sourceUrl)));
+  assert.match(answer.answer, /if the controlling rain-barrel rule says approval is needed/i);
+  assert.match(answer.nextStep, /if the controlling rule requires approval/i);
+  assert.ok(answer.actions.some((action) => /\/201\/Design-Review-Documents/i.test(action.url)));
+  assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl)));
 
   const trampoline = await ask("I need to submit for a trampoline", "trampoline");
   assert.equal(trampoline.answerMode, "community-rule-partial");
@@ -392,13 +392,15 @@ test("unsupported requests complete retrieval before returning the generic evide
 
 test("generic evidence boundaries retain the rules engine diagnostic reason", async () => {
   const cases = [
-    ["Can I run a food truck from my driveway?", "source-review-required"],
-    ["What is the HOA phone number?", "source-review-required"],
+    ["Can I run a food truck from my driveway?", "no-food-truck-specific-rule"],
+    ["What is the HOA phone number?", "missing-requested-contact-info"],
   ];
   for (const [question, reason] of cases) {
     const answer = await answerCommunityQuestion(question, {
       interpretationMode: "structured",
       index: communityIndex,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
       planCommunitySearch: async () => interpretation({
         intent: "rules",
         goal: "permission",

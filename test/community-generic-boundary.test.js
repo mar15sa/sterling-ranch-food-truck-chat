@@ -49,6 +49,23 @@ test("full-page review status alone cannot make a source an answerable boundary 
   assert.equal(answer.actions[0].url, profile.website);
 });
 
+test("a second community does not hand off a withheld answer to a merely related page", () => {
+  const unrelated = {
+    title: "Ridgeview landscape screens",
+    sourceUrl: "https://ridgeview.example/landscape-screens",
+    lifecycle: "current",
+    isOfficialResource: true,
+    canonicalScopedProjection: true,
+    text: "Landscape screen standards and DRC submission details.",
+  };
+  for (const question of ["What are the quiet hours?", "Can I build a helipad in my yard?"]) {
+    const answer = genericEvidenceBoundary(question, {}, { website: profile.website }, profile, [unrelated]);
+    assert.equal(answer.sources[0].sourceUrl, profile.website, question);
+    assert.equal(answer.actions[0].url, profile.website, question);
+    assert.doesNotMatch(answer.sources[0].title, /landscape/i, question);
+  }
+});
+
 test("event connector failures use the active community calendar configuration", () => {
   const actions = eventFailureActions({ communityProfile: profile });
   assert.deepEqual(actions, [{ label: "Open Ridgeview calendar", url: "https://ridgeview.example/calendar", actionType: "calendar" }]);
