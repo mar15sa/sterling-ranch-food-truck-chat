@@ -1,7 +1,7 @@
 const assert = require("node:assert/strict");
 const test = require("node:test");
 
-const { eventFailureActions, poolStatusAnswer } = require("../lib/community-assistant");
+const { eventFailureActions, eventsAnswer, poolStatusAnswer } = require("../lib/community-assistant");
 
 test("live connector handoffs use each community's configured labels", () => {
   const profile = {
@@ -18,6 +18,21 @@ test("live connector handoffs use each community's configured labels", () => {
     url: "https://ridgeview.example/calendar",
     actionType: "calendar",
   }]);
+});
+
+test("a degraded calendar sends the resident through its configured action", () => {
+  const answer = eventsAnswer({
+    events: [],
+    range: { label: "this week" },
+    sourceUrl: "https://ridgeview.example/calendar",
+    calendarActionLabel: "View Ridgeview events",
+    calendarLabel: "Ridgeview calendar",
+    diagnostics: { parserHealthy: false },
+  }, ["date"]);
+
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.nextStep, "View Ridgeview events");
+  assert.equal(answer.actions[0].label, "View Ridgeview events");
 });
 
 test("pool status keeps live authority while taking its handoff label from the profile", () => {
