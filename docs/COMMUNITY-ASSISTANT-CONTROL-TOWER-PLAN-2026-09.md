@@ -10,16 +10,16 @@ For resident-facing static claims, approval is tied to the community, exact URL,
 
 ## Fixed progress ledger
 
-The current audited score is 72 of 100 points. The denominator stays fixed; newly discovered risks are recorded separately instead of silently lowering completed work. Points increase only after the change is integrated and its required checks pass. This update adds nine points to the 63-point baseline: two for removing the reachable fixed pickleball path, three for completing the source-governed food-truck migration, one for renewing the exact approved source versions without changing approval scope, and three for replacing the Assistant's fixed pool-color interpretations with a current evidence envelope.
+The current audited score is 79 of 100 points. The denominator stays fixed; newly discovered risks are recorded separately instead of silently lowering completed work. Points increase only after a change is integrated and its required checks pass. This update records the exact owner-approved operational sources, the family-level shortcut and collision repairs, the permanent resident-literal guard, profile-driven event and pool behavior, and the approved UI. The remaining 21 points are mostly source-inventory disposition and the removal or evidence-gating of older migration debt.
 
 | Area | Complete | Closure still required |
 | --- | ---: | --- |
-| Answer quality and ambiguity | 19/25 | Remove or evidence-gate the remaining reachable static answer paths; pass the family, collision, degradation, and hosted checks. |
-| Durable engineering priorities | 14/15 | Keep the permanent rules enforced in every implementation and release review. |
-| Reusable connector architecture | 16/20 | Finish facility parity without Sterling-only answer logic. |
-| Source completeness and decisions | 9/25 | Import only approved exact decisions, resolve or withhold conflicts, and work down the eligible-page disposition backlog. |
-| Approved UI and feedback controls | 14/15 | Promote the already approved staging implementation with the accuracy release after its gates pass. |
-| **Total** | **72/100** | |
+| Answer quality and ambiguity | 21/25 | Remove or evidence-gate the remaining 87 scanner-tracked migration-debt nodes and repeat the hosted family checks. |
+| Durable engineering priorities | 15/15 | Keep the permanent rules enforced in every implementation, automation, and release review. |
+| Reusable connector architecture | 17/20 | Finish facility operations through approved profile-driven claims and actions. |
+| Source completeness and decisions | 11/25 | Resolve or withhold remaining exact versions and work down the 222-page eligible inventory backlog. |
+| Approved UI and feedback controls | 15/15 | Promote the approved implementation with the exact accuracy release after hosted staging passes. |
+| **Total** | **79/100** | |
 
 ## Workstream 1: answer quality, ambiguity, and incorrect shortcuts
 
@@ -36,7 +36,7 @@ The current audited score is 72 of 100 points. The denominator stays fixed; newl
 - Keep live connector answers narrow to current facts they actually observed.
 - Reject unsupported AI language and unsupported template language sentence by sentence.
 
-**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, and the shared water-usage-versus-billing routing repair are integrated in release candidate PR #65. The reachable fixed pickleball answer has been removed. The Community Assistant food-truck path now ignores historical local event overrides and static menu registries and uses the configured official live calendar instead. Fixed pool-color interpretations have also been removed from the Assistant path: a current status now requires the active community, an exact configured textual label, fresh evidence, healthy connector state, status-only coverage, and a claim tied to that evidence. The remaining early static shortcut family for tree-removal, quiet-hours, mailbox, Instagram, helipad, and HOA-contact questions has now been removed in the local release candidate, together with fixed CAB contact and calendar fallback links. The focused boundary suite passes 71 tests and the broad implementation suite passes 547 tests, 140 rules evaluations, 7 unseen evaluations, and the 122-question resident corpus. The final resident-quality gate still blocks release: it reports seven answer regressions, six answers below Good, and three high-effort answers. Four cases await exact owner source decisions; the newly withheld shortcut families still need their source coverage and evaluation expectations reconciled without restoring canned answers. The exact monitoring source remains withheld pending owner approval, so water-monitoring questions fail closed instead of borrowing payment authority. Production still uses the earlier baseline behavior.
+**Current status:** The exact claim gate, generic grounded composer, adversarial wording checks, current-status boundary, mixed live/static authority tests, and the shared water-usage-versus-billing routing repair are integrated in the local PR #65 candidate. Reachable fixed pickleball, pool-color, fee, delinquency, contact, calendar, tree-removal, quiet-hours, mailbox, Instagram, helipad, and HOA-contact answer shortcuts have been removed or moved behind exact approved projections. Pool holiday hours, DRC contact and submission, conditional rain-barrel routing, UtilityHawk monitoring, water payment, current fees, and delinquency answers now retain their separate controlling-source roles. Facility booking remains safely withheld because its current booking facts and action are not approved; collision tests keep it separate from pool pages and residential rental rules. The exact candidate passes 594 implementation checks, 140 rule variants, 7 unseen variants, the 122-question resident corpus, and the 249-question comparison with 229 Excellent, 20 Good, zero Weak, zero regressions, and zero high-effort answers. The controlling-source retrieval gate passes 20/20. Production still uses the earlier baseline behavior until hosted staging passes and PR #65 is merged.
 
 **Completion evidence:** Former shortcut families cannot be unlocked by full-page approval; changed hashes withdraw claims; partial compound answers retain independent verified parts; representative rule, facility, payment, contact, status, event, food-truck, and trash families pass normal and degraded tests; exact staging test traffic passes with AI composition observed where expected.
 
@@ -63,7 +63,7 @@ The current audited score is 72 of 100 points. The denominator stays fixed; newl
 - Current transaction or process source: booking, payment, registration, submission, and current operational fees.
 - Action link: where to complete the already established step; it cannot prove the underlying rule or amount.
 
-**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. The calendar path now preserves tenant and date-range evidence and cannot validate a static booking claim. Waste scheduling uses the same contract: Sterling-specific endpoints, locations, offsets, labels, actions, and degradation behavior live in the community profile; every displayed area date requires fresh operational evidence; unsupported holiday wording and the uncited fixed bin instruction are withheld. The Community Assistant food-truck path now uses its community profile and exact configured official calendar, rejects alternate same-host pages, unsupported years, and malformed schedule layouts, and withholds menus and prices until exact vendor identities and URLs are reviewed. The Assistant's pool-status path now uses the same profile-driven evidence contract and cannot turn a color, stale result, wrong community, broken claim link, or status-adjacent question into a verified answer. The standalone food-truck and pool pages retain their existing services. General facility operations still need full envelope parity and held-out degradation tests.
+**Current status:** A reusable connector adapter contract is integrated locally for community identity, endpoints, hosts, capabilities, facets, source roles, freshness, degradation, labels, and vocabulary. Castle Rock proves a second CivicPlus profile. Calendar, waste, food-truck, and pool-status paths use profile-driven evidence and keep their authority narrow. The approved Society UI also reads general events through the profile-driven calendar path. The standalone food-truck and pool pages retain their existing services, while the Community Assistant answers from the same governed evidence instead of copying their wording. Facility requests now preserve rule, freshness, and withheld-source precedence across booking, access, cost, pool, and residential-rental collisions. General facility facts and transaction actions still need exact owner approvals before full operational parity.
 
 **Completion evidence:** Each active connector emits the common evidence envelope; every final claim retains its controlling source role; source/action data cannot cross communities; mixed-claim tests preserve separate authorities; specialist handoffs remain useful; no Sterling Ranch URL, label, village mapping, or facility assumption is required in shared core logic.
 
@@ -73,7 +73,7 @@ The current audited score is 72 of 100 points. The denominator stays fixed; newl
 
 **Decision:** Preserve safe approved answers while completing the larger source inventory in small evidence-bound batches. Captured, indexed, or official does not mean approved. Do not combine counts from different crawl snapshots.
 
-**Current status:** The reviewed release bundle has 267 source records, 1,140 discovered URLs, 757 eligible URLs, and a 222-page pending inventory. A separate later live inventory found 1,510 discovered URLs, 1,079 eligible URLs, and an 894-page backlog; those snapshot counts are tracked separately. The strict approval layer contains 18 explicitly approved fact projections. Another 624 trusted-baseline facts remain candidates rather than owner approvals. Seventeen conflicts remain. Full coverage is not achieved. The strict branch imports the owner's water, fee, payment, billing, and delinquency decisions only within their stated boundaries. The exact-version verifier revalidated all 46 approved URLs and renewed 164 due source records with no changed or held source, no broken action, and no change to the approved fingerprint.
+**Current status:** The exact release index has 273 source records and a 222-page eligible inventory backlog. Its decision ledger has 30 unique source versions: 5 approved-evidence versions, 25 pending-review versions, and 22 narrow claim/action approvals across the approved versions. Source and action checks report zero failures, zero expired approved sources or facts, and current approved evidence. The branch imports the owner's water, fee, payment, billing, delinquency, pool-hours, DRC, conditional rain-barrel, and UtilityHawk decisions only within their stated boundaries. A separate later live inventory snapshot remains larger and is tracked separately; captured or eligible pages are still not approved evidence. Full source disposition is not complete.
 
 **Review order:**
 
@@ -91,25 +91,23 @@ The current audited score is 72 of 100 points. The denominator stays fixed; newl
 
 **Target behavior:** Add accessible “Report a bug” and “Request a feature” controls to the shared approved page shell and the Assistant conversation area. Use the existing email-draft behavior with page-specific context; nothing sends automatically.
 
-**Current status:** The owner approved the new editorial design and Society palette. The shared navigation, main page and subpage design, Community Assistant shell, and “Report a bug” / “Request a feature” controls are implemented in PR #65 and deployed to staging. Their email-draft behavior does not send automatically. Production still uses the previous interface.
+**Current status:** The owner approved the new editorial design and Society palette. The shared navigation, main page and subpage design, profile-driven event cards, Community Assistant shell, and “Report a bug” / “Request a feature” controls are included in the PR #65 candidate. Their email-draft behavior does not send automatically. Staging still needs the exact final candidate revision; production still uses the previous interface.
 
 **Verification:** Desktop, mobile, interaction, loading, error, source-detail, and feedback states are included in the reviewed implementation evidence. Final production promotion remains tied to the same accuracy and source gates as the Assistant release.
 
 ## Integration and release order
 
-1. Finish and review the static-shortcut/root-routing repair; keep missing-evidence cases withheld.
-2. Integrate connector envelopes and the shortcut repair into one strict candidate; resolve the four real routing regressions.
-3. Run the broad local family suite. Classify every remaining failure as a deliberate evidence hold, a true regression, or an obsolete test; no unexplained failures advance.
-4. Present only evidence-complete source cards for owner decision. Import each approval exactly as stated; treat skips as deferred and keep the four not-ready records withheld.
-5. Re-run source, authority, grounding, ambiguity, connector, and resident-effort suites against the exact candidate.
-6. Push the feature branch and open a reviewable pull request. Deploy the exact commit to staging and test only through `/community-assistant?test=1` or API requests containing `"isTest": true`.
-7. Verify hosted source fingerprints, current-source freshness, AI-composer use, specialist degradation, and representative question families. Promote only the reviewed exact candidate through the protected release route.
-8. Promote the already approved and validated shared shell and feedback controls with the same exact candidate once the accuracy and source gates pass.
+1. Push the exact locally green candidate to PR #65 and the staging branch.
+2. Wait for GitHub and Railway to build that exact revision.
+3. Verify hosted source fingerprints, source freshness, the approved UI, feedback controls, AI composition, specialist degradation, and representative question families. Use only `/community-assistant?test=1` or API requests containing `"isTest": true`.
+4. Merge PR #65 through the protected route only after hosted staging and required checks pass.
+5. Verify the exact production revision and repeat the resident-critical test questions with test labeling.
+6. Continue source disposition and migration-debt removal as separate workstreams after this release.
 
 ## Approval register
 
-Already authorized for exact import: the stated 2026 water/rate/fee decisions, delinquency policy, water-payment pages, card-processing fee, water-bill explanation, and monthly-fee payment page. Their exclusions remain binding.
+Already authorized and imported exactly: the stated 2026 water/rate/fee decisions, delinquency policy, water-payment pages, card-processing fee, water-bill explanation, monthly-fee payment page, current pool-hours page, current DRC contact/general submission method, conditional rain-barrel submission route, and current UtilityHawk water-monitoring FAQ. Every stated exclusion remains binding.
 
-Still requires owner action for this release: the exact current pool-hours page, current DRC contact/general submission method, conditional rain-barrel submission route, and exact UtilityHawk water-monitoring FAQ. Other evidence-ready continuity proposals remain future source-review batches.
+No further owner approval is required to stage and release this exact candidate; standing push and protected-merge approval is already recorded. A separate CAB Resource Center phone proposal and other evidence-ready continuity proposals remain future source-review decisions.
 
-Still withheld outside the four immediate decisions: amenity-form action, CivicRec facility booking/action evidence, the controlling trash-screening rule, and every other pending or conflicted record. These require their own exact evidence before approval.
+Still withheld: amenity-form action, CivicRec facility booking/action evidence, the controlling trash-screening rule, the CAB Resource Center phone, and every other pending or conflicted record. These require their own exact decisions before use.
