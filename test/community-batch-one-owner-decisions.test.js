@@ -120,6 +120,7 @@ test('money and enforcement wording variants use the reviewed source projections
     ['What is the residential water base rate?', /\$50\.20/],
     ['What is the CAB trash charge?', /\$14\.17/],
     ['What is the facility fee for a single-family detached home?', /\$12,395/],
+    ['What are utility tap fees?', /\$6,080[\s\S]*\$12,395/],
     ['When does a late fee start for an unpaid monthly bill?', /seven calendar days/i],
     ['What are the first three fine amounts for a continuing violation?', /\$100\.00.*\$250\.00.*\$500\.00/i],
   ];
@@ -128,6 +129,14 @@ test('money and enforcement wording variants use the reviewed source projections
     assert.match(result.answer, expected, question);
     assert.ok(result.answerMode.startsWith('source-derived'), question);
   }
+});
+
+test('a broad residential tap question combines only its approved tap and facility rows', async () => {
+  const result = await answerRulesQuestion('What are utility tap fees?', { searchMode: 'legacy', llmMode: 'off' });
+  assert.match(result.answer, /Residential stormwater tap is \$6,080 per unit/i);
+  assert.match(result.answer, /Residential facilities fees: single-family detached and duplex \$12,395/i);
+  assert.doesNotMatch(result.answer, /\$44\.95|\$12\.50|\$18\.80/);
+  assert.deepEqual(result.sources.map((source) => source.ownerReview?.decisionId), ['tap-facility-2026']);
 });
 
 test('annual schedules and excluded tap rows stay withheld instead of borrowing a related amount', async () => {
