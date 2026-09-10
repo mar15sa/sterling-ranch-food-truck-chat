@@ -82,6 +82,32 @@ test("interpretation schema removes unsupported fields and validates clarificati
   assert.equal(normalizeInterpretation(interpretation({ needsClarification: true, clarificationQuestion: "" }), "Which one?", { now: NOW }), null);
 });
 
+test("AI routing cannot invent a specification the resident did not request", () => {
+  const alto = normalizeInterpretation(interpretation({
+    intent: "facilities",
+    goal: "information",
+    goals: ["information"],
+    subject: "Alto facility",
+    requestedDetails: ["specification"],
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "Alto", location: "" },
+    searchQueries: ["Alto community facility"],
+  }), "Is Alto a community facility?", { now: NOW });
+  assert.deepEqual(alto.requestedDetails, []);
+
+  const fence = normalizeInterpretation(interpretation({
+    intent: "rules",
+    goal: "information",
+    goals: ["information"],
+    subject: "fence color",
+    requestedDetails: ["specification"],
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "", location: "" },
+    searchQueries: ["fence color"],
+  }), "What color should I paint my fence?", { now: NOW });
+  assert.deepEqual(fence.requestedDetails, ["specification"]);
+});
+
 test("AI interpreter returns the complete validated contract without factual fields", async () => {
   const modelPlan = interpretation({
     goals: ["booking", "cost"],
