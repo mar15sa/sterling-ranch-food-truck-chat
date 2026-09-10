@@ -20,7 +20,7 @@ const EXAMPLES = [
   {
     question: "Can I build a shed in my backyard?",
     verdict: "conditional",
-    includes: ["DRC approval", "150 square feet", "Utilities must run underground"],
+    includes: ["DRC approval", "150 square feet", "Utilities to a backyard utility shed must be underground"],
   },
   {
     question: "When can I put up holiday lights?",
