@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Temporary migration-debt baseline. Entries are exact resident-copy node fingerprints and occurrence counts; they do not approve content.",
+  "byFile": {
+    "lib/community-assistant.js": 6,
+    "lib/community-food-trucks.js": 5,
+    "lib/community-proactive.js": 0,
+    "lib/rules-assistant.js": 88,
+    "lib/rules-focused-answers.js": 0
+  },
+  "findings": [
+    {
+      "filename": "lib/community-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "cf78d39d667f7c4dd0141cbcd2ec614d4605e37668ff4b1177dfb844286c768a",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "3bcdb1771fec03ecb85d013817c798386cb1ec98ef9a702b9722283790b230b0",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "f47ed46e39619d6bf3294206a3db47087510fd78c5acef127e9c7f4180429ed2",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "6f23f0d53973705631e69fcfbdd9eb692b303fa0ffcdd30cf54f6ad01c93d926",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-assistant.js",
+      "field": "label",
+      "fingerprint": "575fc2d20a10229fac337226bada9ec743a66ff8c829037a3ff3bd3fc8e70e47",
+      "count": 2
+    },
+    {
+      "filename": "lib/community-food-trucks.js",
+      "field": "label",
+      "fingerprint": "a1c3a4fbb74e320dac5699f92e0e9eab6291c7e3cb92aa062a92a052011b9d03",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-food-trucks.js",
+      "field": "nextStep",
+      "fingerprint": "0179f75c6d8e802dc3772942dc41606c0492b1b42d392e5a11811415c183d09c",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-food-trucks.js",
+      "field": "nextStep",
+      "fingerprint": "bc6b4f5386b92ac87aca20982327507ce372f64ea788eb619c361d0f26fe198c",
+      "count": 1
+    },
+    {
+      "filename": "lib/community-food-trucks.js",
+      "field": "directAnswer",
+      "fingerprint": "3d7931b004bac7e5cb6c2a789c62e04dc665b33d7d26a030bceb744c5dcb0804",
+      "count": 2
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "98926d21d11139697f28cab2f26cb0266e84065310e2887f6c189784d3d675dd",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "9737d954e251407f3e4ce1363d249f4df6374369cdec128201934ee1e8d16271",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "9e03762da208f0e939b00f9c00d9f1dfa902f7974d55b3486c35582cd560a73b",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "00d58773fa9147bedd3c999186ecaeb2bd238ce726bd29d3ea316c8a79b6292c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "5bcf5ceaea1d4a4f6640fe07ccf953dbabfda3724496d8944ec40723d65349bd",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "a224d82524e7240715095f05567da6c63cb373ea8994cc7485bc675d871686e4",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "72a1db54e32b732f7824811fb2da7159e5c782b5ce13f494bfa2b0e333c178e5",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "609639bd86f6b56b1189a3a680f20ce6459e8c1468b730356fe40393ca479415",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "6dc4802d26d1a3fa7c3f18f5145bb1b7741bc4eb9dbd408b6a535bbbf37862cb",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "url",
+      "fingerprint": "b96959613176edad8360a1ddf9add77ba9fd77288db60ea26aaa61e0b1dfc980",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "400d2441fafa16fd35a7ef3a600087dd63d271e6e405a97a5c84073a00d44b30",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "2258314f7e9fd2e532958489b12beeb25f329a7d97d920c8365b259155ccdecb",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "ea4a01ee9f06d817213a978f85c1b4e2db13d8865753c00e1fd9d28238e46cb1",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "214763ed9199061d19d71972d5fd13685ae645026b7451f76bbf516697c180b8",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "5d2248c9b960d259fa5e51383673ff4dedc1ab53d591e72f4f7eb70c495b78e9",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "7d18281fbec94602ef089716a2174cd6eac32059aafb9f8eef7b7dd684096bf2",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "a3cc6c46af5d88df8c1a1b8579787cad865e5673291f996320053939c3c83d98",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "ea372f596e863b138e8122a47c7d3eee3504c0728fdd66f4e8328cb139023206",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "2cf674f575f2524a1203744925efd6fce9d5d1567e7b34d5a7987a99d8c96df9",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "f8b7da854efe3c4b9bb0861b1a9e58558a968f531a5dbc974b1f9581d88af99e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "81953d1037c5e107a6348e63ac5d11a510a2159667b32b18c1596d567bf3c27e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "3ef2122c6ea878a89663901a13a51d310c47b0d26d1923ba5abe80af201286e3",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "087842e5c19d43ff65633a4da0436dd6f282ead4e65a087a8da6ac456d55016d",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "821c46d2d167f51aff7cbbac79b9e5a59e806da939e17b4bb02d8ed80efdce8d",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "af873c6acf77b4ea2621d872f51f8bf7e2728918e3ae054424d0ac1b033a51b1",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "4dddb519a5e07ae3e3a5b17006e247fd3e5f5996ab4e1358a32dc6fadc481c8c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "da798f566bf2f184a35e18fd2d7b6cc7d1a19bee5c4641c02eaac3a111f634f7",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "04c3b2eed8cca6168108681aec3ac2cfb066e6e74c0ab3813ca18e8d6ac8cda6",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "a40f445e806d1beb6e22ee06a934b456e6e357a5d8e792dab96ed0799ea33069",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "155fe01e226e08752690d59b4b0435b98fa666b7b9b6d6793b1f621cf54dad28",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "df99dce18eb6102652f3e670a0d7fa568abaf366c1c7aa5fad4a4d1beaed4642",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "b9349eb2b642ea41fffa4a9f91679499685f5bd26c2689aaf381041adba2eca9",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "07a5046d2b7aa0e34b8e9d9ad51ab880bf011538cce0f42c597b3094a06c34fc",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "8aeb1642ee450961cbb11dbddb1c36c8f7a029a3d97d880fa008829dabfa451e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "4185d113a8d696a764b46842af732f6c8f6f28c0330b639393e07cefee31facc",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "ed5ecbff4e0d615373c88cd63dd05e382085d9d6e53b7d7a1413a275cbf158ca",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "21a05871841e4b99bbc0445699fafac3c0da4513f8f94c0bf4013507cf2c567c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "38830bad2482c6675d6ab891f0693bf0cef7116363d86f6087e4052a77858ca4",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "6bf536d244d2e843ac4e6df0e88880c4d88341a1436b9aa1d3627ce8e25cb40e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "16cf5cee980aa5ef1e0c94ead7821ff9483c08bac7cbbb3eb8e33bb35291a879",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "1884eb8517ecb5cf2b95436c6bbef8b9a506544a36d0f0e1b5a8c65b5692df4e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "fd4445432345ce2f52a6e6136254be242d0b2c4333ce0ee407d85137d3c9b192",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "455f93062d5d61357b1547f8c31668939a025bba96260cfd36b6993ddc86cdec",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "8f56d0133553d49e015ee61df074131122428e926a73aa624e920bee6a05587c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "71cb81e3eeff25f315ed94fdbf396a68056530df48cb5eeb934e05a840abd534",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "4836172c5c098097532520671faf8f52483eee5c05648a2e4d4812bc08900f5b",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "cd2434c1187c213a0354abf5fc34e5f075ef4c478fab8296844b9a4fe90f7df3",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "b5c05986af9647118a3864a08a61e4da6b38c2b9519414e722aa5cb17e8ab82c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "16fef2204f51b4ed2b5ee9a588f8a719fe328cadee392fd7ae163b2fc233e413",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "254baea259fc07b417391105522ebbf8a081e4237abee062254509723617201d",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "2c057560a118c0d211a72307587b44136ad26875aab8416bd2dc3bbf667a46ab",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "3296d2768e07cc6d145cebc8aaf9dd6bca4a3eb1f189c9cd1b44c0247e2698ec",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "507617b8bc8ba4970d4e39a8277952219c9afac8423b1e27768ff38797a3ad43",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "7c22f6b1a02557049f9f77cd1ac6a74cfe04a36bb0e230566480c4973c61a54a",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "c138b5a048e5685692b2b3c2578654f43054cbe749f0734bc1884689f686d141",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "4bdfe7e4af42488b9b9c0372ef59d76fac15749c1c54a90cffdf7ca477a0efde",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "1453bbe1623da9d48067c156fe628a12d7070da4213374a3a3a084609297f618",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "dcdf8d0ee7c09b51ea2b2f4d49e3e47bafe9a40d7263495e1bc324eb02db5f05",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "0773cb96276a17effda1f224c0871951b34bd0e760630279c2e4e57144d214eb",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "7f822ef4d8a264a50af997d4153fd1c765300a3deced3de3af29713d3c710f67",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "26cbdaddf65937385ae19b2c51e104819b248fa532ee149c6384069c76dd2126",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "50df51a13967bdaa0ad36082b80b44d5630b0ebccb404bc79d3ec44041170da2",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "7df4db2871d4296c48bab64b053d03dc24531693dbc5cb22e605589a2731731c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "12b4203b6f1aff228b943406332cadd43563dce362db71c3bb2bfa79ab9fbbc9",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "479a83c2ceb55fc57de64a42392d258d4021bbbd354a40704aeca71bedc3dcd5",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "1b477eabb7a415d98fab2a737d714f8c6063e0faf870886146aa9a540fe14e02",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "10db77bae74dea1c17d2e57b0c9282ed5b9c626d7686dcc6c30f289d4a967144",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "27a7648aebfa694e4b447acacd826110d4c5af08cc99335f92828bd892f9a66e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "43f138837861109a6d42492d9a3c6dcd0134d81d8a331ab2e1a83ac25f775d14",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "e2bef0a047cf5409e3fa3dfd3441d49e50c03096cc59c84264523cf1746ed6c3",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "c559a282494f2dfe49ab1e0f52f289ad4b44f2ed791c03da58939d9ccc71300b",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "c5b127889550a27ea43fc658bed424532215f9b5a9a7bb03f99035e02b6d8f67",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "74e2cdb22305e5b34dfd357b3b5bac435df3cfb53e738560ba8691ebf243640a",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "a7efc2be653fefc2d2f73afe8ab352de770b711bbe28444ba13b12cd53427b71",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "98307b341fb8d0097fb0acb9b29fd4f7394d2e112883b71bb8b15cd4ed94c18d",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "194fad300caeb96f29193035a0c1c9e2956454408858bacbc8f6510bc85c2ce6",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "601e7bcde5ff6b4dd3954c594efe64ef0a44bc9a13f4e1a5c4456e53e557036e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "5e52a9978a518cdfad786c7b68a6067c19a068425d84f90ba76b801e73ee51dc",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "2ab5c265ca88771079cb1394f13178d5e7a1be84c1b6b5ba3692b72090f9328c",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "656b25251928867d7c1e9695f17998a416c331ed35d91889699028a1549c562e",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "3c672d6dc353a5598c3627d023481861c10f8ba14f9a17a6d8f1bfc35c26f539",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "4729fa4d98287f9ca7959146a34d154d2558fd9b2875021f0beaf17a9be9312b",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "f5750fe6a7dc5120800f77c2bb07cd4a05e4bcdc942fdebb2366aced4aab7a73",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "d77cbc25f3bbfee5d3ce5970b1b54dd84fba9029891063041684880c2db64e7b",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "8b1231bd6cda4a96a4f4e0f8ab8009b049b959799517b1c9dc684b0cdf0a2405",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "65e20d33e1e9d82bbac9cd9425b2db4cbd4910b4b760c022a876c27ec35f2495",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "directAnswer",
+      "fingerprint": "567978313844b2acaee59a77a7763b38cb9c3f7a6bb5971251a2708ade19494a",
+      "count": 1
+    },
+    {
+      "filename": "lib/rules-assistant.js",
+      "field": "nextStep",
+      "fingerprint": "c443fa6c2eb9eb1148425f6b7c889a5d688f766d97692406b1791592a4acc3a0",
+      "count": 1
+    }
+  ]
+}

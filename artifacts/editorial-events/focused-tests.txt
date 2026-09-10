@@ -1,0 +1,13 @@
+✔ calendar projection uses both profiles and crosses calendar months (32.4062ms)
+✔ calendar removes duplicate identities and caps the broader list at seven (1.8729ms)
+✔ empty and unavailable calendar responses retain the configured fallback (3.0593ms)
+✔ partial days preserve only healthy evidence with a partial status (1.125ms)
+✔ missing connector uses the profile website; unapproved hosts are rejected (1.1831ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71.8673

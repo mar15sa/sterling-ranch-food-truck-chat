@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "mode": "desktop",
+      "shortcuts": [
+        "Home & yard",
+        "Trash & recycling",
+        "The rulebook ↗"
+      ],
+      "redirectMatchesConfiguredSource": true,
+      "keyboardOpensRulebook": true,
+      "feedbackLinks": 2
+    },
+    {
+      "mode": "mobile",
+      "shortcuts": [
+        "Home & yard",
+        "Trash & recycling",
+        "The rulebook ↗"
+      ],
+      "redirectMatchesConfiguredSource": true,
+      "keyboardOpensRulebook": true,
+      "feedbackLinks": 2
+    },
+    {
+      "mode": "no-javascript",
+      "shortcuts": [
+        "Home & yard",
+        "Trash & recycling",
+        "The rulebook ↗"
+      ],
+      "redirectMatchesConfiguredSource": true,
+      "keyboardOpensRulebook": true,
+      "feedbackLinks": 2
+    }
+  ],
+  "assistantRequests": 0
+}

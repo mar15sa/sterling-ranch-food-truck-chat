@@ -4,6 +4,33 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const { createFoodTruckService } = require("../lib/food-truck-service");
+const { createMonthlyScheduleCache } = require("../lib/food-truck-calendar-cache");
+
+test("a month cache keeps the requested calendar day in its source link after another day warms it", async () => {
+  const cache = createMonthlyScheduleCache({
+    calendarBase: "https://sterlingranchcab.com/Calendar.aspx",
+    eventId: 6150,
+  });
+  let loads = 0;
+  const loadSeptember = async () => {
+    loads += 1;
+    return {
+      schedule: {
+        "2026-09-09": "Berliner Haus",
+        "2026-09-10": "Colorado Chile Co",
+      },
+      localEvents: {},
+    };
+  };
+
+  const warmedForSeptember10 = await cache.getSchedule(2026, 9, 10, loadSeptember);
+  const requestedForSeptember9 = await cache.getSchedule(2026, 9, 9, loadSeptember);
+
+  assert.equal(loads, 1);
+  assert.match(warmedForSeptember10.sourceUrl, /[?&]day=10(?:&|$)/);
+  assert.equal(requestedForSeptember9.schedule["2026-09-09"], "Berliner Haus");
+  assert.match(requestedForSeptember9.sourceUrl, /[?&]day=9(?:&|$)/);
+});
 
 test("one food-truck service owns schedule, menu, and answer caching for every caller", async () => {
   let scheduleCalls = 0;
@@ -123,11 +150,12 @@ test("one failed menu/profile enrichment does not remove other trucks on the off
   assert.deepEqual(answer.menuEnrichment.failures, [{ truck: "Example Eats", component: "menu-profile" }]);
 });
 
-test("both public APIs are wired to the same extracted food-truck service", () => {
+test("the standalone API keeps its service while the Community Assistant uses the source-governed connector", () => {
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
   assert.match(server, /createFoodTruckService\(\{/);
   assert.match(server, /sendJson\(res, 200, await getAnswerForDate\(question, targetDate\)\)/);
-  assert.match(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getAnswerForDate/);
+  assert.match(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getCommunityFoodTruckSchedule/);
+  assert.doesNotMatch(server, /getFoodTruckAnswer:\s*async[\s\S]{0,700}getAnswerForDate/);
   assert.match(server, /dateFromInterpretation/);
   assert.doesNotMatch(server, /async function getAnswerForDate/);
 });

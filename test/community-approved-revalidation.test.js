@@ -1,6 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { renewExactApprovedEvidence, selectRevalidationTargetUrls } = require("../scripts/revalidate-approved-community");
+const { factIsAnswerable } = require('../lib/community-truth');
 
 const url = "https://alpha.gov/pool";
 const old = "2026-09-01T00:00:00.000Z";
@@ -33,6 +34,8 @@ test("exact URL and hash renewal updates only matching approved source and fact 
   assert.equal(value.sources[2].staleAfter, old);
   assert.equal(value.factLedger[0].lastObservedAt, checkedAt);
   assert.equal(value.factLedger[0].staleAfter, staleAfter);
+  assert.equal(factIsAnswerable(value.factLedger[0], Date.parse(checkedAt)), false,
+    'freshness renewal must not create missing owner approval provenance');
   assert.equal(value.factLedger[1].lastObservedAt, old);
   assert.equal(value.factLedger[2].lastObservedAt, old);
 });

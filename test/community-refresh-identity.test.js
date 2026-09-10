@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { reconcileCommunityIndex } = require('../lib/community-source-manager');
-const { buildFactLedger } = require('../lib/community-truth');
+const { applyReviewDecisions, buildFactLedger } = require('../lib/community-truth');
 const { crawlCommunity } = require('../lib/community-ingest');
 const { fingerprint } = require('../lib/community-release');
 
@@ -18,7 +18,12 @@ test('refresh preserves exact fact decisions but cannot approve newly interprete
     reviewStatus: 'approved', reviewedAt: '2026-09-01', reviewedBy: 'Owner',
     facts: [{ type: 'money', value: '$20', scopeKey: 'monthly-fee' }] };
   const original = { communityId: 'sterling-ranch', sources: [source] };
-  const factLedger = buildFactLedger(original, { trusted: true });
+  const pendingLedger = buildFactLedger(original, { trusted: true });
+  const factLedger = applyReviewDecisions(pendingLedger, [{
+    id: 'fee-owner-decision', decision: 'approve-proposed', factId: pendingLedger[0].id,
+    sourceVersion: pendingLedger[0].sourceVersion, sourceUrl: pendingLedger[0].sourceUrl,
+    reviewer: 'owner', decidedAt: '2026-09-01T00:00:00Z',
+  }]).ledger;
   const trusted = { ...original, factLedger };
   const unchanged = reconcileCommunityIndex(trusted, original).index.factLedger;
   assert.equal(unchanged[0].id, factLedger[0].id);
@@ -42,7 +47,12 @@ test('workflow refresh preserves the reviewed baseline instead of rebuilding eve
   const source={id:'policy',communityId:'sterling-ranch',sourceUrl:'https://example.gov/policy',contentHash:'same',
     checkedAt:'2026-09-01',staleAfter:'2026-09-02',text:'Approved policy',actions:[],
     facts:[{type:'money',value:'$20',scopeKey:'reviewed-fee'},{type:'money',value:'$999',scopeKey:'unreviewed-extraction'}]};
-  const reviewed=buildFactLedger({...source,communityId:'sterling-ranch',sources:[{...source,facts:[source.facts[0]]}]},{trusted:true})[0];
+  const pendingReviewed=buildFactLedger({...source,communityId:'sterling-ranch',sources:[{...source,facts:[source.facts[0]]}]},{trusted:true})[0];
+  const reviewed=applyReviewDecisions([pendingReviewed],[{
+    id:'fee-owner-decision',decision:'approve-proposed',factId:pendingReviewed.id,
+    sourceVersion:pendingReviewed.sourceVersion,sourceUrl:pendingReviewed.sourceUrl,
+    reviewer:'owner',decidedAt:'2026-09-01T00:00:00Z',
+  }]).ledger[0];
   const trusted={communityId:'sterling-ranch',sources:[source],factLedger:[reviewed],
     truthStatus:{migrationMode:'trusted-baseline',pendingSensitiveReviewCount:0}};
   const candidate={...trusted,generatedAt:'2026-09-07',sources:[{...source,checkedAt:'2026-09-07',staleAfter:'2026-09-08'}],

@@ -16,7 +16,6 @@ const FALLBACK_STATUS = {
   headline: "Status unavailable",
   summary: "The official CAB pool status could not be checked right now.",
   residentAction: "Open the official CAB pool page for the latest information.",
-  officialColorLabel: "Unknown",
   sourceUrl: "https://sterlingranchcab.com/187/Pool",
   actionUrl: "https://sterlingranchcab.com/187/Pool",
   checkedAt: new Date().toISOString(),
@@ -39,27 +38,21 @@ function formatCheckedAt(value) {
   }).format(date);
 }
 
-function actionLabelFor(status) {
-  if (status.state === "at-capacity") return "Open waitlist or CAB page";
-  if (status.state === "event-only") return "Open CAB event details";
-  return "Open official CAB page";
-}
-
 function setLoading(isRefreshing = false) {
   document.body.dataset.poolState = "loading";
   statusDot.dataset.state = "loading";
   currentText.textContent = isRefreshing ? "Refreshing" : "Checking";
   statusTitle.textContent = isRefreshing ? "Refreshing status" : "Checking status";
-  statusSummary.textContent = "Reading the official CAB pool status and translating the color into words.";
+  statusSummary.textContent = "Reading the exact current status from the official CAB page.";
   residentAction.textContent = "This page will show the status text as soon as it loads.";
-  signalLabel.textContent = "Checking";
+  signalLabel.textContent = "Official text";
   statusAlert.hidden = true;
   refreshButton.disabled = true;
 }
 
 function updateStatus(rawStatus) {
   const status = { ...FALLBACK_STATUS, ...rawStatus };
-  const state = status.state || "unknown";
+  const state = status.state === "unknown" ? "unknown" : "current";
 
   document.body.dataset.poolState = state;
   statusDot.dataset.state = state;
@@ -67,12 +60,12 @@ function updateStatus(rawStatus) {
   currentText.textContent = status.headline;
   statusSummary.textContent = status.summary;
   residentAction.textContent = status.residentAction;
-  signalLabel.textContent = status.officialColorLabel || status.detectedLabel || "Unknown";
+  signalLabel.textContent = status.headline || "Unavailable";
   lastChecked.textContent = formatCheckedAt(status.checkedAt);
   if (poolDetailsChecked) poolDetailsChecked.textContent = formatCheckedAt(status.checkedAt);
   sourceLink.href = status.sourceUrl || FALLBACK_STATUS.sourceUrl;
   actionLink.href = status.actionUrl || status.sourceUrl || FALLBACK_STATUS.actionUrl;
-  actionLink.textContent = actionLabelFor(status);
+  actionLink.textContent = "Open official CAB page";
 
   if (status.stale || status.error) {
     statusAlert.hidden = false;

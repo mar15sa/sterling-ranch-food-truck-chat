@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-08",
+  "purpose": "Decision Swipe approvals applied only to exact Batch A source versions. These are scoped decisions, not whole-page promotion.",
+  "decisions": [
+    {"decisionId":"pool-hours-current-page","decision":"approve-proposed","scopeKind":"scoped-claims","scope":"Pool season and regular published hours only; live pool status remains separate.","approvedClaims":["pool-season-and-regular-hours"],"withheldClaims":["pool-current-status","guest-passes","fees","capacity","concessions","rules","party-booking","closure-reasons"],"versions":[{"canonicalUrl":"https://sterlingranchcab.com/187/Pool","contentHash":"14b45b6b4f23a88e324faa20e50db7ca149a7348c8d164d3935cd6a1b17bb8f0"}]},
+    {"decisionId":"drc-contact-current","decision":"approve-proposed","scopeKind":"scoped-claims","scope":"Current DRC email, general email/drop-off method, Friday-before-meeting deadline, and application-directory action only.","approvedClaims":["drc-email","drc-general-submission-method","drc-friday-deadline","drc-application-directory"],"withheldClaims":["project-specific-form","fees","mailing-address","meeting-date-calculation","review-time-promise","approval-requirement"],"versions":[{"canonicalUrl":"https://sterlingranchcab.com/175/Design-Review","contentHash":"863438e8fbeacb8b43ef4d128f216eb9e6b83fca7388e7189e9810842f548191"},{"canonicalUrl":"https://sterlingranchcab.com/201/Design-Review-Documents","contentHash":"09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b"}]},
+    {"decisionId":"rain-barrel-conditional-submission","decision":"approve-proposed","scopeKind":"scoped-claims","scope":"General DRC route and directory action only after a controlling rain-barrel rule establishes approval is needed.","approvedClaims":["rain-barrel-conditional-drc-submission","rain-barrel-conditional-application-directory"],"withheldClaims":["all-rain-barrels-require-application","specific-rain-barrel-form","fees","review-timeline","address","installation-claim"],"controllingSources":["rain-barrel-governing-rule"],"versions":[{"canonicalUrl":"https://sterlingranchcab.com/175/Design-Review","contentHash":"863438e8fbeacb8b43ef4d128f216eb9e6b83fca7388e7189e9810842f548191"},{"canonicalUrl":"https://sterlingranchcab.com/201/Design-Review-Documents","contentHash":"09c149f72138b58d6b926fc7fa8c0eb0958b656a7e4848b89cbd90f044608c8b"}]},
+    {"decisionId":"utilityhawk-water-monitoring-2026","decision":"approve-proposed","scopeKind":"scoped-claims","scope":"Water-usage monitoring registration and listed monitoring capabilities only.","approvedClaims":["utilityhawk-water-monitoring-registration","utilityhawk-water-monitoring-capabilities"],"withheldClaims":["payment","billing-contact","rates","tiers","amounts","calculations","meter-or-valve-troubleshooting","electric-or-gas","steward","registration-guarantee","alert-guarantee"],"versions":[{"canonicalUrl":"https://sterlingranchcab.com/m/faq?cat=16","contentHash":"5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514"}]},
+    {
+      "decisionId": "water-rates-2026",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Clearly labeled residential 2026 water, sanitary sewer, and stormwater rates only.",
+      "approvedClaims": ["clearly-labeled-residential-water-sewer-stormwater-rate-rows-2026"],
+      "withheldClaims": ["master-meter", "nonresidential", "public-school", "construction-water", "irrigation", "unlabelled-or-clipped-row", "generic-2025-rate"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees","contentHash":"3d8fb271534ee84bd4d8c35e6c3982e0de631dd6273f6ee2d3a3372cb66ce3c6"}]
+    },
+    {
+      "decisionId": "tap-facility-2026",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Complete, clearly labeled residential tap and facility-fee rows only.",
+      "approvedClaims": ["complete-clearly-labeled-residential-tap-and-facility-fee-rows-2026"],
+      "withheldClaims": ["commercial", "school", "irrigation", "master-meter", "large-meter", "pool", "clipped-footnote-case", "incomplete-or-unlabelled-row"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees","contentHash":"a5c2aace6bc218b0673ee38bcbd050a1d6f7b39e483517e26bd0f8ef7ed6417f"}]
+    },
+    {
+      "decisionId": "cab-fees-effective-date",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Clearly labeled 2026 CAB fee amounts only.",
+      "approvedClaims": ["clearly-labeled-cab-fee-amounts-2026"],
+      "withheldClaims": ["standalone-effective-date-claim"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees","contentHash":"3913ad6891a52c792a7810e896e034b31ca4fb64c29abc834d2b1252f940be68"}]
+    },
+    {
+      "decisionId": "delinquency-policy",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Controlling June 2025 collection-process source; listed charges are that resolution's fee schedule.",
+      "approvedClaims": ["june-2025-delinquency-collection-process", "that-resolution-listed-fee-schedule"],
+      "withheldClaims": ["claim-that-no-newer-amendment-exists"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE","contentHash":"156e6fac468341f4fcc2603a8926b66f9474751ba6cd150ab1c38b4a45496b1d"}]
+    },
+    {
+      "decisionId": "monthly-fee-overview",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Helpful overview and action link only.",
+      "approvedClaims": ["monthly-fee-overview-action-link"],
+      "withheldClaims": ["controlling-fee-evidence", "fee-amounts"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2502","contentHash":"3fe9b8e85b6a9d1b0e45d735beb1ba1bccb3a809dd33002ab6284d6a1c975d8c"}]
+    },
+    {
+      "decisionId": "water-payment-primary-page",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Current CAB water-payment page role only.",
+      "approvedClaims": ["primary-current-water-payment-page"],
+      "withheldClaims": ["water-rate-amounts", "unapproved-payment-terms"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/334/Water-Billing-Payment-Options","contentHash":"711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75"}]
+    },
+    {
+      "decisionId": "water-payment-direct-link",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Direct water-payment link only.",
+      "approvedClaims": ["direct-water-payment-link"],
+      "withheldClaims": ["water-rate-amounts", "contacts", "payment-terms"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill","contentHash":"3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6"}]
+    },
+    {
+      "decisionId": "card-processing-fee",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Card-processing fee claim only, on these exact current page versions.",
+      "approvedClaims": ["card-processing-fee"],
+      "withheldClaims": ["all-other-page-claims", "water-rate-amounts"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [
+        {"canonicalUrl":"https://sterlingranchcab.com/334/Water-Billing-Payment-Options","contentHash":"711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75"},
+        {"canonicalUrl":"https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill","contentHash":"3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6"}
+      ]
+    },
+    {
+      "decisionId": "water-bill-explanation",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Current water-bill explanation only; DocumentCenter item 2419 remains deferred.",
+      "approvedClaims": ["water-bill-explanation"],
+      "withheldClaims": ["water-rate-amounts", "documentcenter-2419"],
+      "controllingSources": ["adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/333/Understanding-Your-Water-Bill","contentHash":"ec41579679b1969d6efb9ad9e402f743b6176132fb1c29baf384367573f4fa71"}]
+    },
+    {
+      "decisionId": "monthly-fee-payment-page",
+      "decision": "approve-proposed",
+      "scopeKind": "scoped-claims",
+      "scope": "Current monthly-fee operational payment-page role only; adopted resolutions control amounts.",
+      "approvedClaims": ["monthly-fee-operational-payment-page"],
+      "withheldClaims": ["cab-fee-amounts", "water-rate-amounts"],
+      "controllingSources": ["adopted-2026-cab-fee-resolution", "adopted-2026-water-sewer-stormwater-resolution"],
+      "versions": [{"canonicalUrl":"https://sterlingranchcab.com/390/Monthly-Fee-Billing-Payment-Options","contentHash":"01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e"}]
+    }
+  ],
+  "deferred": [{"canonicalUrl":"https://sterlingranchcab.com/DocumentCenter/View/2419","status":"deferred","reason":"Outside the approved Batch A scope; no content version or claim is approved."}]
+}

@@ -459,8 +459,8 @@
     ],
     "expectedFirstAny": ["Sec. 1-38"],
     "expectedClassification": "rules-question",
-    "expectedAnswerMode": "source-derived-structured",
-    "answerIncludesAll": ["does not use a set distance from the porch", "stay on your lot", "roadway or walkway"],
+    "expectedAnswerMode": "source-derived-extractive",
+    "answerIncludesAll": ["Owner's Lot", "roadway", "walkway"],
     "answerExcludesAny": ["could not verify", "could not find"]
   },
   {

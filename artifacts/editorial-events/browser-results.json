@@ -1,0 +1,145 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "path": "/",
+      "state": "ready",
+      "screenshot": "home-1440-ready.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/",
+      "state": "loading",
+      "screenshot": "home-1440-loading.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/",
+      "state": "empty",
+      "screenshot": "home-1440-empty.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/",
+      "state": "error",
+      "screenshot": "home-1440-error.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/calendar",
+      "state": "ready",
+      "screenshot": "calendar-1440-ready.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/calendar",
+      "state": "loading",
+      "screenshot": "calendar-1440-loading.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/calendar",
+      "state": "empty",
+      "screenshot": "calendar-1440-empty.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/calendar",
+      "state": "error",
+      "screenshot": "calendar-1440-error.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "state": "ready",
+      "screenshot": "home-390-ready.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "state": "loading",
+      "screenshot": "home-390-loading.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "state": "empty",
+      "screenshot": "home-390-empty.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "state": "error",
+      "screenshot": "home-390-error.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/calendar",
+      "state": "ready",
+      "screenshot": "calendar-390-ready.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/calendar",
+      "state": "loading",
+      "screenshot": "calendar-390-loading.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/calendar",
+      "state": "empty",
+      "screenshot": "calendar-390-empty.png",
+      "axeViolations": []
+    },
+    {
+      "width": 390,
+      "path": "/calendar",
+      "state": "error",
+      "screenshot": "calendar-390-error.png",
+      "axeViolations": []
+    },
+    {
+      "width": 1440,
+      "path": "/",
+      "state": "live",
+      "screenshot": "home-1440-live.png",
+      "text": "SEP\n9\nFarmer's Market\n\n3:00 PM · Providence Park\n\n↗\nSEP\n9\nStoke Social Run Club\n\n5:30 PM · Providence Park Pavilion\n\n↗\nSEP\n9\nNew Homeowner Orientation\n\n5:30 PM · Great Hall\n\n↗\n\nSome calendar listings couldn’t load just now. Check the official calendar for the latest details. Open official community calendar ↗"
+    },
+    {
+      "width": 1440,
+      "path": "/calendar",
+      "state": "live",
+      "screenshot": "calendar-1440-live.png",
+      "text": "SEP\n9\nFarmer's Market\n\n3:00 PM · Providence Park\n\n↗\nSEP\n9\nStoke Social Run Club\n\n5:30 PM · Providence Park Pavilion\n\n↗\nSEP\n9\nNew Homeowner Orientation\n\n5:30 PM · Great Hall\n\n↗\nSEP\n9\nNeighborhood Run Club\n\n6:30 PM\n\n↗\nSEP\n9\nTrivia Night\n\n7:00 PM · Sterling Center\n\n↗\nSEP\n10\nMah Jongg for Boomers\n\n2:00 PM · Great Hall\n\n↗\nSEP\n10\nWhats Mine is Yours Clothing Swap\n\n5:00 PM · Great Hall\n\n↗\n\nSome calendar listings couldn’t load just now. Check the official calendar for the latest details. Open official community calendar ↗"
+    },
+    {
+      "width": 390,
+      "path": "/",
+      "state": "live",
+      "screenshot": "home-390-live.png",
+      "text": "SEP\n9\nFarmer's Market\n\n3:00 PM · Providence Park\n\n↗\nSEP\n9\nStoke Social Run Club\n\n5:30 PM · Providence Park Pavilion\n\n↗\nSEP\n9\nNew Homeowner Orientation\n\n5:30 PM · Great Hall\n\n↗\n\nSome calendar listings couldn’t load just now. Check the official calendar for the latest details. Open official community calendar ↗"
+    },
+    {
+      "width": 390,
+      "path": "/calendar",
+      "state": "live",
+      "screenshot": "calendar-390-live.png",
+      "text": "SEP\n9\nFarmer's Market\n\n3:00 PM · Providence Park\n\n↗\nSEP\n9\nStoke Social Run Club\n\n5:30 PM · Providence Park Pavilion\n\n↗\nSEP\n9\nNew Homeowner Orientation\n\n5:30 PM · Great Hall\n\n↗\nSEP\n9\nNeighborhood Run Club\n\n6:30 PM\n\n↗\nSEP\n9\nTrivia Night\n\n7:00 PM · Sterling Center\n\n↗\nSEP\n10\nMah Jongg for Boomers\n\n2:00 PM · Great Hall\n\n↗\nSEP\n10\nWhats Mine is Yours Clothing Swap\n\n5:00 PM · Great Hall\n\n↗\n\nSome calendar listings couldn’t load just now. Check the official calendar for the latest details. Open official community calendar ↗"
+    }
+  ],
+  "assistantRequests": 0
+}

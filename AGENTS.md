@@ -11,6 +11,7 @@
 - Read and apply `docs/COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md` before planning, implementing, reviewing, or releasing Community Assistant work.
 - Use `docs/COMMUNITY-CONNECTOR-ARCHITECTURE.md` for the CivicPlus profile/adapter boundary and `docs/COMMUNITY-ANSWER-COMPLETION-DESIGN.md` for answer-completion behavior; do not duplicate their contracts in task-specific code or instructions.
 - Fix the system cause and affected question family, not just the reported wording. A one-question patch requires written evidence that the case is genuinely unique.
+- Do not embed resident-facing facts, amounts, dates, schedules, contacts, rules, or fixed answer wording in application code. Derive answer content from current approved evidence; shared code may provide source-independent structure and formatting only. Intent recognition may route a question, but it cannot supply the answer.
 - Optimize for a resident's helpful, proactive, and accurate outcome together. Give the supported answer first and make the next useful official move clear.
 - Select evidence by authority: controlling adopted rules for binding requirements, official live connectors for current operations, and official forms or actions for verified process steps. Respect freshness and surface conflicts instead of guessing.
 - Preserve claim-level source authority, review state, and owner approval. Do not let a supporting page, connector, form, or action upgrade an unapproved or unsupported claim to verified.

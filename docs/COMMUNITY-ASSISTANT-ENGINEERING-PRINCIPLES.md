@@ -22,11 +22,12 @@ Optimize these outcomes together:
 ## Evidence and source authority
 
 1. A crawl, discovery result, AI suggestion, prior answer, or convenient website page is not resident evidence by itself. Approved evidence must retain its source identity, content version, review state, and freshness state.
-2. Use the controlling adopted code, rule, policy, or amendment for a question about what is required, prohibited, allowed, or enforceable. A process page can explain how to comply; it cannot override the controlling rule.
-3. Use the official live system for changing operational facts such as availability, dates, menus, collection schedules, closures, reservations, and current status.
-4. Use an official form or action page for the next step only after the governing requirement is established. Label the link by the action it performs.
-5. When authoritative sources conflict, report the conflict and offer the safest official resolution path. Do not blend their values into a confident answer.
-6. A stale source cannot receive a verified resident-facing label. An unchanged, identity-matched source may renew only through the approved refresh process; changed or new material stays in review.
+2. Do not store resident-facing facts, amounts, dates, schedules, contacts, rules, or fixed answer wording in application code. Answer content must come from current approved evidence. Shared code may supply source-independent structure and formatting, and routing code may recognize intent, but neither may become a hidden source of truth.
+3. Use the controlling adopted code, rule, policy, or amendment for a question about what is required, prohibited, allowed, or enforceable. A process page can explain how to comply; it cannot override the controlling rule.
+4. Use the official live system for changing operational facts such as availability, dates, menus, collection schedules, closures, reservations, and current status.
+5. Use an official form or action page for the next step only after the governing requirement is established. Label the link by the action it performs.
+6. When authoritative sources conflict, report the conflict and offer the safest official resolution path. Do not blend their values into a confident answer.
+7. A stale source cannot receive a verified resident-facing label. An unchanged, identity-matched source may renew only through the approved refresh process; changed or new material stays in review.
 
 ## Answer completion
 

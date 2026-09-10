@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "connectorAdapterContractVersion": 1,
   "communityId": "castle-rock",
   "name": "Town of Castle Rock",
   "shortName": "Castle Rock",
@@ -12,6 +13,7 @@
       "id": "official-website",
       "type": "civicplus-pages",
       "baseUrl": "https://www.crgov.com/",
+      "adapter": { "capabilities": ["pages", "forms", "services"], "facets": ["contact", "submission", "action"], "controllingSourceRoles": ["operational", "action"], "actionTypes": ["information", "form", "account", "download", "list"], "sourceHosts": ["www.crgov.com"], "endpoints": [{ "id": "primary", "url": "https://www.crgov.com/", "purpose": "official-website" }], "freshness": { "refreshMinutes": 1440, "staleAfterMinutes": 2880 }, "degradation": { "policy": "retain-last-known" }, "vocabulary": { "service": ["resident service", "town service"] } },
       "refreshMinutes": 1440,
       "maxPages": 30,
       "seedUrls": [
@@ -24,12 +26,14 @@
       "id": "official-calendar",
       "type": "civicplus-calendar",
       "baseUrl": "https://www.crgov.com/Calendar.aspx",
+      "adapter": { "capabilities": ["events"], "facets": ["event-date", "date", "action"], "controllingSourceRoles": ["operational"], "actionTypes": ["information", "registration"], "sourceHosts": ["www.crgov.com"], "endpoints": [{ "id": "primary", "url": "https://www.crgov.com/Calendar.aspx", "purpose": "official-calendar" }], "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 }, "degradation": { "policy": "retain-last-known" }, "labels": { "calendarTitle": "Official Castle Rock Calendar", "openAction": "Open official Castle Rock calendar" }, "vocabulary": { "event": ["calendar", "meeting"] } },
       "refreshMinutes": 60
     },
     {
       "id": "official-code",
       "type": "municode",
       "baseUrl": "https://library.municode.com/co/castle_rock/codes/municipal_code",
+      "adapter": { "capabilities": ["rules"], "facets": ["permission", "restriction", "specification"], "controllingSourceRoles": ["governing"], "actionTypes": ["information"], "sourceHosts": ["library.municode.com"], "endpoints": [{ "id": "primary", "url": "https://library.municode.com/co/castle_rock/codes/municipal_code", "purpose": "governing-rules" }], "freshness": { "refreshMinutes": 1440, "staleAfterMinutes": 2880 }, "degradation": { "policy": "withhold" }, "vocabulary": { "code": ["ordinance", "regulation"] } },
       "refreshMinutes": 1440
     }
   ],

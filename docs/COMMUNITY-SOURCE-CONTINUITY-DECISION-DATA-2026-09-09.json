@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-09-09",
+  "purpose": "Proposed, smaller owner Decision Swipe data. This document captures evidence and proposed boundaries only; a captured source or this document does not grant approval.",
+  "sourceSnapshot": "codex/strict-approved-decision-import-20260909 at 46f33e4",
+  "proposedCards": [
+    {
+      "id": "pool-party-unavailable-for-rental",
+      "title": "Use the pool-party availability answer?",
+      "proposalBoundary": "Answer only that the Overlook pool is not available for rental. Do not quote a pool-rental price or substitute prices for other facilities.",
+      "current": "The strict gate withholds the pool-party answer.",
+      "proposed": "Say that the pool is not available for rental; point residents to separately approved facility information for other private-party spaces.",
+      "source": { "url": "https://sterlingranchcab.com/m/faq?cat=21", "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-4-cb8a8869ca", "contentHash": "a21f3e133ac27c80e31662942842f45f5e8b804855cbfbae2220f232ca82647a", "checkedAt": "2026-09-08T18:35:55.918Z", "excerpt": "Can I reserve the pool for a party? Unfortunately, the pool is not available for rental." },
+      "excludedAdjacentClaims": ["pool-rental price", "guest limits", "capacity", "Great Hall or pavilion pricing"],
+      "authorityRole": "Official CAB FAQ; facility-specific availability statement"
+    },
+    {
+      "id": "fence-finish-specifications-only",
+      "title": "Use the two standard three-rail fence finishes?",
+      "proposalBoundary": "For standard three-rail fencing only, state the two named finishes exactly as captured. Do not use this card to decide whether a resident needs approval.",
+      "current": "The strict gate withholds this finish sheet.",
+      "proposed": "For covered standard three-rail fencing, say cedar uses Sherwin Williams #3002 Belvedere Tan and concrete uses Solomon #338 Earthen.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-", "sourceId": "sterling-ranch-standard-3-rail-fencing-1", "contentHash": "107c3bf87a4d6876bb3e620728f26340b11339d1975b18e578233d1a0ae0a2d7", "checkedAt": "2026-09-08T18:35:53.421Z", "excerpt": "3-rail cedar dimensional lumber fence stained in the approved color, Sherwin Williams #3002 Belvedere Tan ... concrete rails and concrete vertical posts ... with integral coloring in Solomon #338 Earthen." },
+      "excludedAdjacentClaims": ["whether DRC approval is required", "Lennar Elements fencing", "dimensions", "gates", "fees", "deadlines"],
+      "authorityRole": "Official CAB specification sheet; scoped finish specification"
+    },
+    {
+      "id": "great-hall-rental-terms",
+      "title": "Use the Great Hall rental terms?",
+      "proposalBoundary": "State only the Great Hall's captured hourly price, two-hour minimum, included indoor space and balcony, refundable deposit, and first-come availability when unreserved.",
+      "current": "The strict gate withholds Great Hall price and rental terms from this page.",
+      "proposed": "Say the Great Hall is $100 per hour with a two-hour minimum; rentals include indoor space and balcony, and a $250 refundable deposit is due on confirmation.",
+      "source": { "url": "https://sterlingranchcab.com/269/Rent-the-Facility", "sourceId": "sterling-ranch-rent-the-facility-1", "contentHash": "0303d628841d2704c91379acace3651fe129512fa5d20c08ca43d405c3ab8ad5", "checkedAt": "2026-09-08T18:35:49.722Z", "excerpts": ["This space can be reserved for private use. However, when not reserved, the Great Hall, kitchen, and outdoor deck are available on a first-come, first-served basis.", "Hourly Pricing $100.00 per hour with a 2-hour minimum. All rentals include the use of the indoor space and balcony. A refundable security deposit of 250.00 will also be due upon rental confirmation."] },
+      "excludedAdjacentClaims": ["pool rental", "pavilion terms", "park shelters", "CivicRec availability", "facility operating hours"],
+      "authorityRole": "Official CAB facility-rental page; facility-specific terms"
+    },
+    {
+      "id": "outdoor-pavilion-rental-terms",
+      "title": "Use the outdoor-pavilion rental terms?",
+      "proposalBoundary": "State only the captured pavilion price, household/day and month limits, and the named pavilion features. Do not imply availability for a particular date.",
+      "current": "The strict gate withholds pavilion rental terms from this page.",
+      "proposed": "Say outdoor pavilions are $25 per hour, one pavilion per household per day, with no more than two rentals per calendar month; identify North and South Pavilion features only as captured.",
+      "source": { "url": "https://sterlingranchcab.com/269/Rent-the-Facility", "sourceId": "sterling-ranch-rent-the-facility-1", "contentHash": "0303d628841d2704c91379acace3651fe129512fa5d20c08ca43d405c3ab8ad5", "checkedAt": "2026-09-08T18:35:49.722Z", "excerpts": ["Each household can reserve one of the outdoor pavilions once per day, with no more than two rentals per calendar month ... Hourly Pricing $25 per hour.", "North Pavilion Larger space that includes an outdoor fireplace and convertible picnic tables South Pavilion Smaller space that includes an outdoor BBQ grill and two picnic tables."] },
+      "excludedAdjacentClaims": ["Great Hall terms", "pool rental", "park shelters", "current booking availability", "CivicRec catalog terms"],
+      "authorityRole": "Official CAB facility-rental page; facility-specific terms"
+    },
+    {
+      "id": "park-shelter-rental-terms",
+      "title": "Use the park-shelter rental terms?",
+      "proposalBoundary": "State only that CAB-owned park shelters and benches are rentable, playgrounds and grassy areas are excluded, and the captured $15-per-hour shelter price.",
+      "current": "The strict gate withholds park-shelter price and scope from this page.",
+      "proposed": "Say park shelter rentals are $15 per hour; shelters and benches are included in CAB-owned park rentals, while playgrounds and grassy areas are not.",
+      "source": { "url": "https://sterlingranchcab.com/311/Park-Shelters", "sourceId": "sterling-ranch-park-shelters-1", "contentHash": "1e0ed362c8fc600b12725c365dbb4215fe01b079c1b90f9534eaae1cb8a035c1", "checkedAt": "2026-09-08T18:35:49.978Z", "excerpt": "CAB-owned parks including the shelters and benches are available for rental. Playgrounds and grassy areas within any Park are not part of any Park rental. Pricing Park Shelter rentals: $15.00 per hour." },
+      "excludedAdjacentClaims": ["Great Hall", "pavilions", "specific-date availability", "CivicRec catalog terms"],
+      "authorityRole": "Official CAB park-shelter page; facility-specific terms"
+    },
+    {
+      "id": "landscape-submission-email-and-attachments",
+      "title": "Use the current landscape submission email and attachments?",
+      "proposalBoundary": "For the 2026 Landscape Submittal Packet only, provide residentsubmit@sterlingranchcab.com and say the packet calls for signed Attachment B-1 and B-2. Do not add other application requirements.",
+      "current": "The strict gate withholds the packet's submission route and attachment requirements.",
+      "proposed": "Direct residents to residentsubmit@sterlingranchcab.com and identify signed Attachment B-1 and B-2 as packet attachments.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026", "sourceId": "sterling-ranch-landscape-submittal-packet-2026-1", "contentHash": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6", "checkedAt": "2026-09-08T20:18:59.432Z", "excerpt": "Email: residentsubmit@sterlingranchcab.com ... Landscape Verification Checklist Attached and Signed (ATTACHMENT B-1) ... Contractor and Fee Addendum Attached and Signed (ATTACHMENT B-2)." },
+      "excludedAdjacentClaims": ["obsolete submit@sterlingranchdrc.com address", "fees", "deadlines", "inspection procedures", "approval outcome"],
+      "authorityRole": "Official CAB 2026 application packet; application-specific route"
+    },
+    {
+      "id": "landscape-modification-fee-only",
+      "title": "Use the landscape-modification fee?",
+      "proposalBoundary": "State only the $150 landscape-modification fee shown in the 2026 packet; do not generalize it to all landscape work.",
+      "current": "The strict gate withholds this packet fee.",
+      "proposed": "For an amendment to existing landscape in the 2026 packet, state the $150 landscape-modification fee.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026", "sourceId": "sterling-ranch-landscape-submittal-packet-2026-1", "contentHash": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6", "checkedAt": "2026-09-08T20:18:59.432Z", "excerpt": "Amend existing landscape - $150.00 Landscape Modification Fee." },
+      "excludedAdjacentClaims": ["inspection fee", "general design-review fees", "deadlines", "approval outcome"],
+      "authorityRole": "Official CAB 2026 application packet; scoped landscape-modification fee"
+    },
+    {
+      "id": "landscape-rear-yard-completion-deadline",
+      "title": "Use the rear-yard landscape completion deadline?",
+      "proposalBoundary": "State only the packet's 120-day-from-closing rear-yard completion requirement, subject to winter contingencies.",
+      "current": "The strict gate withholds this packet deadline.",
+      "proposed": "Say the packet requires rear-yard landscaping within 120 days of closing, subject only to winter contingencies.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026", "sourceId": "sterling-ranch-landscape-submittal-packet-2026-1", "contentHash": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6", "checkedAt": "2026-09-08T20:18:59.432Z", "excerpt": "rear yard landscaping is required to be completed within 120 days of closing subject only to winter contingencies." },
+      "excludedAdjacentClaims": ["front-yard completion", "fee", "inspection timing", "approval outcome"],
+      "authorityRole": "Official CAB 2026 application packet; scoped completion requirement"
+    },
+    {
+      "id": "landscape-inspection-fee-and-coverage",
+      "title": "Use the landscape inspection fee and coverage?",
+      "proposalBoundary": "State only that the $100 fee covers the named Soil Amendment Inspection and Landscape/Irrigation Inspection.",
+      "current": "The strict gate withholds this packet inspection fee.",
+      "proposed": "Say the packet lists a $100 fee covering both the Soil Amendment Inspection and Landscape/Irrigation Inspection.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026", "sourceId": "sterling-ranch-landscape-submittal-packet-2026-4", "contentHash": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00", "checkedAt": "2026-09-08T20:18:59.432Z", "excerpt": "$100.00 This fee covers both Soil Amendment Inspection and Landscape/Irrigation Inspection." },
+      "excludedAdjacentClaims": ["landscape-modification fee", "inspection outcome", "payment instructions", "other project types"],
+      "authorityRole": "Official CAB 2026 application packet; scoped inspection fee"
+    },
+    {
+      "id": "landscape-second-inspection-during-establishment",
+      "title": "Use the second-inspection timing?",
+      "proposalBoundary": "State only that CAB will make a second inspection during the 45-day Landscaping Establishment Period. Do not call it an inspection exactly at day 45.",
+      "current": "The strict gate withholds this packet inspection timing.",
+      "proposed": "Say CAB will make a second inspection during the 45-day Landscaping Establishment Period to document compliance and functional irrigation.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026", "sourceId": "sterling-ranch-landscape-submittal-packet-2026-3", "contentHash": "746f08bb6205dcd2a714c44aba22605a1e11f87636b7a57cd0514e194e9ac9b2", "checkedAt": "2026-09-08T20:18:59.432Z", "excerpt": "the Sterling Ranch Community Authority Board will make a second inspection during the 45 day ‘Landscaping Establishment Period’ to document that installed materials are in compliance with approved plans and irrigation is functional." },
+      "excludedAdjacentClaims": ["an inspection exactly on day 45", "approval guarantee", "inspection fee", "notice timing"],
+      "authorityRole": "Official CAB 2026 application packet; scoped inspection procedure"
+    },
+    {
+      "id": "landscape-inspection-notice-route",
+      "title": "Use the landscape inspection notice route?",
+      "proposalBoundary": "State only the captured minimum 48-hour, Monday-through-Friday notice and the inspection email.",
+      "current": "The strict gate withholds this packet notice route.",
+      "proposed": "For scheduling an inspection, say the packet calls for at least 48 hours' notice, Monday through Friday, at residentialinspections@sterlingranchcab.com.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026", "sourceId": "sterling-ranch-landscape-submittal-packet-2026-4", "contentHash": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00", "checkedAt": "2026-09-08T20:18:59.432Z", "excerpt": "TO SCHEDULE AN INSPECTION (MINIMUM 48 HOURS NOTICE, MONDAY THROUGH FRIDAY ONLY): Contact residentialinspections@sterlingranchcab.com." },
+      "excludedAdjacentClaims": ["inspection fee", "inspection outcome", "weekend scheduling", "approval outcome"],
+      "authorityRole": "Official CAB 2026 application packet; scoped inspection action"
+    },
+    {
+      "id": "plant-establishment-water-treatment",
+      "title": "Use the plant-establishment water treatment?",
+      "proposalBoundary": "State only the FAQ's 45-day establishment-period billing treatment; do not calculate a bill or quote a tier amount.",
+      "current": "The strict gate withholds the FAQ's establishment-period billing statement.",
+      "proposed": "Say water used during the 45 days following turf and plant installation is billed at the first-tier fee rate and does not count against the water budget.",
+      "source": { "url": "https://sterlingranchcab.com/m/faq", "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-7", "contentHash": "b23193c9d7f3143d7a83cfdef29495f9dcab9a6fda1b346a4526618d6b6a2806", "checkedAt": "2026-09-08T18:35:55.481Z", "excerpt": "Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget." },
+      "excludedAdjacentClaims": ["tier price", "bill calculation", "extensions beyond 45 days", "other landscape billing rules"],
+      "authorityRole": "Official CAB FAQ; scoped billing-treatment statement"
+    },
+    {
+      "id": "utilityhawk-monitoring-thresholds-alerts",
+      "title": "Use UtilityHawk monitoring features?",
+      "proposalBoundary": "State only the captured threshold and alert capabilities. Do not use this card to establish payment terms, rates, or a separately approved payment/login scope.",
+      "current": "The strict gate withholds UtilityHawk monitoring features.",
+      "proposed": "Say UtilityHawk supports monthly dollar thresholds for water and irrigation, daily/weekly/monthly usage thresholds with trend notifications, and selectable text, email, or phone alerts.",
+      "source": { "url": "https://sterlingranchcab.com/m/faq", "sourceId": "sterling-ranch-faqs-civicplus-cms-faq-8", "contentHash": "f2dfbc4119948dd52854e4b6366f70875e99344adb209f31f22ea82b07d20bdc", "checkedAt": "2026-09-08T18:35:55.481Z", "excerpts": ["Set monthly threshold values in dollars for water and irrigation usage. Set Daily/Weekly/Monthly usage thresholds and get notified if you are trending to exceed. Provides timely alerts when problems are detected.", "You can specify how you want to be contacted - text, e-mail, or phone."] },
+      "excludedAdjacentClaims": ["water rates", "payment terms", "billing contacts", "electric or gas service"],
+      "authorityRole": "Official CAB FAQ; scoped account-feature statement"
+    },
+    {
+      "id": "trash-recurring-guidance",
+      "title": "Use recurring trash and recycling guidance?",
+      "proposalBoundary": "State only the provider, village recurring days, 7 a.m. placement, named-holiday one-day delay, and listed notification/app actions. Do not answer a specific dated pickup outcome from this static page.",
+      "current": "The strict gate withholds recurring guidance from the public trash page.",
+      "proposed": "Provide the village's recurring trash/recycling days, ask residents to place bins out by 7 a.m., and explain that the named holidays delay pickup by one day; use a dated service source for a particular pickup date.",
+      "source": { "url": "https://sterlingranchcab.com/247/Trash-Recycling", "sourceId": "sterling-ranch-trash-recycling-1", "contentHash": "99861cd15d2165024b659c779c7f8a8cfa329978270ce7a63d28f72d63d44d98", "checkedAt": "2026-09-08T18:35:48.637Z", "excerpts": ["Our trash provider is Waste Connections.", "Make sure to place bins outside by 7 am for trash collection. For Providence Village, trash is picked up weekly on Monday, and recycling is picked up every other Monday. For Ascent Village, trash is picked up weekly on Tuesday, and recycling is picked up every other Tuesday. For Prospect Village, trash is picked up weekly on Thursday, and recycling is picked up every other Thursday.", "Trash pickup will be delayed by one day for the following holidays: New Year's Day Memorial Day Independence Day Labor Day Thanksgiving Christmas.", "Waste Connections also has an emergency phone call system that can notify residents in case of a delay or interruption in service. Service Notification Form ... Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more."] },
+      "excludedAdjacentClaims": ["specific pickup dates", "live service status", "bin-return rule", "bulk-item terms"],
+      "authorityRole": "Official CAB public service page; recurring service guidance"
+    },
+    {
+      "id": "trash-same-day-return-public-page",
+      "title": "Use same-day bin-return guidance?",
+      "proposalBoundary": "Use only the public Trash & Recycling page's end-of-pickup-day return instruction. Do not label a separate screening sheet as a governing rulebook without a verified governing source.",
+      "current": "The strict gate withholds the public page's same-day return instruction.",
+      "proposed": "Say containers placed out for pickup must be returned to an appropriately screened location by the end of the pickup day.",
+      "source": { "url": "https://sterlingranchcab.com/247/Trash-Recycling", "sourceId": "sterling-ranch-trash-recycling-1", "contentHash": "99861cd15d2165024b659c779c7f8a8cfa329978270ce7a63d28f72d63d44d98", "checkedAt": "2026-09-08T18:35:48.637Z", "excerpt": "Containers for pickup may be placed on the street or alleyway on the morning of pickup and must be returned to an appropriately screened location by the end of the pickup day." },
+      "excludedAdjacentClaims": ["governing-rulebook status", "screening dimensions", "enclosure construction", "DRC fees"],
+      "authorityRole": "Official CAB public service page; same-day return instruction"
+    },
+    {
+      "id": "drc-current-application-route-and-review-window",
+      "title": "Use the current general DRC application route?",
+      "proposalBoundary": "For the 2026 general architectural-improvement application only, provide the email and qualified up-to-30-day review window. Do not promise approval or apply the window to incomplete materials.",
+      "current": "The strict gate withholds the current form's email and review-window statement.",
+      "proposed": "Direct general architectural-improvement applications to residentsubmit@sterlingranchcab.com and say the DRC has up to 30 days from receipt of all acceptable materials to review the submittal.",
+      "source": { "url": "https://sterlingranchcab.com/DocumentCenter/View/1574/Attachment-A-3-General-Arch-Improvement-2026", "sourceId": "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1", "contentHash": "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61", "checkedAt": "2026-09-08T20:18:59.044Z", "excerpt": "Email: residentsubmit@sterlingranchcab.com ... the DRC has up to 30 days to review this submittal from the date all acceptable materials are received by the DRC." },
+      "excludedAdjacentClaims": ["obsolete submit@sterlingranchdrc.com address", "approval guarantee", "incomplete-submission timeline", "landscape-specific terms"],
+      "authorityRole": "Official CAB 2026 general architectural-improvement application; application-specific route and timeline"
+    },
+    {
+      "id": "approved-landscaper-directory-link-only",
+      "title": "Provide the approved-landscaper directory link?",
+      "proposalBoundary": "Provide only the official current directory page as an action. Do not name or recommend an individual company.",
+      "current": "The strict gate withholds the directory action.",
+      "proposed": "Offer the official Approved Landscapers List page and say the page does not endorse a particular company.",
+      "source": { "url": "https://sterlingranchcab.com/414/Approved-Landscapers-List", "sourceId": "sterling-ranch-approved-landscapers-list-1", "contentHash": "d7ef8100507ef3c999c454f1e63f6ecda9fa338475797725e6bdd37e174a12f2", "checkedAt": "2026-09-08T18:35:50.858Z", "excerpt": "Approved Landscapers List ... We do not endorse any particular company; please do your own research." },
+      "excludedAdjacentClaims": ["individual company names", "company recommendations", "company qualifications beyond the page wording", "claim of conflicting copies"],
+      "authorityRole": "Official CAB directory landing page; navigation-only action"
+    }
+  ],
+  "notReady": [
+    {
+      "id": "pool-published-hours-boundary",
+      "reason": "The current page chunks are captured on 2026-09-08, but the ledger's 2026-09-09 pool record has a different hash (14b45b6b4f23a88e324faa20e50db7ca149a7348c8d164d3935cd6a1b17bb8f0) and is pending navigation-only review. The card cannot bind its hour wording to one confirmed unchanged page version."
+    },
+    {
+      "id": "amenity-access-form-only",
+      "reason": "The FAQ content was captured on 2026-09-08, but the extracted Resident Amenity Form action/fact metadata is dated 2026-08-31. Recheck the form URL before presenting an action card."
+    },
+    {
+      "id": "facility-rental-civicrec-booking-action",
+      "reason": "The CivicRec connector is a generic catalog link captured 2026-09-06 with no current catalog rows, prices, or availability evidence. It is not sufficient for a booking-action or complete-rows approval."
+    },
+    {
+      "id": "trash-governing-screening-rule",
+      "reason": "A Trash Screening sheet exists, but no actual controlling rulebook source/version was identified. Do not characterize it as a governing rulebook without that evidence."
+    }
+  ],
+  "ledgerStatus": {
+    "note": "The canonical ledger contains staging-only approved evidence for the 2026 landscape packet and Attachment A-3, and a pending navigation-only pool record. It does not convert these proposed cards into approval."
+  }
+}

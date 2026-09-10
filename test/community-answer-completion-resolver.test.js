@@ -137,14 +137,16 @@ test("pool status and holiday-hours variants cannot use a static season page as 
     });
     assert.notEqual(answer.answerStatus, "verified", question);
     assert.notEqual(answer.completion.outcome, "complete", question);
+    assert.deepEqual(answer.completion.requestedDetails, ["status", "hours"], question);
     assert.deepEqual(answer.completion.resolvedDetails, [], question);
     assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key).sort(), ["hours", "status"], question);
+    assert.ok(answer.completion.missingDetails.every((detail) => detail.reason === "missing-evidence"), question);
     assert.match(answer.answer, /holiday hours|hours/i, question);
     assert.match(answer.answer, /status/i, question);
   }
 });
 
-test("pool status alone and dated Labor Day hours remain verified", async () => {
+test("live pool status remains separate from approved dated pool hours", async () => {
   const status = await answerCommunityQuestion("Is the pool open right now?", {
     interpretationMode: "structured",
     now: TEST_NOW,
@@ -161,6 +163,7 @@ test("pool status alone and dated Labor Day hours remain verified", async () => 
       residentAction: "Normal entry rules apply.",
       sourceUrl: "https://sterlingranchcab.com/pool",
       checkedAt: TEST_NOW.toISOString(),
+      evidenceEnvelope: { communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" }, coverage: { covered: ["status"] }, evidence: [{ evidenceId: "sterling-ranch:pool-status:current", communityId: "sterling-ranch", staleAfter: "2026-09-08T19:00:00.000Z" }], claims: [{ facet: "status", text: "Green", controllingEvidenceId: "sterling-ranch:pool-status:current" }] },
     }),
   });
   assert.equal(status.answerStatus, "verified");
@@ -187,8 +190,24 @@ test("pool status alone and dated Labor Day hours remain verified", async () => 
     synthesizeCommunityAnswer: false,
   });
   assert.equal(holidayHours.answerStatus, "verified");
-  assert.match(holidayHours.answer, /5:00 am/i);
-  assert.match(holidayHours.answer, /8:45 pm/i);
+  assert.match(holidayHours.answer, /5:00 am|8:45 pm/i);
+  assert.match(holidayHours.answer, /does not publish separate holiday hours/i);
+});
+
+test("only an active live-status source can resolve a current-status facet", () => {
+  const { sourceCanResolveRequestedDetail } = require("../lib/community-search");
+  const seasonalFacilityPage = {
+    connectorType: "civicplus-pages",
+    sourceType: "services",
+  };
+  const liveStatus = {
+    connectorType: "live-status",
+    sourceType: "status",
+  };
+
+  assert.equal(sourceCanResolveRequestedDetail(seasonalFacilityPage, "hours"), true);
+  assert.equal(sourceCanResolveRequestedDetail(seasonalFacilityPage, "status"), false);
+  assert.equal(sourceCanResolveRequestedDetail(liveStatus, "status"), true);
 });
 
 test("held-out shed permission and fee variants preserve the rule and expose the unresolved fee", async () => {
@@ -339,7 +358,7 @@ test("an existing authoritative specification limitation is not repeated as a ge
   assert.doesNotMatch(answer.answer, /could not verify/i);
 });
 
-test("an exact official specification sheet resolves a specification-only question", async () => {
+test("freshness alone cannot authorize an exact static specification sheet", async () => {
   const freshIndex = structuredClone(communityIndex);
   const sourceUrl = "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-";
   for (const source of freshIndex.sources || []) {
@@ -360,15 +379,15 @@ test("an exact official specification sheet resolves a specification-only questi
       llmMode: "off",
     }),
   });
-  assert.equal(answer.answerStatus, "verified");
-  assert.equal(answer.completion.outcome, "complete");
-  assert.deepEqual(answer.completion.resolvedDetails, ["specification"]);
-  assert.match(answer.answer, /#3002.*Belvedere Tan/i);
-  assert.doesNotMatch(answer.answer, /could not verify/i);
-  assert.ok(answer.sources.some((source) => (source.authorityFacets || []).includes("specification")));
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.completion.outcome, "missing-evidence");
+  assert.deepEqual(answer.completion.resolvedDetails, []);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
+  assert.doesNotMatch(answer.answer, /#3002.*Belvedere Tan/i);
+  assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)));
 });
 
-test("full-route fence permission and finish questions retain the controlling rule answer", async () => {
+test("full-route fence questions retain permission while an unapproved finish stays unresolved", async () => {
   const questions = [
     "Can I build a fence and what color does it need to be?",
     "Can I install backyard fencing, and which stain color is required?",
@@ -407,20 +426,19 @@ test("full-route fence permission and finish questions retain the controlling ru
         llmMode: "off",
       }),
     });
-    assert.equal(communitySynthesisCalls, 1, question);
-    assert.equal(answer.authorityDecision, "per-facet-rule-and-specification", question);
-    assert.equal(answer.answerStatus, "verified", question);
-    assert.equal(answer.completion.outcome, "complete", question);
-    assert.deepEqual(answer.completion.requestedDetails, ["permission", "specification"], question);
-    assert.deepEqual(answer.completion.resolvedDetails, ["permission", "specification"], question);
-    assert.equal(answer.answerMode, "community-per-facet-grounded-ai", question);
+    assert.equal(communitySynthesisCalls, 0, question);
+    assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim", question);
+    assert.equal(answer.answerStatus, "verified-incomplete", question);
+    assert.equal(answer.answerVerdict, "conditional", question);
+    assert.equal(answer.completion.outcome, "verified-partial", question);
+    assert.ok(answer.completion.requestedDetails.includes("permission"), question);
+    assert.ok(answer.completion.requestedDetails.includes("specification"), question);
+    assert.ok(answer.completion.resolvedDetails.includes("permission"), question);
+    assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "specification"), question);
+    assert.notEqual(answer.answerMode, "community-per-facet-grounded-ai", question);
     assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
-    assert.ok(answer.sources.some((source) => source.connectorType === "official-pdf"), question);
-    assert.ok(answer.facetAuthority.permission.length, question);
-    assert.ok(answer.facetAuthority.specification.length, question);
-    assert.match(answer.directAnswer, /approval/i, question);
-    assert.match(answer.directAnswer, /Belvedere Tan/i, question);
-    assert.match(answer.directAnswer, /Earthen/i, question);
+    assert.match(answer.answer, /DRC approval|approval requirements/i, question);
+    assert.match(answer.answer, /^Short answer: The cited current rules do not name one exact paint color or finish/i, question);
     assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
   }
 });
@@ -452,7 +470,65 @@ test("a binding rule remains verified-partial when specification composition is 
   assert.equal(answer.completion.outcome, "verified-partial");
   assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
-  assert.match(answer.answer, /does not provide|could not verify the requested color, finish, material, or dimension/i);
+  assert.match(answer.answer, /does not provide|do not name one exact paint color or finish|could not verify the requested color, finish, material, or dimension/i);
+});
+
+test("an unapproved specification match cannot discard an independently verified controlling fence permission", async () => {
+  const controllingUrl = "https://library.municode.com/co/sterling-ranch/codes/rules?nodeId=FENCES";
+  const answer = await answerCommunityQuestion("Can I build a fence and what color is required?", {
+    interpretationMode: "structured",
+    communityId: "alpha",
+    index: {
+      communityId: "alpha",
+      truthStatus: { migrationMode: "reviewed" },
+      factLedger: [],
+      sources: [{
+        id: "unapproved-fence-finish",
+        communityId: "alpha",
+        title: "Fence permission and finish",
+        sourceUrl: controllingUrl,
+        sourceType: "rules",
+        connectorType: "municode",
+        authorityScore: 1,
+        contentHash: "unapproved-v1",
+        lifecycle: "current",
+        staleAfter: "2099-01-01",
+        text: "Fences require approval. Use Secret Blue stain.",
+        excerpt: "Fences require approval. Use Secret Blue stain.",
+        facts: [],
+        actions: [],
+      }],
+    },
+    planCommunitySearch: async () => ({
+      intent: "rules",
+      goal: "permission",
+      goals: ["permission"],
+      subject: "fence permission and finish",
+      requestedDetails: ["permission", "specification"],
+      filters: {},
+      searchQueries: ["fence permission", "fence finish"],
+      scope: "community",
+      needsClarification: false,
+    }),
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: Fence installation is allowed only with prior design approval.",
+      answerMode: "source-derived-structured",
+      answerVerdict: "conditional",
+      controllingSourceOnly: true,
+      confidence: { canAnswer: true, confidence: "high", reason: "controlling-rule-supported" },
+      sources: [{ id: "fence-rule", title: "Fence rule", sourceUrl: controllingUrl, sourceType: "rules" }],
+      actions: [{ label: "Open the fence rule", url: controllingUrl, actionType: "information" }],
+      qualityChecks: { requestedFacetCoverage: false, issues: ["requested-specification-missing"] },
+    }),
+  });
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.equal(answer.completion.outcome, "verified-partial");
+  assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
+  assert.match(answer.answer, /prior design approval/i);
+  assert.match(answer.answer, /do not name one exact paint color or finish|could not verify the requested color, finish, material, or dimension/i);
+  assert.doesNotMatch(answer.answer, /Secret Blue/i);
 });
 
 test("a form-only fence answer still cannot verify a binding permission claim", async () => {
@@ -486,8 +562,12 @@ test("a form-only fence answer still cannot verify a binding permission claim", 
   });
   assert.notEqual(answer.answerStatus, "verified");
   assert.notEqual(answer.completion.outcome, "complete");
+  assert.ok(answer.completion.requestedDetails.includes("permission"));
   assert.deepEqual(answer.completion.resolvedDetails, []);
-  assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "permission"));
+  assert.deepEqual(
+    answer.completion.missingDetails.find((detail) => detail.key === "permission"),
+    { key: "permission", reason: "missing-evidence" },
+  );
 });
 
 test("single-facet verified families remain complete", () => {

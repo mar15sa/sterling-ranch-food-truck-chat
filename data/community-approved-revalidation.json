@@ -1,109 +1,250 @@
 {
-  "checkedAt": "2026-09-08T20:18:59.432Z",
+  "checkedAt": "2026-09-10T02:45:43.119Z",
   "mode": "exact-url-and-content-hash-only",
   "checks": [
     {
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1574/Attachment-A-3-General-Arch-Improvement-2026",
-      "checkedAt": "2026-09-08T20:18:59.044Z",
-      "renewed": [
+      "sourceUrl": "https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill",
+      "sources": [
         {
-          "id": "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1",
-          "contentHash": "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61"
+          "id": "sterling-ranch-view-and-pay-water-bill-332",
+          "contentHash": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
+          "actionCount": 1,
+          "actionIdentity": "[[\"Utility Hawk\",\"https://srcab.utilityhawk.us/\",\"payment\",[]]]"
         }
       ],
-      "renewedFacts": [
-        {
-          "id": "3746046910ca6cdaea0e0eba850a70c5",
-          "sourceId": "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1",
-          "sourceVersion": "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61"
-        },
-        {
-          "id": "d3412f2ecb38753d0fb9bd8948677858",
-          "sourceId": "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1",
-          "sourceVersion": "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61"
-        },
-        {
-          "id": "a1df600f30f962a1386365d6762da30d",
-          "sourceId": "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1",
-          "sourceVersion": "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61"
-        },
-        {
-          "id": "ba9ccbcca09f7a9c9e1af8e6b427af89",
-          "sourceId": "sterling-ranch-attachment-a-3-general-arch-improvement-2026-1",
-          "sourceVersion": "bc9392d34dce4983f4c95d1a1958c9d8855d6feca5249d7d201570dc72bafb61"
-        }
+      "outcome": "renewed",
+      "observedHashes": [
+        "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6"
       ],
-      "requiresReview": []
+      "actionProof": {
+        "expected": [
+          {
+            "sourceId": "sterling-ranch-view-and-pay-water-bill-332",
+            "action": {
+              "id": "water-payment-332-utility-hawk",
+              "label": "Utility Hawk",
+              "url": "https://srcab.utilityhawk.us",
+              "actionType": "payment",
+              "approvalClaim": "direct-water-payment-link",
+              "decisionId": "water-payment-direct-link",
+              "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions.",
+              "sourceVersion": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
+              "contentHash": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
+              "reviewStatus": "approved",
+              "reviewDecisionId": "water-payment-direct-link",
+              "reviewedBy": "owner",
+              "reviewedAt": "2026-09-08",
+              "checkedAt": "2026-09-09T02:25:34.966Z"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "sourceId": "sterling-ranch-view-and-pay-water-bill-332",
+            "action": {
+              "id": "water-payment-332-utility-hawk",
+              "label": "Utility Hawk",
+              "url": "https://srcab.utilityhawk.us",
+              "actionType": "payment",
+              "approvalClaim": "direct-water-payment-link",
+              "decisionId": "water-payment-direct-link",
+              "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions.",
+              "sourceVersion": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
+              "contentHash": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
+              "reviewStatus": "approved",
+              "reviewDecisionId": "water-payment-direct-link",
+              "reviewedBy": "owner",
+              "reviewedAt": "2026-09-08",
+              "checkedAt": "2026-09-09T02:25:34.966Z"
+            },
+            "matches": [
+              {
+                "label": "https://srcab.utilityhawk.us",
+                "url": "https://srcab.utilityhawk.us/",
+                "context": "-4012-95c9-c11f1947588c\" data-elementqueryclasses='{\"wide-narrow\":\"min-width:25em\"}'> Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions. Your online account allows you to choose the bes"
+              }
+            ],
+            "contextMatches": true
+          }
+        ],
+        "matches": true
+      },
+      "documentProof": null,
+      "checkedAt": "2026-09-10T02:45:42.639Z",
+      "staleAfter": "2026-09-11T02:45:42.639Z",
+      "renewedSourceCount": 1,
+      "renewedFactCount": 1
     },
     {
-      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026",
-      "checkedAt": "2026-09-08T20:18:59.432Z",
-      "renewed": [
+      "sourceUrl": "https://sterlingranchcab.com/333/Understanding-Your-Water-Bill",
+      "sources": [
         {
-          "id": "sterling-ranch-landscape-submittal-packet-2026-1",
-          "contentHash": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6"
-        },
-        {
-          "id": "sterling-ranch-landscape-submittal-packet-2026-2",
-          "contentHash": "3f788b598cea9644333e5941754e55845ae83631745e018997eead7c6d4c8374"
-        },
-        {
-          "id": "sterling-ranch-landscape-submittal-packet-2026-3",
-          "contentHash": "746f08bb6205dcd2a714c44aba22605a1e11f87636b7a57cd0514e194e9ac9b2"
-        },
-        {
-          "id": "sterling-ranch-landscape-submittal-packet-2026-4",
-          "contentHash": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00"
+          "id": "sterling-ranch-understanding-water-bill-333",
+          "contentHash": "ec41579679b1969d6efb9ad9e402f743b6176132fb1c29baf384367573f4fa71",
+          "actionCount": 0,
+          "actionIdentity": ""
         }
       ],
-      "renewedFacts": [
+      "outcome": "renewed",
+      "observedHashes": [
+        "ec41579679b1969d6efb9ad9e402f743b6176132fb1c29baf384367573f4fa71"
+      ],
+      "actionProof": {
+        "expected": [],
+        "observed": [],
+        "matches": true
+      },
+      "documentProof": null,
+      "checkedAt": "2026-09-10T02:45:42.639Z",
+      "staleAfter": "2026-09-11T02:45:42.639Z",
+      "renewedSourceCount": 1,
+      "renewedFactCount": 3
+    },
+    {
+      "sourceUrl": "https://sterlingranchcab.com/334/Water-Billing-Payment-Options",
+      "sources": [
         {
-          "id": "f0c1cb8c405c6f4e24705c53417b7234",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-1",
-          "sourceVersion": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6"
-        },
-        {
-          "id": "138dc039da0edff41be07d13b81463c6",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-1",
-          "sourceVersion": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6"
-        },
-        {
-          "id": "0984511ab554a59ebb1ed272ed6dcbb9",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-1",
-          "sourceVersion": "e59d63232e3f95bd50abdd22b4b1000c47ab2fc160e630106b9c4f59c16359b6"
-        },
-        {
-          "id": "3bccb45cf787ee64d08aa3ca46f36e48",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-3",
-          "sourceVersion": "746f08bb6205dcd2a714c44aba22605a1e11f87636b7a57cd0514e194e9ac9b2"
-        },
-        {
-          "id": "9ff6126a308e68eca09046d15ec8a6c2",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-3",
-          "sourceVersion": "746f08bb6205dcd2a714c44aba22605a1e11f87636b7a57cd0514e194e9ac9b2"
-        },
-        {
-          "id": "d691f4a3418ea09a0fc8dd6257ca9a40",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-4",
-          "sourceVersion": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00"
-        },
-        {
-          "id": "9c14e01cea8c1c07527b15d128ac3a3d",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-4",
-          "sourceVersion": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00"
-        },
-        {
-          "id": "ab4e20abfd220750c20d5c813d6803ec",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-4",
-          "sourceVersion": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00"
-        },
-        {
-          "id": "f0a4c8a8d3a844ac4df4d569d8159ec9",
-          "sourceId": "sterling-ranch-landscape-submittal-packet-2026-4",
-          "sourceVersion": "57e7287f614119f84a85a482e5ed9c004fcbf3f9cd3b494d5346dbc266febb00"
+          "id": "sterling-ranch-water-billing-payment-options-334",
+          "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
+          "actionCount": 1,
+          "actionIdentity": "[[\"Utility Hawk\",\"https://srcab.utilityhawk.us/\",\"payment\",[]]]"
         }
       ],
-      "requiresReview": []
+      "outcome": "renewed",
+      "observedHashes": [
+        "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75"
+      ],
+      "actionProof": {
+        "expected": [
+          {
+            "sourceId": "sterling-ranch-water-billing-payment-options-334",
+            "action": {
+              "id": "water-payment-334-utility-hawk",
+              "label": "Utility Hawk",
+              "url": "https://srcab.utilityhawk.us",
+              "actionType": "payment",
+              "approvalClaim": "primary-current-water-payment-page",
+              "decisionId": "water-payment-primary-page",
+              "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions.",
+              "sourceVersion": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
+              "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
+              "reviewStatus": "approved",
+              "reviewDecisionId": "water-payment-primary-page",
+              "reviewedBy": "owner",
+              "reviewedAt": "2026-09-08",
+              "checkedAt": "2026-09-09T02:25:34.966Z"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "sourceId": "sterling-ranch-water-billing-payment-options-334",
+            "action": {
+              "id": "water-payment-334-utility-hawk",
+              "label": "Utility Hawk",
+              "url": "https://srcab.utilityhawk.us",
+              "actionType": "payment",
+              "approvalClaim": "primary-current-water-payment-page",
+              "decisionId": "water-payment-primary-page",
+              "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions.",
+              "sourceVersion": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
+              "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
+              "reviewStatus": "approved",
+              "reviewDecisionId": "water-payment-primary-page",
+              "reviewedBy": "owner",
+              "reviewedAt": "2026-09-08",
+              "checkedAt": "2026-09-09T02:25:34.966Z"
+            },
+            "matches": [
+              {
+                "label": "https://srcab.utilityhawk.us",
+                "url": "https://srcab.utilityhawk.us/",
+                "context": "do Springs, CO 80949 Please remember to write your account number on your check . Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the &ldquo;Pay Online&rdquo; link on the home page. Follow the instructions. Your online account allows you to choose"
+              }
+            ],
+            "contextMatches": true
+          }
+        ],
+        "matches": true
+      },
+      "documentProof": null,
+      "checkedAt": "2026-09-10T02:45:42.639Z",
+      "staleAfter": "2026-09-11T02:45:42.639Z",
+      "renewedSourceCount": 1,
+      "renewedFactCount": 11
+    },
+    {
+      "sourceUrl": "https://sterlingranchcab.com/390/Monthly-Fee-Billing-Payment-Options",
+      "sources": [
+        {
+          "id": "sterling-ranch-monthly-fee-billing-390",
+          "contentHash": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",
+          "actionCount": 1,
+          "actionIdentity": "[[\"Utility Hawk\",\"https://srcab.utilityhawk.us/\",\"payment\",[]]]"
+        }
+      ],
+      "outcome": "renewed",
+      "observedHashes": [
+        "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e"
+      ],
+      "actionProof": {
+        "expected": [
+          {
+            "sourceId": "sterling-ranch-monthly-fee-billing-390",
+            "action": {
+              "id": "monthly-fee-390-utility-hawk",
+              "label": "Utility Hawk",
+              "url": "https://srcab.utilityhawk.us",
+              "actionType": "payment",
+              "approvalClaim": "monthly-fee-operational-payment-page",
+              "decisionId": "monthly-fee-payment-page",
+              "context": "Monthly Fees Billing and Payment Options Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Visit the AmCoBi website: www.AmCoBi.com Select the \"Pay Online\" link on the home page. Follow the instructions.",
+              "sourceVersion": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",
+              "contentHash": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",
+              "reviewStatus": "approved",
+              "reviewDecisionId": "monthly-fee-payment-page",
+              "reviewedBy": "owner",
+              "reviewedAt": "2026-09-08",
+              "checkedAt": "2026-09-09T02:25:34.966Z"
+            }
+          }
+        ],
+        "observed": [
+          {
+            "sourceId": "sterling-ranch-monthly-fee-billing-390",
+            "action": {
+              "id": "monthly-fee-390-utility-hawk",
+              "label": "Utility Hawk",
+              "url": "https://srcab.utilityhawk.us",
+              "actionType": "payment",
+              "approvalClaim": "monthly-fee-operational-payment-page",
+              "decisionId": "monthly-fee-payment-page",
+              "context": "Monthly Fees Billing and Payment Options Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Visit the AmCoBi website: www.AmCoBi.com Select the \"Pay Online\" link on the home page. Follow the instructions.",
+              "sourceVersion": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",
+              "contentHash": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",
+              "reviewStatus": "approved",
+              "reviewDecisionId": "monthly-fee-payment-page",
+              "reviewedBy": "owner",
+              "reviewedAt": "2026-09-08",
+              "checkedAt": "2026-09-09T02:25:34.966Z"
+            },
+            "matches": [
+              {
+                "label": "https://srcab.utilityhawk.us",
+                "url": "https://srcab.utilityhawk.us/",
+                "context": "5, 255, 255, 0.93); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Each homeowner is responsible for setting up personal accounts for gas, electricity, and internet. Monthly Fees Billing and Payment Options Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Visit the AmCoBi website: www.AmCoBi.com Select the &ldquo;Pay Online&rdquo; link on the home page. Follow the instructions. Other Payment Option"
+              }
+            ],
+            "contextMatches": true
+          }
+        ],
+        "matches": true
+      },
+      "documentProof": null,
+      "checkedAt": "2026-09-10T02:45:42.639Z",
+      "staleAfter": "2026-09-11T02:45:42.639Z",
+      "renewedSourceCount": 1,
+      "renewedFactCount": 3
     }
   ]
 }

@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
+const { answerRulesQuestion } = require('../lib/rules-assistant');
 const storedIndex = require('../data/community-index.json');
 
 const now = new Date('2026-09-08T18:00:00Z');
@@ -29,7 +30,7 @@ const liveStagingAccessPlan = {
   needsClarification: false,
 };
 
-test('live permission and account-access plans keep clubhouse access on the reviewed amenity-form boundary', async () => {
+test('live permission and account-access plans withhold unapproved clubhouse setup instructions', async () => {
   const realTimestampIndex = { ...storedIndex };
   const cases = [
     ['How do I get access to the Overlook Clubhouse?', liveStagingAccessPlan],
@@ -43,52 +44,87 @@ test('live permission and account-access plans keep clubhouse access on the revi
       answerRulesQuestion: unavailableRules,
     });
     assert.equal(result.answerStatus, 'source-unavailable', question);
-    assert.equal(result.answerMode, 'community-proactive-clubhouse-access-partial', question);
-    assert.match(result.directAnswer, /can’t currently confirm the access requirements/i, question);
-    assert.ok(result.sources.some((source) => source.id === 'sterling-ranch-faqs-civicplus-cms-faq-3-f4189bf538'), question);
-    assert.ok(result.actions.some((action) => action.actionType === 'form' && /Resident-Amenity-Form-56/i.test(action.url)), question);
+    assert.equal(result.answerMode, 'community-access-withheld', question);
+    assert.match(result.directAnswer, /can’t currently confirm the access requirements.*owner-approved claims/i, question);
+    assert.ok(result.sources.some((source) => /sterlingranchcab\.com/i.test(source.sourceUrl || '')), question);
+    assert.ok(result.actions.some((action) => action.actionType === 'information' && /sterlingranchcab\.com/i.test(action.url)), question);
+    assert.doesNotMatch(JSON.stringify(result.actions), /Resident-Amenity-Form-56/i, question);
     assert.doesNotMatch(JSON.stringify(result), /secure\.rec1\.com|rental catalog|\$100|\$250/i, question);
     assert.notEqual(result.answerStatus, 'verified', question);
   }
 });
 
-test('clubhouse access wording never falls into rental or pricing', async () => {
+test('clubhouse access wording never falls into rental, pricing, or an unapproved form', async () => {
   for (const question of ['How do I get access to the Overlook Clubhouse?', 'Where do I sign up for clubhouse access?', 'I need an access card for the clubhouse.']) {
     const result = await answerCommunityQuestion(question, { now, index, communityId: 'sterling-ranch',
       planCommunitySearch: async () => plan('booking', 'Overlook Clubhouse'), synthesizeCommunityAnswer: false,
       answerRulesQuestion: unavailableRules });
     assert.equal(result.answerStatus, 'source-unavailable', question);
-    assert.match(result.directAnswer, /can’t currently confirm the access requirements/i, question);
-    assert.equal(result.answerMode, 'community-proactive-clubhouse-access-partial', question);
-    assert.ok(result.actions.some((action) => action.actionType === 'form' && /Resident-Amenity-Form-56/i.test(action.url)), question);
-    assert.doesNotMatch(JSON.stringify(result.actions), /secure\.rec1\.com|rental catalog/i, question);
+    assert.match(result.directAnswer, /can’t currently confirm the access requirements.*owner-approved claims/i, question);
+    assert.equal(result.answerMode, 'community-access-withheld', question);
+    assert.ok(result.actions.some((action) => action.actionType === 'information' && /sterlingranchcab\.com/i.test(action.url)), question);
+    assert.doesNotMatch(JSON.stringify(result.actions), /Resident-Amenity-Form-56|secure\.rec1\.com|rental catalog/i, question);
   }
 });
 
-test('pool-party wording returns the official no-rental answer without clubhouse routing', async () => {
+test('pool-party wording withholds an unapproved no-rental claim without clubhouse routing', async () => {
   for (const question of ['Can I reserve the pool for a birthday party?', 'Is pool rental available for our party?', 'Can we rent the pool?']) {
     const result = await answerCommunityQuestion(question, { now, index, communityId: 'sterling-ranch',
       planCommunitySearch: async () => plan('booking', 'Overlook Clubhouse'), synthesizeCommunityAnswer: false,
       answerRulesQuestion: unavailableRules });
-    assert.equal(result.answerStatus, 'verified', question);
-    assert.equal(result.answerMode, 'community-proactive-pool-party', question);
-    assert.match(result.directAnswer, /^No\..*not available for rental/i, question);
-    assert.doesNotMatch(result.directAnswer, /^Yes\b/i, question);
-    assert.ok(result.sources.some((source) => /pool is not available for rental/i.test(source.text || '')), question);
-    assert.doesNotMatch(JSON.stringify(result.actions), /secure\.rec1\.com|rental catalog/i, question);
+    assert.equal(result.answerStatus, 'source-unavailable', question);
+    assert.equal(result.answerMode, 'community-freshness-withheld', question);
+    assert.doesNotMatch(result.directAnswer, /^(?:Yes|No)\b|not available for rental/i, question);
+    assert.ok(result.sources.some((source) => /\/187\/Pool/.test(source.sourceUrl || '')), question);
+    assert.ok(result.actions.every((action) => action.actionType === 'information'), question);
+    assert.doesNotMatch(JSON.stringify(result.actions), /secure\.rec1\.com|rental catalog|Resident-Amenity-Form-56/i, question);
   }
 });
 
-test('pool rental cost questions receive an evidence-backed not-applicable price answer', async () => {
+test('pool rental cost questions withhold unapproved availability and price conclusions', async () => {
   for (const question of ['What is the pool rental fee?', 'How much does it cost to rent the pool?']) {
     const result = await answerCommunityQuestion(question, { now, index, communityId: 'sterling-ranch',
       planCommunitySearch: async () => ({ ...plan('cost', 'pool'), requestedDetails: ['price'], subject: 'pool rental', searchQueries: ['pool rental fee'] }),
       synthesizeCommunityAnswer: false, answerRulesQuestion: unavailableRules });
-    assert.equal(result.answerStatus, 'verified', question);
-    assert.equal(result.answerMode, 'community-proactive-pool-party', question);
-    assert.match(result.directAnswer, /no pool rental fee.*not available for rental/i, question);
-    assert.equal(result.detailResolutions?.price?.status, 'not-applicable', question);
-    assert.ok(result.detailResolutions.price.evidenceSourceIds.length, question);
+    assert.equal(result.answerStatus, 'source-unavailable', question);
+    assert.equal(result.answerMode, 'community-freshness-withheld', question);
+    assert.match(result.directAnswer, /could not safely confirm.*fee or price/i, question);
+    assert.doesNotMatch(result.directAnswer, /no pool rental fee|not available for rental/i, question);
+    assert.ok(result.sources.some((source) => /\/187\/Pool/.test(source.sourceUrl || '')), question);
     assert.doesNotMatch(JSON.stringify(result), /\$5(?:\.00)?(?: per guest)?|guest passes?|direct debit|secure\.rec1\.com|rental catalog/i, question);
+  }
+});
+
+test('utility infrastructure fees outrank a hostile facility-cost handoff plan', async () => {
+  const hostilePlan = {
+    intent: 'services', goal: 'cost', goals: ['cost'], subject: 'facility fees', requestedDetails: ['price'],
+    dateRange: null, filters: { audience: '', category: '', facility: '', location: '' }, searchQueries: ['facility fees'],
+    scope: 'community', needsClarification: false,
+  };
+  for (const question of [
+    'What are the residential tap and facility fees?',
+    'How much are the utility tap fees for a home?',
+    'What is the water connection cost and facility fee?',
+  ]) {
+    const result = await answerCommunityQuestion(question, {
+      now, index, communityId: 'sterling-ranch', planCommunitySearch: async () => hostilePlan,
+      synthesizeCommunityAnswer: false, answerRulesQuestion,
+    });
+    assert.match(result.answer, /Residential stormwater tap.*\$6,080/i, question);
+    assert.match(result.answer, /Residential facilities fees.*\$12,395/i, question);
+    assert.ok(result.sources.some((source) => /Tap and Facility Fees/i.test(source.title || '')), question);
+    assert.doesNotMatch(JSON.stringify(result.sources), /Rent the Facility/i, question);
+  }
+});
+
+test('amenity costs and ambiguous facility fees retain the withheld rental handoff', async () => {
+  for (const question of ['How much does the clubhouse cost to rent?', 'What are the facility fees?']) {
+    const result = await answerCommunityQuestion(question, {
+      now, index, communityId: 'sterling-ranch', planCommunitySearch: async () => plan('cost', 'Overlook Clubhouse'),
+      synthesizeCommunityAnswer: false, answerRulesQuestion: unavailableRules,
+    });
+    assert.equal(result.answerStatus, 'source-unavailable', question);
+    assert.equal(result.answerMode, 'community-freshness-withheld', question);
+    assert.ok(result.sources.some((source) => /Rent the Facility/i.test(source.title || '')), question);
   }
 });

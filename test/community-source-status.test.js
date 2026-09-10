@@ -5,6 +5,11 @@ const path = require("node:path");
 const { communitySourceStatus } = require("../lib/community-source-manager");
 const { freshnessSummary } = require("../scripts/check-community-sources");
 
+const approvedFact = (staleAfter) => ({
+  sourceVersion: 'v1', reviewStatus: 'approved', reviewDecisionId: 'owner-decision',
+  reviewedAt: '2026-08-31T00:00:00Z', reviewedBy: 'owner', staleAfter,
+});
+
 test("community answers preserve the complete rulebook source status", () => {
   const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
   assert.match(
@@ -37,7 +42,7 @@ test("inventory backlog and expired approved evidence are separate release signa
   const index = {
     communityId: "alpha", sources: [{ id: "approved-page", sourceUrl: "https://alpha.gov/hours", staleAfter: expired }],
     inventory: { pendingCount: 875 },
-    factLedger: [{ reviewStatus: "approved", staleAfter: expired }],
+    factLedger: [approvedFact(expired)],
   };
   const now = Date.parse("2026-09-02T00:00:00.000Z");
   const status = communitySourceStatus(index, now);
@@ -65,7 +70,7 @@ test("fact-only expiry marks community source health stale", () => {
   const status = communitySourceStatus({
     communityId: "alpha", failureCount: 0,
     sources: [{ id: "fresh-page", sourceUrl: "https://alpha.gov/hours", staleAfter: "2026-09-03T00:00:00.000Z" }],
-    factLedger: [{ reviewStatus: "approved", staleAfter: "2026-09-01T00:00:00.000Z" }],
+    factLedger: [approvedFact("2026-09-01T00:00:00.000Z")],
   }, now);
   assert.equal(status.expiredApprovedSourceCount, 0);
   assert.equal(status.expiredApprovedFactCount, 1);

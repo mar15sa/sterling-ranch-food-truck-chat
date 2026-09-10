@@ -6,22 +6,25 @@
     <title>Sterling Ranch Pool Status</title>
     <meta
       name="description"
-      content="A colorblind-friendly Sterling Ranch Society page that translates the official CAB pool status light into plain text."
+      content="A Sterling Ranch Society page that displays the exact current status text from the official CAB source."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sterling Ranch Society" />
     <meta property="og:title" content="Sterling Ranch Pool Status" />
     <meta
       property="og:description"
-      content="Check the Overlook outdoor pool status with words first, color second."
+      content="Check the Overlook outdoor pool’s current official status text."
     />
     <meta property="og:url" content="https://sterlingranchsociety.com/pool" />
-    <meta property="og:image" content="https://sterlingranchcab.com/ImageRepository/Document?documentID=1749" />
+    <meta
+      property="og:image"
+      content="https://sterlingranchcab.com/ImageRepository/Document?documentID=1749"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Sterling Ranch Pool Status" />
     <meta
       name="twitter:description"
-      content="Check the Overlook outdoor pool status with words first, color second."
+      content="Check the Overlook outdoor pool’s current official status text."
     />
     <link rel="icon" href="/rules-icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/pool.css?v=20260627-pool1" />
@@ -30,205 +33,174 @@
       data-page-title="Sterling Ranch Pool Status"
       data-page-path="/pool"
     ></script>
+    <link rel="stylesheet" href="/society.css?v=20260909" />
+    <script src="/society.js?v=20260909" defer></script>
   </head>
-  <body class="pool-page" data-pool-state="loading">
-    <header class="pool-header">
-      <div class="pool-header-inner">
-        <a class="pool-brand" href="/" aria-label="Sterling Ranch Society home">
-          <span class="pool-mark" aria-hidden="true">
-            <svg viewBox="0 0 48 48" focusable="false">
-              <circle cx="24" cy="16" r="8" />
-              <path d="M6 30c4 0 4-3 8-3s4 3 8 3 4-3 8-3 4 3 8 3 4-3 8-3" />
-              <path d="M6 38c4 0 4-3 8-3s4 3 8 3 4-3 8-3 4 3 8 3 4-3 8-3" />
-            </svg>
-          </span>
-          <span>
-            <span class="pool-eyebrow">Sterling Ranch Society</span>
-            <span class="pool-brand-title">Pool Status</span>
-          </span>
-        </a>
-        <nav class="pool-nav" aria-label="Pool links">
-          <a href="/community-assistant">Community Assistant</a>
-          <a href="https://sterlingranchcab.com/187/Pool" target="_blank" rel="noreferrer">
-            Official CAB page
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M14 4h6v6m0-6L10 14M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6" />
-            </svg>
-          </a>
+  <body class="pool-page society-page" data-pool-state="loading">
+    <a class="society-skip" href="#main-content">Skip to content</a>
+    <div class="society-paper">
+      <header class="society-header">
+        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
+        ><button
+          class="society-menu"
+          type="button"
+          aria-expanded="false"
+          aria-controls="society-navigation"
+        >
+          Menu ＋
+        </button>
+        <nav
+          id="society-navigation"
+          class="society-nav"
+          aria-label="Main navigation"
+        >
+          <a href="/">Briefing</a><a href="/community-assistant">Assistant</a
+          ><a href="/food-truck">Food Trucks</a><a href="/calendar">Calendar</a
+          ><a href="/openings">Openings</a
+          ><a href="/pool" aria-current="page">Pool</a>
         </nav>
-      </div>
-    </header>
+      </header>
 
-    <main>
-      <section class="pool-status-band" aria-labelledby="poolStatusTitle">
-        <div class="pool-status-inner">
-          <div class="pool-status-panel">
-            <p class="pool-kicker">Overlook Outdoor Pool</p>
-            <h1 id="poolStatusTitle">Checking status</h1>
-            <p class="pool-summary" id="poolStatusSummary">
-              Reading the official CAB pool status and translating the color into words.
-            </p>
-            <p class="pool-action-note" id="poolResidentAction">
-              This page will show the status text as soon as it loads.
-            </p>
+      <main id="main-content" tabindex="-1">
+        <div class="society-page-title">
+          <p class="society-breadcrumb">
+            <a href="/">The Briefing</a> / Pool & Amenities
+          </p>
+          <h1>Pool & Amenities</h1>
+          <p>Seasonal updates and useful information for shared spaces.</p>
+        </div>
+        <section class="pool-status-band" aria-labelledby="poolStatusTitle">
+          <div class="pool-status-inner">
+            <div class="pool-status-panel">
+              <p class="pool-kicker">Overlook Outdoor Pool</p>
+              <h2 id="poolStatusTitle">Checking status</h2>
+              <p class="pool-summary" id="poolStatusSummary">
+                Reading the exact current status from the official CAB page.
+              </p>
+              <p class="pool-action-note" id="poolResidentAction">
+                This page will show the status text as soon as it loads.
+              </p>
 
-            <div class="pool-command-row">
-              <button class="pool-refresh" id="refreshStatus" type="button">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M20 12a8 8 0 0 1-13.7 5.6M4 12A8 8 0 0 1 17.7 6.4M17 3v4h-4M7 21v-4h4" />
-                </svg>
-                <span>Refresh status</span>
-              </button>
-              <a
-                class="pool-action-link"
-                id="poolActionLink"
-                href="https://sterlingranchcab.com/187/Pool"
-                target="_blank"
-                rel="noreferrer"
-              >Open official CAB page</a>
+              <div class="pool-command-row">
+                <button class="pool-refresh" id="refreshStatus" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                      d="M20 12a8 8 0 0 1-13.7 5.6M4 12A8 8 0 0 1 17.7 6.4M17 3v4h-4M7 21v-4h4"
+                    />
+                  </svg>
+                  <span>Refresh status</span>
+                </button>
+                <a
+                  class="pool-action-link"
+                  id="poolActionLink"
+                  href="https://sterlingranchcab.com/187/Pool"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Open official CAB page</a
+                >
+              </div>
+
+              <dl class="pool-status-meta" aria-label="Status details">
+                <div>
+                  <dt>Official status</dt>
+                  <dd id="poolSignalLabel">Checking</dd>
+                </div>
+                <div>
+                  <dt>Last checked</dt>
+                  <dd id="poolLastChecked">Just now</dd>
+                </div>
+                <div>
+                  <dt>Source</dt>
+                  <dd>
+                    <a
+                      id="poolSourceLink"
+                      href="https://sterlingranchcab.com/187/Pool"
+                      target="_blank"
+                      rel="noreferrer"
+                      >CAB pool page</a
+                    >
+                  </dd>
+                </div>
+              </dl>
+              <p class="pool-alert" id="poolStatusAlert" hidden></p>
             </div>
 
-            <dl class="pool-status-meta" aria-label="Status details">
-              <div>
-                <dt>CAB signal</dt>
-                <dd id="poolSignalLabel">Checking</dd>
-              </div>
-              <div>
-                <dt>Last checked</dt>
-                <dd id="poolLastChecked">Just now</dd>
-              </div>
-              <div>
-                <dt>Source</dt>
-                <dd>
-                  <a
-                    id="poolSourceLink"
-                    href="https://sterlingranchcab.com/187/Pool"
-                    target="_blank"
-                    rel="noreferrer"
-                  >CAB pool page</a>
-                </dd>
-              </div>
-            </dl>
-            <p class="pool-alert" id="poolStatusAlert" hidden></p>
+            <aside class="society-sidebar">
+              <h2>Questions about<br />shared spaces?</h2>
+              <p>
+                The Community Assistant can help you find facility information
+                and the relevant sources.
+              </p>
+              <a class="society-text-link" href="/community-assistant"
+                >Ask the Community Assistant →</a
+              ><img class="society-art" src="/society-foothills.png" alt="" />
+            </aside>
           </div>
+        </section>
 
-          <figure class="pool-photo">
-            <img
-              src="https://sterlingranchcab.com/ImageRepository/Document?documentID=1749"
-              alt="Overlook outdoor pool at Sterling Ranch"
-            />
-            <figcaption>Overlook outdoor pool</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="pool-current-strip" aria-label="Current status summary">
-        <div class="pool-current-inner">
-          <span class="pool-status-dot" id="poolStatusDot" data-state="loading" aria-hidden="true"></span>
-          <div>
-            <span class="pool-current-label">Current status</span>
-            <strong id="poolCurrentText">Checking</strong>
+        <section class="pool-current-strip" aria-label="Current status summary">
+          <div class="pool-current-inner">
+            <span
+              class="pool-status-dot"
+              id="poolStatusDot"
+              data-state="loading"
+              aria-hidden="true"
+            ></span>
+            <div>
+              <span class="pool-current-label">Current status</span>
+              <strong id="poolCurrentText">Checking</strong>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="pool-section pool-legend-section" aria-labelledby="poolLegendTitle">
-        <div class="pool-section-inner">
-          <div class="pool-section-heading">
-            <p class="pool-kicker">Color key</p>
-            <h2 id="poolLegendTitle">What each CAB signal means</h2>
-          </div>
-          <ul class="pool-legend-list">
-            <li>
-              <span class="pool-legend-dot" data-state="open" aria-hidden="true"></span>
-              <div>
-                <strong>Open</strong>
-                <span>Green Light: open for homeowners and guests.</span>
-              </div>
-            </li>
-            <li>
-              <span class="pool-legend-dot" data-state="temporarily-closed" aria-hidden="true"></span>
-              <div>
-                <strong>Temporarily closed</strong>
-                <span>Yellow Light: closed for weather or maintenance, with staff ready to reopen when possible.</span>
-              </div>
-            </li>
-            <li>
-              <span class="pool-legend-dot" data-state="closed" aria-hidden="true"></span>
-              <div>
-                <strong>Closed for the day</strong>
-                <span>Red Light: no access for homeowners or guests.</span>
-              </div>
-            </li>
-            <li>
-              <span class="pool-legend-dot" data-state="event-only" aria-hidden="true"></span>
-              <div>
-                <strong>Event access only</strong>
-                <span>Purple Light: only registered event attendees can use the pool.</span>
-              </div>
-            </li>
-            <li>
-              <span class="pool-legend-dot" data-state="at-capacity" aria-hidden="true"></span>
-              <div>
-                <strong>Open, but at capacity</strong>
-                <span>Blue Light: join the waitlist before entering.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="pool-section pool-info-section" aria-labelledby="poolInfoTitle">
-        <div class="pool-section-inner">
-          <div class="pool-section-heading">
-            <p class="pool-kicker">Pool basics</p>
-            <h2 id="poolInfoTitle">Before you go</h2>
-            <p>
-              Hours and operating rules can change during the season. These cards avoid repeating
-              numbers that may become outdated; the official CAB pool page linked above controls.
-              Status source checked <span id="poolDetailsChecked">when this page loaded</span>.
-            </p>
-          </div>
-          <div class="pool-info-grid">
-            <article class="pool-info-card">
-              <h3>Hours</h3>
-              <p>Check today’s official schedule before leaving home. Lap swim, open swim, lifeguard, and cleaning hours can differ.</p>
-            </article>
-            <article class="pool-info-card">
-              <h3>Guests</h3>
-              <p>Check the official page for the current guest-pass allowance, daily guest limit, and accompaniment requirements.</p>
-            </article>
-            <article class="pool-info-card">
-              <h3>Closures</h3>
-              <p>The pool may close for lightning, weather, maintenance, contamination, or capacity.</p>
-              <p>Use the live status above and the official page for current weather and reopening rules.</p>
-            </article>
-            <article class="pool-info-card">
-              <h3>Reminders</h3>
-              <p>Food, glass, concessions, events, and facility rules can change. Confirm the current details on the official CAB page.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="pool-footer">
-      <div class="pool-footer-inner">
-        <p>
-          Sterling Ranch Society is an independent community resource. Pool status and pool details come from the public Sterling Ranch CAB pool page.
-        </p>
-        <a
-          class="pool-maker-link"
-          href="https://ideakitchen.ai/"
-          target="_blank"
-          rel="noreferrer"
+        <section
+          class="pool-section pool-info-section"
+          aria-labelledby="poolInfoTitle"
         >
-          <img src="/idea-kitchen-icon.svg?v=transparent" alt="" />
-          <span>Made by Idea Kitchen</span>
-        </a>
-      </div>
-    </footer>
+          <div class="pool-section-inner">
+            <div class="pool-section-heading">
+              <p class="pool-kicker">Pool basics</p>
+              <h2 id="poolInfoTitle">Before you go</h2>
+              <p>
+                Hours and operating rules can change during the season. These
+                cards avoid repeating numbers that may become outdated; the
+                official CAB pool page linked above controls. Status source
+                checked
+                <span id="poolDetailsChecked">when this page loaded</span>.
+              </p>
+            </div>
+            <p>For hours, access, events, rentals, and facility rules, use the official CAB page linked above.</p>
+          </div>
+        </section>
+      </main>
 
-    <script src="/pool.js?v=20260627-pool1"></script>
+      <script src="/pool.js?v=20260627-pool1"></script>
+      <footer class="society-footer">
+        <div class="society-footer-brand">
+          <span class="society-monogram" aria-hidden="true">SR</span>
+          <div><b>Sterling Ranch Society</b><br />Douglas County, Colorado</div>
+        </div>
+        <div class="society-footer-right">
+          <p>
+            Independent community resource.
+            <a href="https://ideakitchen.ai/" target="_blank" rel="noreferrer"
+              >Made by Idea Kitchen ↗</a
+            >
+          </p>
+          <div class="society-feedback">
+            <a
+              class="society-feedback-link"
+              href="mailto:hello@ideakitchen.ai?subject=Pool%20Status%20bug%20report&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AWhich%20page%20or%20listing%20were%20you%20viewing%3F%0A%0AWhat%20device%20and%20browser%20were%20you%20using%3F%0A%0APlease%20attach%20a%20screenshot%20if%20you%20can."
+              >Report a bug</a
+            ><a
+              class="society-feedback-link"
+              href="mailto:hello@ideakitchen.ai?subject=Pool%20Status%20feature%20request&amp;body=What%20would%20you%20like%20Pool%20Status%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F"
+              >Request a feature</a
+            >
+          </div>
+          <small>Opens an email draft. You choose whether to send.</small>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

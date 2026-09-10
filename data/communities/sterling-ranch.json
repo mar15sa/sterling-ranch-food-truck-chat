@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "connectorAdapterContractVersion": 1,
   "communityId": "sterling-ranch",
   "name": "Sterling Ranch Community Authority Board",
   "shortName": "Sterling Ranch",
@@ -12,6 +13,7 @@
       "id": "official-website",
       "type": "civicplus-pages",
       "baseUrl": "https://sterlingranchcab.com/",
+      "adapter": { "capabilities": ["pages", "forms", "services"], "facets": ["contact", "submission", "action"], "controllingSourceRoles": ["operational", "action"], "actionTypes": ["information", "form", "account", "download", "list"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/", "purpose": "official-website" }], "freshness": { "refreshMinutes": 1440, "staleAfterMinutes": 2880 }, "degradation": { "policy": "retain-last-known" }, "vocabulary": { "amenity": ["facility", "rental"] } },
       "refreshMinutes": 1440,
       "maxPages": 80,
       "seedUrls": [
@@ -36,25 +38,94 @@
       "id": "official-calendar",
       "type": "civicplus-calendar",
       "baseUrl": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
+      "adapter": { "capabilities": ["events"], "facets": ["event-date", "date", "action"], "controllingSourceRoles": ["operational"], "actionTypes": ["information", "registration"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list", "purpose": "official-calendar" }], "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 }, "degradation": { "policy": "retain-last-known" }, "labels": { "calendarTitle": "Official Sterling Ranch Calendar", "openAction": "Open official community calendar" }, "vocabulary": { "event": ["calendar", "meeting"] } },
+      "refreshMinutes": 60
+    },
+    {
+      "id": "food-truck-schedule",
+      "type": "food-truck-schedule",
+      "baseUrl": "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
+      "adapter": {
+        "capabilities": ["events", "menu"],
+        "facets": ["event-date", "date", "menu", "price", "action"],
+        "controllingSourceRoles": ["operational"],
+        "actionTypes": ["information"],
+        "sourceHosts": ["sterlingranchcab.com"],
+        "endpoints": [{ "id": "schedule", "url": "https://sterlingranchcab.com/Calendar.aspx?EID=6150", "purpose": "official-food-truck-schedule" }],
+        "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 },
+        "degradation": { "policy": "retain-last-known" },
+        "labels": {
+          "calendarTitle": "Official Sterling Ranch food-truck calendar",
+          "calendarAction": "View Sterling Ranch food-truck schedule",
+          "fullAnswerAction": "Open full food-truck answer"
+        },
+        "vocabulary": { "food-truck": ["food truck", "food trucks", "mobile food"] },
+        "foodTruck": {
+          "fullAnswerPath": "/food-truck",
+          "calendarYears": [2026],
+          "vendorSources": []
+        }
+      },
       "refreshMinutes": 60
     },
     {
       "id": "official-rules",
       "type": "municode",
       "baseUrl": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+      "adapter": { "capabilities": ["rules"], "facets": ["permission", "restriction", "specification"], "controllingSourceRoles": ["governing"], "actionTypes": ["information"], "sourceHosts": ["library.municode.com"], "endpoints": [{ "id": "primary", "url": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations", "purpose": "governing-rules" }], "freshness": { "refreshMinutes": 1440, "staleAfterMinutes": 2880 }, "degradation": { "policy": "withhold" }, "vocabulary": { "rule": ["regulation", "standard"] } },
       "refreshMinutes": 1440
     },
     {
       "id": "facility-rentals",
       "type": "civicrec",
       "baseUrl": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog",
+      "adapter": { "capabilities": ["facilities", "availability"], "facets": ["availability", "facility", "price", "action"], "controllingSourceRoles": ["operational", "action"], "actionTypes": ["booking", "information"], "sourceHosts": ["secure.rec1.com"], "endpoints": [{ "id": "catalog", "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog", "purpose": "facility-rentals" }], "freshness": { "refreshMinutes": 360, "staleAfterMinutes": 720 }, "degradation": { "policy": "fallback" }, "vocabulary": { "reservation": ["booking", "rental"] } },
       "refreshMinutes": 360
     },
     {
       "id": "pool-status",
       "type": "live-status",
       "baseUrl": "https://sterlingranchcab.com/187/Pool",
+      "adapter": { "capabilities": ["status"], "facets": ["status"], "controllingSourceRoles": ["operational"], "actionTypes": ["information"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/187/Pool", "purpose": "pool-status" }], "freshness": { "refreshMinutes": 1, "staleAfterMinutes": 5 }, "degradation": { "policy": "withhold" }, "labels": { "openAction": "Open official pool status" }, "vocabulary": { "pool": ["aquatics", "swim"] }, "poolStatus": { "statusLabels": ["Open", "Closed", "At capacity"] } },
       "refreshMinutes": 1
+    },
+    {
+      "id": "waste-schedule",
+      "type": "live-waste-schedule",
+      "baseUrl": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+      "adapter": {
+        "capabilities": ["services"],
+        "facets": ["date", "action"],
+        "controllingSourceRoles": ["operational"],
+        "actionTypes": ["information", "download"],
+        "sourceHosts": ["www.wasteconnections.com", "api.recollect.net", "play.google.com", "apps.apple.com"],
+        "endpoints": [
+          { "id": "pickup-calendar", "url": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#", "purpose": "live-pickup-calendar" },
+          { "id": "address-suggest", "url": "https://api.recollect.net/api/areas", "purpose": "reference-location-lookup" },
+          { "id": "calendar", "url": "https://api.recollect.net/api/places", "purpose": "live-service-events" },
+          { "id": "android-app", "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile", "purpose": "pickup-reminders" },
+          { "id": "iphone-app", "url": "https://apps.apple.com/app/id1442351850", "purpose": "pickup-reminders" }
+        ],
+        "freshness": { "refreshMinutes": 15, "staleAfterMinutes": 30 },
+        "degradation": { "policy": "withhold" },
+        "labels": { "sourceTitle": "Waste Connections live pickup calendar" },
+        "vocabulary": { "waste": ["trash", "garbage", "recycling", "pickup"] },
+        "wasteSchedule": {
+          "recollect": { "areaId": "WC-5311", "serviceId": 975 },
+          "referenceLocation": { "query": "7853 Piney River Avenue", "candidateTextPattern": "7853\\s+Piney\\s+River" },
+          "serviceAreas": [
+            { "label": "Providence Village", "offset": 0 },
+            { "label": "Ascent Village", "offset": 1 },
+            { "label": "Prospect Village", "offset": 3 }
+          ],
+          "actionLinks": [
+            { "id": "pickup-calendar", "type": "information", "label": "Check an address in the official pickup calendar", "url": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" },
+            { "id": "wasteconnect-android", "type": "download", "label": "Open WasteConnect for Android", "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile" },
+            { "id": "wasteconnect-iphone", "type": "download", "label": "Open WasteConnect for iPhone", "url": "https://apps.apple.com/app/id1442351850" }
+          ]
+        }
+      },
+      "refreshMinutes": 15
     }
   ],
   "authority": {
@@ -86,6 +157,8 @@
     "srcab.utilityhawk.us",
     "ebill.sterlingranchco.com",
     "lumiere.technology"
+    ,"www.wasteconnections.com"
+    ,"api.recollect.net"
   ],
   "actions": [
     {
@@ -113,24 +186,6 @@
       "sourceType": "forms",
       "actionType": "form",
       "keywords": ["DRC", "design review", "architectural application", "landscape application"],
-      "refreshMinutes": 1440
-    },
-    {
-      "id": "wasteconnect-android",
-      "label": "Open WasteConnect for Android",
-      "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile",
-      "sourceType": "services",
-      "actionType": "download",
-      "keywords": ["WasteConnect", "trash", "recycling", "pickup schedule", "collection reminders"],
-      "refreshMinutes": 1440
-    },
-    {
-      "id": "wasteconnect-iphone",
-      "label": "Open WasteConnect for iPhone",
-      "url": "https://apps.apple.com/app/id1442351850",
-      "sourceType": "services",
-      "actionType": "download",
-      "keywords": ["WasteConnect", "trash", "recycling", "pickup schedule", "collection reminders"],
       "refreshMinutes": 1440
     }
   ]

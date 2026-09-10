@@ -32,16 +32,13 @@ test('owner pool-event discovery reaches the calendar even when a planner propos
   assert.equal(permission.intent, 'rules');
 });
 
-test('owner holiday phrasings use the explicit approved holiday schedule', () => {
+test('raw holiday page prose cannot create a resident answer shortcut', () => {
   const source = { id: 'trash', sourceUrl: 'https://sterlingranchcab.com/247/Trash-Recycling', title: 'Trash & Recycling',
     text: 'Pick Up Schedule Providence Village Monday. Holiday Schedule Trash pickup will be delayed by one day for the following holidays: New Year\'s Day Memorial Day Independence Day Labor Day Thanksgiving Christmas Opt-In for Service Notifications',
     staleAfter: '2026-09-07T00:00:00Z', checkedAt: '2026-09-06T00:00:00Z' };
   for (const question of ["It's Labor Day a holiday for trash pickup", 'Is Labor Day a holiday for trash pickup?', 'Will trash be picked up on Labor day?', 'Labor day trash pickup']) {
     const answer = proactiveCommunityAnswer(question, { index: { sources: [source] }, now });
-    assert.equal(answer.answerMode, 'community-proactive-trash-holiday');
-    assert.match(answer.answer, /Labor Day.*delayed by one day/i);
-    assert.doesNotMatch(answer.directAnswer, /^Yes\./);
-    assert.equal(answer.sources[0].id, 'trash');
+    assert.equal(answer, null);
   }
   const ask = index => proactiveCommunityAnswer('Is Labor Day a holiday for trash pickup?', { index, now });
   assert.equal(ask({ sources: [{ ...source, staleAfter: '2020-01-01' }] }), null);

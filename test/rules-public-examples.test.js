@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const storedCommunityIndex = require("../data/community-index.json");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 // Public-example regression tests verify answer behavior, not wall-clock source
 // freshness. The live source monitor covers expiration separately, so keep this
 // fixture current instead of letting the test change merely because a day passed.
@@ -37,17 +38,21 @@ const EXAMPLES = [
     includes: ["fixed charges", "Charges that depend on usage", "home type"],
   },
   {
-    question: "How do I reserve the Overlook Clubhouse?",
+    question: "How do I pay my water bill online?",
     verdict: "informational",
-    includes: ["live rental catalog", "Overlook Clubhouse"],
+    includes: ["Utility Hawk", "Pay Online"],
     requiresAction: true,
-    facilityBooking: true,
+    waterPayment: true,
     maxLineLength: 320,
   },
   {
     question: "Who do I contact about water billing?",
-    withheldConflict: true,
-    forbidden: ["American Conservation and Billing Solutions", "AmCoBi", "ClientCare@AmCoBi.com"],
+    verdict: "informational",
+    includes: ["AmCoBi", "(833) 772-2240", "ClientCare@AmCoBi.com"],
+    requiresAction: true,
+    requiresSections: false,
+    waterBillingContact: true,
+    maxLineLength: 450,
   },
   {
     question: "Which food truck is here tomorrow?",
@@ -62,6 +67,7 @@ for (const example of EXAMPLES) {
   test(`${example.withheldConflict ? "public example safely withholds a conflicted source" : "public example stays useful"}: ${example.question}`, async () => {
     const result = await answerCommunityQuestion(example.question, {
       index: communityIndex,
+      communityProfile,
       communityId: "sterling-ranch",
       answerRulesQuestion,
       synthesizeCommunityAnswer: false,
@@ -70,19 +76,11 @@ for (const example of EXAMPLES) {
         friendlyDate: "tomorrow",
         truck: "Example Eats",
         trucks: [{ name: "Example Eats", location: "Prospect Park" }],
-        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
         checkedAt: "2026-08-28T00:00:00.000Z",
         menu: { links: [], items: [] },
       }) : undefined,
     });
-    if (example.withheldConflict) {
-      assert.equal(result.confidence?.canAnswer, false);
-      assert.equal(result.answerMode, "community-freshness-withheld");
-      assert.equal(result.answerStatus, "source-unavailable");
-      for (const phrase of example.forbidden) assert.doesNotMatch(result.answer, new RegExp(phrase, "i"));
-      assert.match(result.actions[0].url, /\/206\/Water-Billing/);
-      return;
-    }
     assert.equal(result.confidence?.canAnswer, true);
     assert.equal(result.answerVerdict, example.verdict);
     assert.ok(result.answer.length <= 1000, `Answer is ${result.answer.length} characters long.`);
@@ -102,11 +100,22 @@ for (const example of EXAMPLES) {
     if (example.requiresAction) {
       assert.ok(result.actions?.some((action) => /^https?:\/\//i.test(action.url || "")));
     }
-    if (example.facilityBooking) {
-      assert.match(result.directAnswer, /live rental catalog.*choose.*Overlook Clubhouse.*select/i);
-      assert.ok(result.actions.some((action) => action.actionType === "booking" && /secure\.rec1\.com/i.test(action.url || "")));
-      assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl || "")));
-      assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i);
+    if (example.waterPayment) {
+      assert.match(result.directAnswer, /Utility Hawk.*continue/i);
+      assert.ok(result.actions.some((action) => action.url === "https://srcab.utilityhawk.us"));
+      assert.doesNotMatch(result.answer, /AmCoBi|rental catalog/i);
+    }
+    if (example.waterBillingContact) {
+      assert.equal(result.answerMode, "community-approved-operational-contact");
+      assert.equal(result.answerStatus, "verified");
+      assert.ok(result.sources.some((source) => /\/334\/Water-Billing-Payment-Options/.test(source.sourceUrl || "")));
+    }
+    if (example.question === "What fees do residents pay?") {
+      assert.equal(result.answerStatus, "verified");
+      assert.deepEqual(
+        result.sources.map((source) => source.ownerReview?.decisionId).sort(),
+        ["cab-fees-effective-date", "water-rates-2026"]
+      );
     }
     const longestLine = Math.max(...result.answer.split("\n").map((line) => line.length));
     assert.ok(
@@ -123,12 +132,13 @@ test("public example questions in the page are covered by the regression suite",
     path.join(__dirname, "..", "public", "rules-assistant.html"),
     "utf8"
   );
-  const buttons = [...html.matchAll(/<button type="button">([^<]+)<\/button>/g)].map(
-    (match) => match[1].trim()
+  const starters = html.match(/id="rulesStarters"[\s\S]*?<\/div>/)?.[0] || "";
+  const buttons = [...starters.matchAll(/<button\b[^>]*>([^<]+)<\/button\s*>/g)].map(
+    (match) => match[1].replace(/\s+/g, " ").trim()
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
   assert.match(html, /rules-assistant\.css\?v=20260901-resident-sources/);
-  assert.match(html, /rules-assistant\.js\?v=20260901-resident-sources/);
+  assert.match(html, /rules-assistant\.js\?v=20260909-editorial/);
 });
 
 test("park and amenity booking questions use the reservation process", async () => {

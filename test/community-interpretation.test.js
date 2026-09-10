@@ -42,6 +42,11 @@ test("specification detection distinguishes requested paint details from the act
   assert.deepEqual(deterministicRequestedDetails("What color can I paint my garage door?"), ["specification"]);
 });
 
+test("water-usage access detection preserves generic online utility portal actions", () => {
+  assert.deepEqual(deterministicRequestedDetails("How can I monitor my water usage online?"), ["action"]);
+  assert.deepEqual(deterministicRequestedDetails("Online access for my utility bill"), ["action"]);
+});
+
 function calendarHtml(events = []) {
   return events.map((event) => `<h2 class="title">${event.category || "Community Events"}</h2>
     <a id="eventTitle_${event.id}" href="/Calendar.aspx?EID=${event.id}"><span>${event.title}</span></a>
@@ -299,25 +304,33 @@ test("structured validation keeps holiday lighting schedules out of live events"
 });
 
 test("permission plus application questions consult the controlling rule before forms", async () => {
-  const answer = await answerCommunityQuestion("I need to submit for rainwater harvesting barrels", {
-    interpretationMode: "structured",
-    index: communityIndex,
-    communityId: "sterling-ranch",
-    answerRulesQuestion,
-    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  const ask = (question, subject) => answerCommunityQuestion(question, {
+    interpretationMode: "structured", index: communityIndex, communityId: "sterling-ranch",
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
     planCommunitySearch: async () => interpretation({
-      intent: "forms",
-      goal: "application",
-      goals: ["application"],
-      subject: "rainwater harvesting barrels",
+      intent: "forms", goal: "application", goals: ["application"], subject,
       requestedDetails: ["action", "permission"],
       dateRange: { kind: "none", start: "", end: "", label: "" },
-      searchQueries: ["rainwater harvesting barrels application"],
+      searchQueries: [`${subject} application`],
     }),
   });
-  assert.match(answer.answer, /55 gallons/i);
-  assert.match(answer.answer, /may not need DRC approval/i);
-  assert.ok(answer.actions.some((action) => /^https:\/\//.test(action.url)));
+  const answer = await ask("I need to submit for rainwater harvesting barrels", "rainwater harvesting barrels");
+  assert.equal(answer.answerStatus, "verified");
+  assert.equal(answer.answerVerdict, "conditional");
+  assert.match(answer.answer, /55-gallon/i);
+  assert.match(answer.answer, /if the controlling rain-barrel rule says approval is needed/i);
+  assert.match(answer.nextStep, /if the controlling rule requires approval/i);
+  assert.ok(answer.actions.some((action) => /\/201\/Design-Review-Documents/i.test(action.url)));
+  assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl)));
+
+  const trampoline = await ask("I need to submit for a trampoline", "trampoline");
+  assert.equal(trampoline.answerMode, "community-rule-partial");
+  assert.match(trampoline.directAnswer, /DRC approval is required/i);
+  assert.match(trampoline.nextStep, /could not verify the application or submission step/i);
+
+  const gazebo = await ask("I need to submit for a gazebo", "gazebo");
+  assert.equal(gazebo.answerStatus, "could-not-verify");
+  assert.doesNotMatch(gazebo.answer, /lighting must be strung.*gazebo/i);
 });
 
 test("structured rules retry the deterministic index before a community-page fallback", async () => {
@@ -356,7 +369,7 @@ test("structured rules retry the deterministic index before a community-page fal
   assert.doesNotMatch(answer.answer, /Calculating Outdoor Water Usage/i);
 });
 
-test("known safety boundaries do not invoke a second AI-assisted rules interpretation", async () => {
+test("unsupported requests complete retrieval before returning the generic evidence boundary", async () => {
   let rulesCalls = 0;
   const answer = await answerCommunityQuestion("What is the CAB Instagram account?", {
     interpretationMode: "structured",
@@ -370,14 +383,14 @@ test("known safety boundaries do not invoke a second AI-assisted rules interpret
       dateRange: { kind: "none", start: "", end: "", label: "" },
       searchQueries: ["CAB Instagram account"],
     }),
-    answerRulesQuestion: async () => { rulesCalls += 1; throw new Error("should not run"); },
+    answerRulesQuestion: async () => { rulesCalls += 1; return { answer: "No approved answer.", answerMode: "unverified", confidence: { canAnswer: false }, sources: [] }; },
   });
-  assert.equal(rulesCalls, 0);
-  assert.equal(answer.answerMode, "community-rules-boundary");
-  assert.match(answer.answer, /could not verify.*Instagram/i);
+  assert.ok(rulesCalls >= 1);
+  assert.equal(answer.answerMode, "source-evidence-boundary");
+  assert.match(answer.answer, /could not verify an answer from approved, up-to-date community sources/i);
 });
 
-test("fast safety boundaries preserve established diagnostic reasons", async () => {
+test("generic evidence boundaries retain the rules engine diagnostic reason", async () => {
   const cases = [
     ["Can I run a food truck from my driveway?", "no-food-truck-specific-rule"],
     ["What is the HOA phone number?", "missing-requested-contact-info"],
@@ -386,6 +399,8 @@ test("fast safety boundaries preserve established diagnostic reasons", async () 
     const answer = await answerCommunityQuestion(question, {
       interpretationMode: "structured",
       index: communityIndex,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
       planCommunitySearch: async () => interpretation({
         intent: "rules",
         goal: "permission",
@@ -435,10 +450,8 @@ test("contact extraction cannot substitute a different organization", async () =
   assert.equal(answer.confidence.canAnswer, false);
   assert.equal(answer.confidence.reason, "missing-requested-contact-info");
   assert.doesNotMatch(answer.answer, /833/);
-  assert.equal(answer.sources.length, 1);
-  assert.match(answer.sources[0].sourceUrl, /Important-Contact-Information/);
-  assert.equal(answer.actions.length, 1);
-  assert.match(answer.actions[0].url, /Important-Contact-Information/);
+  assert.equal(answer.sources.length, 0);
+  assert.equal(answer.actions.length, 0);
 });
 
 test("grounding rejects stronger prohibitions than the official draft supports", () => {
@@ -580,7 +593,7 @@ test("AI unrelated scope cannot reject a clear state-parks-pass process question
       clarificationQuestion: "",
     }),
   });
-  assert.equal(answer.answerMode, "source-derived-structured");
+  assert.match(answer.answerMode, /^source-derived-(?:structured|extractive)$/);
   assert.equal(answer.confidence?.canAnswer, true);
   assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i);
 });

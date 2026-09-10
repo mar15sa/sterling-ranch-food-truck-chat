@@ -6,10 +6,12 @@ const { URL } = require("node:url");
 const { isJunkMenuItem } = require("./lib/menu-quality");
 const liveMonitor = require("./lib/community-live-monitor").createLiveMonitor({
   getPoolStatus: (...args) => getPoolStatus(...args),
-  getCommunityEvents: (...args) => getCommunityEvents(...args),
+  getCommunityEvents: (...args) => getConfiguredCommunityEvents(...args),
   notify: (...args) => require("./lib/rules-alerts").alertCommunityMonitorChanged(...args),
 });
 const { createFoodTruckService } = require("./lib/food-truck-service");
+const { getCommunityFoodTruckSchedule } = require("./lib/community-food-truck-live");
+const { createMonthlyScheduleCache } = require("./lib/food-truck-calendar-cache");
 const {
   answerRulesQuestion,
   createRulesIndex,
@@ -46,12 +48,16 @@ const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
+const { calendarConfiguration, upcomingCommunityEvents } = require("./lib/community-calendar-view");
 const { getCommunityEvents } = require("./lib/community-events");
+const { createConnectorAdapters } = require("./lib/community-connector-adapter");
+const { getCommunityPoolStatus } = require("./lib/community-pool-status");
 const { getCommunityLlmMetrics, planCommunitySearch } = require("./lib/community-llm");
 const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedule");
 const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
 const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
-const { communitySourceStatus, getCommunityIndex, scheduleCommunityRefresh } = require("./lib/community-source-manager");
+const { rulebookDestination } = require("./lib/community-rulebook");
+const { communitySourceStatus, getCommunityIndex, getCommunityProfile, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
 const { latestReviewDecision } = require("./lib/community-review-queue");
 const { paginateReviews } = require("./lib/community-review-pagination");
@@ -66,6 +72,13 @@ const {
   submitOpeningTip,
 } = require("./lib/openings");
 const { previewCommunitySetup } = require("./lib/community-onboarding");
+
+function getConfiguredCommunityEvents(request, options = {}) {
+  const profile = options.profile || getCommunityProfile();
+  const adapter = createConnectorAdapters(profile).find((item) => item.family === "civicplus-calendar" && item.capabilities.includes("events"));
+  if (!adapter) throw new Error("No official calendar connector is configured for this community.");
+  return getCommunityEvents(request, { ...options, profile, adapter });
+}
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";
@@ -103,45 +116,6 @@ const LOCAL_EVENT_OVERRIDES = {
   "2026-08-05": {
     location: "Prospect Park",
     trucks: ["Cousins Maine Lobster", "Muy Loco Tacos", "Kona Ice"],
-  },
-};
-const POOL_STATUS_DETAILS = {
-  green: {
-    state: "open",
-    colorName: "Green",
-    headline: "Open",
-    summary: "The pool is currently open for homeowners and guests.",
-    residentAction: "Normal entry rules still apply, including guest passes and capacity limits.",
-  },
-  yellow: {
-    state: "temporarily-closed",
-    colorName: "Yellow",
-    headline: "Temporarily closed",
-    summary:
-      "The pool is temporarily closed for weather or maintenance. Staff are in the building and may reopen when conditions allow.",
-    residentAction: "Check again before heading over.",
-  },
-  red: {
-    state: "closed",
-    colorName: "Red",
-    headline: "Closed for the day",
-    summary: "The pool is closed for the day with no access for homeowners or guests.",
-    residentAction: "Plan for another day unless the official CAB page changes.",
-  },
-  purple: {
-    state: "event-only",
-    colorName: "Purple",
-    headline: "Event access only",
-    summary:
-      "The pool is open only for people registered for the event currently happening.",
-    residentAction: "Visit the community calendar for event details and registration.",
-  },
-  blue: {
-    state: "at-capacity",
-    colorName: "Blue",
-    headline: "Open, but at capacity",
-    summary: "The pool is open but full. To enter, you will need to join the waitlist.",
-    residentAction: "Use the official CAB link for the waitlist or the latest entry instructions.",
   },
 };
 const KNOWN_TRUCK_LINKS = {
@@ -2916,7 +2890,10 @@ const mimeTypes = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
 };
-const calendarCache = new Map();
+const scheduleCache = createMonthlyScheduleCache({
+  calendarBase: CALENDAR_BASE,
+  eventId: STERLING_EVENT_ID,
+});
 const menuCache = new Map();
 const rulesAskRateLimits = new Map();
 const communityPreviewRateLimits = new Map();
@@ -3276,49 +3253,33 @@ async function getEventTruckListings(calendarTitle, targetDate) {
   return [];
 }
 async function getScheduleForMonth(year, month, day = 1) {
-  const cacheKey = `${year}-${month}`;
-  const cached = calendarCache.get(cacheKey);
-  if (cached && Date.now() - cached.savedAt < 1000 * 60 * 60) return cached.data;
+  return scheduleCache.getSchedule(year, month, day, async (sourceUrl) => {
+    const html = await fetchText(sourceUrl);
+    const text = stripHtml(html);
+    const schedule = {};
+    const matches = text.matchAll(/^(\d{1,2})\/(\d{1,2})\s*[-–]\s*(.+)$/gm);
 
-  const url = new URL(CALENDAR_BASE);
-  url.searchParams.set("EID", STERLING_EVENT_ID);
-  url.searchParams.set("month", String(month));
-  url.searchParams.set("year", String(year));
-  url.searchParams.set("day", String(day));
-  url.searchParams.set("calType", "0");
+    for (const match of matches) {
+      const eventMonth = Number(match[1]);
+      const eventDay = Number(match[2]);
+      const truck = match[3].replace(/\s+/g, " ").trim();
+      if (!isPlausibleCalendarTruckName(truck)) continue;
 
-  const html = await fetchText(url.toString());
-  const text = stripHtml(html);
-  const schedule = {};
-  const matches = text.matchAll(/^(\d{1,2})\/(\d{1,2})\s*[-–]\s*(.+)$/gm);
+      const date = makeLocalDate(year, eventMonth, eventDay);
+      schedule[formatIso(date)] = truck;
+    }
 
-  for (const match of matches) {
-    const eventMonth = Number(match[1]);
-    const eventDay = Number(match[2]);
-    const truck = match[3].replace(/\s+/g, " ").trim();
-    if (!isPlausibleCalendarTruckName(truck)) continue;
+    const localEvents = {};
+    for (const [dateKey, event] of Object.entries(LOCAL_EVENT_OVERRIDES)) {
+      const eventDate = parseIsoDateParam(dateKey);
+      if (!eventDate) continue;
+      if (eventDate.getUTCFullYear() !== year || eventDate.getUTCMonth() + 1 !== month) continue;
 
-    const date = makeLocalDate(year, eventMonth, eventDay);
-    schedule[formatIso(date)] = truck;
-  }
+      localEvents[dateKey] = event;
+    }
 
-  const localEvents = {};
-  for (const [dateKey, event] of Object.entries(LOCAL_EVENT_OVERRIDES)) {
-    const eventDate = parseIsoDateParam(dateKey);
-    if (!eventDate) continue;
-    if (eventDate.getUTCFullYear() !== year || eventDate.getUTCMonth() + 1 !== month) continue;
-
-    localEvents[dateKey] = event;
-  }
-
-  const data = {
-    schedule,
-    localEvents,
-    sourceUrl: url.toString(),
-    fetchedAt: new Date().toISOString(),
-  };
-  calendarCache.set(cacheKey, { data, savedAt: Date.now() });
-  return data;
+    return { schedule, localEvents, fetchedAt: new Date().toISOString() };
+  });
 }
 
 function cleanResultUrl(rawUrl) {
@@ -3749,49 +3710,6 @@ function absoluteUrl(url, baseUrl) {
   }
 }
 
-function getHtmlAttribute(markup, attributeName) {
-  const pattern = new RegExp(`${attributeName}\\s*=\\s*(["\\'])([\\s\\S]*?)\\1`, "i");
-  const match = String(markup || "").match(pattern);
-  return match ? decodeHtml(match[2]).trim() : "";
-}
-
-function findPoolStatusLink(html) {
-  const linkPattern =
-    /<a\b[^>]*class=["'][^"']*\bwidgetGraphicLinksLink\b[^"']*["'][^>]*>[\s\S]*?<\/a>/gi;
-  const links = [...String(html || "").matchAll(linkPattern)].map((match) => match[0]);
-  return links.find((link) => /\b(green|yellow|red|purple|blue)\s+light\b/i.test(link)) || "";
-}
-
-function parsePoolStatus(html) {
-  const linkMarkup = findPoolStatusLink(html);
-  if (!linkMarkup) return null;
-
-  const imageMarkup = linkMarkup.match(/<img\b[^>]*>/i)?.[0] || "";
-  const label =
-    getHtmlAttribute(linkMarkup, "aria-label") ||
-    getHtmlAttribute(imageMarkup, "alt") ||
-    getHtmlAttribute(imageMarkup, "title");
-  const color = label.match(/\b(green|yellow|red|purple|blue)\b/i)?.[1]?.toLowerCase();
-  const detail = POOL_STATUS_DETAILS[color];
-
-  if (!detail) return null;
-
-  const actionUrl = absoluteUrl(getHtmlAttribute(linkMarkup, "href") || POOL_STATUS_URL, POOL_STATUS_URL);
-  const imageUrl = getHtmlAttribute(imageMarkup, "src");
-
-  return {
-    ...detail,
-    color,
-    officialColorLabel: `${detail.colorName} Light`,
-    detectedLabel: label || `${detail.colorName} Light`,
-    sourceName: "Sterling Ranch CAB pool page",
-    sourceUrl: POOL_STATUS_URL,
-    actionUrl,
-    imageUrl: imageUrl ? absoluteUrl(imageUrl, POOL_STATUS_URL) : "",
-    checkedAt: new Date().toISOString(),
-  };
-}
-
 async function getPoolStatus(options = {}) {
   const force = Boolean(options.force);
   const now = Date.now();
@@ -3807,34 +3725,19 @@ async function getPoolStatus(options = {}) {
   if (!force && poolStatusPromise) return poolStatusPromise;
 
   poolStatusPromise = (async () => {
-    const html = await fetchText(POOL_STATUS_URL);
-    const parsed = parsePoolStatus(html);
-
-    if (!parsed) {
-      throw new Error("The CAB pool status button was not found on the source page.");
-    }
-
-    const data = { ...parsed, cached: false, stale: false };
+    const data = { ...await getConfiguredCommunityPoolStatus(), cached: false, stale: false };
     poolStatusCache = { data, savedAt: Date.now() };
     return data;
   })()
-    .catch((error) => {
-      if (poolStatusCache) {
-        return {
-          ...poolStatusCache.data,
-          cached: true,
-          stale: true,
-          error: "Could not refresh the CAB status just now.",
-        };
-      }
-
-      throw error;
-    })
     .finally(() => {
       poolStatusPromise = null;
     });
 
   return poolStatusPromise;
+}
+
+async function getConfiguredCommunityPoolStatus(options = {}) {
+  return getCommunityPoolStatus({ profile: options.profile || getCommunityProfile(), fetchImpl: options.fetchImpl || fetch });
 }
 
 async function getSocialLinksFromOfficial(officialLink, truckName) {
@@ -4503,7 +4406,6 @@ async function handlePoolStatus(req, res, url) {
   } catch (error) {
     sendJson(res, 502, {
       state: "unknown",
-      colorName: "Unknown",
       headline: "Status unavailable",
       summary: "The official CAB pool status could not be checked right now.",
       residentAction: "Open the official CAB pool page for the latest information.",
@@ -4683,17 +4585,19 @@ async function handleRulesAsk(req, res, url) {
       : conversation.resolvedQuestion,
     {
     answerRulesQuestion,
-    getPoolStatus,
-    getCommunityEvents,
+    getPoolStatus: getConfiguredCommunityPoolStatus,
+    getCommunityEvents: getConfiguredCommunityEvents,
     getWasteSchedule: getSterlingRanchWasteSchedule,
     getFoodTruckAnswer: async (foodTruckRequest, originalQuestion) => {
       const dateFromInterpretation = typeof foodTruckRequest === "object"
         ? parseIsoDateParam(foodTruckRequest.dateRange?.start)
         : null;
       const foodTruckQuestion = originalQuestion || (typeof foodTruckRequest === "string" ? foodTruckRequest : "food truck schedule");
-      return getAnswerForDate(foodTruckQuestion, dateFromInterpretation || parseAskedDate(foodTruckQuestion));
+      const date = formatIso(dateFromInterpretation || parseAskedDate(foodTruckQuestion));
+      return getCommunityFoodTruckSchedule({ dateRange: { start: date, end: date } }, { profile: getCommunityProfile(), fetchImpl: fetch, stripHtml });
     },
     index: getCommunityIndex(),
+    communityProfile: getCommunityProfile(),
     communityId: "sterling-ranch",
     }
   );
@@ -5119,6 +5023,8 @@ function serveStatic(req, res, url) {
     "/food-truck/": "/food-truck.html",
     "/rules-assistant": "/rules-assistant.html",
     "/rules-assistant/": "/rules-assistant.html",
+    "/calendar": "/calendar.html",
+    "/calendar/": "/calendar.html",
     "/community-assistant": "/rules-assistant.html",
     "/community-assistant/": "/rules-assistant.html",
     "/community-assistant/questions": "/community-questions.html",
@@ -5172,6 +5078,15 @@ const server = http.createServer(async (req, res) => {
     res.once("finish", () => {
       recordRequest(url.pathname, res.statusCode, Date.now() - requestStartedAt);
     });
+    if (url.pathname === "/rulebook") {
+      res.writeHead(302, {
+        ...SECURITY_HEADERS,
+        location: rulebookDestination(getCommunityProfile()),
+        "cache-control": "no-store",
+      });
+      res.end();
+      return;
+    }
     if (url.pathname === "/api/health") {
       await handleHealth(req, res);
       return;
@@ -5181,6 +5096,16 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (url.pathname === "/community-calendar") {
+      const { action } = calendarConfiguration(getCommunityProfile());
+      res.writeHead(302, { ...SECURITY_HEADERS, location: action.url, "cache-control": "no-store" });
+      res.end();
+      return;
+    }
+    if (url.pathname === "/api/community/events") {
+      sendJson(res, 200, await upcomingCommunityEvents(getCommunityProfile()));
+      return;
+    }
     if (url.pathname === "/api/schedule") {
       await handleSchedule(req, res, url);
       return;

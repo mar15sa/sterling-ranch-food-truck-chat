@@ -3,12 +3,33 @@ const test = require("node:test");
 const { buildAnswerContract } = require("../lib/community-contracts");
 const { resolveConversationQuestion } = require("../lib/community-conversation");
 const { foodTruckAnswer, isFoodTruckQuestion } = require("../lib/community-food-trucks");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion, cleanAnswerText, unanchoredRecurringScheduleAnswer } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
 const { diffCommunityIndexes, sourceReleaseDecision, validateCommunityCandidate } = require("../lib/community-release");
-const { getSterlingRanchWasteSchedule, scheduleTimingLabel, villageDatesForAnchor } = require("../lib/community-waste-schedule");
+const { getWasteSchedule, scheduleTimingLabel, configuredAreaDates } = require("../lib/community-waste-schedule");
+function foodTruckProfile() {
+  const profile = structuredClone(communityProfile);
+  const connector = profile.connectors.find((item) => item.type === "food-truck-schedule");
+  connector.adapter.sourceHosts.push("www.facebook.com", "www.instagram.com");
+  connector.adapter.foodTruck.vendorSources = [
+    { id: "example-eats", aliases: ["Example Eats"], menuUrls: ["https://www.facebook.com/example-eats/menu"] },
+    { id: "tulas", aliases: ["Tula's Tapas"], menuUrls: ["https://www.facebook.com/tulas/menu"] },
+    { id: "hippops", aliases: ["HipPops"], menuUrls: ["https://www.instagram.com/hippops/menu"] },
+  ];
+  profile.allowedHosts.push("www.facebook.com", "www.instagram.com");
+  return profile;
+}
+function liveWasteEvidence(date, checkedAt) {
+  return {
+    degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
+    claims: [date, "2026-09-01", "2026-09-03"].map((claimDate) => ({ facet: "date", text: claimDate, controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" })),
+    evidence: [{ evidenceId: "sterling-ranch:waste-schedule:live-calendar", sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+    actions: [{ type: "information", label: "Check an address in the official pickup calendar", url: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" }],
+  };
+}
 
 function source(id, hash, overrides = {}) {
   return {
@@ -30,7 +51,7 @@ function source(id, hash, overrides = {}) {
   };
 }
 
-test("fence-color wording variants use the searchable official one-sheet, even without AI", async () => {
+test("fence-color wording variants do not use an unapproved static one-sheet as the answer", async () => {
   for (const question of [
     "What is the fence paint color?",
     "What color should I paint my fence?",
@@ -49,9 +70,42 @@ test("fence-color wording variants use the searchable official one-sheet, even w
       }),
     });
 
-    assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
-    assert.match(answer.sources[0]?.sourceUrl || "", /DocumentCenter\/View\/618/i, question);
-    assert.doesNotMatch(answer.answer, /garage-door color list/i, question);
+    if (/3-rail/i.test(question)) {
+      assert.equal(answer.answerStatus, "verified", question);
+      assert.equal(answer.completion.outcome, "complete", question);
+      assert.match(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
+    } else {
+      assert.equal(answer.answerStatus, "source-unavailable", question);
+      assert.equal(answer.completion.outcome, "missing-evidence", question);
+      assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "specification"), question);
+      assert.doesNotMatch(answer.answer, /Sherwin Williams #3002.*Belvedere Tan/i, question);
+      assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)), question);
+    }
+    assert.doesNotMatch(answer.answer, /trash enclosure/i, question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
+  }
+});
+
+test("missing paint specifications lead with the evidence boundary without inventing a color", async () => {
+  for (const question of ["What specific paint color?", "What color can I paint my garage door?"]) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+        ...options,
+        searchMode: "legacy",
+        llmMode: "off",
+      }),
+    });
+
+    assert.equal(answer.answerStatus, "source-unavailable", question);
+    assert.equal(answer.completion.outcome, "missing-evidence", question);
+    assert.match(answer.answer, /^Short answer: The cited current rules do not name one exact paint color or finish/i, question);
+    assert.match(answer.answer, /manufacturer's paint chips indicating color number/i, question);
+    assert.match(answer.answer, /DRC approval is required/i, question);
+    assert.doesNotMatch(answer.answer, /Belvedere Tan|Earthen|Sherwin Williams|Solomon #/i, question);
   }
 });
 
@@ -151,10 +205,10 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
     friendlyDate: "Saturday, August 29",
     truck: "Example Eats",
     trucks: [{ name: "Example Eats", location: "Prospect Park" }],
-    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
     checkedAt: "2026-08-28T00:00:00.000Z",
-    menu: { links: [{ title: "Example Eats official menu", url: "https://sterlingranchcab.com/menu" }], items: [{ name: "Tacos", price: "$12.00" }] },
-  });
+    menu: { links: [{ title: "Example Eats official menu", url: "https://www.facebook.com/example-eats/menu" }], items: [{ name: "Tacos", price: "$12.00", url: "https://www.facebook.com/example-eats/menu" }] },
+  }, { profile: foodTruckProfile() });
   assert.equal(answer.answerMode, "community-live-food-truck");
   assert.match(answer.directAnswer, /Example Eats at Prospect Park/);
   assert.match(answer.keyDetails[0], /Tacos.*\$12/);
@@ -166,7 +220,7 @@ test("food-truck answers use the shared contract and cite schedule and menu evid
   assert.deepEqual(answer.actions.map((action) => action.label), [
     "Open full food-truck answer",
     "View Example Eats menu",
-    "View food-truck schedule",
+    "View Sterling Ranch food-truck schedule",
   ]);
   assert.equal(answer.actions[0].url, "/food-truck?date=2026-08-29");
 });
@@ -175,24 +229,24 @@ test("food-truck answers keep each truck's menu, source, and action separate", (
   const answer = foodTruckAnswer({
     date: "2026-09-04",
     friendlyDate: "Friday, September 4, 2026",
-    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx",
+    sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
     trucks: [
       {
         name: "Tula's Tapas",
         menu: {
-          links: [{ title: "Tula's Tapas menu", url: "https://tulas.example/menu" }],
-          items: [{ name: "Tula's Tots", description: "Crispy tater tots." }],
+          links: [{ title: "Tula's Tapas menu", url: "https://www.facebook.com/tulas/menu" }],
+          items: [{ name: "Tula's Tots", description: "Crispy tater tots.", url: "https://www.facebook.com/tulas/menu" }],
         },
       },
       {
         name: "HipPops",
         menu: {
-          links: [{ title: "HipPops menu", url: "https://hippops.example/menu" }],
-          items: [{ name: "Gelato Pops", price: "$6" }],
+          links: [{ title: "HipPops menu", url: "https://www.instagram.com/hippops/menu" }],
+          items: [{ name: "Gelato Pops", price: "$6", url: "https://www.instagram.com/hippops/menu" }],
         },
       },
     ],
-  });
+  }, { profile: foodTruckProfile() });
 
   assert.match(answer.directAnswer, /Tula's Tapas and HipPops/);
   assert.deepEqual(answer.presentation.truckCards.map((truck) => truck.name), ["Tula's Tapas", "HipPops"]);
@@ -202,10 +256,10 @@ test("food-truck answers keep each truck's menu, source, and action separate", (
     "Open full food-truck answer",
     "View Tula's Tapas menu",
     "View HipPops menu",
-    "View food-truck schedule",
+    "View Sterling Ranch food-truck schedule",
   ]);
   assert.deepEqual(answer.sources.map((source) => source.title), [
-    "Official Sterling Ranch calendar",
+    "Official Sterling Ranch food-truck calendar",
     "Tula's Tapas menu",
     "HipPops menu",
   ]);
@@ -228,17 +282,84 @@ test("negative controls cannot become unrelated confident answers", async () => 
     ["Please help", /What would you like help with/i, /trash carts|Waste Connections/i],
     ["What is the weather today?", /can(?:not|'t) verify|can help/i, /pool contamination/i],
     ["Who is Diane Smethills?", /reliably identify/i, /clubhouse|water billing/i],
-    ["Can I run a food truck from my driveway?", /could not verify.*operating a food-truck business/i, /pool deck|listed food truck/i],
-    ["Can I remove a tree?", /could not verify blanket permission/i, /VPN hardware/i],
-    ["Can I paint my mailbox purple?", /could not verify permission to repaint/i, /same colors as the original/i],
-    ["What is the CAB Instagram account?", /could not verify.*Instagram/i, /clubhouse|trash carts/i],
-    ["Can I build a helipad in my yard?", /could not verify.*helipad/i, /utility shed.*8/i],
+    ["Can I run a food truck from my driveway?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /pool deck|listed food truck/i],
+    ["Can I remove a tree?", /could not verify an answer from approved, up-to-date community sources|do not state whether the requested removal is allowed/i, /VPN hardware/i],
+    ["Can I paint my mailbox purple?", /could not verify an answer from approved, up-to-date community sources/i, /same colors as the original|nonpotable water/i],
+    ["What is the CAB Instagram account?", /could not verify an answer from approved, up-to-date community sources/i, /clubhouse|trash carts/i],
+    ["Can I build a helipad in my yard?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /utility shed.*8/i],
   ];
   for (const [question, include, exclude] of cases) {
     const result = await answerCommunityQuestion(question, options);
     assert.match(result.answer, include, question);
     assert.doesNotMatch(result.answer, exclude, question);
     assert.equal(result.confidence.canAnswer, false, question);
+  }
+});
+
+test("withheld boundaries retain the reason and offer only question-specific handoffs", async () => {
+  const options = {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    synthesizeCommunityAnswer: false,
+  };
+  const foodTruck = await answerCommunityQuestion("Can I run a food truck from my driveway?", options);
+  assert.equal(foodTruck.confidence.reason, "no-food-truck-specific-rule");
+  assert.equal(foodTruck.answerMode, "source-evidence-boundary");
+  assert.doesNotMatch(foodTruck.answer, /(?:allowed|prohibited|approval is required)/i);
+  assert.doesNotMatch(foodTruck.sources.map((source) => source.title).join(" "), /vehicles|parking|food truck/i);
+
+  for (const [question, unrelated] of [
+    ["What are the quiet hours?", /Landscape Screens|Landscape Screens One-Sheet/i],
+    ["Can I build a helipad in my yard?", /Backyard Utility Sheds|Backyard Utility Sheds One-Sheet/i],
+  ]) {
+    const answer = await answerCommunityQuestion(question, options);
+    assert.equal(answer.answerMode, "source-evidence-boundary", question);
+    assert.equal(answer.confidence.canAnswer, false, question);
+    assert.doesNotMatch(answer.sources.map((source) => source.title).join(" "), unrelated, question);
+    assert.doesNotMatch(answer.actions.map((action) => action.label).join(" "), unrelated, question);
+  }
+
+  const contact = await answerCommunityQuestion("What is the HOA phone number?", options);
+  assert.equal(contact.answerMode, "community-contact-boundary");
+  assert.equal(contact.confidence.reason, "missing-requested-contact-info");
+  assert.doesNotMatch(contact.answer, /\b\d{3}[-.)\s]\d{3}[-.\s]\d{4}\b/);
+  assert.doesNotMatch(contact.sources.map((source) => source.title).join(" "), /Billing-related complaints|Owner complaints/i);
+});
+
+test("cautious rules boundaries retain a supported distinction while dropping unrelated handoffs", async () => {
+  const options = {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    synthesizeCommunityAnswer: false,
+  };
+  const cases = [
+    [
+      "Can i build pergola in my front yard",
+      /mentions the requested project only as an example in a different rule/i,
+      /Lighting/i,
+    ],
+    [
+      "Does the community own the landscaping on the sidewalk",
+      /establish maintenance responsibility, but they do not state who owns/i,
+      /Tree lawn maintenance/i,
+    ],
+    [
+      "Is quantum fiber required?",
+      /do not state whether the resident choice in the question is required or allowed/i,
+      /Internet and networking/i,
+    ],
+  ];
+  for (const [question, supportedPart, sourceTitle] of cases) {
+    const answer = await answerCommunityQuestion(question, options);
+    assert.equal(answer.answerMode, "source-evidence-boundary", question);
+    assert.equal(answer.confidence.canAnswer, false, question);
+    assert.match(answer.answer, supportedPart, question);
+    assert.match(answer.sources.map((source) => source.title).join(" "), sourceTitle, question);
+    assert.doesNotMatch(answer.actions.map((action) => action.label).join(" "), /Landscape Screens|Backyard Utility Sheds|Official link/i, question);
   }
 });
 
@@ -256,7 +377,7 @@ test("a confident AI rewrite cannot substitute a broad category for an unsupport
     synthesizeCommunityAnswer: false,
   });
   assert.equal(answer.confidence.canAnswer, false);
-  assert.match(answer.answer, /could not verify.*helipad/i);
+  assert.match(answer.answer, /could not (?:verify an answer|safely confirm).*approved, up-to-date/i);
   assert.doesNotMatch(answer.answer, /Most landscaping is allowed/i);
 });
 
@@ -335,20 +456,22 @@ test("alternating recycling questions disclose the missing date anchor and link 
 });
 
 test("live Waste Connections dates replace the undated recycling fallback", async () => {
+  const checkedAt = new Date().toISOString();
   const answer = await answerCommunityQuestion("When is recycling week?", {
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
     getWasteSchedule: async () => ({
+      date: "2026-08-31",
       timing: "starting tomorrow",
       anchorDate: "2026-08-31",
-      villageDates: [
-        { village: "Providence Village", date: "2026-08-31" },
-        { village: "Ascent Village", date: "2026-09-01" },
-        { village: "Prospect Village", date: "2026-09-03" },
+      serviceAreas: [
+        { label: "Providence Village", date: "2026-08-31" },
+        { label: "Ascent Village", date: "2026-09-01" },
+        { label: "Prospect Village", date: "2026-09-03" },
       ],
-      checkedAt: "2026-08-30T18:00:00.000Z",
-      sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+      checkedAt,
+      evidence: liveWasteEvidence("2026-08-31", checkedAt),
     }),
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
@@ -385,26 +508,26 @@ test("Waste Connections service reads dated recycling events without a resident 
   const fetchImpl = async (url) => {
     requested.push(String(url));
     if (String(url).includes("address-suggest")) {
-      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE" }] };
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", address: "7853 Piney River Avenue" }] };
     }
     return { ok: true, json: async () => ({ events: [
       { day: "2026-08-31", flags: [{ name: "Garbage" }] },
       { day: "2026-08-31", flags: [{ name: "Recycling" }] },
     ] }) };
   };
-  const schedule = await getSterlingRanchWasteSchedule({ fetchImpl, now: new Date("2026-08-30T18:00:00Z") });
+  const schedule = await getWasteSchedule({ profile: communityProfile, fetchImpl, now: new Date("2026-08-30T18:00:00Z") });
   assert.equal(schedule.timing, "starting tomorrow");
-  assert.equal(schedule.villageDates[2].date, "2026-09-03");
+  assert.equal(schedule.serviceAreas[2].date, "2026-09-03");
   assert.equal(requested.length, 2);
   assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
   assert.doesNotMatch(JSON.stringify(schedule), /7853|place_id/i);
   assert.equal(scheduleTimingLabel("2026-09-07", "2026-08-30"), "the week of September 7, 2026");
-  assert.deepEqual(villageDatesForAnchor("2026-11-23", [{ day: "2026-11-26", type: "holiday" }]), [
-    { village: "Providence Village", date: "2026-11-23" },
-    { village: "Ascent Village", date: "2026-11-24" },
-    { village: "Prospect Village", date: "2026-11-27" },
+  assert.deepEqual(configuredAreaDates("2026-11-23", [{ day: "2026-11-26", type: "holiday" }], communityProfile.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule.serviceAreas), [
+    { label: "Providence Village", date: "2026-11-23" },
+    { label: "Ascent Village", date: "2026-11-24" },
+    { label: "Prospect Village", date: "2026-11-27" },
   ]);
-  assert.equal(villageDatesForAnchor("2026-09-08", [{ day: "2026-09-07", type: "holiday" }])[2].date, "2026-09-11");
+  assert.equal(configuredAreaDates("2026-09-08", [{ day: "2026-09-07", type: "holiday" }], communityProfile.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule.serviceAreas)[2].date, "2026-09-11");
 });
 
 test("Waste Connections uses one total deadline across its sequential requests", async () => {
@@ -412,14 +535,14 @@ test("Waste Connections uses one total deadline across its sequential requests",
   const fetchImpl = async (url, options = {}) => {
     calls += 1;
     if (String(url).includes("address-suggest")) {
-      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE" }] };
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", address: "7853 Piney River Avenue" }] };
     }
     return new Promise((resolve, reject) => {
       options.signal.addEventListener("abort", () => reject(Object.assign(new Error("aborted"), { name: "AbortError" })), { once: true });
     });
   };
   const started = Date.now();
-  await assert.rejects(() => getSterlingRanchWasteSchedule({ fetchImpl, timeoutMs: 40 }), /aborted/i);
+  await assert.rejects(() => getWasteSchedule({ profile: communityProfile, fetchImpl, timeoutMs: 40 }), /aborted/i);
   assert.equal(calls, 2);
   assert.ok(Date.now() - started < 250);
 });
@@ -477,12 +600,28 @@ test("official rule documents remain usable action links even without display me
         title: "2026 CAB service fees",
         sourceUrl: "https://sterlingranchcab.com/DocumentCenter/View/2474/current-fees",
         text: "Current official CAB service fee schedule.",
+        isOfficialResource: true,
       }],
     }),
     synthesizeCommunityAnswer: false,
   });
   assert.equal(result.actions[0]?.url, "https://sterlingranchcab.com/DocumentCenter/View/2474/current-fees");
   assert.doesNotMatch(result.actions[0]?.label || "", /FAQ/i);
+});
+
+test("an unmarked HTTPS rules source cannot become an official action", async () => {
+  const result = await answerCommunityQuestion("What fees do residents pay?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion: async () => ({
+      answer: "Short answer: The fee schedule has the current charges.",
+      answerMode: "source-derived-extractive",
+      confidence: { canAnswer: true, confidence: "high" },
+      sources: [{ title: "Unmarked external schedule", sourceUrl: "https://outside.example/fees", text: "Unverified fee schedule." }],
+    }),
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal((result.actions || []).some((action) => action.url === "https://outside.example/fees"), false);
 });
 
 test("answer contracts cap resident-facing details at three", () => {

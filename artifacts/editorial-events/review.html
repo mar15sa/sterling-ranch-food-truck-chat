@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  /><title>General-events UI review</title
+  ><style>
+    body {
+      background: #e3e5e8;
+      color: #24344b;
+      font: 16px system-ui;
+      margin: 32px;
+      max-width: 1500px;
+    }
+    a {
+      color: #24344b;
+    }
+    nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    button {
+      padding: 12px;
+      background: #24344b;
+      color: #e3e5e8;
+      border: 0;
+      cursor: pointer;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #aeb6c1;
+    }
+    p {
+      max-width: 900px;
+    }
+    h1 {
+      font-family: Georgia, serif;
+    }
+  </style>
+  <h1>Community calendar: approved editorial UI</h1>
+  <p>
+    Live captures show actual connector data. Ready/loading/empty/error captures
+    use clearly named test fixtures to verify layout and behavior; those event
+    names are never included in application code. Desktop is 1440 pixels; mobile
+    is 390 pixels.
+  </p>
+  <p>
+    <a href="README.md">Validation notes</a> ·
+    <a href="browser-results.json">Browser results</a> ·
+    <a href="focused-tests.txt">Focused tests</a> ·
+    <a href="npm-final-check.txt">Full project check</a>
+  </p>
+  <nav id="captures" aria-label="Screenshot selection"></nav>
+  <h2 id="label"></h2>
+  <img id="capture" alt="" />
+  <script>
+    const nav = document.querySelector("#captures");
+    for (const page of ["home", "calendar"])
+      for (const width of [1440, 390])
+        for (const state of ["live", "ready", "loading", "empty", "error"]) {
+          const label = `${page} · ${width} · ${state}`;
+          const button = document.createElement("button");
+          button.textContent = label;
+          button.onclick = () => {
+            document.querySelector("#label").textContent = label;
+            const image = document.querySelector("#capture");
+            image.src = `${page}-${width}-${state}.png`;
+            image.alt = label;
+          };
+          nav.append(button);
+        }
+    nav.firstChild.click();
+  </script>
+</html>

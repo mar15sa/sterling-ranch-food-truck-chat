@@ -4,6 +4,7 @@ const path = require("node:path");
 const inputPosition = process.argv.indexOf("--input");
 const inputPath = inputPosition >= 0 ? process.argv[inputPosition + 1] : process.env.COMMUNITY_EVIDENCE_INDEX || "";
 const communityIndex = inputPath ? JSON.parse(fs.readFileSync(inputPath, "utf8")) : require("../data/community-index.json");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 
@@ -13,8 +14,10 @@ const CASES = [
   ["What are the landscaping and yard rules?", /Required lot landscape/i],
   ["What fees do residents pay?", /water, sanitary sewer, and stormwater/i],
   ["What are the rules for parks and open spaces?", /17-54/i],
-  ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i],
-  ["Who do I contact about water billing?", /Water Billing/i, false],
+  // The facility page is relevant, but its booking claim/action remains
+  // withheld until its exact current version receives a scoped decision.
+  ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i, false],
+  ["Who do I contact about water billing?", /Water Billing/i],
   // The current court-page version is withheld while its conflicting hours,
   // fee, and booking claims are reviewed. Generic park rules can still use the
   // separate governing section; operational questions cannot.
@@ -30,7 +33,7 @@ const CASES = [
   ["Can I build a greenhouse?", /Greenhouses/i],
   ["What day is trash pickup?", /Trash & Recycling/i, false],
   ["Who do I contact about internet service?", /Important Contact Information/i, false],
-  ["What email do I use for design review questions?", /Attachment A-3/i],
+  ["What email do I use for design review questions?", /Design Review contact and submission/i],
 ];
 
 async function main() {
@@ -40,6 +43,7 @@ async function main() {
     const answer = await answerCommunityQuestion(question, {
       index: communityIndex,
       communityId: "sterling-ranch",
+      communityProfile,
       answerRulesQuestion,
       rulesOptions: { searchMode: "legacy", llmMode: "off" },
       planCommunitySearch: false,
