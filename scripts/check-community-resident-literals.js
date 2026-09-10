@@ -197,7 +197,10 @@ function responseLiterals(source) {
       if ([")", "]", "}"].includes(token.value)) depth -= 1;
       if (depth === 0 && [";"].includes(token.value)) break;
     }
-    bindings.set(tokens[index + 1].value, { start: index + 3, end });
+    const name = tokens[index + 1].value;
+    const occurrences = bindings.get(name) || [];
+    occurrences.push({ declaration: index, start: index + 3, end });
+    bindings.set(name, occurrences);
   }
 
   // This is deliberately a small, conservative expression walker. It follows
@@ -235,9 +238,12 @@ function responseLiterals(source) {
       // A property receiver (for example `candidate.directAnswer`) is not a
       // locally named response value. Following it would drag arbitrary data
       // objects into this narrow guard.
-      if (resolveBindings && token.type === "identifier" && bindings.has(token.value) && !seen.has(token.value)
+      const candidates = bindings.get(token.value) || [];
+      // Use the closest declaration above this use. This preserves ordinary
+      // function-local shadowing without attempting a complete JS scope parse.
+      const binding = candidates.filter((candidate) => candidate.declaration < cursor).at(-1);
+      if (resolveBindings && token.type === "identifier" && binding && !seen.has(token.value)
         && tokens[cursor - 1]?.value !== "." && tokens[cursor + 1]?.value !== "." && seen.size < 24) {
-        const binding = bindings.get(token.value);
         const nextSeen = new Set(seen);
         nextSeen.add(token.value);
         found.push(...stringsInExpression(binding.start, binding.end, nextSeen, true));

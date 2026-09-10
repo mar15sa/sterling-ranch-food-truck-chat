@@ -183,3 +183,20 @@ test("resident literal guard follows simple concatenation used through response 
   assert.ok(findings.some((finding) => finding.field === "directAnswer" && /scheduled/.test(finding.value)));
   assert.ok(findings.some((finding) => finding.field === "nextStep" && /pickup calendar/.test(finding.value)));
 });
+
+test("resident literal guard resolves reused response names to the nearest earlier binding", () => {
+  const findings = inspectSource(`
+    function firstAnswer() {
+      const directAnswer = "Waste pickup is scheduled for Tuesday.";
+      return { directAnswer };
+    }
+    function secondAnswer() {
+      const directAnswer = "Waste pickup is scheduled for Friday.";
+      return { directAnswer };
+    }
+  `);
+  assert.deepEqual(findings.map((finding) => finding.value), [
+    "Waste pickup is scheduled for Tuesday.",
+    "Waste pickup is scheduled for Friday.",
+  ]);
+});
