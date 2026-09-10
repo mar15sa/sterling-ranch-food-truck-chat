@@ -440,10 +440,41 @@ test("approved conditional instruction claims preserve their boundary and do not
   for (const question of ["Do I submit a rain barrel application to the DRC?", "Where do I send a rain barrel application if approval is required?"]) {
     const answer = await ask(question);
     assert.equal(answer.answerStatus, "verified", question);
-    assert.equal(answer.answerMode, "community-approved-operational-instruction", question);
+    assert.equal(answer.answerMode, /if approval is required/i.test(question)
+      ? "community-rule-conditional-action"
+      : "community-approved-operational-instruction", question);
     assert.match(answer.answer, /If the controlling rain-barrel rule says approval is needed/i, question);
     assert.match(answer.answer, /ResidentSubmit@SterlingRanchCAB\.com/i, question);
     assert.doesNotMatch(answer.answer, /rain-barrel form|approval is required/i, question);
+    assert.ok(answer.actions.some((action) => /\/201\/Design-Review-Documents/.test(action.url)), question);
+  }
+});
+
+test("conditional project submissions combine the controlling rule with the approved next step", async () => {
+  for (const question of [
+    "I need to submit for a rainwater harvesting barrels",
+    "How do I apply for a rain barrel if approval is needed?",
+    "Where do I submit a rain barrel project that needs approval?",
+  ]) {
+    const answer = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
+        ...options,
+        searchMode: "legacy",
+        llmMode: "off",
+      }),
+    });
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.equal(answer.answerMode, "community-rule-conditional-action", question);
+    assert.equal(answer.answerVerdict, "conditional", question);
+    assert.match(answer.answer, /Residents are allowed two 55-gallon rain barrels/i, question);
+    assert.match(answer.answer, /If the controlling rain-barrel rule says approval is needed/i, question);
+    assert.match(answer.answer, /ResidentSubmit@SterlingRanchCAB\.com/i, question);
+    assert.doesNotMatch(answer.answer, /rain-barrel form|approval is required/i, question);
+    assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
     assert.ok(answer.actions.some((action) => /\/201\/Design-Review-Documents/.test(action.url)), question);
   }
 });
