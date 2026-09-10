@@ -295,7 +295,7 @@ test("a named construction project needs object-specific evidence, not a broad y
     assert.equal(result.answerMode, "source-evidence-boundary", question);
     assert.equal(result.confidence.canAnswer, false, question);
     assert.equal(result.confidence.reason, "named-project-not-supported-by-cited-evidence", question);
-    assert.match(result.answer, /could not verify whether the named project is allowed/i, question);
+    assert.match(result.answer, /don't have enough rulebook evidence/i, question);
     assert.deepEqual(result.sources, [], question);
     assert.doesNotMatch(result.answer, /landscap(?:ing|e).*DRC approval|most landscaping is allowed/i, question);
   }
