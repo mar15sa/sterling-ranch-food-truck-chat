@@ -502,6 +502,15 @@
       "url": "https://www.denvercentralmarket.com/vendors",
       "cadence": "daily",
       "notes": "The market's official vendor directory identifies new food concepts and confirms when announced stalls begin operating."
+    },
+    {
+      "id": "industrious-denver-locations",
+      "name": "Industrious Denver-area locations",
+      "community": "Highlands Ranch",
+      "kind": "business",
+      "url": "https://www.industriousoffice.com/m/denver",
+      "cadence": "daily",
+      "notes": "The official location directory confirms the Highlands Ranch workspace address, opening window, and eventual operating status."
     }
   ]
 }
