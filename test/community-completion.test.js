@@ -328,6 +328,41 @@ test("withheld boundaries retain the reason and offer only question-specific han
   assert.doesNotMatch(contact.sources.map((source) => source.title).join(" "), /Billing-related complaints|Owner complaints/i);
 });
 
+test("cautious rules boundaries retain a supported distinction while dropping unrelated handoffs", async () => {
+  const options = {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    synthesizeCommunityAnswer: false,
+  };
+  const cases = [
+    [
+      "Can i build pergola in my front yard",
+      /mentions the requested project only as an example in a different rule/i,
+      /Lighting/i,
+    ],
+    [
+      "Does the community own the landscaping on the sidewalk",
+      /establish maintenance responsibility, but they do not state who owns/i,
+      /Tree lawn maintenance/i,
+    ],
+    [
+      "Is quantum fiber required?",
+      /do not state whether the resident choice in the question is required or allowed/i,
+      /Internet and networking/i,
+    ],
+  ];
+  for (const [question, supportedPart, sourceTitle] of cases) {
+    const answer = await answerCommunityQuestion(question, options);
+    assert.equal(answer.answerMode, "source-evidence-boundary", question);
+    assert.equal(answer.confidence.canAnswer, false, question);
+    assert.match(answer.answer, supportedPart, question);
+    assert.match(answer.sources.map((source) => source.title).join(" "), sourceTitle, question);
+    assert.doesNotMatch(answer.actions.map((action) => action.label).join(" "), /Landscape Screens|Backyard Utility Sheds|Official link/i, question);
+  }
+});
+
 test("a confident AI rewrite cannot substitute a broad category for an unsupported named project", async () => {
   const answer = await answerCommunityQuestion("Can I build a helipad in my yard?", {
     index: communityIndex,
