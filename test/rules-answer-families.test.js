@@ -326,6 +326,23 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   const compoundFence = await answer("Can I build a fence and what color does it need to be?");
   assert.equal(compoundFence.confidence.reason, "fencing-standards");
   assert.match(compoundFence.answer, /fencing standards/i);
+
+  const privacyFence = await answer("Can I build a privacy fence");
+  assert.equal(privacyFence.confidence.canAnswer, true);
+  assert.match(privacyFence.answer, /privacy fence/i);
+
+  const privacyScreens = await answer("Can I install privacy screens");
+  assert.equal(privacyScreens.confidence.canAnswer, true);
+  assert.match(privacyScreens.answer, /landscape screens and require DRC approval/i);
+
+  const catio = await answer("Can I put up a catio. Not attached to the house");
+  assert.match(catio.answer, /does not name catios specifically/i);
+  assert.match(catio.answer, /accessory buildings|outdoor pet areas/i);
+  assert.doesNotMatch(catio.answer, /catio.*(?:is allowed|is prohibited)/i);
+
+  const religiousFlag = await answer("Can my neighbor put up a religious flag?");
+  assert.equal(religiousFlag.confidence.canAnswer, true);
+  assert.match(religiousFlag.answer, /Owners may display flags/i);
 });
 
 test("a related property clause cannot answer a different removal request", async () => {
