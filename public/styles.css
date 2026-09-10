@@ -536,7 +536,9 @@ a {
 }
 
 @media (max-width: 680px) {
-  body {
+  /* Only the legacy fixed-height chat uses an internal scrolling panel.
+     Editorial pages let the document scroll through results and controls. */
+  body:not(.society-page) {
     min-height: 100vh;
     min-height: 100dvh;
     overflow: hidden;
