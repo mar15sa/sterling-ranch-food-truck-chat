@@ -133,11 +133,12 @@ body.food-chat-page { --society-panel: #fdfdfc; --food-rule: #aeb6c1; --food-tea
   .food-chat-page .society-feedback-link { padding: 8px 12px; }
   .food-chat-page .society-feedback-link:first-child { padding-left: 0; }
 }
-/* Restore chat surfaces and keep the composer within reach throughout the page. */
-body.food-chat-page { --food-dock-height: 134px; padding-bottom: calc(var(--food-dock-height) + 20px); }
-html:has(.food-chat-page) { scroll-padding-bottom: calc(var(--food-dock-height, 134px) + 20px); }
-.food-chat-page .chat-panel { max-width: 970px; padding: 0; }
-.food-chat-page .messages { padding-block: 24px; }
+/* As in the original chat: messages scroll, controls occupy their own bottom row. */
+body.food-chat-page { padding-bottom: 0; }
+html:has(.food-chat-page) { scroll-padding-bottom: 0; }
+.food-chat-page .chat-panel { display: grid; grid-template-rows: minmax(0,1fr) auto; max-width: 970px; height: clamp(320px,calc(100dvh - 500px),760px); min-height: 0; margin: 20px auto 24px; padding: 0; overflow: hidden; border: 1px solid #cbd9d5; border-radius: 8px; background: #f7faf8; }
+.food-chat-page .messages { grid-row: 1; min-height: 0; height: auto; max-height: none; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; padding: 14px; }
+.food-chat-page .message { flex-shrink: 0; }
 .food-chat-page .message.bot { padding: 20px; border: 1px solid #dce5e3; border-radius: 7px; background: #fff; box-shadow: 0 3px 14px #24344b05; }
 .food-chat-page .food-assistant-icon { left: 16px; top: 17px; padding: 7px; width: 42px; height: 42px; border-radius: 50%; background: #e4eeeb; }
 .food-chat-page .food-assistant-label { margin-left: 52px; }
@@ -154,15 +155,16 @@ html:has(.food-chat-page) { scroll-padding-bottom: calc(var(--food-dock-height, 
 .food-chat-page .menu-price { color: #894557; font-weight: bold; }
 .food-chat-page .truck-more-section summary { border-radius: 24px; }
 .food-chat-page .message.user { padding: 12px 18px; border-radius: 16px 16px 3px 16px; }
-.food-chat-dock { position: fixed; box-sizing: border-box; bottom: 12px; left: 16px; right: 16px; width: auto; max-width: 970px; margin-inline: auto; z-index: 30; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border: 1px solid #b7c9c5; border-radius: 8px; background: #f8faf9; box-shadow: 0 3px 24px #24344b1c; }
+.food-chat-dock { position: static; grid-row: 2; box-sizing: border-box; width: 100%; min-width: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border: 0; border-top: 1px solid #b7c9c5; background: #f8faf9; }
 .food-chat-dock-inner { max-width: 970px; margin-inline: auto; }
 .food-chat-page .food-chat-dock .quick-actions { margin: 0; gap: 10px; }
 .food-chat-page .food-chat-dock .quick-actions button { border-radius: 22px; min-height: 38px; }
 .food-chat-page .food-chat-dock .composer { margin: 0; padding: 9px 0 0; }
 .food-chat-page .food-chat-dock .composer input { background: white; border-radius: 4px; }
 .food-chat-page .food-chat-dock .composer button { border-radius: 4px; }
-.food-chat-page .staging-environment-banner { bottom: calc(var(--food-dock-height) + 12px) !important; }
 @media (max-width:760px) {
+  .food-chat-page .chat-panel { height: clamp(340px,calc(100dvh - 28px),760px); }
+  .food-chat-page .messages { padding: 10px; }
   .food-chat-page .message.bot { padding: 14px; }
   .food-chat-page .food-assistant-icon { left: 12px; top: 12px; width: 34px; height: 34px; padding: 5px; }
   .food-chat-page .food-assistant-label { margin-left: 42px; padding-left: 0; }
