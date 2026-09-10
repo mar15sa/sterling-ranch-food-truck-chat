@@ -24,13 +24,14 @@ The earlier September 8 table described a transitional trusted-baseline bundle a
 | Area | Current evidence | Classification |
 | --- | --- | --- |
 | Exact resident evidence | 649 extracted ledger rows exist. The strict staging runtime counts 25 as explicitly approved and treats the other 624 trusted-baseline rows as candidates. Any older `truthStatus.approvedFactCount` field that counts the transitional baseline is migration metadata and must not be used as the resident-answer approval count. | **Implemented, migration cleanup remaining** |
+| Canonical exact source ledger | 30 unique source versions are tracked: 5 whole-source `approved-evidence` versions and 25 `pending-review` versions. Separately, 22 claim-scoped approvals are represented by 17 exact decision applications. These are different units and must not be added together. | **Partially implemented** |
 | Approved-source freshness | Staging revision `6e92036891dbbf98348d64afa6dcfd6c36ffd014` renewed all 47 due exact approved URL groups without changing the approved fingerprint: zero review failures, zero expired approved sources, zero expired approved facts, and zero crawl failures. The verifier now handles ordinary chunks, section-scoped approvals, and full-page approvals on the same unchanged CivicPlus URL. | **Implemented and hosted-proven** |
 | Safe refresh behavior | Approved URLs receive priority; only exact URL-plus-hash matches renew; changed/new/removed identities stay quarantined | **Implemented** |
 | Resident freshness behavior | Stale approved sources and dated hours are withheld rather than shown as verified | **Implemented** |
 | Candidate isolation | The latest staging refresh quarantined 18 changed, 356 new, and 57 removed source identities instead of promoting them. | **Implemented** |
 | Inventory accounting | The latest staging snapshot reports 274 source records, 1,529 discovered URLs, 1,099 eligible URLs, and a 910-page backlog. Older bundled and live-candidate totals remain historical snapshots and must not be combined with this one. | **Partially implemented** |
 | Private review queue | The authenticated screen has pagination and shows pending evidence without changing answers. The current long-tail queue is 1,925 candidate review items; this is not the count of approved or answerable facts. Deployment of its external review synchronization and queue-age alerts is not yet proven. | **Partially implemented** |
-| Material conflict resolution | 17 source/fact conflict groups remain for owner decision | **Missing** |
+| Material conflict resolution | No single current global count is proven. Older reconciliation artifacts use different snapshots and scopes. Every disputed claim stays withheld until its active review batch reconciles it. | **Missing** |
 | Full official-site coverage | Not yet claimed; pending sources include current operational pages, forms, rules, historic files, duplicate candidates, and unavailable documents | **Missing** |
 
 The older plan's instruction to block every release until every eligible URL is accounted for is **obsolete as a production-safety gate**. It remains the standard for claiming full coverage or releasing a coverage-expansion batch. The older subject order is also incomplete: current fees, contacts, reservations, and rule amendments have to be sorted by resident harm and authority, not by one large all-or-nothing phase.
@@ -86,7 +87,7 @@ The latest staging backlog is 910 pages from a snapshot with 1,529 discovered an
 
 ## Conflict plan
 
-The 17 remaining conflicts must be handled as their own small decision queue. They are not permission to choose the most convenient value.
+Conflicts must be handled as their own small decision queue within each active source batch. Do not combine counts from older reconciliation snapshots, and never treat a discrepancy as permission to choose the most convenient value.
 
 1. Group each conflict by the resident claim it would change: fee/deposit, contact, hours, rule/permission, date, payment method, or service route.
 2. Identify the authority level and effective date for each competing value.
@@ -94,7 +95,7 @@ The 17 remaining conflicts must be handled as their own small decision queue. Th
 4. Resolve with an owner decision, defer while withholding the value, or request a specialist/controller source.
 5. Re-run affected question-family retrieval and grounding checks after a decision. A decision never transfers to a changed source version.
 
-**Measurable completion criteria:** all 17 groups have an owner disposition; zero unresolved conflict feeds a resident answer; every resolved group has a controlling-source explanation and exact-version evidence; affected regression questions pass.
+**Measurable completion criteria:** every conflict in the active batch has an owner disposition; zero unresolved conflict feeds a resident answer; every resolved group has a controlling-source explanation and exact-version evidence; affected regression questions pass; the reported count names the exact snapshot and scope it came from.
 
 ## Operating measures
 
