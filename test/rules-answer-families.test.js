@@ -322,6 +322,10 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   const rooflineLights = await answer("Can I install permanent roofline lights?");
   assert.equal(rooflineLights.confidence.canAnswer, true);
   assert.match(rooflineLights.answer, /requires DRC approval/i);
+
+  const compoundFence = await answer("Can I build a fence and what color does it need to be?");
+  assert.equal(compoundFence.confidence.reason, "fencing-standards");
+  assert.match(compoundFence.answer, /fencing standards/i);
 });
 
 test("a related property clause cannot answer a different removal request", async () => {
