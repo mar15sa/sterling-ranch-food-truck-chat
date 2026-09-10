@@ -150,6 +150,19 @@ test("ordinary chunks and a scoped projection on the same unchanged page renew t
   assert.ok(unchanged.temporaryIndex.sources.every((source) => Date.parse(source.staleAfter) > NOW));
   assert.ok(unchanged.temporaryIndex.factLedger.every((fact) => Date.parse(fact.staleAfter) > NOW));
 
+  const chunkProjection = { ...projection, id: "pool-section-projection", contentHash: ordinarySources[0].contentHash };
+  const chunkSources = [...ordinarySources, chunkProjection];
+  const chunkFacts = chunkSources.map((source, position) => ({
+    id: `pool-section-fact-${position + 1}`, sourceId: source.id, sourceVersion: source.contentHash, reviewStatus: "approved",
+    reviewDecisionId: "owner", reviewedBy: "owner", reviewedAt: expired, staleAfter: expired, lastObservedAt: expired,
+  }));
+  const unchangedChunkProjection = await runBridge({
+    index: { communityId: "alpha", sources: chunkSources, factLedger: chunkFacts },
+    now: NOW, fetchObservedHashes: observe(exactHtml), auditFn: () => {},
+  });
+  assert.equal(unchangedChunkProjection.valid, true, "a section-scoped projection must not add a whole-page identity");
+  assert.deepEqual(new Set(unchangedChunkProjection.checks[0].observedHashes), new Set(ordinarySources.map((source) => source.contentHash)));
+
   const changedText = await runBridge({
     index: value, now: NOW, fetchObservedHashes: observe(htmlFor({ text: `${longText} Changed.` })), auditFn: () => {},
   });
