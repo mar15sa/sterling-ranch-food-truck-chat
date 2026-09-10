@@ -12,13 +12,13 @@ The current `data/communities/sterling-ranch.json` and `data/communities/castle-
 
 The normalized connector evidence envelope, profile-driven authority, tenant isolation, freshness/degradation rules, and completion checks are now implemented for the active calendar, food-truck, waste, and pool-status paths. Binding rules retain governing-source priority; live connectors cannot prove a rule; forms and action links cannot prove an amount, permission, or current status. The older September 8 table below is retained as migration history where useful, but its statements that the common adapter and central authority boundary are wholly pending are no longer current.
 
-Three separate gaps remain and must be implemented in separate worktrees:
+Three separate gaps are being handled in separate worktrees:
 
-| Priority | Connector gap | Required correction |
+| Priority | Connector gap | Current disposition |
 | --- | --- | --- |
-| P1 | CivicRec is configured and ranked as current facility evidence, but no live CivicRec retrieval adapter exists. | Either implement a real adapter that emits current listing/availability/action evidence and only clearly labeled prices, or demote CivicRec to a booking destination until that evidence exists. |
-| P1 | Waste village dates are derived from one configured reference address plus offsets. | Verify a representative provider result for every service area or ask for the resident's address; never describe an inferred offset as provider-confirmed. Declare live waste evidence as the authority for pickup-date facts. |
-| P1 | Food-truck retrieval accepts only the fixed year 2026 and depends on a brittle text format. | Use a bounded rolling date policy from profile/adapter configuration and parse validated CivicPlus event/date structure while preserving fail-closed behavior. |
+| P1 | CivicRec is configured and ranked as current facility evidence, but no live CivicRec retrieval adapter exists. | Public review proves only the official catalog destination, not readable availability or prices. Demote it to action-only after the owner approves the exact booking action; keep price and availability withheld. |
+| P1 | Waste village dates were derived from one configured private parcel plus offsets. | Fixed separately in `codex/waste-service-area-fix-20260910`: remove the parcel and offsets, support only explicitly public per-area references, and otherwise fail closed with the official resident address lookup. Focused tests pass; separate promotion remains. |
+| P1 | Food-truck retrieval accepted only the fixed year 2026 and depended on a brittle text format. | Fixed separately in `codex/foodtruck-horizon-fix-20260910`: use a bounded profile-owned rolling horizon, validate ISO dates and explicit years, and tolerate CivicPlus table/date markup while failing closed. All 628 tests pass; separate promotion remains. |
 
 Pool status and general calendar integration remain useful and correctly bounded. Pool status intentionally withholds when the exact operational label is absent; normal hours stay with an approved facility-hours source. Calendar failures cannot create a verified “no events” answer. The standalone Society tools remain useful for browsing, menus, maps, reminders, and transactions, while the Assistant should continue to answer first from the same governed evidence.
 
