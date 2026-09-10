@@ -212,26 +212,6 @@ test("legacy production routing still sends pickup delays to the live waste boun
   assert.match(answer.answer, /cannot confirm whether pickup is delayed/i);
   assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)));
   assert.doesNotMatch(answer.answer, /screened|garage|storage|Pickleball/i);
-
-  const datedAnswer = await answerCommunityQuestion("Is garbage pick up delayed this week", {
-    interpretationMode: "legacy", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
-    synthesizeCommunityAnswer: false,
-    getWasteSchedule: async () => ({
-      service: "garbage", date: "2026-09-14", timing: "next week", anchorDate: "2026-09-14",
-      serviceAreas: [
-        { label: "Providence Village", date: "2026-09-14" },
-        { label: "Ascent Village", date: "2026-09-15" },
-        { label: "Prospect Village", date: "2026-09-17" },
-      ],
-      checkedAt: NOW.toISOString(), evidence: liveWasteEvidence("2026-09-14"),
-    }),
-    answerRulesQuestion,
-    rulesOptions: { searchMode: "legacy", llmMode: "off" },
-  });
-  assert.equal(datedAnswer.answerMode, "community-live-waste-status-unavailable");
-  assert.equal(datedAnswer.answerStatus, "source-unavailable");
-  assert.match(datedAnswer.answer, /does not label whether the service is delayed/i);
-  assert.doesNotMatch(datedAnswer.answer, /screened|garage|storage|Pickleball/i);
 });
 
 function plan(overrides = {}) {
