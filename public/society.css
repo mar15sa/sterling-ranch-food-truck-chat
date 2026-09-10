@@ -900,29 +900,75 @@ body.society-page {
     letter-spacing: 1.4px;
   }
   .society-menu {
-    display: block;
-    font-size: 12px;
-    padding: 10px 0 10px 10px;
+    display: inline-flex;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+    border: 1px solid var(--society-silver);
+    border-radius: 3px;
+    background: transparent;
+    font-size: 0;
+  }
+  .society-menu::before,
+  .society-menu::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    width: 18px;
+    height: 1.5px;
+    background: var(--society-navy);
+  }
+  .society-menu::before { top: 16px; }
+  .society-menu::after { top: 24px; }
+  .society-menu[aria-expanded="true"]::before {
+    top: 20px;
+    transform: rotate(45deg);
+  }
+  .society-menu[aria-expanded="true"]::after {
+    top: 20px;
+    transform: rotate(-45deg);
+  }
+  .society-menu:hover {
+    background: var(--society-cloud);
   }
   .society-nav {
     width: 100%;
-    gap: 18px;
+    gap: 0;
   }
-  .society-nav a {
-    font-size: 12px;
-    padding: 10px 0;
-  }
-  .society-nav a:nth-child(n + 4) {
+  .society-enhanced .society-nav:not(.is-expanded) {
     display: none;
   }
-  .society-nav.is-expanded {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 22px;
-    padding-bottom: 10px;
-  }
+  .society-nav a,
   .society-nav.is-expanded a {
     display: flex;
+    justify-content: space-between;
+    min-height: 52px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--society-silver);
+    font: 18px/1.4 Georgia, serif;
+  }
+  .society-nav a::after {
+    content: "›";
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .society-nav a[aria-current] {
+    border-bottom-color: var(--society-silver);
+    background: var(--society-soft);
+    box-shadow: inset 3px 0 var(--society-teal);
+  }
+  .society-nav a:last-child {
+    border-bottom: 0;
+  }
+  .society-nav.is-expanded {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 0 12px;
+    margin-top: 10px;
+    border-top: 1px solid var(--society-silver);
   }
   .society-page-title h1,
   .society-page .rules-header h1,
@@ -1184,10 +1230,8 @@ body.society-page {
 }
 @media (max-width: 760px) {
   .society-page:not(.society-enhanced) .society-nav {
-    flex-wrap: wrap;
-  }
-  .society-page:not(.society-enhanced) .society-nav a:nth-child(n + 4) {
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
   }
 }
 .society-page .society-breadcrumb a {

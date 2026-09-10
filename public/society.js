@@ -5,7 +5,7 @@
   function setMenu(open) {
     nav.classList.toggle("is-expanded", open);
     menu.setAttribute("aria-expanded", String(open));
-    menu.textContent = open ? "Close −" : "Menu ＋";
+    menu.textContent = open ? "Close navigation" : "Open navigation";
   }
   menu.addEventListener("click", () =>
     setMenu(menu.getAttribute("aria-expanded") !== "true"),
@@ -24,6 +24,7 @@
   });
   const mobile = matchMedia("(max-width: 760px)");
   mobile.addEventListener("change", () => setMenu(false));
+  setMenu(false);
   // Navigation from a test page must never turn an automated question into a resident one.
   if (new URLSearchParams(location.search).get("test") === "1") {
     document
