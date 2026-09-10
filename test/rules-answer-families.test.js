@@ -459,3 +459,21 @@ test("generic fallback families use the shared evidence boundary without replaci
   assert.match(collision.answer, /DRC approval/i);
   assert.doesNotMatch(collision.answer, /don't have enough rulebook evidence/i);
 });
+
+test("resident-specific variants use current clauses and official resource projections", async () => {
+  for (const question of ["Can I hang lights from my porch?", "Can I add patio lighting?"]) {
+    const result = await answer(question);
+    assert.match(result.sources?.[0]?.title || "", /Updated exterior lighting policy/i, question);
+    assert.doesNotMatch(result.answer, /Porch, patio, and deck lighting is allowed within the exterior-lighting rules/i, question);
+  }
+
+  const access = await answer("I lost HomeSeer access");
+  assert.match(access.answer, /Lumiere\.technology\/help/i);
+  assert.match(access.answer, /help@lumierefiber\.com/i);
+
+  const drc = await answer("How do I submit to the DRC?");
+  assert.equal(drc.answer, drc.sources.map((source) => source.excerpt).join(" "));
+
+  const clubs = await answer("Resident Clubs calendar");
+  assert.equal(clubs.answer, clubs.sources.map((source) => source.excerpt).join(" "));
+});
