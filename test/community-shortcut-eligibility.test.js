@@ -137,6 +137,22 @@ test("trash holiday schedules use the live Waste Connections path without taking
   });
   assert.equal(calls, 0);
   assert.doesNotMatch(storage.answerMode, /community-live-trash/);
+
+  const weekRangeMismatch = await answerCommunityQuestion("Is garbage pick up delayed this week", {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => plan({
+      intent: "services", goal: "status", goals: ["status"], subject: "garbage pickup", requestedDetails: ["status"],
+      dateRange: { kind: "week", start: "2026-09-01", end: "2026-09-07", label: "this week" }, searchQueries: ["garbage pickup delayed"],
+    }),
+    getWasteSchedule: async () => ({ ...(await liveSchedule()), timing: "starting tomorrow" }),
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(weekRangeMismatch.answerMode, "community-live-waste-unavailable");
+  assert.equal(weekRangeMismatch.answerStatus, "source-unavailable");
+  assert.match(weekRangeMismatch.answer, /cannot confirm whether pickup is delayed/i);
+  assert.ok(weekRangeMismatch.actions.some((action) => /pickup calendar/i.test(action.label)));
+  assert.doesNotMatch(weekRangeMismatch.answer, /screened|garage|Pickleball/i);
 });
 
 test("pickup-delay questions never fall through to trash-storage rules when the live service is unavailable", async () => {
