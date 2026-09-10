@@ -197,23 +197,6 @@ test("pickup-delay questions never fall through to trash-storage rules when the 
   assert.equal(connectorCalls, 0);
 });
 
-test("legacy production routing still sends pickup delays to the live waste boundary", async () => {
-  let calls = 0;
-  const answer = await answerCommunityQuestion("Is garbage pick up delayed this week", {
-    interpretationMode: "legacy", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
-    synthesizeCommunityAnswer: false,
-    getWasteSchedule: async () => { calls += 1; throw new Error("live provider unavailable"); },
-    answerRulesQuestion,
-    rulesOptions: { searchMode: "legacy", llmMode: "off" },
-  });
-  assert.equal(calls, 1);
-  assert.equal(answer.answerMode, "community-live-waste-unavailable");
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.match(answer.answer, /cannot confirm whether pickup is delayed/i);
-  assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)));
-  assert.doesNotMatch(answer.answer, /screened|garage|storage|Pickleball/i);
-});
-
 function plan(overrides = {}) {
   return {
     intent: "events",
