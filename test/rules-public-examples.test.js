@@ -153,7 +153,7 @@ test("park and amenity booking questions use the reservation process", async () 
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
     if (/park/i.test(question)) {
-      assert.match(result.answer, /Park Shelters page|Facility Rentals catalog/i);
+      assert.match(result.answer, /Open the linked official resource/i);
     } else {
       assert.match(result.answer, /Facilities Rental Application and Agreement/i);
     }
@@ -180,7 +180,7 @@ test("unseen everyday wording maps to the reusable facility-reservation concept"
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.match(result.confidence?.reason || "", /semantic-concept-supported:facility-reservations/);
     if (/park shelter/i.test(question)) {
-      assert.match(result.answer, /Park Shelters page|Facility Rentals catalog/i);
+      assert.match(result.answer, /Open the linked official resource/i);
     } else {
       assert.match(result.answer, /Facilities Rental Application and Agreement/i);
     }

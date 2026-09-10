@@ -79,6 +79,30 @@ const GENERIC_COPY = new Set([
   "Try asking with a more specific object or action, or check the official rulebook for an answer.",
   "Try rephrasing with more detail, open the linked sections, or confirm through the official process before acting.",
   "I could not find a local rulebook index yet. Please refresh the source index, then try the question again.",
+  "The approved evidence for this source does not cover that request.",
+]);
+
+// These are the fixed portions of dynamic, source-independent answer frames.
+// They never supply a community fact: the value after interpolation must still
+// come from the selected reviewed source or the resident's question.
+const GENERIC_DYNAMIC_COPY = new Set([
+  "The selected official rules do not name  specifically.",
+  "The official passage I found mentions  only as an example in a different rule, so it does not establish whether the project itself is allowed.",
+  "The selected official passages do not state whether  removal is allowed.",
+  "The cited official rule restricts this:",
+  "The cited official rule requires a specific step:",
+  "The cited official rule says:",
+  "Allowed choices from the selected source:",
+  "Allowed:",
+  "No.",
+  "Yes.",
+  "No. The requested time is inside the restricted window:",
+  "Yes, temporarily.",
+  "The current cited rule does not set the requested numeric maximum.",
+  "The current cited rule does not set a numeric maximum height for the .",
+  "The controlling source does not specify the requested detail.",
+  "Open the linked official resource for .",
+  "The published fee section lists",
 ]);
 
 function isTernaryControlLiteral(tokens, index) {
@@ -449,6 +473,7 @@ function looksLikeFact(value) {
 
 function isGenericDynamicFragment({ field, value, dynamic }) {
   if (!dynamic || looksLikeFact(value)) return false;
+  if (GENERIC_DYNAMIC_COPY.has(value.trim())) return true;
   // Dynamic labels, URLs, and details are presentation wrappers around a
   // reviewed action or source value. Their changing portion is not a fixed
   // resident fact. Answer sentences get this exception only when their fixed

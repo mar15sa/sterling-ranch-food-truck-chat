@@ -25,6 +25,21 @@ test("resident literal guard permits generic whole-sentence presentation and saf
   `), []);
 });
 
+test("resident literal guard permits only reviewed dynamic evidence frames", () => {
+  assert.deepEqual(inspectSource(`
+    return structuredHelpfulAnswer(
+      \`The cited official rule restricts this: \${selectedClause}\`,
+      [],
+      \`The controlling source does not specify the requested detail. \${selectedClause}\`
+    );
+  `), []);
+  const findings = inspectSource(`
+    return structuredHelpfulAnswer(\`Sterling Ranch restricts this: \${selectedClause}\`, [], "Check the rules.");
+  `);
+  assert.equal(findings.length, 2);
+  assert.match(findings[0].value, /Sterling Ranch/);
+});
+
 test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
   const findings = inspectSource(`
     return {
