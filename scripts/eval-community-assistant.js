@@ -8,6 +8,7 @@ const unseenCases = require("./rules-unseen-eval-cases.json");
 const inputPosition = process.argv.indexOf("--input");
 const inputPath = inputPosition >= 0 ? process.argv[inputPosition + 1] : process.env.COMMUNITY_EVIDENCE_INDEX || "";
 const communityIndex = inputPath ? JSON.parse(fs.readFileSync(inputPath, "utf8")) : require("../data/community-index.json");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { classifyCommunityIntent } = require("../lib/community-search");
@@ -86,6 +87,7 @@ async function main() {
     const upgraded = await answerCommunityQuestion(question, {
       index: communityIndex,
       communityId: "sterling-ranch",
+      communityProfile,
       answerRulesQuestion,
       rulesOptions: { searchMode: "legacy", llmMode: "off" },
       planCommunitySearch: planCommunitySearchFixture,
