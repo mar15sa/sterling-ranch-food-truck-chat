@@ -3,6 +3,9 @@ const assert = require("node:assert/strict");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { proactiveCommunityAnswer } = require("../lib/community-proactive");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { createConnectorAdapters, emitEvidenceEnvelope } = require("../lib/community-connector-adapter");
+const sterlingRanch = require("../data/communities/sterling-ranch.json");
+const castleRock = require("../data/communities/castle-rock.json");
 const index = require("../data/community-index.json");
 
 const now = new Date("2026-09-08T18:00:00Z");
@@ -38,6 +41,59 @@ test("held-out rental wording is withheld until the exact booking action is appr
     assert.ok(result.actions.every((action) => !/secure\.rec1\.com/i.test(action.url)), question);
     assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i, question);
   }
+});
+
+test("CivicRec is an action-only connector and has no factual authority", () => {
+  const civicrec = createConnectorAdapters(sterlingRanch).find((adapter) => adapter.connectorId === "facility-rentals");
+  assert.deepEqual(civicrec.capabilities, ["actions"]);
+  assert.deepEqual(civicrec.facets, ["action"]);
+  assert.deepEqual(civicrec.controllingSourceRoles, ["action"]);
+  assert.equal(civicrec.requiresApprovedActionEvidence, true);
+  assert.equal(sterlingRanch.authority.facilities.includes("civicrec"), false);
+  for (const sources of Object.values(sterlingRanch.factAuthority)) assert.equal(sources.includes("civicrec"), false);
+});
+
+test("CivicRec can carry a booking handoff only when exact action evidence is supplied", () => {
+  const civicrec = createConnectorAdapters(sterlingRanch).find((adapter) => adapter.connectorId === "facility-rentals");
+  const evidence = emitEvidenceEnvelope(civicrec, {
+    observedAt: now.toISOString(),
+    sources: [{ id: "approved-booking", sourceUrl: civicrec.endpoints[0].url, controllingSourceRole: "action" }],
+    coverage: { requested: ["action"], covered: ["action"] },
+    claims: [{ facet: "action", controllingEvidenceId: "sterling-ranch:facility-rentals:approved-booking", controllingSourceRole: "action" }],
+    actions: [{ id: "approved-booking", type: "booking", label: "Book the clubhouse", url: civicrec.endpoints[0].url }],
+  });
+  assert.deepEqual(evidence.coverage, { requested: ["action"], covered: ["action"], missing: [] });
+  assert.deepEqual(evidence.actions.map((action) => action.type), ["booking"]);
+});
+
+test("unapproved CivicRec catalog records cannot offer a booking action or answer price and availability", async () => {
+  const civicrec = index.sources.find((source) => source.connectorType === "civicrec");
+  const civicrecOnly = {
+    communityId: "sterling-ranch",
+    communityName: "Sterling Ranch",
+    website: sterlingRanch.website,
+    sources: [{ ...civicrec, checkedAt: now.toISOString(), staleAfter: "2099-01-01T00:00:00Z", actions: [], actionEvidenceRequired: true }],
+  };
+  for (const [question, requestedDetails] of [
+    ["What does the clubhouse cost?", ["price"]],
+    ["Is the clubhouse available this Saturday?", ["availability"]],
+    ["How do I book the clubhouse?", ["action"]],
+  ]) {
+    const result = await answerCommunityQuestion(question, {
+      now, index: civicrecOnly, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => ({ ...plan("Clubhouse"), requestedDetails }),
+      answerRulesQuestion: async () => ({ confidence: { canAnswer: false } }),
+    });
+    assert.equal(result.confidence.canAnswer, false, question);
+    assert.notEqual(result.answerStatus, "verified", question);
+    assert.ok(result.actions.every((action) => action.actionType !== "booking" && !/secure\.rec1\.com/i.test(action.url)), question);
+  }
+});
+
+test("CivicRec configuration does not leak into a community without that connector", () => {
+  assert.equal(createConnectorAdapters(castleRock).some((adapter) => adapter.family === "civicrec"), false);
+  assert.equal(castleRock.authority.facilities.includes("civicrec"), false);
+  for (const sources of Object.values(castleRock.factAuthority)) assert.equal(sources.includes("civicrec"), false);
 });
 
 test("a canonical facility name cannot make an unapproved rental action answerable", async () => {
