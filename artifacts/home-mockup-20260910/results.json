@@ -1,0 +1,115 @@
+{
+  "questionRequests": 0,
+  "results": [
+    {
+      "width": 1448,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 1448,
+        "document": 1448,
+        "overflow": []
+      }
+    },
+    {
+      "width": 1280,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 1280,
+        "document": 1280,
+        "overflow": []
+      }
+    },
+    {
+      "width": 1024,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 1024,
+        "document": 1024,
+        "overflow": []
+      }
+    },
+    {
+      "width": 768,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 768,
+        "document": 768,
+        "overflow": []
+      }
+    },
+    {
+      "width": 760,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 760,
+        "document": 760,
+        "overflow": []
+      }
+    },
+    {
+      "width": 390,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 390,
+        "document": 390,
+        "overflow": []
+      }
+    },
+    {
+      "width": 320,
+      "state": "mockup fixtures",
+      "errors": [],
+      "overflow": {
+        "viewport": 320,
+        "document": 320,
+        "overflow": []
+      }
+    },
+    {
+      "width": 1448,
+      "state": "empty",
+      "truck": "No truck listed yet"
+    },
+    {
+      "width": 390,
+      "state": "empty",
+      "truck": "No truck listed yet"
+    },
+    {
+      "width": 1448,
+      "state": "error",
+      "truck": "Dinner plans, one click away."
+    },
+    {
+      "width": 390,
+      "state": "error",
+      "truck": "Dinner plans, one click away."
+    },
+    {
+      "width": 1448,
+      "state": "long",
+      "truck": "Today: An unusually long neighborhood food truck name"
+    },
+    {
+      "width": 390,
+      "state": "long",
+      "truck": "Today: An unusually long neighborhood food truck name"
+    },
+    {
+      "width": 1448,
+      "state": "live",
+      "truck": "Today: Colorado Chile Co"
+    },
+    {
+      "width": 390,
+      "state": "live",
+      "truck": "Today: Colorado Chile Co"
+    }
+  ]
+}

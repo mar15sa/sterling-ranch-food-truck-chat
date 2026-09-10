@@ -110,7 +110,7 @@
       .then((data) => {
         setText(
           "#briefing-truck",
-          data.truck ? "Today: " + data.truck : "No truck listed yet",
+          data.truck || "No truck listed yet",
         );
         const names = (data.menu?.items || [])
           .slice(0, 3)
