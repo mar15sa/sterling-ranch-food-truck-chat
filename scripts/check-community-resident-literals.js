@@ -81,6 +81,9 @@ const GENERIC_COPY = new Set([
   "I could not find a local rulebook index yet. Please refresh the source index, then try the question again.",
   "The approved evidence for this source does not cover that request.",
   "Open the linked official CAB website to confirm the current service details.",
+  "Do you mean using a community court or building a private court at a home?",
+  "Tell me which court you mean so I can use the matching official source.",
+  "Confirm which cited fence type applies before using the matching finish.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.

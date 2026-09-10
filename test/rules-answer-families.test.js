@@ -55,9 +55,9 @@ test("RV duration answers compare the requested stay with the current source lim
 
 test("the rulebook path stays within its evidence and preserves the private-court distinction", async () => {
   const ambiguous = await answer("Pickle ball");
-  assert.match(ambiguous.answer, /pickleball/i);
-  assert.match(ambiguous.answer, /sport courts?\. DRC approval is required/i);
-  assert.doesNotMatch(ambiguous.answer, /community pickleball court.*private pickleball court/i);
+  assert.equal(ambiguous.answerMode, "targeted-clarification");
+  assert.match(ambiguous.answer, /community court.*private court/is);
+  assert.doesNotMatch(ambiguous.answer, /DRC approval|required.*private sport court/i);
 
   for (const question of ["What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
     const result = await answer(question);
@@ -267,7 +267,7 @@ test("special-source rule families receive useful clause-composed answers withou
     ["Can I turf my front lawn?", /artificial turf.*individual basis.*front yards/i, "source-derived-extractive"],
     ["What is a tree lawn", /between their property edge and the street/i, "source-derived-extractive"],
     ["What is needed to redo backyard", /submitted for review and approval by the DRC/i, "source-derived-extractive"],
-    ["Fence stain color", /approved color.*concrete perimeter fence/i, "source-evidence-boundary"],
+    ["Fence stain color", /Sherwin Williams #3002.*Belvedere Tan[\s\S]*Solomon #338.*Earthen/i, "source-derived-extractive"],
   ];
   for (const [question, expected, answerMode] of cases) {
     const result = await answer(question);
@@ -327,7 +327,9 @@ test("named-project authority guard preserves supported objects, synonyms, and c
 
   const compoundFence = await answer("Can I build a fence and what color does it need to be?");
   assert.equal(compoundFence.confidence.reason, "fencing-standards");
-  assert.match(compoundFence.answer, /fencing standards/i);
+  assert.match(compoundFence.answer, /approval must be obtained from the DRC prior to any construction/i);
+  assert.match(compoundFence.answer, /Sherwin Williams #3002.*Belvedere Tan/i);
+  assert.match(compoundFence.answer, /Solomon #338.*Earthen/i);
 
   const privacyFence = await answer("Can I build a privacy fence");
   assert.equal(privacyFence.confidence.canAnswer, true);
