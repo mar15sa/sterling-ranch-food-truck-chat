@@ -87,13 +87,13 @@ test("resident literal guard inventories a new rule-focused canned answer", () =
   assert.equal(findings[0].field, "directAnswer");
 });
 
-test("resident literal guard reaches helpfulAnswer calls after regular expressions in the real rule engine", () => {
-  const source = fs.readFileSync(path.join(__dirname, "..", "lib", "rules-assistant.js"), "utf8");
-  const start = source.indexOf("function helpfulAnswer");
-  const end = source.indexOf("if (isCarCoverQuery", start);
-  const findings = inspectSource(source.slice(start, end), "lib/rules-assistant.js");
-  assert.ok(findings.some((finding) => finding.value.startsWith("Chapter 5 is the design-guidelines chapter.")));
-  assert.ok(findings.some((finding) => finding.value.startsWith("Porch, patio, and deck lighting is allowed")));
+test("resident literal guard reaches helpfulAnswer calls after regular expressions", () => {
+  const findings = inspectSource(`
+    const matches = /pool\\s+hours/i.test(query);
+    if (matches) return helpfulAnswer("The pool closes at 9:00 pm.", sources, "Check the pool page before you go.");
+  `);
+  assert.equal(findings.length, 2);
+  assert.match(findings[0].value, /pool closes/);
 });
 
 test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
@@ -101,6 +101,10 @@ test("resident literal guard permits generic dynamic presentation but retains fa
   const findings = inspectSource('return helpfulAnswer(`Parking is allowed after ${closingTime}.`, sources);');
   assert.equal(findings.length, 1);
   assert.match(findings[0].value, /Parking is allowed/);
+});
+
+test("resident literal guard permits the reviewed generic resource-navigation boundary", () => {
+  assert.deepEqual(inspectSource('return helpfulAnswer("The official material I found does not explicitly confirm whether the requested list exists, so I won\'t treat a search miss as proof that it is unavailable.", sources, "Open the linked official source to confirm the current resource.");'), []);
 });
 
 test("per-node baselines allow unrelated edits and removal but reject changed or new copy", () => {

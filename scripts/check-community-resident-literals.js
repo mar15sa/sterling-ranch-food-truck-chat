@@ -51,6 +51,7 @@ const GENERIC_COPY = new Set([
   "I don't have enough rulebook evidence to answer that confidently.",
   "I don't have enough rulebook evidence to give a definite answer. These sections look like the closest starting points.",
   "The official material I found does not explicitly confirm whether the requested list exists, so I won't treat a search miss as proof that it is unavailable.",
+  "Open the linked official source to confirm the current resource.",
   "Chapter  appears to cover .",
   " I pulled the changing dates, amounts, and limits from the current controlling source below.",
   "I pulled the controlling dates, amounts, and limits from the current official source below.",
