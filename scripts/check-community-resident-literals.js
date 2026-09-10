@@ -80,6 +80,7 @@ const GENERIC_COPY = new Set([
   "Try rephrasing with more detail, open the linked sections, or confirm through the official process before acting.",
   "I could not find a local rulebook index yet. Please refresh the source index, then try the question again.",
   "The approved evidence for this source does not cover that request.",
+  "Open the linked official CAB website to confirm the current service details.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.
@@ -106,6 +107,16 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "No. The requested stay of  exceeds the source-derived -hour limit.",
   "The selected official passages establish maintenance responsibility, but they do not state who owns .",
   "The selected official passages describe , but they do not state whether the resident choice in the question is required or allowed.",
+  "Chapter  is the  chapter. It includes .",
+  "Trampolines require DRC approval:",
+  "Allowed: the cited rule covers a political sign for a candidate or ballot issue.",
+  "under the cited rule:",
+  "Allowed under the cited domestic-animal exception:",
+  "Greenhouses require DRC approval:  The cited cross-reference applies the accessory-building rule.",
+  "The selected Parks Pass Program source does not describe reimbursing a separately purchased pass.",
+  "To get a Colorado Parks and Wildlife pass, follow the cited voucher or application process.",
+  "One annual Colorado Parks and Wildlife pass is available under the cited program.",
+  "The rulebook search does not define  or publish current access details.",
   "Open the linked official resource for .",
   "The published fee section lists",
 ]);
