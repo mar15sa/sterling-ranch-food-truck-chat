@@ -112,11 +112,10 @@
         "vocabulary": { "waste": ["trash", "garbage", "recycling", "pickup"] },
         "wasteSchedule": {
           "recollect": { "areaId": "WC-5311", "serviceId": 975 },
-          "referenceLocation": { "query": "7853 Piney River Avenue", "candidateTextPattern": "7853\\s+Piney\\s+River" },
           "serviceAreas": [
-            { "label": "Providence Village", "offset": 0 },
-            { "label": "Ascent Village", "offset": 1 },
-            { "label": "Prospect Village", "offset": 3 }
+            { "label": "Providence Village" },
+            { "label": "Ascent Village" },
+            { "label": "Prospect Village" }
           ],
           "actionLinks": [
             { "id": "pickup-calendar", "type": "information", "label": "Check an address in the official pickup calendar", "url": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" },
