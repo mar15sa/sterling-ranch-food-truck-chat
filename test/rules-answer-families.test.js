@@ -314,6 +314,14 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   const airConditioner = await answer("Can I install an AC unit by my home?");
   assert.equal(airConditioner.confidence.canAnswer, true);
   assert.match(airConditioner.answer, /DRC approval is not required/i);
+
+  const landscapeScreens = await answer("Can I add landscape screens for backyard privacy?");
+  assert.equal(landscapeScreens.confidence.canAnswer, true);
+  assert.match(landscapeScreens.answer, /landscape screens and require DRC approval/i);
+
+  const rooflineLights = await answer("Can I install permanent roofline lights?");
+  assert.equal(rooflineLights.confidence.canAnswer, true);
+  assert.match(rooflineLights.answer, /requires DRC approval/i);
 });
 
 test("a related property clause cannot answer a different removal request", async () => {
