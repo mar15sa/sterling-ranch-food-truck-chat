@@ -104,6 +104,8 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "The selected controlling source does not give a specific curb-placement or removal time.",
   "Fence height depends on the fence type and lot. The selected standard says",
   "No. The requested stay of  exceeds the source-derived -hour limit.",
+  "The selected official passages establish maintenance responsibility, but they do not state who owns .",
+  "The selected official passages describe , but they do not state whether the resident choice in the question is required or allowed.",
   "Open the linked official resource for .",
   "The published fee section lists",
 ]);
