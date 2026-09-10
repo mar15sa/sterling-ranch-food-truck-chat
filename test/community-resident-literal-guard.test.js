@@ -17,6 +17,7 @@ test("resident literal guard permits generic whole-sentence presentation and saf
     return {
       directAnswer: "I found a relevant official section, but I could not extract its current date, amount, or limit safely.",
       keyDetails: ["The official facility page is awaiting a fresh source check."],
+      nextStep: "Open the linked official section if you need the complete wording.",
     };
   `), []);
 });
@@ -26,6 +27,16 @@ test("resident literal guard keeps factual and community-specific fixed copy vis
     return {
       directAnswer: "Sterling Ranch pool closes at 9:00 pm.",
       nextStep: "Call the CAB at 720-555-0199 to reserve the pool.",
+    };
+  `);
+  assert.equal(findings.length, 2);
+});
+
+test("resident literal guard keeps named services and rule instructions visible", () => {
+  const findings = inspectSource(`
+    return {
+      nextStep: "Use WasteConnect for your service address to see the next dated pickup and set a reminder.",
+      directAnswer: "Shed utilities must be underground before approval.",
     };
   `);
   assert.equal(findings.length, 2);
