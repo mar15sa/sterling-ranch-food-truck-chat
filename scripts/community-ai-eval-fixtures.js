@@ -13,12 +13,42 @@ const POOL_HOURS_QUESTIONS = new Set([
   "What are the pool hours for Labor Day?",
 ]);
 
+function isGeneralDrcSubmissionQuestion(question) {
+  return /\b(?:drc|design review)\b/i.test(String(question))
+    && /\b(?:submit|submission|send|turn in|apply)\b/i.test(String(question));
+}
+
+function isCalendarAccessQuestion(question) {
+  return /\bcalendar\b/i.test(String(question)) && /\b(?:access|open|view|find|see)\b/i.test(String(question));
+}
+
 function hasAiEvalFixture(question) {
   const normalized = String(question).trim();
-  return PAYMENT_QUESTIONS.has(normalized) || POOL_HOURS_QUESTIONS.has(normalized);
+  return PAYMENT_QUESTIONS.has(normalized) || POOL_HOURS_QUESTIONS.has(normalized)
+    || isGeneralDrcSubmissionQuestion(normalized) || isCalendarAccessQuestion(normalized);
 }
 
 async function planCommunitySearchFixture(question) {
+  if (isGeneralDrcSubmissionQuestion(question)) return {
+    intent: "forms",
+    goal: "application",
+    goals: ["application"],
+    subject: "design review submission",
+    requestedDetails: ["action"],
+    searchQueries: ["DRC application submission", "design review submission"],
+    scope: "community",
+    needsClarification: false,
+  };
+  if (isCalendarAccessQuestion(question)) return {
+    intent: "events",
+    goal: "information",
+    goals: ["information"],
+    subject: "resident clubs calendar",
+    requestedDetails: ["action"],
+    searchQueries: ["resident clubs calendar"],
+    scope: "community",
+    needsClarification: false,
+  };
   if (POOL_HOURS_QUESTIONS.has(String(question).trim())) return {
     intent: "status",
     goal: "schedule",
@@ -42,7 +72,8 @@ async function planCommunitySearchFixture(question) {
 }
 
 async function synthesizeCommunityAnswerFixture(question) {
-  if (POOL_HOURS_QUESTIONS.has(String(question).trim())) return null;
+  if (POOL_HOURS_QUESTIONS.has(String(question).trim())
+    || isGeneralDrcSubmissionQuestion(question) || isCalendarAccessQuestion(question)) return null;
   if (!hasAiEvalFixture(question)) return null;
   return {
     directAnswer: "Pay your Sterling Ranch water bill through UtilityHawk. Sign in, then select “Pay Online.”",

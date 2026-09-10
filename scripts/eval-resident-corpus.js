@@ -6,6 +6,7 @@ const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { answerCoverageIssues } = require("../lib/rules-intent");
 const { actionLinkIssues } = require("../lib/rules-action-coverage");
 const storedCommunityIndex = require("../data/community-index.json");
+const communityProfile = require("../data/communities/sterling-ranch.json");
 const { hasAiEvalFixture, planCommunitySearchFixture, synthesizeCommunityAnswerFixture } = require("./community-ai-eval-fixtures");
 
 const searchMode = process.env.RULES_CORPUS_SEARCH_MODE || "legacy";
@@ -40,6 +41,7 @@ async function answerForCorpus(question) {
   return answerCommunityQuestion(question, {
     index: communityIndex,
     communityId: "sterling-ranch",
+    communityProfile,
     answerRulesQuestion,
     rulesOptions: { searchMode, llmMode },
     planCommunitySearch: planCommunitySearchFixture,

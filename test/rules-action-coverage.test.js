@@ -61,7 +61,7 @@ test("park booking answers provide a current action path instead of naming an un
     const result = await answerRulesQuestion(question);
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.match(result.answer, /\$15\.00 per hour/i, question);
-    assert.match(result.answer, /online booking may not be available|contact Recreation/i, question);
+    assert.match(result.answer, /Official CAB Park Shelters[\s\S]*Official Facility Rentals Catalog/i, question);
     assert.doesNotMatch(result.answer, /^.*submit the Facilities Rental Application/m, question);
     assert.ok(result.sources.some((source) => /Park Shelters/i.test(source.title || "")), question);
     assert.ok(result.sources.some((source) => /Facility Rentals Catalog/i.test(source.title || "")), question);

@@ -11,6 +11,18 @@ async function main() {
     });
     if (item.verdict) assert.equal(result.answerVerdict, item.verdict, item.question);
     if (item.answerMode) assert.equal(result.answerMode, item.answerMode, item.question);
+    if (item.expectedClassification) {
+      assert.equal(result.inputClassification, item.expectedClassification, item.question);
+    }
+    if (item.expectedReason) {
+      assert.equal(result.confidence?.reason, item.expectedReason, item.question);
+    }
+    if (item.expectedNoSources) {
+      assert.equal((result.sources || []).length, 0, item.question);
+    }
+    if (Object.prototype.hasOwnProperty.call(item, "expectedReviewNeeded")) {
+      assert.equal(result.reviewNeeded, item.expectedReviewNeeded, item.question);
+    }
     for (const phrase of item.mustInclude || []) {
       assert.match(result.answer, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"), item.question);
     }
