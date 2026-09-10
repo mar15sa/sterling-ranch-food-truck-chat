@@ -2,7 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { fingerprint } = require("../lib/community-release");
 const { sourceReviewState } = require("../lib/community-source-answerability");
-const { actionIdentity, actionUrlIdentity, observeCanonicalSource } = require("../lib/community-approved-revalidation");
+const { actionIdentity, actionUrlIdentity, observeCanonicalSource, sourceHash } = require("../lib/community-approved-revalidation");
 const { runBridge } = require("../scripts/check-approved-community-revalidation");
 
 const NOW = Date.parse("2026-09-08T12:00:00.000Z");
@@ -71,6 +71,43 @@ test("a realistic unchanged HTML page and actions renew, while an action-only UR
   const changed = await runBridge({ index: approved, now: NOW, fetchObservedHashes: async (url, sources) => observeCanonicalSource(url, sources, { fetchImpl: response(actionOnlyChange) }), auditFn: normalGate });
   assert.equal(changed.valid, false);
   assert.equal(changed.checks[0].reason, "action-identity-changed");
+});
+
+test("a scoped exact-version projection renews its full long page and semantic action without approving deferred links", async () => {
+  const projectedUrl = "https://alpha.gov/water-payment";
+  const paymentUrl = "https://billing.alpha.gov/login";
+  const context = "Payment Options: register through UtilityHawk.";
+  const longText = `${context} ${"Current payment instructions remain available. ".repeat(55)}`;
+  const htmlFor = ({ paymentHref = paymentUrl, includePayment = true, text = longText } = {}) => `<main><p>${text}</p>${includePayment ? `<a href="${paymentHref}">https://billing.alpha.gov/login</a>` : ""}<a href="/DocumentCenter/View/2419">Understanding your water bill (pdf)</a></main>`;
+  const exactHtml = htmlFor();
+  const exactText = require("../lib/community-ingest").pageText(exactHtml);
+  assert.ok(exactText.length > 1800, "fixture must exceed ordinary ingestion chunk size");
+  const projection = {
+    id: "water-payment-projection", sourceUrl: projectedUrl, connectorType: "civicplus-pages", sourceType: "services",
+    reviewStatus: "candidate", contentHash: sourceHash(exactText), staleAfter: "2026-09-01T00:00:00.000Z",
+    facts: [{ id: "approved-fact", reviewStatus: "approved" }],
+    actions: [{ id: "utility-hawk", label: "UtilityHawk", url: paymentUrl, actionType: "payment", context, reviewStatus: "approved" }],
+  };
+  const observed = async (html) => observeCanonicalSource(projectedUrl, [projection], {
+    fetchImpl: async () => ({ ok: true, url: projectedUrl, text: async () => html }),
+  });
+  const unchanged = await observed(exactHtml);
+  assert.deepEqual(unchanged.observedHashes, [projection.contentHash], "the full exact page hash is preserved");
+  assert.equal(unchanged.actionMismatch, false, "URL/context proves the semantic payment projection despite raw link label/type");
+  assert.equal(unchanged.actionProof.observed[0].matches[0].label, "https://billing.alpha.gov/login");
+
+  const revalidated = await runBridge({
+    index: { sources: [projection], factLedger: [{ id: "fact", sourceId: projection.id, sourceVersion: projection.contentHash, reviewStatus: "approved", reviewDecisionId: "owner", reviewedBy: "owner", reviewedAt: "2026-09-01", staleAfter: projection.staleAfter }] },
+    now: NOW, fetchObservedHashes: async () => unchanged, auditFn: () => {},
+  });
+  assert.equal(revalidated.valid, true, "the deferred DocumentCenter link does not enter this claim-scoped renewal");
+
+  const changedText = await observed(htmlFor({ text: `${longText} Changed.` }));
+  assert.notDeepEqual(changedText.observedHashes, [projection.contentHash]);
+  const changedDestination = await observed(htmlFor({ paymentHref: "https://billing.alpha.gov/new-login" }));
+  assert.equal(changedDestination.actionMismatch, true);
+  const missingDestination = await observed(htmlFor({ includePayment: false }));
+  assert.equal(missingDestination.actionMismatch, true);
 });
 
 test("a changed approved fingerprint is an explicit bridge failure", async () => {
