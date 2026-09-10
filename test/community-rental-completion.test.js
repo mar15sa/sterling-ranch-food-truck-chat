@@ -46,6 +46,20 @@ test("a canonical facility name cannot make an unapproved rental action answerab
   assert.doesNotMatch(result.answer, /secure\.rec1\.com|select Overlook Clubhouse/i);
 });
 
+test("planless clubhouse questions keep the withheld facility page separate from the Overlook pool", async () => {
+  for (const question of ["How do I reserve the Overlook Clubhouse?", "What does it cost to rent the Overlook Clubhouse?"]) {
+    const result = await answerCommunityQuestion(question, {
+      now, index, communityId: "sterling-ranch", planCommunitySearch: false, synthesizeCommunityAnswer: false,
+      answerRulesQuestion: async () => ({ confidence: { canAnswer: false, reason: "no-rule-answer" } }),
+    });
+    assert.equal(result.answerStatus, "source-unavailable", question);
+    assert.equal(result.answerMode, "community-freshness-withheld", question);
+    assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl || "")), question);
+    assert.doesNotMatch(JSON.stringify(result), /\/187\/Pool|Overlook Outdoor Pool/i, question);
+    assert.ok(result.actions.every((action) => action.actionType === "information"), question);
+  }
+});
+
 test("residential rental rules outrank withheld facility pages after a facility misclassification", async () => {
   for (const question of ["Long term rental", "Short term rental"]) {
     const result = await answerCommunityQuestion(question, {
