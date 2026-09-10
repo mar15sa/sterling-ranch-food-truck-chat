@@ -101,6 +101,9 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "The current cited rule does not set the requested numeric maximum.",
   "The current cited rule does not set a numeric maximum height for the .",
   "The controlling source does not specify the requested detail.",
+  "The selected controlling source does not give a specific curb-placement or removal time.",
+  "Fence height depends on the fence type and lot. The selected standard says",
+  "No. The requested stay of  exceeds the source-derived -hour limit.",
   "Open the linked official resource for .",
   "The published fee section lists",
 ]);

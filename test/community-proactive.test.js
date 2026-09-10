@@ -280,7 +280,7 @@ test("trash-return questions retain the official storage limit when no removal t
   const answer = await ask("When do I need to bring my recycling cans in?");
   assert.equal(answer.answerMode, "source-derived-structured");
   assert.match(answer.answer, /does not give a specific curb-placement or removal time/i);
-  assert.match(answer.answer, /screened area behind the wing fence/i);
+  assert.match(answer.answer, /screened from view behind the wing fence/i);
   assert.ok(answer.sources.some((source) => /Resolution-No-2024-11-02/.test(source.sourceUrl || "")));
 });
 
@@ -297,7 +297,8 @@ test("generic DRC submission questions use only the approved submission route an
 
 test("rule answers remain grounded after post-answer topic templates are retired", async () => {
   const watering = await ask("When am I allowed to water my lawn?");
-  assert.match(watering.answer, /before 10:00 a\.m\. or after 6:00 p\.m\..*May 1 through September 30/i);
+  assert.match(watering.answer, /prohibited between the hours of 10:00 a\.m\. and 6:00 p\.m\./i);
+  assert.match(watering.answer, /May 1 (?:to|through) September 30/i);
   assert.ok(watering.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
   const lights = await ask("When can I put up holiday lights?");
   assert.match(lights.answer, /June 18 to July 7.*October 1 through January 31/i);

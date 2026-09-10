@@ -181,8 +181,9 @@ test("watering answers apply method, time, and season instead of leading with an
   ]) {
     const result = await answer(question);
     assert.equal(result.answerVerdict, "prohibited", question);
-    assert.match(result.answer, /No\..*inside/i, question);
-    assert.match(result.answer, /10:00 a\.m.*6:00 p\.m/i, question);
+    assert.match(result.answer, /prohibited between the hours of 10:00 a\.m\. and 6:00 p\.m\./i, question);
+    assert.match(result.answer, /May 1 (?:to|through) September 30/i, question);
+    assert.ok(result.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
   }
   const handWatering = await answer("Can I hand water my garden at noon in July?");
   assert.equal(handWatering.answerVerdict, "allowed");
@@ -442,6 +443,7 @@ test("generic fallback families use the shared evidence boundary without replaci
   const supportedFee = await answer("How much is my water service fee?");
   assert.equal(supportedFee.confidence.canAnswer, true);
   assert.match(supportedFee.answer, /\$50\.20|\$9\.70|\$44\.95/i);
+  assert.doesNotMatch(supportedFee.answer, /Disclosure and document fees|Status Letter|USB/i);
   assert.notEqual(supportedFee.answerMode, "source-evidence-boundary");
 
   const noEvidence = await answer("Can I build a helicopter landing pad in my yard?");
