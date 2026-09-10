@@ -1,6 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
+const { answerRulesQuestion } = require('../lib/rules-assistant');
 const storedIndex = require('../data/community-index.json');
 
 const now = new Date('2026-09-08T18:00:00Z');
@@ -91,5 +92,39 @@ test('pool rental cost questions withhold unapproved availability and price conc
     assert.doesNotMatch(result.directAnswer, /no pool rental fee|not available for rental/i, question);
     assert.ok(result.sources.some((source) => /\/187\/Pool/.test(source.sourceUrl || '')), question);
     assert.doesNotMatch(JSON.stringify(result), /\$5(?:\.00)?(?: per guest)?|guest passes?|direct debit|secure\.rec1\.com|rental catalog/i, question);
+  }
+});
+
+test('utility infrastructure fees outrank a hostile facility-cost handoff plan', async () => {
+  const hostilePlan = {
+    intent: 'services', goal: 'cost', goals: ['cost'], subject: 'facility fees', requestedDetails: ['price'],
+    dateRange: null, filters: { audience: '', category: '', facility: '', location: '' }, searchQueries: ['facility fees'],
+    scope: 'community', needsClarification: false,
+  };
+  for (const question of [
+    'What are the residential tap and facility fees?',
+    'How much are the utility tap fees for a home?',
+    'What is the water connection cost and facility fee?',
+  ]) {
+    const result = await answerCommunityQuestion(question, {
+      now, index, communityId: 'sterling-ranch', planCommunitySearch: async () => hostilePlan,
+      synthesizeCommunityAnswer: false, answerRulesQuestion,
+    });
+    assert.match(result.answer, /Residential stormwater tap.*\$6,080/i, question);
+    assert.match(result.answer, /Residential facilities fees.*\$12,395/i, question);
+    assert.ok(result.sources.some((source) => /Tap and Facility Fees/i.test(source.title || '')), question);
+    assert.doesNotMatch(JSON.stringify(result.sources), /Rent the Facility/i, question);
+  }
+});
+
+test('amenity costs and ambiguous facility fees retain the withheld rental handoff', async () => {
+  for (const question of ['How much does the clubhouse cost to rent?', 'What are the facility fees?']) {
+    const result = await answerCommunityQuestion(question, {
+      now, index, communityId: 'sterling-ranch', planCommunitySearch: async () => plan('cost', 'Overlook Clubhouse'),
+      synthesizeCommunityAnswer: false, answerRulesQuestion: unavailableRules,
+    });
+    assert.equal(result.answerStatus, 'source-unavailable', question);
+    assert.equal(result.answerMode, 'community-freshness-withheld', question);
+    assert.ok(result.sources.some((source) => /Rent the Facility/i.test(source.title || '')), question);
   }
 });
