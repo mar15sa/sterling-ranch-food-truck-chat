@@ -950,21 +950,24 @@ test("conversation, underspecified prompts, and exact section lookups stay out o
 test("unfinished resident statements retain targeted clarification instead of broad retrieval", async () => {
   let searchPlanCalls = 0;
   const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [source()] };
-  const answer = await answerCommunityQuestion("I have an Alto v", {
-    index,
-    communityId: "alpha",
-    planCommunitySearch: async () => { searchPlanCalls += 1; return { searchQueries: ["Alto"] }; },
-    answerRulesQuestion: async () => ({
-      answer: "What would you like to know about your Alto home?",
-      answerMode: "targeted-clarification",
-      answerVerdict: "informational",
-      inputClassification: "unclear",
-      confidence: { canAnswer: false, reason: "incomplete-home-model-question" },
-      sources: [],
-    }),
-  });
-  assert.equal(answer.answerMode, "targeted-clarification");
-  assert.match(answer.answer, /What would you like to know/i);
+  for (const question of ["I have an Alto v", "We own a Juniper model"]) {
+    const answer = await answerCommunityQuestion(question, {
+      index,
+      communityId: "alpha",
+      planCommunitySearch: async () => { searchPlanCalls += 1; return { searchQueries: ["model"] }; },
+      answerRulesQuestion: async () => ({
+        answer: "What would you like to know or do?",
+        answerMode: "targeted-clarification",
+        answerVerdict: "informational",
+        inputClassification: "unclear",
+        confidence: { canAnswer: false, reason: "incomplete-statement" },
+        sources: [],
+      }),
+    });
+    assert.equal(answer.answerMode, "targeted-clarification", question);
+    assert.match(answer.answer, /What would you like to know or do/i, question);
+    assert.deepEqual(answer.sources, [], question);
+  }
   assert.equal(searchPlanCalls, 0);
 });
 

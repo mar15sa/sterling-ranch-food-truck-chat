@@ -164,3 +164,15 @@ test("a no-claim hold fails quality when it sends residents to an unrelated sour
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("irrelevant-handoff-source"));
 });
+
+test("a governing rule remains a relevant handoff when it explicitly says a named project is not listed", () => {
+  const result = scoreCommunityAnswer("Can I add a custom enclosure?", {
+    answer: "Short answer: The selected official rules do not name custom enclosure specifically.\n\nWhat I found:\n- The governing section describes related accessory structures.\n\nBefore you act: Open the linked official section.",
+    answerMode: "source-evidence-boundary",
+    confidence: { canAnswer: false, reason: "named-project-not-supported-by-cited-evidence" },
+    sources: [{ title: "General community standards", sourceUrl: "https://library.municode.com/example/rules" }],
+    actions: [],
+    claims: [],
+  });
+  assert.ok(!result.issues.includes("irrelevant-handoff-source"));
+});

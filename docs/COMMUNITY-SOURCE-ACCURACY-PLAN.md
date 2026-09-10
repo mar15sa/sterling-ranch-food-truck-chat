@@ -1,6 +1,6 @@
 # Community Source Accuracy and Coverage Plan
 
-**Status: audited operating plan as of September 9, 2026.** This replaces the earlier plan's single release gate with two separate goals: keeping the exactly approved resident-answer bundle safe, and eventually accounting for the full official CAB/CivicPlus site. The exact claim-level answerability calculation is the reporting authority when it disagrees with a legacy trusted-baseline label.
+**Status: audited operating plan as of September 10, 2026.** This replaces the earlier plan's single release gate with two separate goals: keeping the exactly approved resident-answer bundle safe, and eventually accounting for the full official CAB/CivicPlus site. The exact claim-level answerability calculation is the reporting authority when it disagrees with a legacy trusted-baseline label.
 
 ## The rule that does not change
 
@@ -23,13 +23,13 @@ The earlier September 8 table described a transitional trusted-baseline bundle a
 
 | Area | Current evidence | Classification |
 | --- | --- | --- |
-| Exact resident evidence | 642 extracted ledger rows exist. The strict runtime counts 18 as explicitly approved and treats the other 624 trusted-baseline rows as candidates. The legacy `truthStatus.approvedFactCount: 642` field is migration metadata and must not be used as the resident-answer approval count. | **Implemented, migration cleanup remaining** |
-| Approved-source freshness | The repaired verifier previously renewed 46 due exact approved URLs without changing the approved fingerprint. At the latest complete-gate attempt, 164 source records had crossed their freshness deadline; exact unchanged-version revalidation is running, and the release gate is red until it finishes. | **In progress** |
+| Exact resident evidence | 649 extracted ledger rows exist. The strict staging runtime counts 25 as explicitly approved and treats the other 624 trusted-baseline rows as candidates. Any older `truthStatus.approvedFactCount` field that counts the transitional baseline is migration metadata and must not be used as the resident-answer approval count. | **Implemented, migration cleanup remaining** |
+| Approved-source freshness | Staging revision `6e92036891dbbf98348d64afa6dcfd6c36ffd014` renewed all 47 due exact approved URL groups without changing the approved fingerprint: zero review failures, zero expired approved sources, zero expired approved facts, and zero crawl failures. The verifier now handles ordinary chunks, section-scoped approvals, and full-page approvals on the same unchanged CivicPlus URL. | **Implemented and hosted-proven** |
 | Safe refresh behavior | Approved URLs receive priority; only exact URL-plus-hash matches renew; changed/new/removed identities stay quarantined | **Implemented** |
 | Resident freshness behavior | Stale approved sources and dated hours are withheld rather than shown as verified | **Implemented** |
-| Candidate isolation | An earlier labeled live-crawl snapshot quarantined 67 changed, 331 new, and 36 removed source identities instead of promoting them. | **Implemented** |
-| Inventory accounting | The bundled snapshot reports 267 source records, 1,140 discovered URLs, 757 eligible URLs, and 222 pending pages. A separate later live candidate reported 1,510 discovered URLs, 1,079 eligible URLs, and an 894-page backlog. These are different snapshots and must remain separately labeled. | **Partially implemented** |
-| Private review queue | The authenticated screen has pagination and shows pending evidence without changing answers | **Partially implemented** |
+| Candidate isolation | The latest staging refresh quarantined 18 changed, 356 new, and 57 removed source identities instead of promoting them. | **Implemented** |
+| Inventory accounting | The latest staging snapshot reports 274 source records, 1,529 discovered URLs, 1,099 eligible URLs, and a 910-page backlog. Older bundled and live-candidate totals remain historical snapshots and must not be combined with this one. | **Partially implemented** |
+| Private review queue | The authenticated screen has pagination and shows pending evidence without changing answers. The current long-tail queue is 1,925 candidate review items; this is not the count of approved or answerable facts. Deployment of its external review synchronization and queue-age alerts is not yet proven. | **Partially implemented** |
 | Material conflict resolution | 17 source/fact conflict groups remain for owner decision | **Missing** |
 | Full official-site coverage | Not yet claimed; pending sources include current operational pages, forms, rules, historic files, duplicate candidates, and unavailable documents | **Missing** |
 
@@ -66,7 +66,7 @@ When sources disagree, the assistant withholds the disputed value. A newer infor
 
 ## Staged coverage backlog
 
-The latest separately labeled live-candidate backlog is 894 pages. The bundled snapshot still reports 222 pending pages because it represents a different crawl boundary. Both are queues rather than resident-answer approval. Work one small batch at a time; a batch can be complete even while the next batch is waiting.
+The latest staging backlog is 910 pages from a snapshot with 1,529 discovered and 1,099 eligible URLs. Older 222-page and 894-page totals represent earlier crawl boundaries and remain historical evidence only. Every backlog is a queue rather than resident-answer approval. Work one small batch at a time; a batch can be complete even while the next batch is waiting.
 
 | Batch | Scope and first owner-review set | Why first | Completion criteria |
 | --- | --- | --- | --- |
@@ -111,6 +111,8 @@ Report these separately each week and month:
 | Critical retrieval and answer regression | 100% / zero regressions | Same for every approved coverage batch |
 
 The owner receives one deduplicated alert for each expired approved source, approved-bundle fingerprint mismatch, broken required action, overdue material review, controlling-source disappearance, or stalled active batch. Inventory growth is reported separately from approved-bundle health so a safe resident service is never described as full coverage.
+
+**Scheduling gap:** startup and in-process refreshes, CI exact-version verification, daily source-release checks, and routing checks exist. The complete nightly/weekly/monthly operating schedule described by the earlier plan is not yet proven: inventory reconciliation, queue-age escalation, expiry reporting, retirement confirmation, and a monthly accuracy report still need one versioned schedule and evidence that it runs successfully.
 
 ## Roles and release boundaries
 

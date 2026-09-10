@@ -189,9 +189,12 @@ test("live pool status remains separate from approved dated pool hours", async (
     }),
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(holidayHours.answerStatus, "verified");
+  assert.equal(holidayHours.answerStatus, "verified-incomplete");
+  assert.equal(holidayHours.answerMode, "community-dated-facility-hours-holiday-boundary");
   assert.match(holidayHours.answer, /5:00 am|8:45 pm/i);
-  assert.match(holidayHours.answer, /does not publish separate holiday hours/i);
+  assert.match(holidayHours.answer, /does not publish separate Labor Day hours/i);
+  assert.deepEqual(holidayHours.completion.resolvedDetails, ["date"]);
+  assert.deepEqual(holidayHours.completion.missingDetails.map((detail) => detail.key), ["hours"]);
 });
 
 test("only an active live-status source can resolve a current-status facet", () => {
@@ -358,7 +361,7 @@ test("an existing authoritative specification limitation is not repeated as a ge
   assert.doesNotMatch(answer.answer, /could not verify/i);
 });
 
-test("freshness alone cannot authorize an exact static specification sheet", async () => {
+test("freshness alone cannot authorize an exact static specification sheet when governing evidence is unavailable", async () => {
   const freshIndex = structuredClone(communityIndex);
   const sourceUrl = "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-";
   for (const source of freshIndex.sources || []) {
@@ -373,10 +376,15 @@ test("freshness alone cannot authorize an exact static specification sheet", asy
     now: TEST_NOW,
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
-    answerRulesQuestion: (residentQuestion, options) => answerRulesQuestion(residentQuestion, {
-      ...options,
-      searchMode: "legacy",
-      llmMode: "off",
+    answerRulesQuestion: async () => ({
+      answer: "I could not verify the requested fence specification from a controlling source.",
+      directAnswer: "I could not verify the requested fence specification from a controlling source.",
+      answerStatus: "source-unavailable",
+      answerVerdict: "unverified",
+      answerMode: "source-unavailable",
+      confidence: { canAnswer: false, confidence: "low", reason: "source-unavailable" },
+      sources: [],
+      qualityChecks: { requestedFacetCoverage: false, issues: ["requested-specification-missing"] },
     }),
   });
   assert.equal(answer.answerStatus, "source-unavailable");
@@ -387,7 +395,7 @@ test("freshness alone cannot authorize an exact static specification sheet", asy
   assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)));
 });
 
-test("full-route fence questions retain permission while an unapproved finish stays unresolved", async () => {
+test("full-route fence questions resolve permission and exact finishes from the controlling rule", async () => {
   const questions = [
     "Can I build a fence and what color does it need to be?",
     "Can I install backyard fencing, and which stain color is required?",
@@ -428,22 +436,24 @@ test("full-route fence questions retain permission while an unapproved finish st
     });
     assert.equal(communitySynthesisCalls, 0, question);
     assert.equal(answer.authorityDecision, "rulebook-controls-binding-claim", question);
-    assert.equal(answer.answerStatus, "verified-incomplete", question);
+    assert.equal(answer.answerStatus, "verified", question);
     assert.equal(answer.answerVerdict, "conditional", question);
-    assert.equal(answer.completion.outcome, "verified-partial", question);
+    assert.equal(answer.completion.outcome, "complete", question);
     assert.ok(answer.completion.requestedDetails.includes("permission"), question);
     assert.ok(answer.completion.requestedDetails.includes("specification"), question);
     assert.ok(answer.completion.resolvedDetails.includes("permission"), question);
-    assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "specification"), question);
+    assert.ok(answer.completion.resolvedDetails.includes("specification"), question);
+    assert.deepEqual(answer.completion.missingDetails, [], question);
     assert.notEqual(answer.answerMode, "community-per-facet-grounded-ai", question);
     assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
-    assert.match(answer.answer, /DRC approval|approval requirements/i, question);
-    assert.match(answer.answer, /^Short answer: The cited current rules do not name one exact paint color or finish/i, question);
-    assert.doesNotMatch(answer.answer, /could not verify the permission/i, question);
+    assert.match(answer.answer, /DRC approval|approval requirements|approval must be obtained from the DRC/i, question);
+    assert.match(answer.answer, /Sherwin[- ]Williams #3002.*Belvedere Tan/i, question);
+    assert.match(answer.answer, /concrete fencing[^.]*Solomon #338.*Earthen/i, question);
+    assert.doesNotMatch(answer.answer, /could not verify/i, question);
   }
 });
 
-test("a binding rule remains verified-partial when specification composition is unavailable", async () => {
+test("a binding rule stays complete without external synthesis when the governing source supplies the specification", async () => {
   const answer = await answerCommunityQuestion("Can I build a fence and what color is required?", {
     interpretationMode: "structured",
     index: communityIndex,
@@ -466,11 +476,12 @@ test("a binding rule remains verified-partial when specification composition is 
       llmMode: "off",
     }),
   });
-  assert.equal(answer.answerStatus, "verified-incomplete");
-  assert.equal(answer.completion.outcome, "verified-partial");
-  assert.deepEqual(answer.completion.resolvedDetails, ["permission"]);
-  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
-  assert.match(answer.answer, /does not provide|do not name one exact paint color or finish|could not verify the requested color, finish, material, or dimension/i);
+  assert.equal(answer.answerStatus, "verified");
+  assert.equal(answer.completion.outcome, "complete");
+  assert.deepEqual(answer.completion.resolvedDetails, ["permission", "specification"]);
+  assert.deepEqual(answer.completion.missingDetails, []);
+  assert.match(answer.answer, /Sherwin[- ]Williams #3002.*Belvedere Tan/i);
+  assert.match(answer.answer, /concrete fencing[^.]*Solomon #338.*Earthen/i);
 });
 
 test("an unapproved specification match cannot discard an independently verified controlling fence permission", async () => {

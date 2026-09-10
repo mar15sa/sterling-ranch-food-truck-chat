@@ -102,6 +102,18 @@ assert.match(changedPetLimit.answer, /household pets such as cats and dogs are a
 assert.doesNotMatch(changedPetLimit.answer, /four domestic animals/i);
 assert.match(changedPetLimit.sources[0].excerpt, /five domestic animals/i);
 
+const changedDeadline = sourceDerivedAnswerParts(
+  "When must front yard landscaping be completed?",
+  [{
+    title: "Current landscaping deadline",
+    text: "Front yard landscaping must be completed within 45 days after closing.",
+    excerpt: "Current landscaping deadline.",
+  }],
+  "Short answer: Front yard landscaping must be completed within 30 days after closing."
+);
+assert.doesNotMatch(changedDeadline.answer, /30 days/i);
+assert.match(changedDeadline.sources[0].excerpt, /45 days/i);
+
 assert.equal(sourceLifecycleStatus({ effectiveDate: "2020-01-01" }), "current");
 assert.equal(sourceLifecycleStatus({ effectiveDate: "2099-01-01" }), "future");
 assert.equal(sourceLifecycleStatus({ expirationDate: "2020-01-01" }), "expired");
