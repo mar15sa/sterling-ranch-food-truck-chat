@@ -495,7 +495,9 @@ function isSchemaToken(value) {
   // Internal routing and action identifiers are compact machine tokens, not
   // resident prose. Human-facing fixed copy contains a phrase, sentence, or
   // a factual value and remains subject to the guard.
-  return /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(value) || value === "Official community website";
+  return /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(value)
+    || /^[a-z0-9][a-z0-9._-]*\.(?:json|[cm]?js)$/i.test(value)
+    || value === "Official community website";
 }
 
 function fingerprint(finding) {

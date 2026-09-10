@@ -239,3 +239,12 @@ test("resident literal guard does not attribute a sibling function's metadata to
   `);
   assert.deepEqual(findings.map((finding) => finding.value), ["The pool closes at 9:00 pm."]);
 });
+
+test("resident literal guard ignores internal data filenames but still catches resident prose beside them", () => {
+  const findings = inspectSource(`
+    const indexPath = "rules-index.json";
+    const directAnswer = "The pool closes at 9:00 pm.";
+    return { directAnswer, indexPath };
+  `);
+  assert.deepEqual(findings.map((finding) => finding.value), ["The pool closes at 9:00 pm."]);
+});
