@@ -26,7 +26,13 @@ test('Release 2 ships the exact reviewed trusted-baseline evidence set', () => {
   assert.equal(sourceIds.size, index.sources.length);
   assert.equal(evidenceKeys.size, 269);
   const strictOwnerApprovedIds = new Set(strictOwnerApprovedImport.map(([id]) => id));
-  const sourcesByEvidence = Map.groupBy(index.sources, source => `${normalizeUrl(source.sourceUrl)}\n${source.contentHash}`);
+  const sourcesByEvidence = index.sources.reduce((groups, source) => {
+    const key = `${normalizeUrl(source.sourceUrl)}\n${source.contentHash}`;
+    const sources = groups.get(key) || [];
+    sources.push(source);
+    groups.set(key, sources);
+    return groups;
+  }, new Map());
   assert.ok([...sourcesByEvidence.values()]
     .filter(sources => sources.length > 1)
     .every(sources => sources.some(source => strictOwnerApprovedIds.has(source.id))
