@@ -21,6 +21,7 @@ const RESPONSE_FILES = [
 const BASELINE_PATH = path.join(__dirname, "..", "data", "community-resident-literal-baseline.json");
 
 const RESPONSE_FIELDS = new Set(["directAnswer", "answer", "nextStep", "keyDetails", "label", "url"]);
+const DYNAMIC_PRESENTATION_FIELDS = new Set(["label", "url", "keyDetails"]);
 
 // These are source-independent interface sentences. Additions need review: a
 // resident fact belongs in a source claim/action projection instead.
@@ -55,39 +56,89 @@ function readString(source, start) {
   const quote = source[start];
   if (!['"', "'", "`"].includes(quote)) return null;
   let value = "";
+  let dynamic = false;
   let index = start + 1;
   for (; index < source.length; index += 1) {
     const char = source[index];
     if (char === "\\") { value += source[index + 1] || ""; index += 1; continue; }
     if (quote === "`" && char === "$" && source[index + 1] === "{") {
-      // Dynamic templates are allowed only when their static parts remain
-      // generic. Skip the expression, preserving the surrounding copy.
-      let depth = 1;
-      index += 2;
-      for (; index < source.length && depth; index += 1) {
-        if (source[index] === "{") depth += 1;
-        if (source[index] === "}") depth -= 1;
-      }
-      index -= 1;
+      const expression = skipTemplateExpression(source, index + 2);
+      if (expression == null) return null;
+      dynamic = true;
+      // The loop advances once more before reading the next template byte.
+      index = expression - 1;
       continue;
     }
-    if (char === quote) return { value, end: index + 1 };
+    if (char === quote) return { value, end: index + 1, dynamic };
     value += char;
   }
   return null;
 }
 
+function skipRegex(source, start) {
+  let inClass = false;
+  for (let index = start + 1; index < source.length; index += 1) {
+    if (source[index] === "\\") { index += 1; continue; }
+    if (source[index] === "[") inClass = true;
+    if (source[index] === "]") inClass = false;
+    if (source[index] === "/" && !inClass) {
+      index += 1;
+      while (/[A-Za-z]/.test(source[index] || "")) index += 1;
+      return index;
+    }
+    if (source[index] === "\n" || source[index] === "\r") return null;
+  }
+  return null;
+}
+
+function skipTemplateExpression(source, start) {
+  let depth = 1;
+  let index = start;
+  let previous = null;
+  while (index < source.length && depth) {
+    if (/\s/.test(source[index])) { index += 1; continue; }
+    if (source.startsWith("//", index)) { index = source.indexOf("\n", index + 2); if (index < 0) return null; continue; }
+    if (source.startsWith("/*", index)) { index = source.indexOf("*/", index + 2); if (index < 0) return null; index += 2; continue; }
+    const literal = readString(source, index);
+    if (literal) { index = literal.end; previous = "value"; continue; }
+    if (source[index] === "/" && canStartRegex(previous)) {
+      const end = skipRegex(source, index);
+      if (end == null) return null;
+      index = end;
+      previous = "value";
+      continue;
+    }
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") depth -= 1;
+    previous = source[index];
+    index += 1;
+  }
+  return depth === 0 ? index : null;
+}
+
+function canStartRegex(previous) {
+  return previous == null
+    || ["return", "throw", "case", "delete", "typeof", "void", "new", "in", "of", "yield", "await", "else", "do"].includes(previous)
+    || !["value", ")", "]", "}", "+", "-"].includes(previous);
+}
+
 function tokensFor(source) {
   const tokens = [];
+  let previous = null;
   for (let index = 0; index < source.length;) {
     if (/\s/.test(source[index])) { index += 1; continue; }
     if (source.startsWith("//", index)) { index = source.indexOf("\n", index); if (index < 0) break; continue; }
     if (source.startsWith("/*", index)) { index = source.indexOf("*/", index + 2); if (index < 0) break; index += 2; continue; }
     const literal = readString(source, index);
-    if (literal) { tokens.push({ type: "string", value: literal.value, offset: index }); index = literal.end; continue; }
+    if (literal) { tokens.push({ type: "string", value: literal.value, offset: index, dynamic: literal.dynamic }); index = literal.end; previous = "value"; continue; }
+    if (source[index] === "/" && canStartRegex(previous)) {
+      const end = skipRegex(source, index);
+      if (end != null) { index = end; previous = "value"; continue; }
+    }
     const identifier = source.slice(index).match(/^[A-Za-z_$][\w$]*/);
-    if (identifier) { tokens.push({ type: "identifier", value: identifier[0], offset: index }); index += identifier[0].length; continue; }
+    if (identifier) { tokens.push({ type: "identifier", value: identifier[0], offset: index }); index += identifier[0].length; previous = identifier[0]; continue; }
     tokens.push({ type: "punctuation", value: source[index], offset: index }); index += 1;
+    previous = tokens[tokens.length - 1].value;
   }
   return tokens;
 }
@@ -105,12 +156,12 @@ function responseLiterals(source) {
     const field = tokens[index].value;
     const bound = literalBindings.get(tokens[index + 2]?.value);
     if (bound && [",", "}"].includes(tokens[index + 3]?.value)) {
-      literals.push({ field, value: bound.value, offset: bound.offset });
+      literals.push({ field, value: bound.value, offset: bound.offset, dynamic: bound.dynamic });
     }
     const depth = { "(": 0, "[": 0, "{": 0 };
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
       const token = tokens[cursor];
-      if (token.type === "string") literals.push({ field, value: token.value, offset: token.offset });
+      if (token.type === "string") literals.push({ field, value: token.value, offset: token.offset, dynamic: token.dynamic });
       if (["(", "[", "{"].includes(token.value)) depth[token.value] += 1;
       if (token.value === ")") depth["("] -= 1;
       if (token.value === "]") depth["["] -= 1;
@@ -126,7 +177,7 @@ function responseLiterals(source) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value)) continue;
     if (!["{", ","].includes(tokens[index - 1].value) || ![",", "}"].includes(tokens[index + 1].value)) continue;
     const bound = literalBindings.get(tokens[index].value);
-    if (bound) literals.push({ field: tokens[index].value, value: bound.value, offset: bound.offset });
+    if (bound) literals.push({ field: tokens[index].value, value: bound.value, offset: bound.offset, dynamic: bound.dynamic });
   }
   // The legacy rule engine's resident replies flow through this helper rather
   // than object fields. Treat its first and third arguments as direct answer
@@ -138,7 +189,7 @@ function responseLiterals(source) {
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
       const token = tokens[cursor];
       if (token.type === "string" && (argument === 0 || argument === 2)) {
-        literals.push({ field: argument === 0 ? "directAnswer" : "nextStep", value: token.value, offset: token.offset });
+        literals.push({ field: argument === 0 ? "directAnswer" : "nextStep", value: token.value, offset: token.offset, dynamic: token.dynamic });
       }
       if (["(", "[", "{"].includes(token.value)) depth += 1;
       if ([")", "]", "}"].includes(token.value)) {
@@ -155,13 +206,25 @@ function looksLikeFact(value) {
   return /https?:\/\/|\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b|(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}|\$\s*\d|\b\d{1,2}:\d{2}\s*(?:a\.?m\.?|p\.?m\.?)|\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b|\b(?:allowed|prohibited|required|must|may|cannot|can’t|can't|approval)\b.{0,80}\b(?:pool|mailbox|fence|tree|shed|truck|parking|water|trash|quiet|instagram|helipad|hoa)\b/i.test(value);
 }
 
+function isGenericDynamicFragment({ field, value, dynamic }) {
+  if (!dynamic || looksLikeFact(value)) return false;
+  // Dynamic labels, URLs, and details are presentation wrappers around a
+  // reviewed action or source value. Their changing portion is not a fixed
+  // resident fact. Answer sentences get this exception only when their fixed
+  // wording is a generic evidence/navigation boundary; factual wording still
+  // remains visible to the guard.
+  if (DYNAMIC_PRESENTATION_FIELDS.has(field)) return true;
+  return ["directAnswer", "nextStep"].includes(field)
+    && /^(?:Chapter\s+appears to cover\.|I found this contact detail in the rulebook:\s*\.|I (?:could not|can’t) (?:safely |currently |reliably )?(?:confirm|verify|read)|I did not find an event|I found\s+official calendar|The official calendar does not list|For\s*, the published\s+hours are:|Open\b|Use\b)/i.test(value.trim());
+}
+
 function fingerprint(finding) {
   return crypto.createHash("sha256").update(`${finding.filename}\u0000${finding.field}\u0000${finding.value}`).digest("hex");
 }
 
 function inspectSource(source, filename = "inline.js", { factsOnly = false } = {}) {
   return responseLiterals(source)
-    .filter(({ value }) => value.trim() && !GENERIC_COPY.has(value) && (!factsOnly || looksLikeFact(value)))
+    .filter((literal) => literal.value.trim() && !GENERIC_COPY.has(literal.value) && !isGenericDynamicFragment(literal) && (!factsOnly || looksLikeFact(literal.value)))
     .map(({ field, value, offset }) => ({ filename, field, value, line: lineAt(source, offset) }));
 }
 

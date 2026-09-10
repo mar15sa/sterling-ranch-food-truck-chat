@@ -43,6 +43,22 @@ test("resident literal guard inventories a new rule-focused canned answer", () =
   assert.equal(findings[0].field, "directAnswer");
 });
 
+test("resident literal guard reaches helpfulAnswer calls after regular expressions in the real rule engine", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "lib", "rules-assistant.js"), "utf8");
+  const start = source.indexOf("function helpfulAnswer");
+  const end = source.indexOf("if (isCarCoverQuery", start);
+  const findings = inspectSource(source.slice(start, end), "lib/rules-assistant.js");
+  assert.ok(findings.some((finding) => finding.value.startsWith("Chapter 5 is the design-guidelines chapter.")));
+  assert.ok(findings.some((finding) => finding.value.startsWith("Porch, patio, and deck lighting is allowed")));
+});
+
+test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
+  assert.deepEqual(inspectSource('return { label: `Open ${source.title}` };'), []);
+  const findings = inspectSource('return helpfulAnswer(`Parking is allowed after ${closingTime}.`, sources);');
+  assert.equal(findings.length, 1);
+  assert.match(findings[0].value, /Parking is allowed/);
+});
+
 test("per-node baselines allow unrelated edits and removal but reject changed or new copy", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "resident-literal-guard-"));
   const sourcePath = path.join(root, "lib", "fixture.js");
