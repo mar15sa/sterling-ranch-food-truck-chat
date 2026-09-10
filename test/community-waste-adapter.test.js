@@ -25,8 +25,10 @@ function secondCommunityProfile() {
         freshness: { refreshMinutes: 15, staleAfterMinutes: 30 }, degradation: { policy: "withhold" }, labels: {}, vocabulary: { waste: ["collection"] },
         wasteSchedule: {
           recollect: { areaId: "RV-42", serviceId: 42 },
-          referenceLocation: { query: "400 Cedar Road", candidateTextPattern: "400\\s+Cedar" },
-          serviceAreas: [{ label: "North District", offset: 2 }],
+          serviceAreas: [
+            { label: "North District", officialReferenceLocation: { privacy: "published-service-area-reference", query: "400 Cedar Road", candidateTextPattern: "400\\s+Cedar" } },
+            { label: "South District" },
+          ],
           actionLinks: [{ id: "calendar", type: "information", label: "Check your Ridgeview collection address", url: "https://calendar.ridgeview.example/pickup" }],
         },
       },
@@ -41,10 +43,11 @@ test("live waste adapter is entirely driven by a second community profile", asyn
     if (String(url).includes("address-suggest")) return { ok: true, json: async () => [{ place_id: "A1234567-1234-1234-1234-123456789012", address: "400 Cedar Road" }] };
     return { ok: true, json: async () => ({ events: [{ day: "2026-09-15", flags: [{ name: "Recycling" }] }] }) };
   };
-  const schedule = await getWasteSchedule({ profile: secondCommunityProfile(), fetchImpl, now: new Date("2026-09-14T18:00:00Z"), question: "When is recycling pickup?" });
+  const schedule = await getWasteSchedule({ profile: secondCommunityProfile(), fetchImpl, now: new Date("2026-09-14T18:00:00Z"), question: "When is recycling pickup in North District?" });
   assert.equal(schedule.serviceAreas[0].label, "North District");
-  assert.equal(schedule.serviceAreas[0].date, "2026-09-17");
-  assert.deepEqual(schedule.evidence.claims.map((claim) => claim.text), ["2026-09-15", "2026-09-17"]);
+  assert.equal(schedule.serviceAreas[0].date, "2026-09-15");
+  assert.equal(schedule.serviceAreas[1].date, undefined);
+  assert.deepEqual(schedule.evidence.claims.map((claim) => claim.text), ["2026-09-15"]);
   assert.equal(schedule.evidence.actions[0].label, "Check your Ridgeview collection address");
   assert.match(requested[0], /RV-42\/services\/42\/address-suggest/);
   assert.match(requested[0], /400\+Cedar\+Road/);
@@ -53,7 +56,21 @@ test("live waste adapter is entirely driven by a second community profile", asyn
 
 test("live waste adapter fails closed when its configured reference location cannot be proven", async () => {
   const fetchImpl = async () => ({ ok: true, json: async () => [{ place_id: "A1234567-1234-1234-1234-123456789012", address: "Different address" }] });
-  await assert.rejects(() => getWasteSchedule({ profile: secondCommunityProfile(), fetchImpl, question: "When is recycling pickup?" }), /could not prove/i);
+  await assert.rejects(() => getWasteSchedule({ profile: secondCommunityProfile(), fetchImpl, question: "When is recycling pickup in North District?" }), /could not prove/i);
+});
+
+test("unproven named areas do not query a reference address or receive an inferred date", async () => {
+  let calls = 0;
+  const schedule = await getWasteSchedule({
+    profile: secondCommunityProfile(),
+    fetchImpl: async () => { calls += 1; throw new Error("must not fetch"); },
+    question: "When is recycling pickup in South District?",
+  });
+  assert.equal(calls, 0);
+  assert.equal(schedule.date, "");
+  assert.deepEqual(schedule.serviceAreas, [{ label: "North District" }, { label: "South District" }]);
+  assert.deepEqual(schedule.evidence.claims, []);
+  assert.equal(schedule.evidence.degradation.state, "unavailable");
 });
 
 test("waste answers retain a proven date while using only configured actions and no fixed cart instruction", async () => {
