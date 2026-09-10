@@ -186,38 +186,106 @@ function tokensFor(source) {
 function responseLiterals(source) {
   const tokens = tokensFor(source);
   const literals = [];
-  const literalBindings = new Map();
+  const bindings = new Map();
   for (let index = 0; index < tokens.length - 3; index += 1) {
-    if (!["const", "let"].includes(tokens[index].value) || tokens[index + 1].type !== "identifier" || tokens[index + 2].value !== "=" || tokens[index + 3].type !== "string") continue;
-    literalBindings.set(tokens[index + 1].value, tokens[index + 3]);
+    if (!["const", "let"].includes(tokens[index].value) || tokens[index + 1].type !== "identifier" || tokens[index + 2].value !== "=") continue;
+    let depth = 0;
+    let end = index + 3;
+    for (; end < tokens.length; end += 1) {
+      const token = tokens[end];
+      if (["(", "[", "{"].includes(token.value)) depth += 1;
+      if ([")", "]", "}"].includes(token.value)) depth -= 1;
+      if (depth === 0 && [";"].includes(token.value)) break;
+    }
+    bindings.set(tokens[index + 1].value, { start: index + 3, end });
+  }
+
+  // This is deliberately a small, conservative expression walker. It follows
+  // a named value only when that value is used in a response slot, and it
+  // treats every fixed string in a value branch as resident-facing. We do not
+  // try to understand JavaScript generally: strings in the condition before a
+  // ternary `?` are selectors, while both value branches are inspected.
+  function stringsInExpression(start, end, seen = new Set(), resolveBindings = false) {
+    let depth = 0;
+    let question = -1;
+    for (let cursor = start; cursor < end; cursor += 1) {
+      const token = tokens[cursor];
+      if (["(", "[", "{"].includes(token.value)) depth += 1;
+      if ([")", "]", "}"].includes(token.value)) depth -= 1;
+      if (token.value === "?" && depth === 0) { question = cursor; break; }
+    }
+    if (question >= 0) {
+      depth = 0;
+      for (let cursor = question + 1; cursor < end; cursor += 1) {
+        const token = tokens[cursor];
+        if (["(", "[", "{"].includes(token.value)) depth += 1;
+        if ([")", "]", "}"].includes(token.value)) depth -= 1;
+        if (token.value === ":" && depth === 0) return [
+          ...stringsInExpression(question + 1, cursor, seen, resolveBindings),
+          ...stringsInExpression(cursor + 1, end, seen, resolveBindings),
+        ];
+      }
+      // An incomplete expression is uncertain. Preserve any fixed text we can
+      // see instead of silently allowing a new resident answer through.
+    }
+    const found = [];
+    for (let cursor = start; cursor < end; cursor += 1) {
+      const token = tokens[cursor];
+      if (token.type === "string") found.push(token);
+      // A property receiver (for example `candidate.directAnswer`) is not a
+      // locally named response value. Following it would drag arbitrary data
+      // objects into this narrow guard.
+      if (resolveBindings && token.type === "identifier" && bindings.has(token.value) && !seen.has(token.value)
+        && tokens[cursor - 1]?.value !== "." && tokens[cursor + 1]?.value !== "." && seen.size < 24) {
+        const binding = bindings.get(token.value);
+        const nextSeen = new Set(seen);
+        nextSeen.add(token.value);
+        found.push(...stringsInExpression(binding.start, binding.end, nextSeen, true));
+      }
+    }
+    return found;
+  }
+
+  function addExpression(field, start, end) {
+    // Follow a local binding only when the whole response value is the name.
+    // This avoids treating ordinary metadata objects as a response pathway.
+    const resolveBindings = end === start + 1 && tokens[start]?.type === "identifier";
+    if (!resolveBindings) {
+      for (let cursor = start; cursor < end; cursor += 1) {
+        const literal = tokens[cursor];
+        if (literal.type === "string" && !isTernaryControlLiteral(tokens, cursor)) {
+          literals.push({ field, value: literal.value, offset: literal.offset, dynamic: literal.dynamic });
+        }
+      }
+      return;
+    }
+    for (const literal of stringsInExpression(start, end, new Set(), resolveBindings)) {
+      literals.push({ field, value: literal.value, offset: literal.offset, dynamic: literal.dynamic });
+    }
   }
   for (let index = 0; index < tokens.length - 1; index += 1) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value) || tokens[index + 1].value !== ":") continue;
     const field = tokens[index].value;
-    const bound = literalBindings.get(tokens[index + 2]?.value);
-    if (bound && [",", "}"].includes(tokens[index + 3]?.value)) {
-      literals.push({ field, value: bound.value, offset: bound.offset, dynamic: bound.dynamic });
-    }
     const depth = { "(": 0, "[": 0, "{": 0 };
+    let end = tokens.length;
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
       const token = tokens[cursor];
-      if (token.type === "string" && !isTernaryControlLiteral(tokens, cursor)) literals.push({ field, value: token.value, offset: token.offset, dynamic: token.dynamic });
       if (["(", "[", "{"].includes(token.value)) depth[token.value] += 1;
       if (token.value === ")") depth["("] -= 1;
       if (token.value === "]") depth["["] -= 1;
       if (token.value === "}") {
-        if (depth["{"] === 0 && depth["("] === 0 && depth["["] === 0) break;
+        if (depth["{"] === 0 && depth["("] === 0 && depth["["] === 0) { end = cursor; break; }
         depth["{"] -= 1;
       }
-      if (token.value === "," && depth["("] === 0 && depth["["] === 0 && depth["{"] === 0) break;
+      if (token.value === "," && depth["("] === 0 && depth["["] === 0 && depth["{"] === 0) { end = cursor; break; }
     }
+    addExpression(field, index + 2, end);
   }
   // Object shorthand is another direct response path: `return { answer }`.
   for (let index = 1; index < tokens.length - 1; index += 1) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value)) continue;
     if (!["{", ","].includes(tokens[index - 1].value) || ![",", "}"].includes(tokens[index + 1].value)) continue;
-    const bound = literalBindings.get(tokens[index].value);
-    if (bound) literals.push({ field: tokens[index].value, value: bound.value, offset: bound.offset, dynamic: bound.dynamic });
+    addExpression(tokens[index].value, index, index + 1);
   }
   // The legacy rule engine's resident replies flow through these helpers
   // rather than object fields. Treat their first and third arguments as direct
@@ -227,17 +295,22 @@ function responseLiterals(source) {
     if (!['helpfulAnswer', 'structuredHelpfulAnswer'].includes(tokens[index].value) || tokens[index + 1].value !== "(") continue;
     let depth = 0;
     let argument = 0;
+    let argumentStart = index + 2;
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
       const token = tokens[cursor];
-      if (token.type === "string" && (argument === 0 || argument === 2)) {
-        literals.push({ field: argument === 0 ? "directAnswer" : "nextStep", value: token.value, offset: token.offset, dynamic: token.dynamic });
-      }
       if (["(", "[", "{"].includes(token.value)) depth += 1;
       if ([")", "]", "}"].includes(token.value)) {
-        if (depth === 0 && token.value === ")") break;
+        if (depth === 0 && token.value === ")") {
+          if (argument === 0 || argument === 2) addExpression(argument === 0 ? "directAnswer" : "nextStep", argumentStart, cursor);
+          break;
+        }
         depth -= 1;
       }
-      if (token.value === "," && depth === 0) argument += 1;
+      if (token.value === "," && depth === 0) {
+        if (argument === 0 || argument === 2) addExpression(argument === 0 ? "directAnswer" : "nextStep", argumentStart, cursor);
+        argument += 1;
+        argumentStart = cursor + 1;
+      }
     }
   }
   return literals;

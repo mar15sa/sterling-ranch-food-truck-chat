@@ -152,3 +152,34 @@ test("per-node baselines reject a duplicated existing literal and an indirect an
   assert.equal(indirect.length, 1);
   assert.equal(indirect[0].value, fixed);
 });
+
+test("resident literal guard follows waste-style conditional bindings into answer slots", () => {
+  const findings = inspectSource(`
+    const directAnswer = hasVerifiedDate
+      ? "The live calendar confirms Tuesday pickup, but it does not label a delay."
+      : asksAboutStatus
+        ? "I could not check the live pickup service, so I cannot confirm a delay."
+        : "I could not check the live pickup service, so I cannot confirm the pickup date.";
+    return buildAnswerContract({
+      directAnswer,
+      nextStep: action
+        ? "Check your address in the official pickup calendar before putting out bins."
+        : "Check with the official collection service before putting out bins.",
+    });
+  `);
+  assert.equal(findings.length, 5);
+  assert.ok(findings.every((finding) => !["verified", "status"].includes(finding.value)));
+  assert.ok(findings.some((finding) => /cannot confirm a delay/.test(finding.value)));
+  assert.ok(findings.some((finding) => /official pickup calendar/.test(finding.value)));
+});
+
+test("resident literal guard follows simple concatenation used through response helpers", () => {
+  const findings = inspectSource(`
+    const directAnswer = "Waste pickup is " + "scheduled for Tuesday.";
+    const nextStep = "Open the official " + "pickup calendar before putting out bins.";
+    return helpfulAnswer(directAnswer, sources, nextStep);
+  `);
+  assert.equal(findings.length, 4);
+  assert.ok(findings.some((finding) => finding.field === "directAnswer" && /scheduled/.test(finding.value)));
+  assert.ok(findings.some((finding) => finding.field === "nextStep" && /pickup calendar/.test(finding.value)));
+});
