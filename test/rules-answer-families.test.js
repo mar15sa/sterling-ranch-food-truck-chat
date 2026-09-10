@@ -285,6 +285,37 @@ test("an illustrative source mention is presented as a boundary, not project per
   assert.doesNotMatch(result.answer, /pergola.*(?:is allowed|requires DRC approval)/i);
 });
 
+test("a named construction project needs object-specific evidence, not a broad yard rule", async () => {
+  for (const question of [
+    "Can I build a helipad in my yard?",
+    "Can I construct a helicopter landing pad in my yard?",
+    "Can I erect a landing strip on my property?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.answerMode, "source-evidence-boundary", question);
+    assert.equal(result.confidence.canAnswer, false, question);
+    assert.equal(result.confidence.reason, "named-project-not-supported-by-cited-evidence", question);
+    assert.match(result.answer, /could not verify whether the named project is allowed/i, question);
+    assert.deepEqual(result.sources, [], question);
+    assert.doesNotMatch(result.answer, /landscap(?:ing|e).*DRC approval|most landscaping is allowed/i, question);
+  }
+});
+
+test("named-project authority guard preserves supported objects, synonyms, and cautious boundaries", async () => {
+  const gazebo = await answer("Can I build a gazebo in my yard?");
+  assert.equal(gazebo.answerMode, "source-evidence-boundary");
+  assert.match(gazebo.answer, /mentions the requested project only as an example/i);
+  assert.ok(gazebo.sources.length > 0);
+
+  const rainBarrel = await answer("Can I install a rain barrel in my yard?");
+  assert.equal(rainBarrel.confidence.canAnswer, true);
+  assert.match(rainBarrel.answer, /two 55-gallon rain barrels/i);
+
+  const airConditioner = await answer("Can I install an AC unit by my home?");
+  assert.equal(airConditioner.confidence.canAnswer, true);
+  assert.match(airConditioner.answer, /DRC approval is not required/i);
+});
+
 test("a related property clause cannot answer a different removal request", async () => {
   const result = await answer("Can I remove a tree?");
   assert.equal(result.confidence.canAnswer, false);
