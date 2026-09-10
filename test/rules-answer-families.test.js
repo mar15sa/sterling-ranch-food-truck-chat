@@ -460,7 +460,7 @@ test("generic fallback families use the shared evidence boundary without replaci
   assert.doesNotMatch(collision.answer, /don't have enough rulebook evidence/i);
 });
 
-test("resident-specific variants use current clauses and official resource projections", async () => {
+test("resident-specific variants use current clauses and withhold unavailable resource claims", async () => {
   for (const question of ["Can I hang lights from my porch?", "Can I add patio lighting?"]) {
     const result = await answer(question);
     assert.match(result.sources?.[0]?.title || "", /Updated exterior lighting policy/i, question);
@@ -472,8 +472,15 @@ test("resident-specific variants use current clauses and official resource proje
   assert.match(access.answer, /help@lumierefiber\.com/i);
 
   const drc = await answer("How do I submit to the DRC?");
-  assert.equal(drc.answer, drc.sources.map((source) => source.excerpt).join(" "));
+  assert.match(drc.sources?.[0]?.title || "", /design review|submittal/i);
+  assert.doesNotMatch(drc.answer, /Official CAB page for starting a design review application/i);
 
   const clubs = await answer("Resident Clubs calendar");
-  assert.equal(clubs.answer, clubs.sources.map((source) => source.excerpt).join(" "));
+  assert.doesNotMatch(clubs.answer, /Resident Clubs category and notification options/i);
+
+  for (const question of ["How do I submit to the DRC?", "Resident Clubs calendar", "Atlas Coffee Wi-Fi"]) {
+    const withheld = await answer(question, { indexPath: `${__filename}.missing` });
+    assert.doesNotMatch(withheld.answer, /Official CAB page|Resident Clubs category|Atlas Coffee Wi-Fi.*access details/i, question);
+    assert.deepEqual(withheld.sources, [], question);
+  }
 });
