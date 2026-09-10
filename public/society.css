@@ -249,8 +249,7 @@ body.society-page {
 .society-food-layout,
 .society-assistant-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
-  gap: 48px;
+  grid-template-columns: minmax(0, 1fr);
   margin: 24px 0 36px !important;
 }
 .society-sidebar {
@@ -741,7 +740,14 @@ body.society-page {
   margin: 0;
   padding: 20px 0;
   border-bottom: 1px solid var(--society-silver);
-  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+}
+.society-page .hero-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 14px;
+  margin: 14px 0;
 }
 .society-page .hero h1 {
   font-size: 54px;
@@ -812,8 +818,7 @@ body.society-page {
 .society-page .pool-status-inner {
   width: 100%;
   padding: 0;
-  gap: 48px;
-  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 .society-page .pool-status-panel {
   padding: 0 0 24px;
