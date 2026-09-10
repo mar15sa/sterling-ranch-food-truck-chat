@@ -94,6 +94,42 @@ test("a verified approved contact projection earns Excellent without cosmetic fi
   assert.equal(result.score, 5);
 });
 
+test("a verified approved operational instruction earns Excellent when every claim maps to its returned source", () => {
+  const sourceId = "approved-utilityhawk-water-monitoring-2026";
+  const result = scoreCommunityAnswer("How do I see my water usage online?", {
+    answer: "Short answer: Use the approved UtilityHawk water-monitoring portal to view your water use.\n\nBefore you act: Open the official portal below.",
+    directAnswer: "Use the approved UtilityHawk water-monitoring portal to view your water use.",
+    answerMode: "community-approved-operational-instruction",
+    answerVerdict: "verified",
+    confidence: { canAnswer: true, reason: "approved-operational-instruction" },
+    sources: [{ id: sourceId, title: "UtilityHawk water monitoring", sourceUrl: "https://srcab.utilityhawk.us/" }],
+    claims: [
+      { text: "Use the approved UtilityHawk water-monitoring portal.", verified: true, evidenceSourceIds: [sourceId] },
+      { text: "View your water use online.", verified: true, evidenceSourceIds: [sourceId] },
+    ],
+  });
+  assert.equal(result.rating, "Excellent");
+  assert.ok(!result.issues.includes("claim-provenance-mismatch"));
+});
+
+test("an approved operational instruction fails when any claim is unverified or mapped to another source", () => {
+  const sourceId = "approved-utilityhawk-water-monitoring-2026";
+  const result = scoreCommunityAnswer("How do I see my water usage online?", {
+    answer: "Short answer: Use the portal.",
+    directAnswer: "Use the portal.",
+    answerMode: "community-approved-operational-instruction",
+    answerVerdict: "verified",
+    confidence: { canAnswer: true },
+    sources: [{ id: sourceId, title: "UtilityHawk water monitoring", sourceUrl: "https://srcab.utilityhawk.us/" }],
+    claims: [
+      { text: "Use the portal.", verified: true, evidenceSourceIds: ["another-approved-source"] },
+      { text: "Monitor water use.", verified: false, evidenceSourceIds: [sourceId] },
+    ],
+  });
+  assert.equal(result.rating, "Weak");
+  assert.ok(result.issues.includes("claim-provenance-mismatch"));
+});
+
 test("a safe no-claim hold supersedes a legacy answer built from unrelated evidence", () => {
   const question = "What are the quiet hours?";
   const current = {
