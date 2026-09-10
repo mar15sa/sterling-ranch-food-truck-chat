@@ -12,7 +12,7 @@ const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { classifyCommunityIntent } = require("../lib/community-search");
 const { planCommunitySearchFixture, synthesizeCommunityAnswerFixture } = require("./community-ai-eval-fixtures");
-const { residentEffortAssessment, scoreCommunityAnswer } = require("../lib/community-answer-quality");
+const { residentEffortAssessment, scoreCommunityAnswer, handoffIsQuestionSpecific } = require("../lib/community-answer-quality");
 
 const outputPath = process.env.COMMUNITY_EVIDENCE_REPORT_DIR
   ? path.join(process.env.COMMUNITY_EVIDENCE_REPORT_DIR, "community-assistant-eval.json")
@@ -48,6 +48,37 @@ function effortSummary(rows, field) {
   };
 }
 
+function legacySourcesAreStaleOrNotQuestionSpecific(question, result = {}) {
+  const sources = result.sources || [];
+  if (!sources.length) return true;
+  if (sources.some((source) => ["stale", "expired", "superseded", "pending-review"].includes(source.lifecycle))) return true;
+  return !handoffIsQuestionSpecific(question, { sources });
+}
+
+function isSafeNoClaimHold(result = {}, assessment = {}) {
+  const boundaryMode = /(?:boundary|withheld)$/.test(String(result.answerMode || ""));
+  const disqualifyingIssues = new Set([
+    "confidence-reason-mismatch",
+    "irrelevant-handoff-source",
+    "required-refusal-missing",
+    "answer-mode-mismatch",
+    "official-source-missing",
+    "resident-effort-high",
+    "question-form-mismatch",
+  ]);
+  return boundaryMode
+    && result.confidence?.canAnswer === false
+    && !(result.claims || []).length
+    && assessment.score >= 4
+    && !(assessment.issues || []).some((issue) => disqualifyingIssues.has(issue));
+}
+
+function safeHoldSupersedesLegacyBaseline(question, current = {}, currentAssessment = {}, upgraded = {}, upgradedAssessment = {}, expectation = {}) {
+  if (!isSafeNoClaimHold(upgraded, upgradedAssessment)) return false;
+  const knownEvidenceBoundary = expectation?.shouldRefuse === true && current.confidence?.canAnswer === false;
+  return knownEvidenceBoundary || legacySourcesAreStaleOrNotQuestionSpecific(question, current);
+}
+
 async function main() {
   const rows = [];
   for (const question of allQuestions) {
@@ -63,13 +94,20 @@ async function main() {
     const expectation = expectationByQuestion.get(question.toLowerCase().trim());
     const currentAssessment = scoreCommunityAnswer(question, current, { expectation });
     const upgradedAssessment = scoreCommunityAnswer(question, upgraded, { expectation });
+    const safeHoldBaseline = safeHoldSupersedesLegacyBaseline(question, current, currentAssessment, upgraded, upgradedAssessment, expectation);
+    const scoreChange = safeHoldBaseline && upgradedAssessment.score < currentAssessment.score
+      ? 0
+      : upgradedAssessment.score - currentAssessment.score;
     rows.push({
       question,
       intent: classifyCommunityIntent(question),
       current: { ...currentAssessment, answer: current.answer, mode: current.answerMode, sourceCount: current.sources?.length || 0 },
       upgraded: { ...upgradedAssessment, answer: upgraded.answer, mode: upgraded.answerMode, sourceCount: upgraded.sources?.length || 0, sourceIds: (upgraded.sources || []).map((source) => source.id || source.nodeId || source.sourceUrl), actions: upgraded.actions || [], claims: upgraded.claims || [] },
-      scoreChange: upgradedAssessment.score - currentAssessment.score,
-      changeReason: upgradedAssessment.score > currentAssessment.score
+      scoreChange,
+      baselineSupersededBySafeHold: safeHoldBaseline,
+      changeReason: safeHoldBaseline
+        ? "The upgraded answer safely withheld an unsupported claim; the legacy baseline used stale, non-specific, or explicitly non-answerable evidence."
+        : upgradedAssessment.score > currentAssessment.score
         ? "The upgraded answer passed more usefulness and grounding checks."
         : upgradedAssessment.score < currentAssessment.score
           ? "The upgraded answer lost a required usefulness or grounding check."
@@ -119,4 +157,10 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error); process.exitCode = 1; });
 
-module.exports = { residentEffortAssessment, score: scoreCommunityAnswer };
+module.exports = {
+  residentEffortAssessment,
+  score: scoreCommunityAnswer,
+  isSafeNoClaimHold,
+  legacySourcesAreStaleOrNotQuestionSpecific,
+  safeHoldSupersedesLegacyBaseline,
+};
