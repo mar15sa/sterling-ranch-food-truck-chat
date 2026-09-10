@@ -200,3 +200,27 @@ test("resident literal guard resolves reused response names to the nearest earli
     "Waste pickup is scheduled for Friday.",
   ]);
 });
+
+test("resident literal guard follows computed answer keys and returned response wrappers", () => {
+  const findings = inspectSource(`
+    function finish(payload, residentCopy) { return { ...payload, ["answer"]: residentCopy }; }
+    return finish({}, "The pool closes at 9:00 pm.");
+  `);
+  assert.equal(findings.length, 1);
+  assert.equal(findings[0].field, "answer");
+  assert.match(findings[0].value, /pool closes/);
+});
+
+test("resident literal guard does not attribute a sibling function's metadata to an answer", () => {
+  const findings = inspectSource(`
+    function metadata() {
+      const answer = { status: "verified", answerMode: "internal-only" };
+      return answer;
+    }
+    function residentReply() {
+      const directAnswer = "The pool closes at 9:00 pm.";
+      return { directAnswer };
+    }
+  `);
+  assert.deepEqual(findings.map((finding) => finding.value), ["The pool closes at 9:00 pm."]);
+});

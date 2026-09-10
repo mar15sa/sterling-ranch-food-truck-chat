@@ -187,6 +187,33 @@ function responseLiterals(source) {
   const tokens = tokensFor(source);
   const literals = [];
   const bindings = new Map();
+  const isLocaleFormatOption = (index) => {
+    for (let cursor = Math.max(0, index - 14); cursor < index; cursor += 1) {
+      if (["toLocaleTimeString", "toLocaleDateString", "DateTimeFormat"].includes(tokens[cursor].value)) return true;
+    }
+    return false;
+  };
+  // Bindings may be captured from a parent scope, but must never cross from
+  // one sibling function or block into another. The earlier flat lookup could
+  // mistake unrelated metadata named `answer` for a resident response.
+  const scopes = [{ parent: null }];
+  const scopeAt = [];
+  let activeScope = 0;
+  for (let index = 0; index < tokens.length; index += 1) {
+    scopeAt[index] = activeScope;
+    if (tokens[index].value === "{") {
+      scopes.push({ parent: activeScope });
+      activeScope = scopes.length - 1;
+    } else if (tokens[index].value === "}") {
+      activeScope = scopes[activeScope].parent ?? 0;
+    }
+  }
+  const scopeContains = (ancestor, descendant) => {
+    for (let current = descendant; current != null; current = scopes[current].parent) {
+      if (current === ancestor) return true;
+    }
+    return false;
+  };
   for (let index = 0; index < tokens.length - 3; index += 1) {
     if (!["const", "let"].includes(tokens[index].value) || tokens[index + 1].type !== "identifier" || tokens[index + 2].value !== "=") continue;
     let depth = 0;
@@ -199,7 +226,7 @@ function responseLiterals(source) {
     }
     const name = tokens[index + 1].value;
     const occurrences = bindings.get(name) || [];
-    occurrences.push({ declaration: index, start: index + 3, end });
+    occurrences.push({ declaration: index, start: index + 3, end, scope: scopeAt[index] });
     bindings.set(name, occurrences);
   }
 
@@ -234,14 +261,14 @@ function responseLiterals(source) {
     const found = [];
     for (let cursor = start; cursor < end; cursor += 1) {
       const token = tokens[cursor];
-      if (token.type === "string") found.push(token);
+      if (token.type === "string" && !isLocaleFormatOption(cursor)) found.push(token);
       // A property receiver (for example `candidate.directAnswer`) is not a
       // locally named response value. Following it would drag arbitrary data
       // objects into this narrow guard.
       const candidates = bindings.get(token.value) || [];
       // Use the closest declaration above this use. This preserves ordinary
       // function-local shadowing without attempting a complete JS scope parse.
-      const binding = candidates.filter((candidate) => candidate.declaration < cursor).at(-1);
+      const binding = candidates.filter((candidate) => candidate.declaration < cursor && scopeContains(candidate.scope, scopeAt[cursor])).at(-1);
       if (resolveBindings && token.type === "identifier" && binding && !seen.has(token.value)
         && tokens[cursor - 1]?.value !== "." && tokens[cursor + 1]?.value !== "." && seen.size < 24) {
         const nextSeen = new Set(seen);
@@ -259,7 +286,7 @@ function responseLiterals(source) {
     if (!resolveBindings) {
       for (let cursor = start; cursor < end; cursor += 1) {
         const literal = tokens[cursor];
-        if (literal.type === "string" && !isTernaryControlLiteral(tokens, cursor)) {
+        if (literal.type === "string" && !isTernaryControlLiteral(tokens, cursor) && !isLocaleFormatOption(cursor)) {
           literals.push({ field, value: literal.value, offset: literal.offset, dynamic: literal.dynamic });
         }
       }
@@ -269,9 +296,32 @@ function responseLiterals(source) {
       literals.push({ field, value: literal.value, offset: literal.offset, dynamic: literal.dynamic });
     }
   }
+  function isResidentActionProperty(index) {
+    let start = -1;
+    let depth = 0;
+    for (let cursor = index; cursor >= 0; cursor -= 1) {
+      if (tokens[cursor].value === "}") depth += 1;
+      if (tokens[cursor].value === "{") { if (depth === 0) { start = cursor; break; } depth -= 1; }
+    }
+    if (start < 0) return false;
+    depth = 0;
+    let end = tokens.length;
+    for (let cursor = start; cursor < tokens.length; cursor += 1) {
+      if (tokens[cursor].value === "{") depth += 1;
+      if (tokens[cursor].value === "}") { depth -= 1; if (depth === 0) { end = cursor; break; } }
+    }
+    let hasLabel = false;
+    let hasUrl = false;
+    for (let cursor = start + 1; cursor < end - 1; cursor += 1) {
+      if (tokens[cursor].value === "label" && tokens[cursor + 1]?.value === ":") hasLabel = true;
+      if (tokens[cursor].value === "url" && tokens[cursor + 1]?.value === ":") hasUrl = true;
+    }
+    return hasLabel && hasUrl;
+  }
   for (let index = 0; index < tokens.length - 1; index += 1) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value) || tokens[index + 1].value !== ":") continue;
     const field = tokens[index].value;
+    if (["label", "url"].includes(field) && !isResidentActionProperty(index)) continue;
     const depth = { "(": 0, "[": 0, "{": 0 };
     let end = tokens.length;
     for (let cursor = index + 2; cursor < tokens.length; cursor += 1) {
@@ -287,11 +337,82 @@ function responseLiterals(source) {
     }
     addExpression(field, index + 2, end);
   }
+  // Computed response keys are still response paths. This covers ordinary
+  // `{"answer": value}` alternatives written as `{["answer"]: value}`.
+  for (let index = 0; index < tokens.length - 4; index += 1) {
+    if (tokens[index].value !== "[" || tokens[index + 1].type !== "string" || tokens[index + 2].value !== "]" || tokens[index + 3].value !== ":") continue;
+    const field = tokens[index + 1].value;
+    if (!RESPONSE_FIELDS.has(field)) continue;
+    const depth = { "(": 0, "[": 0, "{": 0 };
+    let end = tokens.length;
+    for (let cursor = index + 4; cursor < tokens.length; cursor += 1) {
+      const token = tokens[cursor];
+      if (["(", "[", "{"].includes(token.value)) depth[token.value] += 1;
+      if (token.value === ")") depth["("] -= 1;
+      if (token.value === "]") depth["["] -= 1;
+      if (token.value === "}") { if (depth["{"] === 0 && depth["("] === 0 && depth["["] === 0) { end = cursor; break; } depth["{"] -= 1; }
+      if (token.value === "," && depth["("] === 0 && depth["["] === 0 && depth["{"] === 0) { end = cursor; break; }
+    }
+    addExpression(field, index + 4, end);
+  }
   // Object shorthand is another direct response path: `return { answer }`.
   for (let index = 1; index < tokens.length - 1; index += 1) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value)) continue;
     if (!["{", ","].includes(tokens[index - 1].value) || ![",", "}"].includes(tokens[index + 1].value)) continue;
     addExpression(tokens[index].value, index, index + 1);
+  }
+  // A small response wrapper is still an answer path. Discover wrappers from
+  // their returned object shape, then inspect the corresponding call argument
+  // instead of trusting the wrapper name.
+  const wrappers = new Map();
+  for (let index = 0; index < tokens.length - 4; index += 1) {
+    if (tokens[index].value !== "function" || tokens[index + 1]?.type !== "identifier" || tokens[index + 2]?.value !== "(") continue;
+    const params = [];
+    let cursor = index + 3;
+    while (cursor < tokens.length && tokens[cursor].value !== ")") {
+      if (tokens[cursor].type === "identifier") params.push(tokens[cursor].value);
+      cursor += 1;
+    }
+    if (tokens[cursor + 1]?.value !== "{") continue;
+    const bodyStart = cursor + 1;
+    let depth = 1;
+    let bodyEnd = bodyStart + 1;
+    for (; bodyEnd < tokens.length && depth; bodyEnd += 1) {
+      if (tokens[bodyEnd].value === "{") depth += 1;
+      if (tokens[bodyEnd].value === "}") depth -= 1;
+    }
+    const outputs = [];
+    for (let fieldAt = bodyStart; fieldAt < bodyEnd - 2; fieldAt += 1) {
+      const direct = tokens[fieldAt].type === "identifier" && RESPONSE_FIELDS.has(tokens[fieldAt].value) && tokens[fieldAt + 1]?.value === ":"
+        ? { field: tokens[fieldAt].value, valueAt: fieldAt + 2 }
+        : tokens[fieldAt].value === "[" && tokens[fieldAt + 1]?.type === "string" && RESPONSE_FIELDS.has(tokens[fieldAt + 1].value) && tokens[fieldAt + 2]?.value === "]" && tokens[fieldAt + 3]?.value === ":"
+          ? { field: tokens[fieldAt + 1].value, valueAt: fieldAt + 4 }
+          : null;
+      if (!direct || tokens[direct.valueAt]?.type !== "identifier") continue;
+      const parameterIndex = params.indexOf(tokens[direct.valueAt].value);
+      if (parameterIndex >= 0) outputs.push({ field: direct.field, parameterIndex });
+    }
+    if (outputs.length) wrappers.set(tokens[index + 1].value, outputs);
+  }
+  for (let index = 0; index < tokens.length - 1; index += 1) {
+    const outputs = wrappers.get(tokens[index].value);
+    if (!outputs?.length || tokens[index + 1].value !== "(") continue;
+    const argumentsAt = [];
+    let depth = 0;
+    let start = index + 2;
+    for (let cursor = start; cursor < tokens.length; cursor += 1) {
+      const token = tokens[cursor];
+      if (["(", "[", "{"].includes(token.value)) depth += 1;
+      if ([")", "]", "}"].includes(token.value)) {
+        if (depth === 0 && token.value === ")") { argumentsAt.push([start, cursor]); break; }
+        depth -= 1;
+      }
+      if (token.value === "," && depth === 0) { argumentsAt.push([start, cursor]); start = cursor + 1; }
+    }
+    for (const output of outputs) {
+      const argument = argumentsAt[output.parameterIndex];
+      if (argument) addExpression(output.field, argument[0], argument[1]);
+    }
   }
   // The legacy rule engine's resident replies flow through these helpers
   // rather than object fields. Treat their first and third arguments as direct
@@ -335,7 +456,7 @@ function isGenericDynamicFragment({ field, value, dynamic }) {
   // remains visible to the guard.
   if (DYNAMIC_PRESENTATION_FIELDS.has(field)) return true;
   return ["directAnswer", "nextStep"].includes(field)
-    && /^(?:Chapter\s+appears to cover\.|I found this contact detail in the rulebook:\s*\.|I (?:could not|can’t) (?:safely |currently |reliably )?(?:confirm|verify|read)|I did not find an event|I found\s+official calendar|The official calendar does not list|For\s*, the published\s+hours are:|Open\b|Use\b)/i.test(value.trim());
+    && /^(?:Chapter\s+appears to cover\.|I found this contact detail in the rulebook:\s*\.|I (?:could not|can’t) (?:safely |currently |reliably )?(?:confirm|verify|read)|I did not find an event|I found\s+official calendar|The official calendar does not list|For\s*, the published\s+hours are:|(?:'s next\s+)?pickup is\s*—?\.?|\s*pickup is\s*—?\.?|Open\b|Use\b)/i.test(value.trim());
 }
 
 function isNonResidentStructuralFragment(value) {
@@ -345,13 +466,20 @@ function isNonResidentStructuralFragment(value) {
   return !/[\p{L}\p{N}]/u.test(value);
 }
 
+function isSchemaToken(value) {
+  // Internal routing and action identifiers are compact machine tokens, not
+  // resident prose. Human-facing fixed copy contains a phrase, sentence, or
+  // a factual value and remains subject to the guard.
+  return /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(value) || value === "Official community website";
+}
+
 function fingerprint(finding) {
   return crypto.createHash("sha256").update(`${finding.filename}\u0000${finding.field}\u0000${finding.value}`).digest("hex");
 }
 
 function inspectSource(source, filename = "inline.js", { factsOnly = false } = {}) {
   return responseLiterals(source)
-    .filter((literal) => literal.value.trim() && !isNonResidentStructuralFragment(literal.value) && !GENERIC_COPY.has(literal.value) && !isGenericDynamicFragment(literal) && (!factsOnly || looksLikeFact(literal.value)))
+    .filter((literal) => literal.value.trim() && !isNonResidentStructuralFragment(literal.value) && !isSchemaToken(literal.value) && !GENERIC_COPY.has(literal.value) && !isGenericDynamicFragment(literal) && (!factsOnly || looksLikeFact(literal.value)))
     .map(({ field, value, offset }) => ({ filename, field, value, line: lineAt(source, offset) }));
 }
 
