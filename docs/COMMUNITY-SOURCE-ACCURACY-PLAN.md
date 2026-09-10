@@ -31,7 +31,7 @@ The earlier September 8 table described a transitional trusted-baseline bundle a
 | Candidate isolation | The latest staging refresh quarantined 18 changed, 356 new, and 57 removed source identities instead of promoting them. | **Implemented** |
 | Inventory accounting | The latest staging snapshot reports 274 source records, 1,529 discovered URLs, 1,099 eligible URLs, and a 910-page backlog. Older bundled and live-candidate totals remain historical snapshots and must not be combined with this one. | **Partially implemented** |
 | Private review queue | The authenticated screen has pagination and shows pending evidence without changing answers. The current long-tail queue is 1,925 candidate review items; this is not the count of approved or answerable facts. Deployment of its external review synchronization and queue-age alerts is not yet proven. | **Partially implemented** |
-| Material conflict resolution | No single current global count is proven. Older reconciliation artifacts use different snapshots and scopes. Every disputed claim stays withheld until its active review batch reconciles it. | **Missing** |
+| Material conflict resolution | Current live health reports 17 conflicted facts. This is a fact count, not a count of source groups; older reconciliation artifacts use different snapshots and scopes. Every disputed claim stays withheld until its active review batch reconciles it. | **Missing** |
 | Full official-site coverage | Not yet claimed; pending sources include current operational pages, forms, rules, historic files, duplicate candidates, and unavailable documents | **Missing** |
 
 The older plan's instruction to block every release until every eligible URL is accounted for is **obsolete as a production-safety gate**. It remains the standard for claiming full coverage or releasing a coverage-expansion batch. The older subject order is also incomplete: current fees, contacts, reservations, and rule amendments have to be sorted by resident harm and authority, not by one large all-or-nothing phase.
@@ -87,7 +87,7 @@ The latest staging backlog is 910 pages from a snapshot with 1,529 discovered an
 
 ## Conflict plan
 
-Conflicts must be handled as their own small decision queue within each active source batch. Do not combine counts from older reconciliation snapshots, and never treat a discrepancy as permission to choose the most convenient value.
+The 17 currently flagged conflicted facts must be handled in small decision queues within their active source batches. Do not relabel them as 17 source groups, do not combine them with counts from older reconciliation snapshots, and never treat a discrepancy as permission to choose the most convenient value.
 
 1. Group each conflict by the resident claim it would change: fee/deposit, contact, hours, rule/permission, date, payment method, or service route.
 2. Identify the authority level and effective date for each competing value.
