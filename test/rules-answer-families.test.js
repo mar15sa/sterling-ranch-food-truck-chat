@@ -466,10 +466,16 @@ test("generic fallback families use the shared evidence boundary without replaci
   assert.doesNotMatch(collision.answer, /don't have enough rulebook evidence/i);
 });
 
-test("bare model and conversation inputs use shared neutral boundaries", async () => {
-  const alto = await answer("I have an Alto v");
-  assert.doesNotMatch(alto.answer, /What would you like to know about your Alto home/i);
-  assert.match(alto.answer, /don't have enough rulebook evidence/i);
+test("incomplete statements ask a neutral clarification without guessing their meaning", async () => {
+  for (const question of ["I have an Alto v", "We own a Juniper model"]) {
+    const result = await answer(question);
+    assert.equal(result.answerMode, "targeted-clarification", question);
+    assert.equal(result.inputClassification, "unclear", question);
+    assert.equal(result.confidence.reason, "incomplete-statement", question);
+    assert.match(result.answer, /What would you like to know or do/i, question);
+    assert.deepEqual(result.sources, [], question);
+    assert.doesNotMatch(result.answer, /Alto home|Juniper home/i, question);
+  }
 
   for (const [question, mode] of [
     ["Hello", "conversation"],

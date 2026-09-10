@@ -84,6 +84,9 @@ const GENERIC_COPY = new Set([
   "Do you mean using a community court or building a private court at a home?",
   "Tell me which court you mean so I can use the matching official source.",
   "Confirm which cited fence type applies before using the matching finish.",
+  "What would you like to know or do?",
+  "Tell me the question, task, or problem you want help with.",
+  "Use the applicable source path below for your situation.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.

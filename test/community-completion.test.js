@@ -22,6 +22,27 @@ function foodTruckProfile() {
   profile.allowedHosts.push("www.facebook.com", "www.instagram.com");
   return profile;
 }
+
+test("a named-project rulebook boundary outranks an unrelated withheld community form", async () => {
+  const question = "Can I put up a catio. Not attached to the house";
+  const answer = await answerCommunityQuestion(question, {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile,
+    planCommunitySearch: async () => null,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+
+  assert.equal(answer.answerMode, "source-evidence-boundary");
+  assert.equal(answer.confidence.reason, "named-project-not-supported-by-cited-evidence");
+  assert.match(answer.answer, /official rules do not name catio specifically/i);
+  assert.match(answer.answer, /accessory buildings|outdoor pet areas/i);
+  assert.ok(answer.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
+  assert.ok(answer.sources.every((source) => !/DocumentCenter\/View\/1350/i.test(source.sourceUrl || "")));
+  assert.ok((answer.actions || []).every((action) => !/DocumentCenter\/View\/1350/i.test(action.url || "")));
+});
 function liveWasteEvidence(date, checkedAt) {
   return {
     degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },

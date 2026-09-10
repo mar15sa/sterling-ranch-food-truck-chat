@@ -596,6 +596,10 @@ test("AI unrelated scope cannot reject a clear state-parks-pass process question
   assert.match(answer.answerMode, /^source-derived-(?:structured|extractive)$/);
   assert.equal(answer.confidence?.canAnswer, true);
   assert.match(answer.sources?.[0]?.title || "", /^Sec\. 17-273\. - Colorado Parks and Wildlife Parks Pass Program/i);
+  assert.match(answer.answer, /Voucher path:/i);
+  assert.match(answer.answer, /Ownership-transfer path:/i);
+  assert.match(answer.answer, /Renewal path:/i);
+  assert.doesNotMatch(answer.answer, /^Short answer: The Voucher must be brought/i);
 });
 
 test("AI clarification cannot suppress a complete verified answer about resident fees", async () => {
