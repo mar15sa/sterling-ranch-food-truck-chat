@@ -310,6 +310,7 @@ test("raw catalog output fails quality while a focused natural answer passes", (
     ...base,
     answer: "Boulder Raspberry is included on the preapproved plant list as a shrub, rather than a vine. The list identifies it as Ribes deliciosus and gives its typical size as 8 by 6 feet.",
     directAnswer: "Boulder Raspberry is included on the preapproved plant list as a shrub, rather than a vine.",
+    keyDetails: ["The list identifies it as Ribes deliciosus and gives its typical size as 8 by 6 feet."],
   });
   const exactName = scoreCommunityAnswer("Which listed shrub is RIBES DELICIOSUS?", {
     ...base,
@@ -324,4 +325,32 @@ test("raw catalog output fails quality while a focused natural answer passes", (
   assert.ok(!focused.issues.includes("raw-catalog-dump"));
   assert.ok(!focused.issues.includes("retrieval-scaffolding"));
   assert.ok(!exactName.issues.includes("raw-catalog-dump"));
+});
+
+test("a previously excellent scaffolded baseline cannot outrank clean resident prose", () => {
+  const question = "Can I hang decorations from my fence?";
+  const contract = {
+    answerMode: "source-derived-extractive",
+    answerVerdict: "not-allowed",
+    confidence: { canAnswer: true, reason: "source-validated-topic-answer" },
+    sources: [source("Community rules")],
+  };
+  const oldStoredScore = 5;
+  const rescoredBaseline = scoreCommunityAnswer(question, {
+    ...contract,
+    answer: "Short answer: The cited rule restricts this.\n\nWhat I found:\n- Items may not be hung from a fence.",
+    directAnswer: "The cited rule restricts this.",
+  });
+  const cleanCurrent = scoreCommunityAnswer(question, {
+    ...contract,
+    answer: "The cited rule restricts this. Items may not be hung from a fence.",
+    directAnswer: "The cited rule restricts this.",
+    keyDetails: ["Items may not be hung from a fence."],
+  });
+
+  assert.equal(oldStoredScore, 5);
+  assert.equal(rescoredBaseline.rating, "Weak");
+  assert.ok(rescoredBaseline.issues.includes("retrieval-scaffolding"));
+  assert.equal(cleanCurrent.rating, "Good");
+  assert.ok(cleanCurrent.score > rescoredBaseline.score);
 });

@@ -87,10 +87,17 @@ for (const example of EXAMPLES) {
     assert.ok(result.answer.length <= 1000, `Answer is ${result.answer.length} characters long.`);
     assert.doesNotMatch(result.answer, /I (?:do not|don't) have enough information/i);
     assert.doesNotMatch(result.answer, /\.\.\.|-- \d+ of \d+ --|WHEREAS|ADOPTED AND APPROVED/i);
-    assert.match(result.answer, /^Short answer:/);
+    const cleanComposedAnswer = !example.waterBillingContact && !example.foodTruck;
+    if (cleanComposedAnswer) assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i);
+    else assert.match(result.answer, /^Short answer:/);
     if (example.requiresSections !== false) {
-      assert.match(result.answer, /\n\nWhat I found:/);
-      assert.match(result.answer, /\n\nBefore you act:/);
+      if (cleanComposedAnswer) {
+        assert.ok(result.directAnswer);
+        assert.ok(Array.isArray(result.keyDetails));
+        assert.ok(result.nextStep);
+      } else {
+        assert.match(result.answer, /\n\nBefore you act:/);
+      }
     }
     for (const phrase of example.includes) {
       assert.ok(

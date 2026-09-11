@@ -128,6 +128,24 @@ test("supported answers of different families all use the shared synthesis path"
   }
 });
 
+test("deterministic supported answers expose clean prose across rule families", async () => {
+  const cases = [
+    ["Can I install privacy screens?", [/landscape screens/i, /DRC approval is required/i]],
+    ["Can I put a trampoline in my backyard?", [/five feet from all property lines/i, /Tall plant material/i]],
+    ["Are jellyfish or gemstone lights allowed?", [/Gemstone/i, /Jellyfish/i, /DRC approval/i]],
+    ["What flags can I fly?", [/United States flag/i, /Colorado flag/i]],
+    ["Do I need DRC approval to paint my house?", [/DRC approval/i, /same colors/i]],
+  ];
+  for (const [question, expectedFacts] of cases) {
+    const result = await answerWithoutAi(question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i, question);
+    for (const expected of expectedFacts) assert.match(result.answer, expected, question);
+    assert.ok(result.directAnswer, question);
+    assert.ok(Array.isArray(result.keyDetails), question);
+  }
+});
+
 test("successful AI synthesis uses natural prose and retains every sourced holiday-light limit", async () => {
   const naturalAnswer = "You can install and use seasonal decorative lights from June 18 to July 7 and from October 1 through January 31. Turn them off by 10:00 p.m., and remove all temporary strings and clips afterward.";
   const result = await answerRulesQuestion("When can I put up holiday lights?", {
