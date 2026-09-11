@@ -4,6 +4,7 @@ const {
   buildReviewItems,
   compileReviewedCandidate,
   listReviewRecords,
+  listReviewRecordsReadOnly,
   resetSourceReviewCachesForTest,
   reviewCoverage,
   saveReviewDecision,
@@ -68,6 +69,21 @@ test('source-review reads, syncs, and decisions only validate the Notion schema'
 
   assert.equal(calls.some(call => call.method === 'PATCH'), false);
   assert.equal(calls.filter(call => /\/pages$/.test(call.url) && call.method === 'POST').length, 2);
+});
+
+test('read-only operations reporting can query existing records without the optional title-property secret or a schema read', async t => {
+  configuredSourceReview(t);
+  delete process.env.COMMUNITY_SOURCE_REVIEW_NOTION_TITLE_PROPERTY;
+  resetSourceReviewCachesForTest();
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, method: options.method || 'GET' });
+    assert.match(url, /\/data_sources\/dummy-test-source\/query$/);
+    return response({ results: [{ id: 'private-page', properties: { Payload: { type: 'rich_text', rich_text: [{ text: { content: JSON.stringify({ id: 'review-1', recordType: 'review-item', createdAt: '2026-09-01T00:00:00Z' }) } }] } } }], has_more: false });
+  };
+  const records = await listReviewRecordsReadOnly({}, fetchImpl);
+  assert.deepEqual(records.map(record => record.id), ['review-1']);
+  assert.deepEqual(calls.map(call => call.method), ['POST']);
 });
 
 test('source-review setup failures stop dashboard reads, syncs, and decisions before any page write', async t => {
