@@ -89,6 +89,7 @@ const GENERIC_COPY = new Set([
   "Use the applicable source path below for your situation.",
   "These are the published hours for that weekday.",
   "The official source does not say whether that placement is allowed.",
+  "The cited source does not confirm whether the requested plant is included.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.

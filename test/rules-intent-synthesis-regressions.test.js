@@ -110,8 +110,26 @@ test("a named plant with no matching source row is not approved", async () => {
   const result = await answerWithoutAi("Can I grow Moonbeam Dragonfruit?");
   assert.equal(result.confidence?.canAnswer, false);
   assert.equal(result.answerMode, "source-evidence-boundary");
-  assert.match(result.answer, /could not verify whether the requested detail is covered/i);
+  assert.match(result.answer, /does not confirm whether the requested plant is included/i);
+  assert.match(result.answer, /additional species will be considered by the Sterling Ranch Design Review Committee/i);
+  assert.ok(result.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
   assert.doesNotMatch(result.answer, /\byes\b|allowed choices|includes Moonbeam Dragonfruit/i);
+});
+
+test("a named catalog miss keeps its supported process and approved route in the Community Assistant", async () => {
+  const result = await answerCommunityQuestion("Can I grow Moonbeam Dragonfruit?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.match(result.answer, /does not confirm whether the requested plant is included/i);
+  assert.match(result.answer, /additional species will be considered by the Sterling Ranch Design Review Committee/i);
+  assert.ok(result.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
+  assert.equal(Object.hasOwn(result, "naturalFallbackProse"), false);
+  assert.doesNotMatch(result.answer, /isn't on|is not in|does not include Moonbeam Dragonfruit/i);
 });
 
 test("supported answers of different families all use the shared synthesis path", async () => {
@@ -465,6 +483,7 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
     assert.equal((rejected.answer.match(/8 feet tall/gi) || []).length, 1);
     assert.equal((rejected.answer.match(/spread of 6 feet/gi) || []).length, 1);
     assert.doesNotMatch(rejected.answer, /Short answer|What I found|Before you act/i);
+    assert.equal(Object.hasOwn(rejected, "naturalFallbackProse"), false);
     assert.ok(rejected.keyDetails.every((detail) => !/Height:|Spread\/width:/i.test(detail)));
     assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
     assert.match(rejected.nextStep, /Open the linked official section/i);
@@ -503,6 +522,43 @@ test("a rejected grounded rewrite gets one safe correction pass", async () => {
     assert.equal(answer, correctedCandidate);
     assert.doesNotMatch(answer, /^Yes\b/i);
     assert.match(answer, /8 feet tall and 6 feet wide/i);
+    assert.deepEqual(llmRewriteIssues(answer, draft, sources, question), []);
+  } finally {
+    global.fetch = previousFetch;
+    if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = previousKey;
+  }
+});
+
+test("a catalog-membership rewrite retries with supported facts instead of an invented absence", async () => {
+  const question = "Can I hire Acme Roofing?";
+  const draft = "The approved contractor directory lists Beacon Roofing. Contact the CAB for approval guidance.";
+  const sources = [{
+    title: "Approved contractor directory",
+    text: "Beacon Roofing is an approved contractor. Contact the CAB for approval guidance.",
+  }];
+  const candidates = [
+    "Acme Roofing is not in the approved contractor directory.",
+    "The approved contractor directory lists Beacon Roofing. It does not confirm whether Acme Roofing is approved. Contact the CAB for approval guidance.",
+  ];
+  const previousKey = process.env.ANTHROPIC_API_KEY;
+  const previousFetch = global.fetch;
+  let calls = 0;
+  process.env.ANTHROPIC_API_KEY = "test-key";
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [{ type: "text", text: candidates[calls++] }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    }),
+  });
+  try {
+    const answer = await rewriteAnswerWithLLM(question, draft, sources);
+    assert.equal(calls, 2);
+    assert.equal(answer, candidates[1]);
+    assert.match(answer, /Beacon Roofing/i);
+    assert.match(answer, /does not confirm whether Acme Roofing is approved/i);
+    assert.doesNotMatch(answer, /Acme Roofing is not in|Acme Roofing isn't/i);
     assert.deepEqual(llmRewriteIssues(answer, draft, sources, question), []);
   } finally {
     global.fetch = previousFetch;
