@@ -40,7 +40,7 @@ function scrollToMessageStart(message) {
   const target = message.offsetTop - messages.offsetTop - 12;
   messages.scrollTo({
     top: Math.max(target, 0),
-    behavior: "smooth",
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
   });
 }
 
@@ -298,7 +298,7 @@ function renderTruckListing(listing, friendlyDate) {
   section.className = "truck-listing";
   truckCard.className = "truck-card";
   truckLabel.className = "label";
-  truckLabel.textContent = listing.location ? `Truck - ${listing.location}` : "Truck";
+  truckLabel.textContent = listing.location ? `Food truck · ${listing.location}` : "Food truck";
   truckName.textContent = listing.name;
   truckBox.append(truckLabel, truckName);
 
@@ -333,7 +333,7 @@ function renderTruckListing(listing, friendlyDate) {
     const heading = document.createElement("h2");
     const list = document.createElement("ul");
     menuSection.className = "menu-section";
-    heading.textContent = "Menu items found";
+    heading.textContent = "Menu";
     list.className = "menu-items";
     items.forEach((item) => list.append(renderMenuItem(item)));
     menuSection.append(heading, list);
@@ -374,9 +374,19 @@ function renderTruckListing(listing, friendlyDate) {
   return section;
 }
 
-function addBotResult(data) {
+function addBotResult(data, scroll = true) {
   const node = template.content.firstElementChild.cloneNode(true);
-  node.querySelector(".answer-text").textContent = data.text;
+  const answer = node.querySelector(".answer-text");
+  answer.textContent = data.text;
+  if (data.truck && data.menu?.items?.length && !data.error && !data.stale && !data.warning) {
+    const details = document.createElement("details");
+    details.className = "food-response-details";
+    const summary = document.createElement("summary");
+    summary.textContent = "Response details";
+    details.append(summary);
+    node.querySelector(".result-meta").before(details);
+    details.append(answer);
+  }
 
   const source = node.querySelector(".source-link");
   source.href = data.sourceUrl;
@@ -388,8 +398,10 @@ function addBotResult(data) {
     truckListings.forEach((listing) => {
       node.insertBefore(renderTruckListing(listing, data.friendlyDate), meta);
     });
+    const responseDetails = node.querySelector(".food-response-details");
+    if (responseDetails) meta.before(responseDetails);
     messages.append(node);
-    scrollToMessageStart(node);
+    if (scroll) scrollToMessageStart(node);
     return;
   }
 
@@ -438,7 +450,7 @@ function addBotResult(data) {
   }
 
   messages.append(node);
-  scrollToMessageStart(node);
+  if (scroll) scrollToMessageStart(node);
 }
 
 async function ask(question, source = "typed", date = "", showUserMessage = true) {
@@ -470,7 +482,7 @@ async function ask(question, source = "typed", date = "", showUserMessage = true
     }
 
     thinking.remove();
-    addBotResult(data);
+    addBotResult(data, showUserMessage);
     trackEvent("menu_lookup_result", {
       source,
       date: data.date || "unknown",
@@ -499,7 +511,9 @@ form.addEventListener("submit", (event) => {
 });
 
 buildQuickActions();
-addPlainBotMessage("Ask me which food truck is here, and I’ll check the Sterling Ranch calendar plus likely menu pages.");
+if (!document.body.classList.contains("food-chat-page")) {
+  addPlainBotMessage("Ask me which food truck is here, and I’ll check the Sterling Ranch calendar plus likely menu pages.");
+}
 document.querySelectorAll("[data-feedback-type]").forEach((link) => {
   link.addEventListener("click", () => {
     trackEvent("feedback_link_click", {
@@ -523,5 +537,6 @@ const initialDate = getInitialDateFromUrl();
 ask(
   initialDate ? `What food truck is here on ${initialDate}?` : "What food truck is here today?",
   initialDate ? "calendar-link" : "default",
-  initialDate || formatIsoDate(new Date())
+  initialDate || formatIsoDate(new Date()),
+  false
 ).finally(warmUpcomingDates);
