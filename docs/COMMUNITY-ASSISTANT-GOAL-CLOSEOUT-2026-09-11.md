@@ -130,7 +130,9 @@ Release evidence: the gate passed 752/752 checks, 140/140 rule checks, 7/7 unsee
 
 The durable answer-quality repair added stronger evidence that the Assistant is improving across a question family instead of only matching a screenshot: 757/757 tests passed, including the 122-question resident corpus; the 249-question comparison audit improved 36 answers, retained 208, and regressed 0; the controlling-source retrieval check passed 20/20; and the resident-literal guard passed. Production is now revision `410bdf28` after PR #107, which followed PR #106 (`bb94d6a`).
 
-Staging has been reconciled at revision `65878307`; it contains the complete production UI and both answer-quality pull requests. Its prior CI run `2f13456` passed. The final staging CI run `34644352823` is pending, and production monitor run `34644245455` is also pending. These are monitoring follow-ups, not unreviewed product changes.
+Staging is deployed, healthy, and reconciled at revision `65878307`; it contains the complete production UI and both answer-quality pull requests. Its prior CI run `2f13456` passed, and final staging CI run [34644352823](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34644352823) completed successfully on that exact revision. The approved UI assets match production byte-for-byte and include all nine official palette colors.
+
+Production monitor run [34644245455](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34644245455) also completed successfully on exact `main`/production revision `410bdf28`. Its live rules, resource-link, source-refresh, and food-truck checks all passed.
 
 ## Source status: do not mix these counts
 
