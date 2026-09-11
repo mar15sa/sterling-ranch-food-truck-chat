@@ -137,4 +137,12 @@ body.chat-workspace { height: var(--chat-viewport-height, 100dvh); display: flex
  .chat-workspace .chat-heading, .chat-workspace .rules-header-inner { padding-block: 4px; }
  .chat-workspace .chat-heading h1 { font-size: 25px; }
  .chat-workspace .chat-heading p { display: none; }
+ .chat-workspace :is(.food-chat-dock,.rules-dock) { padding-block: 6px; }
+ .chat-workspace :is(.messages,.rules-conversation) { padding-block: 12px; }
+ .chat-workspace .rules-composer { padding: 3px; }
+ .chat-workspace .rules-test-banner { padding-block: 4px; margin-top: 4px; }
+}
+@media (min-width:1100px) and (max-height:600px) {
+ .chat-workspace .rules-brand-text { display: flex; align-items: center; gap: 20px; }
+ .chat-workspace .rules-statusbar { margin-top: 0; }
 }

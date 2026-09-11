@@ -27,3 +27,10 @@ body.society-page .site-footer .site-footer-credit a { font-size: 12px; font-sty
  .site-footer .site-footer-credit br { display: none; }
  .site-footer .site-footer-credit a { margin-left: 4px; }
 }
+/* Keep footer text clear of desktop taskbars that overlap the browser's reported viewport. */
+@media (min-width:761px) {
+ body.society-page .society-footer.site-footer { padding-bottom: max(64px, env(safe-area-inset-bottom, 0px)) !important; }
+}
+@media (max-width:760px) {
+ body.society-page .society-footer.site-footer { padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)) !important; }
+}
