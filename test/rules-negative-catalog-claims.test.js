@@ -63,6 +63,21 @@ test("semantic search-miss wording cannot claim that a named catalog item is abs
       answer: "Acme Roofing doesn't appear in the approved contractor directory — the directory may not be complete.",
       source: { title: "Approved contractor directory", text: "Beacon Roofing is an approved contractor." },
     },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "The preapproved plant list doesn't specifically name Moonbeam Dragonfruit, but other species may be considered.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "Check with the DRC if Moonbeam Dragonfruit isn't on it.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "The preapproved plant list doesn't specifically name Moonbeam Dragonfruit, but that does not mean you cannot grow it. Check with the DRC if Moonbeam Dragonfruit isn't on it.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
   ];
 
   for (const { question, answer, source } of cases) {
