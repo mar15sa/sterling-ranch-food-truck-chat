@@ -40,6 +40,16 @@ test('v5 negative controls keep date, availability, contact, and water claims ou
   assert.ok(all.some(entry => entry.approvalClaim === 'water-reports-directory-route'));
 });
 
+test('action-only approvals do not create factual answer authority', () => {
+  const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
+  const state = require('../lib/community-source-answerability').sourceReviewState(index, Date.parse(approvals.decidedAt));
+  for (const id of ['approved-great-hall-booking-link', 'approved-overlook-clubhouse-navigation']) {
+    const source = index.sources.find(item => item.id === id);
+    assert.equal(state.canUseProjection(source), false, `${id} must not establish facts`);
+    assert.equal(state.canUseActionProjection(source), true, `${id} keeps its reviewed navigation`);
+  }
+});
+
 test('a changed exact source version cannot receive a v5 projection', () => {
   const index = structuredClone(baseIndex);
   const source = require('../data/community-source-approvals-v5').buildApprovedV5Sources()[0];
