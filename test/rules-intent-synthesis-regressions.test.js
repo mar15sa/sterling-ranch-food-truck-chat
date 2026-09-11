@@ -243,6 +243,60 @@ test("live-shaped plant questions synthesize from one focused row instead of the
   }
 });
 
+test("live raspberry rewrites preserve height and spread bindings", async () => {
+  const question = "Can I plant raspberry bushes along my fence line?";
+  const correctRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 8 feet tall and 6 feet wide.";
+  const swappedRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 6 feet tall and 8 feet wide.";
+  const previousKey = process.env.ANTHROPIC_API_KEY;
+  const previousFetch = global.fetch;
+  let responseText = swappedRewrite;
+  process.env.ANTHROPIC_API_KEY = "test-key";
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [{ type: "text", text: responseText }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    }),
+  });
+  try {
+    const options = {
+      searchMode: "ai-hybrid",
+      llmMode: "selective",
+      interpretation: { intent: "rules", needsClarification: false },
+    };
+    const rejected = await answerRulesQuestion(question, options);
+    responseText = correctRewrite;
+    const accepted = await answerRulesQuestion(question, options);
+
+    assert.equal(accepted.answer, correctRewrite);
+    assert.notEqual(rejected.answer, swappedRewrite);
+    assert.match(rejected.answer, /Boulder Raspberry/i);
+    assert.doesNotMatch(rejected.answer, /6 feet tall|8 feet wide/i);
+    assert.doesNotMatch(rejected.answer, /Short answer|What I found|Before you act/i);
+  } finally {
+    global.fetch = previousFetch;
+    if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = previousKey;
+  }
+});
+
+test("grounding preserves labeled values across a second dimension family", () => {
+  const sources = [{
+    title: "Current installation standard",
+    text: "Maximum depth: 4 feet. Minimum setback: 10 feet.",
+  }];
+  const draft = "Short answer: The maximum depth is 4 feet and the minimum setback is 10 feet.";
+
+  assert.deepEqual(
+    llmRewriteIssues("The maximum depth is 4 feet, with a minimum setback of 10 feet.", draft, sources),
+    []
+  );
+  assert.match(
+    llmRewriteIssues("The maximum depth is 10 feet, with a minimum setback of 4 feet.", draft, sources).join(" "),
+    /attribute\/value binding.*depth=10 ft.*setback=4 ft/i
+  );
+});
+
 test("focused evidence still rejects omitted relevant limits and invented facts", () => {
   const lightingSources = [{
     title: "Seasonal lighting rule",
