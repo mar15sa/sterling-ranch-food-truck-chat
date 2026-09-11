@@ -88,6 +88,8 @@ const GENERIC_COPY = new Set([
   "Tell me the question, task, or problem you want help with.",
   "Use the applicable source path below for your situation.",
   "These are the published hours for that weekday.",
+  "The official source does not say whether that placement is allowed.",
+  "The cited source does not confirm whether the requested plant is included.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.
@@ -124,6 +126,12 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "The approved source does not publish separate  hours, so I can’t verify that its regular  schedule applies on .",
   "The approved source does not publish hours specifically for , so I can’t verify the holiday schedule.",
   "The approved source does not publish separate  hours, so I can’t verify the holiday schedule for .",
+  "It is listed as  tall with a spread of .",
+  "It is listed as .",
+  "tall",
+  "a spread of",
+  "deep",
+  "long",
   "falls outside that published recurring season, so I can’t verify facility hours for that date.",
 ]);
 
