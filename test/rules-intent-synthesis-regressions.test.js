@@ -421,6 +421,29 @@ test("grounding accepts a resident-supplied proper noun but still rejects an inv
   );
 });
 
+test("a resident-supplied name cannot turn a search miss into a negative catalog claim", () => {
+  const plantSources = [{
+    title: "Preapproved plant list",
+    text: "Boulder Raspberry is a preapproved shrub.",
+  }];
+  const plantDraft = "The selected source confirms that Boulder Raspberry is preapproved.";
+  const issues = llmRewriteIssues(
+    "Moonbeam Dragonfruit isn't on Sterling Ranch's preapproved plant list. Ask the DRC about approval.",
+    plantDraft,
+    plantSources,
+    "Can I plant Moonbeam Dragonfruit?"
+  );
+  assert.ok(issues.includes("unsupported-resource-absence-claim"));
+
+  const vendorIssues = llmRewriteIssues(
+    "The approved vendor directory does not include Alpine Solar.",
+    "The official directory lists approved service providers.",
+    [{ title: "Approved vendor directory", text: "Summit Electric is an approved service provider." }],
+    "Can I use Alpine Solar?"
+  );
+  assert.ok(vendorIssues.includes("unsupported-resource-absence-claim"));
+});
+
 test("natural synthesis may remove scaffolding but cannot drop sourced limits", () => {
   const sources = [{
     title: "Current source",

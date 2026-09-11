@@ -133,6 +133,38 @@ test("missing retrieval cannot be presented as proof that an official list does 
   assert.doesNotMatch(explicitlySupported.join(" "), /unsupported-resource-absence-claim/);
 });
 
+test("missing catalog rows cannot be presented as proof that a named item is excluded", () => {
+  const cases = [
+    {
+      question: "Can I plant Moonbeam Dragonfruit?",
+      answer: "Moonbeam Dragonfruit isn't on Sterling Ranch's preapproved plant list.",
+      sources: [{ title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." }],
+    },
+    {
+      question: "Can I hire Acme Roofing?",
+      answer: "The approved contractor directory does not include Acme Roofing.",
+      sources: [{ title: "Approved contractor directory", text: "Beacon Roofing is listed as an approved contractor." }],
+    },
+  ];
+  for (const { question, answer: proposedAnswer, sources } of cases) {
+    assert.ok(
+      answerCoverageIssues(question, proposedAnswer, sources)
+        .includes("unsupported-resource-absence-claim"),
+      question
+    );
+  }
+
+  const explicitlySupported = answerCoverageIssues(
+    "Can I hire Acme Roofing?",
+    "The approved contractor directory does not include Acme Roofing.",
+    [{
+      title: "Approved contractor directory",
+      text: "Acme Roofing is not included in the approved contractor directory.",
+    }]
+  );
+  assert.doesNotMatch(explicitlySupported.join(" "), /unsupported-resource-absence-claim/);
+});
+
 test("everyday wording for movable outdoor belongings routes to the household-items rule", async () => {
   for (const question of [
     "How far can my stuff go off my porch?",
