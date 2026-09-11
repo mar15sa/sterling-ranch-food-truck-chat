@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { buildSourceOperationsReport, reportMarkdown } = require("../lib/community-source-operations-report");
-const { requireReviewConfiguration } = require("../scripts/report-community-source-operations");
+const { requireReviewConfiguration, revalidationSummary } = require("../scripts/report-community-source-operations");
 
 const now = Date.parse("2026-09-10T12:00:00.000Z");
 
@@ -9,7 +9,7 @@ test("operations report keeps private review details out while reporting queue a
   const index = {
     inventory: { accountingScope: "2026-september-crawl", discoveredCount: 100, eligibleCount: 80, indexedPageCount: 50, excludedCount: 20, pendingCount: 30, complete: false },
     sources: [
-      { id: "fresh", sourceUrl: "https://example.test/fresh", contentHash: "a", staleAfter: "2026-09-12T12:00:00.000Z" },
+      { id: "fresh", sourceUrl: "https://example.test/fresh", contentHash: "a", staleAfter: "2026-09-11T11:59:59.000Z" },
       { id: "expired", sourceUrl: "https://example.test/expired", contentHash: "b", staleAfter: "2026-09-09T12:00:00.000Z" },
       { id: "candidate", sourceUrl: "https://example.test/candidate", contentHash: "c", reviewStatus: "candidate", staleAfter: "2026-09-09T12:00:00.000Z" },
     ],
@@ -39,6 +39,14 @@ test("inventory totals are not compared when accounting scope changes or is miss
   assert.match(report.inventoryTrend.reason, /not compared across crawl boundaries/i);
 });
 
-test("operations reporting fails clearly when private review configuration is absent", () => {
+test("operations reporting only requires the existing read-only Notion credentials", () => {
+  assert.doesNotThrow(() => requireReviewConfiguration({ token: "token", dataSourceId: "source", databaseId: "", titleProperty: "" }));
   assert.throws(() => requireReviewConfiguration({ token: "", dataSourceId: "", databaseId: "", titleProperty: "" }), /requires configured private review secrets.*COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN/i);
+});
+
+test("revalidation attestation parsing preserves the bridge status and only exposes a count", () => {
+  assert.deepEqual(revalidationSummary({ status: "failed", checks: [{ sourceUrl: "https://private.test/a" }, { sourceUrl: "https://private.test/b" }] }), {
+    status: "failed", checkedUrlCount: 2,
+  });
+  assert.deepEqual(revalidationSummary({}), { status: "not-run", checkedUrlCount: 0 });
 });

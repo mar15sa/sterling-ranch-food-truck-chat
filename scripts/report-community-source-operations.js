@@ -3,7 +3,7 @@ const fs = require("node:fs/promises");
 const path = require("node:path");
 // Enforce a read-only Notion client before importing the review repository.
 require("./source-review-readonly.cjs");
-const { listReviewRecords, reviewConfig } = require("../lib/community-source-review");
+const { listReviewRecordsReadOnly, reviewConfig } = require("../lib/community-source-review");
 const { buildSourceOperationsReport, reportMarkdown } = require("../lib/community-source-operations-report");
 
 function flag(name, fallback = "") {
@@ -22,7 +22,6 @@ function requireReviewConfiguration(config = reviewConfig()) {
   const missing = [];
   if (!config.token) missing.push("COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN");
   if (!config.dataSourceId && !config.databaseId) missing.push("COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID or COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID");
-  if (!config.titleProperty) missing.push("COMMUNITY_SOURCE_REVIEW_NOTION_TITLE_PROPERTY");
   if (missing.length) throw new Error(`Community source operations reporting requires configured private review secrets: ${missing.join(", ")}.`);
 }
 
@@ -42,7 +41,7 @@ async function main() {
   const monthly = process.argv.includes("--monthly");
   requireReviewConfiguration();
   const [index, reviewRecords, previousReport, attestation] = await Promise.all([
-    readJson(indexPath), listReviewRecords(), previous ? readJson(previous, {}) : Promise.resolve({}),
+    readJson(indexPath), listReviewRecordsReadOnly(), previous ? readJson(previous, {}) : Promise.resolve({}),
     attestationPath ? readJson(path.resolve(attestationPath), {}) : Promise.resolve({}),
   ]);
   const report = buildSourceOperationsReport({ index, reviewRecords, previousReport, revalidation: revalidationSummary(attestation) });
