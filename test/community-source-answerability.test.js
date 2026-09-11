@@ -54,7 +54,9 @@ test('canonical scoped water-payment approval projects only its matched action t
   };
   const index = { communityId: 'sterling-ranch', sources: [payment], factLedger: [], canonicalSourceLedger: canonicalLedger, truthStatus: { migrationMode: 'trusted-baseline' } };
   assert.deepEqual(canonicalProjectionEntries(payment, index).map((entry) => ({ decision: entry.reviewDecisionId, version: entry.sourceVersion })), [{ decision: 'water-payment-direct-link', version: payment.contentHash }]);
-  const searched = searchCommunityIndex('Where can I pay my water bill?', { index, now });
+  const factualSearch = searchCommunityIndex('Where can I pay my water bill?', { index, now });
+  assert.equal(factualSearch.sources.length, 0, 'an action-only approval is not factual answer evidence');
+  const searched = searchCommunityIndex('Where can I pay my water bill?', { index, now, includeActionOnlyProjections: true });
   assert.equal(searched.sources.length, 1);
   assert.equal(searched.sources[0].text, 'Pay your water bill');
   assert.deepEqual(searched.sources[0].facts, []);
@@ -66,7 +68,7 @@ test('canonical scoped water-payment approval projects only its matched action t
   assert.equal(answer.confidence.canAnswer, true);
   assert.ok(answer.actions.some((action) => action.url === 'https://payments.example.test/water'));
   assert.doesNotMatch(answer.answer, /303-555-0199|rates/i);
-  const changed = searchCommunityIndex('Where can I pay my water bill?', { index: { ...index, sources: [{ ...payment, contentHash: 'f'.repeat(64) }] }, now });
+  const changed = searchCommunityIndex('Where can I pay my water bill?', { index: { ...index, sources: [{ ...payment, contentHash: 'f'.repeat(64) }] }, now, includeActionOnlyProjections: true });
   assert.equal(changed.sources.length, 0);
   assert.equal(changed.withheldSources[0].text, '');
 });

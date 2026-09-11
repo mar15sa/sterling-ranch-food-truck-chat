@@ -28,7 +28,6 @@ async function ask(question, facility) {
 test("held-out rental wording is withheld until the exact booking action is approved", async () => {
   const cases = [
     ["Can I reserve the clubhouse for a meeting?", "Clubhouse"],
-    ["How do I book the Great Hall?", "Great Hall"],
     ["I need a pavilion for a birthday. Where do I reserve it?", "Pavilion"],
     ["Can I rent a park shelter?", "park shelter"],
     ["Where can I check availability for the clubhouse?", "Clubhouse"],
@@ -41,6 +40,14 @@ test("held-out rental wording is withheld until the exact booking action is appr
     assert.ok(result.actions.every((action) => !/secure\.rec1\.com/i.test(action.url)), question);
     assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i, question);
   }
+
+  const greatHall = await ask("How do I book the Great Hall?", "Great Hall");
+  assert.equal(greatHall.answerStatus, "verified");
+  assert.equal(greatHall.answerMode, "community-approved-operational");
+  assert.deepEqual(greatHall.actions.map((action) => action.url), [
+    "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
+  ]);
+  assert.doesNotMatch(greatHall.answer, /available|\$\d|per hour|deposit/i);
 });
 
 test("CivicRec is an action-only connector and has no factual authority", () => {

@@ -5,11 +5,19 @@ const { applyCommunityReleaseSourceApprovals } = require('../scripts/apply-commu
 
 test('four approved decisions create only exact-version claim projections', () => {
   const index = applyCommunityReleaseSourceApprovals(structuredClone(baseIndex));
-  const approved = index.sources.filter((source) => source.id.startsWith('approved-'));
+  const releaseThreeIds = new Set([
+    'approved-drc-application-directory', 'approved-drc-contact-current', 'approved-pool-hours-current-page',
+    'approved-rain-barrel-conditional-directory', 'approved-rain-barrel-conditional-submission', 'approved-utilityhawk-water-monitoring-2026',
+  ]);
+  const approved = index.sources.filter((source) => releaseThreeIds.has(source.id));
   assert.deepEqual(approved.map((source) => source.id).sort(), [
     'approved-drc-application-directory', 'approved-drc-contact-current', 'approved-pool-hours-current-page',
     'approved-rain-barrel-conditional-directory', 'approved-rain-barrel-conditional-submission', 'approved-utilityhawk-water-monitoring-2026',
   ]);
+  assert.deepEqual(
+    index.sources.filter((source) => source.id.startsWith('approved-') && !releaseThreeIds.has(source.id)).map((source) => source.id).sort(),
+    baseIndex.sources.filter((source) => source.id.startsWith('approved-') && !releaseThreeIds.has(source.id)).map((source) => source.id).sort(),
+  );
   assert.match(approved.find((source) => source.id === 'approved-pool-hours-current-page').text, /Labor Day/i);
   assert.doesNotMatch(approved.find((source) => source.id === 'approved-pool-hours-current-page').text, /guest passes|capacity|concessions/i);
   assert.doesNotMatch(approved.find((source) => source.id === 'approved-utilityhawk-water-monitoring-2026').text, /payment portal|electric|gas|Steward/i);

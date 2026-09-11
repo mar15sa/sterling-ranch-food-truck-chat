@@ -79,7 +79,7 @@ test("a scoped exact-version projection renews its full long page and semantic a
   const paymentUrl = "https://billing.alpha.gov/login";
   const context = "Payment Options: register through UtilityHawk.";
   const longText = `${context} ${"Current payment instructions remain available. ".repeat(55)}`;
-  const htmlFor = ({ paymentHref = paymentUrl, includePayment = true, text = longText } = {}) => `<main><p>${text}</p>${includePayment ? `<a href="${paymentHref}">https://billing.alpha.gov/login</a>` : ""}<a href="/DocumentCenter/View/2419">Understanding your water bill (pdf)</a></main>`;
+  const htmlFor = ({ paymentHref = paymentUrl, includePayment = true, text = longText } = {}) => `<main><p>${text}</p>${includePayment ? `<a href="${paymentHref}">UtilityHawk</a>` : ""}<a href="/DocumentCenter/View/2419">Understanding your water bill (pdf)</a></main>`;
   const exactHtml = htmlFor();
   const exactText = require("../lib/community-ingest").pageText(exactHtml);
   assert.ok(exactText.length > 1800, "fixture must exceed ordinary ingestion chunk size");
@@ -94,8 +94,8 @@ test("a scoped exact-version projection renews its full long page and semantic a
   });
   const unchanged = await observed(exactHtml);
   assert.deepEqual(unchanged.observedHashes, [projection.contentHash], "the full exact page hash is preserved");
-  assert.equal(unchanged.actionMismatch, false, "URL/context proves the semantic payment projection despite raw link label/type");
-  assert.equal(unchanged.actionProof.observed[0].matches[0].label, "https://billing.alpha.gov/login");
+  assert.equal(unchanged.actionMismatch, false, "the default source-link proof requires the exact reviewed label and destination");
+  assert.equal(unchanged.actionProof.observed[0].matches[0].label, "UtilityHawk");
 
   const revalidated = await runBridge({
     index: { sources: [projection], factLedger: [{ id: "fact", sourceId: projection.id, sourceVersion: projection.contentHash, reviewStatus: "approved", reviewDecisionId: "owner", reviewedBy: "owner", reviewedAt: "2026-09-01", staleAfter: projection.staleAfter }] },
@@ -134,7 +134,7 @@ test("ordinary chunks and a scoped projection on the same unchanged page renew t
     id: "pool-hours-projection", sourceUrl: projectedUrl, connectorType: "civicplus-pages", sourceType: "facilities",
     reviewStatus: "candidate", contentHash: sourceHash(exactText), staleAfter: expired, checkedAt: expired,
     facts: [{ id: "pool-hours", reviewStatus: "approved" }],
-    actions: [{ id: "pool-schedule", label: "Official pool schedule", url: scheduleUrl, actionType: "information", context, reviewStatus: "approved" }],
+    actions: [{ id: "pool-schedule", label: "View pool schedule", url: scheduleUrl, actionType: "information", context, reviewStatus: "approved" }],
   };
   const sources = [...ordinarySources, projection];
   const factLedger = sources.map((source, position) => ({
