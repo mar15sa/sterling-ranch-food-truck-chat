@@ -12,6 +12,8 @@ test("the reusable bridge creates only disposable evidence and public-safe verif
   assert.match(action, /--temporary-output "\$RUNNER_TEMP\/community-index\.revalidated\.json"/);
   assert.match(action, /--attestation artifacts\/community-approved-revalidation-attestation\.json/);
   assert.match(action, /--review-output artifacts\/community-approved-revalidation-review\.json/);
+  assert.match(action, /--baseline "\$baseline"/);
+  assert.match(action, /github\.event\.pull_request\.base\.sha/);
   assert.match(action, /COMMUNITY_EVIDENCE_INDEX=\$RUNNER_TEMP\/community-index\.revalidated\.json/);
   assert.doesNotMatch(action, /data\/community-index\.json\s*>/);
 });
@@ -23,14 +25,24 @@ test("every workflow quality caller establishes temporary evidence before checki
     const bridge = workflow.indexOf(bridgeUse);
     const check = workflow.indexOf("npm run check");
     assert.ok(bridge >= 0 && check > bridge, `${filename} must use temporary evidence before npm run check`);
+    assert.match(workflow, /fetch-depth: 0/, `${filename} must retain a baseline for unavailable-evidence checks`);
   }
   const ci = fs.readFileSync(path.join(root, ".github", "workflows", "ci.yml"), "utf8");
+  assert.match(ci, /fetch-depth: 0/);
   assert.equal(ci.includes("approved-evidence-revalidation:"), false, "no parallel stale-index quality job remains");
   assert.match(ci, /if: always\(\)/);
   assert.match(ci, /retention-days: 30/);
   for (const script of ["scripts/check-community-sources.js", "scripts/eval-community-assistant.js", "scripts/check-community-retrieval.js"]) {
     assert.match(fs.readFileSync(path.join(root, script), "utf8"), /COMMUNITY_EVIDENCE_INDEX/);
   }
+});
+
+test("scheduled source operations retain a baseline for safe temporary quarantine and still publish the review record", () => {
+  const workflow = fs.readFileSync(path.join(root, ".github", "workflows", "community-source-operations-report.yml"), "utf8");
+  assert.match(workflow, /fetch-depth: 0/);
+  assert.match(workflow, /git show HEAD\^:data\/community-index\.json/);
+  assert.match(workflow, /--baseline "\$baseline"/);
+  assert.match(workflow, /continue-on-error: true/);
 });
 
 test("no workflow can call the local source gate before the reusable bridge", () => {
