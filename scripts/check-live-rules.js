@@ -135,9 +135,9 @@ const CHECKS = [
   {
     question: "What is Atlas WiFi?",
     expectedClassification: "rules-question",
-    expectedReason: "official-resource-boundary",
-    expectedAnswerMode: "official-resource",
-    answerIncludes: ["rulebook does not define", "Ask staff"],
+    expectedReason: "no-single-source-support",
+    expectedAnswerMode: "source-evidence-boundary",
+    expectedNoSources: true,
   },
 ];
 

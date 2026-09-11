@@ -37,6 +37,52 @@ test("plant routing does not capture tree-house or fence-primary questions", () 
   assert.equal(isPlantPermissionQuestion("Are raspberry bushes permitted along a wall?"), true);
 });
 
+test("plant routing yields to garden projects and dead-tree maintenance obligations", () => {
+  for (const question of [
+    "Can I plant a vegetable garden?",
+    "Can I install garden boxes behind my house?",
+    "Can I put up a raised garden in my yard?",
+    "Do I need permission to replant a dead tree?",
+    "Do I have to replace a dead tree in the tree lawn?",
+  ]) {
+    assert.equal(isPlantPermissionQuestion(question), false, question);
+  }
+});
+
+test("garden projects and dead-tree obligations reach their controlling clauses", async () => {
+  const garden = await answerWithoutAi("Can I plant a vegetable garden?");
+  assert.match(garden.sources?.[0]?.title || "", /Sec\. 21-22/i);
+  assert.match(garden.answer, /DRC approval/i);
+  assert.match(garden.answer, /rear or side yard/i);
+  assert.match(garden.answer, /five feet/i);
+
+  for (const question of [
+    "Do I need permission to replant a dead tree?",
+    "Do I have to replace a dead tree in the tree lawn?",
+  ]) {
+    const result = await answerWithoutAi(question);
+    assert.ok(result.sources?.some((source) => /Sec\. 9-146|Sec\. 21-22/i.test(source.title || "")), question);
+    assert.match(result.answer, /dead trees must be replaced/i, question);
+    assert.match(result.answer, /two-inch caliper/i, question);
+    assert.match(result.answer, /DRC approval/i, question);
+  }
+});
+
+test("an unapproved service request stays withheld instead of regaining a canned resource answer", async () => {
+  for (const question of [
+    "What is Atlas WiFi?",
+    "What is atlas coffee wifi?",
+    "What is the Atlas coffee WiFi?",
+  ]) {
+    const result = await answerWithoutAi(question);
+    assert.equal(result.confidence?.canAnswer, false, question);
+    assert.equal(result.confidence?.reason, "no-single-source-support", question);
+    assert.equal(result.answerMode, "source-evidence-boundary", question);
+    assert.deepEqual(result.sources, [], question);
+    assert.doesNotMatch(result.answer, /publish current access details|password|network name|access code/i, question);
+  }
+});
+
 test("specific plant evidence comes from the selected source instead of answer code", async () => {
   const result = await answerWithoutAi("Can I grow raspberries near my property line?");
   assert.match(result.answer, /Boulder Raspberry/i);
