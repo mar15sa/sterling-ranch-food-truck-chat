@@ -305,9 +305,10 @@ test("the exact Labor Day pool-hours question bypasses current status and withho
   });
   const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
     interpretationMode: "structured",
-    now: NOW,
+    now: new Date("2026-09-11T12:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
+    communityProfile,
     planCommunitySearch: async () => routingPlan,
     synthesizeCommunityAnswer: false,
     answerRulesQuestion,
@@ -328,6 +329,55 @@ test("the exact Labor Day pool-hours question bypasses current status and withho
   assert.deepEqual(answer.completion.resolvedDetails, ["date"]);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["hours"]);
   assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) => item.connector === "pool-status" && item.reasons.includes("goal-not-supported")));
+});
+
+test("a dated recurring schedule does not leak beyond its source-defined season", () => {
+  const source = {
+    ...communityIndex.sources.find((item) => item.id === "approved-pool-hours-current-page"),
+    canonicalScopedProjection: true,
+    approvalClaimIds: ["pool-season-and-regular-hours"],
+    staleAfter: "2099-01-01T00:00:00.000Z",
+  };
+  const answer = datedFacilityHoursAnswer("What are the pool hours Tuesday, September 8?", { sources: [source] }, {
+    now: NOW,
+    communityProfile,
+    routingPlan: plan({
+      intent: "facilities", goal: "schedule", subject: "pool hours",
+      requestedDetails: ["hours", "date"],
+      dateRange: { kind: "explicit-date", start: "2026-09-08", end: "2026-09-08", label: "September 8" },
+      searchQueries: ["pool hours Tuesday"],
+    }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours-season-boundary");
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.match(answer.directAnswer, /outside that published recurring season/i);
+  assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
+  assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["hours"]);
+});
+
+test("an explicit holiday exception controls instead of the recurring weekday schedule", () => {
+  const base = communityIndex.sources.find((item) => item.id === "approved-pool-hours-current-page");
+  const source = {
+    ...base,
+    canonicalScopedProjection: true,
+    approvalClaimIds: ["pool-season-and-regular-hours"],
+    staleAfter: "2099-01-01T00:00:00.000Z",
+    text: `${base.text} Labor Day hours: 10:00 am - 4:00 pm.`,
+  };
+  const answer = datedFacilityHoursAnswer("What are the pool hours for Labor Day?", { sources: [source] }, {
+    now: NOW,
+    communityProfile,
+    routingPlan: plan({
+      intent: "facilities", goal: "schedule", subject: "pool hours on the holiday",
+      requestedDetails: ["hours", "date"],
+      dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" },
+      searchQueries: ["pool holiday hours"],
+    }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-holiday-hours");
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.directAnswer, /10:00 am - 4:00 pm/i);
+  assert.doesNotMatch(answer.answer, /regular weekday schedule/i);
 });
 
 test("dated facility hours do not revive raw pool-page prose after rejecting an AI answer", async () => {
