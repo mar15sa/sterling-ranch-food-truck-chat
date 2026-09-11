@@ -81,6 +81,16 @@ test("the rulebook path stays within its evidence and preserves the private-cour
   assert.doesNotMatch(privateCourt.answer, /rulebook does not publish pickleball-specific play/i);
 });
 
+test("an exact solar design-review source produces a high-confidence conditional answer", async () => {
+  const result = await answer("Are rooftop solar panels subject to design review?");
+  assert.equal(result.confidence.canAnswer, true);
+  assert.equal(result.confidence.confidence, "high");
+  assert.equal(result.confidence.reason, "question-specific-official-clause");
+  assert.equal(result.answerVerdict, "conditional");
+  assert.match(result.sources[0]?.title || "", /Solar energy devices and systems/i);
+  assert.match(result.answer, /DRC approval is required/i);
+});
+
 test("flagpole height answers include the connected installation restrictions", async () => {
   for (const question of ["What is the maximum height a freestanding flag pole can be?", "How tall can my flagpole be?"]) {
     const result = await answer(question);
