@@ -4,7 +4,7 @@
   "communityName": "Sterling Ranch Community Authority Board",
   "website": "https://sterlingranchcab.com/",
   "generatedAt": "2026-09-06T18:47:12.016Z",
-  "sourceCount": 273,
+  "sourceCount": 283,
   "pageCount": 24,
   "documentCount": 22,
   "failureCount": 0,
@@ -33321,7 +33321,13 @@
           "reviewDecisionId": "water-payment-primary-page",
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
+          "checkedAt": "2026-09-09T02:25:34.966Z",
+          "evidence": {
+            "proofKind": "source-text-url-v1",
+            "label": "Utility Hawk",
+            "url": "https://srcab.utilityhawk.us",
+            "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions."
+          }
         }
       ],
       "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
@@ -33374,7 +33380,13 @@
           "reviewDecisionId": "water-payment-direct-link",
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
+          "checkedAt": "2026-09-09T02:25:34.966Z",
+          "evidence": {
+            "proofKind": "source-text-url-v1",
+            "label": "Utility Hawk",
+            "url": "https://srcab.utilityhawk.us",
+            "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions."
+          }
         }
       ],
       "contentHash": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
@@ -33519,7 +33531,13 @@
           "reviewDecisionId": "monthly-fee-payment-page",
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
+          "checkedAt": "2026-09-09T02:25:34.966Z",
+          "evidence": {
+            "proofKind": "source-text-url-v1",
+            "label": "Utility Hawk",
+            "url": "https://srcab.utilityhawk.us",
+            "context": "Monthly Fees Billing and Payment Options Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Visit the AmCoBi website: www.AmCoBi.com Select the \"Pay Online\" link on the home page. Follow the instructions."
+          }
         }
       ],
       "contentHash": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",
@@ -33749,6 +33767,465 @@
       "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514",
       "checkedAt": "2026-09-09T21:44:12.406Z",
       "staleAfter": "2026-09-10T21:44:12.406Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-trash-recurring-service",
+      "communityId": "sterling-ranch",
+      "title": "Recurring trash service",
+      "sourceUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Waste Connections serves Sterling Ranch. Recurring collection: Providence Monday, Ascent Tuesday, Prospect Thursday; bins by 7 a.m. and back in screened storage by day end. Named holidays have a one-day delay. Check the live pickup schedule for any particular date.",
+      "excerpt": "",
+      "facts": [
+        {
+          "id": "trash-recurring-guidance",
+          "type": "information",
+          "value": "Waste Connections serves Sterling Ranch. Providence: Monday; Ascent: Tuesday; Prospect: Thursday. Put bins out by 7 a.m. and return them to screened storage by the end of pickup day. New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas have a one-day delay. For a particular date, use the live pickup schedule.",
+          "context": "Waste Connections serves Sterling Ranch. Providence: Monday; Ascent: Tuesday; Prospect: Thursday. Put bins out by 7 a.m. and return them to screened storage by the end of pickup day. New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas have a one-day delay. For a particular date, use the live pickup schedule.",
+          "approvalClaim": "trash-recurring-service-guidance",
+          "reviewDecisionId": "trash-recurring-service",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44"
+        }
+      ],
+      "actions": [
+        {
+          "id": "open-trash-concern-form",
+          "label": "Open the CAB trash and recycling concern form",
+          "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+          "context": "Open the CAB trash and recycling concern form",
+          "actionType": "information",
+          "evidence": {
+            "label": "Please submit this form",
+            "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+            "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
+          },
+          "approvalClaim": "trash-cab-concern-route",
+          "reviewDecisionId": "trash-recurring-service",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44"
+        },
+        {
+          "id": "open-wasteconnect-app",
+          "label": "Open WasteConnect",
+          "url": "https://apps.apple.com/app/id1442351850",
+          "context": "Open WasteConnect",
+          "actionType": "information",
+          "evidence": {
+            "label": "Apple Store",
+            "url": "https://apps.apple.com/app/id1442351850",
+            "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+          },
+          "approvalClaim": "trash-wasteconnect-app-route",
+          "reviewDecisionId": "trash-recurring-service",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44"
+        }
+      ],
+      "contentHash": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44",
+      "hashScheme": "page-text-actions-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-mailbox-keys-route",
+      "communityId": "sterling-ranch",
+      "title": "Mailbox keys starting route",
+      "sourceUrl": "https://sterlingranchcab.com/227/Mailbox-Keys",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Ask the builder about mailbox keys first. If the builder does not have them, use the listed Littleton Post Office.",
+      "excerpt": "",
+      "facts": [
+        {
+          "id": "mailbox-keys-two-step-route",
+          "type": "information",
+          "value": "Ask the builder about mailbox keys first. If the builder does not have them, use the listed Littleton Post Office.",
+          "context": "Ask the builder about mailbox keys first. If the builder does not have them, use the listed Littleton Post Office.",
+          "approvalClaim": "mailbox-keys-two-step-route",
+          "reviewDecisionId": "mailbox-keys-route",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "024092ab686667e7af405dcdcd8b3b2777cbe26a5fee9a9a0cd2dcad8317d4ed"
+        }
+      ],
+      "actions": [],
+      "contentHash": "024092ab686667e7af405dcdcd8b3b2777cbe26a5fee9a9a0cd2dcad8317d4ed",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-streetlight-report-route",
+      "communityId": "sterling-ranch",
+      "title": "Streetlight reporting route",
+      "sourceUrl": "https://sterlingranchcab.com/239/Streetlights",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Use the CAB concern and feedback form to report a streetlight outage or malfunction.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-streetlight-concern-form",
+          "label": "Open the CAB concern and feedback form",
+          "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+          "context": "Open the CAB concern and feedback form",
+          "actionType": "information",
+          "evidence": {
+            "label": "concern or feedback.",
+            "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+            "context": "If you notice a streetlight outage or malfunction, please notify the CAB by submitting a concern or feedback."
+          },
+          "approvalClaim": "streetlight-cab-concern-route",
+          "reviewDecisionId": "streetlight-report-route",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "10d2631192345637f0464961b20bac7c3daff29f5828984df2d0aebd2a5f55cc"
+        }
+      ],
+      "contentHash": "10d2631192345637f0464961b20bac7c3daff29f5828984df2d0aebd2a5f55cc",
+      "hashScheme": "page-text-actions-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-courtreserve-portal",
+      "communityId": "sterling-ranch",
+      "title": "CourtReserve portal",
+      "sourceUrl": "https://sterlingranchcab.com/420/Court-Reserve",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open the current CourtReserve portal.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-courtreserve",
+          "label": "Open CourtReserve",
+          "url": "https://app.courtreserve.com/Online/Portal/Index/15838",
+          "context": "Open CourtReserve",
+          "actionType": "information",
+          "evidence": {
+            "label": "Sterling Ranch CAB CourtReserve portal",
+            "url": "https://app.courtreserve.com/Online/Portal/Index/15838",
+            "context": "To create an acocunt click the Sterling Ranch CAB CourtReserve portal link."
+          },
+          "approvalClaim": "courtreserve-portal-route",
+          "reviewDecisionId": "courtreserve-portal",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "94827d500bb5246ae0221ae8e1420e294da0985f52c7f9dacda4a43c9f364bed"
+        }
+      ],
+      "contentHash": "94827d500bb5246ae0221ae8e1420e294da0985f52c7f9dacda4a43c9f364bed",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-great-hall-booking-link",
+      "communityId": "sterling-ranch",
+      "title": "Great Hall booking navigation",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open the current CivicRec Great Hall booking route.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-great-hall-civicrec",
+          "label": "Open the Great Hall booking page",
+          "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
+          "context": "Open the Great Hall booking page",
+          "actionType": "information",
+          "evidence": {
+            "label": "Reserve the Great Hall",
+            "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
+            "context": "Other Link Reserve the Great Hall The Great Hall can be reserved"
+          },
+          "approvalClaim": "great-hall-civicrec-route",
+          "reviewDecisionId": "great-hall-booking-link",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "878bf564c077ae31bda2fbfc94aa614ef434aed0914e3f17d47a96d692c8cea2"
+        }
+      ],
+      "contentHash": "878bf564c077ae31bda2fbfc94aa614ef434aed0914e3f17d47a96d692c8cea2",
+      "hashScheme": "page-text-actions-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-overlook-clubhouse-navigation",
+      "communityId": "sterling-ranch",
+      "title": "Overlook Clubhouse subfacility navigation",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open named Overlook Clubhouse subfacility pages.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-overlook-great-hall",
+          "label": "Open Great Hall",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-3",
+          "context": "Open Great Hall",
+          "actionType": "information",
+          "evidence": {
+            "label": "View Subfacility",
+            "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-3",
+            "context": "Great Hall View Subfacility"
+          },
+          "approvalClaim": "overlook-great-hall-route",
+          "reviewDecisionId": "overlook-clubhouse-navigation",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "fbd867f603644fa2e83382f369df435019f56b1a19ef93bd11707b82130467df"
+        },
+        {
+          "id": "open-overlook-virtual",
+          "label": "Open Overlook & Virtual",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-8",
+          "context": "Open Overlook & Virtual",
+          "actionType": "information",
+          "evidence": {
+            "label": "View Subfacility",
+            "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-8",
+            "context": "Overlook & Virtual View Subfacility"
+          },
+          "approvalClaim": "overlook-virtual-route",
+          "reviewDecisionId": "overlook-clubhouse-navigation",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "fbd867f603644fa2e83382f369df435019f56b1a19ef93bd11707b82130467df"
+        },
+        {
+          "id": "open-overlook-pool",
+          "label": "Open Pool",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-2",
+          "context": "Open Pool",
+          "actionType": "information",
+          "evidence": {
+            "label": "View Subfacility",
+            "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-2",
+            "context": "Pool View Subfacility"
+          },
+          "approvalClaim": "overlook-pool-route",
+          "reviewDecisionId": "overlook-clubhouse-navigation",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "fbd867f603644fa2e83382f369df435019f56b1a19ef93bd11707b82130467df"
+        }
+      ],
+      "contentHash": "fbd867f603644fa2e83382f369df435019f56b1a19ef93bd11707b82130467df",
+      "hashScheme": "page-text-actions-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-cab-contact-directory-route",
+      "communityId": "sterling-ranch",
+      "title": "CAB contact directory navigation",
+      "sourceUrl": "https://sterlingranchcab.com/400/Contact-Us",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open the current CAB directory or Sterling Ranch 311 route.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-cab-directory",
+          "label": "Open CAB contact directory",
+          "url": "https://sterlingranchcab.com/400/Contact-Us",
+          "context": "Open CAB contact directory",
+          "actionType": "information",
+          "evidence": {
+            "label": "Open CAB contact directory",
+            "url": "https://sterlingranchcab.com/400/Contact-Us",
+            "context": "Open CAB contact directory"
+          },
+          "approvalClaim": "cab-contact-directory-route",
+          "reviewDecisionId": "cab-contact-directory-route",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "a824bac09748ce6d4d3b20951631195bf1ef13b3426ecf4fe06c0dbe1f8cd47f"
+        },
+        {
+          "id": "open-sterling-ranch-311",
+          "label": "Open Sterling Ranch 311",
+          "url": "https://sterlingranchcab.com/298/Sterling-Ranch-311",
+          "context": "Open Sterling Ranch 311",
+          "actionType": "information",
+          "evidence": {
+            "label": "Sterling Ranch 311",
+            "url": "https://sterlingranchcab.com/298/Sterling-Ranch-311",
+            "context": "Please use the Sterling Ranch 311 app."
+          },
+          "approvalClaim": "sterling-ranch-311-route",
+          "reviewDecisionId": "cab-contact-directory-route",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "a824bac09748ce6d4d3b20951631195bf1ef13b3426ecf4fe06c0dbe1f8cd47f"
+        }
+      ],
+      "contentHash": "a824bac09748ce6d4d3b20951631195bf1ef13b3426ecf4fe06c0dbe1f8cd47f",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-rules-hub-municode-link",
+      "communityId": "sterling-ranch",
+      "title": "Sterling Ranch Municode navigation",
+      "sourceUrl": "https://sterlingranchcab.com/168/Rules-Regulations",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open the Sterling Ranch Municode code.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-sterling-ranch-municode",
+          "label": "Open Sterling Ranch Municode",
+          "url": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+          "context": "Open Sterling Ranch Municode",
+          "actionType": "information",
+          "evidence": {
+            "label": "Official link",
+            "url": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+            "context": "These are all found in the Sterling Ranch Code of Rules document."
+          },
+          "approvalClaim": "sterling-ranch-municode-route",
+          "reviewDecisionId": "rules-hub-municode-link",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "a1c0ae055fdaa0b619c62cbc27786b993ed4b4ae01655644f45e5ba821a18e72"
+        }
+      ],
+      "contentHash": "a1c0ae055fdaa0b619c62cbc27786b993ed4b4ae01655644f45e5ba821a18e72",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-water-reports-directory",
+      "communityId": "sterling-ranch",
+      "title": "Water reports directory navigation",
+      "sourceUrl": "https://sterlingranchcab.com/395/Water-Reports",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open the official water reports directory.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-water-reports-directory",
+          "label": "Open official water reports",
+          "url": "https://sterlingranchcab.com/395/Water-Reports",
+          "context": "Open official water reports",
+          "actionType": "information",
+          "evidence": {
+            "label": "Open official water reports",
+            "url": "https://sterlingranchcab.com/395/Water-Reports",
+            "context": "Open official water reports"
+          },
+          "approvalClaim": "water-reports-directory-route",
+          "reviewDecisionId": "water-reports-directory",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "c17e5fd9248cf4468c45552640b9b41b0921368769a719be2cef85b4b3352997"
+        }
+      ],
+      "contentHash": "c17e5fd9248cf4468c45552640b9b41b0921368769a719be2cef85b4b3352997",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
+    },
+    {
+      "id": "approved-landscape-class-calendar",
+      "communityId": "sterling-ranch",
+      "title": "Landscape class calendar navigation",
+      "sourceUrl": "https://sterlingranchcab.com/338/Homeowner-Landscape-Class",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityScore": 1,
+      "text": "Open the official community calendar to find the next landscape class.",
+      "excerpt": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-landscape-class-calendar",
+          "label": "Open the community calendar",
+          "url": "https://sterlingranchcab.com/Calendar.aspx",
+          "context": "Open the community calendar",
+          "actionType": "information",
+          "evidence": {
+            "label": "COMMUNITY CALENDAR",
+            "url": "https://sterlingranchcab.com/Calendar.aspx",
+            "context": "For information or to register for the next class check out our community calendar."
+          },
+          "approvalClaim": "landscape-class-calendar-route",
+          "reviewDecisionId": "landscape-class-calendar",
+          "reviewStatus": "approved",
+          "reviewedBy": "owner",
+          "reviewedAt": "2026-09-10T20:00:00.000Z",
+          "sourceVersion": "995c41f74be5a3a882a9f4f5821cfe79f2cba33676cbc7e3efeb6c2814b9885a"
+        }
+      ],
+      "contentHash": "995c41f74be5a3a882a9f4f5821cfe79f2cba33676cbc7e3efeb6c2814b9885a",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-10T20:00:00.000Z",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
       "lifecycle": "current",
       "reviewStatus": "candidate"
     }
@@ -64469,16 +64946,88 @@
       "approvalClaim": "utilityhawk-water-monitoring-capabilities",
       "lifecycle": "current",
       "claimKey": "sterling-ranch:utilityhawk-water-usage-monitoring:information:email-phone-resident"
+    },
+    {
+      "id": "79797d251627c87c24c984b4f737edbe",
+      "communityId": "sterling-ranch",
+      "subjectKey": "recurring-trash-service",
+      "facet": "information",
+      "scopeKey": "trash-recurring-guidance",
+      "factType": "information",
+      "displayValue": "Waste Connections serves Sterling Ranch. Providence: Monday; Ascent: Tuesday; Prospect: Thursday. Put bins out by 7 a.m. and return them to screened storage by the end of pickup day. New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas have a one-day delay. For a particular date, use the live pickup schedule.",
+      "normalizedValue": "waste connections serves sterling ranch. providence: monday; ascent: tuesday; prospect: thursday. put bins out by 7 a.m. and return them to screened storage by the end of pickup day. new year’s day, memorial day, independence day, labor day, thanksgiving, and christmas have a one-day delay. for a particular date, use the live pickup schedule.",
+      "unit": "",
+      "currency": "",
+      "supportingText": "Waste Connections serves Sterling Ranch. Providence: Monday; Ascent: Tuesday; Prospect: Thursday. Put bins out by 7 a.m. and return them to screened storage by the end of pickup day. New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas have a one-day delay. For a particular date, use the live pickup schedule.",
+      "sourceId": "approved-trash-recurring-service",
+      "sourceUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "sourceTitle": "Recurring trash service",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityClass": "civicplus-pages",
+      "sourceVersion": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44",
+      "firstObservedAt": "2026-09-10T20:00:00.000Z",
+      "lastObservedAt": "2026-09-10T20:00:00.000Z",
+      "publishedAt": "",
+      "effectiveFrom": "",
+      "effectiveTo": "",
+      "supersededBy": "",
+      "retiredAt": "",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-09-10T20:00:00.000Z",
+      "reviewedBy": "owner",
+      "reviewNote": "",
+      "reviewDecisionId": "trash-recurring-service",
+      "approvalClaim": "trash-recurring-service-guidance",
+      "lifecycle": "current",
+      "claimKey": "sterling-ranch:recurring-trash-service:information:trash-recurring-guidance"
+    },
+    {
+      "id": "49ae569d6c39ac9b4b6b57a259ef0d9c",
+      "communityId": "sterling-ranch",
+      "subjectKey": "mailbox-keys-starting-route",
+      "facet": "information",
+      "scopeKey": "mailbox-keys-two-step-route",
+      "factType": "information",
+      "displayValue": "Ask the builder about mailbox keys first. If the builder does not have them, use the listed Littleton Post Office.",
+      "normalizedValue": "ask the builder about mailbox keys first. if the builder does not have them, use the listed littleton post office.",
+      "unit": "",
+      "currency": "",
+      "supportingText": "Ask the builder about mailbox keys first. If the builder does not have them, use the listed Littleton Post Office.",
+      "sourceId": "approved-mailbox-keys-route",
+      "sourceUrl": "https://sterlingranchcab.com/227/Mailbox-Keys",
+      "sourceTitle": "Mailbox keys starting route",
+      "sourceType": "services",
+      "connectorType": "civicplus-pages",
+      "authorityClass": "civicplus-pages",
+      "sourceVersion": "024092ab686667e7af405dcdcd8b3b2777cbe26a5fee9a9a0cd2dcad8317d4ed",
+      "firstObservedAt": "2026-09-10T20:00:00.000Z",
+      "lastObservedAt": "2026-09-10T20:00:00.000Z",
+      "publishedAt": "",
+      "effectiveFrom": "",
+      "effectiveTo": "",
+      "supersededBy": "",
+      "retiredAt": "",
+      "staleAfter": "2026-09-10T20:00:00.000Z",
+      "reviewStatus": "approved",
+      "reviewedAt": "2026-09-10T20:00:00.000Z",
+      "reviewedBy": "owner",
+      "reviewNote": "",
+      "reviewDecisionId": "mailbox-keys-route",
+      "approvalClaim": "mailbox-keys-two-step-route",
+      "lifecycle": "current",
+      "claimKey": "sterling-ranch:mailbox-keys-starting-route:information:mailbox-keys-two-step-route"
     }
   ],
   "truthStatus": {
-    "generatedAt": "2026-09-09T21:44:12.406Z",
+    "generatedAt": "2026-09-10T20:00:00.000Z",
     "migrationMode": "trusted-baseline",
     "unresolvedConflictCount": 21,
     "unresolvedSensitiveConflictCount": 17,
     "pendingSensitiveReviewCount": 0,
-    "totalFactCount": 649,
-    "approvedFactCount": 649,
+    "totalFactCount": 651,
+    "approvedFactCount": 651,
     "candidateFactCount": 0,
     "staleFactCount": 0,
     "conflictedFactCount": 17,
