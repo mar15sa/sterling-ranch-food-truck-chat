@@ -292,3 +292,36 @@ test("a governing rule remains a relevant handoff when it explicitly says a name
   });
   assert.ok(!result.issues.includes("irrelevant-handoff-source"));
 });
+
+test("raw catalog output fails quality while a focused natural answer passes", () => {
+  const question = "Can I grow vine plants like raspberries?";
+  const base = {
+    answerMode: "source-derived-extractive",
+    answerVerdict: "verified",
+    confidence: { canAnswer: true, reason: "source-validated-topic-answer" },
+    sources: [source("Preapproved plant list")],
+  };
+  const raw = scoreCommunityAnswer(question, {
+    ...base,
+    answer: "Short answer: Allowed choices from the selected source: RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub Botanical Common Ht x Spd Type Bird Friendly ACER FREEMANII ARMSTRONG FREEMAN MAPLE 30' x 15' Deciduous ACER GINNALA AMUR MAPLE 20' x 15' Ornamental.\n\nWhat I found:\n- Raw matching rows.\n\nBefore you act: Open the linked official section if you need the complete wording.",
+    directAnswer: "Allowed choices from the selected source: RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub.",
+  });
+  const focused = scoreCommunityAnswer(question, {
+    ...base,
+    answer: "Boulder Raspberry is included on the preapproved plant list as a shrub, rather than a vine. The list identifies it as Ribes deliciosus and gives its typical size as 8 by 6 feet.",
+    directAnswer: "Boulder Raspberry is included on the preapproved plant list as a shrub, rather than a vine.",
+  });
+  const exactName = scoreCommunityAnswer("Which listed shrub is RIBES DELICIOSUS?", {
+    ...base,
+    answer: "RIBES DELICIOSUS is the exact botanical name listed for Boulder Raspberry, classified as a shrub.",
+    directAnswer: "RIBES DELICIOSUS is the exact botanical name listed for Boulder Raspberry, classified as a shrub.",
+  });
+
+  assert.equal(raw.rating, "Weak");
+  assert.ok(raw.issues.includes("raw-catalog-dump"));
+  assert.ok(raw.issues.includes("retrieval-scaffolding"));
+  assert.equal(focused.rating, "Good");
+  assert.ok(!focused.issues.includes("raw-catalog-dump"));
+  assert.ok(!focused.issues.includes("retrieval-scaffolding"));
+  assert.ok(!exactName.issues.includes("raw-catalog-dump"));
+});
