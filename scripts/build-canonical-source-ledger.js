@@ -16,7 +16,6 @@ const formEvidence = require(path.join(root, "data", "community-form-approval-ev
 const legacyDecisions = require(path.join(root, "data", "community-owner-decisions-batch-1-2026-09-08.json"));
 const scopedDecisions = require(path.join(root, "data", "canonical-source-ledger-decisions.json"));
 const v5Decisions = require(path.join(root, "data", "community-source-approvals-v5.json"));
-const { approvedActionProofs: v5ActionProofs } = require(path.join(root, "data", "community-source-approvals-v5"));
 const outputPath = path.join(root, "data", "canonical-source-ledger.json");
 
 function buildLedger() {
@@ -66,7 +65,7 @@ function buildLedger() {
     for (const version of decision.versions || []) {
       const result = applyExplicitDecision(ledger, {
         ...decision,
-        approvedActions: v5ActionProofs[decision.decisionId] || decision.approvedActions || [],
+        approvedActions: decision.approvedActions || [],
         decision: decision.decision || "approve-proposed",
         ...version,
         communityId: decision.decisionId && (v5Decisions.decisions || []).includes(decision) ? v5Decisions.communityId : scopedDecisions.communityId,

@@ -6,6 +6,7 @@ const { approvals } = require('../data/community-source-approvals-v5');
 const { applyCommunitySourceApprovalsV5 } = require('../scripts/apply-community-source-approvals-v5');
 const { canonicalProjectionEntries } = require('../lib/community-source-answerability');
 const { approvedActionProofs, buildApprovedV5Sources } = require('../data/community-source-approvals-v5');
+const { selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
 
 test('each v5 approval is bound to its exact version and only its listed claims', () => {
   const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
@@ -49,4 +50,12 @@ test('every action-bearing decision rejects a substituted resident destination',
     source.actions[0] = { ...first, url: 'https://substitution.example/incorrect-route' };
     assert.throws(() => applyCommunitySourceApprovalsV5({ ...structuredClone(baseIndex), sources: [], factLedger: [] }, { sourceBuilder: () => [source] }), /reviewed action identity/, source.id);
   }
+});
+
+test('every v5 projection is immediately due for protected exact revalidation', () => {
+  const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
+  const v5Sources = index.sources.filter(source => source.id.startsWith('approved-') && approvals.decisions.some(decision => source.contentHash === decision.versions[0].contentHash));
+  const due = new Set(selectRevalidationTargetUrls(index, Date.parse(approvals.decidedAt) + 1));
+  assert.equal(v5Sources.length, 10);
+  for (const source of v5Sources) assert.ok(due.has(source.sourceUrl), source.id);
 });
