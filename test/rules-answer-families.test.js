@@ -250,7 +250,7 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
   const expectations = [
     ["Rain barrels", /two 55-gallon rain barrels|two barrels[\s\S]*55 gallons/i],
     ["Air conditioner", /DRC approval is not required[\s\S]*screen/i],
-    ["Fireworks", /^Short answer:\s*(?:No\.|No fireworks|Residents.*not.*fireworks)/i],
+    ["Fireworks", /^(?:No\.|No fireworks|Residents.*not.*fireworks)/i],
     ["Gazebo", /gazebos?/i],
     ["Jellyfish", /(?:Gemstone.*Jellyfish|Jellyfish.*Gemstone)/i],
   ];
@@ -380,7 +380,7 @@ test("wording variants and collisions preserve the resident's actual intent", as
 
 test("requested facets are answered directly or explicitly identified as absent", async () => {
   const duration = await answer("Parking RV for longer than 72 hours");
-  assert.match(duration.answer, /^Short answer:\s*No\./i);
+  assert.match(duration.answer, /^No\./i);
 
   const poleHeight = await answer("What is the maximum height a freestanding flag pole can be?");
   assert.match(poleHeight.answer, /does not set a numeric maximum height/i);

@@ -90,6 +90,23 @@ test("specific plant evidence comes from the selected source instead of answer c
   assert.match(result.sources?.[0]?.excerpt || "", /Shrub/i);
 });
 
+test("named plant answers preserve a non-raspberry multiword common name", async () => {
+  const result = await answerWithoutAi("Can I plant Blue Point Juniper?");
+  assert.equal(result.confidence?.canAnswer, true);
+  assert.match(result.answer, /Blue Point Juniper: preapproved and evergreen/i);
+  assert.doesNotMatch(result.answer, /Short answer:\s*Point Juniper:/i);
+  assert.match(result.sources?.[0]?.excerpt || "", /Blue Point Juniper/i);
+  assert.match(result.sources?.[0]?.text || "", /JUNIPERUS CHINENSIS ['"]BLUE POINT['"]/i);
+});
+
+test("a named plant with no matching source row is not approved", async () => {
+  const result = await answerWithoutAi("Can I grow Moonbeam Dragonfruit?");
+  assert.equal(result.confidence?.canAnswer, false);
+  assert.equal(result.answerMode, "source-evidence-boundary");
+  assert.match(result.answer, /could not verify whether the requested detail is covered/i);
+  assert.doesNotMatch(result.answer, /\byes\b|allowed choices|includes Moonbeam Dragonfruit/i);
+});
+
 test("supported answers of different families all use the shared synthesis path", async () => {
   for (const question of [
     "When can I put up holiday lights?",
@@ -108,6 +125,24 @@ test("supported answers of different families all use the shared synthesis path"
     });
     assert.equal(calls, 1, question);
     assert.match(result.answerMode || "", /llm-selective/i, question);
+  }
+});
+
+test("deterministic supported answers expose clean prose across rule families", async () => {
+  const cases = [
+    ["Can I install privacy screens?", [/landscape screens/i, /DRC approval is required/i]],
+    ["Can I put a trampoline in my backyard?", [/five feet from all property lines/i, /Tall plant material/i]],
+    ["Are jellyfish or gemstone lights allowed?", [/Gemstone/i, /Jellyfish/i, /DRC approval/i]],
+    ["What flags can I fly?", [/United States flag/i, /Colorado flag/i]],
+    ["Do I need DRC approval to paint my house?", [/DRC approval/i, /same colors/i]],
+  ];
+  for (const [question, expectedFacts] of cases) {
+    const result = await answerWithoutAi(question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i, question);
+    for (const expected of expectedFacts) assert.match(result.answer, expected, question);
+    assert.ok(result.directAnswer, question);
+    assert.ok(Array.isArray(result.keyDetails), question);
   }
 });
 
@@ -163,7 +198,7 @@ test("structured rules interpretation still uses successful grounded synthesis",
 
 test("structured rules interpretation naturalizes a rejected synthesis without losing evidence", async () => {
   let rewriteCalls = 0;
-  const result = await answerRulesQuestion("Can I grow raspberries near my property line?", {
+  const result = await answerRulesQuestion("Can I grow raspberries?", {
     searchMode: "ai-hybrid",
     llmMode: "selective",
     interpretation: { intent: "rules", needsClarification: false },
@@ -175,6 +210,64 @@ test("structured rules interpretation naturalizes a rejected synthesis without l
   assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
   assert.match(result.answer, /Boulder Raspberry/i);
   assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i);
+});
+
+test("live-shaped plant questions synthesize from one focused row instead of the noisy table", async () => {
+  for (const question of [
+    "Can I grow raspberries near my property line?",
+    "Can I grow vine plants like raspberries?",
+  ]) {
+    const naturalAnswer = "For the plant choice itself, Boulder Raspberry is on the preapproved list and is classified as a shrub.";
+    let synthesisDraft = "";
+    let synthesisSources = [];
+    const result = await answerRulesQuestion(question, {
+      searchMode: "ai-hybrid",
+      llmMode: "selective",
+      interpretation: { intent: "rules", needsClarification: false },
+      rewriteAnswerWithLLM: async (_residentQuestion, draft, sources) => {
+        synthesisDraft = draft;
+        synthesisSources = sources;
+        return naturalAnswer;
+      },
+    });
+
+    assert.equal(result.answer, naturalAnswer, question);
+    assert.match(synthesisDraft, /Boulder Raspberry/i, question);
+    assert.match(synthesisDraft, /Boulder Raspberry: preapproved and shrub/i, question);
+    assert.doesNotMatch(synthesisDraft, /Botanical Common Ht x Spd|Freeman Maple|Amur Maple|30' x 15'/i, question);
+    assert.deepEqual(
+      llmRewriteIssues(naturalAnswer, synthesisDraft, synthesisSources, question),
+      [],
+      question
+    );
+  }
+});
+
+test("focused evidence still rejects omitted relevant limits and invented facts", () => {
+  const lightingSources = [{
+    title: "Seasonal lighting rule",
+    text: "Seasonal lighting may be used from June 18 to July 7. It must be turned off by 10:00 p.m.",
+  }];
+  const lightingDraft = "Short answer: Seasonal lighting may be used from June 18 to July 7.\n\nWhat I found:\n- It must be turned off by 10:00 p.m.";
+  assert.match(
+    llmRewriteIssues("Seasonal lighting may be used from June 18 to July 7.", lightingDraft, lightingSources).join(" "),
+    /10:00 p\.m/i
+  );
+
+  const plantSources = [{
+    title: "Preapproved plant list",
+    text: "RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub.",
+  }];
+  const plantDraft = "Short answer: The preapproved list includes Boulder Raspberry and classifies it as a shrub.";
+  assert.match(
+    llmRewriteIssues(
+      "Boulder Raspberry is preapproved and grows 999 feet tall.",
+      plantDraft,
+      plantSources,
+      "Can I grow raspberries?"
+    ).join(" "),
+    /number.*999/i
+  );
 });
 
 test("grounding accepts a resident-supplied proper noun but still rejects an invented one", () => {
