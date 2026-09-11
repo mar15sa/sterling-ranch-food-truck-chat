@@ -4,7 +4,8 @@ const path = require("node:path");
 const { crawlCommunity } = require("../lib/community-ingest");
 const { validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
 const { isFreshnessTrackedSource } = require("../lib/community-source-manager");
-const { factLedgerStatus } = require("../lib/community-truth");
+const { factApprovalIsExplicit, factIsAnswerable } = require("../lib/community-truth");
+const { quarantinedSourceIds } = require("../lib/community-evidence-quarantine");
 
 const root = path.join(__dirname, "..");
 const profile = validateCommunityProfile(JSON.parse(fs.readFileSync(path.join(root, "data", "communities", "sterling-ranch.json"), "utf8")));
@@ -15,11 +16,16 @@ const valueAfter = (flag, fallback) => {
 };
 
 function freshnessSummary(index, now = Date.now()) {
+  const withheldSourceIds = quarantinedSourceIds(index);
   return {
     inventoryBacklog: Number(index.inventory?.pendingCount || 0),
-    expiredApprovedSourceCount: index.sources.filter((source) => isFreshnessTrackedSource(source)
+    // A temporary bridge snapshot may explicitly quarantine an unchanged URL
+    // after repeated exact-verification failures. It remains in the review
+    // record and cannot answer residents; do not call it renewed here.
+    expiredApprovedSourceCount: index.sources.filter((source) => !withheldSourceIds.has(source.id) && isFreshnessTrackedSource(source)
       && source.staleAfter && new Date(source.staleAfter).getTime() < now).length,
-    expiredApprovedFactCount: factLedgerStatus(index, now).staleFactCount,
+    expiredApprovedFactCount: (index.factLedger || []).filter((fact) => !withheldSourceIds.has(fact.sourceId)
+      && factApprovalIsExplicit(fact) && !factIsAnswerable(fact, now)).length,
   };
 }
 
