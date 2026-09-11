@@ -39,7 +39,9 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
       dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
     })],
     ["What food truck is here today?", plan({
-      scope: "community", intent: "status", goal: "status", goals: ["status"], subject: "food truck", requestedDetails: ["date"],
+      // Exact production planner output: it describes "here today" as status.
+      // The live connector must translate that to dated schedule evidence.
+      scope: "community", intent: "status", goal: "status", goals: ["status"], subject: "food truck", requestedDetails: ["status"],
       dateRange: { kind: "today", start: "2026-09-01", end: "2026-09-01", label: "today" }, searchQueries: ["food truck today"],
     })],
     ["Which truck is here on 2026-09-02?", plan({
@@ -63,6 +65,10 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
     assert.equal(answer.routingPlan.scope, "community", question);
     assert.equal(answer.routingPlan.intent, "events", question);
     assert.notEqual(answer.routingPlan.goal, "status", question);
+    assert.deepEqual(answer.routingPlan.requestedDetails, routingPlan.requestedDetails.includes("status") ? ["date"] : routingPlan.requestedDetails, question);
+    if (question === "What food truck is here today?") {
+      assert.deepEqual(answer.evidenceEnvelope.coverage, { requested: ["date"], covered: ["date"], missing: [] }, question);
+    }
   }
 });
 
