@@ -141,6 +141,69 @@ test("source-built fallback uses natural prose and retains every sourced holiday
   assert.match(result.answer, /10:00 p\.m\./i);
 });
 
+test("structured rules interpretation still uses successful grounded synthesis", async () => {
+  const naturalAnswer = "Seasonal lights can be used from June 18 to July 7 and from October 1 through January 31. Turn them off by 10:00 p.m., then remove temporary strings and clips after the season.";
+  let plannerCalls = 0;
+  let rewriteCalls = 0;
+  const result = await answerRulesQuestion("When can I put up holiday lights?", {
+    searchMode: "ai-hybrid",
+    llmMode: "selective",
+    interpretation: { intent: "rules", needsClarification: false },
+    planRulesSearch: async () => { plannerCalls += 1; return null; },
+    rewriteAnswerWithLLM: async () => { rewriteCalls += 1; return naturalAnswer; },
+  });
+
+  assert.equal(plannerCalls, 0);
+  assert.equal(rewriteCalls, 1);
+  assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
+  assert.equal(result.answerMode, "source-derived-llm-selective");
+  assert.equal(result.answer, naturalAnswer);
+  assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i);
+});
+
+test("structured rules interpretation naturalizes a rejected synthesis without losing evidence", async () => {
+  let rewriteCalls = 0;
+  const result = await answerRulesQuestion("Can I grow raspberries near my property line?", {
+    searchMode: "ai-hybrid",
+    llmMode: "selective",
+    interpretation: { intent: "rules", needsClarification: false },
+    planRulesSearch: async () => { throw new Error("strong source match should skip the search planner"); },
+    rewriteAnswerWithLLM: async () => { rewriteCalls += 1; return null; },
+  });
+
+  assert.equal(rewriteCalls, 1);
+  assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
+  assert.match(result.answer, /Boulder Raspberry/i);
+  assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i);
+});
+
+test("grounding accepts a resident-supplied proper noun but still rejects an invented one", () => {
+  const sources = [{
+    title: "Seasonal lighting rule",
+    text: "Seasonal decorative lighting may be installed and used from June 18 through July 7.",
+  }];
+  const draft = "Short answer: Seasonal decorative lighting may be used from June 18 through July 7.";
+
+  assert.deepEqual(
+    llmRewriteIssues(
+      "For Labor Day planning, the cited seasonal-lighting window is June 18 through July 7.",
+      draft,
+      sources,
+      "Can I keep my lights up through Labor Day?"
+    ),
+    []
+  );
+  assert.match(
+    llmRewriteIssues(
+      "For Presidents Day planning, the cited seasonal-lighting window is June 18 through July 7.",
+      draft,
+      sources,
+      "Can I keep my lights up through Labor Day?"
+    ).join(" "),
+    /proper noun.*Presidents Day/i
+  );
+});
+
 test("natural synthesis may remove scaffolding but cannot drop sourced limits", () => {
   const sources = [{
     title: "Current source",

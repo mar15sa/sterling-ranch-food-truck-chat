@@ -39,6 +39,64 @@ function dueIndexWithIndependentEvidence() {
   return value;
 }
 
+function recentlyExpiredDomainIndex() {
+  const expired = new Date(NOW - (6 * 60 * 60 * 1000)).toISOString();
+  const lastVerified = new Date(NOW - (30 * 60 * 60 * 1000)).toISOString();
+  const value = { communityId: "alpha", sources: [], factLedger: [] };
+  for (let position = 1; position <= 5; position += 1) {
+    const id = `approved-page-${position}`;
+    const contentHash = `approved-hash-${position}`;
+    value.sources.push({
+      id,
+      communityId: "alpha",
+      title: `Approved page ${position}`,
+      sourceUrl: `https://alpha.gov/page-${position}`,
+      contentHash,
+      text: `Approved guidance ${position}.`,
+      excerpt: `Approved guidance ${position}.`,
+      authorityClass: "official-page",
+      authorityScore: 1,
+      actions: [],
+      connectorType: "civicplus-pages",
+      sourceType: "services",
+      reviewStatus: "approved",
+      checkedAt: lastVerified,
+      staleAfter: expired,
+    });
+    value.factLedger.push({
+      id: `approved-fact-${position}`,
+      sourceId: id,
+      sourceVersion: contentHash,
+      reviewStatus: "approved",
+      reviewDecisionId: `owner-decision-${position}`,
+      reviewedAt: expired,
+      reviewedBy: "owner",
+      normalizedValue: `guidance-${position}`,
+      displayValue: `Guidance ${position}`,
+      supportingText: `Approved guidance ${position}.`,
+      facet: "information",
+      scopeKey: `guidance-${position}`,
+      lifecycle: "current",
+      lastObservedAt: lastVerified,
+      staleAfter: expired,
+    });
+  }
+  value.sources.push({
+    id: "live-pool-status",
+    communityId: "alpha",
+    title: "Live pool status",
+    sourceUrl: "https://alpha.gov/page-1",
+    contentHash: "live-status-value",
+    text: "The pool is open.",
+    connectorType: "live-status",
+    sourceType: "status",
+    reviewStatus: "approved",
+    checkedAt: lastVerified,
+    staleAfter: expired,
+  });
+  return value;
+}
+
 function availabilityGate(index) {
   const review = sourceReviewState(index, NOW);
   const pool = index.sources.find((source) => source.id === "pool-faq");
@@ -101,6 +159,55 @@ test("an unchanged unavailable source is quarantined from the temporary answerab
   assert.deepEqual(result.attestation.quarantined.map((source) => source.id), ["pool-faq"]);
   assert.equal(result.temporaryIndex.sources.find((source) => source.id === "pool-faq").staleAfter, EXPIRED,
     "quarantine must not renew the unavailable source");
+});
+
+test("a broad transient domain outage gets a bounded grace period for unchanged recently verified versions", async () => {
+  const index = recentlyExpiredDomainIndex();
+  const originalCheckedAt = index.sources[0].checkedAt;
+  const result = await runBridge({
+    index,
+    baselineIndex: structuredClone(index),
+    now: NOW,
+    auditFn: (temporary) => {
+      const review = sourceReviewState(temporary, NOW);
+      assert.ok(temporary.sources.filter((source) => source.connectorType !== "live-status")
+        .every((source) => review.canUseProjection(source)));
+    },
+    fetchObservedHashes: async () => { throw timeout(); },
+  });
+  assert.equal(result.valid, true);
+  assert.equal(result.attestation.status, "passed-with-grace-evidence");
+  assert.equal(result.attestation.graced.length, 5);
+  assert.equal(result.attestation.quarantined.length, 0);
+  assert.ok(result.temporaryIndex.sources.filter((source) => source.connectorType !== "live-status")
+    .every((source) => Date.parse(source.staleAfter) > NOW));
+  assert.equal(result.temporaryIndex.sources.find((source) => source.id === "live-pool-status").staleAfter,
+    new Date(NOW - (6 * 60 * 60 * 1000)).toISOString(), "live status must never inherit static-page grace");
+  assert.ok(result.temporaryIndex.factLedger.every((fact) => Date.parse(fact.staleAfter) > NOW));
+  assert.ok(result.temporaryIndex.sources.every((source) => source.checkedAt === originalCheckedAt),
+    "availability grace must not claim that an unavailable page was reverified");
+  assert.deepEqual(result.temporaryIndex.sources.map((source) => source.contentHash), index.sources.map((source) => source.contentHash));
+  assert.equal(result.temporaryIndex.revalidationGrace.mode, "last-exact-version-during-domain-outage");
+});
+
+test("domain grace does not cover old evidence or a non-transient verification error", async () => {
+  const index = recentlyExpiredDomainIndex();
+  index.sources[1].staleAfter = EXPIRED;
+  index.factLedger[1].staleAfter = EXPIRED;
+  const result = await runBridge({
+    index,
+    baselineIndex: structuredClone(index),
+    now: NOW,
+    auditFn: () => {},
+    fetchObservedHashes: async (sourceUrl) => {
+      if (sourceUrl.endsWith("page-1")) throw new Error("Extraction returned no usable text.");
+      throw timeout();
+    },
+  });
+  assert.equal(result.valid, true);
+  assert.equal(result.attestation.graced.length, 3);
+  assert.deepEqual(new Set(result.attestation.quarantined.map((source) => source.id)), new Set(["approved-page-1", "approved-page-2"]));
+  assert.equal(result.temporaryIndex.sources[1].staleAfter, EXPIRED);
 });
 
 test("a branch that changes unavailable evidence cannot pass under the quarantine exception", async () => {
