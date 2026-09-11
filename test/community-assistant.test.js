@@ -1090,6 +1090,40 @@ test("pickleball operational variants with unapproved evidence withhold instead 
   }
 });
 
+test("binding facility-rule questions keep the governing rule when an operational page is withheld", async () => {
+  const unreviewedFacility = source({
+    id: "alpha-pickleball-unreviewed",
+    title: "Pickleball Courts",
+    sourceUrl: "https://alpha.gov/418/Pickleball-Courts",
+    sourceType: "facilities",
+    text: "Current pickleball court operations and reservations.",
+    staleAfter: future,
+  });
+  const governingRule = {
+    id: "park-general-rule",
+    title: "Sec. 17-54. - General rules.",
+    sourceUrl: "https://library.municode.com/example/rules?nodeId=park-general-rule",
+    text: "The governing park and open-space rules apply to neighborhood courts.",
+  };
+  const result = await answerCommunityQuestion("What are the neighborhood pickleball court rules?", {
+    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [unreviewedFacility] },
+    communityId: "alpha",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({
+      answer: "The governing park and open-space rules apply to neighborhood courts.",
+      answerMode: "source-derived-structured",
+      confidence: { canAnswer: true, confidence: "high", reason: "supported" },
+      sources: [governingRule],
+      actions: [],
+      claims: [],
+    }),
+  });
+  assert.equal(result.confidence.canAnswer, true);
+  assert.equal(result.sources[0].title, governingRule.title);
+  assert.doesNotMatch(result.sources.map((item) => item.title).join(" "), /Pickleball Courts/i);
+});
+
 test("pickleball retrieval does not collide with private-court rules or pool rental fees", async () => {
   const courts = source({
     id: "alpha-pickleball-unreviewed", title: "Pickleball Courts", sourceUrl: "https://alpha.gov/pickleball", sourceType: "facilities",
