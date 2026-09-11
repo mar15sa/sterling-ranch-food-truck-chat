@@ -3452,6 +3452,35 @@
         "precision": "address",
         "geocodedFrom": "9325 Dorchester Street, Highlands Ranch, CO 80129"
       }
+    },
+    {
+      "id": "spirit-halloween-aspen-grove",
+      "name": "Spirit Halloween",
+      "category": "Grocery & retail",
+      "community": "Littleton",
+      "area": "Aspen Grove",
+      "address": "7301 South Santa Fe Drive, Suite 445, Littleton, CO 80120",
+      "status": "opening-soon",
+      "openingWindow": "Opening soon for the 2026 Halloween season",
+      "summary": "Spirit Halloween is preparing a seasonal Aspen Grove store in the former lululemon space; the official store page has published the location but still labels it opening soon.",
+      "verifiedAt": "2026-09-11",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Spirit Halloween official Aspen Grove store page",
+          "url": "https://stores.spirithalloween.com/co/littleton/animatronics-60984.html"
+        },
+        {
+          "label": "Aspen Grove tenant announcement",
+          "url": "https://aspengrovecenter.com/retailers_categories/clothing/"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.58543,
+        "lng": -105.026435,
+        "precision": "address",
+        "geocodedFrom": "7301 South Santa Fe Drive, Suite 445, Littleton, CO 80120"
+      }
     }
   ]
 }
