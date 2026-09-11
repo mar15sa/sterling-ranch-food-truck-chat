@@ -52,17 +52,18 @@
     <link rel="stylesheet" href="/styles.css?v=20260910-mobile-scroll" />
     <script src="/environment.js"></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
-    <link rel="stylesheet" href="/food-truck-editorial.css?v=20260910-chat-window" />
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
     <link rel="stylesheet" href="/society-footer.css?v=20260910-shared" />
+      <link rel="stylesheet" href="/society-subpage.css?v=20260910-compact" />
+      <link rel="stylesheet" href="/chat-workspace.css?v=20260910-reset" />
   </head>
-  <body class="society-page food-chat-page">
+  <body class="society-page food-chat-page society-subpage chat-workspace">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
         <a class="society-brand" href="/" aria-label="Sterling Ranch Society home">
-          <span class="food-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span>
-          <span class="food-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span>
+          <span class="subpage-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span>
+          <span class="subpage-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span>
         </a><button
           class="society-menu"
           type="button"
@@ -83,14 +84,7 @@
         </nav>
       </header>
       <main id="main-content" tabindex="-1" class="app-shell">
-        <section class="food-hero" aria-labelledby="food-title">
-          <div>
-            <p class="food-eyebrow">Food trucks</p>
-            <h1 id="food-title">Food Truck Chat</h1>
-            <p class="food-lede">Get today’s food truck, view the menu, and find out what’s coming next at Sterling Ranch.</p>
-          </div>
-          <img src="/society-food-truck-v2.webp" alt="" width="1680" height="936" />
-        </section>
+        <section class="chat-heading" aria-labelledby="food-title"><h1 id="food-title">Food Truck Chat</h1><p>Today’s truck, the menu, and what’s coming next.</p></section>
         <div class="society-food-layout">
           <section class="chat-panel" aria-label="Food truck chat">
             <div class="food-sr-only" id="statusPill" role="status">Ready</div>
@@ -119,7 +113,6 @@
 
       <template id="botResultTemplate">
         <article class="message bot food-result">
-          <svg class="food-assistant-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 9c0 8-4 12-10 12 6 0 10 4 10 12 0-8 4-12 10-12-6 0-10-4-10-12Z M29 3c0 5-2 7-6 7 4 0 6 2 6 7 0-5 2-7 6-7-4 0-6-2-6-7Z M30 24c0 4-2 6-5 6 3 0 5 2 5 6 0-4 2-6 5-6-3 0-5-2-5-6Z"/></svg>
           <p class="food-assistant-label">Assistant</p>
           <p class="answer-text"></p>
           <div class="truck-card hidden">
