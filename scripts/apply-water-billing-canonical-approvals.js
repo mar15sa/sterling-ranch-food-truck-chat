@@ -98,6 +98,16 @@ function buildWaterBillingSources() {
         throw new Error(`${page.id}:${item.id} is not allowed by its exact canonical decision.`);
       }
     }
+    for (const action of page.actions || []) {
+      if (!action.evidence) continue;
+      const evidence = action.evidence;
+      if (evidence.proofKind !== 'source-text-url-v1'
+        || evidence.label !== action.label || evidence.url !== action.url
+        || evidence.context !== action.context
+        || !evidence.context.includes(evidence.label) || !evidence.context.includes(evidence.url)) {
+        throw new Error(`${page.id}:${action.id} has invalid immutable action evidence.`);
+      }
+    }
     return {
       id: page.id,
       communityId: artifact.communityId,

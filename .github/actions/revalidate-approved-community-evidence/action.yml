@@ -1,0 +1,28 @@
+name: Revalidate approved community evidence
+description: Renew only exact approved versions in a disposable evidence snapshot for local quality gates.
+inputs:
+  index:
+    description: Community evidence index to revalidate after the workflow has prepared it.
+    required: false
+    default: data/community-index.json
+runs:
+  using: composite
+  steps:
+    - name: Revalidate exact approved evidence
+      shell: bash
+      run: |
+        baseline="$RUNNER_TEMP/community-index.baseline.json"
+        baseline_ref="${{ github.event.pull_request.base.sha }}"
+        if [ -z "$baseline_ref" ]; then baseline_ref="$(git rev-parse HEAD^ 2>/dev/null || true)"; fi
+        baseline_arg=()
+        if [ -n "$baseline_ref" ] && git show "$baseline_ref:data/community-index.json" > "$baseline"; then
+          baseline_arg=(--baseline "$baseline")
+        fi
+        node scripts/check-approved-community-revalidation.js \
+          --input "${{ inputs.index }}" \
+          --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
+          --attestation artifacts/community-approved-revalidation-attestation.json \
+          --review-output artifacts/community-approved-revalidation-review.json \
+          "${baseline_arg[@]}"
+        echo "COMMUNITY_EVIDENCE_INDEX=$RUNNER_TEMP/community-index.revalidated.json" >> "$GITHUB_ENV"
+        echo "COMMUNITY_EVIDENCE_REPORT_DIR=$GITHUB_WORKSPACE/artifacts" >> "$GITHUB_ENV"

@@ -38,6 +38,38 @@ test("approved-landscaper questions withhold unapproved directory prose and comp
   assert.ok(answer.actions.some((action) => /\/414\/Approved-Landscapers-List/.test(action.url)));
 });
 
+test("revalidated projections cannot answer an unrelated directory lookup", async () => {
+  const renewed = structuredClone(communityIndex);
+  const renewedIds = new Set([
+    "approved-mailbox-keys-route",
+    "approved-great-hall-booking-link",
+  ]);
+  renewed.sources = renewed.sources.map((source) => renewedIds.has(source.id)
+    ? { ...source, checkedAt: "2026-09-11T05:00:00Z", staleAfter: "2099-01-01T00:00:00Z" }
+    : source);
+  renewed.factLedger = (renewed.factLedger || []).map((fact) => renewedIds.has(fact.sourceId)
+    ? { ...fact, lastObservedAt: "2026-09-11T05:00:00Z", staleAfter: "2099-01-01T00:00:00Z" }
+    : fact);
+  const options = {
+    index: renewed,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    now: new Date("2026-09-11T06:00:00Z"),
+  };
+
+  const directory = await answerCommunityQuestion("list of approved landscapers", options);
+  assert.notEqual(directory.answerStatus, "verified");
+  assert.doesNotMatch(directory.answer, /mailbox|builder|Littleton Post Office/i);
+  assert.doesNotMatch(JSON.stringify(directory.actions || []), /\/227\/Mailbox-Keys/i);
+
+  const greatHall = await answerCommunityQuestion("How do I book the Great Hall?", options);
+  assert.equal(greatHall.answerStatus, "verified");
+  assert.match(JSON.stringify(greatHall.actions), /secure\.rec1\.com/i);
+});
+
 test("approved water-usage monitoring instructions do not borrow payment facts", async () => {
   const answer = await ask("Internet access for water usage");
   assert.equal(answer.answerMode, "community-approved-operational-instruction");

@@ -42,6 +42,13 @@ test("prohibition and approval answers receive explicit verdicts", () => {
     ),
     "conditional"
   );
+  assert.equal(
+    deriveAnswerVerdict(
+      "Landscape and irrigation plans must be submitted for DRC review.",
+      supported
+    ),
+    "conditional"
+  );
   assert.equal(deriveAnswerVerdict("Short answer: No. This use is prohibited.", supported), "prohibited");
 });
 

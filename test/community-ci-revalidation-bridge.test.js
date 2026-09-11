@@ -79,7 +79,7 @@ test("a scoped exact-version projection renews its full long page and semantic a
   const paymentUrl = "https://billing.alpha.gov/login";
   const context = "Payment Options: register through UtilityHawk.";
   const longText = `${context} ${"Current payment instructions remain available. ".repeat(55)}`;
-  const htmlFor = ({ paymentHref = paymentUrl, includePayment = true, text = longText } = {}) => `<main><p>${text}</p>${includePayment ? `<a href="${paymentHref}">https://billing.alpha.gov/login</a>` : ""}<a href="/DocumentCenter/View/2419">Understanding your water bill (pdf)</a></main>`;
+  const htmlFor = ({ paymentHref = paymentUrl, includePayment = true, text = longText } = {}) => `<main><p>${text}</p>${includePayment ? `<a href="${paymentHref}">UtilityHawk</a>` : ""}<a href="/DocumentCenter/View/2419">Understanding your water bill (pdf)</a></main>`;
   const exactHtml = htmlFor();
   const exactText = require("../lib/community-ingest").pageText(exactHtml);
   assert.ok(exactText.length > 1800, "fixture must exceed ordinary ingestion chunk size");
@@ -94,8 +94,8 @@ test("a scoped exact-version projection renews its full long page and semantic a
   });
   const unchanged = await observed(exactHtml);
   assert.deepEqual(unchanged.observedHashes, [projection.contentHash], "the full exact page hash is preserved");
-  assert.equal(unchanged.actionMismatch, false, "URL/context proves the semantic payment projection despite raw link label/type");
-  assert.equal(unchanged.actionProof.observed[0].matches[0].label, "https://billing.alpha.gov/login");
+  assert.equal(unchanged.actionMismatch, false, "the default source-link proof requires the exact reviewed label and destination");
+  assert.equal(unchanged.actionProof.observed[0].matches[0].label, "UtilityHawk");
 
   const revalidated = await runBridge({
     index: { sources: [projection], factLedger: [{ id: "fact", sourceId: projection.id, sourceVersion: projection.contentHash, reviewStatus: "approved", reviewDecisionId: "owner", reviewedBy: "owner", reviewedAt: "2026-09-01", staleAfter: projection.staleAfter }] },
@@ -134,7 +134,7 @@ test("ordinary chunks and a scoped projection on the same unchanged page renew t
     id: "pool-hours-projection", sourceUrl: projectedUrl, connectorType: "civicplus-pages", sourceType: "facilities",
     reviewStatus: "candidate", contentHash: sourceHash(exactText), staleAfter: expired, checkedAt: expired,
     facts: [{ id: "pool-hours", reviewStatus: "approved" }],
-    actions: [{ id: "pool-schedule", label: "Official pool schedule", url: scheduleUrl, actionType: "information", context, reviewStatus: "approved" }],
+    actions: [{ id: "pool-schedule", label: "View pool schedule", url: scheduleUrl, actionType: "information", context, reviewStatus: "approved" }],
   };
   const sources = [...ordinarySources, projection];
   const factLedger = sources.map((source, position) => ({
@@ -174,6 +174,55 @@ test("ordinary chunks and a scoped projection on the same unchanged page renew t
   });
   assert.equal(changedAction.valid, false);
   assert.equal(changedAction.checks[0].reason, "action-identity-changed");
+});
+
+test("an approved action that opens its exact current source page renews with the matching page version", async () => {
+  const sourceUrl = "https://alpha.gov/design-review-documents";
+  const html = "<main><h1>Design Review Documents</h1><p>Current applications and forms.</p></main>";
+  const text = pageText(html);
+  const expired = "2026-09-01T00:00:00.000Z";
+  const directPageAction = {
+    id: "approved-design-review-directory",
+    sourceUrl,
+    connectorType: "civicplus-pages",
+    sourceType: "forms",
+    reviewStatus: "candidate",
+    contentHash: sourceHash(text),
+    checkedAt: expired,
+    staleAfter: expired,
+    facts: [],
+    actions: [{
+      id: "open-design-review-directory",
+      label: "Open Design Review applications and forms",
+      url: sourceUrl,
+      actionType: "information",
+      context: "Open the official directory.",
+      reviewStatus: "approved",
+    }],
+  };
+  const result = await runBridge({
+    index: { communityId: "alpha", sources: [directPageAction], factLedger: [] },
+    now: NOW,
+    fetchObservedHashes: (url, approvedSources) => observeCanonicalSource(url, approvedSources, {
+      fetchImpl: async () => ({ ok: true, url: sourceUrl, text: async () => html }),
+    }),
+    auditFn: (temporaryIndex) => {
+      assert.ok(Date.parse(temporaryIndex.sources[0].staleAfter) > NOW);
+    },
+  });
+  assert.equal(result.valid, true);
+  assert.equal(result.checks[0].renewedSourceCount, 1);
+
+  const changed = await runBridge({
+    index: { communityId: "alpha", sources: [directPageAction], factLedger: [] },
+    now: NOW,
+    fetchObservedHashes: (url, approvedSources) => observeCanonicalSource(url, approvedSources, {
+      fetchImpl: async () => ({ ok: true, url: sourceUrl, text: async () => html.replace("Current", "Changed") }),
+    }),
+    auditFn: () => {},
+  });
+  assert.equal(changed.valid, false);
+  assert.equal(changed.checks[0].reason, "extra-source-identity-or-content-hash");
 });
 
 test("a changed approved fingerprint is an explicit bridge failure", async () => {

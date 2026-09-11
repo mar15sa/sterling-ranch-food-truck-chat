@@ -39,7 +39,9 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
       dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" }, searchQueries: ["food truck tomorrow"],
     })],
     ["What food truck is here today?", plan({
-      scope: "community", intent: "status", goal: "status", goals: ["status"], subject: "food truck", requestedDetails: ["date"],
+      // Exact production planner output: it describes "here today" as status.
+      // The live connector must translate that to dated schedule evidence.
+      scope: "community", intent: "status", goal: "status", goals: ["status"], subject: "food truck", requestedDetails: ["status"],
       dateRange: { kind: "today", start: "2026-09-01", end: "2026-09-01", label: "today" }, searchQueries: ["food truck today"],
     })],
     ["Which truck is here on 2026-09-02?", plan({
@@ -63,6 +65,10 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
     assert.equal(answer.routingPlan.scope, "community", question);
     assert.equal(answer.routingPlan.intent, "events", question);
     assert.notEqual(answer.routingPlan.goal, "status", question);
+    assert.deepEqual(answer.routingPlan.requestedDetails, routingPlan.requestedDetails.includes("status") ? ["date"] : routingPlan.requestedDetails, question);
+    if (question === "What food truck is here today?") {
+      assert.deepEqual(answer.evidenceEnvelope.coverage, { requested: ["date"], covered: ["date"], missing: [] }, question);
+    }
   }
 });
 
@@ -122,8 +128,9 @@ test("trash holiday schedules use the live Waste Connections path without taking
       }),
       getWasteSchedule: liveSchedule,
     });
-    assert.equal(answer.answerMode, delayedStatus ? "community-freshness-withheld" : "community-live-trash", question);
-    assert.match(answer.answer, delayedStatus ? /could not safely confirm/i : /September 8/i, question);
+    assert.equal(answer.answerMode, delayedStatus ? "community-live-waste-status-unavailable" : "community-live-trash", question);
+    assert.match(answer.answer, /September 8/i, question);
+    if (delayedStatus) assert.deepEqual(answer.completion.missingDetails.map(({ key }) => key), ["status"], question);
     assert.doesNotMatch(answer.answer, /screened|garage/i, question);
     assert.equal(answer.routingPlan.intent, "services", question);
     assert.equal(answer.routingPlan.goal, delayedStatus ? "status" : "schedule", question);
@@ -137,6 +144,102 @@ test("trash holiday schedules use the live Waste Connections path without taking
   });
   assert.equal(calls, 0);
   assert.doesNotMatch(storage.answerMode, /community-live-trash/);
+
+  const weekRangeMismatch = await answerCommunityQuestion("Is garbage pick up delayed this week", {
+    interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+    planCommunitySearch: async () => plan({
+      intent: "services", goal: "status", goals: ["status"], subject: "garbage pickup", requestedDetails: ["status"],
+      dateRange: { kind: "week", start: "2026-09-01", end: "2026-09-07", label: "this week" }, searchQueries: ["garbage pickup delayed"],
+    }),
+    getWasteSchedule: async () => ({ ...(await liveSchedule()), timing: "starting tomorrow" }),
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(weekRangeMismatch.answerMode, "community-live-waste-unavailable");
+  assert.equal(weekRangeMismatch.answerStatus, "source-unavailable");
+  assert.deepEqual(weekRangeMismatch.completion.missingDetails.map(({ key }) => key), ["status"]);
+  assert.ok(weekRangeMismatch.actions.some((action) => /pickup calendar/i.test(action.label)));
+  assert.doesNotMatch(weekRangeMismatch.answer, /screened|garage|Pickleball/i);
+});
+
+test("pickup-delay questions never fall through to trash-storage rules when the live service is unavailable", async () => {
+  const questions = [
+    "Is garbage pick up delayed this week",
+    "Garbage delayed this week?",
+    "Is trash pick up late this wk?",
+    "Any holiday delay for recycling?",
+    "Trash pickup delay",
+  ];
+  for (const question of questions) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+      synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({
+        intent: "status", goal: "status", goals: ["status"], subject: "trash pickup status",
+        requestedDetails: ["status"], dateRange: null, searchQueries: ["trash pickup status"],
+      }),
+      getWasteSchedule: async () => { throw new Error("live provider unavailable"); },
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    });
+    assert.equal(answer.answerMode, "community-live-waste-unavailable", question);
+    assert.equal(answer.answerStatus, "source-unavailable", question);
+    assert.deepEqual(answer.completion.missingDetails.map(({ key }) => key), ["status"], question);
+    assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)), question);
+    assert.doesNotMatch(answer.answer, /screened|garage|storage/i, question);
+  }
+
+  let connectorCalls = 0;
+  for (const question of ["Do trash cans need to be screened?", "When do I bring garbage cans in after pickup?"]) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+      synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({ intent: "rules", goal: "information", goals: ["information"], subject: "trash can storage rules", requestedDetails: ["permission"], searchQueries: ["trash can storage rules"] }),
+      getWasteSchedule: async () => { connectorCalls += 1; throw new Error("must not run"); },
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    });
+    assert.match(answer.answer, /screened|garage|pickup day/i, question);
+  }
+  assert.equal(connectorCalls, 0);
+});
+
+test("legacy production routing still sends pickup delays to the live waste boundary", async () => {
+  let calls = 0;
+  const answer = await answerCommunityQuestion("Is garbage pick up delayed this week", {
+    interpretationMode: "legacy", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+    synthesizeCommunityAnswer: false,
+    getWasteSchedule: async () => { calls += 1; throw new Error("live provider unavailable"); },
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(calls, 1);
+  assert.equal(answer.answerMode, "community-live-waste-unavailable");
+  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.deepEqual(answer.completion.missingDetails.map(({ key }) => key), ["status"]);
+  assert.ok(answer.actions.some((action) => /pickup calendar/i.test(action.label) && /wasteconnections\.com/i.test(action.url)));
+  assert.doesNotMatch(answer.answer, /screened|garage|storage|Pickleball/i);
+
+  const datedAnswer = await answerCommunityQuestion("Is garbage pick up delayed this week", {
+    interpretationMode: "legacy", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+    synthesizeCommunityAnswer: false,
+    getWasteSchedule: async () => ({
+      service: "garbage", date: "2026-09-14", timing: "next week", anchorDate: "2026-09-14",
+      serviceAreas: [
+        { label: "Providence Village", date: "2026-09-14" },
+        { label: "Ascent Village", date: "2026-09-15" },
+        { label: "Prospect Village", date: "2026-09-17" },
+      ],
+      checkedAt: NOW.toISOString(), evidence: liveWasteEvidence("2026-09-14"),
+    }),
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+  });
+  assert.equal(datedAnswer.answerMode, "community-live-waste-status-unavailable");
+  assert.equal(datedAnswer.answerStatus, "source-unavailable");
+  assert.match(datedAnswer.answer, /September 14/i);
+  assert.deepEqual(datedAnswer.completion.missingDetails.map(({ key }) => key), ["status"]);
+  assert.doesNotMatch(datedAnswer.answer, /screened|garage|storage|Pickleball/i);
 });
 
 function plan(overrides = {}) {

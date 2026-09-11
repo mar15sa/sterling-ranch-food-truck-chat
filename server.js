@@ -30,6 +30,7 @@ const {
   queryQuestionLogs,
   setQuestionNeedsWork,
 } = require("./lib/rules-question-log");
+const { questionLogOptions } = require("./lib/community-question-log-boundary");
 const {
   createLoginLimiter,
   createSessionToken,
@@ -4605,7 +4606,10 @@ async function handleRulesAsk(req, res, url) {
   const llmAfter = getCommunityLlmMetrics();
   answer.resolvedQuestion = conversation.resolvedQuestion;
   answer.usedPriorContext = conversation.usedPriorContext;
-  logRulesQuestion(question, answer, req, { isTest: request.isTest });
+  // Staging is a non-resident deployment even when someone opens the ordinary
+  // URL. The server owns this boundary so a missed browser test flag cannot
+  // pollute the production owner log.
+  logRulesQuestion(question, answer, req, questionLogOptions(req, request.isTest));
   if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false && answer?.answerStatus !== "safety-rejected") {
     recordRulesLowConfidence({
       questionFingerprint: privacyFingerprint(question),

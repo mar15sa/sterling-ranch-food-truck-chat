@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const {
   getRulesLlmMode,
+  naturalizeGroundedDraft,
   normalizeGovernanceNamesToSources,
   selectiveRewriteDecision,
 } = require("../lib/rules-llm");
@@ -21,29 +22,30 @@ test("LLM mode supports the new switch and the legacy all-on switch", () => {
   assert.equal(getRulesLlmMode({ RULES_LLM_MODE: "selective" }), "selective");
   assert.equal(getRulesLlmMode({ RULES_LLM_MODE: "off", RULES_ENABLE_LLM_REWRITE: "true" }), "off");
   assert.equal(getRulesLlmMode({ RULES_ENABLE_LLM_REWRITE: "true" }), "all");
+  assert.equal(getRulesLlmMode({ ANTHROPIC_API_KEY: "configured" }), "selective");
   assert.equal(getRulesLlmMode({}), "off");
 });
 
-test("selective mode sends generic extractive answers and non-structured compound questions to AI", () => {
+test("selective mode sends every supported source-grounded answer to AI", () => {
   assert.deepEqual(
     selectiveRewriteDecision({ ...supported, answerStrategy: "ai-search" }),
     { eligible: true, reason: "ai-search-grounded-answer" }
   );
   assert.deepEqual(
     selectiveRewriteDecision({ ...supported, answerStrategy: "extractive", sources: [supported.sources[0]], question: "What does this section require?" }),
-    { eligible: true, reason: "generic-extractive-answer" }
+    { eligible: true, reason: "grounded-answer-synthesis" }
   );
   assert.deepEqual(
     selectiveRewriteDecision({ ...supported, answerStrategy: "deterministic" }),
     { eligible: true, reason: "multi-source-synthesis" }
   );
   assert.deepEqual(selectiveRewriteDecision({ ...supported, answerStrategy: "structured" }), {
-    eligible: false,
-    reason: "already-human-readable",
+    eligible: true,
+    reason: "multi-source-synthesis",
   });
 });
 
-test("selective mode keeps already-readable and simple covered answers deterministic", () => {
+test("selective mode also synthesizes simple and already-structured grounded answers", () => {
   assert.deepEqual(
     selectiveRewriteDecision({
       ...supported,
@@ -51,7 +53,7 @@ test("selective mode keeps already-readable and simple covered answers determini
       sources: [supported.sources[0]],
       answerStrategy: "structured",
     }),
-    { eligible: false, reason: "already-human-readable" }
+    { eligible: true, reason: "grounded-answer-synthesis" }
   );
   assert.deepEqual(
     selectiveRewriteDecision({
@@ -60,7 +62,7 @@ test("selective mode keeps already-readable and simple covered answers determini
       sources: [supported.sources[0]],
       answerStrategy: "deterministic",
     }),
-    { eligible: false, reason: "simple-covered-question" }
+    { eligible: true, reason: "grounded-answer-synthesis" }
   );
   assert.deepEqual(
     selectiveRewriteDecision({
@@ -69,7 +71,15 @@ test("selective mode keeps already-readable and simple covered answers determini
       answerStrategy: "ai-search",
       draftAnswer: "Short answer: Yes, with approval.\n\nWhat I found:\n- The rule requires approval.\n\nBefore you act: Submit the application.",
     }),
-    { eligible: false, reason: "already-human-readable" }
+    { eligible: true, reason: "ai-search-grounded-answer" }
+  );
+});
+
+test("source-built fallback removes internal answer scaffolding without changing facts", () => {
+  const draft = "Short answer: The source allows the project.\n\nWhat I found:\n- Approval is required.\n- The limit is 3 feet.\n\nBefore you act: Submit the current form.";
+  assert.equal(
+    naturalizeGroundedDraft(draft),
+    "The source allows the project. Approval is required. The limit is 3 feet. Submit the current form."
   );
 });
 
@@ -132,16 +142,16 @@ test("credential-seeking injection variants return before search or rewrite", as
   }
 });
 
-test("public examples stay on the tested source-built path in selective mode", async () => {
+test("public examples use grounded synthesis in selective mode", async () => {
   let rewriteCalls = 0;
   const result = await answerRulesQuestion("What fees do residents pay?", {
     llmMode: "selective",
-    rewriteAnswerWithLLM: async () => {
+    rewriteAnswerWithLLM: async (_question, draft) => {
       rewriteCalls += 1;
-      return "This should never be returned.";
+      return draft;
     },
   });
-  assert.equal(result.answerMode, "source-derived-structured");
-  assert.equal(rewriteCalls, 0);
+  assert.equal(result.answerMode, "source-derived-llm-selective");
+  assert.equal(rewriteCalls, 1);
   assert.match(result.answer, /fixed charges/i);
 });

@@ -1,0 +1,138 @@
+name: Community source operations report
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 15 * * *"
+    - cron: "15 15 1 * *"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: community-source-operations-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - uses: actions/cache/restore@v4
+        with:
+          path: artifacts/community-source-operations-report.json
+          key: community-source-operations-${{ github.run_id }}
+          restore-keys: community-source-operations-
+      - run: npm ci
+      - name: Revalidate due approved evidence in a disposable snapshot
+        id: revalidate
+        continue-on-error: true
+        run: |
+          baseline="$RUNNER_TEMP/community-index.baseline.json"
+          baseline_arg=()
+          if git show HEAD^:data/community-index.json > "$baseline"; then
+            baseline_arg=(--baseline "$baseline")
+          fi
+          node scripts/check-approved-community-revalidation.js \
+            --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
+            --attestation "$RUNNER_TEMP/community-approved-revalidation-attestation.json" \
+            --review-output "$RUNNER_TEMP/community-approved-revalidation-review.json" \
+            "${baseline_arg[@]}"
+      - name: Build aggregate operations report from private review records
+        id: report
+        continue-on-error: true
+        env:
+          COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_TOKEN }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATA_SOURCE_ID }}
+          COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID: ${{ secrets.COMMUNITY_SOURCE_REVIEW_NOTION_DATABASE_ID }}
+        run: |
+          node scripts/report-community-source-operations.js \
+            --index "$RUNNER_TEMP/community-index.revalidated.json" \
+            --previous artifacts/community-source-operations-report.json \
+            --revalidation-attestation "$RUNNER_TEMP/community-approved-revalidation-attestation.json" \
+            --output artifacts/community-source-operations-report.json \
+            --markdown artifacts/community-source-operations-report.md \
+            ${{ github.event.schedule == '15 15 1 * *' && '--monthly' || '' }}
+      - uses: actions/cache/save@v4
+        if: always() && steps.report.outcome == 'success'
+        with:
+          path: artifacts/community-source-operations-report.json
+          key: community-source-operations-${{ github.run_id }}
+      - name: Preserve aggregate accuracy artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: community-source-operations-${{ github.run_id }}
+          path: artifacts/community-source-operations-report.*
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Open or update the private operations alert
+        if: always() && steps.report.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('artifacts/community-source-operations-report.json', 'utf8'));
+            const needsAttention = report.residentSafety.approvedEvidenceNeedsAttention
+              || report.reviewQueue.olderThan7DaysCount > 0
+              || report.conflicts.unresolvedSensitiveConflictCount > 0;
+            const title = 'Sterling Ranch community source operations needs attention';
+            const { data: issues } = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: 'open', per_page: 100 });
+            const existing = issues.find(issue => !issue.pull_request && issue.title === title);
+            if (needsAttention) {
+              const body = fs.readFileSync('artifacts/community-source-operations-report.md', 'utf8');
+              if (existing) await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+              else await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
+            } else if (existing) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body: 'The aggregate source-operations report is back within its alert thresholds. Closing this alert.' });
+              await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, state: 'closed' });
+            }
+      - name: Open or update configuration and revalidation alert
+        if: always() && (steps.report.outcome != 'success' || steps.revalidate.outcome != 'success')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'Sterling Ranch community source operations configuration or revalidation failed';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `The source-operations job could not complete its private reporting or exact approved-evidence revalidation. Review the run: ${runUrl}\n\nReport step: ${{ steps.report.outcome }}. Revalidation step: ${{ steps.revalidate.outcome }}. No source approval or resident-answer change was made.`;
+            const { data: issues } = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: 'open', per_page: 100 });
+            const existing = issues.find(issue => !issue.pull_request && issue.title === title);
+            if (existing) await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+            else await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
+      - name: Close configuration and revalidation alert after recovery
+        if: always() && steps.report.outcome == 'success' && steps.revalidate.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = 'Sterling Ranch community source operations configuration or revalidation failed';
+            const { data: issues } = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: 'open', per_page: 100 });
+            for (const issue of issues.filter(issue => !issue.pull_request && issue.title === title)) {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, body: 'Private reporting and exact revalidation are running again. Closing this alert.' });
+              await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: issue.number, state: 'closed' });
+            }
+      - name: Publish the monthly aggregate accuracy issue
+        if: always() && steps.report.outcome == 'success' && github.event.schedule == '15 15 1 * *'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const month = new Date().toISOString().slice(0, 7);
+            const title = `Sterling Ranch community source accuracy: ${month}`;
+            const body = fs.readFileSync('artifacts/community-source-operations-report.md', 'utf8');
+            const { data: issues } = await github.rest.issues.listForRepo({ owner: context.repo.owner, repo: context.repo.repo, state: 'all', per_page: 100 });
+            const existing = issues.find(issue => !issue.pull_request && issue.title === title);
+            if (existing) await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+            else await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body });
+      - name: Fail clearly when the report or exact revalidation could not run
+        if: always()
+        run: |
+          test "${{ steps.revalidate.outcome }}" = "success"
+          test "${{ steps.report.outcome }}" = "success"

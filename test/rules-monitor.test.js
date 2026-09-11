@@ -5,6 +5,8 @@ const {
   deploymentHealthState,
   evaluateRuleResult,
   freshnessRecheckIssue,
+  homepageJourneyIssues,
+  poolStatusJourneyIssues,
   shouldRetrySlowResponse,
 } = require("../lib/rules-monitor");
 
@@ -51,6 +53,28 @@ test("monitor catches stale counts, raw excerpts, missing answer details, and so
   assert.match(issues.join(" "), /indexed topic cards/i);
 });
 
+test("facility monitoring validates semantics, authority, citations, and action metadata", () => {
+  const check = {
+    firstSourceIncludes: "Pickleball Courts",
+    expectedSourceType: "facilities",
+    expectedSourceUrlIncludes: "/facilities/pickleball",
+    expectedAuthorityDecision: "current-facility-operations",
+    expectedActionType: "booking",
+    expectedClaimsFromFirstSource: true,
+    answerFactPatterns: [/weekday[\s\S]*dusk/i],
+  };
+  const result = goodResult({
+    answer: "On weekdays, play starts at 6 a.m. and runs until dusk.",
+    authorityDecision: "current-facility-operations",
+    sources: [{ id: "courts", title: "Pickleball Courts", sourceType: "facilities", sourceUrl: "https://alpha.gov/facilities/pickleball" }],
+    actions: [{ label: "Book a court", actionType: "booking", url: "https://alpha.gov/book" }],
+    claims: [{ text: "On weekdays, play starts at 6 a.m. and runs until dusk.", evidenceSourceIds: ["courts"] }],
+  });
+  assert.deepEqual(evaluateRuleResult(check, result), []);
+  assert.match(evaluateRuleResult(check, { ...result, actions: [] }).join(" "), /HTTPS booking action/i);
+  assert.match(evaluateRuleResult(check, { ...result, claims: [] }).join(" "), /controlling first source/i);
+});
+
 test("safety checks validate classification, reason, mode, and empty sources", () => {
   const issues = evaluateRuleResult(
     { expectedClassification: "prompt-injection", expectedReason: "prompt-injection-rejected", expectedAnswerMode: "safety", expectedNoSources: true },
@@ -63,4 +87,27 @@ test("freshness recheck fails closed until sources are current", () => {
   assert.match(freshnessRecheckIssue(true, { status: "ok", rules: { isStale: true } }), /remained stale/i);
   assert.match(freshnessRecheckIssue(false, { status: "ok", rules: { isStale: false } }), /remained stale/i);
   assert.equal(freshnessRecheckIssue(true, { status: "ok", rules: { isStale: false } }), "");
+});
+
+test("homepage journey follows stable semantic markers and transport protections", () => {
+  const headers = new Map([
+    ["content-security-policy", "default-src 'self'; object-src 'none'"],
+    ["strict-transport-security", "max-age=31536000; includeSubDomains"],
+  ]);
+  const currentHomepage = '<main id="main-content"><h1>The Daily Briefing</h1><a href="/community-assistant">Assistant</a></main>';
+  assert.deepEqual(homepageJourneyIssues(true, currentHomepage, headers), []);
+  assert.match(homepageJourneyIssues(true, '<main><h1>Welcome</h1></main>', headers).join(" "), /stable Daily Briefing/i);
+  assert.match(homepageJourneyIssues(true, currentHomepage, new Map()).join(" "), /CSP.*HSTS/i);
+});
+
+test("pool status journey requires verified operational evidence or a safe official handoff", () => {
+  const verified = {
+    answerStatus: "verified", answerMode: "community-live-status", confidence: { canAnswer: true },
+    sources: [{ id: "pool:current-status", sourceUrl: "https://sterlingranchcab.com/187/Pool", connectorType: "live-status", sourceType: "status", controllingSourceRole: "operational", authorityFacets: ["status"] }],
+    evidenceEnvelope: { degradation: { state: "healthy" }, coverage: { covered: ["status"] }, claims: [{ facet: "status", controllingSourceRole: "operational", controllingEvidenceId: "pool:current-status" }] },
+  };
+  assert.deepEqual(poolStatusJourneyIssues(verified), []);
+  assert.deepEqual(poolStatusJourneyIssues({ answerStatus: "source-unavailable", confidence: { canAnswer: false }, claims: [], actions: [{ label: "Open official CAB pool status", url: "https://sterlingranchcab.com/187/Pool" }] }), []);
+  assert.match(poolStatusJourneyIssues({ answerStatus: "verified", answerMode: "community-live-status", confidence: { canAnswer: true }, sources: [] }).join(" "), /exact verified CAB operational status/i);
+  assert.match(poolStatusJourneyIssues({ answerStatus: "source-unavailable", confidence: { canAnswer: false }, claims: [{ text: "The pool is open" }], actions: [{ label: "Open official CAB pool status", url: "https://sterlingranchcab.com/187/Pool" }] }).join(" "), /official CAB handoff/i);
 });

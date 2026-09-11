@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
-const { safeHoldSupersedesLegacyBaseline } = require("../scripts/eval-community-assistant");
+const { handoffIsQuestionSpecific, scoreCommunityAnswer } = require("../lib/community-answer-quality");
+const { expectedNoSourceEvidenceBoundary, normalizeEvaluationQuestion, quarantineWithholdsRequiredEvidence, safeHoldSupersedesLegacyBaseline } = require("../scripts/eval-community-assistant");
 
 function source(title) {
   return { title, sourceUrl: "https://sterlingranchcab.com/example", text: title };
@@ -163,6 +163,107 @@ test("a no-claim hold fails quality when it sends residents to an unrelated sour
   });
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("irrelevant-handoff-source"));
+});
+
+test("handoff matching recognizes spaced and closed compound topic names", () => {
+  const handoff = {
+    sources: [{ title: "Pickleball Courts", sourceUrl: "https://sterlingranchcab.com/courts" }],
+    actions: [{ label: "Open Pickleball Courts", url: "https://sterlingranchcab.com/courts" }],
+  };
+  assert.equal(handoffIsQuestionSpecific("Pickle ball", handoff), true);
+  assert.equal(handoffIsQuestionSpecific("Build a helipad", handoff), false);
+});
+
+test("only an exact expected empty evidence boundary is excluded from scoring", () => {
+  const expectation = {
+    shouldRefuse: true,
+    expectedAnswerMode: "source-evidence-boundary",
+    expectedNoSources: true,
+    expectedReason: "no-single-source-support",
+  };
+  const hold = {
+    answerMode: "source-evidence-boundary",
+    confidence: { canAnswer: false, reason: "no-single-source-support" },
+    sources: [],
+    actions: [],
+    claims: [],
+  };
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, expectation), true);
+  assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, sources: [source("Unrelated source")] }, expectation), false);
+  assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, confidence: { canAnswer: false, reason: "weak-query-coverage" } }, expectation), false);
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, { ...expectation, shouldRefuse: false }), false);
+});
+
+test("evaluator expectations match harmless punctuation variants", () => {
+  assert.equal(normalizeEvaluationQuestion("What is Atlas WiFi?"), normalizeEvaluationQuestion("What is atlas wifi"));
+  assert.notEqual(normalizeEvaluationQuestion("What is Atlas WiFi?"), normalizeEvaluationQuestion("What are pool hours?"));
+});
+
+test("release quality excludes only a question-specific hold backed by its exact quarantined source", () => {
+  const source = {
+    id: "approved-water-monitoring",
+    title: "Water usage monitoring",
+    sourceUrl: "https://alpha.gov/water-monitoring",
+    contentHash: "approved-version",
+  };
+  const index = {
+    sources: [source],
+    revalidationQuarantine: {
+      mode: "temporary-unavailable-approved-evidence",
+      sources: [{ id: source.id, sourceUrl: source.sourceUrl, contentHash: source.contentHash, reason: "fetch-or-extraction-failed" }],
+    },
+  };
+  const result = {
+    answer: "I can’t currently confirm the water monitoring access requirements from exact owner-approved claims.",
+    answerMode: "community-access-withheld",
+    answerStatus: "source-unavailable",
+    authorityDecision: "freshness-withheld",
+    confidence: { canAnswer: false, reason: "source-review-required" },
+    sources: [source],
+    claims: [],
+  };
+  assert.equal(quarantineWithholdsRequiredEvidence("How do I access water usage monitoring?", result, index), true);
+
+  const unrelated = { ...source, id: "pool-hours", title: "Pool hours", sourceUrl: "https://alpha.gov/pool" };
+  assert.equal(quarantineWithholdsRequiredEvidence("How do I access water usage monitoring?", { ...result, sources: [unrelated] }, index), false,
+    "an unrelated hold remains quality-scored");
+  assert.equal(quarantineWithholdsRequiredEvidence("How do I access water usage monitoring?", { ...result, sources: [source, unrelated] }, {
+    ...index, sources: [source, unrelated],
+  }), false, "a non-quarantined source cannot share the exclusion");
+});
+
+test("changed evidence and ordinary weak answers cannot hide behind quarantine", () => {
+  const approved = {
+    id: "approved-water-monitoring",
+    title: "Water usage monitoring",
+    sourceUrl: "https://alpha.gov/water-monitoring",
+    contentHash: "approved-version",
+  };
+  const index = {
+    sources: [{ ...approved, contentHash: "changed-version" }],
+    revalidationQuarantine: {
+      mode: "temporary-unavailable-approved-evidence",
+      sources: [{ id: approved.id, sourceUrl: approved.sourceUrl, contentHash: approved.contentHash, reason: "fetch-or-extraction-failed" }],
+    },
+  };
+  const held = {
+    answer: "I can’t currently confirm the water monitoring access requirements from exact owner-approved claims.",
+    answerMode: "community-access-withheld",
+    answerStatus: "source-unavailable",
+    authorityDecision: "freshness-withheld",
+    confidence: { canAnswer: false, reason: "source-review-required" },
+    sources: [approved],
+    claims: [],
+  };
+  assert.equal(quarantineWithholdsRequiredEvidence("How do I access water usage monitoring?", held, index), false);
+  assert.equal(quarantineWithholdsRequiredEvidence("How do I access water usage monitoring?", {
+    ...held,
+    answer: "Open the portal.",
+    answerMode: "community-approved-operational-instruction",
+    answerStatus: "verified",
+    confidence: { canAnswer: true, reason: "approved-operational-instruction" },
+    claims: [{ text: "Open the portal.", verified: false }],
+  }, { ...index, sources: [approved] }), false, "a weak attempted answer remains quality-scored");
 });
 
 test("a governing rule remains a relevant handoff when it explicitly says a named project is not listed", () => {

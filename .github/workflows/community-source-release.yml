@@ -43,7 +43,10 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.approve_high_risk }}" = "true" ]; then approval="--approve-reviewed"; fi
           npm run community:candidate -- --candidate data/community-index.candidate.json --report data/community-source-report.json --check-links --prune-broken-links --promote $approval
           rm data/community-index.candidate.json
-          npm run check
+      - name: Revalidate the promoted candidate into temporary evidence
+        uses: ./.github/actions/revalidate-approved-community-evidence
+      - name: Check the promoted candidate against temporary evidence
+        run: npm run check
       - name: Publish source-only staging commit
         id: staging_commit
         run: |

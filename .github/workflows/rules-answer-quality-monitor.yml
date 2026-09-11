@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -28,6 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Revalidate due approved evidence into a temporary snapshot
+        uses: ./.github/actions/revalidate-approved-community-evidence
 
       - name: Check local rules retrieval and uncertainty handling
         run: npm run check

@@ -7,9 +7,11 @@ function source(filename) {
   return fs.readFileSync(path.join(__dirname, "..", "scripts", filename), "utf8");
 }
 
-test("live rules monitor labels every assistant question as a test", () => {
+test("live rules monitor labels every rules and Community Assistant question as a test", () => {
   const script = source("check-live-rules.js");
-  assert.match(script, /JSON\.stringify\(\{ question, isTest: true \}\)/);
+  const markers = script.match(/JSON\.stringify\(\{ question, isTest: true \}\)/g) || [];
+  assert.equal(markers.length, 2);
+  assert.match(script, /\/api\/community\/ask/);
 });
 
 test("community soak labels its questions and follow-up as tests", () => {
