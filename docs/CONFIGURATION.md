@@ -35,6 +35,8 @@ The application can start without email, Notion, Anthropic, or openings-tip cred
 
 Staging must use the `staging` branch, show the purple test-site banner, avoid live Google Analytics, and use disabled or test-only alert destinations. It may share the official public source URLs because accurate source behavior is part of staging verification.
 
+Set `COMMUNITY_QUESTION_LOG_MODE=staging` in the Railway staging service and `COMMUNITY_QUESTION_LOG_MODE=production` in the production service. This is a server-side boundary: every staging Community Assistant question is marked as a test before it reaches Notion or a logging webhook, even if someone forgets `?test=1`. The normal owner log already hides test-marked questions. Railway's built-in `RAILWAY_ENVIRONMENT_NAME=staging` is a fallback; `COMMUNITY_STAGING_HOSTS` is a narrower emergency fallback and only works when it matches Railway's own `RAILWAY_PUBLIC_DOMAIN`. Do not rely on a browser-provided host or an `isTest` flag to protect production logging.
+
 Staging may use the same Anthropic credential as production, but its request and token usage should be included in the same owner cost review. Secrets stay in Railway and are never copied into repository files. Set `COMMUNITY_INTERPRETATION_MODE=structured` for the required 24-hour application-code soak.
 
 The real-model routing evaluation endpoint is enabled automatically only when Railway identifies the environment as `staging`. `COMMUNITY_ROUTING_EVAL_ENABLED=true` can enable it in another controlled test environment. Leave it disabled in production.
