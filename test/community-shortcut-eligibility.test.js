@@ -380,6 +380,29 @@ test("an explicit holiday exception controls instead of the recurring weekday sc
   assert.doesNotMatch(answer.answer, /regular weekday schedule/i);
 });
 
+test("a stale ordinary weekday schedule without explicit date or season coverage remains withheld", () => {
+  const source = {
+    id: "alpha-hours", title: "Alpha facility hours", sourceUrl: "https://alpha.gov/hours",
+    sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1,
+    canonicalScopedProjection: true, approvalClaimIds: ["alpha-weekday-hours"],
+    checkedAt: "2026-09-09T21:44:12.000Z", staleAfter: "2026-09-10T21:44:12.000Z",
+    text: "Monday-Friday: 8:00 am - 6:00 pm.", excerpt: "Monday-Friday: 8:00 am - 6:00 pm.",
+  };
+  const answer = datedFacilityHoursAnswer("What were the hours Monday, September 7?", { sources: [source] }, {
+    now: new Date("2026-09-11T12:00:00Z"),
+    communityProfile: { timezone: "America/Denver" },
+    routingPlan: plan({
+      intent: "facilities", goal: "schedule", subject: "facility hours",
+      requestedDetails: ["hours", "date"],
+      dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "September 7" },
+      searchQueries: ["facility hours Monday"],
+    }),
+  });
+  assert.equal(answer.answerMode, "community-dated-facility-hours-stale");
+  assert.equal(answer.answerStatus, "could-not-verify");
+  assert.doesNotMatch(answer.answer, /8:00 am|6:00 pm/i);
+});
+
 test("dated facility hours do not revive raw pool-page prose after rejecting an AI answer", async () => {
   const routingPlan = plan({ intent: "status", goal: "schedule", subject: "pool operating hours on Labor Day", requestedDetails: ["hours", "date"], dateRange: { kind: "explicit-date", start: "2026-09-07", end: "2026-09-07", label: "Labor Day" }, filters: { audience: "", category: "", facility: "pool", location: "" }, searchQueries: ["pool hours Labor Day"] });
   const answer = await answerCommunityQuestion(REPORTED_QUESTION, {
