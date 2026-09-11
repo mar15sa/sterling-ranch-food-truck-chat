@@ -7,27 +7,32 @@
     if (text !== undefined) el.textContent = text;
     return el;
   }
-  function conditionIcon(period) {
+  function conditionArtwork(period) {
     const text = String(period.shortForecast || "").toLowerCase();
-    if (/thunder|storm/.test(text)) return "storm";
-    if (/snow|sleet|ice|freezing/.test(text)) return "snow";
-    if (/rain|shower|drizzle/.test(text)) return "rain";
-    if (/fog|mist|haze|smoke/.test(text)) return "fog";
+    if (/\b(thunderstorms?|storms?)\b/.test(text)) return "storm";
+    if (/\b(snow\w*|sleet|ice|icy|freezing|flurries)\b/.test(text)) return "snow";
+    if (/\b(rain\w*|showers?|drizzle)\b/.test(text)) return "rain";
+    if (/\b(fog\w*|mist\w*|haze|hazy|smoke)\b/.test(text)) return "fog";
+    if (/\b(wind\w*|breezy|blustery)\b/.test(text)) return "wind";
     if (/partly|mostly sunny|mostly clear/.test(text)) return period.isDaytime ? "partly" : "night-cloud";
     if (/cloud|overcast/.test(text)) return "cloud";
     if (/sunny|clear/.test(text)) return period.isDaytime ? "sun" : "moon";
-    if (/wind|breezy/.test(text)) return "wind";
-    return "cloud";
+    return "neutral";
   }
-  function icon(name, className = "weather-icon") {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("class", className);
-    svg.setAttribute("aria-hidden", "true");
-    svg.setAttribute("focusable", "false");
-    const use = document.createElementNS(svg.namespaceURI, "use");
-    use.setAttribute("href", `/weather-icons.svg?v=20260911-editorial#${name}`);
-    svg.append(use);
-    return svg;
+  function artwork(period, miniature = false) {
+    const name = conditionArtwork(period);
+    const frame = element("span", miniature ? "weather-symbol" : "weather-illustration");
+    frame.setAttribute("aria-hidden", "true");
+    frame.dataset.weather = name;
+    if (miniature) return frame;
+    const image = element("img", "weather-engraving");
+    image.src = name === "neutral" ? "/weather-foothills.webp" : `/weather-art/${name}.webp`;
+    image.alt = "";
+    image.width = 600;
+    image.height = 450;
+    image.addEventListener("error", () => { image.hidden = true; });
+    frame.append(image);
+    return frame;
   }
   function temperature(period, className) {
     const value = element("span", className, `${period.temperature}°`);
@@ -51,17 +56,9 @@
     const reading = element("div", "weather-reading");
     reading.append(element("h3", "weather-period-name", current.name));
     const number = element("div", "weather-number");
-    number.append(temperature(current, "weather-temperature"), element("span", "weather-unit", "F"));
+    number.append(temperature(current, "weather-temperature"));
     reading.append(number, element("span", "weather-range-label", current.isDaytime ? "Forecast high" : "Forecast low"), element("p", "weather-condition", current.shortForecast));
-    const illustration = element("div", "weather-illustration");
-    illustration.setAttribute("aria-hidden", "true");
-    const landscape = element("img", "weather-landscape");
-    landscape.src = "/weather-foothills.webp";
-    landscape.alt = "";
-    landscape.width = 720;
-    landscape.height = 480;
-    illustration.append(landscape, icon(conditionIcon(current), "weather-icon weather-hero-icon"));
-    hero.append(reading, illustration);
+    hero.append(reading, artwork(current));
     const metrics = element("div", "weather-metrics");
     if (Number.isFinite(current.precipitation)) {
       const precipitation = element("span", "weather-metric");
@@ -77,7 +74,9 @@
     const outlook = element("div", "weather-outlook");
     for (const period of next) {
       const card = element("div", "weather-next");
-      card.append(element("h4", "", period.name), icon(conditionIcon(period)), temperature(period, "weather-next-temperature"), outlookDescription(period.shortForecast));
+      const name = element("h4", "", period.name.replace(/^(\w{3})\w+ Night$/, "$1. night"));
+      name.title = period.name;
+      card.append(name, artwork(period, true), temperature(period, "weather-next-temperature"), outlookDescription(period.shortForecast));
       outlook.append(card);
     }
     const updated = element("p", "briefing-weather-updated", "National Weather Service · Updated " + new Intl.DateTimeFormat("en-US", {
@@ -86,22 +85,29 @@
     panel.replaceChildren(hero, ...(next.length ? [outlook] : []), updated);
   }
   let pending = false;
+  let refreshTimer;
   async function loadWeather() {
     if (pending) return;
     pending = true;
+    clearTimeout(refreshTimer);
+    let refreshAfter = 15 * 60 * 1000;
     try {
       const response = await fetch("/api/weather", { signal: AbortSignal.timeout(22000) });
       if (!response.ok) throw new Error("Unavailable");
       const data = await response.json();
       if (data.status !== "ok" || !data.periods?.length) throw new Error("Unavailable");
       render(data);
+      const periodEnd = Date.parse(data.periods[0].endTime);
+      if (Number.isFinite(periodEnd)) refreshAfter = Math.min(refreshAfter, Math.max(1000, periodEnd - Date.now() + 1000));
     } catch {
       const empty = element("div", "weather-unavailable");
-      empty.append(icon("cloud"), element("p", "", "Forecast temporarily unavailable. Use the full forecast below."));
+      empty.append(element("p", "", "Forecast temporarily unavailable. Use the full forecast below."));
       panel.replaceChildren(empty);
+      refreshAfter = 60 * 1000;
     } finally {
       pending = false;
       panel.setAttribute("aria-busy", "false");
+      refreshTimer = setTimeout(() => { if (!document.hidden) loadWeather(); }, refreshAfter);
     }
   }
   loadWeather();
