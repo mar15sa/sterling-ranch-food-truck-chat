@@ -60,14 +60,14 @@
     ></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
+    <link rel="stylesheet" href="/community-editorial.css?v=20260910-community" />
     <link rel="stylesheet" href="/society-footer.css?v=20260910-shared" />
   </head>
-  <body class="rules-page society-page">
+  <body class="rules-page society-page community-editorial assistant-editorial">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
-        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
-        ><button
+        <a class="society-brand" href="/" aria-label="Sterling Ranch Society home"><span class="community-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span><span class="community-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span></a><button
           class="society-menu"
           type="button"
           aria-expanded="false"
@@ -87,17 +87,11 @@
         </nav>
       </header>
       <div class="rules-app">
+        <div class="community-hero"><div class="community-hero-copy"><p class="community-kicker">HERE TO HELP</p><h1>Community Assistant</h1><p class="community-intro">Clear answers about life here, with links to the official sources.</p></div><img class="community-hero-art" src="/society-foothills.png" alt="" fetchpriority="high" /></div>
         <header class="rules-header">
           <div class="rules-header-inner">
             <div class="rules-brand">
               <div class="rules-brand-text">
-                <p class="society-breadcrumb">
-                  <a href="/">The Briefing</a> / Assistant
-                </p>
-                <h1>Community Assistant</h1>
-                <p class="rules-subtitle">
-                  Ask about rules, services, forms, facilities, and events.
-                </p>
                 <div class="rules-statusbar">
                   <span
                     class="rules-status-dot"
@@ -190,7 +184,7 @@
             class="society-conversation-column"
             aria-label="Ask the Community Assistant"
           >
-            <div class="rules-conversation" id="rulesScroll">
+            <div class="rules-conversation" id="rulesScroll" tabindex="0" role="region" aria-label="Community Assistant chat window">
               <div
                 class="rules-thread"
                 id="rulesMessages"

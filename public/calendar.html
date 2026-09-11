@@ -13,14 +13,14 @@
     <script src="/environment.js"></script>
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
     <script src="/briefing.js?v=20260910-cleanup" defer></script>
+    <link rel="stylesheet" href="/community-editorial.css?v=20260910-community" />
     <link rel="stylesheet" href="/society-footer.css?v=20260910-shared" />
   </head>
-  <body class="society-page">
+  <body class="society-page community-editorial calendar-editorial">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
-        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
-        ><button
+        <a class="society-brand" href="/" aria-label="Sterling Ranch Society home"><span class="community-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span><span class="community-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span></a><button
           class="society-menu"
           type="button"
           aria-expanded="false"
@@ -40,23 +40,11 @@
         </nav>
       </header>
       <main id="main-content" tabindex="-1">
-        <div class="society-page-title">
-          <p class="society-breadcrumb">
-            <a href="/">The Briefing</a> / Community Calendar
-          </p>
-          <h1>Community Calendar</h1>
-          <p>A reason to get out, catch up, and be part of the neighborhood.</p>
-        </div>
-        <a
-          class="society-primary"
-          href="/community-calendar"
-          target="_blank"
-          rel="noreferrer"
-          >Open community calendar ↗</a
-        >
+        <div class="community-hero"><div class="community-hero-copy"><p class="community-kicker">COMMUNITY LIFE</p><h1>Community Calendar</h1><p class="community-intro">A reason to get out, catch up, and be part of the neighborhood.</p></div><img class="community-hero-art" src="/society-mountains-v2.webp" alt="" fetchpriority="high" /></div>
+
         <div class="society-food-layout">
           <section>
-            <p class="society-eyebrow">UPCOMING COMMUNITY EVENTS</p>
+            <div class="community-section-heading"><div><p class="community-kicker">ON THE CALENDAR</p><h2>Coming up in the neighborhood</h2></div><a class="society-text-link" href="/community-calendar" target="_blank" rel="noreferrer">View full calendar ↗</a></div>
             <div
               id="briefing-events"
               data-full-calendar
