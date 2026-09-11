@@ -41,6 +41,7 @@ const files = { '/': 'index.html', '/food-truck': 'food-truck.html', '/community
         }
         if (food) await page.locator('.food-result').waitFor({ timeout: 40000 });
         if (url === '/openings') await page.locator('.opening-card').first().waitFor({ timeout: 35000 });
+        if (url === '/pool') await page.waitForFunction(() => document.body.dataset.poolState !== 'loading');
         if (url === '/' || url === '/calendar') await page.locator('#briefing-events[aria-busy="false"]').waitFor({ timeout: 35000 });
         if (url === '/') {
           await page.locator('#briefing-weather[aria-busy="false"]').waitFor({ timeout: 35000 });
