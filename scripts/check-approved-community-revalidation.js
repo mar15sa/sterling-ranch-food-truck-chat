@@ -4,7 +4,10 @@
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
-const { actionDigest, actionIdentity, observeCanonicalSource, sourceHash } = require("../lib/community-approved-revalidation");
+const {
+  actionDigest, actionIdentity, applyDomainOutageGrace, canonicalizeEvidence: canonicalize,
+  observeCanonicalSource, sourceEvidenceIdentity, sourceHash, unchangedBaselineSources,
+} = require("../lib/community-approved-revalidation");
 const { audit } = require("./check-community-sources");
 const { VERIFIER_VERSION, approvedFingerprint, inputFingerprint, revalidateApprovedEvidence } = require("./revalidate-approved-community");
 
@@ -17,44 +20,12 @@ function gitCommit() {
   try { return execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(); } catch { return "unavailable"; }
 }
 
-function canonicalize(value, volatileKeys = new Set()) {
-  if (Array.isArray(value)) return value.map((item) => canonicalize(item, volatileKeys))
-    .sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
-  if (!value || typeof value !== "object") return value;
-  return Object.fromEntries(Object.keys(value).sort().flatMap((key) => {
-    if (volatileKeys.has(key)) return [];
-    return [[key, canonicalize(value[key], volatileKeys)]];
-  }));
-}
-
-function sourceEvidenceIdentity(index = {}, source = {}) {
-  const sourceVolatileKeys = new Set(["checkedAt", "staleAfter", "lastObservedAt"]);
-  const ledgerVolatileKeys = new Set(["staleAfter", "lastObservedAt"]);
-  const ledger = (index.factLedger || []).filter((entry) => entry.sourceId === source.id
-    && entry.sourceVersion === source.contentHash)
-    .map((entry) => canonicalize(entry, ledgerVolatileKeys))
-    .sort((left, right) => JSON.stringify(left).localeCompare(JSON.stringify(right)));
-  return JSON.stringify({
-    source: canonicalize(source, sourceVolatileKeys),
-    ledger,
-  });
-}
-
-function quarantineUnchangedUnavailableEvidence(temporaryIndex, checks = [], baselineIndex) {
+function quarantineUnchangedUnavailableEvidence(temporaryIndex, checks = [], baselineIndex, excludedSourceIds = new Set()) {
   if (!baselineIndex) return [];
-  const baselineById = new Map((baselineIndex.sources || []).map((source) => [source.id, source]));
   const quarantined = [];
   for (const check of checks) {
-    if (check.outcome !== "review-required" || check.reason !== "fetch-or-extraction-failed") continue;
-    const currentSources = (temporaryIndex.sources || []).filter((source) => source.sourceUrl === check.sourceUrl);
-    const baselineSources = (baselineIndex.sources || []).filter((source) => source.sourceUrl === check.sourceUrl);
-    // An outage may only be quarantined when this branch retained every exact
-    // approved record from its baseline. A changed/new decision or source is
-    // never allowed to hide behind an unreachable official page.
-    if (!currentSources.length || currentSources.length !== baselineSources.length || !currentSources.every((source) => {
-      const baseline = baselineById.get(source.id);
-      return baseline && sourceEvidenceIdentity(temporaryIndex, source) === sourceEvidenceIdentity(baselineIndex, baseline);
-    })) continue;
+    const currentSources = unchangedBaselineSources(temporaryIndex, check, baselineIndex)
+      .filter((source) => !excludedSourceIds.has(source.id));
     quarantined.push(...currentSources.map((source) => ({ id: source.id, sourceUrl: source.sourceUrl,
       contentHash: source.contentHash, reason: check.reason, checkedAt: check.checkedAt })));
   }
@@ -70,11 +41,14 @@ function quarantineUnchangedUnavailableEvidence(temporaryIndex, checks = [], bas
 async function runBridge({ index, baselineIndex, now = Date.now(), fetchObservedHashes, auditFn = audit, staleAfterMs } = {}) {
   const beforeFingerprint = approvedFingerprint(index);
   const result = await revalidateApprovedEvidence(index, { now, fetchObservedHashes, ...(staleAfterMs === undefined ? {} : { staleAfterMs }) });
-  const quarantined = quarantineUnchangedUnavailableEvidence(result.temporaryIndex, result.checks, baselineIndex);
+  const graced = applyDomainOutageGrace(result.temporaryIndex, result.checks, baselineIndex, { now });
+  const gracedIds = new Set(graced.map((source) => source.id));
+  const quarantined = quarantineUnchangedUnavailableEvidence(result.temporaryIndex, result.checks, baselineIndex, gracedIds);
   const quarantinedIds = new Set(quarantined.map((source) => source.id));
+  const toleratedIds = new Set([...quarantinedIds, ...gracedIds]);
   const gateErrors = [];
   try { auditFn(result.temporaryIndex); } catch (error) { gateErrors.push(error.message); }
-  if (result.checks.some((check) => check.outcome !== "renewed" && !check.sources.every((source) => quarantinedIds.has(source.id)))) {
+  if (result.checks.some((check) => check.outcome !== "renewed" && !check.sources.every((source) => toleratedIds.has(source.id)))) {
     gateErrors.push("Approved evidence requires owner review.");
   }
   const afterFingerprint = approvedFingerprint(result.temporaryIndex);
@@ -86,8 +60,9 @@ async function runBridge({ index, baselineIndex, now = Date.now(), fetchObserved
     beforeApprovedFingerprint: beforeFingerprint,
     afterApprovedFingerprint: afterFingerprint,
     checkedAt: new Date(now).toISOString(),
-    status: gateErrors.length ? "failed" : quarantined.length ? "passed-with-withheld-evidence" : "passed",
+    status: gateErrors.length ? "failed" : graced.length ? "passed-with-grace-evidence" : quarantined.length ? "passed-with-withheld-evidence" : "passed",
     checks: result.checks,
+    graced,
     quarantined,
     gateErrors,
   };
@@ -114,4 +89,4 @@ async function main() {
 
 if (require.main === module) main().catch((error) => { console.error(error.message); process.exitCode = 1; });
 
-module.exports = { actionDigest, actionIdentity, canonicalize, observeCanonicalSource, quarantineUnchangedUnavailableEvidence, runBridge, sourceEvidenceIdentity, sourceHash };
+module.exports = { actionDigest, actionIdentity, applyDomainOutageGrace, canonicalize, observeCanonicalSource, quarantineUnchangedUnavailableEvidence, runBridge, sourceEvidenceIdentity, sourceHash };
