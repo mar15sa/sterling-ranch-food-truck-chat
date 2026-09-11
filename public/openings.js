@@ -5,7 +5,7 @@ const state = {
   map: null,
   markerLayer: null,
   page: 1,
-  pageSize: 15,
+  pageSize: 9,
 };
 
 const STATUS_LABELS = {
@@ -28,14 +28,14 @@ const EVIDENCE_LABELS = {
 };
 
 const MAP_STATUS_COLORS = {
-  "opening-soon": "#c7792e",
-  "under-construction": "#8d5b3d",
-  confirmed: "#2e6f84",
-  approved: "#5f6fa8",
-  proposed: "#7a6b82",
-  open: "#247456",
-  paused: "#777777",
-  closed: "#555555",
+  "opening-soon": "#a86f7c",
+  "under-construction": "#a86f7c",
+  confirmed: "#a86f7c",
+  approved: "#a86f7c",
+  proposed: "#a86f7c",
+  open: "#4f7d7b",
+  paused: "#34373d",
+  closed: "#34373d",
 };
 
 const els = {
@@ -106,6 +106,15 @@ function fillSelect(select, values) {
   }
 }
 
+function categoryGroup(category) {
+  if (/coffee|bakery/i.test(category)) return "Coffee & bakeries";
+  if (/restaurant|\bbar\b|brewery/i.test(category)) return "Food & drink";
+  if (/fitness|wellness|recreation|entertainment/i.test(category)) return "Fitness & recreation";
+  if (/retail|shopping|grocery/i.test(category)) return "Shopping & groceries";
+  if (/service/i.test(category)) return "Services";
+  return category;
+}
+
 function renderSummary(catalog) {
   setText("#hero-count", catalog.total);
   setText("#hero-update", `Catalog checked ${formatDate(catalog.updatedAt)}.`);
@@ -113,7 +122,7 @@ function renderSummary(catalog) {
   setText("#stat-soon", catalog.stats.openingSoon);
   setText("#stat-open", catalog.stats.open);
   fillSelect(els.community, catalog.filters.communities);
-  fillSelect(els.category, catalog.filters.categories);
+  fillSelect(els.category, [...new Set(catalog.filters.categories.map(categoryGroup))].sort());
 }
 
 function cardFor(item) {
@@ -168,7 +177,7 @@ function filteredItems() {
   const filters = currentFilters();
   return state.catalog.items.filter((item) => {
     if (filters.community !== "all" && item.community !== filters.community) return false;
-    if (filters.category !== "all" && item.category !== filters.category) return false;
+    if (filters.category !== "all" && categoryGroup(item.category) !== filters.category) return false;
     if (filters.status !== "all" && item.status !== filters.status) return false;
     if (filters.quickStatus === "coming" && ["open", "closed"].includes(item.status)) return false;
     if (["opening-soon", "open"].includes(filters.quickStatus) && item.status !== filters.quickStatus) return false;
@@ -182,12 +191,12 @@ function filteredItems() {
 
 function sortItems(items) {
   const statusOrder = {
-    "opening-soon": 0,
-    "under-construction": 1,
-    confirmed: 2,
-    approved: 3,
-    proposed: 4,
-    open: 5,
+    open: 0,
+    "opening-soon": 1,
+    "under-construction": 2,
+    confirmed: 3,
+    approved: 4,
+    proposed: 5,
     paused: 6,
     closed: 7,
   };
@@ -199,40 +208,17 @@ function sortItems(items) {
   });
 }
 
-function listSection(title, items) {
-  const section = document.createElement("section");
-  section.className = "opening-group";
-  const heading = document.createElement("div");
-  heading.className = "opening-group-heading";
-  const name = document.createElement("h3");
-  name.textContent = title;
-  const count = document.createElement("span");
-  count.textContent = `${items.length} ${items.length === 1 ? "place" : "places"}`;
-  heading.append(name, count);
-  const rows = document.createElement("div");
-  rows.className = "opening-rows";
-  rows.append(...items.map(cardFor));
-  section.append(heading, rows);
-  return section;
-}
-
 function renderList() {
   const pageCount = Math.max(1, Math.ceil(state.items.length / state.pageSize));
   state.page = Math.min(state.page, pageCount);
   const start = (state.page - 1) * state.pageSize;
   const pageItems = state.items.slice(start, start + state.pageSize);
-  const upcoming = pageItems.filter((item) => item.status !== "open" && item.status !== "closed");
-  const recentlyOpen = pageItems.filter((item) => item.status === "open");
-  const other = pageItems.filter((item) => !upcoming.includes(item) && !recentlyOpen.includes(item));
-  const groups = [];
-  if (upcoming.length) groups.push(listSection("Coming up", upcoming));
-  if (recentlyOpen.length) groups.push(listSection("Recently opened", recentlyOpen));
-  if (other.length) groups.push(listSection("Other updates", other));
-  els.list.replaceChildren(...groups);
+  els.list.replaceChildren(...pageItems.map(cardFor));
   els.pager.hidden = state.items.length <= state.pageSize;
   els.pagePrevious.disabled = state.page === 1;
   els.pageNext.disabled = state.page === pageCount;
   els.pageStatus.textContent = `Page ${state.page} of ${pageCount}`;
+  els.resultCount.textContent = state.items.length ? `Showing ${start + 1}–${start + pageItems.length} of ${state.items.length} places` : "0 matching places";
 }
 
 function renderItems() {
@@ -240,7 +226,6 @@ function renderItems() {
   renderList();
   const active = Object.values(currentFilters()).some((value) => value && value !== "all");
   els.clear.hidden = !active;
-  els.resultCount.textContent = `${state.items.length} ${state.items.length === 1 ? "place" : "places"} shown`;
   const selectedCommunity = currentFilters().community;
   const coverage = state.catalog.communityCoverage?.[selectedCommunity];
   els.emptyTitle.textContent = coverage?.emptyTitle || "No matches yet";
@@ -248,6 +233,7 @@ function renderItems() {
   els.empty.hidden = state.items.length > 0;
   els.list.hidden = state.items.length === 0;
   els.mapPanel.hidden = state.items.length === 0;
+  document.querySelector("#legend-other").hidden = !state.items.some((item) => ["paused", "closed"].includes(item.status));
   if (state.items.length) renderMap();
 }
 

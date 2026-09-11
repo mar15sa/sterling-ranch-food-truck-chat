@@ -1,4 +1,5 @@
 const http = require("node:http");
+const getHomepageWeather = require("./lib/briefing-weather").createWeatherService(require("./config/homepage-weather.json"));
 const fs = require("node:fs");
 const path = require("node:path");
 const { spawn } = require("node:child_process");
@@ -5117,6 +5118,11 @@ const server = http.createServer(async (req, res) => {
       const { action } = calendarConfiguration(getCommunityProfile());
       res.writeHead(302, { ...SECURITY_HEADERS, location: action.url, "cache-control": "no-store" });
       res.end();
+      return;
+    }
+    if (url.pathname === "/api/weather") {
+      if (req.method !== "GET") { sendJson(res, 405, { error: "Use GET for weather." }); return; }
+      sendJson(res, 200, await getHomepageWeather());
       return;
     }
     if (url.pathname === "/api/community/events") {
