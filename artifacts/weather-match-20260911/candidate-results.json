@@ -1,0 +1,248 @@
+{
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "heroHeight": 218.40625,
+      "passed": true
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "heroHeight": 218.59375,
+      "passed": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "heroHeight": 173.28125,
+      "passed": true
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "heroHeight": 173.28125,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "heroHeight": 192.359375,
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "heroHeight": 185.28125,
+      "passed": true
+    }
+  ],
+  "conditionCases": [
+    {
+      "text": "Sunny",
+      "day": true,
+      "artwork": "sun",
+      "passed": true
+    },
+    {
+      "text": "Clear",
+      "day": false,
+      "artwork": "moon",
+      "passed": true
+    },
+    {
+      "text": "Mostly Sunny",
+      "day": true,
+      "artwork": "partly",
+      "passed": true
+    },
+    {
+      "text": "Mostly Clear",
+      "day": false,
+      "artwork": "night-cloud",
+      "passed": true
+    },
+    {
+      "text": "Partly Cloudy",
+      "day": true,
+      "artwork": "partly",
+      "passed": true
+    },
+    {
+      "text": "Partly Cloudy",
+      "day": false,
+      "artwork": "night-cloud",
+      "passed": true
+    },
+    {
+      "text": "Mostly Cloudy",
+      "day": true,
+      "artwork": "cloud",
+      "passed": true
+    },
+    {
+      "text": "Overcast",
+      "day": false,
+      "artwork": "cloud",
+      "passed": true
+    },
+    {
+      "text": "Rain Showers",
+      "day": true,
+      "artwork": "rain",
+      "passed": true
+    },
+    {
+      "text": "Rain",
+      "day": false,
+      "artwork": "rain",
+      "passed": true
+    },
+    {
+      "text": "Drizzle",
+      "day": false,
+      "artwork": "rain",
+      "passed": true
+    },
+    {
+      "text": "Snow Showers",
+      "day": true,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Snow",
+      "day": false,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Freezing Rain",
+      "day": true,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Sleet",
+      "day": false,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Ice",
+      "day": true,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Flurries",
+      "day": true,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Thunderstorms",
+      "day": true,
+      "artwork": "storm",
+      "passed": true
+    },
+    {
+      "text": "Slight Chance Showers And Thunderstorms",
+      "day": false,
+      "artwork": "storm",
+      "passed": true
+    },
+    {
+      "text": "Fog",
+      "day": true,
+      "artwork": "fog",
+      "passed": true
+    },
+    {
+      "text": "Patchy Fog",
+      "day": false,
+      "artwork": "fog",
+      "passed": true
+    },
+    {
+      "text": "Haze",
+      "day": true,
+      "artwork": "fog",
+      "passed": true
+    },
+    {
+      "text": "Hazy",
+      "day": true,
+      "artwork": "fog",
+      "passed": true
+    },
+    {
+      "text": "Smoke",
+      "day": false,
+      "artwork": "fog",
+      "passed": true
+    },
+    {
+      "text": "Sunny And Breezy",
+      "day": true,
+      "artwork": "wind",
+      "passed": true
+    },
+    {
+      "text": "Mostly Cloudy And Windy",
+      "day": false,
+      "artwork": "wind",
+      "passed": true
+    },
+    {
+      "text": "Blowing Snow",
+      "day": true,
+      "artwork": "snow",
+      "passed": true
+    },
+    {
+      "text": "Rain And Windy",
+      "day": false,
+      "artwork": "rain",
+      "passed": true
+    },
+    {
+      "text": "Unknown",
+      "day": true,
+      "artwork": "neutral",
+      "passed": true
+    },
+    {
+      "text": "",
+      "day": false,
+      "artwork": "neutral",
+      "passed": true
+    },
+    {
+      "text": "Nice",
+      "day": true,
+      "artwork": "neutral",
+      "passed": true
+    }
+  ],
+  "liveAssistantQuestions": 0,
+  "refresh": {
+    "periodBoundary": true,
+    "visibility": true,
+    "recovery": true
+  },
+  "failureCases": 5,
+  "assets": [
+    "sun",
+    "moon",
+    "partly",
+    "night-cloud",
+    "cloud",
+    "rain",
+    "snow",
+    "storm",
+    "fog",
+    "wind",
+    "neutral"
+  ]
+}
