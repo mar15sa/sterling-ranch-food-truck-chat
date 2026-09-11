@@ -1,0 +1,20 @@
+name: Revalidate approved community evidence
+description: Renew only exact approved versions in a disposable evidence snapshot for local quality gates.
+inputs:
+  index:
+    description: Community evidence index to revalidate after the workflow has prepared it.
+    required: false
+    default: data/community-index.json
+runs:
+  using: composite
+  steps:
+    - name: Revalidate exact approved evidence
+      shell: bash
+      run: |
+        node scripts/check-approved-community-revalidation.js \
+          --input "${{ inputs.index }}" \
+          --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
+          --attestation artifacts/community-approved-revalidation-attestation.json \
+          --review-output artifacts/community-approved-revalidation-review.json
+        echo "COMMUNITY_EVIDENCE_INDEX=$RUNNER_TEMP/community-index.revalidated.json" >> "$GITHUB_ENV"
+        echo "COMMUNITY_EVIDENCE_REPORT_DIR=$GITHUB_WORKSPACE/artifacts" >> "$GITHUB_ENV"
