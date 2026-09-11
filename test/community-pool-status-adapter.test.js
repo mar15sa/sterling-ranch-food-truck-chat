@@ -36,11 +36,10 @@ test("every exact CAB live label maps to its configured resident meaning", async
   }
 });
 
-test("a red current marker combines with the approved seasonal window only outside the season", async () => {
+test("a red current marker reports only the live closure and does not borrow the configured season as evidence", async () => {
   const offSeason = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Red Light")), now: () => "2026-09-10T12:00:00.000Z" });
-  assert.match(offSeason.summary, /closed for the season/i);
-  assert.match(offSeason.summary, /Memorial Day weekend through Labor Day/i);
-  assert.doesNotMatch(offSeason.summary, /2027|May \d/i);
+  assert.match(offSeason.summary, /closed with no access/i);
+  assert.doesNotMatch(offSeason.summary, /closed for the season|Memorial Day|Labor Day|2027|May \d/i);
   const inSeason = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Red Light")), now: () => "2026-07-15T12:00:00.000Z" });
   assert.match(inSeason.summary, /closed with no access/i);
   assert.doesNotMatch(inSeason.summary, /closed for the season/i);
@@ -115,6 +114,9 @@ test("Assistant requires same-community, current status evidence and a claim bou
   }
   const healthy = await ask(live);
   assert.equal(healthy.answerMode, "community-live-status");
+  assert.equal(healthy.answerStatus, "verified");
+  assert.equal(healthy.claims.length, 1);
+  assert.ok(healthy.claims.every((claim) => claim.verified === true));
   const noEnvelope = { ...live, evidenceEnvelope: undefined };
   assert.notEqual((await ask(noEnvelope)).answerMode, "community-live-status");
   const wrongCommunity = structuredClone(live);
