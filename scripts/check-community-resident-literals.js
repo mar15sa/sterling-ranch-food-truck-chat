@@ -132,6 +132,7 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "a spread of",
   "deep",
   "long",
+  "falls outside that published recurring season, so I can’t verify facility hours for that date.",
 ]);
 
 function isTernaryControlLiteral(tokens, index) {

@@ -40,6 +40,14 @@ test("resident literal guard permits only reviewed dynamic evidence frames", () 
   assert.match(findings[0].value, /Sterling Ranch/);
 });
 
+test("resident literal guard permits the reviewed recurring-season evidence boundary", () => {
+  assert.deepEqual(inspectSource(`
+    return buildAnswerContract({
+      directAnswer: \`\${seasonStatement} \${dateLabel} falls outside that published recurring season, so I can’t verify facility hours for that date.\`,
+    });
+  `), []);
+});
+
 test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
   const findings = inspectSource(`
     return {
