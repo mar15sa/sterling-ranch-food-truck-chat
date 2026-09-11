@@ -78,6 +78,31 @@ test("semantic search-miss wording cannot claim that a named catalog item is abs
       answer: "The preapproved plant list doesn't specifically name Moonbeam Dragonfruit, but that does not mean you cannot grow it. Check with the DRC if Moonbeam Dragonfruit isn't on it.",
       source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
     },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "The preapproved plant list contains no Moonbeam Dragonfruit.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "There is no Moonbeam Dragonfruit entry in the plant list.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "Moonbeam Dragonfruit is missing from the plant list.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "I don't see Moonbeam Dragonfruit there.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "Moonbeam Dragonfruit is absent from the approved catalog.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
   ];
 
   for (const { question, answer, source } of cases) {
@@ -116,6 +141,13 @@ test("the semantic guard allows explicit exclusion evidence and ordinary uncerta
     [{ title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." }]
   );
   assert.ok(!cautiousMembershipBoundary.includes(unsupportedIssue));
+
+  const cautiousPersonalBoundary = answerCoverageIssues(
+    "Can I grow Moonbeam Dragonfruit?",
+    "I could not verify whether Moonbeam Dragonfruit is approved from the official source.",
+    [{ title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." }]
+  );
+  assert.ok(!cautiousPersonalBoundary.includes(unsupportedIssue));
 });
 
 test("community answer validation rejects indirect negative catalog membership claims", () => {
