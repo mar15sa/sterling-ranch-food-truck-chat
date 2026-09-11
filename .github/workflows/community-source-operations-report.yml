@@ -20,6 +20,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -34,10 +36,16 @@ jobs:
         id: revalidate
         continue-on-error: true
         run: |
+          baseline="$RUNNER_TEMP/community-index.baseline.json"
+          baseline_arg=()
+          if git show HEAD^:data/community-index.json > "$baseline"; then
+            baseline_arg=(--baseline "$baseline")
+          fi
           node scripts/check-approved-community-revalidation.js \
             --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
             --attestation "$RUNNER_TEMP/community-approved-revalidation-attestation.json" \
-            --review-output "$RUNNER_TEMP/community-approved-revalidation-review.json"
+            --review-output "$RUNNER_TEMP/community-approved-revalidation-review.json" \
+            "${baseline_arg[@]}"
       - name: Build aggregate operations report from private review records
         id: report
         continue-on-error: true
