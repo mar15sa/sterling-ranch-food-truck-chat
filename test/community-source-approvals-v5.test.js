@@ -5,6 +5,7 @@ const ledger = require('../data/canonical-source-ledger.json');
 const { approvals } = require('../data/community-source-approvals-v5');
 const { applyCommunitySourceApprovalsV5 } = require('../scripts/apply-community-source-approvals-v5');
 const { canonicalProjectionEntries } = require('../lib/community-source-answerability');
+const { approvedActionProofs, buildApprovedV5Sources } = require('../data/community-source-approvals-v5');
 
 test('each v5 approval is bound to its exact version and only its listed claims', () => {
   const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
@@ -16,6 +17,7 @@ test('each v5 approval is bound to its exact version and only its listed claims'
     const approval = record.approvals.find(item => item.decisionId === decision.decisionId);
     assert.equal(approval.scopeKind, 'scoped-claims');
     assert.deepEqual(approval.approvedClaims, decision.approvedClaims);
+    assert.deepEqual(approval.approvedActions, approvedActionProofs[decision.decisionId] || []);
     const source = index.sources.find(item => item.contentHash === hash && item.id.startsWith('approved-'));
     assert.ok(source, `${decision.decisionId} has a resident projection`);
     const projected = canonicalProjectionEntries(source, index);
@@ -39,4 +41,12 @@ test('a changed exact source version cannot receive a v5 projection', () => {
   const source = require('../data/community-source-approvals-v5').buildApprovedV5Sources()[0];
   source.contentHash = 'f'.repeat(64);
   assert.equal(canonicalProjectionEntries(source, index).length, 0);
+});
+
+test('every action-bearing decision rejects a substituted resident destination', () => {
+  for (const source of buildApprovedV5Sources().filter(source => source.actions.length)) {
+    const first = source.actions[0];
+    source.actions[0] = { ...first, url: 'https://substitution.example/incorrect-route' };
+    assert.throws(() => applyCommunitySourceApprovalsV5({ ...structuredClone(baseIndex), sources: [], factLedger: [] }, { sourceBuilder: () => [source] }), /reviewed action identity/, source.id);
+  }
 });

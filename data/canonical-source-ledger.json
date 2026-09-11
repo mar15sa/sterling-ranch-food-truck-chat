@@ -47,6 +47,7 @@
             "generic-2025-rate"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -99,6 +100,7 @@
             "incomplete-or-unlabelled-row"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -144,6 +146,7 @@
             "standalone-effective-date-claim"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -190,6 +193,7 @@
             "claim-that-no-newer-amendment-exists"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -236,6 +240,7 @@
             "fee-amounts"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -284,6 +289,7 @@
           "controllingSources": [
             "adopted-2026-water-sewer-stormwater-resolution"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         },
         {
@@ -302,6 +308,7 @@
           "controllingSources": [
             "adopted-2026-water-sewer-stormwater-resolution"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -351,6 +358,7 @@
           "controllingSources": [
             "adopted-2026-water-sewer-stormwater-resolution"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         },
         {
@@ -369,6 +377,7 @@
           "controllingSources": [
             "adopted-2026-water-sewer-stormwater-resolution"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -417,6 +426,7 @@
           "controllingSources": [
             "adopted-2026-water-sewer-stormwater-resolution"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -466,6 +476,7 @@
             "adopted-2026-cab-fee-resolution",
             "adopted-2026-water-sewer-stormwater-resolution"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -527,6 +538,13 @@
             "measurement"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open official water reports",
+              "https://sterlingranchcab.com/395/Water-Reports",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -704,6 +722,13 @@
             "rule-interpretation"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open Sterling Ranch Municode",
+              "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -795,6 +820,13 @@
             "booking-outcomes"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open CourtReserve",
+              "https://app.courtreserve.com/Online/Portal/Index/15838",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -848,6 +880,7 @@
             "closure-reasons"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -901,6 +934,7 @@
             "approval-requirement"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         },
         {
@@ -924,6 +958,7 @@
           "controllingSources": [
             "rain-barrel-governing-rule"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -977,6 +1012,7 @@
             "approval-requirement"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         },
         {
@@ -1000,6 +1036,7 @@
           "controllingSources": [
             "rain-barrel-governing-rule"
           ],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -1056,6 +1093,7 @@
             "alert-guarantee"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-08"
         }
       ],
@@ -1118,6 +1156,18 @@
             "service-outcomes"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open CAB contact directory",
+              "https://sterlingranchcab.com/400/Contact-Us",
+              "information"
+            ],
+            [
+              "Open Sterling Ranch 311",
+              "https://sterlingranchcab.com/298/Sterling-Ranch-311",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -1183,6 +1233,13 @@
             "booking-outcomes"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open the Great Hall booking page",
+              "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -1251,6 +1308,23 @@
             "safety-guidance"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open Great Hall",
+              "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3",
+              "information"
+            ],
+            [
+              "Open Overlook & Virtual",
+              "https://sterlingranchcab.com/Facilities/Facility/Details/-8",
+              "information"
+            ],
+            [
+              "Open Pool",
+              "https://sterlingranchcab.com/Facilities/Facility/Details/-2",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -1314,6 +1388,13 @@
             "submission-instructions"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open the community calendar",
+              "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -1558,6 +1639,18 @@
             "provider-promises"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open the CAB trash and recycling concern form",
+              "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+              "information"
+            ],
+            [
+              "Open WasteConnect",
+              "https://apps.apple.com/app/id1442351850",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -1608,6 +1701,7 @@
             "promised-outcome"
           ],
           "controllingSources": [],
+          "approvedActions": [],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],
@@ -1658,6 +1752,13 @@
             "emergency-guidance"
           ],
           "controllingSources": [],
+          "approvedActions": [
+            [
+              "Open the CAB concern and feedback form",
+              "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+              "information"
+            ]
+          ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
       ],

@@ -4,6 +4,23 @@ const URLs = {
   trash: 'https://sterlingranchcab.com/247/Trash-Recycling', mailbox: 'https://sterlingranchcab.com/227/Mailbox-Keys', streetlight: 'https://sterlingranchcab.com/239/Streetlights', court: 'https://sterlingranchcab.com/420/Court-Reserve', greatHall: 'https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3', overlook: 'https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1', contact: 'https://sterlingranchcab.com/400/Contact-Us', rules: 'https://sterlingranchcab.com/168/Rules-Regulations', water: 'https://sterlingranchcab.com/395/Water-Reports', landscape: 'https://sterlingranchcab.com/338/Homeowner-Landscape-Class',
 };
 const hashes = Object.fromEntries(approvals.decisions.map(d => [d.decisionId, d.versions[0].contentHash]));
+// These are the reviewed outgoing-link identities observed on the exact page
+// versions named in the decision artifact.  A claim name is never enough to
+// authorize a resident-facing destination.
+const approvedActionProofs = {
+  'trash-recurring-service': [
+    ['Open the CAB trash and recycling concern form', 'https://www.sterlingranchcab.com/298/Submit-Your-Feedback', 'information'],
+    ['Open WasteConnect', 'https://apps.apple.com/app/id1442351850', 'information'],
+  ],
+  'streetlight-report-route': [['Open the CAB concern and feedback form', 'https://www.sterlingranchcab.com/298/Submit-Your-Feedback', 'information']],
+  'courtreserve-portal': [['Open CourtReserve', 'https://app.courtreserve.com/Online/Portal/Index/15838', 'information']],
+  'great-hall-booking-link': [['Open the Great Hall booking page', 'https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9', 'information']],
+  'overlook-clubhouse-navigation': [['Open Great Hall', URLs.greatHall, 'information'], ['Open Overlook & Virtual', 'https://sterlingranchcab.com/Facilities/Facility/Details/-8', 'information'], ['Open Pool', 'https://sterlingranchcab.com/Facilities/Facility/Details/-2', 'information']],
+  'cab-contact-directory-route': [['Open CAB contact directory', URLs.contact, 'information'], ['Open Sterling Ranch 311', 'https://sterlingranchcab.com/298/Sterling-Ranch-311', 'information']],
+  'rules-hub-municode-link': [['Open Sterling Ranch Municode', 'https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations', 'information']],
+  'water-reports-directory': [['Open official water reports', URLs.water, 'information']],
+  'landscape-class-calendar': [['Open the community calendar', 'https://sterlingranchcab.com/calendar.aspx?CID=0&view=list', 'information']],
+};
 const staleAfter = '2026-09-17T20:00:00.000Z';
 function action(id, label, url, approvalClaim, reviewDecisionId) { return { id, label, url, context: label, actionType: 'information', approvalClaim, reviewDecisionId, reviewStatus: 'approved', reviewedBy: 'owner', reviewedAt: approvals.decidedAt }; }
 function fact(id, value, approvalClaim, reviewDecisionId, type = 'information') { return { id, type, value, context: value, approvalClaim, reviewDecisionId, reviewStatus: 'approved', reviewedBy: 'owner', reviewedAt: approvals.decidedAt }; }
@@ -23,4 +40,4 @@ function buildApprovedV5Sources() {
     source('approved-landscape-class-calendar', 'Landscape class calendar navigation', URLs.landscape, 'landscape-class-calendar', 'Open the official community calendar to find the next landscape class.', { actions: [action('open-landscape-class-calendar', 'Open the community calendar', 'https://sterlingranchcab.com/calendar.aspx?CID=0&view=list', 'landscape-class-calendar-route', 'landscape-class-calendar')] }),
   ];
 }
-module.exports = { approvals, buildApprovedV5Sources, hashes };
+module.exports = { approvals, approvedActionProofs, buildApprovedV5Sources, hashes };

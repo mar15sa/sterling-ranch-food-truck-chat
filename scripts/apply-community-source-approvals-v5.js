@@ -3,12 +3,19 @@ const path = require('node:path');
 const { buildFactLedger, resolveFactLedger } = require('../lib/community-truth');
 const { scopedApprovalsForVersion } = require('../lib/canonical-source-ledger');
 const ledger = require('../data/canonical-source-ledger.json');
-const { approvals, buildApprovedV5Sources } = require('../data/community-source-approvals-v5');
-function applyCommunitySourceApprovalsV5(index) {
-  const additions = buildApprovedV5Sources();
+const { approvals, approvedActionProofs, buildApprovedV5Sources } = require('../data/community-source-approvals-v5');
+const { actionIdentity } = require('../lib/community-approved-revalidation');
+function applyCommunitySourceApprovalsV5(index, { sourceBuilder = buildApprovedV5Sources } = {}) {
+  const additions = sourceBuilder();
   for (const source of additions) for (const item of [...source.facts, ...source.actions]) {
-    const claims = scopedApprovalsForVersion(ledger, source, approvals.communityId).flatMap(a => (a.approvedClaims || []).map(c => [c, a.decisionId]));
-    if (!claims.some(([claim, decision]) => claim === item.approvalClaim && decision === item.reviewDecisionId)) throw new Error(`${item.id} is outside its exact canonical decision.`);
+    const scoped = scopedApprovalsForVersion(ledger, source, approvals.communityId);
+    const approval = scoped.find(a => (a.approvedClaims || []).includes(item.approvalClaim) && a.decisionId === item.reviewDecisionId);
+    if (!approval) throw new Error(`${item.id} is outside its exact canonical decision.`);
+    if (item.url) {
+      const proof = approval.approvedActions || approvedActionProofs[item.reviewDecisionId] || [];
+      const expected = proof.map(([label, url, actionType]) => ({ label, url, actionType }));
+      if (!expected.some(candidate => actionIdentity([candidate]) === actionIdentity([item]))) throw new Error(`${item.id} does not match the reviewed action identity for ${item.reviewDecisionId}.`);
+    }
     item.sourceVersion = source.contentHash;
   }
   const ids = new Set(additions.map(s => s.id));
