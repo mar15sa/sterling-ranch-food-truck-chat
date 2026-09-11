@@ -87,7 +87,7 @@ test("an unapproved service request stays withheld instead of regaining a canned
 
 test("specific plant evidence comes from the selected source instead of answer code", async () => {
   const result = await answerWithoutAi("Can I grow raspberries near my property line?");
-  assert.match(result.answer, /Boulder Raspberry/i);
+  assert.match(result.answer, /Boulder Raspberry is a preapproved shrub/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Boulder Raspberry/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Shrub/i);
 });
@@ -95,7 +95,7 @@ test("specific plant evidence comes from the selected source instead of answer c
 test("named plant answers preserve a non-raspberry multiword common name", async () => {
   const result = await answerWithoutAi("Can I plant Blue Point Juniper?");
   assert.equal(result.confidence?.canAnswer, true);
-  assert.match(result.answer, /Blue Point Juniper is preapproved and evergreen/i);
+  assert.match(result.answer, /Blue Point Juniper is a preapproved evergreen/i);
   assert.doesNotMatch(result.answer, /Short answer:\s*Point Juniper:/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Blue Point Juniper/i);
   assert.match(result.sources?.[0]?.text || "", /JUNIPERUS CHINENSIS ['"]BLUE POINT['"]/i);
@@ -235,13 +235,61 @@ test("live-shaped plant questions synthesize from one focused row instead of the
 
     assert.equal(result.answer, naturalAnswer, question);
     assert.match(synthesisDraft, /Boulder Raspberry/i, question);
-    assert.match(synthesisDraft, /Boulder Raspberry: preapproved and shrub/i, question);
+    assert.match(synthesisDraft, /Boulder Raspberry is a preapproved shrub/i, question);
     assert.doesNotMatch(synthesisDraft, /Botanical Common Ht x Spd|Freeman Maple|Amur Maple|30' x 15'/i, question);
     assert.deepEqual(
       llmRewriteIssues(naturalAnswer, synthesisDraft, synthesisSources, question),
       [],
       question
     );
+  }
+});
+
+test("multiple focused plant rows reach synthesis with explicit height and spread labels", async () => {
+  const cases = [
+    {
+      question: "Can I plant Boulder Raspberry in my side yard?",
+      answer: "Boulder Raspberry is a preapproved shrub. It grows 8 feet tall and 6 feet wide.",
+      height: "8 feet",
+      width: "6 feet",
+    },
+    {
+      question: "Can I plant Blue Point Juniper in my side yard?",
+      answer: "Blue Point Juniper is a preapproved evergreen. It grows 15 feet tall and 8 feet wide.",
+      height: "15 feet",
+      width: "8 feet",
+    },
+  ];
+  const previousKey = process.env.ANTHROPIC_API_KEY;
+  const previousFetch = global.fetch;
+  process.env.ANTHROPIC_API_KEY = "test-key";
+  try {
+    for (const item of cases) {
+      let prompt = "";
+      global.fetch = async (_url, options) => {
+        prompt = JSON.parse(options.body).messages[0].content;
+        return {
+          ok: true,
+          json: async () => ({
+            content: [{ type: "text", text: item.answer }],
+            usage: { input_tokens: 1, output_tokens: 1 },
+          }),
+        };
+      };
+      const result = await answerRulesQuestion(item.question, {
+        searchMode: "ai-hybrid",
+        llmMode: "selective",
+        interpretation: { intent: "rules", needsClarification: false },
+      });
+
+      assert.equal(result.answer, item.answer, item.question);
+      assert.match(prompt, new RegExp(`Explicit labeled facts from this source: Height: ${item.height}; Spread/width: ${item.width}\\.`), item.question);
+      assert.doesNotMatch(prompt, /Height:\s*6 feet; Spread\/width:\s*8 feet/i, item.question);
+    }
+  } finally {
+    global.fetch = previousFetch;
+    if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = previousKey;
   }
 });
 
@@ -279,7 +327,7 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
 
     assert.equal(accepted.answer, correctRewrite);
     assert.notEqual(rejected.answer, swappedRewrite);
-    assert.match(rejected.directAnswer, /^Boulder Raspberry is preapproved and shrub\./i);
+    assert.match(rejected.directAnswer, /^Boulder Raspberry is a preapproved shrub\./i);
     assert.match(rejected.answer, /Height:\s*8 feet/i);
     assert.match(rejected.answer, /Spread\/width:\s*6 feet/i);
     assert.doesNotMatch(rejected.answer, /6 feet tall|8 feet wide/i);
