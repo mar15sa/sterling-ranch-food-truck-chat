@@ -110,7 +110,7 @@ function conversationScrolls() {
 
 function scrollToBottom() {
   const behavior = reduceMotion ? "auto" : "smooth";
-  if (conversationScrolls()) {
+  if (document.body.classList.contains("chat-workspace") || conversationScrolls()) {
     rulesScroll.scrollTo({ top: rulesScroll.scrollHeight, behavior });
   } else {
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior });
@@ -119,7 +119,7 @@ function scrollToBottom() {
 
 function scrollToMessageStart(message) {
   const behavior = reduceMotion ? "auto" : "smooth";
-  if (conversationScrolls()) {
+  if (document.body.classList.contains("chat-workspace") || conversationScrolls()) {
     const top =
       message.getBoundingClientRect().top -
       rulesScroll.getBoundingClientRect().top +
@@ -816,19 +816,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// Full disclaimer on desktop; collapsed on mobile. Only flip when crossing the
-// breakpoint so a user's manual expand on mobile isn't undone by every resize.
-const disclaimerEl = document.querySelector(".rules-disclaimer");
-let disclaimerIsDesktop = null;
-function syncDisclaimerForViewport() {
-  if (!disclaimerEl) return;
-  const isDesktop = window.innerWidth > 720;
-  if (isDesktop === disclaimerIsDesktop) return;
-  disclaimerIsDesktop = isDesktop;
-  disclaimerEl.open = isDesktop;
-}
-syncDisclaimerForViewport();
-window.addEventListener("resize", syncDisclaimerForViewport);
+// The disclaimer starts collapsed; its native disclosure preserves the resident’s choice.
 
 loadStatus();
 

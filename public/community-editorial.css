@@ -29,7 +29,6 @@ body.community-editorial {
 .community-editorial .community-intro { font-size: 21px; line-height: 1.35; margin: 0; max-width: 43ch; }
 .community-hero-art { position: absolute; z-index: -1; right: -2vw; bottom: 0; width: 53%; height: 100%; object-fit: cover; object-position: center; mix-blend-mode: multiply; opacity: .8; mask-image: linear-gradient(to right, transparent, black 28%); }
 .pool-editorial .community-hero-art { object-position: center 58%; }
-.assistant-editorial .community-hero-art { filter: grayscale(1) contrast(1.08) brightness(1.04); }
 .community-editorial .society-text-link { font: 17px/1.4 "Times New Roman", serif; text-decoration: underline; }
 .community-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 5px 0 24px; }
 .community-section-heading h2 { font-size: 36px; letter-spacing: -1px; margin: 0; }
@@ -62,29 +61,6 @@ body.community-editorial {
 .pool-editorial .pool-section { padding: 30px 0 34px; }
 .pool-editorial .pool-section-heading h2 { font-size: 36px; letter-spacing: -1px; }
 .pool-editorial .pool-section-heading p { font-size: 18px; line-height: 1.5; }
-.assistant-editorial .rules-header-inner { padding: 14px 0; align-items: center; border-bottom: 1px solid var(--society-silver); gap: 16px; }
-.assistant-editorial .rules-brand { min-width: 0; }
-.assistant-editorial .rules-statusbar { margin: 0; font-size: 13px; }
-.assistant-editorial .rules-source-link { display: inline-flex; font: 15px "Times New Roman", serif; flex-shrink: 0; }
-.assistant-editorial .society-assistant-layout { margin: 24px auto !important; max-width: 1100px; }
-.assistant-editorial .society-conversation-column { min-width: 0; }
-.assistant-editorial .rules-conversation { max-height: 520px; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; padding: 4px; }
-.assistant-editorial .rules-thread { padding: 0; }
-.assistant-editorial .rules-message { font-size: 18px; padding: 24px; border-color: color-mix(in srgb, var(--society-teal) 35%, white); border-radius: 6px; }
-.assistant-editorial .rules-message-bot { background: color-mix(in srgb, var(--society-soft) 70%, white); margin-right: 32px; }
-.assistant-editorial .rules-message-user { background: var(--society-cloud); color: var(--society-navy); }
-.assistant-editorial .rules-answer { font: 18px/1.5 "Times New Roman", serif; }
-.assistant-editorial .rules-dock { margin-top: 18px; }
-.assistant-editorial .rules-dock-inner { padding-top: 18px; }
-.assistant-editorial .rules-starters { gap: 10px; }
-.assistant-editorial .rules-starters button { background: var(--society-soft); font-size: 16px; font-weight: 400; padding: 10px 14px; border-color: var(--society-silver); }
-.assistant-editorial .rules-starters button:hover { background: var(--society-cloud); }
-.assistant-editorial .rules-composer { border-color: var(--society-silver); background: white; }
-.assistant-editorial .rules-composer textarea { font: 18px/1.4 "Times New Roman", serif; color: var(--society-navy); }
-.assistant-editorial .rules-send { background: var(--society-navy); border-radius: 3px; }
-.assistant-editorial .rules-hint { font-size: 12px; }
-.assistant-editorial .rules-footer { padding: 14px 0 22px; border-top: 0; }
-.assistant-editorial .rules-disclaimer p { font: 14px/1.5 "Times New Roman", serif; max-width: 105ch; }
 @media (min-width: 761px) and (max-width: 1200px) {
   .community-editorial .society-header { gap: 30px; justify-content: space-between; }
   .community-editorial .society-nav { gap: 17px; }
@@ -129,13 +105,6 @@ body.community-editorial {
   .pool-editorial .pool-status-meta > div { padding: 0; border: 0; }
   .pool-editorial .pool-command-row { gap: 14px; flex-wrap: wrap; }
   .pool-editorial .pool-section-heading h2 { font-size: 32px; }
-  .assistant-editorial .rules-header-inner { flex-wrap: wrap; gap: 8px; }
-  .assistant-editorial .rules-statusbar { flex-wrap: wrap; }
-  .assistant-editorial .rules-source-link { min-height: 32px; }
-  .assistant-editorial .rules-message { padding: 18px; margin-right: 0; }
-  .assistant-editorial .rules-conversation { max-height: 55dvh; }
-  .assistant-editorial .rules-starters button { font-size: 15px; }
-  .assistant-editorial .rules-composer textarea { font-size: 16px; }
 }
 @media (max-width: 360px) {
   .community-editorial .society-paper { padding-inline: 16px; }

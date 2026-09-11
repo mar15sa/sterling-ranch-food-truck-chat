@@ -1,0 +1,156 @@
+{
+  "mockedQuestions": 15,
+  "liveQuestions": 0,
+  "results": [
+    {
+      "url": "/food-truck",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 1366,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1366,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1366,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1366,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1366,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    }
+  ]
+}
