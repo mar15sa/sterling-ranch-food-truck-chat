@@ -560,7 +560,7 @@ test("a catalog-membership rewrite retries with supported facts instead of an in
     text: "Beacon Roofing is an approved contractor. Contact the CAB for approval guidance.",
   }];
   const candidates = [
-    "Acme Roofing isn't on the approved contractor directory for this community.",
+    "Acme Roofing isn't on the approved contractor directory for this community, but that doesn't mean it cannot be approved.",
     "The approved contractor directory lists Beacon Roofing. It does not confirm whether Acme Roofing is approved. Contact the CAB for approval guidance.",
   ];
   const previousKey = process.env.ANTHROPIC_API_KEY;

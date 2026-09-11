@@ -48,6 +48,21 @@ test("semantic search-miss wording cannot claim that a named catalog item is abs
       answer: "Acme Roofing does not appear in the approved contractor directory for this community.",
       source: { title: "Approved contractor directory", text: "Beacon Roofing is an approved contractor." },
     },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "Moonbeam Dragonfruit isn't on the preapproved plant list, but that doesn't mean you can't grow it.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I hire Acme Roofing?",
+      answer: "Acme Roofing is not listed in the approved contractor directory; contact the CAB for approval guidance.",
+      source: { title: "Approved contractor directory", text: "Beacon Roofing is an approved contractor." },
+    },
+    {
+      question: "Can I hire Acme Roofing?",
+      answer: "Acme Roofing doesn't appear in the approved contractor directory — the directory may not be complete.",
+      source: { title: "Approved contractor directory", text: "Beacon Roofing is an approved contractor." },
+    },
   ];
 
   for (const { question, answer, source } of cases) {
@@ -79,6 +94,13 @@ test("the semantic guard allows explicit exclusion evidence and ordinary uncerta
     [{ title: "Application rule", text: "Submit the application to the CAB." }]
   );
   assert.ok(!nonCatalog.includes(unsupportedIssue));
+
+  const cautiousMembershipBoundary = answerCoverageIssues(
+    "Can I grow Moonbeam Dragonfruit?",
+    "The official source does not confirm whether Moonbeam Dragonfruit is included. Check with the DRC before planting.",
+    [{ title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." }]
+  );
+  assert.ok(!cautiousMembershipBoundary.includes(unsupportedIssue));
 });
 
 test("community answer validation rejects indirect negative catalog membership claims", () => {
