@@ -2,8 +2,10 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
-const { llmRewriteIssues } = require("../lib/rules-grounding");
+const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { focusedDimensionDetails, llmRewriteIssues } = require("../lib/rules-grounding");
 const { isPlantPermissionQuestion } = require("../lib/rules-intent");
+const communityIndex = require("../data/community-index.json");
 
 const answerWithoutAi = (question) => answerRulesQuestion(question, {
   searchMode: "legacy",
@@ -93,7 +95,7 @@ test("specific plant evidence comes from the selected source instead of answer c
 test("named plant answers preserve a non-raspberry multiword common name", async () => {
   const result = await answerWithoutAi("Can I plant Blue Point Juniper?");
   assert.equal(result.confidence?.canAnswer, true);
-  assert.match(result.answer, /Blue Point Juniper: preapproved and evergreen/i);
+  assert.match(result.answer, /Blue Point Juniper is preapproved and evergreen/i);
   assert.doesNotMatch(result.answer, /Short answer:\s*Point Juniper:/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Blue Point Juniper/i);
   assert.match(result.sources?.[0]?.text || "", /JUNIPERUS CHINENSIS ['"]BLUE POINT['"]/i);
@@ -264,15 +266,29 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
       llmMode: "selective",
       interpretation: { intent: "rules", needsClarification: false },
     };
-    const rejected = await answerRulesQuestion(question, options);
+    const rejected = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      answerRulesQuestion,
+      rulesOptions: options,
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+    });
     responseText = correctRewrite;
     const accepted = await answerRulesQuestion(question, options);
 
     assert.equal(accepted.answer, correctRewrite);
     assert.notEqual(rejected.answer, swappedRewrite);
-    assert.match(rejected.answer, /Boulder Raspberry/i);
+    assert.match(rejected.directAnswer, /^Boulder Raspberry is preapproved and shrub\./i);
+    assert.match(rejected.answer, /Height:\s*8 feet/i);
+    assert.match(rejected.answer, /Spread\/width:\s*6 feet/i);
     assert.doesNotMatch(rejected.answer, /6 feet tall|8 feet wide/i);
     assert.doesNotMatch(rejected.answer, /Short answer|What I found|Before you act/i);
+    assert.ok(rejected.keyDetails.some((detail) => /Height:\s*8 feet/i.test(detail)));
+    assert.ok(rejected.keyDetails.some((detail) => /Spread\/width:\s*6 feet/i.test(detail)));
+    assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
+    assert.match(rejected.nextStep, /Open the linked official section/i);
+    assert.equal((rejected.answer.match(/Open the linked official section/gi) || []).length, 1);
   } finally {
     global.fetch = previousFetch;
     if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
@@ -284,6 +300,8 @@ test("grounding preserves labeled values across a second dimension family", () =
   const sources = [{
     title: "Current installation standard",
     text: "Maximum depth: 4 feet. Minimum setback: 10 feet.",
+    excerpt: "Maximum depth: 4 feet. Minimum setback: 10 feet.",
+    questionSpecificExcerpt: true,
   }];
   const draft = "Short answer: The maximum depth is 4 feet and the minimum setback is 10 feet.";
 
@@ -295,6 +313,10 @@ test("grounding preserves labeled values across a second dimension family", () =
     llmRewriteIssues("The maximum depth is 10 feet, with a minimum setback of 4 feet.", draft, sources).join(" "),
     /attribute\/value binding.*depth=10 ft.*setback=4 ft/i
   );
+  assert.deepEqual(focusedDimensionDetails(sources), [
+    { role: "depth", value: "4 ft" },
+    { role: "setback", value: "10 ft" },
+  ]);
 });
 
 test("focused evidence still rejects omitted relevant limits and invented facts", () => {
