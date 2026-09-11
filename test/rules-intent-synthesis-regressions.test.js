@@ -126,3 +126,25 @@ test("natural synthesis cannot drop sourced examples that were carried in bullet
     /proper noun.*dropped/i
   );
 });
+
+test("broad overviews retain every available evidence facet before synthesis", async () => {
+  const landscape = await answerWithoutAi("Give me an overview of the landscaping and yard requirements");
+  for (const fact of [
+    /submitted for review and approval/i,
+    /front yard design and installation/i,
+    /backyard landscaping/i,
+    /underground irrigation system/i,
+    /kept healthy/i,
+  ]) assert.match(landscape.answer, fact);
+
+  const parks = await answerWithoutAi("What should I know about the rules for parks and open spaces?");
+  for (const fact of [
+    /open from .*a\.m\..*p\.m\./i,
+    /must leash/i,
+    /motorized vehicles are prohibited/i,
+    /glass containers, littering, dumping/i,
+    /fires are only permitted/i,
+    /swimming or the use of watercraft/i,
+    /camping in any CAB Park/i,
+  ]) assert.match(parks.answer, fact);
+});
