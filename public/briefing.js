@@ -24,7 +24,7 @@
     if (!response.ok) throw new Error("Service unavailable");
     return response.json();
   }
-  function row(title, detail, href, date) {
+  function row(title, detail, href, date, headingTag = "h3") {
     const link = document.createElement("a");
     link.className = "briefing-row";
     link.href = href;
@@ -43,7 +43,7 @@
       link.append(day);
     }
     const copy = document.createElement("div");
-    const heading = document.createElement("h3");
+    const heading = document.createElement(headingTag);
     heading.textContent = title;
     const text = document.createElement("p");
     text.textContent = detail;
@@ -65,45 +65,68 @@
   }
   const events = document.querySelector("#briefing-events");
   if (events) {
-    read("/api/community/events")
-      .then((data) => {
-        events.replaceChildren();
-        for (const event of (data.events || []).slice(
-          0,
-          events.hasAttribute("data-full-calendar") ? 7 : 3,
-        )) {
-          const time = /^\d{2}:\d{2}$/.test(event.time || "")
-            ? new Intl.DateTimeFormat("en-US", {
-                hour: "numeric",
-                minute: "2-digit",
-                timeZone: "UTC",
-              }).format(new Date(`2000-01-01T${event.time}:00Z`))
-            : "";
-          events.append(
-            row(
-              event.title,
-              [time, event.location].filter(Boolean).join(" · "),
-              event.url,
-              event.date,
-            ),
-          );
+    const fullCalendar = events.hasAttribute("data-full-calendar");
+    const timeKey = new Intl.DateTimeFormat("en-GB", { timeZone: "America/Denver", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(now);
+    const tomorrow = new Date(dateKey + "T12:00:00Z");
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+    const tomorrowKey = tomorrow.toISOString().slice(0, 10);
+    const dateLabel = (date) => date === dateKey ? "Today" : date === tomorrowKey ? "Tomorrow" : new Intl.DateTimeFormat("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: "UTC" }).format(new Date(date + "T12:00:00Z"));
+    const eventTime = (event) => /^\d{2}:\d{2}$/.test(event.time || "") ? new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: "UTC" }).format(new Date("2000-01-01T" + event.time + ":00Z")) : "Time not listed";
+    function notice(text) {
+      const note = document.createElement("p");
+      note.className = "calendar-notice";
+      note.setAttribute("role", "status");
+      note.textContent = text;
+      calendarFallback(note);
+      events.append(note);
+    }
+    function appendEvents(items, container, grouped) {
+      let previousDate = null;
+      for (const event of items) {
+        if (grouped && event.date !== previousDate) {
+          const heading = document.createElement("h3");
+          heading.className = "calendar-date-heading";
+          heading.textContent = dateLabel(event.date);
+          container.append(heading);
+          previousDate = event.date;
         }
-        if (!data.events?.length || data.status === "partial") {
-          const note = document.createElement("p");
-          note.textContent =
-            data.status === "empty"
-              ? "No upcoming events are listed in the next seven days. Check the official calendar for updates."
-              : "Some calendar listings couldn’t load just now. Check the official calendar for the latest details.";
-          calendarFallback(note);
-          events.append(note);
-        }
-      })
-      .catch(() => {
-        events.textContent =
-          "Upcoming events couldn’t load just now. Try again later.";
-        calendarFallback(events);
-      })
-      .finally(() => events.setAttribute("aria-busy", "false"));
+        container.append(row(event.title, [eventTime(event), event.location].filter(Boolean).join(" · "), event.url, event.date, grouped ? "h4" : "h3"));
+      }
+    }
+    read("/api/community/events").then((data) => {
+      events.replaceChildren();
+      if (data.status === "partial") notice("Some listings are unavailable. This list may be incomplete.");
+      const entries = (data.events || []).filter(e => /^\d{4}-\d{2}-\d{2}$/.test(e.date || "")).sort((a,b) => a.date.localeCompare(b.date) || String(a.time || "").localeCompare(String(b.time || "")));
+      const started = entries.filter(e => e.date === dateKey && /^\d{2}:\d{2}$/.test(e.time || "") && e.time < timeKey);
+      const upcoming = entries.filter(e => e.date >= dateKey && !started.includes(e));
+      appendEvents(upcoming.slice(0, fullCalendar ? 14 : 3), events, fullCalendar);
+      if (!upcoming.length) notice("No upcoming events are available in these listings.");
+      if (fullCalendar && started.length) {
+        const earlier = document.createElement("details");
+        earlier.className = "calendar-earlier";
+        const summary = document.createElement("summary");
+        summary.textContent = "Started earlier today (" + started.length + ")";
+        earlier.append(summary);
+        appendEvents(started, earlier, false);
+        events.append(earlier);
+      }
+      const next = document.querySelector("#briefing-next-event");
+      if (next && upcoming[0]) {
+        const event = upcoming[0];
+        next.href = event.url;
+        const label = document.createElement("span");
+        label.textContent = "Next on the calendar";
+        const title = document.createElement("strong");
+        title.textContent = event.title;
+        const detail = document.createElement("span");
+        detail.textContent = dateLabel(event.date) + " · " + eventTime(event);
+        next.replaceChildren(label, title, detail);
+        next.hidden = false;
+      }
+    }).catch(() => {
+      events.replaceChildren();
+      notice("Upcoming events couldn’t load just now. Please use the official calendar.");
+    }).finally(() => events.setAttribute("aria-busy", "false"));
   }
   if (document.querySelector("#briefing-truck"))
     read("/api/ask?date=" + encodeURIComponent(dateKey))

@@ -132,3 +132,13 @@ body.openings-page {
   .openings-page .society-feedback-link { padding: 8px 12px; }
   .openings-page .society-feedback-link:first-child { border-left: 0; padding-left: 0; }
 }
+
+/* Audit: essential card metadata stays readable at every screen size. */
+.openings-page :is(.status-badge,.card-place,.evidence-badge) { font-size: 12px; letter-spacing: .2px; }
+.openings-page :is(.verified-date,.category) { font-size: 13px; }
+.openings-page .card-top { flex-wrap: wrap; gap: 6px 10px; }
+.openings-page .opening-card summary { font-size: 13px; min-height: 40px; }
+.openings-page .stats button span { font-size: 12px; letter-spacing: .4px; }
+.openings-page .hero-summary { font-size: 14px; }
+.openings-page .card-summary { line-height: 1.35; }
+

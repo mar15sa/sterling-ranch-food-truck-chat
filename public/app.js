@@ -376,7 +376,17 @@ function renderTruckListing(listing, friendlyDate) {
 
 function addBotResult(data, scroll = true) {
   const node = template.content.firstElementChild.cloneNode(true);
-  node.querySelector(".answer-text").textContent = data.text;
+  const answer = node.querySelector(".answer-text");
+  answer.textContent = data.text;
+  if (data.truck && data.menu?.items?.length && !data.error && !data.stale && !data.warning) {
+    const details = document.createElement("details");
+    details.className = "food-response-details";
+    const summary = document.createElement("summary");
+    summary.textContent = "Response details";
+    details.append(summary);
+    node.querySelector(".result-meta").before(details);
+    details.append(answer);
+  }
 
   const source = node.querySelector(".source-link");
   source.href = data.sourceUrl;
@@ -388,6 +398,8 @@ function addBotResult(data, scroll = true) {
     truckListings.forEach((listing) => {
       node.insertBefore(renderTruckListing(listing, data.friendlyDate), meta);
     });
+    const responseDetails = node.querySelector(".food-response-details");
+    if (responseDetails) meta.before(responseDetails);
     messages.append(node);
     if (scroll) scrollToMessageStart(node);
     return;

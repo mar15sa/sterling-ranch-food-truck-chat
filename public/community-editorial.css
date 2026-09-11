@@ -111,3 +111,29 @@ body.community-editorial {
   .community-brand-copy { font-size: 12px; letter-spacing: 1px; }
   .community-brand-copy small { font-size: 7px; letter-spacing: .7px; }
 }
+
+/* Audit: concise Calendar introduction and readable date groups. */
+.calendar-editorial .community-hero { min-height: 170px; padding: 22px 0; }
+.calendar-editorial .community-hero-copy { width: 65%; }
+.calendar-editorial .community-hero h1 { font-size: clamp(38px,4vw,56px); max-width: none; margin-bottom: 8px; letter-spacing: -1.4px; }
+.calendar-editorial .community-intro { font-size: 18px; }
+.calendar-editorial .society-food-layout { display: block; max-width: 960px; margin: 24px auto; }
+.calendar-editorial .community-section-heading { padding-bottom: 12px; }
+.calendar-editorial .community-section-heading h2 { font-size: 30px; }
+.calendar-editorial .calendar-date-heading { margin: 24px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--society-silver); font: bold 20px/1.3 "Times New Roman",serif; }
+.calendar-editorial .briefing-row { min-height: 0; padding: 14px 0; }
+.calendar-editorial .briefing-row :is(h3,h4) { margin: 0; font: bold 22px/1.2 "Times New Roman",serif; letter-spacing: -.3px; }
+.calendar-editorial .briefing-row p { font-size: 16px; margin-top: 5px; }
+.calendar-editorial .briefing-day { display: none; }
+.calendar-editorial .calendar-earlier { margin-top: 24px; }
+.calendar-editorial .calendar-earlier summary { cursor: pointer; min-height: 44px; padding-block: 10px; font-size: 17px; }
+.calendar-notice { margin: 0 0 18px; padding: 12px 14px; border-left: 3px solid #4f7d7b; background: #edf2f1; font: 16px/1.45 "Times New Roman",serif; }
+.pool-editorial .community-hero-art { mask-image: linear-gradient(to right,transparent,black 28%,black 94%,transparent); }
+.pool-editorial .pool-status-meta dt { font-size: 12px; letter-spacing: .5px; }
+@media (max-width:760px) {
+ .calendar-editorial .community-hero-copy { width: 100%; }
+ .calendar-editorial .community-hero-art { position: absolute; width: 70%; height: 100%; opacity: .18; right: 0; margin: 0; }
+ .calendar-editorial .community-hero { padding-block: 20px; }
+ .calendar-editorial .community-section-heading { gap: 4px; }
+ .pool-editorial .community-hero-art { mask-image: linear-gradient(to bottom,transparent,black 25%,black 90%,transparent); }
+}

@@ -33,3 +33,7 @@
   .subpage-brand-copy { font-size: 12px; }
   .subpage-brand-copy small { font-size: 7px; letter-spacing: .7px; }
 }
+
+@media (max-width:760px) {
+ .society-page.society-subpage .society-header { min-height: 68px; padding-block: 10px; }
+}

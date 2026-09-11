@@ -48,9 +48,9 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/environment.js"></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
-    <link rel="stylesheet" href="/briefing-home.css?v=20260910-heritage-footer" />
+    <link rel="stylesheet" href="/briefing-home.css?v=20260910-audit-followup" />
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
-    <link rel="stylesheet" href="/society-footer.css?v=20260910-shared" />
+    <link rel="stylesheet" href="/society-footer.css?v=20260910-audit-followup" />
   </head>
   <body class="society-page briefing-page">
     <a class="society-skip" href="#main-content">Skip to content</a>
@@ -87,13 +87,14 @@
           </div>
           <p class="briefing-date" id="briefing-date"></p>
         </section>
+        <nav class="briefing-jump-links" aria-label="Briefing sections"><a href="#today-food">Today</a><a href="#today-assistant">Ask</a><a href="#today-calendar">Events</a><a href="#today-openings">Openings</a><a href="#today-pool">Pool</a></nav>
         <div class="briefing-lead">
-          <section class="briefing-food">
+          <section class="briefing-food" id="today-food">
             <p class="society-eyebrow">TODAY’S FOOD TRUCK</p>
             <h2 id="briefing-truck">Checking today’s calendar…</h2>
             <div class="briefing-food-story">
               <img
-                src="/society-truck.png"
+                src="/society-food-truck-v2.webp"
                 alt="Illustration of a food truck"
               />
               <div>
@@ -105,8 +106,9 @@
                 >
               </div>
             </div>
+            <a class="briefing-next-event" id="briefing-next-event" hidden></a>
           </section>
-          <section class="briefing-assistant">
+          <section class="briefing-assistant" id="today-assistant">
             <p class="society-eyebrow">COMMUNITY ASSISTANT</p>
             <h2>How can we help?</h2>
             <p>
@@ -136,7 +138,7 @@
           </section>
         </div>
         <div class="briefing-columns">
-          <section>
+          <section id="today-calendar">
             <div class="briefing-section-heading">
               <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#calendar"></use></svg>ON THE CALENDAR</h2>
               <a class="society-text-link" href="/calendar">View full calendar →</a>
@@ -145,7 +147,7 @@
               <p>Loading upcoming community events…</p>
             </div>
           </section>
-          <section>
+          <section id="today-openings">
             <div class="briefing-section-heading">
               <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#megaphone"></use></svg>OPENINGS & ARRIVALS</h2>
               <a class="society-text-link" href="/openings">See all openings →</a>
@@ -154,7 +156,7 @@
               <p>Loading nearby openings…</p>
             </div>
           </section>
-          <section class="briefing-pool">
+          <section class="briefing-pool" id="today-pool">
             <div class="briefing-section-heading">
               <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#pool"></use></svg>POOL & AMENITIES</h2>
             </div>
@@ -169,7 +171,7 @@
           </section>
         </div>
       </main>
-      <script src="/briefing.js?v=20260910-cleanup" defer></script>
+      <script src="/briefing.js?v=20260910-audit-followup" defer></script>
       <footer class="society-footer site-footer">
         <div class="site-footer-brand"><b>Sterling Ranch Society</b><span>Douglas County, Colorado</span></div>
         <div class="site-footer-links">

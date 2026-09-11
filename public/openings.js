@@ -106,6 +106,15 @@ function fillSelect(select, values) {
   }
 }
 
+function categoryGroup(category) {
+  if (/coffee|bakery/i.test(category)) return "Coffee & bakeries";
+  if (/restaurant|\bbar\b|brewery/i.test(category)) return "Food & drink";
+  if (/fitness|wellness|recreation|entertainment/i.test(category)) return "Fitness & recreation";
+  if (/retail|shopping|grocery/i.test(category)) return "Shopping & groceries";
+  if (/service/i.test(category)) return "Services";
+  return category;
+}
+
 function renderSummary(catalog) {
   setText("#hero-count", catalog.total);
   setText("#hero-update", `Catalog checked ${formatDate(catalog.updatedAt)}.`);
@@ -113,7 +122,7 @@ function renderSummary(catalog) {
   setText("#stat-soon", catalog.stats.openingSoon);
   setText("#stat-open", catalog.stats.open);
   fillSelect(els.community, catalog.filters.communities);
-  fillSelect(els.category, catalog.filters.categories);
+  fillSelect(els.category, [...new Set(catalog.filters.categories.map(categoryGroup))].sort());
 }
 
 function cardFor(item) {
@@ -168,7 +177,7 @@ function filteredItems() {
   const filters = currentFilters();
   return state.catalog.items.filter((item) => {
     if (filters.community !== "all" && item.community !== filters.community) return false;
-    if (filters.category !== "all" && item.category !== filters.category) return false;
+    if (filters.category !== "all" && categoryGroup(item.category) !== filters.category) return false;
     if (filters.status !== "all" && item.status !== filters.status) return false;
     if (filters.quickStatus === "coming" && ["open", "closed"].includes(item.status)) return false;
     if (["opening-soon", "open"].includes(filters.quickStatus) && item.status !== filters.quickStatus) return false;
@@ -209,6 +218,7 @@ function renderList() {
   els.pagePrevious.disabled = state.page === 1;
   els.pageNext.disabled = state.page === pageCount;
   els.pageStatus.textContent = `Page ${state.page} of ${pageCount}`;
+  els.resultCount.textContent = state.items.length ? `Showing ${start + 1}–${start + pageItems.length} of ${state.items.length} places` : "0 matching places";
 }
 
 function renderItems() {
@@ -216,7 +226,6 @@ function renderItems() {
   renderList();
   const active = Object.values(currentFilters()).some((value) => value && value !== "all");
   els.clear.hidden = !active;
-  els.resultCount.textContent = `${state.items.length} ${state.items.length === 1 ? "place" : "places"} shown`;
   const selectedCommunity = currentFilters().community;
   const coverage = state.catalog.communityCoverage?.[selectedCommunity];
   els.emptyTitle.textContent = coverage?.emptyTitle || "No matches yet";
