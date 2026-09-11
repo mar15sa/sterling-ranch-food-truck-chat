@@ -35,14 +35,14 @@
     ></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
+    <link rel="stylesheet" href="/community-editorial.css?v=20260910-community" />
     <link rel="stylesheet" href="/society-footer.css?v=20260910-shared" />
   </head>
-  <body class="pool-page society-page" data-pool-state="loading">
+  <body class="pool-page society-page community-editorial pool-editorial" data-pool-state="loading">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
-        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
-        ><button
+        <a class="society-brand" href="/" aria-label="Sterling Ranch Society home"><span class="community-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span><span class="community-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span></a><button
           class="society-menu"
           type="button"
           aria-expanded="false"
@@ -63,13 +63,7 @@
       </header>
 
       <main id="main-content" tabindex="-1">
-        <div class="society-page-title">
-          <p class="society-breadcrumb">
-            <a href="/">The Briefing</a> / Pool & Amenities
-          </p>
-          <h1>Pool & Amenities</h1>
-          <p>Seasonal updates and useful information for shared spaces.</p>
-        </div>
+        <div class="community-hero"><div class="community-hero-copy"><p class="community-kicker">POOL & AMENITIES</p><h1>A little time by the water.</h1><p class="community-intro">Seasonal updates and useful information for shared spaces.</p></div><img class="community-hero-art" src="/society-pool-v2.webp" alt="" fetchpriority="high" /></div>
         <section class="pool-status-band" aria-labelledby="poolStatusTitle">
           <div class="pool-status-inner">
             <div class="pool-status-panel">
@@ -152,14 +146,11 @@
               <p class="pool-kicker">Pool basics</p>
               <h2 id="poolInfoTitle">Before you go</h2>
               <p>
-                Hours and operating rules can change during the season. These
-                cards avoid repeating numbers that may become outdated; the
-                official CAB pool page linked above controls. Status source
-                checked
+                For current hours, access, events, rentals, and facility rules, visit the official CAB pool page. Status source checked
                 <span id="poolDetailsChecked">when this page loaded</span>.
               </p>
             </div>
-            <p>For hours, access, events, rentals, and facility rules, use the official CAB page linked above.</p>
+            <a class="society-text-link" href="https://sterlingranchcab.com/187/Pool" target="_blank" rel="noreferrer">Plan your visit ↗</a>
           </div>
         </section>
       </main>
