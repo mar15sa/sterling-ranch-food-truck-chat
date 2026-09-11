@@ -330,6 +330,12 @@ test("resident-supplied locations cannot become placement permission without cit
   const bounded = "Boulder Raspberry is a preapproved shrub. The cited list doesn't confirm whether placement along your fence line is allowed.";
   assert.deepEqual(locationScopeIssues(bounded, plantSource, cases[0][0]), []);
 
+  const disclaimerBypass = "Yes, you can plant it along your fence line; the source does not say you can't.";
+  assert.match(
+    locationScopeIssues(disclaimerBypass, plantSource, cases[0][0]).join(" "),
+    /affirmative placement claim.*fence-line/i
+  );
+
   const liveShapedOverclaim = "Yes, you can plant Boulder Raspberry along your fence line. It's a preapproved shrub that grows 8 feet tall and 6 feet wide, so you don't need special approval. Check setbacks and underground utilities before planting.";
   const liveIssues = llmRewriteIssues(
     liveShapedOverclaim,
@@ -352,6 +358,14 @@ test("location grounding applies outside plant names and permits genuinely cited
       "Can I put a storage box beside my driveway?"
     ).join(" "),
     /driveway/
+  );
+  assert.match(
+    locationScopeIssues(
+      "Yes, you can put it beside your driveway, but the source does not say you can't.",
+      itemOnly,
+      "Can I put a storage box beside my driveway?"
+    ).join(" "),
+    /affirmative placement claim.*driveway/i
   );
   assert.match(
     locationScopeIssues(
