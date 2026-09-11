@@ -10,7 +10,29 @@ const communityEvalCases = require("../scripts/community-eval-cases.json");
 const rulesEvalCases = require("../scripts/rules-eval-cases.json");
 
 const NOW = new Date("2026-09-01T18:00:00Z");
+const POOL_OFFSEASON_NOW = new Date("2026-09-10T12:00:00Z");
 const REPORTED_QUESTION = "What are the pool hours for Labor Day?";
+
+function closedPoolStatus(checkedAt = NOW, { communityId = "sterling-ranch", sourceUrl = "https://sterlingranchcab.com/187/Pool" } = {}) {
+  const evidenceId = `${communityId}:pool-status:current`;
+  return {
+    state: "closed",
+    headline: "Closed",
+    summary: "The official CAB status is Red Light: the pool is closed with no access for homeowners or guests.",
+    residentAction: "Open the official pool status for any additional details.",
+    sourceUrl,
+    actionUrl: sourceUrl,
+    checkedAt: new Date(checkedAt).toISOString(),
+    evidenceEnvelope: {
+      communityId,
+      connectorFamily: "live-status",
+      degradation: { state: "healthy" },
+      coverage: { covered: ["status"] },
+      evidence: [{ evidenceId, communityId, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+      claims: [{ facet: "status", text: "Closed", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+    },
+  };
+}
 
 function liveWasteEvidence(date) {
   return {
@@ -470,6 +492,158 @@ test("a current pool-status question still uses the live status connector", asyn
   assert.equal(poolCalls, 1);
   assert.equal(answer.answerMode, "community-live-status");
   assert.match(answer.directAnswer, /currently open/i);
+});
+
+test("pool reopening and next-season questions combine current closed status with the recurring season boundary", async () => {
+  const cases = [
+    ["When does the pool reopen next summer?", plan({ intent: "facilities", goal: "schedule", goals: ["schedule"], subject: "pool reopening next summer", requestedDetails: ["date", "hours"], searchQueries: ["pool next summer hours"] })],
+    ["What date will the pool open for the next season?", plan({ intent: "events", goal: "schedule", goals: ["schedule"], subject: "pool next season opening", requestedDetails: ["date"], searchQueries: ["pool next season"] })],
+    ["Is the pool closed until next season?", plan({ intent: "facilities", goal: "information", goals: ["information"], subject: "pool closed until next season", requestedDetails: [], searchQueries: ["pool season"] })],
+    ["When will the pool open again?", plan({ intent: "status", goal: "status", goals: ["status"], subject: "pool reopening", requestedDetails: ["status", "date"], searchQueries: ["pool reopening status"] })],
+  ];
+  for (const [question, routingPlan] of cases) {
+    let poolCalls = 0;
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured",
+      now: POOL_OFFSEASON_NOW,
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      communityProfile,
+      planCommunitySearch: async () => routingPlan,
+      synthesizeCommunityAnswer: false,
+      getPoolStatus: async () => {
+        poolCalls += 1;
+        return closedPoolStatus(POOL_OFFSEASON_NOW);
+      },
+    });
+    assert.equal(poolCalls, 1, question);
+    assert.equal(answer.answerMode, "community-live-pool-season-reopening", question);
+    assert.equal(answer.answerStatus, "verified-incomplete", question);
+    assert.match(answer.directAnswer, /^The pool is closed for the season\./i, question);
+    assert.match(answer.directAnswer, /can’t confirm next summer’s exact opening date from the current approved CAB information/i, question);
+    assert.match(answer.answer, /Memorial Day weekend through Labor Day/i, question);
+    assert.doesNotMatch(answer.answer, /\bcurrently open\b|5:00 am|8:45 pm/i, question);
+    assert.deepEqual(answer.completion.resolvedDetails, ["status"], question);
+    assert.deepEqual(answer.completion.missingDetails, [{ key: "date", reason: "missing-evidence" }], question);
+    assert.equal(answer.sources[0].connectorType, "live-status", question);
+    assert.equal(answer.sources[0].controllingSourceRole, "operational", question);
+    assert.equal(answer.sources[1].id, "approved-pool-hours-current-page", question);
+    assert.equal(answer.sources[1].connectorType, "civicplus-pages", question);
+    assert.deepEqual(answer.claims.map((claim) => claim.evidenceSourceIds), [
+      ["sterling-ranch:pool-status:current"],
+      ["approved-pool-hours-current-page"],
+    ], question);
+    assert.ok(answer.claims.every((claim) => claim.verified === true), question);
+  }
+});
+
+test("pool reopening omits the recurring season when its static approval is missing, stale, or changed", async () => {
+  const approvedSeason = communityIndex.sources.find((source) => source.id === "approved-pool-hours-current-page");
+  const cases = [
+    ["missing", { ...communityIndex, sources: communityIndex.sources.filter((source) => source.id !== approvedSeason.id) }],
+    ["stale", { ...communityIndex, sources: communityIndex.sources.map((source) => source.id === approvedSeason.id ? { ...source, staleAfter: "2026-08-31T00:00:00.000Z" } : source) }],
+    ["changed", { ...communityIndex, sources: communityIndex.sources.map((source) => source.id === approvedSeason.id ? { ...source, contentHash: "changed-unreviewed-version" } : source) }],
+  ];
+  for (const [label, index] of cases) {
+    const answer = await answerCommunityQuestion("When does the pool reopen next summer?", {
+      interpretationMode: "structured",
+      now: NOW,
+      index,
+      communityId: "sterling-ranch",
+      communityProfile,
+      planCommunitySearch: async () => plan({ intent: "facilities", goal: "schedule", goals: ["schedule"], subject: "pool reopening next summer", requestedDetails: ["date"], searchQueries: ["pool next summer"] }),
+      synthesizeCommunityAnswer: false,
+      getPoolStatus: async () => closedPoolStatus(),
+    });
+    assert.equal(answer.answerMode, "community-live-pool-season-reopening", label);
+    assert.equal(answer.answerStatus, "verified-incomplete", label);
+    assert.match(answer.directAnswer, /^Closed\. The official CAB status is Red Light:/i, label);
+    assert.match(answer.directAnswer, /can’t confirm next summer’s exact opening date/i, label);
+    assert.doesNotMatch(answer.answer, /closed for the season|Memorial Day|Labor Day/i, label);
+    assert.equal(answer.sources.length, 1, label);
+    assert.equal(answer.sources[0].connectorType, "live-status", label);
+    assert.deepEqual(answer.claims.map((claim) => [claim.text, claim.verified]), [["Closed", true]], label);
+    assert.deepEqual(answer.completion.missingDetails, [{ key: "date", reason: "missing-evidence" }], label);
+  }
+});
+
+test("an in-season red status remains a current closure rather than becoming closed for the season", async () => {
+  const inSeasonNow = new Date("2026-07-15T12:00:00Z");
+  const answer = await answerCommunityQuestion("When will the pool open again?", {
+    interpretationMode: "structured",
+    now: inSeasonNow,
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile,
+    planCommunitySearch: async () => plan({ intent: "status", goal: "status", goals: ["status"], subject: "pool reopening", requestedDetails: ["status", "date"], searchQueries: ["pool reopening status"] }),
+    synthesizeCommunityAnswer: false,
+    getPoolStatus: async () => closedPoolStatus(inSeasonNow),
+  });
+  assert.equal(answer.answerStatus, "verified-incomplete");
+  assert.match(answer.directAnswer, /^Closed\. The official CAB status is Red Light:/i);
+  assert.doesNotMatch(answer.directAnswer, /closed for the season/i);
+  assert.match(answer.answer, /Memorial Day weekend through Labor Day/i);
+});
+
+test("a second community declares its own pool-season approval identity", async () => {
+  const communityId = "beta";
+  const sourceUrl = "https://beta.example.gov/pool";
+  const sourceHash = "b".repeat(64);
+  const approvalClaim = "beta-recurring-pool-season";
+  const reviewDecisionId = "beta-pool-season-approved";
+  const betaConnector = structuredClone(communityProfile.connectors.find((item) => item.id === "pool-status"));
+  betaConnector.baseUrl = sourceUrl;
+  betaConnector.adapter.sourceHosts = ["beta.example.gov"];
+  betaConnector.adapter.endpoints = [{ id: "primary", url: sourceUrl, purpose: "pool-status" }];
+  betaConnector.adapter.poolStatus.approvedSeasonProjection = { approvalClaim, reviewDecisionId };
+  const betaProfile = { ...communityProfile, communityId, name: "Beta Community", shortName: "Beta", website: "https://beta.example.gov/", allowedHosts: ["beta.example.gov"], connectors: [betaConnector] };
+  const seasonSource = {
+    id: "beta-approved-pool-season", communityId, title: "Beta pool season", sourceUrl,
+    sourceType: "facilities", connectorType: "civicplus-pages", authorityScore: 1,
+    text: "The pool is open Memorial Day weekend through Labor Day.", excerpt: "", actions: [],
+    facts: [{ type: "schedule", value: "Memorial Day weekend through Labor Day", context: "The pool is open Memorial Day weekend through Labor Day.", approvalClaim, sourceVersion: sourceHash }],
+    contentHash: sourceHash, checkedAt: "2026-09-10T10:00:00Z", staleAfter: "2099-01-01T00:00:00Z", lifecycle: "current",
+  };
+  const betaIndex = {
+    communityId,
+    sources: [seasonSource],
+    factLedger: [],
+    canonicalSourceLedger: { records: [{
+      key: `${sourceUrl}#sha256:${sourceHash}`, canonicalUrl: sourceUrl, contentHash: sourceHash,
+      approvals: [{ status: "approved", communityId, decisionId: reviewDecisionId, scopeKind: "scoped-claims", approvedClaims: [approvalClaim], withheldClaims: [] }],
+    }] },
+  };
+  const answer = await answerCommunityQuestion("When does the pool reopen next summer?", {
+    interpretationMode: "structured",
+    now: POOL_OFFSEASON_NOW,
+    index: betaIndex,
+    communityId,
+    communityProfile: betaProfile,
+    planCommunitySearch: async () => plan({ intent: "facilities", goal: "schedule", goals: ["schedule"], subject: "pool reopening next summer", requestedDetails: ["date"], searchQueries: ["pool next summer"] }),
+    synthesizeCommunityAnswer: false,
+    getPoolStatus: async () => closedPoolStatus(POOL_OFFSEASON_NOW, { communityId, sourceUrl }),
+  });
+  assert.equal(answer.answerMode, "community-live-pool-season-reopening");
+  assert.match(answer.directAnswer, /^The pool is closed for the season\./i);
+  assert.equal(answer.sources[1].id, "beta-approved-pool-season");
+  assert.deepEqual(answer.claims[1].approvalClaimIds, [approvalClaim]);
+  assert.doesNotMatch(JSON.stringify(answer), /pool-season-and-regular-hours|pool-hours-current-page/);
+});
+
+test("pool reopening questions fail closed when live operational status is unavailable", async () => {
+  const answer = await answerCommunityQuestion("When does the pool reopen next summer?", {
+    interpretationMode: "structured",
+    now: NOW,
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile,
+    planCommunitySearch: async () => plan({ intent: "facilities", goal: "schedule", goals: ["schedule"], subject: "pool reopening next summer", requestedDetails: ["date", "hours"], searchQueries: ["pool next summer hours"] }),
+    getPoolStatus: async () => { throw new Error("CAB unavailable"); },
+  });
+  assert.equal(answer.answerStatus, "could-not-verify");
+  assert.equal(answer.answerMode, "community-live-pool-season-reopening");
+  assert.match(answer.answer, /could not verify an answer from approved, up-to-date community sources/i);
+  assert.doesNotMatch(answer.answer, /Memorial Day|Labor Day|currently open/i);
 });
 
 test("a mislabeled status plan still cannot use current status for operating hours", () => {

@@ -79,8 +79,19 @@ test("source-built fallback removes internal answer scaffolding without changing
   const draft = "Short answer: The source allows the project.\n\nWhat I found:\n- Approval is required.\n- The limit is 3 feet.\n\nBefore you act: Submit the current form.";
   assert.equal(
     naturalizeGroundedDraft(draft),
-    "The source allows the project. Approval is required. The limit is 3 feet. Submit the current form."
+    "The source allows the project.\n\nApproval is required.\n\nThe limit is 3 feet.\n\nSubmit the current form."
   );
+});
+
+test("source-built fallback removes contained duplicate clauses across answer families", () => {
+  const repeated = "The limit is 72 hours.";
+  const unique = "A separate seven-day restriction also applies.";
+  const draft = `Short answer: No. ${repeated}\n\nWhat I found:\n- ${repeated}\n- ${unique}\n\nBefore you act: Check the current source.`;
+  const answer = naturalizeGroundedDraft(draft);
+  assert.equal((answer.match(/The limit is 72 hours\./g) || []).length, 1);
+  assert.match(answer, /separate seven-day restriction/i);
+  assert.match(answer, /Check the current source/i);
+  assert.doesNotMatch(answer, /Short answer|What I found|Before you act/i);
 });
 
 test("unsafe, unsupported, and uncertain inputs never reach AI", () => {

@@ -124,7 +124,7 @@ test("missing paint specifications lead with the evidence boundary without inven
 
     assert.equal(answer.answerStatus, "source-unavailable", question);
     assert.equal(answer.completion.outcome, "missing-evidence", question);
-    assert.match(answer.answer, /^Short answer: The cited current rules do not name one exact paint color or finish/i, question);
+    assert.match(answer.answer, /^The cited current rules do not name one exact paint color or finish/i, question);
     assert.match(answer.answer, /manufacturer's paint chips indicating color number/i, question);
     assert.match(answer.answer, /DRC approval is required/i, question);
     assert.doesNotMatch(answer.answer, /Belvedere Tan|Earthen|Sherwin Williams|Solomon #/i, question);
