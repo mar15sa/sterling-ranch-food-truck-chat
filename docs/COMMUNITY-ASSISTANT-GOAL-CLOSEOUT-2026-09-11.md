@@ -93,6 +93,12 @@ These are the main accuracy/reliability pull requests merged into `main` during 
 
 | Pull request | Result |
 | --- | --- |
+| [#46](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/46)–[#52](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/52) | Removed incomplete shortcut routing; repaired supported schedules; defined shared answer completion and engineering principles; restored source freshness; completed facility answers; and separated source safety from whole-site coverage. |
+| [#53](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/53)–[#59](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/59) | Added exact-source renewal, connector-authority auditing, CI/startup revalidation, persistent project guardrails, binding-claim authority checks, and facet-level answer completion. |
+| [#60](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/60)–[#65](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/65) | Fixed live food-truck routing, enforced the first owner source decisions, repaired pool-rental routing and menu degradation, and shipped the source-grounded Release 2 integration. |
+| [#67](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/67)–[#72](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/72) | Kept trash-delay questions out of storage rules, stopped status guesses from action labels, made Release 3 source-driven, routed food-truck questions to the live schedule, and removed an exterior-paint canned answer. |
+| [#73](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/73)–[#77](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/77) | Added the rolling food-truck horizon, failed closed on unproven village pickup dates, limited CivicRec to approved actions, repaired the daily monitor, and added source-operations reporting. |
+| [#79](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/79)–[#85](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/85) | Revalidated evidence in every quality run, isolated staging logs, restored exact pool status, applied ten scoped approvals, quarantined evidence during CAB outages, completed source-grounded composition, and preserved approved static answers during brief outages. |
 | [#86](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/86) | Hosted synthesis repair. |
 | [#87](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/87) | Pool reopening-answer safety. |
 | [#88](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/88) | Grounded synthesis evidence projection. |
@@ -112,6 +118,8 @@ These are the main accuracy/reliability pull requests merged into `main` during 
 | [#102](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/102) | Final approved editorial UI and release integration. Merged to `main` at 2026-09-11T14:24:22Z as `dcf4f0e170e5cdedd86d7dcbf7693e089c998761`. |
 
 The approved nine-color editorial UI is now live in production for Home, Community Assistant, Food Trucks, Calendar, Openings, and Pool. Production checks confirmed the redesigned homepage loaded its data; the Assistant showed its Test mode banner; holiday lights returned a natural, grounded answer; Boulder Raspberry was correctly described as a preapproved shrub with placement not established and dimensions of 8 ft by 6 ft; Labor Day correctly stated that the pool season runs through Labor Day while separate holiday hours are not published; pool status showed Closed/Red; the Food Trucks page showed Lucky Bird and its menu; Calendar loaded official events; Openings showed 125 listings; and Pool showed Closed.
+
+The production health endpoint reported the exact deployed revision `dcf4f0e170e5cdedd86d7dcbf7693e089c998761`, `status: ok`, current rule and pool sources, and zero server errors during the release checks. The post-merge GitHub quality run also passed.
 
 Release evidence: the gate passed 752/752 checks, 140/140 rule checks, 7/7 unseen cases, and the 122-question resident corpus. Responsive/accessibility checks passed 24/24; footer/composer checks passed 36/36; the post-update openings check passed 125/125; and UI examples passed 19/19.
 
@@ -145,7 +153,7 @@ The 16.9% figure is only live crawl incorporation: 182 of 1,078 eligible URLs. I
 2. **Full source disposition:** 879 eligible URLs remain pending in the live crawl, with 1,810 source-review items (1,054 sensitive). Work in small batches: payments/fees/contacts/reservations first, then DRC/property changes, utilities/trash, facilities/events, and long-tail history.
 3. **Conflicts:** 17 conflicted facts remain safely withheld. Resolve or explicitly withhold each in its appropriate owner-review batch.
 4. **Pool reopening:** the official source does not publish an exact 2027 opening date. The Assistant should say the pool is closed for the season and use the published seasonal window without inventing a date.
-5. **Connector follow-ups:** CivicRec should be action-only until a real live adapter proves availability and prices. The separately scoped waste service-area and food-truck horizon work should be promoted and verified if it is not already included in the final production revision. Continue moving remaining Sterling-specific connector behavior into profile/adapter configuration.
+5. **Connector follow-ups:** The rolling food-truck horizon and waste service-area boundary are live through PRs #73 and #74. CivicRec should remain action-only until a real live adapter proves availability and prices. Continue moving remaining Sterling-specific connector behavior into profile/adapter configuration.
 6. **Historical admin records:** the four known screenshot rows were corrected. Review any other older records only through an owner-authorized private-log workflow; do not claim a bulk cleanup occurred.
 7. **Automation review:** periodically sample the Daily fixer’s changes against its no-canned-facts and family-level-proof rules. This is an operational check, not a reason to auto-publish.
 
@@ -154,6 +162,7 @@ The 16.9% figure is only live crawl incorporation: 182 of 1,078 eligible URLs. I
 - AI can still produce a fluent answer that is not sufficiently supported. The answer validator and test suite reduce this risk; they do not make it zero. New failure shapes require a family-level repair and regression.
 - Source content can change without notice. Exact URL/hash/freshness checking keeps changed content from silently becoming evidence, but it can temporarily make an answer more cautious until reviewed.
 - Some current questions need an official live system. If a connector is unhealthy, the Assistant must say current status cannot be verified rather than guess.
+- The production openings monitor currently reports one source error among 55 source channels. The resident page still loads 125 verified listings and discloses partial-source failures, but the failed channel needs continued monitoring.
 - Full official-site coverage is incomplete. The Assistant may correctly withhold a useful answer while an official page is waiting for review.
 - The resident-literal baseline still has 58 tracked historical debt nodes. It cannot grow, but it should be reduced in deliberate, tested batches.
 - The user interface can make a safe partial answer feel less helpful if it overemphasizes limitations. Continue testing natural language and action clarity with real resident question families.
