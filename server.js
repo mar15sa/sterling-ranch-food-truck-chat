@@ -10,7 +10,7 @@ const liveMonitor = require("./lib/community-live-monitor").createLiveMonitor({
   getCommunityEvents: (...args) => getConfiguredCommunityEvents(...args),
   notify: (...args) => require("./lib/rules-alerts").alertCommunityMonitorChanged(...args),
 });
-const { createFoodTruckService } = require("./lib/food-truck-service");
+const { createFoodTruckService, formatTruckList } = require("./lib/food-truck-service");
 const { getCommunityFoodTruckSchedule } = require("./lib/community-food-truck-live");
 const { createMonthlyScheduleCache } = require("./lib/food-truck-calendar-cache");
 const {
@@ -90,7 +90,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v37";
+const MENU_CACHE_VERSION = "menus-v38";
 const FETCH_TIMEOUT_MS = 8000;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -2610,40 +2610,49 @@ const KNOWN_TRUCK_LINKS = {
   "billy s gourmet hot dogs": {
     preferKnownItems: true,
     official: {
-      title: "Billy's Beefy Burgers",
-      url: "https://www.billysbeefyburgers.com/",
+      title: "Billy's Gourmet Dogs",
+      url: "https://billysgourmethotdogs.com/",
     },
     menu: [
       {
-        title: "Billy's Beefy Burgers menu",
-        url: "https://www.billysbeefyburgers.com/menu",
+        title: "Billy's Gourmet Dogs menu",
+        url: "https://billysgourmethotdogs.com/",
+      },
+      {
+        title: "Billys Gourmet Hot Dogs menu - Best Food Trucks",
+        url: "https://www.bestfoodtrucks.com/truck/billys-gourmet-hot-dogs",
       },
     ],
     items: [
       {
-        name: "1/4lb Hot Dog",
-        description:
-          "Hot dog with optional jalapenos, sauerkraut, onions, or nacho cheese.",
-        price: "$6.00",
-        url: "https://www.billysbeefyburgers.com/menu",
+        name: "Billy Dog",
+        description: "Signature hot dog from Billy's Gourmet Dogs.",
+        price: "",
+        url: "https://billysgourmethotdogs.com/",
       },
       {
-        name: "1/4lb Smoked Brat",
-        description: "Smoked brat with optional jalapenos, sauerkraut, or onions.",
-        price: "$6.50",
-        url: "https://www.billysbeefyburgers.com/menu",
+        name: "Beer Bratwurst",
+        description: "Gourmet sausage listed on Billy's Gourmet Dogs menu.",
+        price: "",
+        url: "https://www.bestfoodtrucks.com/truck/billys-gourmet-hot-dogs",
       },
       {
-        name: "Hamburger",
-        description: "Quarter-pound hamburger with onions and pickles.",
-        price: "$6.25",
-        url: "https://www.billysbeefyburgers.com/menu",
+        name: "Billy Fries",
+        description: "Famous fries from Billy's Gourmet Dogs.",
+        price: "",
+        url: "https://www.bestfoodtrucks.com/truck/billys-gourmet-hot-dogs",
       },
       {
-        name: "Cheeseburger",
-        description: "Quarter-pound cheeseburger with onions and pickles.",
-        price: "$6.75",
-        url: "https://www.billysbeefyburgers.com/menu",
+        name: "Chicago Italian Beef",
+        description: "Chicago-style Italian beef sandwich from Billy's menu.",
+        price: "",
+        url: "https://billysgourmethotdogs.com/",
+      },
+      {
+        name: "Vegan Dog",
+        description: "Plant-based hot dog option from Billy's menu.",
+        price: "",
+        url: "https://billysgourmethotdogs.com/",
       },
     ],
   },
@@ -2872,8 +2881,11 @@ const KNOWN_TRUCK_ALIASES = {
 };
 
 const KNOWN_TRUCK_DISPLAY_NAMES = {
+  "billy s gourmet hot dogs": "Billy's Gourmet Hot Dogs",
   "cousin s maine lobster": "Cousins Maine Lobster",
   "cousins maine lobster": "Cousins Maine Lobster",
+  "shugg s bbq": "Shugg's BBQ",
+  "shuggs bbq": "Shugg's BBQ",
   "tula s tapas": "Tula's Tapas",
 };
 
@@ -3268,7 +3280,8 @@ async function getScheduleForMonth(year, month, day = 1) {
       if (!isPlausibleCalendarTruckName(truck)) continue;
 
       const date = makeLocalDate(year, eventMonth, eventDay);
-      schedule[formatIso(date)] = truck;
+    const displayNames = splitListedTruckNames(truck).map(displayTruckName);
+    schedule[formatIso(date)] = displayNames.length ? formatTruckList(displayNames) : displayTruckName(truck);
     }
 
     const localEvents = {};
