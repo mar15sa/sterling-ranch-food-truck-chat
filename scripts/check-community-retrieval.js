@@ -18,10 +18,10 @@ const CASES = [
   // withheld until its exact current version receives a scoped decision.
   ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i, false],
   ["Who do I contact about water billing?", /Water Billing/i],
-  // The current court-page version is withheld while its conflicting hours,
-  // fee, and booking claims are reviewed. Generic park rules can still use the
-  // separate governing section; operational questions cannot.
-  ["What are the neighborhood pickleball court rules?", /17-54|General rules/i],
+  // The current court-page version is withheld while its hours, fee, and
+  // booking claims await a scoped decision. Public-court wording must point to
+  // that page without borrowing the private backyard sport-court rule.
+  ["What are the neighborhood pickleball court rules?", /Pickleball Courts/i, false],
   ["What is the maximum height a freestanding flag pole can be?", /2024 CAB Code amendments/i],
   ["What trees can we plant?", /5-131|Preapproved plant list/i],
   ["What are the rules for yard art?", /2024 CAB Code amendments/i],
