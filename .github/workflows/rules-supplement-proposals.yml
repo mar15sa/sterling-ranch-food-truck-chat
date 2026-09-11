@@ -28,6 +28,9 @@ jobs:
       - name: Generate proposal files for new official CAB docs
         run: npm run supplements:propose
 
+      - name: Revalidate due approved evidence into a temporary snapshot
+        uses: ./.github/actions/revalidate-approved-community-evidence
+
       - name: Run checks
         run: npm run check
 
