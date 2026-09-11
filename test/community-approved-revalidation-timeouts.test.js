@@ -122,6 +122,26 @@ test("a branch that changes unavailable evidence cannot pass under the quarantin
   assert.match(result.attestation.gateErrors.join(" "), /requires owner review/i);
 });
 
+test("a new unavailable evidence record cannot enter quarantine", async () => {
+  const baseline = dueIndexWithIndependentEvidence();
+  const changed = structuredClone(baseline);
+  changed.sources.push({ ...changed.sources[0], id: "new-pool-faq" });
+  changed.factLedger.push({ ...changed.factLedger[0], id: "new-pool-fact", sourceId: "new-pool-faq" });
+  const result = await runBridge({
+    index: changed,
+    baselineIndex: baseline,
+    now: NOW,
+    auditFn: () => {},
+    fetchObservedHashes: async (sourceUrl) => {
+      if (sourceUrl === URL) throw timeout();
+      return { observedHashes: ["rules-hash"], actionMismatch: false };
+    },
+  });
+  assert.equal(result.valid, false);
+  assert.equal(result.attestation.quarantined.length, 0);
+  assert.match(result.attestation.gateErrors.join(" "), /requires owner review/i);
+});
+
 test("an unavailable source with changed authority, source text, or claim value cannot enter quarantine", async () => {
   for (const change of [
     (index) => { index.sources[0].authorityClass = "historical-reference"; },

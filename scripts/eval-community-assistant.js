@@ -35,7 +35,7 @@ const allQuestions = [...new Set([
 
 function summary(rows, field) {
   const ratings = rows.reduce((all, row) => { const value = row[field].rating; all[value] = (all[value] || 0) + 1; return all; }, {});
-  const average = rows.reduce((sum, row) => sum + row[field].score, 0) / rows.length;
+  const average = rows.length ? rows.reduce((sum, row) => sum + row[field].score, 0) / rows.length : 0;
   return { average: Number(average.toFixed(2)), ratings };
 }
 
@@ -43,10 +43,37 @@ function effortSummary(rows, field) {
   const values = rows.map((row) => row[field].residentEffort);
   const ratings = values.reduce((all, value) => { all[value.rating] = (all[value.rating] || 0) + 1; return all; }, {});
   return {
-    average: Number((values.reduce((sum, value) => sum + value.score, 0) / values.length).toFixed(2)),
+    average: Number((values.length ? values.reduce((sum, value) => sum + value.score, 0) / values.length : 0).toFixed(2)),
     ratings,
     highEffortQuestions: values.filter((value) => value.score <= 2).length,
   };
+}
+
+function quarantineWithholdsRequiredEvidence(question, result = {}, index = {}) {
+  const quarantine = index.revalidationQuarantine;
+  if (quarantine?.mode !== "temporary-unavailable-approved-evidence") return false;
+  if (!new Set(["community-access-withheld", "community-freshness-withheld"]).has(result.answerMode)) return false;
+  if (result.answerStatus !== "source-unavailable" || result.authorityDecision !== "freshness-withheld") return false;
+  if (result.confidence?.canAnswer !== false || result.confidence?.reason !== "source-review-required") return false;
+  if ((result.claims || []).length || !result.sources?.length) return false;
+
+  const indexedById = new Map((index.sources || []).map((source) => [String(source.id || ""), source]));
+  const quarantinedById = new Map((quarantine.sources || []).map((source) => [String(source.id || ""), source]));
+  const exactWithheldSources = result.sources.map((source) => {
+    const id = String(source.id || "");
+    const indexed = indexedById.get(id);
+    const withheld = quarantinedById.get(id);
+    return id && indexed && withheld
+      && indexed.sourceUrl === source.sourceUrl
+      && indexed.sourceUrl === withheld.sourceUrl
+      && indexed.contentHash === source.contentHash
+      && indexed.contentHash === withheld.contentHash
+      && withheld.reason === "fetch-or-extraction-failed"
+      ? indexed
+      : null;
+  });
+  return exactWithheldSources.every(Boolean)
+    && handoffIsQuestionSpecific(question, { sources: exactWithheldSources });
 }
 
 function legacySourcesAreStaleOrNotQuestionSpecific(question, result = {}) {
@@ -96,6 +123,9 @@ async function main() {
     const expectation = expectationByQuestion.get(question.toLowerCase().trim());
     const currentAssessment = scoreCommunityAnswer(question, current, { expectation });
     const upgradedAssessment = scoreCommunityAnswer(question, upgraded, { expectation });
+    const qualityDisposition = quarantineWithholdsRequiredEvidence(question, upgraded, communityIndex)
+      ? "withheld-unscored"
+      : "scored";
     const safeHoldBaseline = safeHoldSupersedesLegacyBaseline(question, current, currentAssessment, upgraded, upgradedAssessment, expectation);
     const scoreChange = safeHoldBaseline && upgradedAssessment.score < currentAssessment.score
       ? 0
@@ -106,6 +136,7 @@ async function main() {
       current: { ...currentAssessment, answer: current.answer, mode: current.answerMode, sourceCount: current.sources?.length || 0 },
       upgraded: { ...upgradedAssessment, answer: upgraded.answer, mode: upgraded.answerMode, sourceCount: upgraded.sources?.length || 0, sourceIds: (upgraded.sources || []).map((source) => source.id || source.nodeId || source.sourceUrl), actions: upgraded.actions || [], claims: upgraded.claims || [] },
       scoreChange,
+      qualityDisposition,
       baselineSupersededBySafeHold: safeHoldBaseline,
       changeReason: safeHoldBaseline
         ? "The upgraded answer safely withheld an unsupported claim; the legacy baseline used stale, non-specific, or explicitly non-answerable evidence."
@@ -116,28 +147,34 @@ async function main() {
           : "The upgraded answer retained the prior quality score.",
     });
   }
+  const scoredRows = rows.filter((row) => row.qualityDisposition === "scored");
+  const withheldRows = rows.filter((row) => row.qualityDisposition === "withheld-unscored");
   const report = {
     generatedAt: new Date().toISOString(),
     questionCount: rows.length,
-    current: summary(rows, "current"),
-    upgraded: summary(rows, "upgraded"),
-    improved: rows.filter((row) => row.scoreChange > 0).length,
-    retained: rows.filter((row) => row.scoreChange === 0).length,
-    regressed: rows.filter((row) => row.scoreChange < 0).length,
+    scoredQuestionCount: scoredRows.length,
+    withheldUnscoredCount: withheldRows.length,
+    withheldUnscoredQuestions: withheldRows.map((row) => row.question),
+    current: summary(scoredRows, "current"),
+    upgraded: summary(scoredRows, "upgraded"),
+    improved: scoredRows.filter((row) => row.scoreChange > 0).length,
+    retained: scoredRows.filter((row) => row.scoreChange === 0).length,
+    regressed: scoredRows.filter((row) => row.scoreChange < 0).length,
     unsupportedClaimCount: rows.reduce((sum, row) => sum + (row.upgraded.claims || []).filter((claim) => !claim.verified).length, 0),
-    currentResidentEffort: effortSummary(rows, "current"),
-    upgradedResidentEffort: effortSummary(rows, "upgraded"),
+    currentResidentEffort: effortSummary(scoredRows, "current"),
+    upgradedResidentEffort: effortSummary(scoredRows, "upgraded"),
     rows,
   };
   const outputPosition = process.argv.indexOf("--output");
   const requestedOutput = outputPosition >= 0 ? process.argv[outputPosition + 1] : "";
   if (process.argv.includes("--write") || requestedOutput) fs.writeFileSync(requestedOutput || outputPath, `${JSON.stringify(report, null, 2)}\n`);
   console.log(`Community Assistant audit: ${report.questionCount} unique questions.`);
+  if (report.withheldUnscoredCount) console.log(`Withheld and unscored: ${report.withheldUnscoredCount} question(s): ${report.withheldUnscoredQuestions.join("; ")}.`);
   console.log(`Current: ${JSON.stringify(report.current)}.`);
   console.log(`Upgraded: ${JSON.stringify(report.upgraded)}.`);
   console.log(`Improved ${report.improved}; retained ${report.retained}; regressed ${report.regressed}.`);
   console.log(`Resident effort: ${JSON.stringify(report.upgradedResidentEffort)}.`);
-  for (const row of rows.filter((item) => item.upgraded.score < 4 || item.scoreChange < 0).slice(0, 30)) {
+  for (const row of scoredRows.filter((item) => item.upgraded.score < 4 || item.scoreChange < 0).slice(0, 30)) {
     console.log(`\n[${row.upgraded.score}; ${row.scoreChange >= 0 ? "+" : ""}${row.scoreChange}] ${row.question}\n${row.upgraded.issues.join(", ")}\n${row.upgraded.answer.replace(/\s+/g, " ").slice(0, 420)}`);
   }
   if (process.argv.includes("--enforce")) {
@@ -145,7 +182,7 @@ async function main() {
     if (report.questionCount < 200) releaseFailures.push(`evaluation corpus unexpectedly shrank to ${report.questionCount} questions`);
     if (report.regressed) releaseFailures.push(`${report.regressed} answer regressions`);
     if (report.upgraded.average < report.current.average) releaseFailures.push("upgraded average is lower than the current assistant");
-    const belowGood = rows.filter((row) => row.upgraded.score < 4);
+    const belowGood = scoredRows.filter((row) => row.upgraded.score < 4);
     if (belowGood.length) releaseFailures.push(`${belowGood.length} upgraded answers scored below Good`);
     if (report.unsupportedClaimCount) releaseFailures.push(`${report.unsupportedClaimCount} unsupported claims were returned`);
     if (report.upgradedResidentEffort.highEffortQuestions) releaseFailures.push(`${report.upgradedResidentEffort.highEffortQuestions} answers still leave high resident effort`);
@@ -165,4 +202,5 @@ module.exports = {
   isSafeNoClaimHold,
   legacySourcesAreStaleOrNotQuestionSpecific,
   safeHoldSupersedesLegacyBaseline,
+  quarantineWithholdsRequiredEvidence,
 };
