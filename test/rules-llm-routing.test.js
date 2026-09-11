@@ -153,6 +153,23 @@ test("credential-seeking injection variants return before search or rewrite", as
   }
 });
 
+test("complete deterministic answers and empty evidence boundaries skip the search planner", async () => {
+  let plannerCalls = 0;
+  const options = {
+    searchMode: "ai-hybrid",
+    llmMode: "off",
+    planRulesSearch: async () => { plannerCalls += 1; return null; },
+  };
+  const fees = await answerRulesQuestion("What fees do residents pay?", options);
+  const unsupported = await answerRulesQuestion("What is Atlas WiFi?", options);
+  assert.equal(plannerCalls, 0);
+  assert.equal(fees.searchStrategy, "deterministic-grounded-strong-match");
+  assert.match(fees.answer, /fixed charges/i);
+  assert.equal(unsupported.searchStrategy, "deterministic-empty-evidence-boundary");
+  assert.equal(unsupported.confidence.reason, "no-single-source-support");
+  assert.deepEqual(unsupported.sources, []);
+});
+
 test("public examples use grounded synthesis in selective mode", async () => {
   let rewriteCalls = 0;
   const result = await answerRulesQuestion("What fees do residents pay?", {

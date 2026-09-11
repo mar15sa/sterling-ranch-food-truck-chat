@@ -1090,6 +1090,101 @@ test("public pickleball operations use the approved facility source and grounded
   assert.ok(result.claims.every((claim) => claim.evidenceSourceIds.includes(result.sources[0].id)));
 });
 
+test("public pickleball overview uses approved facility facts while private construction stays with rules", async () => {
+  const pickleball = source({
+    id: "alpha-pickleball-overview",
+    title: "Pickleball Courts",
+    sourceUrl: "https://alpha.gov/418/Pickleball-Courts",
+    sourceType: "facilities",
+    text: "Pickleball Facility Guidelines. Hours: Weekdays 7 am-dusk; Weekends 8 am-dusk. Court reservations can be made for a maximum of two hours/day via CourtBook.",
+    excerpt: "Current pickleball facility guidelines.",
+    actions: [{ id: "courtbook", label: "Reserve through CourtBook", url: "https://alpha.gov/courtbook", actionType: "booking", context: "Reserve through CourtBook." }],
+    facts: [
+      { id: "hours", factKey: "alpha-pickleball-hours", facet: "facility-hours", type: "time", value: "7 am-dusk", context: "Hours: Weekdays 7 am-dusk; Weekends 8 am-dusk." },
+    ],
+  });
+  const index = approvedFixtureIndex([pickleball], { communityName: "Alpha", website: "https://alpha.gov/" });
+  const governingAnswer = {
+    answer: "Private backyard pickleball courts require DRC approval.",
+    answerMode: "source-derived-extractive",
+    answerVerdict: "conditional",
+    confidence: { canAnswer: true, confidence: "high" },
+    sources: [{ id: "private-rule", title: "Private sport courts", sourceUrl: "https://alpha.gov/rules", text: "Private backyard pickleball courts require DRC approval." }],
+  };
+
+  for (const question of [
+    "What are the neighborhood pickleball court rules?",
+    "What are the public pickleball court guidelines?",
+  ]) {
+    const result = await answerCommunityQuestion(question, {
+      index,
+      communityId: "alpha",
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      answerRulesQuestion: async () => governingAnswer,
+    });
+    assert.equal(result.authorityDecision, "current-facility-operations", question);
+    assert.equal(result.sources[0].sourceType, "facilities", question);
+    assert.match(result.answer, /weekdays[\s\S]*dusk/i, question);
+    assert.match(result.answer, /weekends[\s\S]*dusk/i, question);
+    assert.match(result.answer, /two hours?\s*\/\s*day/i, question);
+    assert.equal(result.actions[0].actionType, "booking", question);
+    assert.ok(result.claims.every((claim) => claim.evidenceSourceIds.includes(result.sources[0].id)), question);
+  }
+
+  const privateResult = await answerCommunityQuestion("Can I build a pickleball court in my backyard?", {
+    index,
+    communityId: "alpha",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => governingAnswer,
+  });
+  assert.match(privateResult.answer, /DRC approval/i);
+  assert.doesNotMatch(privateResult.answer, /7 am|8 am|two hours/i);
+});
+
+test("clear rules questions do not wait for the community planner", async () => {
+  let plannerCalls = 0;
+  const questions = [
+    "Can I build a shed in my backyard?",
+    "When can I put up holiday lights?",
+    "What are the landscaping and yard rules?",
+    "What trees can we plant?",
+    "What are the rules for yard art?",
+    "What fees do residents pay?",
+    "What are the rules for parks and open spaces?",
+    "What is the rule on privacy screens in your backyard?",
+    "Are rooftop solar panels subject to design review?",
+    "What approval and setbacks apply to a backyard spa?",
+  ];
+  for (const question of questions) {
+    const plannerCallsBeforeQuestion = plannerCalls;
+    const result = await answerCommunityQuestion(question, {
+      index: approvedFixtureIndex([], { communityName: "Alpha", website: "https://alpha.gov/" }),
+      communityId: "alpha",
+      planCommunitySearch: async () => { plannerCalls += 1; return null; },
+      answerRulesQuestion: async () => ({
+        answer: "The selected official rule answers this question.",
+        answerMode: "source-derived-structured",
+        answerVerdict: "verified",
+        confidence: { canAnswer: true, confidence: "high", reason: "supported" },
+        sources: [{ id: "rule", title: "Official rule", sourceUrl: "https://alpha.gov/rules", text: "The selected official rule answers this question." }],
+      }),
+    });
+    assert.equal(result.confidence.canAnswer, true, question);
+    assert.equal(plannerCalls, plannerCallsBeforeQuestion, question);
+  }
+  assert.equal(plannerCalls, 0);
+
+  await answerCommunityQuestion("How do I reserve the community clubhouse?", {
+    index: approvedFixtureIndex([], { communityName: "Alpha", website: "https://alpha.gov/" }),
+    communityId: "alpha",
+    planCommunitySearch: async () => { plannerCalls += 1; return null; },
+    answerRulesQuestion: async () => ({ confidence: { canAnswer: false }, sources: [] }),
+  });
+  assert.equal(plannerCalls, 1);
+});
+
 test("pickleball operational variants with unapproved evidence withhold instead of repeating retired fixed details", async () => {
   const unreviewed = source({
     id: "alpha-pickleball-unreviewed",

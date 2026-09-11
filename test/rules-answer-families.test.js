@@ -59,7 +59,7 @@ test("the rulebook path stays within its evidence and preserves the private-cour
   assert.match(ambiguous.answer, /community court.*private court/is);
   assert.doesNotMatch(ambiguous.answer, /DRC approval|required.*private sport court/i);
 
-  for (const question of ["What are the pickleball court rules?", "Can we play pickleball in the neighborhood?"]) {
+  for (const question of ["What are the pickleball court rules?"]) {
     const result = await answer(question);
     assert.doesNotMatch(result.answer, /5:00 a\.m\..*11:00 p\.m\./is, question);
     assert.match(result.answer, /sport court.*DRC approval|DRC approval.*sport court/is, question);
@@ -67,6 +67,12 @@ test("the rulebook path stays within its evidence and preserves the private-cour
     assert.match(result.answer, /not permitted to be lighted|may not be lighted/i, question);
     assert.deepEqual(result.qualityChecks?.issues, [], question);
   }
+
+  const publicPlay = await answer("Can we play pickleball in the neighborhood?");
+  assert.equal(publicPlay.confidence.canAnswer, false);
+  assert.equal(publicPlay.confidence.reason, "no-single-source-support");
+  assert.deepEqual(publicPlay.sources, []);
+  assert.doesNotMatch(publicPlay.answer, /DRC approval|not permitted to be lighted/i);
 
   const privateCourt = await answer("Can I build a pickleball court in my backyard?");
   assert.match(privateCourt.answer, /DRC approval/i);
