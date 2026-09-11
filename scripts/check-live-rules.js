@@ -6,6 +6,8 @@ const {
   deploymentHealthState,
   evaluateRuleResult,
   freshnessRecheckIssue,
+  homepageJourneyIssues,
+  poolStatusJourneyIssues,
   shouldRetrySlowResponse,
 } = require("../lib/rules-monitor");
 
@@ -153,18 +155,32 @@ async function askLive(question) {
   return { ...body, monitorDurationMs: Date.now() - startedAt };
 }
 
+async function askCommunityLive(question) {
+  const response = await fetch(`${BASE_URL}/api/community/ask`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "user-agent": "SterlingRanchRulesQualityMonitor/1.0",
+    },
+    body: JSON.stringify({ question, isTest: true }),
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+  });
+  const body = await response.json();
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${body.error || "request failed"}`);
+  }
+  return body;
+}
+
 async function checkResidentJourneys(failures) {
   try {
     const response = await fetch(`${BASE_URL}/`, {
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
     const html = await response.text();
-    const csp = response.headers.get("content-security-policy") || "";
-    const hsts = response.headers.get("strict-transport-security") || "";
-    if (!response.ok || !html.includes("Resident tools, all in one place")) {
-      failures.push({ question: "Homepage journey", issues: [`unexpected homepage response: HTTP ${response.status}`] });
-    } else if (!csp.includes("default-src 'self'") || !hsts.includes("max-age=")) {
-      failures.push({ question: "Homepage security headers", issues: ["CSP or HSTS is missing from the live homepage."] });
+    const issues = homepageJourneyIssues(response.ok, html, response.headers);
+    if (issues.length) {
+      failures.push({ question: "Homepage journey", issues });
     } else {
       console.log("PASS: Homepage journey and security headers");
     }
@@ -187,14 +203,12 @@ async function checkResidentJourneys(failures) {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/api/pool/status`, {
-      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
-    });
-    const data = await response.json();
-    if (!response.ok || !data.checkedAt || !String(data.sourceUrl || "").includes("sterlingranchcab.com")) {
-      failures.push({ question: "Pool-status journey", issues: [`unverified pool response: HTTP ${response.status}`] });
+    const data = await askCommunityLive("Is the pool open right now?");
+    const issues = poolStatusJourneyIssues(data);
+    if (issues.length) {
+      failures.push({ question: "Pool-status journey", issues });
     } else {
-      console.log(`PASS: Pool-status journey (${data.headline || data.state})`);
+      console.log(`PASS: Pool-status journey (${data.answerStatus})`);
     }
   } catch (error) {
     failures.push({ question: "Pool-status journey", issues: [error?.message || String(error)] });
