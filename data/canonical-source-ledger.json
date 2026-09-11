@@ -495,11 +495,44 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/395/Water-Reports",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "water-reports-directory",
+          "scope": "Current official water-report directory navigation only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "water-reports-directory-route"
+          ],
+          "withheldClaims": [
+            "water-quality",
+            "compliance",
+            "health",
+            "treatment",
+            "testing",
+            "measurement"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "water-information-batch-b-2026-09-09"
+        "water-information-batch-b-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -640,11 +673,43 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/168/Rules-Regulations",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "rules-hub-municode-link",
+          "scope": "Current Sterling Ranch Municode link only; the CAB hub is not rule evidence.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "sterling-ranch-municode-route"
+          ],
+          "withheldClaims": [
+            "restriction",
+            "amendment",
+            "fee",
+            "permission",
+            "rule-interpretation"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "low-risk-navigation-batch-c-2026-09-09"
+        "low-risk-navigation-batch-c-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -698,11 +763,44 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/420/Court-Reserve",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "courtreserve-portal",
+          "scope": "Current CourtReserve portal link only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "courtreserve-portal-route"
+          ],
+          "withheldClaims": [
+            "instructions",
+            "availability",
+            "fees",
+            "membership",
+            "court-rules",
+            "booking-outcomes"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "low-risk-navigation-batch-c-2026-09-09"
+        "low-risk-navigation-batch-c-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -987,11 +1085,45 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/400/Contact-Us",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "cab-contact-directory-route",
+          "scope": "Current CAB directory and Sterling Ranch 311 navigation only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "cab-contact-directory-route",
+            "sterling-ranch-311-route"
+          ],
+          "withheldClaims": [
+            "phone-numbers",
+            "emails",
+            "hours",
+            "emergency-guidance",
+            "hoa-contacts",
+            "service-outcomes"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "resident-navigation-batch-d-2026-09-09"
+        "resident-navigation-batch-d-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -1016,11 +1148,47 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "great-hall-booking-link",
+          "scope": "Current direct CivicRec Great Hall destination only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "great-hall-civicrec-route"
+          ],
+          "withheldClaims": [
+            "price",
+            "deposit",
+            "fees",
+            "capacity",
+            "availability",
+            "hours",
+            "inclusions",
+            "contacts",
+            "booking-outcomes"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "resident-navigation-batch-d-2026-09-09"
+        "resident-navigation-batch-d-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -1045,11 +1213,50 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "overlook-clubhouse-navigation",
+          "scope": "Navigation to named Great Hall, Overlook & Virtual, and Pool subfacility pages only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "overlook-great-hall-route",
+            "overlook-virtual-route",
+            "overlook-pool-route"
+          ],
+          "withheldClaims": [
+            "access",
+            "guest-passes",
+            "fees",
+            "rules",
+            "hours",
+            "pool-status",
+            "contacts",
+            "emergencies",
+            "fitness-guidance",
+            "safety-guidance"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "resident-navigation-batch-d-2026-09-09"
+        "resident-navigation-batch-d-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -1074,11 +1281,45 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/338/Homeowner-Landscape-Class",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
-      "approvals": [],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "landscape-class-calendar",
+          "scope": "Official calendar route to find the next class only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "landscape-class-calendar-route"
+          ],
+          "withheldClaims": [
+            "dates",
+            "attendance-requirements",
+            "certificate-requirements",
+            "fees",
+            "inspections",
+            "landscape-rules",
+            "submission-instructions"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
       "packetRefs": [
-        "resident-navigation-batch-d-2026-09-09"
+        "resident-navigation-batch-d-2026-09-09",
+        "community-source-approvals-v5"
       ]
     },
     {
@@ -1270,6 +1511,159 @@
       "packetRefs": [
         "community-form-approval-evidence"
       ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44",
+      "canonicalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "contentHash": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44",
+      "title": "trash-recurring-service",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "trash-recurring-service",
+          "scope": "Listed provider, recurring village collection days, 7 a.m. bin placement, same-day screened storage, named-holiday one-day delay, CAB concern form, and WasteConnect app routes only. A particular pickup date or delay requires live schedule evidence.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "trash-recurring-service-guidance",
+            "trash-cab-concern-route",
+            "trash-wasteconnect-app-route"
+          ],
+          "withheldClaims": [
+            "date-specific-pickup",
+            "outages",
+            "missed-pickups",
+            "charges",
+            "contacts",
+            "bulk-item-terms",
+            "provider-promises"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v5"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/227/Mailbox-Keys#sha256:024092ab686667e7af405dcdcd8b3b2777cbe26a5fee9a9a0cd2dcad8317d4ed",
+      "canonicalUrl": "https://sterlingranchcab.com/227/Mailbox-Keys",
+      "contentHash": "024092ab686667e7af405dcdcd8b3b2777cbe26a5fee9a9a0cd2dcad8317d4ed",
+      "title": "mailbox-keys-route",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/227/Mailbox-Keys",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "mailbox-keys-route",
+          "scope": "Ask the builder first; if it does not have the keys, use the listed Littleton Post Office. No USPS terms or outcome claims.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "mailbox-keys-two-step-route"
+          ],
+          "withheldClaims": [
+            "usps-documents",
+            "usps-hours",
+            "usps-eligibility",
+            "usps-fees",
+            "lost-key-handling",
+            "promised-outcome"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v5"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/239/Streetlights#sha256:10d2631192345637f0464961b20bac7c3daff29f5828984df2d0aebd2a5f55cc",
+      "canonicalUrl": "https://sterlingranchcab.com/239/Streetlights",
+      "contentHash": "10d2631192345637f0464961b20bac7c3daff29f5828984df2d0aebd2a5f55cc",
+      "title": "streetlight-report-route",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-10T20:00:00.000Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/239/Streetlights",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v5",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "streetlight-report-route",
+          "scope": "CAB concern and feedback form route for a streetlight outage or malfunction only.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "streetlight-cab-concern-route"
+          ],
+          "withheldClaims": [
+            "live-status",
+            "ownership",
+            "repair-timing",
+            "technical-lighting",
+            "contacts",
+            "emergency-guidance"
+          ],
+          "controllingSources": [],
+          "decidedAt": "2026-09-10T20:00:00.000Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v5"
+      ]
     }
   ],
   "decisionApplications": [
@@ -1357,6 +1751,56 @@
       "decisionId": "monthly-fee-payment-page",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/390/Monthly-Fee-Billing-Payment-Options#sha256:01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e"
+    },
+    {
+      "decisionId": "trash-recurring-service",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44"
+    },
+    {
+      "decisionId": "mailbox-keys-route",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/227/Mailbox-Keys#sha256:024092ab686667e7af405dcdcd8b3b2777cbe26a5fee9a9a0cd2dcad8317d4ed"
+    },
+    {
+      "decisionId": "streetlight-report-route",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/239/Streetlights#sha256:10d2631192345637f0464961b20bac7c3daff29f5828984df2d0aebd2a5f55cc"
+    },
+    {
+      "decisionId": "courtreserve-portal",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/420/Court-Reserve#sha256:94827d500bb5246ae0221ae8e1420e294da0985f52c7f9dacda4a43c9f364bed"
+    },
+    {
+      "decisionId": "great-hall-booking-link",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3#sha256:878bf564c077ae31bda2fbfc94aa614ef434aed0914e3f17d47a96d692c8cea2"
+    },
+    {
+      "decisionId": "overlook-clubhouse-navigation",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1#sha256:fbd867f603644fa2e83382f369df435019f56b1a19ef93bd11707b82130467df"
+    },
+    {
+      "decisionId": "cab-contact-directory-route",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/400/Contact-Us#sha256:a824bac09748ce6d4d3b20951631195bf1ef13b3426ecf4fe06c0dbe1f8cd47f"
+    },
+    {
+      "decisionId": "rules-hub-municode-link",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/168/Rules-Regulations#sha256:a1c0ae055fdaa0b619c62cbc27786b993ed4b4ae01655644f45e5ba821a18e72"
+    },
+    {
+      "decisionId": "water-reports-directory",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/395/Water-Reports#sha256:c17e5fd9248cf4468c45552640b9b41b0921368769a719be2cef85b4b3352997"
+    },
+    {
+      "decisionId": "landscape-class-calendar",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/338/Homeowner-Landscape-Class#sha256:995c41f74be5a3a882a9f4f5821cfe79f2cba33676cbc7e3efeb6c2814b9885a"
     }
   ],
   "deferred": [
@@ -1384,17 +1828,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 30,
+    "uniqueVersions": 33,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 25,
+      "pending-review": 28,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 22,
-    "pendingReview": 25
+    "scopedApprovals": 32,
+    "pendingReview": 28
   }
 }

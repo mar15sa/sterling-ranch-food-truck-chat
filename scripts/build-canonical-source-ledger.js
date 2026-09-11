@@ -15,6 +15,7 @@ const imports = require(path.join(root, "data", "canonical-source-ledger-imports
 const formEvidence = require(path.join(root, "data", "community-form-approval-evidence.json"));
 const legacyDecisions = require(path.join(root, "data", "community-owner-decisions-batch-1-2026-09-08.json"));
 const scopedDecisions = require(path.join(root, "data", "canonical-source-ledger-decisions.json"));
+const v5Decisions = require(path.join(root, "data", "community-source-approvals-v5.json"));
 const outputPath = path.join(root, "data", "canonical-source-ledger.json");
 
 function buildLedger() {
@@ -45,14 +46,29 @@ function buildLedger() {
     }
   }
 
+  // The approval artifact is itself the exact-version decision record.  Keep
+  // its version identity in the canonical ledger before attaching the scoped
+  // claims below; never turn this into an entire-source approval.
+  for (const decision of v5Decisions.decisions || []) {
+    for (const version of decision.versions || []) {
+      upsertObservation(ledger, {
+        ...version,
+        title: decision.decisionId,
+        checkedAt: v5Decisions.decidedAt,
+        availability: { checkedAt: v5Decisions.decidedAt, httpStatus: 200, finalUrl: version.canonicalUrl },
+      }, { origin: "community-source-approvals-v5", communityId: v5Decisions.communityId });
+    }
+  }
+
   ledger.decisionApplications = [];
-  for (const decision of scopedDecisions.decisions || []) {
+  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || [])]) {
     for (const version of decision.versions || []) {
       const result = applyExplicitDecision(ledger, {
         ...decision,
+        decision: decision.decision || "approve-proposed",
         ...version,
-        communityId: scopedDecisions.communityId,
-        decidedAt: scopedDecisions.decidedAt,
+        communityId: decision.decisionId && (v5Decisions.decisions || []).includes(decision) ? v5Decisions.communityId : scopedDecisions.communityId,
+        decidedAt: decision.decisionId && (v5Decisions.decisions || []).includes(decision) ? v5Decisions.decidedAt : scopedDecisions.decidedAt,
       });
       if (!result.applied) throw new Error(`Could not apply ${decision.decisionId}: ${result.reason}`);
       ledger.decisionApplications.push({ decisionId: decision.decisionId, communityId: scopedDecisions.communityId, key: result.key });
