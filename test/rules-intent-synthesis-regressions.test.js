@@ -9,7 +9,7 @@ const {
   locationScopeIssues,
 } = require("../lib/rules-grounding");
 const { isPlantPermissionQuestion } = require("../lib/rules-intent");
-const { rewriteAnswerWithLLM } = require("../lib/rules-llm");
+const { composePlainEnglishFallback, rewriteAnswerWithLLM } = require("../lib/rules-llm");
 const communityIndex = require("../data/community-index.json");
 
 const answerWithoutAi = (question) => answerRulesQuestion(question, {
@@ -199,6 +199,27 @@ test("source-built fallback uses natural prose and retains every sourced holiday
   assert.match(result.answer, /October 1/i);
   assert.match(result.answer, /January 31/i);
   assert.match(result.answer, /10:00 p\.m\./i);
+  assert.match(result.answer, /^You can install and energize seasonal decorative lighting from June 18 to July 7 and from October 1 through January 31\./i);
+  assert.match(result.answer, /You need to remove all temporary string lighting and light installation clips\./i);
+  assert.match(result.answer, /Turn off all holiday lighting by 10:00 p\.m\./i);
+  assert.match(result.answer, /Open the official source for the complete wording\./i);
+  assert.equal((result.answer.match(/June 18/gi) || []).length, 1);
+  assert.equal((result.answer.match(/10:00 p\.m\./gi) || []).length, 1);
+});
+
+test("plain-English deterministic composition keeps generic structured source clauses intact", () => {
+  const answer = composePlainEnglishFallback(
+    "Submit the application during the following approved filing periods: From May 1 to May 15.\n\n" +
+    "All temporary signs are required to be removed.\n\n" +
+    "All exterior lights must be turned off by 9:00 p.m.\n\n" +
+    "Open the linked official section if you need the complete wording."
+  );
+
+  assert.match(answer, /^You can submit the application from May 1 to May 15\./i);
+  assert.match(answer, /You need to remove all temporary signs\./i);
+  assert.match(answer, /Turn off all exterior lights by 9:00 p\.m\./i);
+  assert.match(answer, /Open the official source for the complete wording\./i);
+  assert.doesNotMatch(answer, /Short answer|What I found|Before you act|following approved|are required to be removed/i);
 });
 
 test("structured rules interpretation still uses successful grounded synthesis", async () => {

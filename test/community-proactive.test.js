@@ -334,7 +334,7 @@ test("rule answers remain grounded after post-answer topic templates are retired
   assert.ok(watering.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")));
   const lights = await ask("When can I put up holiday lights?");
   assert.match(lights.answer, /June 18 to July 7.*October 1 through January 31/i);
-  assert.match(lights.answer, /off by 10:00 p\.m\./i);
+  assert.match(lights.answer, /(?:turn off|off)\b.*by 10:00 p\.m\./i);
 });
 
 test("approved fee, rate, and delinquency evidence no longer receives canned calculation prompts", async () => {
