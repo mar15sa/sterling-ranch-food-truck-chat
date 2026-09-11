@@ -25,13 +25,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Revalidate due approved evidence into a temporary snapshot
-        run: |
-          node scripts/check-approved-community-revalidation.js \
-            --temporary-output "$RUNNER_TEMP/community-index.revalidated.json" \
-            --attestation artifacts/community-approved-revalidation-attestation.json \
-            --review-output artifacts/community-approved-revalidation-review.json
-          echo "COMMUNITY_EVIDENCE_INDEX=$RUNNER_TEMP/community-index.revalidated.json" >> "$GITHUB_ENV"
-          echo "COMMUNITY_EVIDENCE_REPORT_DIR=$GITHUB_WORKSPACE/artifacts" >> "$GITHUB_ENV"
+        uses: ./.github/actions/revalidate-approved-community-evidence
       - name: Run the comprehensive quality gate against temporary evidence
         run: |
           npm run check
