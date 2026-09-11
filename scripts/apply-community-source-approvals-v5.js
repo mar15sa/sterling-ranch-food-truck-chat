@@ -13,8 +13,8 @@ function applyCommunitySourceApprovalsV5(index, { sourceBuilder = buildApprovedV
     if (!approval) throw new Error(`${item.id} is outside its exact canonical decision.`);
     if (item.url) {
       const proof = approval.approvedActions || approvedActionProofs[item.reviewDecisionId] || [];
-      const expected = proof.map(([label, url, actionType]) => ({ label, url, actionType }));
-      if (!expected.some(candidate => actionIdentity([candidate]) === actionIdentity([item]))) throw new Error(`${item.id} does not match the reviewed action identity for ${item.reviewDecisionId}.`);
+      const expected = proof.map(candidate => ({ ...candidate.display, url: candidate.evidence.url, context: candidate.evidence.context }));
+      if (!expected.some(candidate => actionIdentity([candidate]) === actionIdentity([item]) && candidate.context === item.context)) throw new Error(`${item.id} does not match the reviewed action identity for ${item.reviewDecisionId}.`);
     }
     item.sourceVersion = source.contentHash;
   }

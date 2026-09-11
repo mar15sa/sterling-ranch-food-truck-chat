@@ -7,6 +7,8 @@ const { applyCommunitySourceApprovalsV5 } = require('../scripts/apply-community-
 const { canonicalProjectionEntries } = require('../lib/community-source-answerability');
 const { approvedActionProofs, buildApprovedV5Sources } = require('../data/community-source-approvals-v5');
 const { selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
+const { observeCanonicalSource, sourceHash, versionHash } = require('../lib/community-approved-revalidation');
+const { pageText, sourceContentHash } = require('../lib/community-ingest');
 
 test('each v5 approval is bound to its exact version and only its listed claims', () => {
   const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
@@ -58,4 +60,27 @@ test('every v5 projection is immediately due for protected exact revalidation', 
   const due = new Set(selectRevalidationTargetUrls(index, Date.parse(approvals.decidedAt) + 1));
   assert.equal(v5Sources.length, 10);
   for (const source of v5Sources) assert.ok(due.has(source.sourceUrl), source.id);
+});
+
+test('v5 uses literal approved subfacility and calendar destinations', () => {
+  const sources = buildApprovedV5Sources();
+  assert.equal(sources.find(source => source.id === 'approved-overlook-clubhouse-navigation').actions[0].url, 'https://sterlingranchcab.com/Facilities/Facility/Details/-3');
+  assert.equal(sources.find(source => source.id === 'approved-landscape-class-calendar').actions[0].url, 'https://sterlingranchcab.com/Calendar.aspx');
+});
+
+test('the verifier distinguishes display copy from action evidence and supports both declared hash schemes', async () => {
+  const url = 'https://alpha.gov/page';
+  const html = '<main><p>Exact context.</p><a href="/go">Source label</a></main>';
+  const text = pageText(html);
+  const evidence = { label: 'Source label', url: 'https://alpha.gov/go', context: 'Exact context.' };
+  const action = { label: 'Friendly resident label', url: evidence.url, actionType: 'information', evidence, reviewStatus: 'approved' };
+  const textOnly = { id: 'text', sourceUrl: url, contentHash: sourceHash(text), hashScheme: 'page-text-v1', reviewStatus: 'candidate', facts: [{ reviewStatus: 'approved' }], actions: [] };
+  const actionInclusive = { id: 'actions', sourceUrl: url, contentHash: sourceContentHash(text, '', [{ label: evidence.label, url: evidence.url, actionType: 'information' }]), hashScheme: 'page-text-actions-v1', reviewStatus: 'candidate', facts: [], actions: [action] };
+  assert.notEqual(textOnly.contentHash, actionInclusive.contentHash);
+  assert.equal(versionHash(text, textOnly), textOnly.contentHash);
+  assert.equal(versionHash(text, actionInclusive), actionInclusive.contentHash);
+  const observe = body => observeCanonicalSource(url, [textOnly, actionInclusive], { fetchImpl: async () => ({ ok: true, url, text: async () => body }) });
+  assert.equal((await observe(html)).actionMismatch, false);
+  assert.equal((await observe(html.replace('/go', '/changed'))).actionMismatch, true);
+  assert.equal((await observe(html.replace('Exact context.', 'Other context.'))).actionMismatch, true);
 });

@@ -539,11 +539,17 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open official water reports",
-              "https://sterlingranchcab.com/395/Water-Reports",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open official water reports",
+                "url": "https://sterlingranchcab.com/395/Water-Reports",
+                "context": "Open official water reports"
+              },
+              "display": {
+                "label": "Open official water reports",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -723,11 +729,17 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open Sterling Ranch Municode",
-              "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open Sterling Ranch Municode",
+                "url": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
+                "context": "Open Sterling Ranch Municode"
+              },
+              "display": {
+                "label": "Open Sterling Ranch Municode",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -821,11 +833,17 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open CourtReserve",
-              "https://app.courtreserve.com/Online/Portal/Index/15838",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open CourtReserve",
+                "url": "https://app.courtreserve.com/Online/Portal/Index/15838",
+                "context": "Open CourtReserve"
+              },
+              "display": {
+                "label": "Open CourtReserve",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -1157,16 +1175,28 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open CAB contact directory",
-              "https://sterlingranchcab.com/400/Contact-Us",
-              "information"
-            ],
-            [
-              "Open Sterling Ranch 311",
-              "https://sterlingranchcab.com/298/Sterling-Ranch-311",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open CAB contact directory",
+                "url": "https://sterlingranchcab.com/400/Contact-Us",
+                "context": "Open CAB contact directory"
+              },
+              "display": {
+                "label": "Open CAB contact directory",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Open Sterling Ranch 311",
+                "url": "https://sterlingranchcab.com/298/Sterling-Ranch-311",
+                "context": "Open Sterling Ranch 311"
+              },
+              "display": {
+                "label": "Open Sterling Ranch 311",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -1234,11 +1264,17 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open the Great Hall booking page",
-              "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open the Great Hall booking page",
+                "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
+                "context": "Open the Great Hall booking page"
+              },
+              "display": {
+                "label": "Open the Great Hall booking page",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -1309,21 +1345,39 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open Great Hall",
-              "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3",
-              "information"
-            ],
-            [
-              "Open Overlook & Virtual",
-              "https://sterlingranchcab.com/Facilities/Facility/Details/-8",
-              "information"
-            ],
-            [
-              "Open Pool",
-              "https://sterlingranchcab.com/Facilities/Facility/Details/-2",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open Great Hall",
+                "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-3",
+                "context": "Open Great Hall"
+              },
+              "display": {
+                "label": "Open Great Hall",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Open Overlook & Virtual",
+                "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-8",
+                "context": "Open Overlook & Virtual"
+              },
+              "display": {
+                "label": "Open Overlook & Virtual",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Open Pool",
+                "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-2",
+                "context": "Open Pool"
+              },
+              "display": {
+                "label": "Open Pool",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -1389,11 +1443,17 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open the community calendar",
-              "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open the community calendar",
+                "url": "https://sterlingranchcab.com/Calendar.aspx",
+                "context": "Open the community calendar"
+              },
+              "display": {
+                "label": "Open the community calendar",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -1640,16 +1700,28 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open the CAB trash and recycling concern form",
-              "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
-              "information"
-            ],
-            [
-              "Open WasteConnect",
-              "https://apps.apple.com/app/id1442351850",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open the CAB trash and recycling concern form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "Open the CAB trash and recycling concern form"
+              },
+              "display": {
+                "label": "Open the CAB trash and recycling concern form",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Open WasteConnect",
+                "url": "https://apps.apple.com/app/id1442351850",
+                "context": "Open WasteConnect"
+              },
+              "display": {
+                "label": "Open WasteConnect",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }
@@ -1753,11 +1825,17 @@
           ],
           "controllingSources": [],
           "approvedActions": [
-            [
-              "Open the CAB concern and feedback form",
-              "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
-              "information"
-            ]
+            {
+              "evidence": {
+                "label": "Open the CAB concern and feedback form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "Open the CAB concern and feedback form"
+              },
+              "display": {
+                "label": "Open the CAB concern and feedback form",
+                "actionType": "information"
+              }
+            }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
         }

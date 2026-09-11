@@ -11,13 +11,12 @@ const approvedActionProofs = Object.fromEntries(approvals.decisions.map(decision
 // page version and every reviewed resident action against the live page.
 const staleAfter = approvals.decidedAt;
 function action(id, label, _untrustedUrl, approvalClaim, reviewDecisionId) {
-  const proof = (approvedActionProofs[reviewDecisionId] || []).find(([reviewedLabel]) => reviewedLabel === label);
+  const proof = (approvedActionProofs[reviewDecisionId] || []).find(item => item.evidence?.label === label);
   if (!proof) throw new Error(`${id} has no reviewed action proof on ${reviewDecisionId}.`);
-  const [reviewedLabel, url, actionType] = proof;
-  return { id, label: reviewedLabel, url, context: reviewedLabel, actionType, approvalClaim, reviewDecisionId, reviewStatus: 'approved', reviewedBy: 'owner', reviewedAt: approvals.decidedAt };
+  return { id, label: proof.display.label, url: proof.evidence.url, context: proof.evidence.context, actionType: proof.display.actionType, evidence: proof.evidence, approvalClaim, reviewDecisionId, reviewStatus: 'approved', reviewedBy: 'owner', reviewedAt: approvals.decidedAt };
 }
 function fact(id, value, approvalClaim, reviewDecisionId, type = 'information') { return { id, type, value, context: value, approvalClaim, reviewDecisionId, reviewStatus: 'approved', reviewedBy: 'owner', reviewedAt: approvals.decidedAt }; }
-function source(id, title, url, decisionId, text, { facts = [], actions = [] } = {}) { return { id, communityId: approvals.communityId, title, sourceUrl: url, sourceType: 'services', connectorType: 'civicplus-pages', authorityScore: 1, text, excerpt: '', facts, actions, contentHash: hashes[decisionId], checkedAt: approvals.decidedAt, staleAfter, lifecycle: 'current', reviewStatus: 'candidate' }; }
+function source(id, title, url, decisionId, text, { facts = [], actions = [] } = {}) { const version = approvals.decisions.find(decision => decision.decisionId === decisionId).versions[0]; return { id, communityId: approvals.communityId, title, sourceUrl: url, sourceType: 'services', connectorType: 'civicplus-pages', authorityScore: 1, text, excerpt: '', facts, actions, contentHash: hashes[decisionId], hashScheme: version.hashScheme, checkedAt: approvals.decidedAt, staleAfter, lifecycle: 'current', reviewStatus: 'candidate' }; }
 
 function buildApprovedV5Sources() {
   return [
