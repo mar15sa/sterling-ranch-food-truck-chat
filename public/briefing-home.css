@@ -1,0 +1,211 @@
+/* Homepage-only presentation for the owner-approved September 10 mockup. */
+body.briefing-page {
+  --society-panel: color-mix(in srgb, var(--society-cloud) 18%, white);
+  --briefing-rule: color-mix(in srgb, var(--society-navy) 50%, var(--society-silver));
+  background: var(--society-panel);
+  color: var(--society-navy);
+  font: 17px/1.4 "Times New Roman", serif;
+}
+.briefing-page :is(h1, h2, h3) { font-family: "Times New Roman", serif; }
+.briefing-page .society-paper { max-width: 1558px; margin: 0 auto; padding: 0 clamp(24px, 3.8vw, 60px); border: 0; box-shadow: none; background: transparent; }
+.briefing-page .society-header { min-height: 100px; justify-content: flex-start; gap: clamp(36px, 12vw, 176px); border-bottom: 1px solid var(--briefing-rule); }
+.briefing-page .society-header .society-brand { display: flex; align-items: center; gap: 22px; font-weight: 400; letter-spacing: 3px; white-space: normal; flex-shrink: 0; }
+.briefing-monogram { position: relative; display: block; width: 70px; height: 62px; border-right: 1px solid var(--society-silver); flex-shrink: 0; font: 40px/.8 "Times New Roman", serif; letter-spacing: -5px; }
+.briefing-monogram span { position: absolute; left: 0; top: 0; }
+.briefing-monogram span:nth-child(2) { left: 12px; top: 16px; }
+.briefing-monogram span:nth-child(3) { left: 23px; top: 32px; }
+.briefing-brand-copy { font-size: 20px; text-transform: uppercase; }
+.briefing-brand-copy small { display: block; font-size: 11px; letter-spacing: 3px; margin-top: 5px; }
+.briefing-page .society-nav { gap: 30px; }
+.briefing-page .society-nav a { font-size: 16px; white-space: nowrap; }
+.briefing-page .society-nav a[aria-current] { border-color: var(--society-teal); }
+.briefing-page .briefing-masthead { position: relative; isolation: isolate; min-height: 212px; padding: 45px 0 35px; }
+.briefing-page .briefing-masthead > div { display: block; padding: 0; }
+.briefing-page .briefing-masthead h1 { position: relative; width: max-content; max-width: 100%; font-size: clamp(60px, 6.2vw, 94px); line-height: 1; letter-spacing: -4px; margin: 0 0 17px; white-space: normal; }
+.briefing-page .briefing-masthead img { display: block; position: absolute; z-index: -1; right: -3.6vw; bottom: 0; width: 70%; height: 100%; object-fit: cover; object-position: center 57%; mix-blend-mode: multiply; filter: none; opacity: .8; mask-image: linear-gradient(to right, transparent, black 35%); }
+.briefing-page .briefing-date { width: 48%; margin: 0; font: 13px/1.5 "Times New Roman", serif; text-transform: uppercase; letter-spacing: 3.5px; text-align: left; white-space: nowrap; }
+.briefing-page .briefing-date::before { display: none; }
+.briefing-page .briefing-date::after { min-width: 30px; }
+.briefing-page .briefing-lead { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; padding: 31px 0; border-color: var(--briefing-rule); }
+.briefing-page .briefing-food { padding-right: 34px; }
+.briefing-page .briefing-assistant { padding-left: 36px; }
+.briefing-page .briefing-lead h2 { font-size: clamp(32px, 3.45vw, 52px); letter-spacing: -1.7px; line-height: 1.08; margin: 0 0 17px; }
+.briefing-page .society-eyebrow { font: bold 14px/1.5 "Times New Roman", serif; letter-spacing: 1.3px; margin: 0 0 10px; }
+.briefing-page .briefing-lead .society-eyebrow { border-left-width: 4px; padding-left: 19px; }
+.briefing-page .briefing-food-story { grid-template-columns: minmax(0, .98fr) minmax(0, 1fr); gap: 27px; align-items: center; }
+.briefing-page .briefing-food-story img { width: 100%; height: 160px; object-fit: cover; object-position: center 55%; filter: grayscale(1) contrast(1.08) brightness(1.07); transform: scaleX(-1); }
+.briefing-page .briefing-food-story p, .briefing-page .briefing-assistant > p:not(.society-eyebrow) { font-size: 20px; line-height: 1.25; margin: 0 0 20px; }
+.briefing-page .society-primary, .briefing-page .briefing-search button { font: bold 17px/1.3 "Times New Roman", serif; padding: 13px 25px; min-height: 50px; border-radius: 2px; }
+.briefing-page .briefing-search { margin: 18px 0; }
+.briefing-page .briefing-search input { font: 18px "Times New Roman", serif; padding: 11px 15px; min-height: 46px; border-color: var(--briefing-rule); background: transparent; }
+.briefing-page .briefing-search input::placeholder { color: color-mix(in srgb, var(--society-navy) 66%, white); opacity: 1; }
+.briefing-page .briefing-search button { min-height: 46px; padding: 10px 23px; border-radius: 0 2px 2px 0; }
+.briefing-page .briefing-tags { display: flex; gap: 12px; }
+.briefing-page .briefing-tags a { justify-content: center; gap: 12px; padding: 12px 16px; min-height: 56px; font-size: 16px; border-color: var(--society-silver); background: color-mix(in srgb, var(--society-cloud) 65%, var(--society-panel)); }
+.briefing-icon { width: 28px; height: 28px; flex: 0 0 28px; color: var(--society-teal); }
+.briefing-page .briefing-columns { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.05fr); gap: 30px; padding: 26px 0 32px; }
+.briefing-page .briefing-columns > section { min-width: 0; }
+.briefing-page .briefing-columns > section + section { padding-left: 30px; }
+.briefing-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 37px; margin-bottom: 9px; }
+.briefing-page .briefing-section-heading .society-eyebrow { display: flex; align-items: center; gap: 20px; font-size: 14px; letter-spacing: .9px; margin: 0; }
+.briefing-section-heading .briefing-icon { width: 32px; height: 32px; flex-basis: 32px; color: var(--society-rose); }
+.briefing-pool .briefing-icon { color: var(--society-teal); }
+.briefing-page .society-text-link { font: 16px/1.35 "Times New Roman", serif; text-decoration: underline; margin: 0; min-height: 32px; }
+.briefing-page .briefing-section-heading .society-text-link { font-size: 14px; white-space: nowrap; }
+.briefing-page .briefing-row { min-height: 84px; padding: 14px 0; gap: 20px; border-color: color-mix(in srgb, var(--society-silver) 60%, white); }
+.briefing-page .briefing-row:last-child { border-bottom: 0; }
+.briefing-page .briefing-row h3 { font-size: 20px; line-height: 1.14; letter-spacing: -.45px; }
+.briefing-page .briefing-row p { font-size: 16px; line-height: 1.4; margin: 5px 0 0; }
+.briefing-page .briefing-day { font-size: 12px; line-height: 1.1; flex-basis: 70px; padding-right: 20px; }
+.briefing-page .briefing-day strong { font-size: 36px; line-height: 1.1; }
+.briefing-page .briefing-arrow { font-size: 0; }
+.briefing-page .briefing-arrow::after { content: "›"; font-size: 26px; font-weight: 400; }
+.briefing-pool-art { display: block; width: 100%; height: 155px; object-fit: cover; mix-blend-mode: multiply; }
+.briefing-page .briefing-status { position: relative; font: bold 10px/1.4 "Times New Roman", serif; letter-spacing: .8px; margin: -12px 0 2px; padding: 4px 8px; border: 0; background: var(--society-cloud); }
+.briefing-page .briefing-pool h3 { font-size: 32px; letter-spacing: -1px; margin: 0 0 3px; }
+.briefing-page .briefing-pool > p { max-width: 32ch; font-size: 16px; line-height: 1.4; margin: 0; }
+.briefing-page .society-footer { border-top: 1px solid var(--briefing-rule); padding: 18px 0 !important; font-size: 15px; }
+.briefing-page .society-footer-brand { gap: 20px; }
+.briefing-page .society-footer-brand b { font-size: 21px; }
+.briefing-page .society-monogram { width: 45px; height: 47px; font-size: 28px; }
+.briefing-page .society-feedback { gap: 0; }
+.briefing-page .society-feedback-link { font: 16px "Times New Roman", serif; padding: 0 26px; border-left: 1px solid var(--society-silver); }
+.briefing-page .society-feedback-link:last-child { padding-right: 10px; }
+.briefing-page .briefing-colophon { margin: 0; padding-bottom: 12px; font-size: 12px; color: var(--society-charcoal); }
+.briefing-page :is(.briefing-row, .society-text-link, .society-feedback-link):hover { color: var(--society-teal); }
+.briefing-page .briefing-tags a:hover { background: var(--society-cloud); }
+.briefing-page :is(.society-primary, .briefing-search button):hover { background: color-mix(in srgb, var(--society-navy) 85%, var(--society-teal)); }
+@media (min-width: 761px) and (max-width: 1200px) {
+  .briefing-page .society-header { gap: 30px; justify-content: space-between; }
+  .briefing-page .society-nav { gap: 17px; }
+  .briefing-brand-copy { font-size: 16px; letter-spacing: 2px; }
+  .briefing-brand-copy small { font-size: 9px; letter-spacing: 2px; }
+  .briefing-page .society-header .society-brand { gap: 14px; }
+  .briefing-monogram { width: 54px; }
+  .briefing-page .briefing-tags { gap: 8px; }
+  .briefing-page .briefing-tags a { padding: 10px; font-size: 14px; gap: 8px; }
+  .briefing-section-heading { flex-wrap: wrap; align-content: flex-start; min-height: 74px; gap: 0; }
+  .briefing-page .briefing-section-heading .society-text-link { margin-left: 52px; }
+  .briefing-page .briefing-row h3 { font-size: 19px; }
+  .briefing-page .briefing-day { flex-basis: 52px; padding-right: 12px; }
+  .briefing-page .briefing-row { gap: 12px; }
+  .briefing-page .briefing-food-story { gap: 16px; grid-template-columns: .8fr 1fr; }
+  .briefing-page .briefing-food-story p, .briefing-page .briefing-assistant > p:not(.society-eyebrow) { font-size: 18px; }
+  .briefing-page .society-primary { padding-inline: 16px; font-size: 15px; }
+}
+@media (min-width: 761px) and (max-width: 950px) {
+  .briefing-page .society-header { flex-wrap: wrap; justify-content: center; gap: 0; padding: 18px 0 8px; }
+  .briefing-page .society-nav { width: 100%; justify-content: center; }
+  .briefing-page .briefing-lead h2 { font-size: 32px; }
+  .briefing-page .briefing-columns { gap: 18px; }
+  .briefing-page .briefing-columns > section + section { padding-left: 18px; }
+  .briefing-page .briefing-section-heading .society-eyebrow { font-size: 12px; gap: 10px; }
+  .briefing-page .briefing-section-heading .society-text-link { margin-left: 0; }
+}
+@media (max-width: 760px) {
+  .briefing-page .society-paper { padding: 0 22px; }
+  .briefing-page .society-header { flex-wrap: wrap; gap: 0 12px; padding: 18px 0; min-height: 84px; justify-content: space-between; }
+  .briefing-page .society-header .society-brand { gap: 12px; flex: 1 1 0; min-width: 0; }
+  .briefing-monogram { width: 43px; height: 47px; font-size: 29px; }
+  .briefing-monogram span:nth-child(2) { left: 8px; top: 12px; }
+  .briefing-monogram span:nth-child(3) { left: 16px; top: 24px; }
+  .briefing-brand-copy { font-size: 14px; line-height: 1.3; letter-spacing: 1.4px; }
+  .briefing-brand-copy small { font-size: 8px; letter-spacing: 1.3px; }
+  .briefing-page .society-menu { font-size: 0; padding: 0; }
+  .briefing-page .society-nav { gap: 0; }
+  .briefing-page .society-nav a { font: 19px/1.4 "Times New Roman", serif; }
+  .briefing-page .briefing-masthead { min-height: 185px; padding: 30px 0 25px; }
+  .briefing-page .briefing-masthead h1 { font-size: clamp(42px, 8.4vw, 64px); letter-spacing: -2px; max-width: 100%; margin-bottom: 19px; }
+  .briefing-page .briefing-masthead img { width: 90%; height: 115px; right: -22px; opacity: .42; }
+  .briefing-page .briefing-date { width: 100%; font-size: 10px; letter-spacing: 1.5px; white-space: normal; }
+  .briefing-page .briefing-date::after { display: none; }
+  .briefing-page .briefing-lead { gap: 26px; padding: 24px 0; }
+  .briefing-page .briefing-assistant { padding: 0; }
+  .briefing-page .briefing-food { padding: 24px 0 0; }
+  .briefing-page .briefing-lead h2 { font-size: 36px; letter-spacing: -1.3px; }
+  .briefing-page .briefing-lead .society-eyebrow { font-size: 12px; padding-left: 12px; }
+  .briefing-page .briefing-food-story p, .briefing-page .briefing-assistant > p:not(.society-eyebrow) { font-size: 18px; line-height: 1.4; }
+  .briefing-page .briefing-search input { font-size: 16px; padding-inline: 10px; }
+  .briefing-page .briefing-search button { font-size: 16px; padding-inline: 16px; }
+  .briefing-page .briefing-tags { gap: 8px; }
+  .briefing-page .briefing-tags a { min-height: 48px; font-size: 14px; padding: 9px 12px; gap: 8px; flex-grow: 1; }
+  .briefing-page .briefing-tags .briefing-icon { width: 23px; height: 23px; flex-basis: 23px; }
+  .briefing-page .briefing-food-story { grid-template-columns: .85fr 1fr; gap: 16px; }
+  .briefing-page .briefing-food-story img { height: auto; object-fit: contain; }
+  .briefing-page .society-primary { font-size: 15px; padding: 12px; }
+  .briefing-page .briefing-columns { grid-template-columns: 1fr; padding: 24px 0; gap: 24px; }
+  .briefing-page .briefing-columns > section + section { padding: 24px 0 0; border-left: 0; }
+  .briefing-page .briefing-section-heading .society-eyebrow { font-size: 12px; gap: 12px; }
+  .briefing-page .briefing-section-heading .society-text-link { font-size: 13px; }
+  .briefing-section-heading { gap: 8px; }
+  .briefing-page .briefing-row h3 { font-size: 21px; }
+  .briefing-page .briefing-day { flex-basis: 60px; padding-right: 16px; }
+  .briefing-pool-art { height: auto; aspect-ratio: 2 / 1; }
+  .briefing-page .society-footer { display: flex; flex-wrap: wrap; gap: 16px; }
+  .briefing-page .society-footer-right { margin-top: 0; }
+  .briefing-page .society-feedback-link { padding-inline: 20px; }
+  .briefing-page .society-feedback-link:first-child { border-left: 0; padding-left: 0; }
+}
+@media (max-width: 360px) {
+  .briefing-page .society-paper { padding-inline: 16px; }
+  .briefing-page .briefing-masthead img { right: -16px; }
+  .briefing-brand-copy { letter-spacing: 1px; }
+  .briefing-page .briefing-section-heading { flex-wrap: wrap; }
+  .briefing-page .briefing-food-story { grid-template-columns: 1fr; }
+  .briefing-page .briefing-food-story img { max-height: 160px; }
+}
+
+/* Audit: put daily information first on phones, with quick section links. */
+.briefing-jump-links, .briefing-next-event { display: none; }
+.briefing-page .briefing-food-story img { object-fit: contain; filter: none; transform: none; mix-blend-mode: multiply; opacity: .85; }
+.briefing-pool-art { mask-image: linear-gradient(to right,transparent,black 4%,black 96%,transparent),linear-gradient(to bottom,transparent,black 8%,black 85%,transparent); mask-composite: intersect; }
+.briefing-page .briefing-status { font-size: 12px; letter-spacing: .35px; }
+.calendar-notice { padding: 12px 14px; border-left: 3px solid #4f7d7b; background: #edf2f1; font: 15px/1.45 "Times New Roman",serif; }
+@media (max-width:760px) {
+ .briefing-page .briefing-masthead { min-height: 145px; padding-block: 22px; }
+ .briefing-page .briefing-date { font-size: 12px; letter-spacing: 1px; }
+ .briefing-jump-links { display: flex; justify-content: space-between; gap: 4px; border-top: 1px solid var(--society-silver); }
+ .briefing-jump-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; text-underline-offset: 3px; }
+ .briefing-page .briefing-lead { padding-top: 18px; gap: 22px; }
+ .briefing-page .briefing-food { padding: 0; border: 0; }
+ .briefing-page .briefing-assistant { order: 0; border-top: 1px solid var(--society-silver); padding-top: 20px; }
+ .briefing-page .briefing-food-story { grid-template-columns: 80px minmax(0,1fr); gap: 12px; }
+ .briefing-page .briefing-food-story img { height: 100px; }
+ .briefing-page .briefing-food-story p { font-size: 16px; line-height: 1.3; margin-bottom: 12px; }
+ .briefing-page .briefing-lead h2 { font-size: 32px; margin-bottom: 12px; }
+ .briefing-page .briefing-next-event { display: flex; flex-direction: column; gap: 2px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--society-silver); text-decoration: none; }
+ .briefing-next-event span { font-size: 14px; }
+ .briefing-next-event strong { font-size: 20px; text-decoration: underline; text-underline-offset: 3px; }
+ .briefing-page :is(#today-food,#today-assistant,#today-calendar,#today-openings,#today-weather) { scroll-margin-top: 16px; }
+}
+/* A visual forecast in the site's navy, teal, and quiet paper tones. */
+.briefing-page .briefing-weather-section .briefing-section-heading { min-height: 37px; }
+.briefing-page .briefing-weather-section .society-eyebrow { width: 100%; justify-content: space-between; gap: 8px; }
+.weather-zip { font: 13px/1.4 Arial,sans-serif; color: #536174; letter-spacing: .6px; }
+.weather-hero { display: grid; grid-template-columns: minmax(0,1fr) 112px; align-items: center; gap: 10px 8px; padding: 18px 20px 14px; background: linear-gradient(140deg,#e5eeeb,#f6f8f8); border-top: 2px solid #4f7d7b; border-radius: 2px; }
+.briefing-page .weather-period-name { margin: 0; font-size: 21px; letter-spacing: -.3px; }
+.weather-number { display: flex; align-items: baseline; gap: 2px; }
+.weather-temperature { font: 72px/.98 "Times New Roman",serif; letter-spacing: -3px; }
+.weather-unit { font-size: 22px; }
+.weather-range-label { color: #536174; font: 12px/1.4 Arial,sans-serif; }
+.weather-icon { display: block; width: 38px; height: 38px; color: #4f7d7b; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.weather-hero-icon { width: 112px; height: 112px; color: #365d67; }
+.briefing-page .weather-condition { grid-column: 1/-1; margin: 0; font-size: 20px; line-height: 1.25; }
+.weather-metrics { grid-column: 1/-1; display: flex; gap: 8px 18px; flex-wrap: wrap; padding-top: 6px; color: #536174; }
+.weather-metric { display: inline-flex; align-items: center; gap: 6px; font: 13px/1.4 Arial,sans-serif; }
+.weather-metric .weather-icon { width: 17px; height: 17px; }
+.weather-outlook { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); padding-top: 14px; }
+.weather-next { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; padding: 0 8px; }
+.weather-next + .weather-next { border-left: 1px solid #d4dddf; }
+.briefing-page .weather-next h4 { margin: 0; min-height: 32px; font: bold 14px/1.15 "Times New Roman",serif; }
+.weather-next-temperature { font-size: 25px; line-height: 1; }
+.weather-next-condition { color: #536174; font: 12px/1.25 Arial,sans-serif; }
+.briefing-page .briefing-weather-updated { margin: 14px 0 4px; color: #536174; font: 12px/1.4 Arial,sans-serif; }
+.weather-unavailable { display: flex; align-items: center; gap: 16px; padding: 20px; background: #edf2f1; }
+.briefing-page .weather-unavailable p { margin: 0; font-size: 16px; }
+@media (min-width:761px) and (max-width:1100px) {
+ .weather-hero { grid-template-columns: minmax(0,1fr) 72px; padding-inline: 12px; }
+ .weather-hero-icon { width: 72px; height: 72px; }
+ .weather-temperature { font-size: 58px; }
+ .weather-next { padding-inline: 4px; }
+}

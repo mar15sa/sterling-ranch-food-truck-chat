@@ -1,0 +1,181 @@
+/* Food Truck Chat presentation from the owner-approved September 10 mockup. */
+body.food-chat-page { --society-panel: #fdfdfc; --food-rule: #aeb6c1; --food-teal: #285e5a; --food-muted: #53687d; background: var(--society-panel); color: var(--society-navy); font: 18px/1.35 "Times New Roman",serif; }
+.food-chat-page :is(h1,h2,h3,button,input) { font-family: "Times New Roman",serif; }
+.food-chat-page .society-paper { max-width: 1168px; margin: 0 auto; padding: 0 64px; border: 0; background: transparent; box-shadow: none; }
+.food-chat-page .society-header { min-height: 77px; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--food-rule); }
+.food-chat-page .society-header .society-brand { display: flex; align-items: center; gap: 17px; font-weight: 400; white-space: normal; }
+.food-monogram { position: relative; width: 59px; height: 49px; flex-shrink: 0; border-right: 1px solid var(--society-silver); font: 32px/.8 "Times New Roman",serif; letter-spacing: -4px; }
+.food-monogram span { position: absolute; top: 0; left: 0; }
+.food-monogram span:nth-child(2) { top: 13px; left: 10px; }
+.food-monogram span:nth-child(3) { top: 26px; left: 19px; }
+.food-brand-copy { font-size: 18px; letter-spacing: 1.9px; text-transform: uppercase; }
+.food-brand-copy small { display: block; margin-top: 4px; font-size: 9px; letter-spacing: 2.6px; }
+.food-chat-page .society-nav { gap: 25px; }
+.food-chat-page .society-nav a { font-size: 16px; white-space: nowrap; }
+.food-chat-page .society-nav a[aria-current] { border-color: var(--food-teal); }
+.food-chat-page .app-shell { place-items: normal; }
+.food-chat-page .food-hero { position: relative; isolation: isolate; display: flex; width: 100%; align-items: center; min-height: 246px; padding: 35px 0 30px; border-bottom: 1px solid var(--food-rule); }
+.food-hero > div { width: 60%; }
+.food-chat-page .food-eyebrow { margin: 0 0 11px; font-size: 12px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: var(--food-teal); }
+.food-chat-page .food-hero h1 { margin: 0; font-size: clamp(56px,5.7vw,82px); line-height: 1; letter-spacing: -3px; }
+.food-chat-page .food-lede { max-width: 585px; margin: 10px 0 0; font-size: 22px; line-height: 1.25; }
+.food-hero img { position: absolute; right: -15px; bottom: 10px; width: 46%; height: 225px; object-fit: contain; z-index: -1; mix-blend-mode: multiply; }
+.food-chat-page .society-food-layout { display: block; width: 100%; padding: 0; margin: 0 !important; }
+.food-chat-page .chat-panel { max-width: 970px; margin: 0 auto; padding: 0 70px 0 0; }
+.food-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.food-chat-page .messages { display: flex; flex-direction: column; gap: 26px; padding: 24px 0 8px; overflow: visible; height: auto; max-height: none; }
+.food-chat-page .message { width: 100%; max-width: 100%; padding: 0 0 0 65px; font-size: 18px; line-height: 1.3; scroll-margin-top: 24px; }
+.food-chat-page .message.bot { position: relative; background: transparent; border: 0; box-shadow: none; }
+.food-chat-page .message.user { width: fit-content; max-width: calc(100% - 65px); margin-left: 65px; padding: 10px 16px; background: #e5efeb; color: var(--society-navy); border: 1px solid #cedbd7; }
+.food-assistant-icon { position: absolute; left: -7px; top: 2px; width: 40px; height: 40px; color: var(--food-teal); }
+.food-chat-page .food-assistant-label { margin: 0 0 5px; color: var(--food-teal); font-size: 12px; line-height: 1.3; font-weight: bold; text-transform: uppercase; letter-spacing: .4px; }
+.food-chat-page .answer-text { margin: 0 0 22px; font-size: 18px; line-height: 1.3; }
+.food-chat-page .truck-listing { margin-top: 22px; padding-top: 22px; border-top: 1px solid #dce2e7; }
+.food-chat-page .truck-listing:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.food-chat-page .truck-card { grid-template-columns: 1fr 1fr; gap: 12px 34px; margin: 0 0 14px; }
+.food-chat-page .truck-card > div { padding: 0; background: transparent; border: 0; border-radius: 0; }
+.food-chat-page .truck-card > div:nth-child(2) { padding-left: 38px; border-left: 1px solid #dce2e7; }
+.food-chat-page .label { margin-bottom: 5px; color: var(--food-teal); font: bold 13px/1.2 "Times New Roman",serif; letter-spacing: .4px; }
+.food-chat-page .truck-card strong { font: bold 36px/1.1 "Times New Roman",serif; letter-spacing: -1px; }
+.food-chat-page .truck-card > div:nth-child(2) strong { font-size: 27px; font-weight: normal; letter-spacing: -.6px; }
+.food-chat-page .featured-links-section > .label { display: none; }
+.food-chat-page .featured-links { gap: 12px 30px; }
+.food-chat-page .featured-links li + li { border-left: 1px solid #dce2e7; padding-left: 30px; }
+.food-chat-page .link-icon-button { display: inline-flex; width: auto; height: auto; min-height: 36px; gap: 12px; border: 0; border-radius: 0; background: transparent; color: var(--food-teal); }
+.food-chat-page .link-icon-button:hover { color: var(--society-navy); }
+.food-chat-page .link-icon-button::after { content: "↗"; font-size: 19px; margin-left: 1px; }
+.food-chat-page .link-icon-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; text-decoration: underline; font: 17px/1.3 "Times New Roman",serif; color: var(--society-navy); }
+.food-chat-page .link-icon { width: 25px; height: 25px; flex-shrink: 0; }
+.food-chat-page .menu-section { margin-top: 14px; }
+.food-chat-page :is(.menu-section,.links-section,.menu-fallback) h2 { margin: 0 0 8px; color: var(--food-teal); font: bold 13px/1.3 "Times New Roman",serif; letter-spacing: .6px; text-transform: uppercase; }
+.food-chat-page .menu-items li { padding: 9px 0; border-top: 1px solid #dce2e7; }
+.food-chat-page .menu-items li:first-child { border-top: 0; padding-top: 0; }
+.food-chat-page .menu-name { align-items: baseline; gap: 20px; color: var(--society-navy); font: normal 22px/1.15 "Times New Roman",serif; letter-spacing: -.4px; }
+.food-chat-page .menu-price { color: var(--society-navy); flex-shrink: 0; }
+.food-chat-page .menu-description { margin: 2px 0 0; font-size: 16px; line-height: 1.2; color: var(--food-muted); }
+.food-chat-page .truck-more-section { margin-top: 8px; padding-top: 0; border: 0; }
+.food-chat-page .truck-more-section summary { min-height: 36px; padding: 7px 20px; border: 0; border-radius: 0; background: #e5efeb; color: var(--food-teal); font: 17px/1.3 "Times New Roman",serif; }
+.food-chat-page .truck-more-section summary::after { content: "→"; margin-left: 16px; font-size: 22px; font-weight: normal; }
+.food-chat-page .truck-more-section[open] summary::after { content: "↓"; }
+.food-chat-page .truck-more-content { padding: 14px 0 4px; }
+.food-chat-page .compact-link a { font-weight: normal; font-size: 16px; }
+.food-chat-page .link-domain { font-size: 13px; color: var(--food-muted); }
+.food-chat-page .menu-fallback { border-radius: 2px; border-color: #d5dddf; background: #eef1f1; padding: 14px; }
+.food-chat-page .menu-fallback p { color: var(--food-muted); }
+.food-chat-page .result-meta { margin-top: 12px; gap: 10px 20px; font: 14px/1.4 "Times New Roman",serif; color: var(--food-muted); }
+.food-chat-page .checked-at::before { content: "◷"; color: var(--food-teal); font-size: 20px; vertical-align: -1px; margin-right: 10px; }
+.food-chat-page .source-link { border-left: 1px solid #dce2e7; padding-left: 20px; color: var(--food-teal); font-weight: normal; }
+.food-chat-page .source-link::after { content: "↗"; margin-left: 10px; }
+.food-chat-page .quick-actions { flex-wrap: wrap; gap: 12px; margin-left: 65px; padding: 0; border: 0; }
+.food-chat-page .quick-actions button { min-height: 36px; min-width: 100px; padding: 5px 15px; border: 1px solid #7c9a9d; border-radius: 0; background: transparent; color: var(--food-teal); font: 16px/1.3 "Times New Roman",serif; }
+.food-chat-page .quick-actions button[aria-pressed="true"] { color: white; background: var(--food-teal); border-color: var(--food-teal); }
+.food-chat-page .composer { margin-left: 65px; gap: 10px; grid-template-columns: minmax(0,1fr) 49px; padding: 10px 0 22px; border: 0; }
+.food-chat-page .composer input { min-width: 0; min-height: 43px; padding: 9px 16px; border: 1px solid #9baabe; border-radius: 1px; color: var(--society-navy); background: #ffffff90; font: 16px/1.3 "Times New Roman",serif; }
+.food-chat-page .composer input::placeholder { color: var(--food-muted); opacity: 1; }
+.food-chat-page .composer input:focus { outline: 2px solid var(--food-teal); outline-offset: 2px; border-color: var(--food-teal); }
+.food-chat-page .composer button { min-width: 0; min-height: 43px; padding: 0; border-radius: 1px; background: var(--food-teal); color: white; font-size: 26px; }
+.food-chat-page .society-footer { border-top: 1px solid var(--food-rule); padding: 12px 0 !important; font-size: 12px; }
+.food-chat-page .society-footer-brand { gap: 12px; }
+.food-chat-page .society-footer-brand b { font-size: 16px; }
+.food-chat-page .society-monogram { width: 33px; height: 35px; font-size: 23px; }
+.food-chat-page .society-footer-right p { font-size: 11px; }
+.food-chat-page .society-feedback { gap: 0; }
+.food-chat-page .society-feedback-link { padding: 0 22px; border-left: 1px solid var(--food-rule); font: 14px "Times New Roman",serif; }
+.food-chat-page .society-feedback-link:first-child { border-left: 0; }
+@media (min-width:761px) and (max-width:1100px) {
+  .food-chat-page .society-paper { padding-inline: 35px; }
+  .food-chat-page .society-nav { gap: 16px; }
+  .food-chat-page .society-nav a { font-size: 14px; }
+  .food-brand-copy { font-size: 14px; letter-spacing: 1px; }
+  .food-brand-copy small { font-size: 8px; letter-spacing: 1px; }
+  .food-chat-page .food-hero h1 { font-size: 58px; }
+  .food-chat-page .food-lede { font-size: 19px; }
+}
+@media (max-width:760px) {
+  .food-chat-page .society-paper { padding-inline: 22px; }
+  .food-chat-page .society-header { min-height: 84px; gap: 12px; padding: 16px 0; }
+  .food-chat-page .society-header .society-brand { gap: 11px; flex: 1; min-width: 0; }
+  .food-monogram { width: 43px; height: 47px; font-size: 29px; }
+  .food-brand-copy { font-size: 13px; letter-spacing: 1px; }
+  .food-brand-copy small { font-size: 8px; letter-spacing: 1px; }
+  .food-chat-page .society-nav { gap: 0; }
+  .food-chat-page .society-nav a { font-size: 19px; }
+  .food-chat-page .food-hero { display: block; padding: 24px 0 14px; min-height: 0; }
+  .food-hero > div { width: 100%; }
+  .food-chat-page .food-hero h1 { font-size: clamp(44px,9vw,62px); letter-spacing: -2px; }
+  .food-chat-page .food-lede { font-size: 18px; line-height: 1.3; }
+  .food-hero img { display: block; position: static; width: 100%; max-height: 180px; height: auto; margin: 12px 0 0; }
+  .food-chat-page .chat-panel { padding: 0; }
+  .food-chat-page .messages { padding-top: 20px; gap: 20px; }
+  .food-chat-page .message { padding: 0; font-size: 17px; }
+  .food-chat-page .message.user { margin-left: 20px; max-width: calc(100% - 20px); padding: 10px 14px; }
+  .food-assistant-icon { left: 0; top: -3px; width: 26px; height: 26px; }
+  .food-chat-page .food-assistant-label { padding-left: 36px; min-height: 24px; padding-top: 3px; }
+  .food-chat-page .answer-text { font-size: 17px; margin-bottom: 20px; }
+  .food-chat-page .truck-card { grid-template-columns: 1fr; gap: 15px; }
+  .food-chat-page .truck-card > div:nth-child(2) { padding-left: 0; border-left: 0; }
+  .food-chat-page .truck-card strong { font-size: 32px; }
+  .food-chat-page .truck-card > div:nth-child(2) strong { font-size: 23px; }
+  .food-chat-page .featured-links { gap: 4px 20px; }
+  .food-chat-page .featured-links li + li { padding-left: 0; border-left: 0; }
+  .food-chat-page .link-icon-button { min-height: 44px; gap: 8px; }
+  .food-chat-page .link-icon-text { font-size: 16px; }
+  .food-chat-page .menu-name { font-size: 21px; gap: 14px; }
+  .food-chat-page .menu-description { line-height: 1.35; }
+  .food-chat-page .menu-items li { padding-block: 12px; }
+  .food-chat-page .truck-more-section summary { min-height: 44px; }
+  .food-chat-page .result-meta { gap: 8px 12px; }
+  .food-chat-page .source-link { padding-left: 12px; min-height: 32px; align-items: center; }
+  .food-chat-page .quick-actions { margin: 5px 0 0; gap: 8px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .food-chat-page .quick-actions button { min-width: 0; min-height: 44px; padding-inline: 4px; }
+  .food-chat-page .composer { margin-left: 0; grid-template-columns: minmax(0,1fr) 44px; }
+  .food-chat-page .composer :is(input,button) { min-height: 46px; }
+  .food-chat-page .society-feedback-link { padding: 8px 12px; }
+  .food-chat-page .society-feedback-link:first-child { padding-left: 0; }
+}
+/* As in the original chat: messages scroll, controls occupy their own bottom row. */
+body.food-chat-page { padding-bottom: 0; }
+html:has(.food-chat-page) { scroll-padding-bottom: 0; }
+.food-chat-page .chat-panel { display: grid; grid-template-rows: minmax(0,1fr) auto; max-width: 970px; height: clamp(320px,calc(100dvh - 500px),760px); min-height: 0; margin: 20px auto 24px; padding: 0; overflow: hidden; border: 1px solid #cbd9d5; border-radius: 8px; background: #f7faf8; }
+.food-chat-page .messages { grid-row: 1; min-height: 0; height: auto; max-height: none; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; padding: 14px; }
+.food-chat-page .message { flex-shrink: 0; }
+.food-chat-page .message.bot { padding: 20px; border: 1px solid #dce5e3; border-radius: 7px; background: #fff; box-shadow: 0 3px 14px #24344b05; }
+.food-chat-page .food-assistant-icon { left: 16px; top: 17px; padding: 7px; width: 42px; height: 42px; border-radius: 50%; background: #e4eeeb; }
+.food-chat-page .food-assistant-label { margin-left: 52px; }
+.food-chat-page .answer-text { margin: 0 0 16px 52px; padding: 11px 15px; border-radius: 6px; background: #f0f5f3; }
+.food-chat-page .truck-card { gap: 12px 18px; }
+.food-chat-page .truck-card > div { padding: 13px 16px; background: #eaf2ef; border-radius: 5px; }
+.food-chat-page .truck-card > div:nth-child(2) { padding: 13px 16px; border: 0; }
+.food-chat-page .truck-card strong { font-size: 29px; letter-spacing: -.5px; }
+.food-chat-page .truck-card > div:nth-child(2) strong { font-size: 24px; }
+.food-chat-page .truck-card .featured-links-section { background: #f1f5f3; }
+.food-chat-page .featured-links-section > .label { display: block; }
+.food-chat-page .link-icon { background: #e1ece8; border-radius: 50%; padding: 5px; width: 32px; height: 32px; }
+.food-chat-page .menu-section { padding-top: 15px; border-top: 1px solid #dce5e3; }
+.food-chat-page .menu-price { color: #894557; font-weight: bold; }
+.food-chat-page .truck-more-section summary { border-radius: 24px; }
+.food-chat-page .message.user { padding: 12px 18px; border-radius: 16px 16px 3px 16px; }
+.food-chat-dock { position: static; grid-row: 2; box-sizing: border-box; width: 100%; min-width: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border: 0; border-top: 1px solid #b7c9c5; background: #f8faf9; }
+.food-chat-dock-inner { max-width: 970px; margin-inline: auto; }
+.food-chat-page .food-chat-dock .quick-actions { margin: 0; gap: 10px; }
+.food-chat-page .food-chat-dock .quick-actions button { border-radius: 22px; min-height: 38px; }
+.food-chat-page .food-chat-dock .composer { margin: 0; padding: 9px 0 0; }
+.food-chat-page .food-chat-dock .composer input { background: white; border-radius: 4px; }
+.food-chat-page .food-chat-dock .composer button { border-radius: 4px; }
+@media (max-width:760px) {
+  .food-chat-page .chat-panel { height: clamp(340px,calc(100dvh - 28px),760px); }
+  .food-chat-page .messages { padding: 10px; }
+  .food-chat-page .message.bot { padding: 14px; }
+  .food-chat-page .food-assistant-icon { left: 12px; top: 12px; width: 34px; height: 34px; padding: 5px; }
+  .food-chat-page .food-assistant-label { margin-left: 42px; padding-left: 0; }
+  .food-chat-page .answer-text { margin-left: 0; padding: 12px; }
+  .food-chat-page .truck-card > div, .food-chat-page .truck-card > div:nth-child(2) { padding: 12px; }
+  .food-chat-page .truck-card strong { font-size: 27px; }
+  .food-chat-page .truck-card > div:nth-child(2) strong { font-size: 22px; }
+  .food-chat-page .featured-links { gap: 6px 14px; }
+  .food-chat-page .link-icon-button { gap: 6px; }
+  .food-chat-dock { padding: 9px 16px calc(9px + env(safe-area-inset-bottom, 0px)); }
+  .food-chat-page .food-chat-dock .quick-actions { gap: 8px; }
+  .food-chat-page .food-chat-dock .quick-actions button { min-height: 40px; font-size: 15px; }
+  .food-chat-page .food-chat-dock .composer { padding-top: 8px; }
+}
