@@ -335,6 +335,11 @@ test("resident-supplied locations cannot become placement permission without cit
     locationScopeIssues(disclaimerBypass, plantSource, cases[0][0]).join(" "),
     /affirmative placement claim.*fence-line/i
   );
+  const permittedDisclaimerBypass = "You are permitted to plant it along your fence line; the source does not say you can't.";
+  assert.match(
+    locationScopeIssues(permittedDisclaimerBypass, plantSource, cases[0][0]).join(" "),
+    /affirmative placement claim.*fence-line/i
+  );
 
   const liveShapedOverclaim = "Yes, you can plant Boulder Raspberry along your fence line. It's a preapproved shrub that grows 8 feet tall and 6 feet wide, so you don't need special approval. Check setbacks and underground utilities before planting.";
   const liveIssues = llmRewriteIssues(
