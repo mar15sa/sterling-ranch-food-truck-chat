@@ -1,6 +1,7 @@
 {
-  "latitude": 39.5068,
-  "longitude": -105.0375,
+  "latitude": 39.5946,
+  "longitude": -105.014,
   "userAgent": "SterlingRanchSociety (https://sterlingranchsociety.com)",
-  "sourceUrl": "https://forecast.weather.gov/MapClick.php?lat=39.5068&lon=-105.0375"
+  "sourceUrl": "https://forecast.weather.gov/zipcity.php?inputstring=80125",
+  "zipCode": "80125"
 }

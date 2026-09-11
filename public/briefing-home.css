@@ -176,15 +176,36 @@ body.briefing-page {
  .briefing-page .briefing-next-event { display: flex; flex-direction: column; gap: 2px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--society-silver); text-decoration: none; }
  .briefing-next-event span { font-size: 14px; }
  .briefing-next-event strong { font-size: 20px; text-decoration: underline; text-underline-offset: 3px; }
- .briefing-page :is(#today-food,#today-assistant,#today-calendar,#today-openings,#today-pool) { scroll-margin-top: 16px; }
+ .briefing-page :is(#today-food,#today-assistant,#today-calendar,#today-openings,#today-weather) { scroll-margin-top: 16px; }
 }
-.briefing-weather-period { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--society-silver); }
-.briefing-weather-period > div { display: flex; flex-direction: column; gap: 3px; }
-.briefing-weather-period strong { font-size: 20px; }
-.briefing-weather-period span { font-size: 16px; }
-.briefing-weather-period .briefing-weather-temperature { font-size: 34px; line-height: 1; white-space: nowrap; }
-.briefing-page .briefing-weather-updated { margin: 8px 0 0; font-size: 13px; }
-.briefing-essentials { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--society-silver); }
-.briefing-page .briefing-essentials h3 { margin: 0 0 4px; font-size: 23px; }
-.briefing-essentials a { display: flex; align-items: center; min-height: 32px; font-size: 16px; text-decoration: underline; }
-@media (max-width:760px) { .briefing-essentials a { min-height: 44px; } }
+/* A visual forecast in the site's navy, teal, and quiet paper tones. */
+.briefing-page .briefing-weather-section .briefing-section-heading { min-height: 37px; }
+.briefing-page .briefing-weather-section .society-eyebrow { width: 100%; justify-content: space-between; gap: 8px; }
+.weather-zip { font: 13px/1.4 Arial,sans-serif; color: #536174; letter-spacing: .6px; }
+.weather-hero { display: grid; grid-template-columns: minmax(0,1fr) 112px; align-items: center; gap: 10px 8px; padding: 18px 20px 14px; background: linear-gradient(140deg,#e5eeeb,#f6f8f8); border-top: 2px solid #4f7d7b; border-radius: 2px; }
+.briefing-page .weather-period-name { margin: 0; font-size: 21px; letter-spacing: -.3px; }
+.weather-number { display: flex; align-items: baseline; gap: 2px; }
+.weather-temperature { font: 72px/.98 "Times New Roman",serif; letter-spacing: -3px; }
+.weather-unit { font-size: 22px; }
+.weather-range-label { color: #536174; font: 12px/1.4 Arial,sans-serif; }
+.weather-icon { display: block; width: 38px; height: 38px; color: #4f7d7b; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.weather-hero-icon { width: 112px; height: 112px; color: #365d67; }
+.briefing-page .weather-condition { grid-column: 1/-1; margin: 0; font-size: 20px; line-height: 1.25; }
+.weather-metrics { grid-column: 1/-1; display: flex; gap: 8px 18px; flex-wrap: wrap; padding-top: 6px; color: #536174; }
+.weather-metric { display: inline-flex; align-items: center; gap: 6px; font: 13px/1.4 Arial,sans-serif; }
+.weather-metric .weather-icon { width: 17px; height: 17px; }
+.weather-outlook { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); padding-top: 14px; }
+.weather-next { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; padding: 0 8px; }
+.weather-next + .weather-next { border-left: 1px solid #d4dddf; }
+.briefing-page .weather-next h4 { margin: 0; min-height: 32px; font: bold 14px/1.15 "Times New Roman",serif; }
+.weather-next-temperature { font-size: 25px; line-height: 1; }
+.weather-next-condition { color: #536174; font: 12px/1.25 Arial,sans-serif; }
+.briefing-page .briefing-weather-updated { margin: 14px 0 4px; color: #536174; font: 12px/1.4 Arial,sans-serif; }
+.weather-unavailable { display: flex; align-items: center; gap: 16px; padding: 20px; background: #edf2f1; }
+.briefing-page .weather-unavailable p { margin: 0; font-size: 16px; }
+@media (min-width:761px) and (max-width:1100px) {
+ .weather-hero { grid-template-columns: minmax(0,1fr) 72px; padding-inline: 12px; }
+ .weather-hero-icon { width: 72px; height: 72px; }
+ .weather-temperature { font-size: 58px; }
+ .weather-next { padding-inline: 4px; }
+}
