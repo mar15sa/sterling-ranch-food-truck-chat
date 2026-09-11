@@ -491,6 +491,9 @@
   },
   {
     "question": "Can I build a helipad in my yard?",
-    "shouldRefuse": true
+    "shouldRefuse": true,
+    "expectedAnswerMode": "source-evidence-boundary",
+    "expectedNoSources": true,
+    "expectedReason": "named-project-not-supported-by-cited-evidence"
   }
 ]
