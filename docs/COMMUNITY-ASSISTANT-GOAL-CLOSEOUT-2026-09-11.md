@@ -1,7 +1,7 @@
 # Community Assistant goal closeout
 
 **Date:** September 11, 2026  
-**Status:** Draft closeout record. It describes the accuracy and reliability goal. The broader rule-generalization work is deliberately deferred to a new goal.
+**Status:** Complete. The broader rule-generalization work is deliberately deferred to a new goal.
 
 ## What this goal was for
 
@@ -15,7 +15,7 @@ The goal was to make the Sterling Ranch Community Assistant helpful and accurate
 - reporting controls for bugs and feature requests; and
 - permanent planning and automation rules so future repairs solve a family of failures instead of one reported question.
 
-The Society redesign was later removed from this goal. It has its own approved workstream. A final production UI status is recorded in the release checklist below rather than being counted as an accuracy-goal deliverable.
+The approved Society redesign was included in the final release at the user's direction. It is now live in production alongside the accuracy work.
 
 ## What changed and is live
 
@@ -77,15 +77,15 @@ Official discovery or indexing never automatically makes a fact answerable.
 
 The server now marks all staging Community Assistant questions as tests before logging, even if someone forgot `?test=1`. Production does not trust a browser-provided host or test marker for this boundary. The normal owner view hides test-marked questions. Automated and browser testing also use the explicit test mode.
 
-This prevents new staging/test questions from appearing as resident questions. Older records created before the boundary was fixed may still need a private owner-log cleanup if they were stored as resident entries; this work did not delete or alter historical owner records.
+This prevents new staging/test questions from appearing as resident questions. The four known screenshot records (two raspberry and two holiday-light questions) were corrected to `Testing = yes`. This does not claim that every historical record was bulk-cleaned.
 
 ### Feedback controls
 
-The Community Assistant has "Report a bug" and "Request a feature" controls with contextual email drafts. They do not send anything automatically. Their final production verification is listed below because this document was drafted before the coordinator's final UI release confirmation.
+The Community Assistant has live "Report a bug" and "Request a feature" controls with contextual email drafts. They do not send anything automatically.
 
 ### Automation guardrails
 
-The Daily Community Assistant improvement fixer has permanent instructions to fix a root cause and its related question family, compose facts from current approved evidence, avoid resident-facing canned facts in code, run broad regressions, and stop publishing if evidence or checks are incomplete. The guardrail is now explicit; its future runs still require release review and monitoring.
+The Daily Community Assistant improvement fixer, food-truck check, and openings review are enabled, and the publishing hold has been removed. The Assistant fixer has permanent instructions to fix a root cause and its related question family, compose facts from current approved evidence, avoid resident-facing canned facts in code, run broad regressions, and stop publishing if evidence or checks are incomplete. The guardrail is now explicit; its future runs still require release review and monitoring. The 58 existing literal-debt nodes remain a frozen baseline: they cannot grow and still need deliberate cleanup.
 
 ## Release record
 
@@ -109,45 +109,45 @@ These are the main accuracy/reliability pull requests merged into `main` during 
 | [#99](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/99) | Trailing negative catalog-claim guard. |
 | [#100](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/100) | Natural structured fallback and explicit separation of deferred catalog work. |
 | [#101](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/101) | Aspen Grove seasonal-opening update. |
-| #102 | **Coordinator to fill in:** final release/UI pull request, merge commit, production deployment revision, and production smoke-test results. |
+| [#102](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/102) | Final approved editorial UI and release integration. Merged to `main` at 2026-09-11T14:24:22Z as `dcf4f0e170e5cdedd86d7dcbf7693e089c998761`. |
 
-**Final UI and production verification placeholder — coordinator must complete before closing:**
+The approved nine-color editorial UI is now live in production for Home, Community Assistant, Food Trucks, Calendar, Openings, and Pool. Production checks confirmed the redesigned homepage loaded its data; the Assistant showed its Test mode banner; holiday lights returned a natural, grounded answer; Boulder Raspberry was correctly described as a preapproved shrub with placement not established and dimensions of 8 ft by 6 ft; Labor Day correctly stated that the pool season runs through Labor Day while separate holiday hours are not published; pool status showed Closed/Red; the Food Trucks page showed Lucky Bird and its menu; Calendar loaded official events; Openings showed 125 listings; and Pool showed Closed.
 
-- UI production merge commit: `TBD`
-- Production deployment revision/time: `TBD`
-- Production test-mode verification of Assistant, pool, a rule question, food trucks, feedback controls, and test-log isolation: `TBD`
-- Confirmation that the approved Society UI is live: `TBD`
+Release evidence: the gate passed 752/752 checks, 140/140 rule checks, 7/7 unseen cases, and the 122-question resident corpus. Responsive/accessibility checks passed 24/24; footer/composer checks passed 36/36; the post-update openings check passed 125/125; and UI examples passed 19/19.
 
 ## Source status: do not mix these counts
 
-These are different measuring sticks from the same latest staging inventory snapshot. They must not be added together.
+These are different measuring sticks from the current live production crawl and review state. They must not be added together or collapsed into one completion percentage.
 
 | Measure | Current count | What it means |
 | --- | ---: | --- |
-| Discovered official URLs | 1,529 | URLs found by the crawl. Discovery is not approval. |
-| Eligible URLs | 1,099 | URLs that need processing under the current scope. |
-| Backlog | 910 pages | Eligible URLs still awaiting disposition in the staged coverage process. |
-| Source records in snapshot | 274 | Stored source records; this is not the number of URLs or approved facts. |
-| Exact source versions in canonical ledger | 30 | 5 whole-source approved-evidence versions and 25 pending-review versions. |
-| Claim-scoped approvals | 22 approvals in 17 decision applications | Owner decisions for precise claims or actions; do not add to source-version count. |
-| Extracted ledger rows | 649 | Migration inventory, not the number of owner-approved answer facts. |
-| Strictly approved extracted facts | 25 | Exact approved facts in the strict staging runtime in this snapshot. |
+| Discovered official URLs | 1,508 | URLs found by the live crawl. Discovery is not approval. |
+| Eligible URLs | 1,078 | URLs that need a disposition under the current scope. |
+| Incorporated URLs | 182 (16.9% of eligible) | URLs incorporated into the crawl process. This is coverage progress, not answer approval. |
+| Pending URLs | 879 | Eligible URLs awaiting disposition. |
+| Excluded URLs | 430 | URLs excluded from the eligible set. |
+| Duplicate URLs | 97 | Duplicate crawl findings; not extra review work. |
+| Source review items | 1,810 | Private review items, not source groups or approved facts. |
+| Sensitive review items | 1,054 | A review-queue subset, not an additional total. |
+| Extracted facts | 651 | Fact inventory, not the number of owner-approved answer facts. |
+| Approved extracted facts | 27 | Exact fact approvals in the current review state. |
 | Candidate extracted facts | 624 | Not approved for resident answers. |
-| Candidate review items | 1,925 | Private review-queue items, not source groups or approved facts. |
 | Conflicted facts | 17 | Withheld until their review batch resolves them. |
+| Exact-source ledger versions | 33 | A separate canonical inventory: 5 whole-source approved versions and 28 pending versions. |
+| Narrow claim approvals | 32 | Exact claim/action decisions; do not add them to source versions or facts. |
+| Current source revalidation | 59/59, zero review required | Revalidation result for the approved current bundle. It is not full-site coverage. |
 
-The full-coverage percentage seemed slow because the crawl kept discovering more pages while the stricter human decision work deliberately did not auto-approve them. The safety process is correct, but the review workflow is too granular for fast throughput. The recommended next goal should group exact unchanged pages into bounded approval packages, surface only meaningful diffs, renew only identity-matched unchanged evidence, and prioritize high-harm topics and conflicts first.
+The 16.9% figure is only live crawl incorporation: 182 of 1,078 eligible URLs. It is not the share of facts approved for resident answers, the share of review items handled, or the safety score. The review process is intentionally strict, but it is still too granular for fast throughput. The next goal should group exact unchanged pages into bounded approval packages, surface only meaningful diffs, renew only identity-matched unchanged evidence, and prioritize high-harm topics and conflicts first.
 
 ## What remains or is deferred
 
-1. **Broader semantic catalog-absence rule:** deferred to the next goal. The recent repairs stop the known negative-membership wording families. A broader general rule needs its own careful scope and regression suite so it does not suppress legitimate source-backed absence statements.
-2. **Full source disposition:** 910 eligible pages remain in the current backlog, with 1,925 candidate review items. Work in small batches: payments/fees/contacts/reservations first, then DRC/property changes, utilities/trash, facilities/events, and long-tail history.
+1. **Broader semantic catalog-absence rule:** deferred to the next goal. Known gaps are: a lowercase wording bypass; a mixed uncertainty-plus-unsafe-absence bypass; and a false positive on the valid statement "cannot be included without DRC approval." The next goal must solve all three without suppressing legitimate source-backed absence statements.
+2. **Full source disposition:** 879 eligible URLs remain pending in the live crawl, with 1,810 source-review items (1,054 sensitive). Work in small batches: payments/fees/contacts/reservations first, then DRC/property changes, utilities/trash, facilities/events, and long-tail history.
 3. **Conflicts:** 17 conflicted facts remain safely withheld. Resolve or explicitly withhold each in its appropriate owner-review batch.
 4. **Pool reopening:** the official source does not publish an exact 2027 opening date. The Assistant should say the pool is closed for the season and use the published seasonal window without inventing a date.
 5. **Connector follow-ups:** CivicRec should be action-only until a real live adapter proves availability and prices. The separately scoped waste service-area and food-truck horizon work should be promoted and verified if it is not already included in the final production revision. Continue moving remaining Sterling-specific connector behavior into profile/adapter configuration.
-6. **Historical admin records:** locate and correct only the older staging/test records that were logged as resident questions before the server-side isolation fix, with an owner-authorized private-log workflow.
+6. **Historical admin records:** the four known screenshot rows were corrected. Review any other older records only through an owner-authorized private-log workflow; do not claim a bulk cleanup occurred.
 7. **Automation review:** periodically sample the Daily fixer’s changes against its no-canned-facts and family-level-proof rules. This is an operational check, not a reason to auto-publish.
-8. **UI:** the approved visual work belongs to its separate release record. Complete the final placeholder above before stating that it is in production.
 
 ## Ongoing risks
 
@@ -155,23 +155,23 @@ The full-coverage percentage seemed slow because the crawl kept discovering more
 - Source content can change without notice. Exact URL/hash/freshness checking keeps changed content from silently becoming evidence, but it can temporarily make an answer more cautious until reviewed.
 - Some current questions need an official live system. If a connector is unhealthy, the Assistant must say current status cannot be verified rather than guess.
 - Full official-site coverage is incomplete. The Assistant may correctly withhold a useful answer while an official page is waiting for review.
-- The resident-literal baseline still has tracked historical migration debt. It cannot grow, but it should be reduced in deliberate, tested batches.
+- The resident-literal baseline still has 58 tracked historical debt nodes. It cannot grow, but it should be reduced in deliberate, tested batches.
 - The user interface can make a safe partial answer feel less helpful if it overemphasizes limitations. Continue testing natural language and action clarity with real resident question families.
 
 ## Candid postmortem: why this took too long
 
-The work started as a large set of visible answer problems, but those problems came from several different layers: old shortcuts, source approval, source freshness, question routing, live connectors, AI composition, answer formatting, and test logging. Treating each screenshot as a separate defect initially caused repeated repairs and retesting of neighboring behavior.
+The work started as a large set of visible answer problems, but its scope mixed architecture, source inventory, an active incident, UI, release work, and automation. Those pieces moved at different speeds and on a moving `main` branch. Treating each screenshot as a separate defect initially caused repeated repairs and retesting of neighboring behavior.
 
-The biggest delay was discovering hidden interactions only after a fix had moved forward. For example, fixing a natural AI response exposed duplicate rendering in the page wrapper; blocking one negative catalog phrase exposed a qualified version of the same unsupported claim; fixing seasonal pool data required separating current status, normal hours, historical evidence, and holiday-specific hours. Those were real root-cause discoveries, but they should have been mapped as one answer-pipeline problem sooner.
+The biggest delay was discovering hidden interactions only after a fix had moved forward. For example, fixing a natural AI response exposed duplicate rendering in the page wrapper; blocking one negative catalog phrase exposed a qualified version of the same unsupported claim; fixing seasonal pool data required separating current status, normal hours, historical evidence, and holiday-specific hours. Narrow tests created false confidence until broader resident questions exposed the next bypass. Those were real root-cause discoveries, but they should have been mapped as one answer-pipeline problem sooner.
 
-Source work also looked slower than it was because different reports counted URLs, source records, facts, approvals, candidates, and review items as if they were comparable. That created misleading percentage changes and made completed safety work hard to see. The old shortcut baseline added confusion by looking more complete than it was.
+Source work also looked slower than it was because different reports counted URLs, source records, facts, approvals, candidates, and review items as if they were comparable. That created misleading percentage changes and made completed safety work hard to see. The old shortcut baseline added confusion by looking more complete than it was. Work was also hidden across chats and worktrees, while sequential CI and deployment gates made small releases look idle from the outside.
 
 The process changes are:
 
 1. Fix one failure family at a time and write its authority, evidence, degraded behavior, and adjacent-question tests before coding.
 2. Keep a fixed goal scorecard with separate tracks for product safety, source coverage, connector migration, UI, and operations. Do not lower completed work merely because new inventory was found.
 3. Require every release to have a short before/after resident example plus exact production smoke tests before moving to the next branch.
-4. Use separate worktrees for independent fixes, but integrate them through one small release branch and one final reviewer. Do not allow an unrelated UI or data update to share an accuracy release by accident.
+4. Use separate worktrees for independent fixes, but keep one visible release board and one final reviewer. Explicitly decide whether UI, data, and accuracy work share a release before testing begins.
 5. Report source counts with names and denominators every time. Never use a single “percent complete” without saying whether it is safety, coverage, or review throughput.
 6. Use bounded, diff-based approval packages for sources. The owner should review meaningful changed facts and source roles, not repeatedly inspect unchanged boilerplate.
 7. Treat staging as a protected testing environment from the server side, then audit the owner log after each release for boundary regressions.
