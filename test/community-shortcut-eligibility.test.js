@@ -473,25 +473,63 @@ test("a confident rental fallback cannot replace pool hours after live status is
   ));
 });
 
-test("a current pool-status question still uses the live status connector", async () => {
+test("a current pool-status question with today's date uses the fresh live status connector", async () => {
   let poolCalls = 0;
-  const answer = await answerCommunityQuestion("Is the pool open right now?", {
+  const answer = await answerCommunityQuestion("Is the pool open today?", {
     interpretationMode: "structured",
     now: NOW,
     communityId: "sterling-ranch",
     communityProfile,
     planCommunitySearch: async () => plan({
       intent: "status", goal: "status", goals: ["status"], subject: "current pool status",
-      requestedDetails: ["status"], searchQueries: ["current pool status"],
+      requestedDetails: ["status"],
+      dateRange: { kind: "today", start: "2026-09-01", end: "2026-09-01", label: "today" },
+      searchQueries: ["current pool status"],
     }),
     getPoolStatus: async () => {
       poolCalls += 1;
-      return { headline: "Green", summary: "The pool is currently open.", residentAction: "Normal entry rules apply.", sourceUrl: "https://sterlingranchcab.com/pool", checkedAt: NOW.toISOString(), evidenceEnvelope: { communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" }, coverage: { covered: ["status"] }, evidence: [{ evidenceId: "sterling-ranch:pool-status:current", communityId: "sterling-ranch", staleAfter: "2026-09-01T19:00:00.000Z" }], claims: [{ facet: "status", text: "Green", controllingEvidenceId: "sterling-ranch:pool-status:current" }] } };
+      return { state: "closed", headline: "Closed", summary: "The official CAB status is Red Light: the pool is closed with no access for homeowners or guests.", residentAction: "Open the official pool status for any additional details.", sourceUrl: "https://sterlingranchcab.com/pool", date: "2026-09-01", checkedAt: NOW.toISOString(), stale: false, evidenceEnvelope: { communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" }, coverage: { covered: ["status"] }, evidence: [{ evidenceId: "sterling-ranch:pool-status:current", communityId: "sterling-ranch", staleAfter: "2026-09-01T19:00:00.000Z" }], claims: [{ facet: "status", text: "Closed", controllingEvidenceId: "sterling-ranch:pool-status:current" }] } };
     },
   });
   assert.equal(poolCalls, 1);
   assert.equal(answer.answerMode, "community-live-status");
-  assert.match(answer.directAnswer, /currently open/i);
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.directAnswer, /^Closed\. The official CAB status is Red Light:/i);
+});
+
+test("a future dated status request cannot reuse a current live-status observation", () => {
+  const checkedAt = NOW.toISOString();
+  const evidenceId = "riverton:pool-status:current";
+  const connectorResult = {
+    checkedAt,
+    stale: false,
+    evidenceEnvelope: {
+      connectorFamily: "live-status",
+      degradation: { state: "healthy" },
+      coverage: { covered: ["status"] },
+      evidence: [{ evidenceId }],
+      claims: [{ facet: "status", controllingEvidenceId: evidenceId }],
+    },
+  };
+  const currentAnswer = candidate({
+    answerStatus: "verified",
+    answerMode: "community-live-status",
+    checkedAt,
+    directAnswer: "Closed. The official status is Red.",
+  });
+  const decision = shortcutEligibility("pool-status", {
+    question: "Will the pool be open tomorrow?",
+    plan: plan({
+      intent: "status", goal: "status", goals: ["status"], subject: "pool status tomorrow",
+      requestedDetails: ["status"],
+      dateRange: { kind: "tomorrow", start: "2026-09-02", end: "2026-09-02", label: "tomorrow" },
+      searchQueries: ["pool status tomorrow"],
+    }),
+    candidate: currentAnswer,
+    connectorResult,
+  });
+  assert.equal(decision.eligible, false);
+  assert.ok(decision.reasons.includes("date-range-not-covered"));
 });
 
 test("pool reopening and next-season questions combine current closed status with the recurring season boundary", async () => {
