@@ -6,6 +6,7 @@ body.society-page .society-footer.site-footer { position: relative; isolation: i
 .site-footer .site-footer-brand b { font: bold 18px/1.2 "Times New Roman",serif; }
 .site-footer .site-footer-brand span { margin-top: 3px; font-size: 12px; }
 .site-footer .site-footer-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.site-footer .site-footer-note { flex-basis: 100%; font: 12px/1.35 Arial,sans-serif; }
 body.society-page .site-footer a { color: #24344b; font: 14px/1.4 "Times New Roman",serif; text-decoration: underline; text-underline-offset: 3px; }
 .site-footer .site-footer-links a { display: inline-flex; min-height: 32px; align-items: center; }
 body.society-page .site-footer .site-footer-credit { margin: 0; padding-left: 18px; border-left: 1px solid #aeb6c1; color: #24344b; font: italic 12px/1.5 "Times New Roman",serif; }

@@ -3,8 +3,13 @@ const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
-const { focusedDimensionDetails, llmRewriteIssues } = require("../lib/rules-grounding");
+const {
+  focusedDimensionDetails,
+  llmRewriteIssues,
+  locationScopeIssues,
+} = require("../lib/rules-grounding");
 const { isPlantPermissionQuestion } = require("../lib/rules-intent");
+const { composePlainEnglishFallback, rewriteAnswerWithLLM } = require("../lib/rules-llm");
 const communityIndex = require("../data/community-index.json");
 
 const answerWithoutAi = (question) => answerRulesQuestion(question, {
@@ -87,7 +92,7 @@ test("an unapproved service request stays withheld instead of regaining a canned
 
 test("specific plant evidence comes from the selected source instead of answer code", async () => {
   const result = await answerWithoutAi("Can I grow raspberries near my property line?");
-  assert.match(result.answer, /Boulder Raspberry/i);
+  assert.match(result.answer, /Boulder Raspberry is a preapproved shrub/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Boulder Raspberry/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Shrub/i);
 });
@@ -95,7 +100,7 @@ test("specific plant evidence comes from the selected source instead of answer c
 test("named plant answers preserve a non-raspberry multiword common name", async () => {
   const result = await answerWithoutAi("Can I plant Blue Point Juniper?");
   assert.equal(result.confidence?.canAnswer, true);
-  assert.match(result.answer, /Blue Point Juniper is preapproved and evergreen/i);
+  assert.match(result.answer, /Blue Point Juniper is a preapproved evergreen/i);
   assert.doesNotMatch(result.answer, /Short answer:\s*Point Juniper:/i);
   assert.match(result.sources?.[0]?.excerpt || "", /Blue Point Juniper/i);
   assert.match(result.sources?.[0]?.text || "", /JUNIPERUS CHINENSIS ['"]BLUE POINT['"]/i);
@@ -105,8 +110,26 @@ test("a named plant with no matching source row is not approved", async () => {
   const result = await answerWithoutAi("Can I grow Moonbeam Dragonfruit?");
   assert.equal(result.confidence?.canAnswer, false);
   assert.equal(result.answerMode, "source-evidence-boundary");
-  assert.match(result.answer, /could not verify whether the requested detail is covered/i);
+  assert.match(result.answer, /does not confirm whether the requested plant is included/i);
+  assert.match(result.answer, /additional species will be considered by the Sterling Ranch Design Review Committee/i);
+  assert.ok(result.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
   assert.doesNotMatch(result.answer, /\byes\b|allowed choices|includes Moonbeam Dragonfruit/i);
+});
+
+test("a named catalog miss keeps its supported process and approved route in the Community Assistant", async () => {
+  const result = await answerCommunityQuestion("Can I grow Moonbeam Dragonfruit?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.match(result.answer, /does not confirm whether the requested plant is included/i);
+  assert.match(result.answer, /additional species will be considered by the Sterling Ranch Design Review Committee/i);
+  assert.ok(result.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
+  assert.equal(Object.hasOwn(result, "naturalFallbackProse"), false);
+  assert.doesNotMatch(result.answer, /isn't on|is not in|does not include Moonbeam Dragonfruit/i);
 });
 
 test("supported answers of different families all use the shared synthesis path", async () => {
@@ -176,6 +199,27 @@ test("source-built fallback uses natural prose and retains every sourced holiday
   assert.match(result.answer, /October 1/i);
   assert.match(result.answer, /January 31/i);
   assert.match(result.answer, /10:00 p\.m\./i);
+  assert.match(result.answer, /^You can install and energize seasonal decorative lighting from June 18 to July 7 and from October 1 through January 31\./i);
+  assert.match(result.answer, /You need to remove all temporary string lighting and light installation clips\./i);
+  assert.match(result.answer, /Turn off all holiday lighting by 10:00 p\.m\./i);
+  assert.match(result.answer, /Open the official source for the complete wording\./i);
+  assert.equal((result.answer.match(/June 18/gi) || []).length, 1);
+  assert.equal((result.answer.match(/10:00 p\.m\./gi) || []).length, 1);
+});
+
+test("plain-English deterministic composition keeps generic structured source clauses intact", () => {
+  const answer = composePlainEnglishFallback(
+    "Submit the application during the following approved filing periods: From May 1 to May 15.\n\n" +
+    "All temporary signs are required to be removed.\n\n" +
+    "All exterior lights must be turned off by 9:00 p.m.\n\n" +
+    "Open the linked official section if you need the complete wording."
+  );
+
+  assert.match(answer, /^You can submit the application from May 1 to May 15\./i);
+  assert.match(answer, /You need to remove all temporary signs\./i);
+  assert.match(answer, /Turn off all exterior lights by 9:00 p\.m\./i);
+  assert.match(answer, /Open the official source for the complete wording\./i);
+  assert.doesNotMatch(answer, /Short answer|What I found|Before you act|following approved|are required to be removed/i);
 });
 
 test("structured rules interpretation still uses successful grounded synthesis", async () => {
@@ -219,7 +263,7 @@ test("live-shaped plant questions synthesize from one focused row instead of the
     "Can I grow raspberries near my property line?",
     "Can I grow vine plants like raspberries?",
   ]) {
-    const naturalAnswer = "For the plant choice itself, Boulder Raspberry is on the preapproved list and is classified as a shrub.";
+    const naturalAnswer = "For the plant choice itself, Boulder Raspberry is on the preapproved list and is classified as a shrub. The cited list doesn't confirm whether the requested location is allowed.";
     let synthesisDraft = "";
     let synthesisSources = [];
     const result = await answerRulesQuestion(question, {
@@ -235,7 +279,7 @@ test("live-shaped plant questions synthesize from one focused row instead of the
 
     assert.equal(result.answer, naturalAnswer, question);
     assert.match(synthesisDraft, /Boulder Raspberry/i, question);
-    assert.match(synthesisDraft, /Boulder Raspberry: preapproved and shrub/i, question);
+    assert.match(synthesisDraft, /Boulder Raspberry is a preapproved shrub/i, question);
     assert.doesNotMatch(synthesisDraft, /Botanical Common Ht x Spd|Freeman Maple|Amur Maple|30' x 15'/i, question);
     assert.deepEqual(
       llmRewriteIssues(naturalAnswer, synthesisDraft, synthesisSources, question),
@@ -245,10 +289,181 @@ test("live-shaped plant questions synthesize from one focused row instead of the
   }
 });
 
+test("multiple focused plant rows reach synthesis with explicit height and spread labels", async () => {
+  const cases = [
+    {
+      question: "Can I plant Boulder Raspberry in my side yard?",
+      answer: "Boulder Raspberry is a preapproved shrub. It grows 8 feet tall and 6 feet wide. The cited list doesn't confirm whether the requested location is allowed.",
+      height: "8 feet",
+      width: "6 feet",
+    },
+    {
+      question: "Can I plant Blue Point Juniper in my side yard?",
+      answer: "Blue Point Juniper is a preapproved evergreen. It grows 15 feet tall and 8 feet wide. The cited list doesn't confirm whether the requested location is allowed.",
+      height: "15 feet",
+      width: "8 feet",
+    },
+  ];
+  const previousKey = process.env.ANTHROPIC_API_KEY;
+  const previousFetch = global.fetch;
+  process.env.ANTHROPIC_API_KEY = "test-key";
+  try {
+    for (const item of cases) {
+      let prompt = "";
+      global.fetch = async (_url, options) => {
+        prompt = JSON.parse(options.body).messages[0].content;
+        return {
+          ok: true,
+          json: async () => ({
+            content: [{ type: "text", text: item.answer }],
+            usage: { input_tokens: 1, output_tokens: 1 },
+          }),
+        };
+      };
+      const result = await answerRulesQuestion(item.question, {
+        searchMode: "ai-hybrid",
+        llmMode: "selective",
+        interpretation: { intent: "rules", needsClarification: false },
+      });
+
+      assert.equal(result.answer, item.answer, item.question);
+      assert.match(prompt, new RegExp(`Explicit labeled facts from this source: Height: ${item.height}; Spread/width: ${item.width}\\.`), item.question);
+      assert.match(prompt, /Evidence scope boundary:.*side yard.*Do not approve placement there/is, item.question);
+      assert.doesNotMatch(prompt, /Height:\s*6 feet; Spread\/width:\s*8 feet/i, item.question);
+    }
+  } finally {
+    global.fetch = previousFetch;
+    if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = previousKey;
+  }
+});
+
+test("resident-supplied locations cannot become placement permission without cited support", () => {
+  const plantSource = [{
+    title: "Preapproved plant list",
+    text: "The following preapproved plant list identifies acceptable plants. RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub.",
+    excerpt: "RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub.",
+    questionSpecificExcerpt: true,
+  }];
+  const cases = [
+    [
+      "Can I plant Boulder Raspberry along my fence line?",
+      "Yes, you can plant Boulder Raspberry along your fence line.",
+      /fence-line/,
+    ],
+    [
+      "Can I plant Boulder Raspberry in my side yard?",
+      "Boulder Raspberry can be planted in your side yard.",
+      /side-yard/,
+    ],
+    [
+      "May I plant Boulder Raspberry near my property line?",
+      "Boulder Raspberry is preapproved, so you may plant it near your property line.",
+      /property-line/,
+    ],
+  ];
+
+  for (const [question, answer, expected] of cases) {
+    assert.match(locationScopeIssues(answer, plantSource, question).join(" "), expected, question);
+  }
+
+  const bounded = "Boulder Raspberry is a preapproved shrub. The cited list doesn't confirm whether placement along your fence line is allowed.";
+  assert.deepEqual(locationScopeIssues(bounded, plantSource, cases[0][0]), []);
+
+  const disclaimerBypass = "Yes, you can plant it along your fence line; the source does not say you can't.";
+  assert.match(
+    locationScopeIssues(disclaimerBypass, plantSource, cases[0][0]).join(" "),
+    /affirmative placement claim.*fence-line/i
+  );
+  const permittedDisclaimerBypass = "You are permitted to plant it along your fence line; the source does not say you can't.";
+  assert.match(
+    locationScopeIssues(permittedDisclaimerBypass, plantSource, cases[0][0]).join(" "),
+    /affirmative placement claim.*fence-line/i
+  );
+
+  const liveShapedOverclaim = "Yes, you can plant Boulder Raspberry along your fence line. It's a preapproved shrub that grows 8 feet tall and 6 feet wide, so you don't need special approval. Check setbacks and underground utilities before planting.";
+  const liveIssues = llmRewriteIssues(
+    liveShapedOverclaim,
+    "Short answer: Boulder Raspberry is a preapproved shrub.",
+    plantSource,
+    cases[0][0]
+  ).join(" ");
+  assert.match(liveIssues, /requested location|resident-supplied location/i);
+  assert.match(liveIssues, /approval is unnecessary/i);
+  assert.match(liveIssues, /setback/);
+  assert.match(liveIssues, /utility-line/);
+});
+
+test("location grounding applies outside plant names and permits genuinely cited placement", () => {
+  const itemOnly = [{ title: "Storage list", text: "Storage boxes are permitted." }];
+  assert.match(
+    locationScopeIssues(
+      "You can put a storage box beside your driveway.",
+      itemOnly,
+      "Can I put a storage box beside my driveway?"
+    ).join(" "),
+    /driveway/
+  );
+  assert.match(
+    locationScopeIssues(
+      "Yes, you can put it beside your driveway, but the source does not say you can't.",
+      itemOnly,
+      "Can I put a storage box beside my driveway?"
+    ).join(" "),
+    /affirmative placement claim.*driveway/i
+  );
+  assert.match(
+    locationScopeIssues(
+      "You can put a storage box beside your fence.",
+      [{ title: "Item list", text: "Fences are permitted. Storage boxes are permitted." }],
+      "Can I put a storage box beside my fence?"
+    ).join(" "),
+    /fence/
+  );
+  assert.match(
+    locationScopeIssues(
+      "Put it beside the driveway, away from utility easements.",
+      itemOnly,
+      "Can I use a storage box?"
+    ).join(" "),
+    /utility-easement.*driveway/
+  );
+
+  const placementSource = [{
+    title: "Storage placement",
+    text: "Storage boxes are permitted in rear yards.",
+  }];
+  assert.deepEqual(
+    locationScopeIssues(
+      "Storage boxes are permitted in rear yards.",
+      placementSource,
+      "Can I put a storage box in my backyard?"
+    ),
+    []
+  );
+});
+
+test("preapproved item status cannot be expanded into an uncited no-approval claim", () => {
+  const sources = [{
+    title: "Preapproved plant list",
+    text: "Boulder Raspberry is on the preapproved plant list as a shrub.",
+  }];
+  const draft = "Short answer: Boulder Raspberry is a preapproved shrub.";
+  assert.match(
+    llmRewriteIssues(
+      "Boulder Raspberry is a preapproved shrub, so you don't need special approval.",
+      draft,
+      sources,
+      "Can I plant Boulder Raspberry?"
+    ).join(" "),
+    /approval is unnecessary/i
+  );
+});
+
 test("live raspberry rewrites preserve height and spread bindings", async () => {
   const question = "Can I plant raspberry bushes along my fence line?";
-  const correctRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 8 feet tall and 6 feet wide.";
-  const swappedRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 6 feet tall and 8 feet wide.";
+  const correctRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 8 feet tall and 6 feet wide. The cited list doesn't confirm whether placement along your fence line is allowed.";
+  const swappedRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 6 feet tall and 8 feet wide. The cited list doesn't confirm whether placement along your fence line is allowed.";
   const previousKey = process.env.ANTHROPIC_API_KEY;
   const previousFetch = global.fetch;
   let responseText = swappedRewrite;
@@ -279,16 +494,115 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
 
     assert.equal(accepted.answer, correctRewrite);
     assert.notEqual(rejected.answer, swappedRewrite);
-    assert.match(rejected.directAnswer, /^Boulder Raspberry is preapproved and shrub\./i);
-    assert.match(rejected.answer, /Height:\s*8 feet/i);
-    assert.match(rejected.answer, /Spread\/width:\s*6 feet/i);
+    assert.match(rejected.directAnswer, /^Boulder Raspberry is a preapproved shrub\./i);
+    assert.match(rejected.answer, /It is listed as 8 feet tall with a spread of 6 feet/i);
     assert.doesNotMatch(rejected.answer, /6 feet tall|8 feet wide/i);
+    assert.doesNotMatch(rejected.answer, /Height:|Spread\/width:/i);
+    assert.match(rejected.answer, /official source does not say whether that placement is allowed/i);
+    assert.equal((rejected.answer.match(/official source does not say whether that placement is allowed/gi) || []).length, 1);
+    assert.doesNotMatch(rejected.answer, /selected source|requested location|requested placement/i);
+    assert.equal((rejected.answer.match(/8 feet tall/gi) || []).length, 1);
+    assert.equal((rejected.answer.match(/spread of 6 feet/gi) || []).length, 1);
     assert.doesNotMatch(rejected.answer, /Short answer|What I found|Before you act/i);
-    assert.ok(rejected.keyDetails.some((detail) => /Height:\s*8 feet/i.test(detail)));
-    assert.ok(rejected.keyDetails.some((detail) => /Spread\/width:\s*6 feet/i.test(detail)));
+    assert.equal(Object.hasOwn(rejected, "naturalFallbackProse"), false);
+    assert.ok(rejected.keyDetails.every((detail) => !/Height:|Spread\/width:/i.test(detail)));
     assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
     assert.match(rejected.nextStep, /Open the linked official section/i);
     assert.equal((rejected.answer.match(/Open the linked official section/gi) || []).length, 1);
+  } finally {
+    global.fetch = previousFetch;
+    if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = previousKey;
+  }
+});
+
+test("the Community Assistant keeps accepted grounded AI prose without re-appending structured details", async () => {
+  const naturalAnswer = "Seasonal decorative lights are allowed from June 18 to July 7 and from October 1 through January 31. Turn them off by 10:00 p.m. and remove temporary strings and clips after the season.";
+  const result = await answerCommunityQuestion("When can I put up holiday lights?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: {
+      searchMode: "legacy",
+      llmMode: "selective",
+      rewriteAnswerWithLLM: async () => naturalAnswer,
+    },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+
+  assert.equal(result.answer, naturalAnswer);
+  assert.equal((result.answer.match(/temporary strings and clips/gi) || []).length, 1);
+  assert.equal((result.answer.match(/10:00 p\.m\./gi) || []).length, 1);
+  assert.ok(result.directAnswer);
+  assert.ok(Array.isArray(result.keyDetails));
+});
+
+test("a rejected grounded rewrite gets one safe correction pass", async () => {
+  const question = "Can I plant Boulder Raspberry along my fence line?";
+  const draft = "Boulder Raspberry is a preapproved shrub. It is 8 feet tall and 6 feet wide.";
+  const sources = [{
+    title: "Preapproved plant list",
+    text: "Boulder Raspberry is a preapproved shrub. It is 8 feet tall and 6 feet wide.",
+  }];
+  const firstCandidate = "Yes, you can plant Boulder Raspberry along your fence line. It is a preapproved shrub that is 8 feet tall and 6 feet wide.";
+  const correctedCandidate = "Boulder Raspberry is a preapproved shrub. It is 8 feet tall and 6 feet wide. The cited source does not confirm whether it can be planted along your fence line.";
+  const previousKey = process.env.ANTHROPIC_API_KEY;
+  const previousFetch = global.fetch;
+  const candidates = [firstCandidate, correctedCandidate];
+  let calls = 0;
+  process.env.ANTHROPIC_API_KEY = "test-key";
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [{ type: "text", text: candidates[calls++] }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    }),
+  });
+  try {
+    const answer = await rewriteAnswerWithLLM(question, draft, sources);
+    assert.equal(calls, 2);
+    assert.equal(answer, correctedCandidate);
+    assert.doesNotMatch(answer, /^Yes\b/i);
+    assert.match(answer, /8 feet tall and 6 feet wide/i);
+    assert.deepEqual(llmRewriteIssues(answer, draft, sources, question), []);
+  } finally {
+    global.fetch = previousFetch;
+    if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
+    else process.env.ANTHROPIC_API_KEY = previousKey;
+  }
+});
+
+test("a catalog-membership rewrite retries with supported facts instead of an invented absence", async () => {
+  const question = "Can I hire Acme Roofing?";
+  const draft = "The approved contractor directory lists Beacon Roofing. Contact the CAB for approval guidance.";
+  const sources = [{
+    title: "Approved contractor directory",
+    text: "Beacon Roofing is an approved contractor. Contact the CAB for approval guidance.",
+  }];
+  const candidates = [
+    "Acme Roofing isn't on the approved contractor directory for this community, but that doesn't mean it cannot be approved.",
+    "The approved contractor directory lists Beacon Roofing. It does not confirm whether Acme Roofing is approved. Contact the CAB for approval guidance.",
+  ];
+  const previousKey = process.env.ANTHROPIC_API_KEY;
+  const previousFetch = global.fetch;
+  let calls = 0;
+  process.env.ANTHROPIC_API_KEY = "test-key";
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [{ type: "text", text: candidates[calls++] }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    }),
+  });
+  try {
+    const answer = await rewriteAnswerWithLLM(question, draft, sources);
+    assert.equal(calls, 2);
+    assert.equal(answer, candidates[1]);
+    assert.match(answer, /Beacon Roofing/i);
+    assert.match(answer, /does not confirm whether Acme Roofing is approved/i);
+    assert.doesNotMatch(answer, /Acme Roofing is not in|Acme Roofing isn't/i);
+    assert.deepEqual(llmRewriteIssues(answer, draft, sources, question), []);
   } finally {
     global.fetch = previousFetch;
     if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
@@ -371,6 +685,29 @@ test("grounding accepts a resident-supplied proper noun but still rejects an inv
     ).join(" "),
     /proper noun.*Presidents Day/i
   );
+});
+
+test("a resident-supplied name cannot turn a search miss into a negative catalog claim", () => {
+  const plantSources = [{
+    title: "Preapproved plant list",
+    text: "Boulder Raspberry is a preapproved shrub.",
+  }];
+  const plantDraft = "The selected source confirms that Boulder Raspberry is preapproved.";
+  const issues = llmRewriteIssues(
+    "Moonbeam Dragonfruit isn't on Sterling Ranch's preapproved plant list. Ask the DRC about approval.",
+    plantDraft,
+    plantSources,
+    "Can I plant Moonbeam Dragonfruit?"
+  );
+  assert.ok(issues.includes("unsupported-resource-absence-claim"));
+
+  const vendorIssues = llmRewriteIssues(
+    "The approved vendor directory does not include Alpine Solar.",
+    "The official directory lists approved service providers.",
+    [{ title: "Approved vendor directory", text: "Summit Electric is an approved service provider." }],
+    "Can I use Alpine Solar?"
+  );
+  assert.ok(vendorIssues.includes("unsupported-resource-absence-claim"));
 });
 
 test("natural synthesis may remove scaffolding but cannot drop sourced limits", () => {

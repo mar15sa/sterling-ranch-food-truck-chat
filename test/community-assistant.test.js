@@ -4,7 +4,7 @@ const { createHash } = require("node:crypto");
 const { buildAnswerContract, detectFactConflicts, validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
 const { canonicalPageUrl, contentHtml, crawlCommunity, disambiguateSourceIds, extractActions, extractFacts, linksFromHtml, pageText, stripEmbeddedInstructions } = require("../lib/community-ingest");
 const { verifyStructuredDraft } = require("../lib/community-grounding");
-const { parseJson, planCommunitySearch } = require("../lib/community-llm");
+const { parseJson, planCommunitySearch, synthesizeCommunityAnswer } = require("../lib/community-llm");
 const { actionSupportsGoal, classifyCommunityIntent, normalizedRoutingPlan, requestedDetails, searchCommunityIndex, sourceSupportsGoal } = require("../lib/community-search");
 const { eventDateRange, parseCivicPlusEvents } = require("../lib/community-events");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
@@ -578,6 +578,32 @@ test("AI cannot claim an official list is absent merely because retrieval missed
   assert.equal(result.valid, false);
   assert.equal(result.reason, "question-relevance");
   assert.ok(result.relevanceIssues.includes("unsupported-resource-absence-claim"));
+});
+
+test("hosted synthesis rejects an unsupported negative claim about a named list item", async () => {
+  const answer = await synthesizeCommunityAnswer(
+    "Can I plant Moonbeam Dragonfruit?",
+    [{
+      id: "plant-list",
+      title: "Preapproved plant list",
+      text: "Boulder Raspberry is a preapproved shrub.",
+    }],
+    {
+      apiKey: "test-key",
+      fetchImpl: async () => new Response(JSON.stringify({
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            directAnswer: "Moonbeam Dragonfruit isn't on Sterling Ranch's preapproved plant list.",
+            keyDetails: [],
+            nextStep: "Ask the DRC about approval.",
+          }),
+        }],
+        usage: { input_tokens: 1, output_tokens: 1 },
+      }), { status: 200, headers: { "content-type": "application/json" } }),
+    }
+  );
+  assert.equal(answer, null);
 });
 
 test("instructions hidden inside a source are quarantined before retrieval", () => {
