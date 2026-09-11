@@ -25,9 +25,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open the CAB trash and recycling concern form",
+            "label": "Please submit this form",
             "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
-            "context": "Open the CAB trash and recycling concern form"
+            "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
           },
           "display": {
             "label": "Open the CAB trash and recycling concern form",
@@ -36,9 +36,9 @@
         },
         {
           "evidence": {
-            "label": "Open WasteConnect",
+            "label": "Apple Store",
             "url": "https://apps.apple.com/app/id1442351850",
-            "context": "Open WasteConnect"
+            "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
           },
           "display": {
             "label": "Open WasteConnect",
@@ -50,7 +50,7 @@
         {
           "canonicalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
           "contentHash": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44",
-          "hashScheme": "page-text-v1"
+          "hashScheme": "page-text-actions-v1"
         }
       ]
     },
@@ -95,9 +95,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open the CAB concern and feedback form",
+            "label": "concern or feedback.",
             "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
-            "context": "Open the CAB concern and feedback form"
+            "context": "If you notice a streetlight outage or malfunction, please notify the CAB by submitting a concern or feedback."
           },
           "display": {
             "label": "Open the CAB concern and feedback form",
@@ -109,7 +109,7 @@
         {
           "canonicalUrl": "https://sterlingranchcab.com/239/Streetlights",
           "contentHash": "10d2631192345637f0464961b20bac7c3daff29f5828984df2d0aebd2a5f55cc",
-          "hashScheme": "page-text-v1"
+          "hashScheme": "page-text-actions-v1"
         }
       ]
     },
@@ -131,9 +131,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open CourtReserve",
+            "label": "Sterling Ranch CAB CourtReserve portal",
             "url": "https://app.courtreserve.com/Online/Portal/Index/15838",
-            "context": "Open CourtReserve"
+            "context": "To create an acocunt click the Sterling Ranch CAB CourtReserve portal link."
           },
           "display": {
             "label": "Open CourtReserve",
@@ -170,9 +170,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open the Great Hall booking page",
+            "label": "Reserve the Great Hall",
             "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog/index?filter=bG9jYXRpb24lNUIyNDY3NCU1RD0xJnNlYXJjaD0mcmVudGFsJTVCZnJvbSU1RD0mcmVudGFsJTVCdG8lNUQ9",
-            "context": "Open the Great Hall booking page"
+            "context": "Other Link Reserve the Great Hall The Great Hall can be reserved"
           },
           "display": {
             "label": "Open the Great Hall booking page",
@@ -184,7 +184,7 @@
         {
           "canonicalUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3",
           "contentHash": "878bf564c077ae31bda2fbfc94aa614ef434aed0914e3f17d47a96d692c8cea2",
-          "hashScheme": "page-text-v1"
+          "hashScheme": "page-text-actions-v1"
         }
       ]
     },
@@ -212,9 +212,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open Great Hall",
+            "label": "View Subfacility",
             "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-3",
-            "context": "Open Great Hall"
+            "context": "Great Hall View Subfacility"
           },
           "display": {
             "label": "Open Great Hall",
@@ -223,9 +223,9 @@
         },
         {
           "evidence": {
-            "label": "Open Overlook & Virtual",
+            "label": "View Subfacility",
             "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-8",
-            "context": "Open Overlook & Virtual"
+            "context": "Overlook & Virtual View Subfacility"
           },
           "display": {
             "label": "Open Overlook & Virtual",
@@ -234,9 +234,9 @@
         },
         {
           "evidence": {
-            "label": "Open Pool",
+            "label": "View Subfacility",
             "url": "https://sterlingranchcab.com/Facilities/Facility/Details/-2",
-            "context": "Open Pool"
+            "context": "Pool View Subfacility"
           },
           "display": {
             "label": "Open Pool",
@@ -248,7 +248,7 @@
         {
           "canonicalUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
           "contentHash": "fbd867f603644fa2e83382f369df435019f56b1a19ef93bd11707b82130467df",
-          "hashScheme": "page-text-v1"
+          "hashScheme": "page-text-actions-v1"
         }
       ]
     },
@@ -282,9 +282,9 @@
         },
         {
           "evidence": {
-            "label": "Open Sterling Ranch 311",
+            "label": "Sterling Ranch 311",
             "url": "https://sterlingranchcab.com/298/Sterling-Ranch-311",
-            "context": "Open Sterling Ranch 311"
+            "context": "Please use the Sterling Ranch 311 app."
           },
           "display": {
             "label": "Open Sterling Ranch 311",
@@ -317,9 +317,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open Sterling Ranch Municode",
+            "label": "Official link",
             "url": "https://library.municode.com/co/sterling_ranch_community_authority_board/codes/rules_and_regulations",
-            "context": "Open Sterling Ranch Municode"
+            "context": "These are all found in the Sterling Ranch Code of Rules document."
           },
           "display": {
             "label": "Open Sterling Ranch Municode",
@@ -390,9 +390,9 @@
       "approvedActions": [
         {
           "evidence": {
-            "label": "Open the community calendar",
+            "label": "COMMUNITY CALENDAR",
             "url": "https://sterlingranchcab.com/Calendar.aspx",
-            "context": "Open the community calendar"
+            "context": "For information or to register for the next class check out our community calendar."
           },
           "display": {
             "label": "Open the community calendar",
