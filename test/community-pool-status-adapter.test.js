@@ -13,10 +13,22 @@ function plan(overrides = {}) {
 test("configured exact operational status emits a healthy community-scoped evidence envelope", async () => {
   const result = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Green Light")), now: () => "2026-09-09T12:00:00.000Z" });
   assert.equal(result.headline, "Open");
+  assert.equal(result.date, "2026-09-09");
   assert.equal(result.evidenceEnvelope.communityId, "sterling-ranch");
   assert.equal(result.evidenceEnvelope.connectorFamily, "live-status");
   assert.deepEqual(result.evidenceEnvelope.coverage, { requested: ["status"], covered: ["status"], missing: [] });
+  assert.deepEqual(result.evidenceEnvelope.request.dateRange, { start: "2026-09-09", end: "2026-09-09", label: "current" });
   assert.equal(result.evidenceEnvelope.claims[0].text, "Open");
+});
+
+test("live status observation dates use each community's configured timezone", async () => {
+  const result = await getCommunityPoolStatus({
+    profile: sterling,
+    fetchImpl: async () => response(poolLink("Red Light")),
+    now: () => "2026-09-12T05:30:00.000Z",
+  });
+  assert.equal(result.date, "2026-09-11");
+  assert.equal(result.evidenceEnvelope.request.dateRange.start, "2026-09-11");
 });
 
 test("every exact CAB live label maps to its configured resident meaning", async () => {
@@ -62,7 +74,7 @@ test("color alone, malformed pages, failed fetches, and unknown labels fail clos
 
 test("wrong tenant and unsupported source host fail before an Assistant claim can be made", async () => {
   const connector = structuredClone(sterling.connectors.find((item) => item.type === "live-status"));
-  const profile = { communityId: "riverton", website: "https://riverton.example/", allowedHosts: ["riverton.example"], connectors: [connector] };
+  const profile = { communityId: "riverton", website: "https://riverton.example/", timezone: "America/Denver", allowedHosts: ["riverton.example"], connectors: [connector] };
   connector.baseUrl = "https://riverton.example/pool";
   connector.adapter.sourceHosts = ["riverton.example"];
   connector.adapter.endpoints = [{ id: "primary", url: "https://riverton.example/pool", purpose: "pool-status" }];
