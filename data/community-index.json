@@ -33321,7 +33321,13 @@
           "reviewDecisionId": "water-payment-primary-page",
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
+          "checkedAt": "2026-09-09T02:25:34.966Z",
+          "evidence": {
+            "proofKind": "source-text-url-v1",
+            "label": "Utility Hawk",
+            "url": "https://srcab.utilityhawk.us",
+            "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions."
+          }
         }
       ],
       "contentHash": "711961b69a8acfe94cab33898c29da0df263c5b1d4f261fae2b433cf8f544f75",
@@ -33374,7 +33380,13 @@
           "reviewDecisionId": "water-payment-direct-link",
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
+          "checkedAt": "2026-09-09T02:25:34.966Z",
+          "evidence": {
+            "proofKind": "source-text-url-v1",
+            "label": "Utility Hawk",
+            "url": "https://srcab.utilityhawk.us",
+            "context": "Payment Options: Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Point your Web browser to: http://www.amcobi.com/pay-online Select the \"Pay Online\" link on the home page. Follow the instructions."
+          }
         }
       ],
       "contentHash": "3a97574de30055decd929fad24318777d581318d97113b871b0412f61435a9f6",
@@ -33519,7 +33531,13 @@
           "reviewDecisionId": "monthly-fee-payment-page",
           "reviewedBy": "owner",
           "reviewedAt": "2026-09-08",
-          "checkedAt": "2026-09-09T02:25:34.966Z"
+          "checkedAt": "2026-09-09T02:25:34.966Z",
+          "evidence": {
+            "proofKind": "source-text-url-v1",
+            "label": "Utility Hawk",
+            "url": "https://srcab.utilityhawk.us",
+            "context": "Monthly Fees Billing and Payment Options Please register your account through Utility Hawk ( https://srcab.utilityhawk.us ) or through the AmCoBi website: Visit the AmCoBi website: www.AmCoBi.com Select the \"Pay Online\" link on the home page. Follow the instructions."
+          }
         }
       ],
       "contentHash": "01d90cf8d4549d69b6f7a2ea177981f1f02dd55a084e3a92e812fbbab4ab7f9e",

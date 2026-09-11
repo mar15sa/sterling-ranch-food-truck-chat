@@ -6,7 +6,7 @@ const { buildWaterBillingSources } = require('../scripts/apply-water-billing-can
 const { searchCommunityIndex } = require('../lib/community-search');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
 const { sourceReviewState } = require('../lib/community-source-answerability');
-const { revalidateApprovedEvidence, selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
+const { projectedActionProof, revalidateApprovedEvidence, selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
 
 const NOW = Date.parse('2026-09-09T12:00:00Z');
 const waterIds = new Set(artifact.pages.map((page) => page.id));
@@ -29,8 +29,42 @@ test('rebuild imports only exact reviewed water-billing excerpts with complete p
   const payment = rebuilt.find((source) => source.id === 'sterling-ranch-water-billing-payment-options-334');
   assert.deepEqual(payment.actions.map((action) => action.id), ['water-payment-334-utility-hawk']);
   assert.equal(payment.actions[0].url, 'https://srcab.utilityhawk.us');
+  assert.equal(payment.actions[0].evidence.proofKind, 'source-text-url-v1');
   assert.equal(payment.facts.some((fact) => fact.id === 'water-payment-334-help-email'), true);
   assert.equal(payment.actions.some((action) => /amcobi/i.test(action.url)), false);
+});
+
+test('reviewed plain-text payment destinations retain exact action proof without weakening link proof', () => {
+  const rebuilt = buildWaterBillingSources();
+  const paymentSources = rebuilt.filter((source) => source.actions.some((action) => action.evidence?.proofKind === 'source-text-url-v1'));
+  assert.deepEqual(paymentSources.map((source) => source.id).sort(), [
+    'sterling-ranch-monthly-fee-billing-390',
+    'sterling-ranch-view-and-pay-water-bill-332',
+    'sterling-ranch-water-billing-payment-options-334',
+  ]);
+  for (const source of paymentSources) {
+    const proof = projectedActionProof([source], [], source.text, source.sourceUrl);
+    assert.equal(proof.matches, true, `${source.id} should accept its reviewed plain-text destination`);
+
+    const missingUrl = source.text.replace('https://srcab.utilityhawk.us', 'https://changed.example/pay');
+    assert.equal(projectedActionProof([source], [], missingUrl, source.sourceUrl).matches, false, `${source.id} must reject a changed destination`);
+
+    const changedContext = source.text.replace(source.actions[0].evidence.context, 'Payment instructions changed.');
+    assert.equal(projectedActionProof([source], [], changedContext, source.sourceUrl).matches, false, `${source.id} must reject changed evidence context`);
+
+    const changedAction = structuredClone(source);
+    changedAction.actions[0].url = 'https://changed.example/pay';
+    assert.equal(projectedActionProof([changedAction], [], source.text, source.sourceUrl).matches, false, `${source.id} must reject a substituted resident destination`);
+
+    const unknownProof = structuredClone(source);
+    unknownProof.actions[0].evidence.proofKind = 'unknown-proof-v1';
+    assert.equal(projectedActionProof([unknownProof], [], source.text, source.sourceUrl).matches, false, `${source.id} must fail closed on an unknown proof kind`);
+  }
+
+  const linkOnly = structuredClone(paymentSources[0]);
+  delete linkOnly.actions[0].evidence;
+  assert.equal(projectedActionProof([linkOnly], [], linkOnly.text, linkOnly.sourceUrl).matches, false,
+    'plain page text must not satisfy the default source-link proof');
 });
 
 test('real community index exposes approved payment/contact claims while raw and adjacent claims stay withheld', async () => {
