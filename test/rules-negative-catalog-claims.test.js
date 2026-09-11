@@ -38,6 +38,16 @@ test("semantic search-miss wording cannot claim that a named catalog item is abs
       answer: "Rapid Rooter isn't an approved contractor.",
       source: { title: "Approved contractor list", text: "Clearwater Plumbing is approved." },
     },
+    {
+      question: "Can I grow Moonbeam Dragonfruit?",
+      answer: "Moonbeam Dragonfruit isn't on the preapproved plant list for Sterling Ranch.",
+      source: { title: "Preapproved plant list", text: "Boulder Raspberry is a preapproved shrub." },
+    },
+    {
+      question: "Can I hire Acme Roofing?",
+      answer: "Acme Roofing does not appear in the approved contractor directory for this community.",
+      source: { title: "Approved contractor directory", text: "Beacon Roofing is an approved contractor." },
+    },
   ];
 
   for (const { question, answer, source } of cases) {
