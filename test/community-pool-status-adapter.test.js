@@ -1,7 +1,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const sterling = require("../data/communities/sterling-ranch.json");
-const { getCommunityPoolStatus } = require("../lib/community-pool-status");
+const { getCommunityPoolStatus, withinConfiguredPoolSeason } = require("../lib/community-pool-status");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 
 function response(body, ok = true, status = 200) { return new Response(body, { status: ok ? status : 503 }); }
@@ -11,7 +11,7 @@ function plan(overrides = {}) {
 }
 
 test("configured exact operational status emits a healthy community-scoped evidence envelope", async () => {
-  const result = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Open")), now: () => "2026-09-09T12:00:00.000Z" });
+  const result = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Green Light")), now: () => "2026-09-09T12:00:00.000Z" });
   assert.equal(result.headline, "Open");
   assert.equal(result.evidenceEnvelope.communityId, "sterling-ranch");
   assert.equal(result.evidenceEnvelope.connectorFamily, "live-status");
@@ -19,8 +19,43 @@ test("configured exact operational status emits a healthy community-scoped evide
   assert.equal(result.evidenceEnvelope.claims[0].text, "Open");
 });
 
+test("every exact CAB live label maps to its configured resident meaning", async () => {
+  const cases = [
+    ["Green Light", "open", "Open", /open for all homeowners and guests/i],
+    ["Yellow Light", "temporarily-closed", "Temporarily closed", /weather or maintenance/i],
+    ["Red Light", "closed", "Closed", /closed with no access/i],
+    ["Purple Light", "event-only", "Open for a registered event only", /registered for the current event/i],
+    ["Blue Light", "at-capacity", "Open, at capacity", /join the official waitlist/i],
+  ];
+  for (const [label, state, headline, meaning] of cases) {
+    const result = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink(label)), now: () => "2026-07-15T12:00:00.000Z" });
+    assert.equal(result.state, state, label);
+    assert.equal(result.headline, headline, label);
+    assert.match(result.summary, meaning, label);
+    assert.equal(result.evidenceEnvelope.claims[0].text, headline, label);
+  }
+});
+
+test("a red current marker combines with the approved seasonal window only outside the season", async () => {
+  const offSeason = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Red Light")), now: () => "2026-09-10T12:00:00.000Z" });
+  assert.match(offSeason.summary, /closed for the season/i);
+  assert.match(offSeason.summary, /Memorial Day weekend through Labor Day/i);
+  assert.doesNotMatch(offSeason.summary, /2027|May \d/i);
+  const inSeason = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Red Light")), now: () => "2026-07-15T12:00:00.000Z" });
+  assert.match(inSeason.summary, /closed with no access/i);
+  assert.doesNotMatch(inSeason.summary, /closed for the season/i);
+});
+
+test("Memorial Day weekend through Labor Day season boundaries are explicit and inclusive", () => {
+  const season = sterling.connectors.find((item) => item.id === "pool-status").adapter.poolStatus.season;
+  assert.equal(withinConfiguredPoolSeason("2026-05-22T12:00:00.000Z", season), false);
+  assert.equal(withinConfiguredPoolSeason("2026-05-23T12:00:00.000Z", season), true);
+  assert.equal(withinConfiguredPoolSeason("2026-09-07T12:00:00.000Z", season), true);
+  assert.equal(withinConfiguredPoolSeason("2026-09-08T12:00:00.000Z", season), false);
+});
+
 test("color alone, malformed pages, failed fetches, and unknown labels fail closed", async () => {
-  for (const source of [poolLink("Green Light"), "<main>Open</main>"]) {
+  for (const source of [poolLink("Unknown Light"), "<main>The status legend says Red Light means closed.</main>", '<a href="/187/Pool"><img alt="Red Light"></a>']) {
     await assert.rejects(() => getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(source) }), /exact operational status/i);
   }
   await assert.rejects(() => getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response("nope", false) }), /returned 503/i);
@@ -32,17 +67,17 @@ test("wrong tenant and unsupported source host fail before an Assistant claim ca
   connector.baseUrl = "https://riverton.example/pool";
   connector.adapter.sourceHosts = ["riverton.example"];
   connector.adapter.endpoints = [{ id: "primary", url: "https://riverton.example/pool", purpose: "pool-status" }];
-  const result = await getCommunityPoolStatus({ profile, fetchImpl: async () => response(poolLink("Open", "/pool")) });
+  const result = await getCommunityPoolStatus({ profile, fetchImpl: async () => response(poolLink("Green Light", "/pool")) });
   assert.equal(result.evidenceEnvelope.communityId, "riverton");
   assert.equal(result.actionUrl, "https://riverton.example/pool");
-  await assert.rejects(() => getCommunityPoolStatus({ profile, fetchImpl: async () => response(poolLink("Open", "https://sterlingranchcab.com/187/Pool")) }), /outside its declared hosts/i);
+  await assert.rejects(() => getCommunityPoolStatus({ profile, fetchImpl: async () => response(poolLink("Green Light", "https://sterlingranchcab.com/187/Pool")) }), /outside its declared hosts/i);
   const bad = structuredClone(profile);
   bad.connectors.find((item) => item.type === "live-status").adapter.endpoints[0].url = "https://hostile.example/pool";
   await assert.rejects(() => getCommunityPoolStatus({ profile: bad, fetchImpl: async () => response(poolLink("Open")) }), /allowed official HTTPS host/i);
 });
 
 test("live status cannot answer hours, guests, rentals, waitlists, or events", async () => {
-  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Open")) });
+  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Green Light")) });
   for (const routingPlan of [
     plan({ goal: "schedule", subject: "pool hours", requestedDetails: ["hours"] }),
     plan({ goal: "information", subject: "pool guest passes", requestedDetails: ["permission"] }),
@@ -61,7 +96,7 @@ test("live status cannot answer hours, guests, rentals, waitlists, or events", a
 });
 
 test("stale or degraded status evidence cannot produce a current-status answer", async () => {
-  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Open")) });
+  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Green Light")) });
   live.evidenceEnvelope.degradation.state = "degraded";
   const answer = await answerCommunityQuestion("Is the pool open right now?", {
     interpretationMode: "structured", planCommunitySearch: async () => plan(),
@@ -71,7 +106,7 @@ test("stale or degraded status evidence cannot produce a current-status answer",
 });
 
 test("Assistant requires same-community, current status evidence and a claim bound to that evidence", async () => {
-  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Open")) });
+  const live = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response(poolLink("Green Light")) });
   async function ask(status) {
     return answerCommunityQuestion("Is the pool open right now?", {
       interpretationMode: "structured", communityId: "sterling-ranch", communityProfile: sterling,

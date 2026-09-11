@@ -8,11 +8,10 @@ const { getCommunityPoolStatus } = require("../lib/community-pool-status");
 const root = path.join(__dirname, "..");
 const response = (body) => new Response(body, { status: 200 });
 
-test("the standalone status source rejects color-only markup through the shared adapter", async () => {
-  await assert.rejects(
-    () => getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response('<a class="widgetGraphicLinksLink" href="/187/Pool"><img alt="Green Light"></a>') }),
-    /exact operational status/i,
-  );
+test("the standalone status source uses only an exact configured CAB marker", async () => {
+  const result = await getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response('<a class="widgetGraphicLinksLink" href="/187/Pool"><img alt="Green Light"></a>') });
+  assert.equal(result.state, "open");
+  await assert.rejects(() => getCommunityPoolStatus({ profile: sterling, fetchImpl: async () => response('<main>Green Light = The pool is currently open.</main>') }), /exact operational status/i);
 });
 
 test("pool API uses the shared strict adapter and has no retained color parser", () => {
