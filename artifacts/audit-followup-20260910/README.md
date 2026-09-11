@@ -1,0 +1,17 @@
+# Approved design-audit follow-up
+
+Scope: implement audit findings 1, 2, 5–10. Exclusions: do not change the Openings map, its position/behavior, or the Pool unavailable-state content/actions (#3 and #4).
+
+Root cause and resident outcome: oversized fixed presentation blocks and example controls compete with the conversation; mobile uses nested page/transcript/example scrolling. Move examples into the main transcript region, make the composer stay within the available viewport, and compact the shared footer/header. All Assistant question families use the same presentation; no answer-specific workaround is needed.
+
+Other approved work: a smaller grouped Calendar with prominent partial-data notice; distinguish events that have already started using supplied dates/times; lead the phone homepage with today's truck and next event; clarify Openings result ranges and group category filters while retaining source tags; improve supporting type and illustration edge treatment.
+
+Authority/reuse boundary: frontend presentation only. Official statuses, evidence, action URLs, source freshness/conflict handling, core routing, profiles, and adapters retain existing contracts. Started events are labeled rather than assumed finished. Unknown event times remain in the current-day list. Food Truck answer prose stays accessible in a disclosure when the same truck/date/menu already has structured presentation. Never hide error/unknown responses. No Pool source-state changes.
+
+Validation: representative desktop, tablet, narrow phone, and reduced-height/keyboard-like browser viewports; examples must not shrink the transcript; input visible; nested transcript scrolling; official-source/error disclosures; calendar partial/empty/time boundaries; Openings categories/count ranges; accessibility and screenshots. Assistant browser tests use `?test=1`, visible Test mode, intercepted responses, and assertions that `isTest` is true. No automated resident questions reach the server. Repeat against the exact staging build before reporting completion. Native phone-keyboard testing is unavailable; visual-viewport handling is verified with browser resize simulations.
+
+Candidate validation: all six pages passed at 1440×900, 1024×768, 390×844, and 320×740. No horizontal overflow, browser JavaScript errors, or WCAG A/AA axe findings. Exactly one feedback-link pair per page. Chat input/footer fit the viewport; wheel scrolling moves the transcript without moving the composer. Example expansion leaves transcript height unchanged. A focus/blur control shift found during mobile source-link testing was corrected. Footer is about 62px on desktop (previously 115px). At 1024×768 the test-mode Assistant transcript is 286px; residents gain the additional Test mode banner space.
+
+Calendar fixtures passed: Denver-time grouping even with browser timezone Asia/Tokyo, partial notice before events, earlier start times disclosed separately, unknown times retained, past dates omitted, empty list and source failure preserve official-calendar access. Food Truck fixtures cover structured single/multi-truck responses, response-detail ordering, missing menus, and warnings. Openings checks cover page 1/page 2 counts, grouped Coffee filter, and no matches. Browser resize tests cover 390×480 input visibility and normal footer restoration. Native mobile keyboards remain an unverified device-specific limitation.
+
+Deployment evidence is recorded in release-verification.json after the exact staging revision is healthy and these browser checks pass against served assets.

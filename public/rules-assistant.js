@@ -48,6 +48,7 @@ function resetConversation({ showPrompt = true } = {}) {
   rulesMessages.replaceChildren();
   conversationStarted = false;
   rulesDock.classList.remove("has-conversation", "starters-open");
+  rulesStarters.hidden = true;
   startersToggle.setAttribute("aria-expanded", "false");
   startersToggle.textContent = "Show example questions";
   if (showPrompt) {
@@ -739,6 +740,7 @@ function startConversation() {
   conversationStarted = true;
   rulesDock.classList.add("has-conversation");
   rulesDock.classList.remove("starters-open");
+  rulesStarters.hidden = true;
   startersToggle.setAttribute("aria-expanded", "false");
   startersToggle.textContent = "Show example questions";
 }
@@ -780,7 +782,9 @@ rulesStarters.addEventListener("click", (event) => {
 });
 
 startersToggle.addEventListener("click", () => {
-  const open = rulesDock.classList.toggle("starters-open");
+  const open = rulesStarters.hidden;
+  rulesStarters.hidden = !open;
+  if (open) rulesScroll.scrollTo({ top: 0, behavior: "instant" });
   startersToggle.setAttribute("aria-expanded", String(open));
   startersToggle.textContent = open ? "Hide example questions" : "Show example questions";
 });
@@ -833,6 +837,6 @@ if (sharedQuestion) {
   });
 } else {
   addBotText(
-    "Ask me about Sterling Ranch rules, services, forms, facilities, events, pool status, or food trucks. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Try one of the examples below."
+    "Ask me about Sterling Ranch rules, services, forms, facilities, events, pool status, or food trucks. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Choose “Show example questions” to get started."
   );
 }
