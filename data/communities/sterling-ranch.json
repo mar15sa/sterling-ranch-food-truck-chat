@@ -79,7 +79,7 @@
       "id": "facility-rentals",
       "type": "civicrec",
       "baseUrl": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog",
-      "adapter": { "capabilities": ["facilities", "availability"], "facets": ["availability", "facility", "price", "action"], "controllingSourceRoles": ["operational", "action"], "actionTypes": ["booking", "information"], "sourceHosts": ["secure.rec1.com"], "endpoints": [{ "id": "catalog", "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog", "purpose": "facility-rentals" }], "freshness": { "refreshMinutes": 360, "staleAfterMinutes": 720 }, "degradation": { "policy": "fallback" }, "vocabulary": { "reservation": ["booking", "rental"] } },
+      "adapter": { "capabilities": ["actions"], "facets": ["action"], "controllingSourceRoles": ["action"], "actionTypes": ["booking"], "requiresApprovedActionEvidence": true, "sourceHosts": ["secure.rec1.com"], "endpoints": [{ "id": "catalog", "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog", "purpose": "facility-rentals" }], "freshness": { "refreshMinutes": 360, "staleAfterMinutes": 720 }, "degradation": { "policy": "fallback" }, "vocabulary": { "reservation": ["booking", "rental"] } },
       "refreshMinutes": 360
     },
     {
@@ -129,8 +129,8 @@
   ],
   "authority": {
     "rules": ["municode", "adopted-document"],
-    "facilities": ["civicrec", "civicplus-pages", "municode"],
-    "forms": ["civicplus-pages", "civicrec", "document"],
+    "facilities": ["civicplus-pages", "municode"],
+    "forms": ["civicplus-pages", "document"],
     "events": ["civicplus-calendar", "civicplus-pages"],
     "alerts": ["civicplus-alerts", "civicplus-pages"],
     "status": ["live-status", "civicplus-alerts"],
@@ -138,9 +138,9 @@
   },
   "factAuthority": {
     "live-status": ["live-status", "civicplus-alerts", "civicplus-pages"],
-    "facility-hours": ["civicrec", "civicplus-pages", "civicplus-alerts", "official-pdf", "municode"],
-    "reservation-policy": ["civicrec", "civicplus-pages", "official-pdf", "municode"],
-    "fee": ["adopted-document", "civicrec", "official-pdf", "civicplus-pages", "municode"],
+    "facility-hours": ["civicplus-pages", "civicplus-alerts", "official-pdf", "municode"],
+    "reservation-policy": ["civicplus-pages", "official-pdf", "municode"],
+    "fee": ["adopted-document", "official-pdf", "civicplus-pages", "municode"],
     "restriction": ["municode", "adopted-document", "official-pdf", "civicplus-pages"],
     "contact": ["civicplus-pages", "official-action", "official-pdf", "municode"],
     "submission": ["official-action", "civicplus-pages", "official-pdf", "municode"],

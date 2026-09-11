@@ -10922,17 +10922,11 @@
       "sourceUrl": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog",
       "sourceType": "facilities",
       "connectorType": "civicrec",
-      "authorityScore": 1,
+      "authorityScore": 0.62,
       "text": "Sterling Ranch Community Authority Board official facilities source provided by the civicrec connector.",
       "excerpt": "Sterling Ranch Community Authority Board official facilities source provided by the civicrec connector.",
-      "actions": [
-        {
-          "id": "facility-rentals-open",
-          "label": "Open official facilities",
-          "url": "https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog",
-          "actionType": "information"
-        }
-      ],
+      "actions": [],
+      "actionEvidenceRequired": true,
       "facts": [],
       "contentHash": "771ba0f7da4cb8ae2911bf3fe625c7b4450d13a314b8f854536814ab9603b402",
       "checkedAt": "2026-09-06T16:44:58.937Z",
