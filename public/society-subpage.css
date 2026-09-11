@@ -1,0 +1,39 @@
+/* The compact Openings masthead is shared by every public subpage. */
+.society-page.society-subpage .society-paper { width: 100%; max-width: 1448px; margin: 0 auto; padding: 0 clamp(22px,5.4vw,78px); border: 0; box-shadow: none; background: transparent; }
+.society-page.society-subpage .society-header { min-height: 80px; flex-shrink: 0; gap: 30px; padding: 0; justify-content: space-between; flex-wrap: nowrap; border-bottom: 1px solid #aeb6c1; }
+.society-page.society-subpage .society-header .society-brand { display: flex; align-items: center; flex-shrink: 0; gap: 16px; font-weight: 400; white-space: normal; }
+.subpage-monogram { position: relative; display: block; width: 52px; height: 49px; flex-shrink: 0; border-right: 1px solid #aeb6c1; font: 32px/.8 "Times New Roman",serif; letter-spacing: -4px; }
+.subpage-monogram span { position: absolute; top: 0; left: 0; }
+.subpage-monogram span:nth-child(2) { top: 13px; left: 10px; }
+.subpage-monogram span:nth-child(3) { top: 26px; left: 19px; }
+.subpage-brand-copy { font: 16px/1.35 "Times New Roman",serif; letter-spacing: 2px; text-transform: uppercase; }
+.subpage-brand-copy small { display: block; margin-top: 4px; font-size: 9px; letter-spacing: 2.2px; }
+.society-page.society-subpage .society-nav { width: auto; gap: 26px; }
+.society-page.society-subpage .society-nav a { font: 14px/1.4 "Times New Roman",serif; white-space: nowrap; }
+.society-page.society-subpage .society-nav a[aria-current] { border-color: var(--society-teal); font-weight: bold; }
+@media (min-width:761px) and (max-width:1050px) {
+  .society-page.society-subpage .society-header { gap: 16px; }
+  .society-page.society-subpage .society-nav { gap: 13px; }
+  .subpage-brand-copy { font-size: 13px; letter-spacing: 1px; }
+  .subpage-brand-copy small { font-size: 8px; letter-spacing: 1px; }
+}
+@media (max-width:760px) {
+  .society-page.society-subpage .society-paper { padding-inline: 22px; }
+  .society-page.society-subpage .society-header { min-height: 84px; gap: 12px; padding: 16px 0; flex-wrap: wrap; }
+  .society-page.society-subpage .society-header .society-brand { gap: 11px; flex: 1; min-width: 0; }
+  .subpage-monogram { width: 43px; height: 47px; font-size: 29px; }
+  .subpage-brand-copy { font-size: 13px; letter-spacing: 1px; }
+  .subpage-brand-copy small { font-size: 8px; letter-spacing: 1px; }
+  .society-page.society-subpage .society-menu { font-size: 0; padding: 0; }
+  .society-page.society-subpage .society-nav { width: 100%; gap: 0; }
+  .society-page.society-subpage .society-nav a { font-size: 19px; }
+}
+@media (max-width:360px) {
+  .society-page.society-subpage .society-paper { padding-inline: 16px; }
+  .subpage-brand-copy { font-size: 12px; }
+  .subpage-brand-copy small { font-size: 7px; letter-spacing: .7px; }
+}
+
+@media (max-width:760px) {
+ .society-page.society-subpage .society-header { min-height: 68px; padding-block: 10px; }
+}

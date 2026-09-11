@@ -146,7 +146,7 @@ test("public example questions in the page are covered by the regression suite",
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
   assert.match(html, /rules-assistant\.css\?v=20260901-resident-sources/);
-  assert.match(html, /rules-assistant\.js\?v=20260909-editorial/);
+  assert.match(html, /rules-assistant\.js\?v=20260910-resident-polish/);
 });
 
 test("park and amenity booking questions use the reservation process", async () => {

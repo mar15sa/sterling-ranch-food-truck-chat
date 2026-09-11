@@ -1,0 +1,148 @@
+/* Chat layout follows the original app: flexible transcript, stable composer.
+   Editorial type belongs to the masthead; conversation controls use UI type. */
+body.chat-workspace { --chat-line: #d4dddf; --chat-muted: #536174; --society-panel: #f8f9fa; background: var(--society-panel); color: #24344b; font: 15px/1.5 Arial,sans-serif; }
+.chat-workspace :is(button,input,textarea,.rules-answer,.rules-message,.message) { font-family: Arial,sans-serif; }
+.chat-workspace .chat-heading { flex: none; padding: 18px 0 14px; margin: 0; border: 0; }
+.chat-workspace .chat-heading h1 { font: bold 34px/1.1 "Times New Roman",serif; letter-spacing: -.6px; margin: 0; }
+.chat-workspace .chat-heading p { font: 14px/1.4 Arial,sans-serif; margin: 7px 0 0; color: var(--chat-muted); }
+.chat-workspace .society-food-layout { display: flex; margin: 0 0 16px !important; min-height: 0; }
+.chat-workspace .app-shell { display: flex; flex-direction: column; align-items: stretch; min-height: 0; }
+.chat-workspace .chat-panel { display: flex; flex-direction: column; width: 100%; max-width: 960px; height: 600px; min-height: 0; margin: 0 auto; overflow: hidden; background: #f0f3f4; border: 1px solid var(--chat-line); border-radius: 8px; }
+.chat-workspace :is(.messages,.rules-conversation) { flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; padding: 22px; }
+.chat-workspace .messages { gap: 18px; }
+.chat-workspace :is(.message,.rules-message) { flex-shrink: 0; font: 15px/1.55 Arial,sans-serif; padding: 18px 20px; border-radius: 7px; box-shadow: none; margin: 0; }
+.chat-workspace :is(.message.bot,.rules-message-bot) { width: 100%; max-width: 100%; background: #fff; border: 1px solid var(--chat-line); }
+.chat-workspace :is(.message.user,.rules-message-user) { align-self: flex-end; width: auto; max-width: 80%; background: #24344b; color: white; border: 0; padding: 11px 16px; }
+.chat-workspace .answer-text { margin: 0 0 16px; font-size: 15px; line-height: 1.55; }
+.chat-workspace .food-assistant-label { margin: 0 0 7px; color: var(--chat-muted); font: bold 10px/1.3 Arial,sans-serif; text-transform: uppercase; letter-spacing: .8px; }
+.chat-workspace .truck-card { gap: 0; margin: 16px 0; padding: 14px; background: #edf2f1; border-radius: 5px; }
+.chat-workspace .truck-card > div { padding: 0; border-radius: 0; background: transparent; }
+.chat-workspace .truck-card > div:nth-child(2) { padding-left: 20px; border-left: 1px solid var(--chat-line); }
+.chat-workspace .truck-card .featured-links-section { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--chat-line); }
+.chat-workspace .truck-card strong { font: 600 17px/1.4 Arial,sans-serif; }
+.chat-workspace :is(.label,.menu-section h2,.links-section h2,.menu-fallback h2) { color: var(--chat-muted); font: bold 11px/1.4 Arial,sans-serif; text-transform: uppercase; letter-spacing: .6px; }
+.chat-workspace .featured-links-section > .label { display: none; }
+.chat-workspace .featured-links { gap: 10px 20px; }
+.chat-workspace .link-icon-button { display: inline-flex; width: auto; height: auto; padding: 0; min-height: 32px; gap: 7px; background: transparent; border: 0; border-radius: 0; }
+.chat-workspace .link-icon-button:hover { color: #24344b; background: transparent; }
+.chat-workspace .link-icon { width: 20px; height: 20px; }
+.chat-workspace .link-icon-text { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; text-decoration: underline; font-size: 13px; }
+.chat-workspace .menu-items li { padding: 10px 0; border-color: var(--chat-line); }
+.chat-workspace .menu-name { font: 600 15px/1.4 Arial,sans-serif; gap: 20px; color: #24344b; }
+.chat-workspace .menu-price { color: #24344b; white-space: nowrap; }
+.chat-workspace .menu-description { font: 13px/1.5 Arial,sans-serif; color: var(--chat-muted); margin: 4px 0 0; }
+.chat-workspace .truck-more-section summary { font: 600 13px/1.4 Arial,sans-serif; border-radius: 5px; min-height: 36px; background: #edf2f1; color: #24344b; padding: 9px 12px; }
+.chat-workspace .result-meta { font: 12px/1.5 Arial,sans-serif; color: var(--chat-muted); }
+.chat-workspace :is(.food-chat-dock,.rules-dock) { flex: none; position: static; padding: 12px 20px; margin: 0; border: 0; border-top: 1px solid var(--chat-line); background: #f8f9fa; }
+.chat-workspace .food-chat-dock-inner { width: 100%; }
+.chat-workspace :is(.quick-actions,.rules-starters) { display: flex; gap: 8px; flex-wrap: wrap; padding: 0; margin: 0 0 10px; border: 0; max-height: none; }
+.chat-workspace :is(.quick-actions button,.rules-starters button) { min-height: 32px; min-width: 0; font: 13px/1.35 Arial,sans-serif; padding: 7px 11px; background: white; border: 1px solid #bccbca; border-radius: 5px; color: #24344b; }
+.chat-workspace .quick-actions button[aria-pressed="true"] { background: #24344b; border-color: #24344b; color: white; }
+.chat-workspace .composer { margin: 0; padding: 0; border: 0; gap: 10px; grid-template-columns: minmax(0,1fr) 46px; }
+.chat-workspace .composer input { min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid #bccbca; border-radius: 6px; font: 15px Arial,sans-serif; background: white; color: #24344b; }
+.chat-workspace .composer button { min-width: 0; min-height: 48px; border-radius: 6px; font-size: 22px; background: #24344b; }
+.chat-workspace .rules-app { display: flex; flex-direction: column; min-height: 0; }
+.chat-workspace .rules-header { flex: none; }
+.chat-workspace .rules-header-inner { width: 100%; padding: 18px 0 14px; border-bottom: 1px solid var(--chat-line); align-items: center; }
+.chat-workspace .rules-header .chat-heading { padding: 0; }
+.chat-workspace .rules-statusbar { margin-top: 7px; font-size: 12px; }
+.chat-workspace .rules-status-toggle { min-height: 28px; padding-block: 2px; }
+.chat-workspace .rules-source-link { display: inline-flex; font: 12px Arial,sans-serif; }
+.chat-workspace .rules-test-banner { flex: none; margin: 8px auto 0; max-width: 960px; padding: 7px 12px; font-size: 12px; }
+.chat-workspace .society-assistant-layout { display: flex; flex-direction: column; width: 100%; max-width: 960px; min-height: 0; margin: 12px auto 0 !important; }
+.chat-workspace .society-conversation-column { display: flex; flex-direction: column; min-height: 0; height: 530px; border: 1px solid var(--chat-line); border-radius: 8px; overflow: hidden; background: #f0f3f4; }
+.chat-workspace .rules-thread { padding: 0; width: 100%; gap: 18px; }
+.chat-workspace .rules-answer { font: 15px/1.6 Arial,sans-serif; }
+.chat-workspace .rules-dock-inner { width: 100%; padding: 0; border: 0; }
+.chat-workspace .rules-composer { background: white; border: 1px solid #bccbca; border-radius: 6px; }
+.chat-workspace .rules-composer textarea { font: 15px/1.45 Arial,sans-serif; color: #24344b; }
+.chat-workspace .rules-send { background: #24344b; border-radius: 5px; }
+.chat-workspace .rules-hint { font-size: 11px; margin: 6px 0 0; color: var(--chat-muted); }
+.chat-workspace .rules-dock.has-conversation .rules-starters { display: none; }
+.chat-workspace .rules-dock.has-conversation.starters-open .rules-starters { display: flex; }
+.chat-workspace :is(.rules-starters-toggle,.rules-start-over) { min-height: 28px; margin-bottom: 7px; font: 12px Arial,sans-serif; }
+.chat-workspace .rules-footer { flex: none; padding: 6px 0 10px; border: 0; }
+.chat-workspace .rules-disclaimer { max-width: 960px; margin: auto; }
+.chat-workspace .rules-disclaimer summary { display: inline-flex; min-height: 26px; font: 11px Arial,sans-serif; }
+.chat-workspace .rules-disclaimer p { font: 11px/1.5 Arial,sans-serif; margin: 4px 0; }
+.chat-workspace .site-footer { flex-shrink: 0; }
+.food-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* The transcript owns examples as well as messages; the composer never gives up its row. */
+body.chat-workspace { height: var(--chat-viewport-height, 100dvh); display: flex; flex-direction: column; }
+.society-page.chat-workspace .society-paper { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.chat-workspace :is(.app-shell,.rules-app,.society-food-layout,.chat-panel,.society-assistant-layout,.society-conversation-column) { flex: 1 1 auto; min-height: 0; height: auto; }
+.chat-workspace .chat-heading { padding: 10px 0; }
+.chat-workspace .chat-heading h1 { font-size: 30px; }
+.chat-workspace .rules-header-inner { padding: 10px 0; }
+.chat-workspace .rules-statusbar { margin-top: 3px; }
+.chat-workspace .society-assistant-layout { margin-top: 8px !important; }
+.chat-workspace .society-food-layout { margin-bottom: 8px !important; }
+.chat-workspace .rules-footer { padding: 2px 0 4px; }
+.chat-workspace .rules-starters-toggle { display: inline-flex; font-size: 13px; margin-bottom: 5px; }
+.chat-workspace .rules-conversation .rules-starters { display: flex; max-height: none; overflow: visible; margin: 0 0 18px; padding: 0 0 16px; border-bottom: 1px solid var(--chat-line); }
+.chat-workspace .rules-conversation .rules-starters button { font-size: 14px; min-height: 40px; }
+.chat-workspace .rules-disclaimer summary { font-size: 12px; }
+.chat-workspace .rules-disclaimer p { font-size: 12px; max-height: 25dvh; overflow-y: auto; }
+.chat-workspace .rules-source-link { font-size: 13px; }
+.chat-workspace .food-assistant-label { font-size: 12px; letter-spacing: .3px; }
+.chat-workspace .food-response-details { margin: 12px 0; font-size: 13px; }
+.chat-workspace .food-response-details summary { min-height: 28px; cursor: pointer; }
+.chat-workspace .food-response-details .answer-text { margin-top: 8px; }
+.chat-workspace .truck-card { margin-top: 4px; }
+.chat-workspace .rules-hint { display: none; }
+@media (max-width:760px) {
+  .chat-workspace .chat-heading h1 { font-size: 25px; }
+  .chat-workspace .chat-heading p { display: none; }
+  .chat-workspace .rules-header-inner { padding-block: 8px; gap: 4px; }
+  .chat-workspace .rules-source-link { display: none; }
+  .chat-workspace .rules-statusbar { font-size: 12px; flex-wrap: wrap; }
+  .chat-workspace .rules-brand { justify-content: flex-start; }
+  .chat-workspace :is(.messages,.rules-conversation) { padding: 10px; }
+  .chat-workspace :is(.message,.rules-message) { padding: 12px; }
+  .chat-workspace .truck-card { grid-template-columns: 1fr; gap: 8px; padding: 10px; }
+  .chat-workspace .truck-card > div:nth-child(2) { padding: 0; border: 0; }
+  .chat-workspace :is(.food-chat-dock,.rules-dock) { padding: 8px 10px; }
+  .chat-workspace .rules-dock-inner { display: block; }
+  .chat-workspace .rules-composer textarea { font-size: 16px; min-height: 44px; max-height: 90px; }
+  .chat-workspace .composer input { font-size: 16px; }
+  .chat-workspace :is(.quick-actions button,.rules-starters button) { min-height: 40px; }
+  .chat-workspace .quick-actions { flex-wrap: nowrap; gap: 6px; margin-bottom: 6px; }
+  .chat-workspace .quick-actions button { flex: 1; padding-inline: 3px; font-size: 13px; }
+  .chat-workspace .rules-footer { padding: 0; }
+  .chat-workspace .rules-test-banner { padding: 4px 8px; margin-top: 4px; }
+  .chat-workspace .rules-test-banner span { display: none; }
+}
+@media (max-width:760px) and (max-height:560px) {
+  .chat-workspace .society-header, body.chat-workspace .site-footer { display: none !important; }
+  .chat-workspace .rules-footer { display: none; }
+}
+@media (max-width:760px) {
+ body.chat-workspace[data-keyboard-open] .site-footer, .chat-workspace[data-keyboard-open] .society-header { display: none !important; }
+}
+
+.chat-workspace :is(.label,.menu-section h2,.links-section h2,.menu-fallback h2) { font-size: 12px; letter-spacing: .3px; }
+.chat-workspace .result-meta { font-size: 13px; }
+
+/* Keep dock controls steady when focus moves from the input to a source link. */
+.chat-workspace .rules-dock.has-conversation .rules-dock-inner { display: block; }
+.chat-workspace .rules-dock.is-composing .rules-starters-toggle { display: inline-flex; }
+@media (max-width:760px) {
+ .chat-workspace .rules-composer textarea { height: 64px; min-height: 64px; padding: 8px 10px; }
+}
+.chat-workspace .truck-listing:first-of-type { margin-top: 4px; padding-top: 0; }
+
+@media (min-width:761px) and (max-height:600px) {
+ .society-page.chat-workspace .society-header { min-height: 56px; }
+ .chat-workspace .chat-heading, .chat-workspace .rules-header-inner { padding-block: 4px; }
+ .chat-workspace .chat-heading h1 { font-size: 25px; }
+ .chat-workspace .chat-heading p { display: none; }
+ .chat-workspace :is(.food-chat-dock,.rules-dock) { padding-block: 6px; }
+ .chat-workspace :is(.messages,.rules-conversation) { padding-block: 12px; }
+ .chat-workspace .rules-composer { padding: 3px; }
+ .chat-workspace .rules-test-banner { padding-block: 4px; margin-top: 4px; }
+}
+@media (min-width:1100px) and (max-height:600px) {
+ .chat-workspace .rules-brand-text { display: flex; align-items: center; gap: 20px; }
+ .chat-workspace .rules-statusbar { margin-top: 0; }
+}

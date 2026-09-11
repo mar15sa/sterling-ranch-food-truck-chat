@@ -48,6 +48,7 @@ function resetConversation({ showPrompt = true } = {}) {
   rulesMessages.replaceChildren();
   conversationStarted = false;
   rulesDock.classList.remove("has-conversation", "starters-open");
+  rulesStarters.hidden = true;
   startersToggle.setAttribute("aria-expanded", "false");
   startersToggle.textContent = "Show example questions";
   if (showPrompt) {
@@ -110,7 +111,7 @@ function conversationScrolls() {
 
 function scrollToBottom() {
   const behavior = reduceMotion ? "auto" : "smooth";
-  if (conversationScrolls()) {
+  if (document.body.classList.contains("chat-workspace") || conversationScrolls()) {
     rulesScroll.scrollTo({ top: rulesScroll.scrollHeight, behavior });
   } else {
     window.scrollTo({ top: document.documentElement.scrollHeight, behavior });
@@ -119,7 +120,7 @@ function scrollToBottom() {
 
 function scrollToMessageStart(message) {
   const behavior = reduceMotion ? "auto" : "smooth";
-  if (conversationScrolls()) {
+  if (document.body.classList.contains("chat-workspace") || conversationScrolls()) {
     const top =
       message.getBoundingClientRect().top -
       rulesScroll.getBoundingClientRect().top +
@@ -739,6 +740,7 @@ function startConversation() {
   conversationStarted = true;
   rulesDock.classList.add("has-conversation");
   rulesDock.classList.remove("starters-open");
+  rulesStarters.hidden = true;
   startersToggle.setAttribute("aria-expanded", "false");
   startersToggle.textContent = "Show example questions";
 }
@@ -780,7 +782,9 @@ rulesStarters.addEventListener("click", (event) => {
 });
 
 startersToggle.addEventListener("click", () => {
-  const open = rulesDock.classList.toggle("starters-open");
+  const open = rulesStarters.hidden;
+  rulesStarters.hidden = !open;
+  if (open) rulesScroll.scrollTo({ top: 0, behavior: "instant" });
   startersToggle.setAttribute("aria-expanded", String(open));
   startersToggle.textContent = open ? "Hide example questions" : "Show example questions";
 });
@@ -816,19 +820,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// Full disclaimer on desktop; collapsed on mobile. Only flip when crossing the
-// breakpoint so a user's manual expand on mobile isn't undone by every resize.
-const disclaimerEl = document.querySelector(".rules-disclaimer");
-let disclaimerIsDesktop = null;
-function syncDisclaimerForViewport() {
-  if (!disclaimerEl) return;
-  const isDesktop = window.innerWidth > 720;
-  if (isDesktop === disclaimerIsDesktop) return;
-  disclaimerIsDesktop = isDesktop;
-  disclaimerEl.open = isDesktop;
-}
-syncDisclaimerForViewport();
-window.addEventListener("resize", syncDisclaimerForViewport);
+// The disclaimer starts collapsed; its native disclosure preserves the resident’s choice.
 
 loadStatus();
 
@@ -845,6 +837,6 @@ if (sharedQuestion) {
   });
 } else {
   addBotText(
-    "Ask me about Sterling Ranch rules, services, forms, facilities, events, pool status, or food trucks. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Try one of the examples below."
+    "Ask me about Sterling Ranch rules, services, forms, facilities, events, pool status, or food trucks. I’ll give you a clear answer with the official sources and next steps I used. Not sure where to start? Choose “Show example questions” to get started."
   );
 }

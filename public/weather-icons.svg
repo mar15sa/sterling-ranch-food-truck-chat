@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+ <symbol id="sun" viewBox="0 0 64 64"><circle cx="32" cy="32" r="13" fill="currentColor" fill-opacity=".08"/><path d="M32 5v8m0 38v8M5 32h8m38 0h8M13 13l6 6m26 26 6 6M13 51l6-6m26-26 6-6"/></symbol>
+ <symbol id="moon" viewBox="0 0 64 64"><path d="M46 42A23 23 0 0 1 23 10a24 24 0 1 0 31 31c-3 1-5 1-8 1Z" fill="currentColor" fill-opacity=".08"/><path d="m44 9 1 4 4 1-4 1-1 4-1-4-4-1 4-1Z"/></symbol>
+ <symbol id="cloud" viewBox="0 0 64 64"><path d="M15 46a12 12 0 0 1-1-24 17 17 0 0 1 33-1 13 13 0 1 1 3 25Z" fill="currentColor" fill-opacity=".08"/></symbol>
+ <symbol id="partly" viewBox="0 0 64 64"><circle cx="22" cy="22" r="10" fill="currentColor" fill-opacity=".08"/><path d="M22 3v5M3 22h5M8 8l4 4m22 0 4-4M12 36l-4 4"/><path d="M24 51a10 10 0 0 1-1-20 13 13 0 0 1 25-2 11 11 0 1 1 4 22Z" fill="#f0f4f3"/></symbol>
+ <symbol id="night-cloud" viewBox="0 0 64 64"><path d="M29 8a16 16 0 0 0 13 24A18 18 0 1 1 29 8Z" fill="currentColor" fill-opacity=".08"/><path d="M24 52a10 10 0 0 1-1-20 13 13 0 0 1 25-2 11 11 0 1 1 4 22Z" fill="#f0f4f3"/></symbol>
+ <symbol id="rain" viewBox="0 0 64 64"><path d="M14 37a10 10 0 0 1-1-20 16 16 0 0 1 30-1 11 11 0 1 1 4 21Z" fill="currentColor" fill-opacity=".08"/><path d="m19 45-4 8m17-8-4 8m17-8-4 8"/></symbol>
+ <symbol id="snow" viewBox="0 0 64 64"><path d="M14 34a10 10 0 0 1-1-20 16 16 0 0 1 30-1 11 11 0 1 1 4 21Z" fill="currentColor" fill-opacity=".08"/><path d="M19 43v12m-5-9 10 6m-10 0 10-6m19-3v12m-5-9 10 6m-10 0 10-6"/></symbol>
+ <symbol id="storm" viewBox="0 0 64 64"><path d="M14 36a10 10 0 0 1-1-20 16 16 0 0 1 30-1 11 11 0 1 1 4 21Z" fill="currentColor" fill-opacity=".08"/><path d="m31 30-9 16h11l-6 14 19-24H33l5-6" fill="#e3e5e8"/></symbol>
+ <symbol id="fog" viewBox="0 0 64 64"><path d="M15 32a10 10 0 0 1 0-20 16 16 0 0 1 30 2 10 10 0 0 1 7 18M9 40h46M5 48h39m5 0h10M13 56h38"/></symbol>
+ <symbol id="wind" viewBox="0 0 64 64"><path d="M7 23h35a8 8 0 1 0-8-8M5 33h47a7 7 0 1 1-7 7M11 45h17a7 7 0 1 1-7 7"/></symbol>
+ <symbol id="drop" viewBox="0 0 64 64"><path d="M32 6S14 28 14 40a18 18 0 0 0 36 0C50 28 32 6 32 6Z" fill="currentColor" fill-opacity=".08"/></symbol>
+</svg>

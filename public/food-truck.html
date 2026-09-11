@@ -49,17 +49,23 @@
       content="Sterling Ranch Food Truck Chat preview"
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=20260607-footer-icons" />
+    <link rel="stylesheet" href="/styles.css?v=20260910-mobile-scroll" />
     <script src="/environment.js"></script>
-    <link rel="stylesheet" href="/society.css?v=20260909" />
-    <script src="/society.js?v=20260909" defer></script>
+    <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
+    <script src="/society.js?v=20260910-mobile-menu" defer></script>
+    <link rel="stylesheet" href="/society-footer.css?v=20260910-footer-clearance" />
+      <link rel="stylesheet" href="/society-subpage.css?v=20260910-resident-polish" />
+      <link rel="stylesheet" href="/chat-workspace.css?v=20260910-footer-clearance" />
+      <script src="/chat-viewport.js?v=20260910-resident-polish" defer></script>
   </head>
-  <body class="society-page">
+  <body class="society-page food-chat-page society-subpage chat-workspace">
     <a class="society-skip" href="#main-content">Skip to content</a>
     <div class="society-paper">
       <header class="society-header">
-        <a class="society-brand" href="/">STERLING RANCH SOCIETY</a
-        ><button
+        <a class="society-brand" href="/" aria-label="Sterling Ranch Society home">
+          <span class="subpage-monogram" aria-hidden="true"><span>S</span><span>R</span><span>S</span></span>
+          <span class="subpage-brand-copy">Sterling Ranch Society<small>Douglas County, Colorado</small></span>
+        </a><button
           class="society-menu"
           type="button"
           aria-expanded="false"
@@ -72,110 +78,47 @@
           class="society-nav"
           aria-label="Main navigation"
         >
-          <a href="/">Briefing</a><a href="/community-assistant">Assistant</a
+          <a href="/">Today</a><a href="/community-assistant">Assistant</a
           ><a href="/food-truck" aria-current="page">Food Trucks</a
           ><a href="/calendar">Calendar</a><a href="/openings">Openings</a
           ><a href="/pool">Pool</a>
         </nav>
       </header>
       <main id="main-content" tabindex="-1" class="app-shell">
-        <div class="society-page-title">
-          <p class="society-breadcrumb">
-            <a href="/">The Briefing</a> / Food Trucks
-          </p>
-          <h1>Food Trucks</h1>
-          <p>
-            Dinner plans, made easy. See who’s coming and what’s on the menu.
-          </p>
-        </div>
+        <section class="chat-heading" aria-labelledby="food-title"><h1 id="food-title">Food Truck Chat</h1><p>Today’s truck, the menu, and what’s coming next.</p></section>
         <div class="society-food-layout">
           <section class="chat-panel" aria-label="Food truck chat">
-            <header class="topbar">
-              <div>
-                <p class="eyebrow">ASK ABOUT A DATE</p>
-                <h2>Food Truck Chat</h2>
-              </div>
-              <div class="status-pill" id="statusPill">Ready</div>
-            </header>
+            <div class="food-sr-only" id="statusPill" role="status">Ready</div>
 
-            <div class="messages" id="messages" aria-live="polite"></div>
+            <div class="messages" id="messages" aria-live="polite" tabindex="0" role="region" aria-label="Food truck conversation"></div>
+    <div class="food-chat-dock" role="region" aria-label="Food truck questions">
+      <div class="food-chat-dock-inner">
+        <div class="quick-actions" id="quickActions" aria-label="Quick questions"></div>
+        <form class="composer" id="chatForm">
+          <input
+            id="questionInput"
+            name="question"
+            autocomplete="off"
+            aria-label="Ask about a food truck date"
+            placeholder="Ask about today, tomorrow, or a date…"
+          />
+          <button type="submit" aria-label="Send question">→</button>
+        </form>
+      </div>
+    </div>
 
-            <div
-              class="quick-actions"
-              id="quickActions"
-              aria-label="Quick questions"
-            ></div>
 
-            <form class="composer" id="chatForm">
-              <input
-                id="questionInput"
-                name="question"
-                autocomplete="off"
-                aria-label="Ask about a food truck date"
-                placeholder="Ask about today, tomorrow, or a date…"
-              />
-              <button type="submit" aria-label="Send question">→</button>
-            </form>
-
-            <footer class="app-footer">
-              <details class="settings-menu" id="settingsMenu">
-                <summary aria-label="Settings">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.09a2 2 0 0 1 1 1.74v.5a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z"
-                    />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </summary>
-                <nav class="feedback-links" aria-label="Feedback">
-                  <a
-                    href="mailto:hello@ideakitchen.ai?subject=Food%20Truck%20Chat%20bug%20report&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AWhat%20date%20or%20food%20truck%20were%20you%20checking%3F%0A%0AWhat%20device%20and%20browser%20were%20you%20using%3F%0A%0APlease%20attach%20a%20screenshot%20if%20you%20can."
-                    data-feedback-type="bug"
-                    >Report a bug</a
-                  >
-                  <a
-                    href="mailto:hello@ideakitchen.ai?subject=Food%20Truck%20Chat%20feature%20request&amp;body=What%20would%20you%20like%20the%20app%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F"
-                    data-feedback-type="feature"
-                    >Request a feature</a
-                  >
-                </nav>
-              </details>
-              <a
-                class="maker-link"
-                href="https://ideakitchen.ai/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src="/idea-kitchen-icon.svg?v=transparent" alt="" />
-                <span>Made by Idea Kitchen</span>
-              </a>
-            </footer>
           </section>
-          <aside class="society-sidebar">
-            <p class="society-eyebrow">MAKE AN EVENING OF IT</p>
-            <h2>Tonight’s dinner,<br />around the corner.</h2>
-            <img
-              class="society-art"
-              src="/society-truck.png"
-              alt="Illustration of a food truck"
-            />
-            <p>
-              Check the calendar and menu links in each answer. Schedules and
-              menus can change.
-            </p>
-            <a class="society-text-link" href="/calendar"
-              >More dates on the calendar →</a
-            >
-          </aside>
         </div>
       </main>
 
       <template id="botResultTemplate">
-        <article class="message bot">
+        <article class="message bot food-result">
+          <p class="food-assistant-label">Assistant</p>
           <p class="answer-text"></p>
           <div class="truck-card hidden">
             <div>
-              <span class="label">Truck</span>
+              <span class="label">Food truck</span>
               <strong class="truck-name"></strong>
             </div>
             <div>
@@ -188,7 +131,7 @@
             </div>
           </div>
           <div class="menu-section hidden">
-            <h2>Menu items found</h2>
+            <h2>Menu</h2>
             <ul class="menu-items"></ul>
           </div>
           <div class="menu-fallback hidden">
@@ -216,32 +159,14 @@
         </article>
       </template>
 
-      <script src="/app.js?v=20260607-footer-icons"></script>
-      <footer class="society-footer">
-        <div class="society-footer-brand">
-          <span class="society-monogram" aria-hidden="true">SR</span>
-          <div><b>Sterling Ranch Society</b><br />Douglas County, Colorado</div>
+      <script src="/app.js?v=20260910-resident-polish" defer></script>
+      <footer class="society-footer site-footer">
+        <div class="site-footer-brand"><b>Sterling Ranch Society</b><span>Douglas County, Colorado</span></div>
+        <div class="site-footer-links">
+          <a href="mailto:hello@ideakitchen.ai?subject=Sterling%20Ranch%20Society%20bug%20report&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%3F%0A%0AWhich%20page%20were%20you%20viewing%3F%0A%0AWhat%20device%20and%20browser%20were%20you%20using%3F" data-feedback-type="bug">Report a bug</a>
+          <a href="mailto:hello@ideakitchen.ai?subject=Sterling%20Ranch%20Society%20feature%20request&amp;body=What%20would%20you%20like%20the%20site%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F" data-feedback-type="feature">Request a feature</a>
         </div>
-        <div class="society-footer-right">
-          <p>
-            Independent community resource.
-            <a href="https://ideakitchen.ai/" target="_blank" rel="noreferrer"
-              >Made by Idea Kitchen ↗</a
-            >
-          </p>
-          <div class="society-feedback">
-            <a
-              class="society-feedback-link"
-              href="mailto:hello@ideakitchen.ai?subject=Food%20Truck%20Chat%20bug%20report&amp;body=What%20happened%3F%0A%0AWhat%20did%20you%20expect%20to%20happen%3F%0A%0AWhat%20date%20or%20food%20truck%20were%20you%20checking%3F%0A%0AWhat%20device%20and%20browser%20were%20you%20using%3F%0A%0APlease%20attach%20a%20screenshot%20if%20you%20can."
-              >Report a bug</a
-            ><a
-              class="society-feedback-link"
-              href="mailto:hello@ideakitchen.ai?subject=Food%20Truck%20Chat%20feature%20request&amp;body=What%20would%20you%20like%20Food%20Truck%20Chat%20to%20do%3F%0A%0AHow%20would%20this%20help%20you%3F"
-              >Request a feature</a
-            >
-          </div>
-          <small>Opens an email draft. You choose whether to send.</small>
-        </div>
+        <p class="site-footer-credit">Independent community resource.<br /><a href="https://ideakitchen.ai/" target="_blank" rel="noreferrer">Made by Idea Kitchen ↗</a></p>
       </footer>
     </div>
   </body>
