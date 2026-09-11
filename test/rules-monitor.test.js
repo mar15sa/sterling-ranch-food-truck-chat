@@ -83,6 +83,30 @@ test("safety checks validate classification, reason, mode, and empty sources", (
   assert.equal(issues.length, 4);
 });
 
+test("source-review monitoring requires an explicit withheld answer with its official handoff", () => {
+  const check = {
+    expectedClassification: "rules-question",
+    expectedReason: "source-review-required",
+    expectedAnswerMode: "community-freshness-withheld",
+    expectedAnswerStatus: "source-unavailable",
+    expectedCanAnswer: false,
+    firstSourceIncludes: "Pickleball Courts",
+    expectedSourceType: "facilities",
+    expectedSourceUrlIncludes: "/418/Pickleball-Courts",
+    expectedActionType: "information",
+  };
+  const result = goodResult({
+    answerStatus: "source-unavailable",
+    answerMode: "community-freshness-withheld",
+    inputClassification: "rules-question",
+    confidence: { canAnswer: false, confidence: "high", reason: "source-review-required" },
+    sources: [{ id: "courts", title: "Pickleball Courts", sourceType: "facilities", sourceUrl: "https://alpha.gov/418/Pickleball-Courts" }],
+    actions: [{ label: "Open Pickleball Courts", actionType: "information", url: "https://alpha.gov/418/Pickleball-Courts" }],
+  });
+  assert.deepEqual(evaluateRuleResult(check, result), []);
+  assert.match(evaluateRuleResult(check, { ...result, answerStatus: "verified", confidence: { canAnswer: true, confidence: "high", reason: "source-review-required" } }).join(" "), /answer status.*canAnswer/i);
+});
+
 test("freshness recheck fails closed until sources are current", () => {
   assert.match(freshnessRecheckIssue(true, { status: "ok", rules: { isStale: true } }), /remained stale/i);
   assert.match(freshnessRecheckIssue(false, { status: "ok", rules: { isStale: false } }), /remained stale/i);

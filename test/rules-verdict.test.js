@@ -50,6 +50,21 @@ test("prohibition and approval answers receive explicit verdicts", () => {
     "conditional"
   );
   assert.equal(deriveAnswerVerdict("Short answer: No. This use is prohibited.", supported), "prohibited");
+  assert.equal(
+    deriveAnswerVerdict("Hot tubs, outdoor spas, outdoor saunas. DRC approval is required.", supported),
+    "conditional"
+  );
+});
+
+test("plain affirmative openings receive an allowed verdict", () => {
+  assert.equal(
+    deriveAnswerVerdict("You can install seasonal lights during the approved dates.", supported),
+    "allowed"
+  );
+  assert.equal(
+    deriveAnswerVerdict("Residents may keep dogs subject to the listed limits.", supported),
+    "allowed"
+  );
 });
 
 test("unsupported answers are always unverified", () => {
