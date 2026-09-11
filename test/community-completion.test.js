@@ -9,7 +9,7 @@ const { answerRulesQuestion } = require("../lib/rules-assistant");
 const communityIndex = require("../data/community-index.json");
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
 const { diffCommunityIndexes, sourceReleaseDecision, validateCommunityCandidate } = require("../lib/community-release");
-const { getWasteSchedule, scheduleTimingLabel, configuredAreaDates } = require("../lib/community-waste-schedule");
+const { getWasteSchedule, scheduleTimingLabel } = require("../lib/community-waste-schedule");
 function foodTruckProfile() {
   const profile = structuredClone(communityProfile);
   const connector = profile.connectors.find((item) => item.type === "food-truck-schedule");
@@ -526,46 +526,38 @@ test("live schedule routing does not replace recycling cart-storage rules", asyn
   assert.match(`${answer.directAnswer || ""} ${answer.answer || ""}`, /end of (?:the )?pickup day|stored|screened/i);
 });
 
-test("Waste Connections service reads dated recycling events without a resident address", async () => {
+test("Sterling Ranch withholds village dates without published service-area references", async () => {
   const requested = [];
   const fetchImpl = async (url) => {
     requested.push(String(url));
-    if (String(url).includes("address-suggest")) {
-      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", address: "7853 Piney River Avenue" }] };
-    }
-    return { ok: true, json: async () => ({ events: [
-      { day: "2026-08-31", flags: [{ name: "Garbage" }] },
-      { day: "2026-08-31", flags: [{ name: "Recycling" }] },
-    ] }) };
+    throw new Error("unproven village must not trigger address lookup");
   };
-  const schedule = await getWasteSchedule({ profile: communityProfile, fetchImpl, now: new Date("2026-08-30T18:00:00Z") });
-  assert.equal(schedule.timing, "starting tomorrow");
-  assert.equal(schedule.serviceAreas[2].date, "2026-09-03");
-  assert.equal(requested.length, 2);
-  assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
-  assert.doesNotMatch(JSON.stringify(schedule), /7853|place_id/i);
+  const schedule = await getWasteSchedule({ profile: communityProfile, fetchImpl, now: new Date("2026-08-30T18:00:00Z"), question: "When is recycling pickup in Prospect Village?" });
+  assert.equal(schedule.date, "");
+  assert.equal(schedule.serviceAreas[2].date, undefined);
+  assert.equal(requested.length, 0);
+  assert.doesNotMatch(JSON.stringify(communityProfile.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule), /7853|Piney River/i);
+  assert.equal(schedule.evidence.degradation.state, "unavailable");
   assert.equal(scheduleTimingLabel("2026-09-07", "2026-08-30"), "the week of September 7, 2026");
-  assert.deepEqual(configuredAreaDates("2026-11-23", [{ day: "2026-11-26", type: "holiday" }], communityProfile.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule.serviceAreas), [
-    { label: "Providence Village", date: "2026-11-23" },
-    { label: "Ascent Village", date: "2026-11-24" },
-    { label: "Prospect Village", date: "2026-11-27" },
-  ]);
-  assert.equal(configuredAreaDates("2026-09-08", [{ day: "2026-09-07", type: "holiday" }], communityProfile.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule.serviceAreas)[2].date, "2026-09-11");
 });
 
 test("Waste Connections uses one total deadline across its sequential requests", async () => {
+  const profileWithPublishedReference = structuredClone(communityProfile);
+  profileWithPublishedReference.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule.serviceAreas[0].officialReferenceLocation = {
+    privacy: "published-service-area-reference", query: "400 Cedar Road", candidateTextPattern: "400\\s+Cedar",
+  };
   let calls = 0;
   const fetchImpl = async (url, options = {}) => {
     calls += 1;
     if (String(url).includes("address-suggest")) {
-      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", address: "7853 Piney River Avenue" }] };
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", address: "400 Cedar Road" }] };
     }
     return new Promise((resolve, reject) => {
       options.signal.addEventListener("abort", () => reject(Object.assign(new Error("aborted"), { name: "AbortError" })), { once: true });
     });
   };
   const started = Date.now();
-  await assert.rejects(() => getWasteSchedule({ profile: communityProfile, fetchImpl, timeoutMs: 40 }), /aborted/i);
+  await assert.rejects(() => getWasteSchedule({ profile: profileWithPublishedReference, fetchImpl, question: "When is recycling pickup in Providence Village?", timeoutMs: 40 }), /aborted/i);
   assert.equal(calls, 2);
   assert.ok(Date.now() - started < 250);
 });
