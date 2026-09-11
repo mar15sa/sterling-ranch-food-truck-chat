@@ -124,6 +124,7 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "The approved source does not publish separate  hours, so I can’t verify that its regular  schedule applies on .",
   "The approved source does not publish hours specifically for , so I can’t verify the holiday schedule.",
   "The approved source does not publish separate  hours, so I can’t verify the holiday schedule for .",
+  "falls outside that published recurring season, so I can’t verify facility hours for that date.",
 ]);
 
 function isTernaryControlLiteral(tokens, index) {
