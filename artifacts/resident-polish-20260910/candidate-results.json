@@ -1,0 +1,294 @@
+{
+  "mockedQuestions": 18,
+  "liveQuestions": 0,
+  "results": [
+    {
+      "url": "/",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 1440,
+      "transcriptHeight": 487.078125,
+      "footerHeight": 76.390625
+    },
+    {
+      "url": "/food-truck",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1440,
+      "transcriptHeight": 404.21875,
+      "footerHeight": 76.390625
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "url": "/",
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 1024,
+      "transcriptHeight": 355.078125,
+      "footerHeight": 76.390625
+    },
+    {
+      "url": "/food-truck",
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1024,
+      "transcriptHeight": 272.21875,
+      "footerHeight": 76.390625
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "url": "/",
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 800,
+      "transcriptHeight": 261.078125,
+      "footerHeight": 102.390625
+    },
+    {
+      "url": "/food-truck",
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 800,
+      "transcriptHeight": 178.21875,
+      "footerHeight": 102.390625
+    },
+    {
+      "url": "/community-assistant",
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "url": "/",
+      "width": 1440,
+      "height": 540,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 1440,
+      "transcriptHeight": 195.171875,
+      "footerHeight": 76.390625
+    },
+    {
+      "url": "/food-truck",
+      "width": 1440,
+      "height": 540,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1440,
+      "transcriptHeight": 85.71875,
+      "footerHeight": 76.390625
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1440,
+      "height": 540,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1440,
+      "height": 540,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1440,
+      "height": 540,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1440,
+      "height": 540,
+      "passed": true
+    },
+    {
+      "url": "/",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 390,
+      "transcriptHeight": 470.3125,
+      "footerHeight": 92.796875
+    },
+    {
+      "url": "/food-truck",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 390,
+      "transcriptHeight": 363.3125,
+      "footerHeight": 92.796875
+    },
+    {
+      "url": "/community-assistant",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "url": "/",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 320,
+      "transcriptHeight": 335.734375,
+      "footerHeight": 108.984375
+    },
+    {
+      "url": "/food-truck",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 320,
+      "transcriptHeight": 228.734375,
+      "footerHeight": 108.984375
+    },
+    {
+      "url": "/community-assistant",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 320,
+      "height": 740,
+      "passed": true
+    }
+  ]
+}

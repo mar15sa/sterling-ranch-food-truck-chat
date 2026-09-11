@@ -113,11 +113,13 @@ body.chat-workspace { height: var(--chat-viewport-height, 100dvh); display: flex
   .chat-workspace .rules-test-banner { padding: 4px 8px; margin-top: 4px; }
   .chat-workspace .rules-test-banner span { display: none; }
 }
-@media (max-height:560px) {
+@media (max-width:760px) and (max-height:560px) {
   .chat-workspace .society-header, body.chat-workspace .site-footer { display: none !important; }
   .chat-workspace .rules-footer { display: none; }
 }
-body.chat-workspace[data-keyboard-open] .site-footer, .chat-workspace[data-keyboard-open] .society-header { display: none !important; }
+@media (max-width:760px) {
+ body.chat-workspace[data-keyboard-open] .site-footer, .chat-workspace[data-keyboard-open] .society-header { display: none !important; }
+}
 
 .chat-workspace :is(.label,.menu-section h2,.links-section h2,.menu-fallback h2) { font-size: 12px; letter-spacing: .3px; }
 .chat-workspace .result-meta { font-size: 13px; }
@@ -129,3 +131,10 @@ body.chat-workspace[data-keyboard-open] .site-footer, .chat-workspace[data-keybo
  .chat-workspace .rules-composer textarea { height: 64px; min-height: 64px; padding: 8px 10px; }
 }
 .chat-workspace .truck-listing:first-of-type { margin-top: 4px; padding-top: 0; }
+
+@media (min-width:761px) and (max-height:600px) {
+ .society-page.chat-workspace .society-header { min-height: 56px; }
+ .chat-workspace .chat-heading, .chat-workspace .rules-header-inner { padding-block: 4px; }
+ .chat-workspace .chat-heading h1 { font-size: 25px; }
+ .chat-workspace .chat-heading p { display: none; }
+}

@@ -191,12 +191,12 @@ function filteredItems() {
 
 function sortItems(items) {
   const statusOrder = {
-    "opening-soon": 0,
-    "under-construction": 1,
-    confirmed: 2,
-    approved: 3,
-    proposed: 4,
-    open: 5,
+    open: 0,
+    "opening-soon": 1,
+    "under-construction": 2,
+    confirmed: 3,
+    approved: 4,
+    proposed: 5,
     paused: 6,
     closed: 7,
   };

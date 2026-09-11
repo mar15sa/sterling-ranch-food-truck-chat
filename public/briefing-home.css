@@ -178,3 +178,13 @@ body.briefing-page {
  .briefing-next-event strong { font-size: 20px; text-decoration: underline; text-underline-offset: 3px; }
  .briefing-page :is(#today-food,#today-assistant,#today-calendar,#today-openings,#today-pool) { scroll-margin-top: 16px; }
 }
+.briefing-weather-period { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--society-silver); }
+.briefing-weather-period > div { display: flex; flex-direction: column; gap: 3px; }
+.briefing-weather-period strong { font-size: 20px; }
+.briefing-weather-period span { font-size: 16px; }
+.briefing-weather-period .briefing-weather-temperature { font-size: 34px; line-height: 1; white-space: nowrap; }
+.briefing-page .briefing-weather-updated { margin: 8px 0 0; font-size: 13px; }
+.briefing-essentials { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--society-silver); }
+.briefing-page .briefing-essentials h3 { margin: 0 0 4px; font-size: 23px; }
+.briefing-essentials a { display: flex; align-items: center; min-height: 32px; font-size: 16px; text-decoration: underline; }
+@media (max-width:760px) { .briefing-essentials a { min-height: 44px; } }
