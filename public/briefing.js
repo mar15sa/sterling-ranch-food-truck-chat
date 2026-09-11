@@ -95,7 +95,6 @@
     }
     read("/api/community/events").then((data) => {
       events.replaceChildren();
-      if (data.status === "partial") notice("Some listings are unavailable. This list may be incomplete.");
       const entries = (data.events || []).filter(e => /^\d{4}-\d{2}-\d{2}$/.test(e.date || "")).sort((a,b) => a.date.localeCompare(b.date) || String(a.time || "").localeCompare(String(b.time || "")));
       const started = entries.filter(e => e.date === dateKey && /^\d{2}:\d{2}$/.test(e.time || "") && e.time < timeKey);
       const upcoming = entries.filter(e => e.date >= dateKey && !started.includes(e));
@@ -110,6 +109,7 @@
         appendEvents(started, earlier, false);
         events.append(earlier);
       }
+      if (data.status === "partial") notice("Some listings are unavailable. This list may be incomplete.");
       const next = document.querySelector("#briefing-next-event");
       if (next && upcoming[0]) {
         const event = upcoming[0];
@@ -162,7 +162,7 @@
       .then((data) => {
         const items = [...(data.items || [])]
           .sort((a, b) =>
-            String(b.verifiedAt || "").localeCompare(
+            (Number(b.status === "open") - Number(a.status === "open")) || String(b.verifiedAt || "").localeCompare(
               String(a.verifiedAt || ""),
             ),
           )

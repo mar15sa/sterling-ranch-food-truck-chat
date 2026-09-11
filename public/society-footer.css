@@ -1,7 +1,7 @@
 /* Shared, compact footer across all six public pages. */
 .society-page > .staging-environment-banner { position: static !important; width: fit-content; max-width: calc(100% - 16px); margin: 6px auto; border-radius: 3px !important; text-align: center; flex-shrink: 0; }
-body.society-page .society-footer.site-footer { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; gap: 12px 24px; width: 100%; max-width: none; margin: 0 !important; padding: 10px 0 !important; border: 0; border-top: 1px solid #aeb6c1; border-radius: 0; background: transparent; box-shadow: none; text-align: left; color: #24344b; font: 14px/1.4 "Times New Roman",serif; }
-.site-footer::before { content: ""; position: absolute; z-index: -1; inset: 0; background: url('/society-footer-botanicals.webp') center bottom / 100% 150px no-repeat; opacity: .2; pointer-events: none; }
+body.society-page .society-footer.site-footer { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; gap: 12px 24px; width: 100%; max-width: none; margin: 0 !important; padding: 14px 0 20px !important; border: 0; border-top: 1px solid #aeb6c1; border-radius: 0; background: transparent; box-shadow: none; text-align: left; color: #24344b; font: 14px/1.4 "Times New Roman",serif; }
+.site-footer::before { content: ""; position: absolute; z-index: -1; inset: 0; background: url('/society-footer-botanicals.webp') center bottom / 100% 100% no-repeat; opacity: .2; pointer-events: none; }
 .site-footer .site-footer-brand { display: flex; flex-direction: column; min-width: 0; }
 .site-footer .site-footer-brand b { font: bold 18px/1.2 "Times New Roman",serif; }
 .site-footer .site-footer-brand span { margin-top: 3px; font-size: 12px; }
@@ -19,4 +19,11 @@ body.society-page .site-footer .site-footer-credit a { font-size: 12px; font-sty
  .site-footer .site-footer-credit br { display: none; }
  .site-footer .site-footer-credit a { margin-left: 4px; display: inline-block; }
  .site-footer::before { background-size: auto 140px; opacity: .15; }
+}
+
+@media (min-width:761px) and (max-width:1000px) {
+ body.society-page .society-footer.site-footer { grid-template-columns: minmax(0,1fr) auto; gap: 8px 18px; }
+ body.society-page .site-footer .site-footer-credit { grid-column: 1/-1; border: 0; padding: 0; }
+ .site-footer .site-footer-credit br { display: none; }
+ .site-footer .site-footer-credit a { margin-left: 4px; }
 }

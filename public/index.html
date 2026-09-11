@@ -48,9 +48,9 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/environment.js"></script>
     <link rel="stylesheet" href="/society.css?v=20260910-cleanup" />
-    <link rel="stylesheet" href="/briefing-home.css?v=20260910-audit-followup" />
+    <link rel="stylesheet" href="/briefing-home.css?v=20260910-resident-polish" />
     <script src="/society.js?v=20260910-mobile-menu" defer></script>
-    <link rel="stylesheet" href="/society-footer.css?v=20260910-audit-followup" />
+    <link rel="stylesheet" href="/society-footer.css?v=20260910-resident-polish" />
   </head>
   <body class="society-page briefing-page">
     <a class="society-skip" href="#main-content">Skip to content</a>
@@ -87,7 +87,7 @@
           </div>
           <p class="briefing-date" id="briefing-date"></p>
         </section>
-        <nav class="briefing-jump-links" aria-label="Briefing sections"><a href="#today-food">Today</a><a href="#today-assistant">Ask</a><a href="#today-calendar">Events</a><a href="#today-openings">Openings</a><a href="#today-pool">Pool</a></nav>
+        <nav class="briefing-jump-links" aria-label="Briefing sections"><a href="#today-food">Today</a><a href="#today-assistant">Ask</a><a href="#today-calendar">Events</a><a href="#today-openings">Openings</a><a href="#today-essentials">Local</a></nav>
         <div class="briefing-lead">
           <section class="briefing-food" id="today-food">
             <p class="society-eyebrow">TODAY’S FOOD TRUCK</p>
@@ -149,29 +149,28 @@
           </section>
           <section id="today-openings">
             <div class="briefing-section-heading">
-              <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#megaphone"></use></svg>OPENINGS & ARRIVALS</h2>
+              <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#megaphone"></use></svg>NEW AROUND HERE</h2>
               <a class="society-text-link" href="/openings">See all openings →</a>
             </div>
             <div id="briefing-openings" aria-live="polite">
               <p>Loading nearby openings…</p>
             </div>
           </section>
-          <section class="briefing-pool" id="today-pool">
-            <div class="briefing-section-heading">
-              <h2 class="society-eyebrow"><svg class="briefing-icon" aria-hidden="true"><use href="/briefing-icons.svg#pool"></use></svg>POOL & AMENITIES</h2>
+          <section class="briefing-resident" id="today-essentials">
+            <div class="briefing-section-heading"><h2 class="society-eyebrow">LOCAL WEATHER</h2></div>
+            <div id="briefing-weather" aria-live="polite" aria-busy="true"><p>Loading the local forecast…</p></div>
+            <a class="society-text-link" href="https://forecast.weather.gov/MapClick.php?lat=39.5068&amp;lon=-105.0375" target="_blank" rel="noreferrer">Full forecast ↗</a>
+            <div class="briefing-essentials">
+              <h3>Resident essentials</h3>
+              <a href="/community-assistant?q=Where%20can%20I%20find%20trash%20and%20recycling%20information%3F">Trash & recycling →</a>
+              <a href="/community-assistant?q=Where%20can%20I%20find%20official%20forms%20and%20submit%20a%20service%20request%3F">Forms & requests →</a>
+              <a href="/pool">Pool information →</a>
             </div>
-            <img class="briefing-pool-art" src="/society-pool-v2.webp" width="1774" height="887" alt="Engraved illustration of a quiet pool with parasols and mountain views" />
-            <span class="briefing-status">SEASONAL INFORMATION</span>
-            <h3>A quieter season.</h3>
-            <p>
-              Find the latest pool status and official information about shared
-              spaces.
-            </p>
-            <a class="society-text-link" href="/pool">Pool information →</a>
           </section>
         </div>
       </main>
-      <script src="/briefing.js?v=20260910-audit-followup" defer></script>
+      <script src="/briefing.js?v=20260910-resident-polish" defer></script>
+      <script src="/briefing-weather.js?v=20260910-resident-polish" defer></script>
       <footer class="society-footer site-footer">
         <div class="site-footer-brand"><b>Sterling Ranch Society</b><span>Douglas County, Colorado</span></div>
         <div class="site-footer-links">
