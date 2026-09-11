@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { handoffIsQuestionSpecific, scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { expectedNoSourceEvidenceBoundary, normalizeEvaluationQuestion, quarantineWithholdsRequiredEvidence, safeHoldSupersedesLegacyBaseline } = require("../scripts/eval-community-assistant");
+const authoredCases = require("../scripts/rules-eval-cases.json");
 
 function source(title) {
   return { title, sourceUrl: "https://sterlingranchcab.com/example", text: title };
@@ -192,6 +193,20 @@ test("only an exact expected empty evidence boundary is excluded from scoring", 
   assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, sources: [source("Unrelated source")] }, expectation), false);
   assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, confidence: { canAnswer: false, reason: "weak-query-coverage" } }, expectation), false);
   assert.equal(expectedNoSourceEvidenceBoundary(hold, { ...expectation, shouldRefuse: false }), false);
+});
+
+test("an authored unsupported named project is an exact safe hold, while unexpected holds still fail", () => {
+  const expectation = authoredCases.find((item) => item.question === "Can I build a helipad in my yard?");
+  const hold = {
+    answerMode: "source-evidence-boundary",
+    confidence: { canAnswer: false, reason: "named-project-not-supported-by-cited-evidence" },
+    sources: [],
+    actions: [],
+    claims: [],
+  };
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, expectation), true);
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, { shouldRefuse: true }), false);
+  assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, sources: [source("Nearby project rules")] }, expectation), false);
 });
 
 test("evaluator expectations match harmless punctuation variants", () => {
