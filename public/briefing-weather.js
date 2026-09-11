@@ -25,7 +25,7 @@
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
     const use = document.createElementNS(svg.namespaceURI, "use");
-    use.setAttribute("href", `/weather-icons.svg#${name}`);
+    use.setAttribute("href", `/weather-icons.svg?v=20260911-editorial#${name}`);
     svg.append(use);
     return svg;
   }
@@ -34,6 +34,17 @@
     value.setAttribute("aria-label", `${period.isDaytime ? "High" : "Low"}: ${period.temperature} degrees Fahrenheit`);
     return value;
   }
+  function outlookDescription(forecast) {
+    const full = String(forecast || "");
+    const concise = full.replace(/mostly sunny then /gi, "Sun, then ")
+      .replace(/showers and thunderstorms/gi, "storms")
+      .replace(/thunderstorms/gi, "storms")
+      .replace(/slight chance (?!of\b)/gi, "slight chance of ");
+    const description = element("span", "weather-next-condition", concise);
+    description.title = full;
+    description.setAttribute("aria-label", full);
+    return description;
+  }
   function render(data) {
     const [current, ...next] = data.periods;
     const hero = element("div", "weather-hero");
@@ -41,28 +52,35 @@
     reading.append(element("h3", "weather-period-name", current.name));
     const number = element("div", "weather-number");
     number.append(temperature(current, "weather-temperature"), element("span", "weather-unit", "F"));
-    reading.append(number, element("span", "weather-range-label", current.isDaytime ? "Forecast high" : "Forecast low"));
-    hero.append(reading, icon(conditionIcon(current), "weather-icon weather-hero-icon"));
-    hero.append(element("p", "weather-condition", current.shortForecast));
+    reading.append(number, element("span", "weather-range-label", current.isDaytime ? "Forecast high" : "Forecast low"), element("p", "weather-condition", current.shortForecast));
+    const illustration = element("div", "weather-illustration");
+    illustration.setAttribute("aria-hidden", "true");
+    const landscape = element("img", "weather-landscape");
+    landscape.src = "/weather-foothills.webp";
+    landscape.alt = "";
+    landscape.width = 720;
+    landscape.height = 480;
+    illustration.append(landscape, icon(conditionIcon(current), "weather-icon weather-hero-icon"));
+    hero.append(reading, illustration);
     const metrics = element("div", "weather-metrics");
     if (Number.isFinite(current.precipitation)) {
       const precipitation = element("span", "weather-metric");
-      precipitation.append(icon("drop"), element("span", "", `${current.precipitation}% precip.`));
+      precipitation.append(element("span", "", `${current.precipitation}% precip.`));
       metrics.append(precipitation);
     }
     if (current.windSpeed) {
       const wind = element("span", "weather-metric");
-      wind.append(icon("wind"), element("span", "", `${current.windDirection || ""} ${current.windSpeed}`.trim()));
+      wind.append(element("span", "", `${current.windDirection || ""} ${current.windSpeed}`.trim()));
       metrics.append(wind);
     }
     if (metrics.childElementCount) hero.append(metrics);
     const outlook = element("div", "weather-outlook");
     for (const period of next) {
       const card = element("div", "weather-next");
-      card.append(element("h4", "", period.name), icon(conditionIcon(period)), temperature(period, "weather-next-temperature"), element("span", "weather-next-condition", period.shortForecast));
+      card.append(element("h4", "", period.name), icon(conditionIcon(period)), temperature(period, "weather-next-temperature"), outlookDescription(period.shortForecast));
       outlook.append(card);
     }
-    const updated = element("p", "briefing-weather-updated", "National Weather Service · " + new Intl.DateTimeFormat("en-US", {
+    const updated = element("p", "briefing-weather-updated", "National Weather Service · Updated " + new Intl.DateTimeFormat("en-US", {
       month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/Denver",
     }).format(new Date(data.updatedAt)));
     panel.replaceChildren(hero, ...(next.length ? [outlook] : []), updated);
