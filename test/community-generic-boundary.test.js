@@ -49,6 +49,27 @@ test("full-page review status alone cannot make a source an answerable boundary 
   assert.equal(answer.actions[0].url, profile.website);
 });
 
+test("an explicit no-source evidence boundary cannot be decorated by the community fallback", () => {
+  const rulesBoundary = {
+    answer: "I could not verify this from approved evidence.",
+    answerMode: "source-evidence-boundary",
+    confidence: { canAnswer: false, reason: "no-single-source-support" },
+    sources: [],
+    actions: [],
+    claims: [],
+  };
+  const answer = genericEvidenceBoundary(
+    "What service is this?",
+    rulesBoundary,
+    { communityName: "Ridgeview", website: profile.website },
+    profile,
+  );
+  assert.equal(answer.answerMode, "source-evidence-boundary");
+  assert.deepEqual(answer.sources, []);
+  assert.deepEqual(answer.actions, []);
+  assert.equal(answer.confidence.reason, "no-single-source-support");
+});
+
 test("a second community does not hand off a withheld answer to a merely related page", () => {
   const unrelated = {
     title: "Ridgeview landscape screens",

@@ -1146,7 +1146,8 @@ test("missing official service information uses the generic evidence boundary me
   assert.equal(result.answerVerdict, "unverified");
   assert.equal(result.confidence.canAnswer, false);
   assert.equal(result.confidence.reason, "no-exact-official-evidence");
-  assert.equal(result.sources[0].sourceUrl, "https://alpha.gov/");
+  assert.deepEqual(result.sources, []);
+  assert.deepEqual(result.actions, []);
   assert.doesNotMatch(result.answer, /password|network name|access code/i);
 });
 
