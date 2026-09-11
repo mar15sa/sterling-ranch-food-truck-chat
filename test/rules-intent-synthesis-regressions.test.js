@@ -3,7 +3,11 @@ const assert = require("node:assert/strict");
 
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
-const { focusedDimensionDetails, llmRewriteIssues } = require("../lib/rules-grounding");
+const {
+  focusedDimensionDetails,
+  llmRewriteIssues,
+  locationScopeIssues,
+} = require("../lib/rules-grounding");
 const { isPlantPermissionQuestion } = require("../lib/rules-intent");
 const communityIndex = require("../data/community-index.json");
 
@@ -219,7 +223,7 @@ test("live-shaped plant questions synthesize from one focused row instead of the
     "Can I grow raspberries near my property line?",
     "Can I grow vine plants like raspberries?",
   ]) {
-    const naturalAnswer = "For the plant choice itself, Boulder Raspberry is on the preapproved list and is classified as a shrub.";
+    const naturalAnswer = "For the plant choice itself, Boulder Raspberry is on the preapproved list and is classified as a shrub. The cited list doesn't confirm whether the requested location is allowed.";
     let synthesisDraft = "";
     let synthesisSources = [];
     const result = await answerRulesQuestion(question, {
@@ -249,13 +253,13 @@ test("multiple focused plant rows reach synthesis with explicit height and sprea
   const cases = [
     {
       question: "Can I plant Boulder Raspberry in my side yard?",
-      answer: "Boulder Raspberry is a preapproved shrub. It grows 8 feet tall and 6 feet wide.",
+      answer: "Boulder Raspberry is a preapproved shrub. It grows 8 feet tall and 6 feet wide. The cited list doesn't confirm whether the requested location is allowed.",
       height: "8 feet",
       width: "6 feet",
     },
     {
       question: "Can I plant Blue Point Juniper in my side yard?",
-      answer: "Blue Point Juniper is a preapproved evergreen. It grows 15 feet tall and 8 feet wide.",
+      answer: "Blue Point Juniper is a preapproved evergreen. It grows 15 feet tall and 8 feet wide. The cited list doesn't confirm whether the requested location is allowed.",
       height: "15 feet",
       width: "8 feet",
     },
@@ -284,6 +288,7 @@ test("multiple focused plant rows reach synthesis with explicit height and sprea
 
       assert.equal(result.answer, item.answer, item.question);
       assert.match(prompt, new RegExp(`Explicit labeled facts from this source: Height: ${item.height}; Spread/width: ${item.width}\\.`), item.question);
+      assert.match(prompt, /Evidence scope boundary:.*side yard.*Do not approve placement there/is, item.question);
       assert.doesNotMatch(prompt, /Height:\s*6 feet; Spread\/width:\s*8 feet/i, item.question);
     }
   } finally {
@@ -293,10 +298,113 @@ test("multiple focused plant rows reach synthesis with explicit height and sprea
   }
 });
 
+test("resident-supplied locations cannot become placement permission without cited support", () => {
+  const plantSource = [{
+    title: "Preapproved plant list",
+    text: "The following preapproved plant list identifies acceptable plants. RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub.",
+    excerpt: "RIBES DELICIOSUS BOULDER RASPBERRY 8' x 6' Shrub.",
+    questionSpecificExcerpt: true,
+  }];
+  const cases = [
+    [
+      "Can I plant Boulder Raspberry along my fence line?",
+      "Yes, you can plant Boulder Raspberry along your fence line.",
+      /fence-line/,
+    ],
+    [
+      "Can I plant Boulder Raspberry in my side yard?",
+      "Boulder Raspberry can be planted in your side yard.",
+      /side-yard/,
+    ],
+    [
+      "May I plant Boulder Raspberry near my property line?",
+      "Boulder Raspberry is preapproved, so you may plant it near your property line.",
+      /property-line/,
+    ],
+  ];
+
+  for (const [question, answer, expected] of cases) {
+    assert.match(locationScopeIssues(answer, plantSource, question).join(" "), expected, question);
+  }
+
+  const bounded = "Boulder Raspberry is a preapproved shrub. The cited list doesn't confirm whether placement along your fence line is allowed.";
+  assert.deepEqual(locationScopeIssues(bounded, plantSource, cases[0][0]), []);
+
+  const liveShapedOverclaim = "Yes, you can plant Boulder Raspberry along your fence line. It's a preapproved shrub that grows 8 feet tall and 6 feet wide, so you don't need special approval. Check setbacks and underground utilities before planting.";
+  const liveIssues = llmRewriteIssues(
+    liveShapedOverclaim,
+    "Short answer: Boulder Raspberry is a preapproved shrub.",
+    plantSource,
+    cases[0][0]
+  ).join(" ");
+  assert.match(liveIssues, /requested location|resident-supplied location/i);
+  assert.match(liveIssues, /approval is unnecessary/i);
+  assert.match(liveIssues, /setback/);
+  assert.match(liveIssues, /utility-line/);
+});
+
+test("location grounding applies outside plant names and permits genuinely cited placement", () => {
+  const itemOnly = [{ title: "Storage list", text: "Storage boxes are permitted." }];
+  assert.match(
+    locationScopeIssues(
+      "You can put a storage box beside your driveway.",
+      itemOnly,
+      "Can I put a storage box beside my driveway?"
+    ).join(" "),
+    /driveway/
+  );
+  assert.match(
+    locationScopeIssues(
+      "You can put a storage box beside your fence.",
+      [{ title: "Item list", text: "Fences are permitted. Storage boxes are permitted." }],
+      "Can I put a storage box beside my fence?"
+    ).join(" "),
+    /fence/
+  );
+  assert.match(
+    locationScopeIssues(
+      "Put it beside the driveway, away from utility easements.",
+      itemOnly,
+      "Can I use a storage box?"
+    ).join(" "),
+    /utility-easement.*driveway/
+  );
+
+  const placementSource = [{
+    title: "Storage placement",
+    text: "Storage boxes are permitted in rear yards.",
+  }];
+  assert.deepEqual(
+    locationScopeIssues(
+      "Storage boxes are permitted in rear yards.",
+      placementSource,
+      "Can I put a storage box in my backyard?"
+    ),
+    []
+  );
+});
+
+test("preapproved item status cannot be expanded into an uncited no-approval claim", () => {
+  const sources = [{
+    title: "Preapproved plant list",
+    text: "Boulder Raspberry is on the preapproved plant list as a shrub.",
+  }];
+  const draft = "Short answer: Boulder Raspberry is a preapproved shrub.";
+  assert.match(
+    llmRewriteIssues(
+      "Boulder Raspberry is a preapproved shrub, so you don't need special approval.",
+      draft,
+      sources,
+      "Can I plant Boulder Raspberry?"
+    ).join(" "),
+    /approval is unnecessary/i
+  );
+});
+
 test("live raspberry rewrites preserve height and spread bindings", async () => {
   const question = "Can I plant raspberry bushes along my fence line?";
-  const correctRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 8 feet tall and 6 feet wide.";
-  const swappedRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 6 feet tall and 8 feet wide.";
+  const correctRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 8 feet tall and 6 feet wide. The cited list doesn't confirm whether placement along your fence line is allowed.";
+  const swappedRewrite = "Boulder Raspberry is preapproved as a shrub. The list shows it at 6 feet tall and 8 feet wide. The cited list doesn't confirm whether placement along your fence line is allowed.";
   const previousKey = process.env.ANTHROPIC_API_KEY;
   const previousFetch = global.fetch;
   let responseText = swappedRewrite;
