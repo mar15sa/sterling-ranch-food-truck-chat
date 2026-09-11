@@ -495,6 +495,28 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
   }
 });
 
+test("the Community Assistant keeps accepted grounded AI prose without re-appending structured details", async () => {
+  const naturalAnswer = "Seasonal decorative lights are allowed from June 18 to July 7 and from October 1 through January 31. Turn them off by 10:00 p.m. and remove temporary strings and clips after the season.";
+  const result = await answerCommunityQuestion("When can I put up holiday lights?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: {
+      searchMode: "legacy",
+      llmMode: "selective",
+      rewriteAnswerWithLLM: async () => naturalAnswer,
+    },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+
+  assert.equal(result.answer, naturalAnswer);
+  assert.equal((result.answer.match(/temporary strings and clips/gi) || []).length, 1);
+  assert.equal((result.answer.match(/10:00 p\.m\./gi) || []).length, 1);
+  assert.ok(result.directAnswer);
+  assert.ok(Array.isArray(result.keyDetails));
+});
+
 test("a rejected grounded rewrite gets one safe correction pass", async () => {
   const question = "Can I plant Boulder Raspberry along my fence line?";
   const draft = "Boulder Raspberry is a preapproved shrub. It is 8 feet tall and 6 feet wide.";
@@ -538,7 +560,7 @@ test("a catalog-membership rewrite retries with supported facts instead of an in
     text: "Beacon Roofing is an approved contractor. Contact the CAB for approval guidance.",
   }];
   const candidates = [
-    "Acme Roofing is not in the approved contractor directory.",
+    "Acme Roofing isn't on the approved contractor directory for this community.",
     "The approved contractor directory lists Beacon Roofing. It does not confirm whether Acme Roofing is approved. Contact the CAB for approval guidance.",
   ];
   const previousKey = process.env.ANTHROPIC_API_KEY;
