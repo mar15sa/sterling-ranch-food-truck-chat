@@ -53,6 +53,28 @@ test("monitor catches stale counts, raw excerpts, missing answer details, and so
   assert.match(issues.join(" "), /indexed topic cards/i);
 });
 
+test("facility monitoring validates semantics, authority, citations, and action metadata", () => {
+  const check = {
+    firstSourceIncludes: "Pickleball Courts",
+    expectedSourceType: "facilities",
+    expectedSourceUrlIncludes: "/facilities/pickleball",
+    expectedAuthorityDecision: "current-facility-operations",
+    expectedActionType: "booking",
+    expectedClaimsFromFirstSource: true,
+    answerFactPatterns: [/weekday[\s\S]*dusk/i],
+  };
+  const result = goodResult({
+    answer: "On weekdays, play starts at 6 a.m. and runs until dusk.",
+    authorityDecision: "current-facility-operations",
+    sources: [{ id: "courts", title: "Pickleball Courts", sourceType: "facilities", sourceUrl: "https://alpha.gov/facilities/pickleball" }],
+    actions: [{ label: "Book a court", actionType: "booking", url: "https://alpha.gov/book" }],
+    claims: [{ text: "On weekdays, play starts at 6 a.m. and runs until dusk.", evidenceSourceIds: ["courts"] }],
+  });
+  assert.deepEqual(evaluateRuleResult(check, result), []);
+  assert.match(evaluateRuleResult(check, { ...result, actions: [] }).join(" "), /HTTPS booking action/i);
+  assert.match(evaluateRuleResult(check, { ...result, claims: [] }).join(" "), /controlling first source/i);
+});
+
 test("safety checks validate classification, reason, mode, and empty sources", () => {
   const issues = evaluateRuleResult(
     { expectedClassification: "prompt-injection", expectedReason: "prompt-injection-rejected", expectedAnswerMode: "safety", expectedNoSources: true },

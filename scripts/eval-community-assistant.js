@@ -19,13 +19,22 @@ const outputPath = process.env.COMMUNITY_EVIDENCE_REPORT_DIR
   ? path.join(process.env.COMMUNITY_EVIDENCE_REPORT_DIR, "community-assistant-eval.json")
   : path.join(__dirname, "..", "data", "community-assistant-eval.json");
 const expectationByQuestion = new Map();
+
+function normalizeEvaluationQuestion(question = "") {
+  return String(question)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
 for (const item of authoredCases) {
-  for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(question.toLowerCase().trim(), item);
+  for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(normalizeEvaluationQuestion(question), item);
 }
 for (const item of communityCases) {
-  for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(question.toLowerCase().trim(), item);
+  for (const question of [item.question, ...(item.variants || [])]) expectationByQuestion.set(normalizeEvaluationQuestion(question), item);
 }
-for (const item of unseenCases) expectationByQuestion.set(item.question.toLowerCase().trim(), item);
+for (const item of unseenCases) expectationByQuestion.set(normalizeEvaluationQuestion(item.question), item);
 const allQuestions = [...new Set([
   ...residentQuestions,
   ...authoredCases.flatMap((item) => [item.question, ...(item.variants || [])]),
@@ -76,6 +85,18 @@ function quarantineWithholdsRequiredEvidence(question, result = {}, index = {}) 
     && handoffIsQuestionSpecific(question, { sources: exactWithheldSources });
 }
 
+function expectedNoSourceEvidenceBoundary(result = {}, expectation = {}) {
+  return expectation.shouldRefuse === true
+    && expectation.expectedAnswerMode === "source-evidence-boundary"
+    && expectation.expectedNoSources === true
+    && result.answerMode === expectation.expectedAnswerMode
+    && result.confidence?.canAnswer === false
+    && (!expectation.expectedReason || result.confidence?.reason === expectation.expectedReason)
+    && !(result.sources || []).length
+    && !(result.actions || []).length
+    && !(result.claims || []).length;
+}
+
 function legacySourcesAreStaleOrNotQuestionSpecific(question, result = {}) {
   const sources = result.sources || [];
   if (!sources.length) return true;
@@ -120,10 +141,11 @@ async function main() {
       planCommunitySearch: planCommunitySearchFixture,
       synthesizeCommunityAnswer: synthesizeCommunityAnswerFixture,
     });
-    const expectation = expectationByQuestion.get(question.toLowerCase().trim());
+    const expectation = expectationByQuestion.get(normalizeEvaluationQuestion(question));
     const currentAssessment = scoreCommunityAnswer(question, current, { expectation });
     const upgradedAssessment = scoreCommunityAnswer(question, upgraded, { expectation });
     const qualityDisposition = quarantineWithholdsRequiredEvidence(question, upgraded, communityIndex)
+      || expectedNoSourceEvidenceBoundary(upgraded, expectation)
       ? "withheld-unscored"
       : "scored";
     const safeHoldBaseline = safeHoldSupersedesLegacyBaseline(question, current, currentAssessment, upgraded, upgradedAssessment, expectation);
@@ -203,4 +225,6 @@ module.exports = {
   legacySourcesAreStaleOrNotQuestionSpecific,
   safeHoldSupersedesLegacyBaseline,
   quarantineWithholdsRequiredEvidence,
+  expectedNoSourceEvidenceBoundary,
+  normalizeEvaluationQuestion,
 };

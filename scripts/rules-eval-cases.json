@@ -421,8 +421,10 @@
     "question": "What is Atlas WiFi?",
     "variants": ["What is atlas coffee wifi?", "What is the Atlas coffee WiFi?"],
     "expectedClassification": "rules-question",
-    "expectedAnswerMode": "official-resource",
-    "answerIncludesAll": ["The rulebook search does not define", "publish current access details"]
+    "shouldRefuse": true,
+    "expectedAnswerMode": "source-evidence-boundary",
+    "expectedNoSources": true,
+    "expectedReason": "no-single-source-support"
   },
   {
     "question": "Tell me a joke",
@@ -489,6 +491,9 @@
   },
   {
     "question": "Can I build a helipad in my yard?",
-    "shouldRefuse": true
+    "shouldRefuse": true,
+    "expectedAnswerMode": "source-evidence-boundary",
+    "expectedNoSources": true,
+    "expectedReason": "named-project-not-supported-by-cited-evidence"
   }
 ]

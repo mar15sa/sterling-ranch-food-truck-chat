@@ -36,7 +36,12 @@ const CHECKS = [
   {
     question: "What are the neighborhood pickleball court rules?",
     firstSourceIncludes: "Pickleball Courts",
-    answerIncludes: ["weekdays from 7 a.m. to dusk", "weekends from 8 a.m. to dusk", "two hours per day", "CourtReserve"],
+    expectedSourceType: "facilities",
+    expectedSourceUrlIncludes: "/418/Pickleball-Courts",
+    expectedAuthorityDecision: "current-facility-operations",
+    expectedActionType: "booking",
+    expectedClaimsFromFirstSource: true,
+    answerFactPatterns: [/weekdays[\s\S]{0,80}dusk/i, /weekends[\s\S]{0,80}dusk/i, /two hours?\s*(?:\/|per)\s*day/i],
     maxAnswerLength: 1000,
   },
   {
@@ -130,9 +135,9 @@ const CHECKS = [
   {
     question: "What is Atlas WiFi?",
     expectedClassification: "rules-question",
-    expectedReason: "official-resource-boundary",
-    expectedAnswerMode: "official-resource",
-    answerIncludes: ["rulebook does not define", "Ask staff"],
+    expectedReason: "no-single-source-support",
+    expectedAnswerMode: "source-evidence-boundary",
+    expectedNoSources: true,
   },
 ];
 

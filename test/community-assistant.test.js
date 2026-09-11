@@ -1018,6 +1018,52 @@ test("pickleball facilities use an exact approved reservation projection without
   assert.equal(result.answerMode, "community-approved-operational");
 });
 
+test("public pickleball operations use the approved facility source and grounded composition", async () => {
+  const pickleball = source({
+    id: "alpha-pickleball-current",
+    title: "Pickleball Courts",
+    sourceUrl: "https://alpha.gov/facilities/pickleball",
+    sourceType: "facilities",
+    text: "Pickleball courts are open weekdays from 6 a.m. to dusk. Players may reserve one hour per day through CourtBook.",
+    excerpt: "Current pickleball court hours and reservations.",
+    actions: [{ id: "courtbook", label: "Reserve through CourtBook", url: "https://alpha.gov/courtbook", actionType: "booking", context: "Reserve through CourtBook." }],
+    facts: [
+      { id: "weekday-hours", factKey: "alpha-pickleball-hours", facet: "facility-hours", type: "time", value: "6 a.m. to dusk", context: "Pickleball courts are open weekdays from 6 a.m. to dusk." },
+      { id: "reservation-limit", factKey: "alpha-pickleball-reservation", facet: "reservation-policy", type: "duration", value: "one hour per day", context: "Players may reserve one hour per day through CourtBook." },
+    ],
+  });
+  let synthesisCalls = 0;
+  const result = await answerCommunityQuestion("What are the pickleball court hours?", {
+    index: approvedFixtureIndex([pickleball], { communityName: "Alpha", website: "https://alpha.gov/" }),
+    communityId: "alpha",
+    now: new Date("2026-08-26T13:00:00.000Z"),
+    planCommunitySearch: false,
+    answerRulesQuestion: async () => ({
+      answer: "Private sport courts require design review.",
+      answerMode: "source-derived-extractive",
+      confidence: { canAnswer: true, confidence: "high" },
+      sources: [{ id: "private-rule", title: "Private sport courts", sourceUrl: "https://alpha.gov/rules", text: "Private sport courts require design review." }],
+    }),
+    synthesizeCommunityAnswer: async () => {
+      synthesisCalls += 1;
+      return {
+        directAnswer: "Pickleball courts are open weekdays from 6 a.m. to dusk.",
+        keyDetails: [],
+        nextStep: "",
+      };
+    },
+  });
+  assert.equal(synthesisCalls, 1);
+  assert.match(result.answerMode, /^community-approved-operational(?:-grounded-ai)?$/);
+  assert.equal(result.authorityDecision, "current-facility-operations");
+  assert.equal(result.sources[0].sourceType, "facilities");
+  assert.equal(result.sources[0].sourceUrl, "https://alpha.gov/facilities/pickleball");
+  assert.match(result.answer, /6 a\.m\..*dusk/i);
+  assert.equal(result.actions[0].actionType, "booking");
+  assert.equal(result.actions[0].url, "https://alpha.gov/courtbook");
+  assert.ok(result.claims.every((claim) => claim.evidenceSourceIds.includes(result.sources[0].id)));
+});
+
 test("pickleball operational variants with unapproved evidence withhold instead of repeating retired fixed details", async () => {
   const unreviewed = source({
     id: "alpha-pickleball-unreviewed",
@@ -1042,6 +1088,40 @@ test("pickleball operational variants with unapproved evidence withhold instead 
     assert.doesNotMatch(result.answer, /7\s*(?:a\.m\.|am)[\s\S]*dusk|\$40|seven days ahead|open play/i, question);
     assert.equal(result.actions[0].url, "https://alpha.gov/418/Pickleball-Courts", question);
   }
+});
+
+test("binding facility-rule questions keep the governing rule when an operational page is withheld", async () => {
+  const unreviewedFacility = source({
+    id: "alpha-pickleball-unreviewed",
+    title: "Pickleball Courts",
+    sourceUrl: "https://alpha.gov/418/Pickleball-Courts",
+    sourceType: "facilities",
+    text: "Current pickleball court operations and reservations.",
+    staleAfter: future,
+  });
+  const governingRule = {
+    id: "park-general-rule",
+    title: "Sec. 17-54. - General rules.",
+    sourceUrl: "https://library.municode.com/example/rules?nodeId=park-general-rule",
+    text: "The governing park and open-space rules apply to neighborhood courts.",
+  };
+  const result = await answerCommunityQuestion("What are the neighborhood pickleball court rules?", {
+    index: { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [unreviewedFacility] },
+    communityId: "alpha",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({
+      answer: "The governing park and open-space rules apply to neighborhood courts.",
+      answerMode: "source-derived-structured",
+      confidence: { canAnswer: true, confidence: "high", reason: "supported" },
+      sources: [governingRule],
+      actions: [],
+      claims: [],
+    }),
+  });
+  assert.equal(result.confidence.canAnswer, true);
+  assert.equal(result.sources[0].title, governingRule.title);
+  assert.doesNotMatch(result.sources.map((item) => item.title).join(" "), /Pickleball Courts/i);
 });
 
 test("pickleball retrieval does not collide with private-court rules or pool rental fees", async () => {
@@ -1079,6 +1159,30 @@ test("approved pickleball claims do not leak between communities", async () => {
   });
   assert.doesNotMatch(result.answer, /7 a\.m\.|Alpha/i);
   assert.equal(result.answerStatus, "could-not-verify");
+});
+
+test("missing official service information uses the generic evidence boundary metadata", async () => {
+  const result = await answerCommunityQuestion("What is Atlas WiFi?", {
+    index: approvedFixtureIndex([], { communityName: "Alpha", website: "https://alpha.gov/" }),
+    communityId: "alpha",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: async () => ({
+      answer: "No governing rule resolves this service request.",
+      answerMode: "source-evidence-boundary",
+      inputClassification: "rules-question",
+      confidence: { canAnswer: false, confidence: "high", reason: "no-exact-official-evidence" },
+      sources: [],
+    }),
+  });
+  assert.equal(result.answerMode, "source-evidence-boundary");
+  assert.equal(result.answerStatus, "could-not-verify");
+  assert.equal(result.answerVerdict, "unverified");
+  assert.equal(result.confidence.canAnswer, false);
+  assert.equal(result.confidence.reason, "no-exact-official-evidence");
+  assert.deepEqual(result.sources, []);
+  assert.deepEqual(result.actions, []);
+  assert.doesNotMatch(result.answer, /password|network name|access code/i);
 });
 
 test("held-out collision: a facility or form cannot become rule evidence", () => {

@@ -1,7 +1,8 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
-const { quarantineWithholdsRequiredEvidence, safeHoldSupersedesLegacyBaseline } = require("../scripts/eval-community-assistant");
+const { handoffIsQuestionSpecific, scoreCommunityAnswer } = require("../lib/community-answer-quality");
+const { expectedNoSourceEvidenceBoundary, normalizeEvaluationQuestion, quarantineWithholdsRequiredEvidence, safeHoldSupersedesLegacyBaseline } = require("../scripts/eval-community-assistant");
+const authoredCases = require("../scripts/rules-eval-cases.json");
 
 function source(title) {
   return { title, sourceUrl: "https://sterlingranchcab.com/example", text: title };
@@ -163,6 +164,54 @@ test("a no-claim hold fails quality when it sends residents to an unrelated sour
   });
   assert.equal(result.rating, "Weak");
   assert.ok(result.issues.includes("irrelevant-handoff-source"));
+});
+
+test("handoff matching recognizes spaced and closed compound topic names", () => {
+  const handoff = {
+    sources: [{ title: "Pickleball Courts", sourceUrl: "https://sterlingranchcab.com/courts" }],
+    actions: [{ label: "Open Pickleball Courts", url: "https://sterlingranchcab.com/courts" }],
+  };
+  assert.equal(handoffIsQuestionSpecific("Pickle ball", handoff), true);
+  assert.equal(handoffIsQuestionSpecific("Build a helipad", handoff), false);
+});
+
+test("only an exact expected empty evidence boundary is excluded from scoring", () => {
+  const expectation = {
+    shouldRefuse: true,
+    expectedAnswerMode: "source-evidence-boundary",
+    expectedNoSources: true,
+    expectedReason: "no-single-source-support",
+  };
+  const hold = {
+    answerMode: "source-evidence-boundary",
+    confidence: { canAnswer: false, reason: "no-single-source-support" },
+    sources: [],
+    actions: [],
+    claims: [],
+  };
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, expectation), true);
+  assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, sources: [source("Unrelated source")] }, expectation), false);
+  assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, confidence: { canAnswer: false, reason: "weak-query-coverage" } }, expectation), false);
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, { ...expectation, shouldRefuse: false }), false);
+});
+
+test("an authored unsupported named project is an exact safe hold, while unexpected holds still fail", () => {
+  const expectation = authoredCases.find((item) => item.question === "Can I build a helipad in my yard?");
+  const hold = {
+    answerMode: "source-evidence-boundary",
+    confidence: { canAnswer: false, reason: "named-project-not-supported-by-cited-evidence" },
+    sources: [],
+    actions: [],
+    claims: [],
+  };
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, expectation), true);
+  assert.equal(expectedNoSourceEvidenceBoundary(hold, { shouldRefuse: true }), false);
+  assert.equal(expectedNoSourceEvidenceBoundary({ ...hold, sources: [source("Nearby project rules")] }, expectation), false);
+});
+
+test("evaluator expectations match harmless punctuation variants", () => {
+  assert.equal(normalizeEvaluationQuestion("What is Atlas WiFi?"), normalizeEvaluationQuestion("What is atlas wifi"));
+  assert.notEqual(normalizeEvaluationQuestion("What is Atlas WiFi?"), normalizeEvaluationQuestion("What are pool hours?"));
 });
 
 test("release quality excludes only a question-specific hold backed by its exact quarantined source", () => {
