@@ -1196,6 +1196,7 @@ test("pickleball operational variants with unapproved evidence withhold instead 
   });
   const index = { communityId: "alpha", communityName: "Alpha", website: "https://alpha.gov/", sources: [unreviewed] };
   for (const question of [
+    "What are the neighborhood pickleball court rules?",
     "What hours are the pickleball courts open?",
     "Is there weekend open play for pickle ball?",
     "How do I reserve a pickleball court?",
@@ -1206,6 +1207,7 @@ test("pickleball operational variants with unapproved evidence withhold instead 
       answerRulesQuestion: async () => ({ answer: "I could not verify that in the rulebook.", answerMode: "source-evidence-boundary", confidence: { canAnswer: false }, sources: [] }),
     });
     assert.equal(result.answerStatus, "source-unavailable", question);
+    assert.equal(result.inputClassification, "rules-question", question);
     assert.doesNotMatch(result.answer, /7\s*(?:a\.m\.|am)[\s\S]*dusk|\$40|seven days ahead|open play/i, question);
     assert.equal(result.actions[0].url, "https://alpha.gov/418/Pickleball-Courts", question);
   }
