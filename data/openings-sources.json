@@ -511,6 +511,15 @@
       "url": "https://www.industriousoffice.com/m/denver",
       "cadence": "daily",
       "notes": "The official location directory confirms the Highlands Ranch workspace address, opening window, and eventual operating status."
+    },
+    {
+      "id": "collective-parker-station",
+      "name": "The Collective at Parker Station",
+      "community": "Parker",
+      "kind": "business",
+      "url": "https://www.thecollectiveatparkerstation.com/",
+      "cadence": "daily",
+      "notes": "The official site confirms the workspace address, services, booking availability, expansion plans, and operating status."
     }
   ]
 }
