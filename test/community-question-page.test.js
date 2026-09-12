@@ -50,6 +50,17 @@ test("Community Assistant test bookmark is visible and marks API requests", () =
   assert.match(script, /isTest: isTestMode/);
 });
 
+test("resident answers use structured formatting and do not repeat link labels as prose", () => {
+  const script = fs.readFileSync(path.join(__dirname, "..", "public", "rules-assistant.js"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "public", "rules-assistant.css"), "utf8");
+  assert.match(script, /renderStructuredAnswer\(answerContainer, data\)/);
+  assert.match(script, /presentation\?\.kind === "waste-schedule"/);
+  assert.match(script, /actionLabels\.includes\(normalizedAnswerText\(nextStep\)\)/);
+  assert.match(script, /Belvedere Tan/);
+  assert.match(script, /Earthen/);
+  assert.match(css, /\.rules-answer-lead strong/);
+});
+
 test("an expanded owner question stays open across automatic refreshes", () => {
   const script = fs.readFileSync(
     path.join(__dirname, "..", "public", "community-questions.js"),

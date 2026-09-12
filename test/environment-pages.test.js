@@ -39,4 +39,8 @@ test("the homepage demonstrates three real Community Assistant questions", () =>
   ]);
   assert.doesNotMatch(examples, /\/rulebook|opens in a new tab/i);
   assert.match(html, /clear answer, the next step,[\s\S]*official source behind it/i);
+
+  const css = fs.readFileSync(path.join(__dirname, "..", "public", "briefing-home.css"), "utf8");
+  assert.match(css, /\.briefing-tags\s*\{[^}]*grid-template-columns:\s*repeat\(3,/);
+  assert.match(css, /\.briefing-tags\s+a\s*\{[^}]*background:\s*transparent/);
 });

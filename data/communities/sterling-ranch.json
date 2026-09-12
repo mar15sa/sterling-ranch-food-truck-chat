@@ -113,10 +113,17 @@
         "wasteSchedule": {
           "recollect": { "areaId": "WC-5311", "serviceId": 975 },
           "serviceAreas": [
-            { "label": "Providence Village" },
-            { "label": "Ascent Village" },
-            { "label": "Prospect Village" }
+            { "label": "Providence Village", "serviceWeekday": 1 },
+            { "label": "Ascent Village", "serviceWeekday": 2 },
+            { "label": "Prospect Village", "serviceWeekday": 4 }
           ],
+          "communityCycleReference": {
+            "privacy": "published-service-area-reference",
+            "query": "7853 Piney River Avenue",
+            "candidateTextPattern": "7853\\s+Piney\\s+River",
+            "serviceWeekday": 1,
+            "publicSourceUrl": "https://sterlingranchcab.com/258/The-Overlook-Clubhouse"
+          },
           "actionLinks": [
             { "id": "pickup-calendar", "type": "information", "label": "Check an address in the official pickup calendar", "url": "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" },
             { "id": "wasteconnect-android", "type": "download", "label": "Open WasteConnect for Android", "url": "https://play.google.com/store/apps/details?id=org.wcnx.mobile" },

@@ -40,8 +40,10 @@ body.briefing-page {
 .briefing-page .briefing-search input { font: 18px "Times New Roman", serif; padding: 11px 15px; min-height: 46px; border-color: var(--briefing-rule); background: transparent; }
 .briefing-page .briefing-search input::placeholder { color: color-mix(in srgb, var(--society-navy) 66%, white); opacity: 1; }
 .briefing-page .briefing-search button { min-height: 46px; padding: 10px 23px; border-radius: 0 2px 2px 0; }
-.briefing-page .briefing-tags { display: grid; grid-template-columns: 1fr; gap: 8px; }
-.briefing-page .briefing-tags a { justify-content: flex-start; gap: 12px; width: 100%; padding: 11px 14px; min-height: 52px; font-size: 16px; line-height: 1.25; text-align: left; border-color: var(--society-silver); background: color-mix(in srgb, var(--society-cloud) 65%, var(--society-panel)); }
+.briefing-page .briefing-tags { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-block: 1px solid var(--society-silver); }
+.briefing-page .briefing-tags a { justify-content: flex-start; align-items: flex-start; gap: 9px; width: 100%; padding: 10px 12px; min-height: 70px; font-size: 15px; line-height: 1.22; text-align: left; border: 0; border-radius: 0; background: transparent; }
+.briefing-page .briefing-tags a + a { border-left: 1px solid var(--society-silver); }
+.briefing-page .briefing-tags .briefing-icon { width: 23px; height: 23px; flex-basis: 23px; }
 .briefing-page .briefing-tag-arrow { margin-left: auto; color: var(--society-navy); font-size: 18px; }
 .briefing-icon { width: 28px; height: 28px; flex: 0 0 28px; color: var(--society-teal); }
 .briefing-page .briefing-columns { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.05fr); gap: 30px; padding: 26px 0 32px; }
@@ -83,8 +85,9 @@ body.briefing-page {
   .briefing-brand-copy small { font-size: 9px; letter-spacing: 2px; }
   .briefing-page .society-header .society-brand { gap: 14px; }
   .briefing-monogram { width: 54px; }
-  .briefing-page .briefing-tags { gap: 8px; }
-  .briefing-page .briefing-tags a { padding: 10px 12px; font-size: 14px; gap: 8px; }
+  .briefing-page .briefing-tags { grid-template-columns: 1fr; }
+  .briefing-page .briefing-tags a { padding: 8px 10px; min-height: 44px; font-size: 14px; gap: 8px; }
+  .briefing-page .briefing-tags a + a { border-left: 0; border-top: 1px solid var(--society-silver); }
   .briefing-section-heading { flex-wrap: wrap; align-content: flex-start; min-height: 74px; gap: 0; }
   .briefing-page .briefing-section-heading .society-text-link { margin-left: 52px; }
   .briefing-page .briefing-row h3 { font-size: 19px; }
@@ -128,8 +131,9 @@ body.briefing-page {
   .briefing-page .briefing-food-story p, .briefing-page .briefing-assistant > p:not(.society-eyebrow) { font-size: 18px; line-height: 1.4; }
   .briefing-page .briefing-search input { font-size: 16px; padding-inline: 10px; }
   .briefing-page .briefing-search button { font-size: 16px; padding-inline: 16px; }
-  .briefing-page .briefing-tags { gap: 8px; }
+  .briefing-page .briefing-tags { grid-template-columns: 1fr; }
   .briefing-page .briefing-tags a { min-height: 48px; font-size: 14px; padding: 9px 12px; gap: 8px; }
+  .briefing-page .briefing-tags a + a { border-left: 0; border-top: 1px solid var(--society-silver); }
   .briefing-page .briefing-tags .briefing-icon { width: 23px; height: 23px; flex-basis: 23px; }
   .briefing-page .briefing-food-story { grid-template-columns: .85fr 1fr; gap: 16px; }
   .briefing-page .briefing-food-story img { height: auto; object-fit: contain; }
