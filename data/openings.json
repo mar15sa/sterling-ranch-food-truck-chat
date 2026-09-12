@@ -3481,6 +3481,35 @@
         "precision": "address",
         "geocodedFrom": "7301 South Santa Fe Drive, Suite 445, Littleton, CO 80120"
       }
+    },
+    {
+      "id": "collective-parker-station",
+      "name": "The Collective at Parker Station",
+      "category": "Everyday services",
+      "community": "Parker",
+      "area": "Downtown Parker",
+      "address": "19751 East Mainstreet, Suite 333, Parker, CO 80138",
+      "status": "opening-soon",
+      "openingWindow": "Grand opening September 23, 2026",
+      "summary": "The locally owned flexible-workspace and business-support hub is accepting bookings, with an official grand opening and open house scheduled for September 23.",
+      "verifiedAt": "2026-09-12",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "The Collective official website",
+          "url": "https://www.thecollectiveatparkerstation.com/"
+        },
+        {
+          "label": "Parker Chamber grand-opening announcement",
+          "url": "https://business.parkerchamber.com/events/details/ribbon-cutting-the-collective-at-parker-station-9197"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.518499,
+        "lng": -104.760221,
+        "precision": "address",
+        "geocodedFrom": "19751 East Mainstreet, Suite 333, Parker, CO 80138"
+      }
     }
   ]
 }
