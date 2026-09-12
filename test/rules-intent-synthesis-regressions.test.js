@@ -187,6 +187,29 @@ test("successful AI synthesis uses natural prose and retains every sourced holid
   assert.match(result.answer, /10:00 p\.m\./i);
 });
 
+test("an accepted literal AI rewrite still receives the shared plain-language cleanup", async () => {
+  const literalRewrite = [
+    "Install and energize seasonal decorative lighting during the following approved seasonal lighting periods: From June 18 to July 7 and from October 1 through January 31.",
+    "All temporary string lighting and light installation clips are required to be removed.",
+    "All holiday lighting must be turned off by 10:00 p.m.",
+    "Open the linked official section if you need the complete wording.",
+  ].join("\n\n");
+  const result = await answerRulesQuestion("When can I put up holiday lights?", {
+    searchMode: "ai-hybrid",
+    llmMode: "selective",
+    interpretation: { intent: "rules", needsClarification: false },
+    planRulesSearch: async () => { throw new Error("the strong source match should skip planning"); },
+    rewriteAnswerWithLLM: async () => literalRewrite,
+  });
+
+  assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
+  assert.match(result.answer, /^You can put up and turn on seasonal decorative lights/i);
+  assert.doesNotMatch(result.answer, /install and energize|following approved|are required to be removed/i);
+  for (const value of ["June 18", "July 7", "October 1", "January 31", "10:00 p.m."]) {
+    assert.match(result.answer, new RegExp(value.replace(".", "\\."), "i"));
+  }
+});
+
 test("source-built fallback uses natural prose and retains every sourced holiday-light limit", async () => {
   const result = await answerRulesQuestion("When can I put up holiday lights?", {
     searchMode: "legacy",
@@ -199,7 +222,8 @@ test("source-built fallback uses natural prose and retains every sourced holiday
   assert.match(result.answer, /October 1/i);
   assert.match(result.answer, /January 31/i);
   assert.match(result.answer, /10:00 p\.m\./i);
-  assert.match(result.answer, /^You can install and energize seasonal decorative lighting from June 18 to July 7 and from October 1 through January 31\./i);
+  assert.match(result.answer, /^You can put up and turn on seasonal decorative lights from June 18 to July 7 and from October 1 through January 31\./i);
+  assert.doesNotMatch(result.answer, /install and energize/i);
   assert.match(result.answer, /You need to remove all temporary string lighting and light installation clips\./i);
   assert.match(result.answer, /Turn off all holiday lighting by 10:00 p\.m\./i);
   assert.match(result.answer, /Open the official source for the complete wording\./i);
@@ -507,8 +531,8 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
     assert.equal(Object.hasOwn(rejected, "naturalFallbackProse"), false);
     assert.ok(rejected.keyDetails.every((detail) => !/Height:|Spread\/width:/i.test(detail)));
     assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
-    assert.match(rejected.nextStep, /Open the linked official section/i);
-    assert.equal((rejected.answer.match(/Open the linked official section/gi) || []).length, 1);
+    assert.match(rejected.nextStep, /Open the official source for the complete wording/i);
+    assert.equal((rejected.answer.match(/Open the official source for the complete wording/gi) || []).length, 1);
   } finally {
     global.fetch = previousFetch;
     if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
@@ -536,6 +560,33 @@ test("the Community Assistant keeps accepted grounded AI prose without re-append
   assert.equal((result.answer.match(/10:00 p\.m\./gi) || []).length, 1);
   assert.ok(result.directAnswer);
   assert.ok(Array.isArray(result.keyDetails));
+});
+
+test("the Community Assistant cleans literal rulebook wording in every public answer field", async () => {
+  const literalRewrite = [
+    "Install and energize seasonal decorative lighting during the following approved seasonal lighting periods: From June 18 to July 7 and from October 1 through January 31.",
+    "All temporary string lighting and light installation clips are required to be removed.",
+    "All holiday lighting must be turned off by 10:00 p.m.",
+    "Open the linked official section if you need the complete wording.",
+  ].join("\n\n");
+  const result = await answerCommunityQuestion("When can I put up holiday lights?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: {
+      searchMode: "ai-hybrid",
+      llmMode: "selective",
+      interpretation: { intent: "rules", needsClarification: false },
+      rewriteAnswerWithLLM: async () => literalRewrite,
+    },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+
+  assert.match(result.answer, /^You can put up and turn on seasonal decorative lights/i);
+  assert.match(result.directAnswer, /^You can put up and turn on seasonal decorative lights/i);
+  assert.ok(result.keyDetails.every((detail) => !/install and energize|are required to be removed|following approved/i.test(detail)));
+  assert.equal(result.nextStep, "Open the official source for the complete wording.");
 });
 
 test("a rejected grounded rewrite gets one safe correction pass", async () => {

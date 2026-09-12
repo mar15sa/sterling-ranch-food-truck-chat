@@ -26,6 +26,16 @@ const DYNAMIC_PRESENTATION_FIELDS = new Set(["label", "url", "keyDetails"]);
 // These are source-independent interface sentences. Additions need review: a
 // resident fact belongs in a source claim/action projection instead.
 const GENERIC_COPY = new Set([
+  "I couldn’t confirm the current value from an approved CAB source.",
+  "The official community website is the best place to confirm this.",
+  "I couldn’t find a current official answer for that.",
+  "Open the official community source below to keep looking.",
+  "I couldn’t confirm a current pickup date from the live calendar.",
+  "I couldn’t find a current official pickup date.",
+  "The current official sources don’t agree, so I can’t safely choose one value.",
+  "Open an event below for details or registration information.",
+  "I couldn’t check the live food-truck schedule just now.",
+  "I couldn’t check the official community calendar just now.",
   "I can’t currently confirm the access requirements from exact owner-approved claims.",
   "I could not verify an answer from approved, up-to-date community sources.",
   "I could not confirm Sec.  from the current official source, so I won't substitute a different section.",
@@ -96,6 +106,14 @@ const GENERIC_COPY = new Set([
 // They never supply a community fact: the value after interpolation must still
 // come from the selected reviewed source or the resident's question.
 const GENERIC_DYNAMIC_COPY = new Set([
+  "I couldn’t confirm the  from an approved CAB source.",
+  "I couldn’t confirm a current  pickup date for .",
+  "The published recurring schedule doesn’t show whether this pickup is this week or next: .",
+  "I couldn’t find a current official phone number for .",
+  "I couldn’t read the official calendar for  just now.",
+  "I couldn’t find an event matching “” for . The official calendar has  other .",
+  "The official calendar doesn’t list any events for .",
+  "The official calendar has   .",
   "The selected official rules do not name  specifically.",
   "The official passage I found mentions  only as an example in a different rule, so it does not establish whether the project itself is allowed.",
   "The selected official passages do not state whether  removal is allowed.",

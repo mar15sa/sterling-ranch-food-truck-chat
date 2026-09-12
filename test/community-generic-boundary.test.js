@@ -21,7 +21,8 @@ test("unsupported static topics use one generic boundary with no resident facts 
   ]) {
     const answer = genericEvidenceBoundary(question, {}, { communityName: "Ridgeview", website: profile.website }, profile);
     assert.equal(answer.answerMode, "source-evidence-boundary");
-    assert.match(answer.answer, /could not verify an answer from approved, up-to-date community sources/i);
+    assert.match(answer.answer, /couldn['’]t find a current official answer/i);
+    assert.doesNotMatch(answer.answer, /connected official|approved, up-to-date|requested detail/i);
     assert.doesNotMatch(answer.answer, /tree|quiet|mailbox|instagram|helipad|hoa|sterling/i);
     assert.deepEqual(answer.actions.map((action) => action.url), [profile.website]);
   }

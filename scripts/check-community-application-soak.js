@@ -95,7 +95,7 @@ async function verifyLiveEvents() {
   const firstEvents = (first.actions || []).filter((action) => action.actionType === "event").map((action) => action.label).sort();
   const secondEvents = (second.actions || []).filter((action) => action.actionType === "event").map((action) => action.label).sort();
   if (official.diagnostics.parserHealthy && official.events.length) {
-    if (!/I found \d+ official calendar/i.test(first.directAnswer || "")) throw new Error("The original ‘going on’ wording missed known official events.");
+    if (!/official calendar has \d+ (?:event|events)/i.test(first.directAnswer || "")) throw new Error("The original ‘going on’ wording missed known official events.");
     if (!firstEvents.length) throw new Error("The original event wording did not return event links.");
   }
   if (first.answerStatus !== second.answerStatus || JSON.stringify(firstEvents) !== JSON.stringify(secondEvents)) {

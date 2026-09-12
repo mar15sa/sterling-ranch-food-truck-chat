@@ -247,7 +247,7 @@ test("held-out shed permission and fee variants preserve the rule and expose the
     assert.ok(answer.completion.resolvedDetails.includes("permission"), question);
     assert.ok(answer.completion.missingDetails.some((detail) => detail.key === "price"), question);
     assert.match(answer.answer, /approval|required/i, question);
-    assert.match(answer.answer, /could not verify the current fee or price/i, question);
+    assert.match(answer.answer, /couldn’t confirm the current fee or price/i, question);
     assert.ok(answer.completion.nextBestMove.url, question);
   }
 });
