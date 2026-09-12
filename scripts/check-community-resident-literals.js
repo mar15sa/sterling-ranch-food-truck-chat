@@ -140,6 +140,7 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "The selected source does not address reimbursement.",
   "The rulebook search does not define  or publish current access details.",
   "Open the linked official resource for .",
+  "You’ll find the official information on the  page.",
   "The published fee section lists",
   "The approved source does not publish separate  hours, so I can’t verify that its regular  schedule applies on .",
   "The approved source does not publish hours specifically for , so I can’t verify the holiday schedule.",

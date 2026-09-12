@@ -48,6 +48,14 @@ test("resident literal guard permits the reviewed recurring-season evidence boun
   `), []);
 });
 
+test("resident literal guard permits the reviewed official-resource navigation frame", () => {
+  assert.deepEqual(inspectSource(`
+    return buildAnswerContract({
+      directAnswer: \`You’ll find the official information on the \${resource.title} page.\`,
+    });
+  `), []);
+});
+
 test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
   const findings = inspectSource(`
     return {
@@ -133,6 +141,10 @@ test("resident literal guard reaches structuredHelpfulAnswer calls", () => {
 
 test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
   assert.deepEqual(inspectSource('return { label: `Open ${source.title}` };'), []);
+  assert.deepEqual(inspectSource(`
+    const action = { label: \`Open official \${source.title}\`, url: source.sourceUrl };
+    return buildAnswerContract({ directAnswer: source.title, nextStep: action.label, actions: [action] });
+  `), []);
   const findings = inspectSource('return helpfulAnswer(`Parking is allowed after ${closingTime}.`, sources);');
   assert.equal(findings.length, 1);
   assert.match(findings[0].value, /Parking is allowed/);

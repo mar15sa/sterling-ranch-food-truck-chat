@@ -474,6 +474,16 @@ kbd {
   color: var(--rules-forest-deep);
 }
 
+.rules-answer-lead strong,
+.rules-answer-p strong {
+  font-weight: 700;
+  color: var(--rules-forest-deep);
+}
+
+.rules-answer-list-dates li {
+  padding-block: 2px;
+}
+
 .rules-official-wording {
   margin-top: 5px;
   color: var(--rules-muted);
