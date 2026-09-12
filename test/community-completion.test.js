@@ -438,19 +438,41 @@ test("conflicted official contact versions do not expose the prior internet numb
   assert.match(answer.actions[0].url, /\/324\/Important-Contact-Information/);
 });
 
-test("conflicted trash-page versions do not expose village pickup days", async () => {
-  const answer = await answerCommunityQuestion("What day is trash pickup?", {
+test("the approved recurring schedule answers the homepage question without using conflicted raw page text", async () => {
+  let liveCalls = 0;
+  const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
+    getWasteSchedule: async () => { liveCalls += 1; throw new Error("A recurring-day question should not require an address lookup."); },
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
-    planCommunitySearch: false,
+    interpretationMode: "structured",
+    planCommunitySearch: async () => ({
+      scope: "community",
+      intent: "services",
+      goal: "schedule",
+      goals: ["schedule"],
+      subject: "trash and recycling pickup days",
+      requestedDetails: ["date"],
+      dateRange: null,
+      filters: {},
+      searchQueries: ["trash recycling pickup days"],
+      needsClarification: false,
+    }),
     synthesizeCommunityAnswer: false,
   });
-  assert.equal(answer.answerMode, "community-freshness-withheld");
-  assert.equal(answer.answerStatus, "source-unavailable");
-  assert.doesNotMatch(answer.answer, /Monday|Tuesday|Thursday/);
-  assert.match(answer.actions[0].url, /\/247\/Trash-Recycling/);
+  assert.equal(liveCalls, 0);
+  assert.equal(answer.answerMode, "community-approved-operational");
+  assert.equal(answer.answerStatus, "verified");
+  assert.match(answer.answer, /Monday in Providence Village/i);
+  assert.match(answer.answer, /Tuesday in Ascent Village/i);
+  assert.match(answer.answer, /Thursday in Prospect Village/i);
+  assert.match(answer.answer, /Recycling is picked up every other week/i);
+  assert.match(answer.answer, /7 a\.m\./i);
+  assert.match(answer.answer, /New Year’s Day[\s\S]*Christmas move pickup back by one day/i);
+  assert.deepEqual(answer.sources.map((source) => source.id), ["approved-trash-recurring-service"]);
+  assert.equal(answer.actions[0].label, "Open WasteConnect");
+  assert.doesNotMatch(answer.answer, /303-288-2100|bulk item|missed pickup/i);
 });
 
 test("alternating recycling questions disclose the missing date anchor and link to the exact-schedule tools", async () => {

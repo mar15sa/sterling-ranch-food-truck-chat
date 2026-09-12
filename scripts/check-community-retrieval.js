@@ -31,7 +31,7 @@ const CASES = [
   ["Dogs?", /1-33|Pets and livestock/i],
   ["Can I park on the street?", /1-37|Vehicles; parking/i],
   ["Can I build a greenhouse?", /Greenhouses/i],
-  ["What day is trash pickup?", /Trash & Recycling/i, false],
+  ["What day is trash pickup?", /Trash & Recycling/i],
   ["Who do I contact about internet service?", /Important Contact Information/i, false],
   ["What email do I use for design review questions?", /Design Review contact and submission/i],
 ];
