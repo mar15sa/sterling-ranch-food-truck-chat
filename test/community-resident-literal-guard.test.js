@@ -48,6 +48,14 @@ test("resident literal guard permits the reviewed recurring-season evidence boun
   `), []);
 });
 
+test("resident literal guard permits the reviewed official-resource navigation frame", () => {
+  assert.deepEqual(inspectSource(`
+    return buildAnswerContract({
+      directAnswer: \`You’ll find the official information on the \${resource.title} page.\`,
+    });
+  `), []);
+});
+
 test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
   const findings = inspectSource(`
     return {
