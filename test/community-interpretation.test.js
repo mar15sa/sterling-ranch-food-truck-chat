@@ -188,7 +188,9 @@ test("structured mode interprets every substantive question and passes the plan 
   });
   assert.equal(plannerCalls, 1);
   assert.equal(receivedRequest.subject, "community events");
-  assert.match(answer.directAnswer, /1 official calendar event/);
+  assert.match(answer.directAnswer, /official calendar has 1 event tomorrow/i);
+  assert.match(answer.keyDetails.join(" "), /Trivia Night is tomorrow at 7 p\.m\. in Sterling Center/i);
+  assert.doesNotMatch(answer.keyDetails.join(" "), /2026-09-02|7:00 PM/i);
   assert.equal(answer._interpretation.outcome, "ai");
 });
 
@@ -210,7 +212,8 @@ test("AI outage uses a broad unfiltered event fallback", async () => {
     },
   });
   assert.deepEqual(receivedRequest.filters, { audience: "", category: "", facility: "", location: "" });
-  assert.match(answer.directAnswer, /Farmer|1 official/);
+  assert.match(answer.directAnswer, /official calendar has 1 event tomorrow/i);
+  assert.match(answer.keyDetails.join(" "), /Farmer's Market is tomorrow at 3 p\.m\. in Providence Park/i);
   assert.equal(answer._interpretation.outcome, "fallback");
 });
 
@@ -352,7 +355,7 @@ test("permission plus application questions consult the controlling rule before 
   const trampoline = await ask("I need to submit for a trampoline", "trampoline");
   assert.equal(trampoline.answerMode, "community-rule-partial");
   assert.match(trampoline.directAnswer, /DRC approval is required/i);
-  assert.match(trampoline.nextStep, /could not verify the application or submission step/i);
+  assert.match(trampoline.nextStep, /couldn['’]t confirm the application or submission step/i);
 
   const gazebo = await ask("I need to submit for a gazebo", "gazebo");
   assert.equal(gazebo.answerStatus, "could-not-verify");
@@ -413,7 +416,7 @@ test("unsupported requests complete retrieval before returning the generic evide
   });
   assert.ok(rulesCalls >= 1);
   assert.equal(answer.answerMode, "source-evidence-boundary");
-  assert.match(answer.answer, /could not verify an answer from approved, up-to-date community sources/i);
+  assert.match(answer.answer, /couldn['’]t find a current official answer/i);
 });
 
 test("generic evidence boundaries retain the rules engine diagnostic reason", async () => {
@@ -689,7 +692,7 @@ test("shadow mode records the AI comparison without changing the legacy answer",
       request,
     }),
   });
-  assert.match(answer.directAnswer, /1 official calendar event/);
+  assert.match(answer.directAnswer, /official calendar has 1 event tomorrow/i);
   assert.equal(answer._interpretation.mode, "shadow");
   assert.equal(answer._interpretation.outcome, "shadow");
   assert.equal(answer._interpretation.shadowPlan.scope, "unrelated");

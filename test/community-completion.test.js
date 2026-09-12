@@ -304,11 +304,11 @@ test("negative controls cannot become unrelated confident answers", async () => 
     ["Please help", /What would you like help with/i, /trash carts|Waste Connections/i],
     ["What is the weather today?", /can(?:not|'t) verify|can help/i, /pool contamination/i],
     ["Who is Diane Smethills?", /reliably identify/i, /clubhouse|water billing/i],
-    ["Can I run a food truck from my driveway?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /pool deck|listed food truck/i],
+    ["Can I run a food truck from my driveway?", /couldn['’]t find a current official answer/i, /pool deck|listed food truck/i],
     ["Can I remove a tree?", /official passages do not state whether tree removal is allowed/i, /VPN hardware|^Short answer:\s*(?:Yes|No)\b|tree removal (?:is prohibited|requires)/i, /Tree lawn/i],
-    ["Can I paint my mailbox purple?", /could not verify an answer from approved, up-to-date community sources/i, /same colors as the original|nonpotable water/i],
-    ["What is the CAB Instagram account?", /could not verify an answer from approved, up-to-date community sources/i, /clubhouse|trash carts/i],
-    ["Can I build a helipad in my yard?", /could not (?:verify an answer|safely confirm).*approved, up-to-date/i, /utility shed.*8/i],
+    ["Can I paint my mailbox purple?", /couldn['’]t find a current official answer/i, /same colors as the original|nonpotable water/i],
+    ["What is the CAB Instagram account?", /couldn['’]t find a current official answer/i, /clubhouse|trash carts/i],
+    ["Can I build a helipad in my yard?", /couldn['’]t find a current official answer/i, /utility shed.*8/i],
   ];
   for (const [question, include, exclude, sourceTitle] of cases) {
     const result = await answerCommunityQuestion(question, options);
@@ -400,7 +400,7 @@ test("a confident AI rewrite cannot substitute a broad category for an unsupport
     synthesizeCommunityAnswer: false,
   });
   assert.equal(answer.confidence.canAnswer, false);
-  assert.match(answer.answer, /could not (?:verify an answer|safely confirm).*approved, up-to-date/i);
+  assert.match(answer.answer, /couldn['’]t find a current official answer/i);
   assert.doesNotMatch(answer.answer, /Most landscaping is allowed/i);
 });
 

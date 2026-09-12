@@ -265,7 +265,7 @@ function renderLabeled(key, rest) {
     note.className = "rules-callout";
     const tag = document.createElement("span");
     tag.className = "rules-callout-tag";
-    tag.textContent = "Next step";
+    tag.textContent = "What you can do";
     note.append(tag, document.createTextNode(rest));
     return note;
   }
@@ -516,7 +516,7 @@ function addAnswer(data, question) {
   } else if (["conversation", "unrelated", "unclear"].includes(data.inputClassification)) {
     answerLabel.textContent = "Community assistant";
   } else if (data.answerVerdict === "unverified" || data.confidence?.canAnswer !== true) {
-    answerLabel.textContent = "Could not verify — next step included";
+    answerLabel.textContent = "Not confirmed";
     answerLabel.dataset.state = "unverified";
   } else if (data.answerVerdict === "prohibited") {
     answerLabel.textContent = "Rule says no";
@@ -528,7 +528,7 @@ function addAnswer(data, question) {
     answerLabel.textContent = "Rule says yes";
     answerLabel.dataset.state = "allowed";
   } else {
-    answerLabel.textContent = "Verified answer";
+    answerLabel.textContent = "From current official sources";
   }
 
   const shareButton = node.querySelector(".rules-share-button");
@@ -544,7 +544,7 @@ function addAnswer(data, question) {
     actionPanel.className = "rules-next-actions";
     const actionLabel = document.createElement("p");
     actionLabel.className = "rules-next-actions-label";
-    actionLabel.textContent = "Helpful links";
+    actionLabel.textContent = "Official links";
     const actionLinks = document.createElement("div");
     actionLinks.className = "rules-next-actions-links";
     actions.slice(0, 5).forEach((action, index) => {
@@ -608,7 +608,7 @@ function updateStatus(status) {
   statusHeadline.textContent = headline;
   statusDot.dataset.state = state;
   statusNote.textContent = state === "warn"
-    ? "Source availability could not be confirmed just now. Important answers should be verified using the official links provided."
+    ? "The official sources weren’t available just now. Use the links provided to confirm anything time-sensitive."
     : "Answers use the approved source library and link to the supporting official pages.";
 }
 

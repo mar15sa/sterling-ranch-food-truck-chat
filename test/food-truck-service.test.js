@@ -165,7 +165,10 @@ test("the Community Assistant has a dedicated resident-friendly food-truck card"
   const styles = fs.readFileSync(path.join(__dirname, "..", "public", "rules-assistant.css"), "utf8");
   assert.match(script, /function renderFoodTruckAnswer/);
   assert.match(script, /Menu preview/);
-  assert.match(script, /Helpful links/);
+  assert.match(script, /Official links/);
+  assert.match(script, /From current official sources/);
+  assert.match(script, /Not confirmed/);
+  assert.match(script, /What you can do/);
   assert.match(script, /View official wording/);
   assert.match(script, /resetConversation\(\{ showPrompt: false \}\)/);
   assert.match(styles, /\.rules-food-truck-menu/);

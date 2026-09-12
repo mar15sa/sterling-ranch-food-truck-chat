@@ -88,7 +88,8 @@ test('pool rental cost questions withhold unapproved availability and price conc
       synthesizeCommunityAnswer: false, answerRulesQuestion: unavailableRules });
     assert.equal(result.answerStatus, 'source-unavailable', question);
     assert.equal(result.answerMode, 'community-freshness-withheld', question);
-    assert.match(result.directAnswer, /could not safely confirm.*fee or price/i, question);
+    assert.match(result.directAnswer, /couldn['’]t confirm.*fee or price/i, question);
+    assert.doesNotMatch(result.directAnswer, /current current/i, question);
     assert.doesNotMatch(result.directAnswer, /no pool rental fee|not available for rental/i, question);
     assert.ok(result.sources.some((source) => /\/187\/Pool/.test(source.sourceUrl || '')), question);
     assert.doesNotMatch(JSON.stringify(result), /\$5(?:\.00)?(?: per guest)?|guest passes?|direct debit|secure\.rec1\.com|rental catalog/i, question);

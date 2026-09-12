@@ -115,7 +115,7 @@ test("a named service area fails closed when only the reference date is claimed"
     synthesizeCommunityAnswer: false,
   });
   assert.equal(answer.answerStatus, "source-unavailable");
-  assert.match(answer.answer, /could not verify.*North District/i);
+  assert.match(answer.answer, /couldn’t confirm.*North District/i);
   assert.doesNotMatch(answer.answer, /September 15|September 17/);
   assert.equal(answer.actions[0].label, "Check your Ridgeview collection address");
 });
