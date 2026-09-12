@@ -145,7 +145,7 @@ test("public example questions in the page are covered by the regression suite",
     (match) => match[1].replace(/\s+/g, " ").trim()
   );
   assert.deepEqual(buttons, EXAMPLES.map((example) => example.question));
-  assert.match(html, /rules-assistant\.css\?v=20260901-resident-sources/);
+  assert.match(html, /rules-assistant\.css\?v=20260912-answer-polish/);
   assert.match(html, /rules-assistant\.js\?v=20260912-structured-answers/);
 });
 
