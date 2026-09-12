@@ -133,6 +133,10 @@ test("resident literal guard reaches structuredHelpfulAnswer calls", () => {
 
 test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
   assert.deepEqual(inspectSource('return { label: `Open ${source.title}` };'), []);
+  assert.deepEqual(inspectSource(`
+    const action = { label: \`Open official \${source.title}\`, url: source.sourceUrl };
+    return buildAnswerContract({ directAnswer: source.title, nextStep: action.label, actions: [action] });
+  `), []);
   const findings = inspectSource('return helpfulAnswer(`Parking is allowed after ${closingTime}.`, sources);');
   assert.equal(findings.length, 1);
   assert.match(findings[0].value, /Parking is allowed/);
