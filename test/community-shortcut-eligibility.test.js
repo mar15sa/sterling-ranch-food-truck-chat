@@ -11,6 +11,7 @@ const rulesEvalCases = require("../scripts/rules-eval-cases.json");
 
 const NOW = new Date("2026-09-01T18:00:00Z");
 const POOL_OFFSEASON_NOW = new Date("2026-09-10T12:00:00Z");
+const TRASH_INFORMATION_NOW = new Date("2026-09-10T20:00:00Z");
 const REPORTED_QUESTION = "What are the pool hours for Labor Day?";
 
 function closedPoolStatus(checkedAt = NOW, { communityId = "sterling-ranch", sourceUrl = "https://sterlingranchcab.com/187/Pool" } = {}) {
@@ -224,6 +225,54 @@ test("pickup-delay questions never fall through to trash-storage rules when the 
     assert.match(answer.answer, /screened|garage|pickup day/i, question);
   }
   assert.equal(connectorCalls, 0);
+});
+
+test("official information-page requests stay on the service resource without colliding with schedules or storage rules", async () => {
+  const informationQuestions = [
+    "Where can I find trash and recycling information?",
+    "Where is the garbage info page?",
+    "Open recycling information",
+    "trash/recycling info?",
+    "Where can I find recyling info?",
+  ];
+  for (const question of informationQuestions) {
+    let rulesCalls = 0;
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: TRASH_INFORMATION_NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+      synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({
+        intent: "services", goal: "information", goals: ["information"], subject: "trash recycling information",
+        requestedDetails: ["action"], searchQueries: ["trash recycling information"],
+      }),
+      answerRulesQuestion: async () => { rulesCalls += 1; throw new Error("information navigation must not enter the rules answer path"); },
+    });
+    assert.equal(rulesCalls, 0, question);
+    assert.equal(answer.answerMode, "community-approved-information-resource", question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.ok(answer.actions.some((action) => /trash|recycling/i.test(action.label) && /sterlingranchcab\.com\/247\/Trash-Recycling/i.test(action.url)), question);
+    assert.doesNotMatch(answer.answer, /screened|garage|storage|Monday|Tuesday|Thursday/i, question);
+  }
+
+  for (const question of [
+    "When is the next recycling pickup?",
+    "Where can I store recycling bins?",
+    "Where can I report a missed trash pickup?",
+    "Where can I find the recycling rules?",
+    "Where can I find information about painting my trash enclosure?",
+  ]) {
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: TRASH_INFORMATION_NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+      synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => plan({
+        intent: /rules|store|painting|enclosure/i.test(question) ? "rules" : "services",
+        goal: "information", goals: ["information"], subject: question, requestedDetails: [], searchQueries: [question],
+      }),
+      getWasteSchedule: async () => { throw new Error("live provider unavailable"); },
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    });
+    assert.notEqual(answer.answerMode, "community-approved-information-resource", question);
+  }
 });
 
 test("legacy production routing still sends pickup delays to the live waste boundary", async () => {
