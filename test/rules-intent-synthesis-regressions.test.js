@@ -195,11 +195,14 @@ test("an accepted literal AI rewrite still receives the shared plain-language cl
     "Open the linked official section if you need the complete wording.",
   ].join("\n\n");
   const result = await answerRulesQuestion("When can I put up holiday lights?", {
-    searchMode: "legacy",
+    searchMode: "ai-hybrid",
     llmMode: "selective",
+    interpretation: { intent: "rules", needsClarification: false },
+    planRulesSearch: async () => { throw new Error("the strong source match should skip planning"); },
     rewriteAnswerWithLLM: async () => literalRewrite,
   });
 
+  assert.equal(result.searchStrategy, "shared-interpretation-strong-match");
   assert.match(result.answer, /^You can put up and turn on seasonal decorative lights/i);
   assert.doesNotMatch(result.answer, /install and energize|following approved|are required to be removed/i);
   for (const value of ["June 18", "July 7", "October 1", "January 31", "10:00 p.m."]) {
@@ -529,7 +532,7 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
     assert.ok(rejected.keyDetails.every((detail) => !/Height:|Spread\/width:/i.test(detail)));
     assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
     assert.match(rejected.nextStep, /Open the linked official section/i);
-    assert.equal((rejected.answer.match(/Open the linked official section/gi) || []).length, 1);
+    assert.equal((rejected.answer.match(/Open the official source for the complete wording/gi) || []).length, 1);
   } finally {
     global.fetch = previousFetch;
     if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;
