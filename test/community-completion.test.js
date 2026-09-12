@@ -47,10 +47,10 @@ test("a named-project rulebook boundary outranks an unrelated withheld community
     assert.ok((answer.actions || []).every((action) => !/DocumentCenter\/View\/1350/i.test(action.url || "")), question);
   }
 });
-function liveWasteEvidence(date, checkedAt) {
+function liveWasteEvidence(date, checkedAt, dates = [date, "2026-09-01", "2026-09-03"]) {
   return {
     degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
-    claims: [date, "2026-09-01", "2026-09-03"].map((claimDate) => ({ facet: "date", text: claimDate, controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" })),
+    claims: dates.map((claimDate) => ({ facet: "date", text: claimDate, controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" })),
     evidence: [{ evidenceId: "sterling-ranch:waste-schedule:live-calendar", sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
     actions: [{ type: "information", label: "Check an address in the official pickup calendar", url: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#" }],
   };
@@ -438,13 +438,13 @@ test("conflicted official contact versions do not expose the prior internet numb
   assert.match(answer.actions[0].url, /\/324\/Important-Contact-Information/);
 });
 
-test("the approved recurring schedule answers the homepage question without using conflicted raw page text", async () => {
+test("the approved recurring schedule stays useful when the live calendar is temporarily unavailable", async () => {
   let liveCalls = 0;
   const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
-    getWasteSchedule: async () => { liveCalls += 1; throw new Error("A recurring-day question should not require an address lookup."); },
+    getWasteSchedule: async () => { liveCalls += 1; throw new Error("live calendar unavailable"); },
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
     interpretationMode: "structured",
     planCommunitySearch: async () => ({
@@ -473,6 +473,44 @@ test("the approved recurring schedule answers the homepage question without usin
   assert.deepEqual(answer.sources.map((source) => source.id), ["approved-trash-recurring-service"]);
   assert.equal(answer.actions[0].label, "Open WasteConnect");
   assert.doesNotMatch(answer.answer, /303-288-2100|bulk item|missed pickup/i);
+});
+
+test("the homepage pickup answer adds the next recycling date for every village", async () => {
+  const checkedAt = new Date().toISOString();
+  const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile,
+    answerRulesQuestion,
+    getWasteSchedule: async () => ({
+      service: "recycling",
+      date: "2026-09-14",
+      timing: "next week",
+      anchorDate: "2026-09-14",
+      serviceAreas: [
+        { label: "Providence Village", date: "2026-09-14" },
+        { label: "Ascent Village", date: "2026-09-15" },
+        { label: "Prospect Village", date: "2026-09-17" },
+      ],
+      checkedAt,
+      evidence: liveWasteEvidence("2026-09-14", checkedAt, ["2026-09-14", "2026-09-15", "2026-09-17"]),
+    }),
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(answer.answerStatus, "verified");
+  assert.deepEqual(answer.presentation, {
+    kind: "waste-schedule",
+    nextPickupLabel: "Next recycling pickup",
+    nextPickups: [
+      "Providence Village: Monday, September 14, 2026",
+      "Ascent Village: Tuesday, September 15, 2026",
+      "Prospect Village: Thursday, September 17, 2026",
+    ],
+  });
+  assert.doesNotMatch(answer.answer, /Open WasteConnect/i);
+  assert.equal(answer.actions[0].label, "Check an address in the official pickup calendar");
 });
 
 test("alternating recycling questions disclose the missing date anchor and link to the exact-schedule tools", async () => {
@@ -548,18 +586,25 @@ test("live schedule routing does not replace recycling cart-storage rules", asyn
   assert.match(`${answer.directAnswer || ""} ${answer.answer || ""}`, /end of (?:the )?pickup day|stored|screened/i);
 });
 
-test("Sterling Ranch withholds village dates without published service-area references", async () => {
+test("Sterling Ranch uses only its published community reference for village recycling dates", async () => {
   const requested = [];
   const fetchImpl = async (url) => {
     requested.push(String(url));
-    throw new Error("unproven village must not trigger address lookup");
+    if (String(url).includes("address-suggest")) {
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", name: "7853 Piney River Ave, Littleton" }] };
+    }
+    return { ok: true, json: async () => ({ events: [{ day: "2026-09-14", flags: [{ name: "Recycling" }] }] }) };
   };
-  const schedule = await getWasteSchedule({ profile: communityProfile, fetchImpl, now: new Date("2026-08-30T18:00:00Z"), question: "When is recycling pickup in Prospect Village?" });
-  assert.equal(schedule.date, "");
-  assert.equal(schedule.serviceAreas[2].date, undefined);
-  assert.equal(requested.length, 0);
-  assert.doesNotMatch(JSON.stringify(communityProfile.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule), /7853|Piney River/i);
-  assert.equal(schedule.evidence.degradation.state, "unavailable");
+  const schedule = await getWasteSchedule({ profile: communityProfile, fetchImpl, now: new Date("2026-09-12T18:00:00Z"), question: "When is the next recycling pickup?" });
+  assert.equal(schedule.date, "2026-09-14");
+  assert.deepEqual(schedule.serviceAreas, [
+    { label: "Providence Village", date: "2026-09-14" },
+    { label: "Ascent Village", date: "2026-09-15" },
+    { label: "Prospect Village", date: "2026-09-17" },
+  ]);
+  assert.equal(requested.length, 2);
+  assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
+  assert.equal(schedule.evidence.degradation.state, "healthy");
   assert.equal(scheduleTimingLabel("2026-09-07", "2026-08-30"), "the week of September 7, 2026");
 });
 

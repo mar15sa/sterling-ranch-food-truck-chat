@@ -223,6 +223,94 @@ function renderAnswerInto(container, text) {
   }
 }
 
+function normalizedAnswerText(value) {
+  return String(value || "").toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function appendAnswerText(container, text, options = {}) {
+  const value = String(text || "");
+  const patterns = [
+    /Sherwin(?:-Williams| Williams)?\s+#\d+\s+[“"]?Belvedere Tan[”"]?/gi,
+    /Solomon\s+#\d+\s+[“"]?Earthen[”"]?/gi,
+    /(?:Monday in Providence Village|Tuesday in Ascent Village|Thursday in Prospect Village)/gi,
+  ];
+  if (options.eventDetail) patterns.push(/^.+?(?=\s+is\s+(?:today|tomorrow|on\b))/gi);
+  const matches = patterns.flatMap((pattern) => [...value.matchAll(pattern)].map((match) => ({ index: match.index, text: match[0] })))
+    .filter((match) => Number.isInteger(match.index) && match.text)
+    .sort((left, right) => left.index - right.index || right.text.length - left.text.length)
+    .filter((match, index, all) => !all.slice(0, index).some((prior) => match.index < prior.index + prior.text.length));
+  let cursor = 0;
+  matches.forEach((match) => {
+    if (match.index > cursor) container.append(document.createTextNode(value.slice(cursor, match.index)));
+    const strong = document.createElement("strong");
+    strong.textContent = match.text;
+    container.append(strong);
+    cursor = match.index + match.text.length;
+  });
+  if (cursor < value.length) container.append(document.createTextNode(value.slice(cursor)));
+}
+
+function renderStructuredAnswer(container, data = {}) {
+  const directAnswer = String(data.directAnswer || "").trim();
+  const keyDetails = Array.isArray(data.keyDetails) ? data.keyDetails.filter(Boolean) : [];
+  if (!directAnswer && !keyDetails.length) return renderAnswerInto(container, data.answer || "");
+  container.replaceChildren();
+
+  if (directAnswer) {
+    const lead = document.createElement("p");
+    lead.className = "rules-answer-lead";
+    appendAnswerText(lead, directAnswer);
+    container.append(lead);
+  }
+
+  const pickupDetails = data.presentation?.kind === "waste-schedule"
+    ? (data.presentation.nextPickups || []).filter(Boolean)
+    : [];
+  if (pickupDetails.length) {
+    const heading = document.createElement("p");
+    heading.className = "rules-answer-subhead";
+    heading.textContent = data.presentation.nextPickupLabel || "Next pickup";
+    const list = document.createElement("ul");
+    list.className = "rules-answer-list rules-answer-list-dates";
+    pickupDetails.forEach((detail) => list.append(renderBullet(detail)));
+    container.append(heading, list);
+  }
+
+  if (keyDetails.length) {
+    const useList = keyDetails.length > 1 || /^community-live-(?:events|recycling)/.test(data.answerMode || "");
+    if (useList) {
+      const list = document.createElement("ul");
+      list.className = "rules-answer-list";
+      keyDetails.forEach((detail) => {
+        const item = document.createElement("li");
+        appendAnswerText(item, detail, { eventDetail: /^community-live-events/.test(data.answerMode || "") });
+        list.append(item);
+      });
+      container.append(list);
+    } else {
+      keyDetails.forEach((detail) => {
+        const paragraph = document.createElement("p");
+        paragraph.className = "rules-answer-p";
+        appendAnswerText(paragraph, detail);
+        container.append(paragraph);
+      });
+    }
+  }
+
+  const actionLabels = (data.actions || []).map((action) => normalizedAnswerText(action?.label)).filter(Boolean);
+  const nextStep = String(data.nextStep || "").trim();
+  if (nextStep && !actionLabels.includes(normalizedAnswerText(nextStep))) {
+    const note = document.createElement("p");
+    note.className = "rules-callout";
+    const tag = document.createElement("span");
+    tag.className = "rules-callout-tag";
+    tag.textContent = "Next step";
+    note.append(tag);
+    appendAnswerText(note, nextStep);
+    container.append(note);
+  }
+}
+
 function renderBullet(body) {
   const item = document.createElement("li");
   const split = body.indexOf(": ");
@@ -504,7 +592,7 @@ function addAnswer(data, question) {
     renderFoodTruckAnswer(answerContainer, data.presentation);
     node.classList.add("rules-message-food-truck");
   } else {
-    renderAnswerInto(answerContainer, data.answer || "");
+    renderStructuredAnswer(answerContainer, data);
   }
 
   const answerLabel = node.querySelector(".rules-answer-actions-label");
