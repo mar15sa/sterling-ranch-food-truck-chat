@@ -25,3 +25,18 @@ test("Community Assistant sharing metadata uses the current 1200 by 630 preview"
   assert.equal(png.readUInt32BE(16), 1200);
   assert.equal(png.readUInt32BE(20), 630);
 });
+
+test("the homepage demonstrates three real Community Assistant questions", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "public", "index.html"), "utf8");
+  const examples = html.match(/<div class="briefing-tags">([\s\S]*?)<\/div>/)?.[1] || "";
+  const hrefs = [...examples.matchAll(/<a\s+[^>]*href="([^"]+)"/g)].map((match) => match[1]);
+  const questions = hrefs.map((href) => new URL(href, "https://sterlingranchsociety.com").searchParams.get("q"));
+
+  assert.deepEqual(questions, [
+    "What events are happening today?",
+    "When are trash and recycling picked up?",
+    "What color should I stain my fence?",
+  ]);
+  assert.doesNotMatch(examples, /\/rulebook|opens in a new tab/i);
+  assert.match(html, /clear answer, the next step,[\s\S]*official source behind it/i);
+});
