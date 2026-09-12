@@ -35,6 +35,18 @@ test("live events keep connector facts while using natural dates and times", () 
   assert.doesNotMatch(`${answer.directAnswer} ${answer.keyDetails.join(" ")}`, /2026-09-11|9:00 AM|\bI found \d/i);
 });
 
+test("live event times do not add a second period when the location is missing", () => {
+  const answer = eventsAnswer({
+    events: [{ id: "one", title: "Outdoor Concert", date: "2026-09-11", time: "18:00", location: "", url: "https://ridgeview.example/events/one" }],
+    range: { start: "2026-09-11", end: "2026-09-11", label: "today" },
+    sourceUrl: "https://ridgeview.example/calendar",
+    checkedAt: "2026-09-11T12:00:00Z",
+    diagnostics: { parserHealthy: true, sourceOutcome: "ok", appliedFilters: [] },
+  }, ["date", "examples"]);
+  assert.equal(answer.keyDetails[0], "Outdoor Concert is today at 6 p.m.");
+  assert.doesNotMatch(answer.keyDetails[0], /\.\.$/);
+});
+
 test("live pool presentation hides the internal color label but keeps live authority", () => {
   const answer = poolStatusAnswer({
     headline: "Closed",
