@@ -567,7 +567,8 @@ test("a current pool-status question with today's date uses the fresh live statu
   assert.equal(poolCalls, 1);
   assert.equal(answer.answerMode, "community-live-status");
   assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.directAnswer, /^Closed\. The official CAB status is Red Light:/i);
+  assert.match(answer.directAnswer, /^The pool is closed with no access for homeowners or guests\./);
+  assert.doesNotMatch(answer.directAnswer, /Red Light|official CAB status/i);
 });
 
 test("a future dated status request cannot reuse a current live-status observation", () => {
@@ -668,7 +669,8 @@ test("pool reopening omits the recurring season when its static approval is miss
     });
     assert.equal(answer.answerMode, "community-live-pool-season-reopening", label);
     assert.equal(answer.answerStatus, "verified-incomplete", label);
-    assert.match(answer.directAnswer, /^Closed\. The official CAB status is Red Light:/i, label);
+    assert.match(answer.directAnswer, /^The pool is closed with no access for homeowners or guests\./, label);
+    assert.doesNotMatch(answer.directAnswer, /Red Light|official CAB status/i, label);
     assert.match(answer.directAnswer, /can’t confirm next summer’s exact opening date/i, label);
     assert.doesNotMatch(answer.answer, /closed for the season|Memorial Day|Labor Day/i, label);
     assert.equal(answer.sources.length, 1, label);
@@ -691,7 +693,8 @@ test("an in-season red status remains a current closure rather than becoming clo
     getPoolStatus: async () => closedPoolStatus(inSeasonNow),
   });
   assert.equal(answer.answerStatus, "verified-incomplete");
-  assert.match(answer.directAnswer, /^Closed\. The official CAB status is Red Light:/i);
+  assert.match(answer.directAnswer, /^The pool is closed with no access for homeowners or guests\./);
+  assert.doesNotMatch(answer.directAnswer, /Red Light|official CAB status/i);
   assert.doesNotMatch(answer.directAnswer, /closed for the season/i);
   assert.match(answer.answer, /Memorial Day weekend through Labor Day/i);
 });
@@ -753,7 +756,7 @@ test("pool reopening questions fail closed when live operational status is unava
   });
   assert.equal(answer.answerStatus, "could-not-verify");
   assert.equal(answer.answerMode, "community-live-pool-season-reopening");
-  assert.match(answer.answer, /could not verify an answer from approved, up-to-date community sources/i);
+  assert.match(answer.answer, /couldn['’]t find a current official answer/i);
   assert.doesNotMatch(answer.answer, /Memorial Day|Labor Day|currently open/i);
 });
 

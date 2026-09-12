@@ -199,7 +199,8 @@ test("source-built fallback uses natural prose and retains every sourced holiday
   assert.match(result.answer, /October 1/i);
   assert.match(result.answer, /January 31/i);
   assert.match(result.answer, /10:00 p\.m\./i);
-  assert.match(result.answer, /^You can install and energize seasonal decorative lighting from June 18 to July 7 and from October 1 through January 31\./i);
+  assert.match(result.answer, /^You can put up and turn on seasonal decorative lights from June 18 to July 7 and from October 1 through January 31\./i);
+  assert.doesNotMatch(result.answer, /install and energize/i);
   assert.match(result.answer, /You need to remove all temporary string lighting and light installation clips\./i);
   assert.match(result.answer, /Turn off all holiday lighting by 10:00 p\.m\./i);
   assert.match(result.answer, /Open the official source for the complete wording\./i);
