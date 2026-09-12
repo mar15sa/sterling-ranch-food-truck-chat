@@ -38,7 +38,7 @@
       "id": "official-calendar",
       "type": "civicplus-calendar",
       "baseUrl": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
-      "adapter": { "capabilities": ["events"], "facets": ["event-date", "date", "action"], "controllingSourceRoles": ["operational"], "actionTypes": ["information", "registration"], "sourceHosts": ["sterlingranchcab.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list", "purpose": "official-calendar" }], "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 }, "degradation": { "policy": "retain-last-known" }, "labels": { "calendarTitle": "Official Sterling Ranch Calendar", "openAction": "Open official community calendar" }, "vocabulary": { "event": ["calendar", "meeting"] } },
+      "adapter": { "capabilities": ["events"], "facets": ["event-date", "date", "action"], "controllingSourceRoles": ["operational"], "actionTypes": ["information", "registration"], "sourceHosts": ["sterlingranchcab.com", "secure.rec1.com"], "endpoints": [{ "id": "primary", "url": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list", "purpose": "official-calendar" }], "freshness": { "refreshMinutes": 60, "staleAfterMinutes": 180 }, "degradation": { "policy": "retain-last-known" }, "labels": { "calendarTitle": "Official Sterling Ranch Calendar", "openAction": "Open official community calendar" }, "vocabulary": { "event": ["calendar", "meeting"] } },
       "refreshMinutes": 60
     },
     {

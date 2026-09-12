@@ -96,6 +96,34 @@ test("partial days preserve only healthy evidence with a partial status", async 
   assert.equal(result.status, "partial");
   assert.equal(result.events.length, 1);
 });
+test("a calendar day that fails once is retried before the week is marked partial", async () => {
+  clearCommunityEventsCache();
+  let failedOnce = false;
+  const result = await upcomingCommunityEvents(castle, {
+    now,
+    fetchImpl: async (url) => {
+      if (url.searchParams.get("day") === "30" && !failedOnce) {
+        failedOnce = true;
+        throw new Error("brief upstream timeout");
+      }
+      return response(html(1, "Fixture gathering", "2026-09-30"));
+    },
+  });
+  assert.equal(result.status, "ready");
+  assert.equal(result.evidence.length, 7);
+});
+test("Sterling Ranch calendar accepts its official CivicRec registration links", async () => {
+  clearCommunityEventsCache();
+  const result = await upcomingCommunityEvents(sterling, {
+    now: new Date("2026-09-13T18:00:00Z"),
+    fetchImpl: async () => response(
+      '<a id="eventTitle_5509" href="https://secure.rec1.com/CO/sterling-ranch-community-authority-board-co/catalog"><span>Puppy Plunge</span></a><span itemprop="startDate">2026-09-13T12:00:00</span>',
+    ),
+  });
+  assert.equal(result.status, "ready");
+  assert.equal(result.events[0].title, "Puppy Plunge");
+  assert.equal(new URL(result.events[0].url).hostname, "secure.rec1.com");
+});
 test("missing connector uses the profile website; unapproved hosts are rejected", async () => {
   const result = await upcomingCommunityEvents(
     { ...castle, connectors: [] },
