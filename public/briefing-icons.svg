@@ -1,8 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg">
-  <symbol id="home" viewBox="0 0 32 32"><path fill="currentColor" d="M3 15 16 3l13 12-2 2-2-2v14h-7V19h-5v10H6V15l-1 2zm19-9h4v6l-4-4z"/><path d="m2 14 14-13 14 13" fill="none" stroke="currentColor"/></symbol>
-  <symbol id="trash" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 9h16l-2 20H10zM5 6h22M12 6V3h8v3M13 12v13m6-13v13"/></g></symbol>
-  <symbol id="book" viewBox="0 0 32 32"><path fill="currentColor" d="M3 5c4-2 8-2 12 1v23c-4-3-8-3-12-1zm14 1c4-3 8-3 12-1v23c-4-2-8-2-12 1z"/><path d="M8 10v7m16-7v7" stroke="#e3e5e8" stroke-width="1.3"/></symbol>
-  <symbol id="calendar" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="6" width="26" height="24" rx="1"/><path d="M3 12h26M10 2v8m12-8v8"/></g><path fill="currentColor" d="M8 16h4v4H8zm7 0h4v4h-4zm7 0h3v4h-3zM8 23h4v4H8zm7 0h4v4h-4zm7 0h3v4h-3z"/></symbol>
-  <symbol id="megaphone" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M11 10c7 0 12-3 17-7v25c-5-4-10-7-17-7H4V10zm0 0v11m-4 0 2 10h5l-2-10M3 12H1v7h3"/></g></symbol>
-  <symbol id="pool" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M16 1v25M2 14C3-2 29-2 30 14c-4-3-6-3-9 0-3-3-7-3-10 0-3-3-6-3-9 0zM11 14c0-7 2-11 5-12 3 2 5 6 5 12M2 25q4-3 7 0 4-3 7 0 4-3 7 0 4-3 7 0M2 30q4-3 7 0 4-3 7 0 4-3 7 0 4-3 7 0"/></g></symbol>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <pattern id="briefing-hatch" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(35)">
+      <rect width="4" height="4" fill="#f8f9fa" stroke="none"/>
+      <path d="M0 0V4" stroke="currentColor" stroke-width=".55" opacity=".32"/>
+    </pattern>
+  </defs>
+  <symbol id="home" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 30 32 9l24 21"/>
+      <path d="M14 27v27h36V27M25 54V37h14v17" fill="url(#briefing-hatch)"/>
+      <path d="M44 15V9h7v12"/>
+    </g>
+  </symbol>
+  <symbol id="trash" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 19h32l-3 38H19z" fill="url(#briefing-hatch)"/>
+      <path d="M11 13h42M24 13V7h16v6M27 26v22M37 26v22"/>
+    </g>
+  </symbol>
+  <symbol id="book" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 11c9-3 17-1 25 5v39c-8-6-16-8-25-5zM57 11c-9-3-17-1-25 5v39c8-6 16-8 25-5z" fill="url(#briefing-hatch)"/>
+      <path d="M32 16v39M14 20h10M14 27h10M40 20h10M40 27h10"/>
+    </g>
+  </symbol>
+  <symbol id="calendar" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="8" y="13" width="48" height="43" rx="3" fill="url(#briefing-hatch)"/>
+      <path d="M8 25h48M20 7v12M44 7v12M17 34h6M29 34h6M41 34h6M17 44h6M29 44h6M41 44h6"/>
+    </g>
+  </symbol>
+  <symbol id="megaphone" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 22c13 0 23-5 34-14v43C45 42 35 37 22 37z" fill="url(#briefing-hatch)"/>
+      <path d="M22 22v15H8V22zM13 37l4 19h10l-3-19M57 23h5M55 16l5-3M55 31l5 3"/>
+    </g>
+  </symbol>
+  <symbol id="pool" viewBox="0 0 64 64">
+    <path d="M32 5v42M8 27C9 1 55 1 56 27c-8-6-13-6-19 0-6-6-14-6-20 0-4-4-7-5-9 0zM8 47q8-6 16 0 8-6 16 0 8-6 16 0M8 57q8-6 16 0 8-6 16 0 8-6 16 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>
