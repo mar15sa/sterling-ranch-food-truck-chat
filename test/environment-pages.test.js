@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const pages = ["index.html", "food-truck.html", "rules-assistant.html", "pool.html", "openings.html", "community-demo.html"];
+const pages = ["index.html", "food-truck.html", "rules-assistant.html", "pool.html", "openings.html", "calendar.html", "community-demo.html"];
 
 test("every resident page uses the shared staging and analytics guard", () => {
   for (const page of pages) {
@@ -14,7 +14,7 @@ test("every resident page uses the shared staging and analytics guard", () => {
 
 test("Community Assistant sharing metadata uses the current 1200 by 630 preview", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "public", "rules-assistant.html"), "utf8");
-  const imageName = "community-social-preview-v2.png";
+  const imageName = "community-social-preview-v3.png";
   assert.match(html, new RegExp(`property=["']og:image["'][^>]+${imageName}`));
   assert.match(html, new RegExp(`name=["']twitter:image["'][^>]+${imageName}`));
   assert.match(html, /og:image:alt[^>]+Community Assistant[^>]+rules, services, forms, facilities, events/i);
@@ -24,6 +24,26 @@ test("Community Assistant sharing metadata uses the current 1200 by 630 preview"
   assert.deepEqual([...png.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.equal(png.readUInt32BE(16), 1200);
   assert.equal(png.readUInt32BE(20), 630);
+});
+
+test("resident pages use the editorial favicon and matching social previews", () => {
+  const previews = new Map([
+    ["index.html", "society-social-preview-v3.png"],
+    ["food-truck.html", "food-truck-social-preview-v3.png"],
+    ["rules-assistant.html", "community-social-preview-v3.png"],
+    ["pool.html", "pool-social-preview-v3.png"],
+    ["openings.html", "openings-social-preview-v3.png"],
+    ["calendar.html", "calendar-social-preview-v3.png"],
+  ]);
+  for (const [page, imageName] of previews) {
+    const html = fs.readFileSync(path.join(__dirname, "..", "public", page), "utf8");
+    assert.match(html, /rel=["']icon["'][^>]+favicon\.svg\?v=20260912-editorial/);
+    assert.match(html, new RegExp(`property=["']og:image["'][^>]+${imageName}`));
+    assert.match(html, new RegExp(`name=["']twitter:image["'][^>]+${imageName}`));
+    const png = fs.readFileSync(path.join(__dirname, "..", "public", imageName));
+    assert.equal(png.readUInt32BE(16), 1200);
+    assert.equal(png.readUInt32BE(20), 630);
+  }
 });
 
 test("the homepage demonstrates three real Community Assistant questions", () => {
@@ -39,7 +59,7 @@ test("the homepage demonstrates three real Community Assistant questions", () =>
   ]);
   assert.doesNotMatch(examples, /\/rulebook|opens in a new tab/i);
   assert.match(html, /clear answer, the next step,[\s\S]*official source behind it/i);
-  assert.match(html, /briefing-home\.css\?v=20260912-answer-polish/);
+  assert.match(html, /briefing-home\.css\?v=20260912-visual-polish/);
 
   const css = fs.readFileSync(path.join(__dirname, "..", "public", "briefing-home.css"), "utf8");
   assert.match(css, /\.briefing-tags\s*\{[^}]*grid-template-columns:\s*repeat\(3,/);

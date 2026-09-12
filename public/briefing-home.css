@@ -22,7 +22,7 @@ body.briefing-page {
 .briefing-page .briefing-masthead { position: relative; isolation: isolate; min-height: 212px; padding: 45px 0 35px; }
 .briefing-page .briefing-masthead > div { display: block; padding: 0; }
 .briefing-page .briefing-masthead h1 { position: relative; width: max-content; max-width: 100%; font-size: clamp(60px, 6.2vw, 94px); line-height: 1; letter-spacing: -4px; margin: 0 0 17px; white-space: normal; }
-.briefing-page .briefing-masthead img { display: block; position: absolute; z-index: -1; right: -3.6vw; bottom: 0; width: 70%; height: 100%; object-fit: cover; object-position: center 57%; mix-blend-mode: multiply; filter: none; opacity: .8; mask-image: linear-gradient(to right, transparent, black 35%); }
+.briefing-page .briefing-masthead img { display: block; position: absolute; z-index: -1; right: -3.6vw; bottom: 0; width: 70%; height: 100%; object-fit: cover; object-position: center top; mix-blend-mode: multiply; filter: none; opacity: .8; mask-image: linear-gradient(to right, transparent, black 35%); }
 .briefing-page .briefing-date { width: 48%; margin: 0; font: 13px/1.5 "Times New Roman", serif; text-transform: uppercase; letter-spacing: 3.5px; text-align: left; white-space: nowrap; }
 .briefing-page .briefing-date::before { display: none; }
 .briefing-page .briefing-date::after { min-width: 30px; }
@@ -52,6 +52,12 @@ body.briefing-page {
 .briefing-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 37px; margin-bottom: 9px; }
 .briefing-page .briefing-section-heading .society-eyebrow { display: flex; align-items: center; gap: 20px; font-size: 14px; letter-spacing: .9px; margin: 0; }
 .briefing-section-heading .briefing-icon { width: 32px; height: 32px; flex-basis: 32px; color: var(--society-rose); }
+
+@media (min-width: 761px) {
+  .briefing-page .briefing-columns > section > [aria-live] { border-top: 1px solid #aeb6c1; }
+  .briefing-page .briefing-columns .weather-hero,
+  .briefing-page .briefing-columns .weather-unavailable { border-top: 0; }
+}
 .briefing-pool .briefing-icon { color: var(--society-teal); }
 .briefing-page .society-text-link { font: 16px/1.35 "Times New Roman", serif; text-decoration: underline; margin: 0; min-height: 32px; }
 .briefing-page .briefing-section-heading .society-text-link { font-size: 14px; white-space: nowrap; }
