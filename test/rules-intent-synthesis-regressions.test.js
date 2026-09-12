@@ -531,7 +531,7 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
     assert.equal(Object.hasOwn(rejected, "naturalFallbackProse"), false);
     assert.ok(rejected.keyDetails.every((detail) => !/Height:|Spread\/width:/i.test(detail)));
     assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
-    assert.match(rejected.nextStep, /Open the linked official section/i);
+    assert.match(rejected.nextStep, /Open the official source for the complete wording/i);
     assert.equal((rejected.answer.match(/Open the official source for the complete wording/gi) || []).length, 1);
   } finally {
     global.fetch = previousFetch;
@@ -560,6 +560,33 @@ test("the Community Assistant keeps accepted grounded AI prose without re-append
   assert.equal((result.answer.match(/10:00 p\.m\./gi) || []).length, 1);
   assert.ok(result.directAnswer);
   assert.ok(Array.isArray(result.keyDetails));
+});
+
+test("the Community Assistant cleans literal rulebook wording in every public answer field", async () => {
+  const literalRewrite = [
+    "Install and energize seasonal decorative lighting during the following approved seasonal lighting periods: From June 18 to July 7 and from October 1 through January 31.",
+    "All temporary string lighting and light installation clips are required to be removed.",
+    "All holiday lighting must be turned off by 10:00 p.m.",
+    "Open the linked official section if you need the complete wording.",
+  ].join("\n\n");
+  const result = await answerCommunityQuestion("When can I put up holiday lights?", {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    answerRulesQuestion,
+    rulesOptions: {
+      searchMode: "ai-hybrid",
+      llmMode: "selective",
+      interpretation: { intent: "rules", needsClarification: false },
+      rewriteAnswerWithLLM: async () => literalRewrite,
+    },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+
+  assert.match(result.answer, /^You can put up and turn on seasonal decorative lights/i);
+  assert.match(result.directAnswer, /^You can put up and turn on seasonal decorative lights/i);
+  assert.ok(result.keyDetails.every((detail) => !/install and energize|are required to be removed|following approved/i.test(detail)));
+  assert.equal(result.nextStep, "Open the official source for the complete wording.");
 });
 
 test("a rejected grounded rewrite gets one safe correction pass", async () => {
