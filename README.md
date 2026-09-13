@@ -15,6 +15,8 @@ For a plain-English overview, decision history, and design references, use the [
 
 Current operating references: [release and testing](docs/RELEASE-POLICY.md), [saved question records and access](docs/QUESTION-RECORDS.md), and [design reference/history](docs/DESIGN-REFERENCE.md). The September 13 CI change keeps the full pre-merge gate and replaces the duplicate post-merge suite with an exact-deployment health check. Older test counts and release snapshots describe their original revisions.
 
+Start with [SRS purpose and product values](docs/PRODUCT-VALUES.md) for helpfulness, proactiveness, accuracy, and the intended reusable product for other communities. Marissa is the sole operator today. These values explain the existing project-level engineering requirements.
+
 ## Run it
 
 ```powershell

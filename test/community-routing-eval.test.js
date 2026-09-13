@@ -15,7 +15,7 @@ test("routing profiles use a small one-pass smoke check by default and reserve t
   assert.ok(profileCases(smoke.profile).some((item) => item.expectedClassification === "prompt-injection"));
   assert.equal(full.profile, "full");
   assert.equal(full.repeats, 3);
-  assert.equal(profileCases(full.profile).length, 50);
+  assert.equal(profileCases(full.profile).length, cases.length);
   assert.deepEqual(ROUTING_PROFILES.full, cases.map((item) => item.id));
 });
 

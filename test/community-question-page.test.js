@@ -65,6 +65,8 @@ test("resident answers use structured formatting and do not repeat link labels a
   assert.match(script, /Belvedere Tan/);
   assert.match(script, /Earthen/);
   assert.match(css, /\.rules-answer-lead strong/);
+  assert.match(css, /\.rules-answer-lead\s*\{[^}]*font-size:\s*1rem;[^}]*line-height:\s*1\.56;/s);
+  assert.match(css, /\.rules-answer-list strong\s*\{[^}]*font-weight:\s*700;/s);
 });
 
 test("conditional-answer banner explains the caveat without implying yes", () => {

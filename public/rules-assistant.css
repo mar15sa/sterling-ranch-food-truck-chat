@@ -414,8 +414,8 @@ kbd {
 }
 
 .rules-answer-lead {
-  font-size: 1.03rem;
-  line-height: 1.58;
+  font-size: 1rem;
+  line-height: 1.56;
   color: var(--rules-ink);
 }
 
@@ -470,7 +470,7 @@ kbd {
 }
 
 .rules-answer-list strong {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--rules-forest-deep);
 }
 

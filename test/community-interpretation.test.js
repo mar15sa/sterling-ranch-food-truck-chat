@@ -217,6 +217,62 @@ test("AI outage uses a broad unfiltered event fallback", async () => {
   assert.equal(answer._interpretation.outcome, "fallback");
 });
 
+test("a named class question without punctuation reaches the live calendar", async () => {
+  let receivedRequest;
+  let plannerCalls = 0;
+  const question = "When is the next yoga class";
+  const answer = await answerCommunityQuestion(question, {
+    interpretationMode: "legacy",
+    now: new Date("2026-09-13T18:00:00Z"),
+    planCommunitySearch: async () => { plannerCalls += 1; return null; },
+    getCommunityEvents: async (request) => {
+      receivedRequest = request;
+      return {
+        events: [{ id: "19", title: "Yoga w/Laura", date: "2026-09-19", time: "07:30", location: "Great Hall", url: "https://alpha.gov/event/19", startDate: "2026-09-19T07:30:00" }],
+        range: { kind: "next-seven-days", start: "2026-09-13", end: "2026-09-20", label: "the next seven days" },
+        sourceUrl: "https://alpha.gov/calendar",
+        checkedAt: "2026-09-13T18:00:00Z",
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [] },
+      };
+    },
+  });
+  assert.equal(plannerCalls, 0);
+  assert.equal(receivedRequest, question);
+  assert.equal(answer.answerMode, "community-live-events");
+  assert.match(answer.keyDetails.join(" "), /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
+});
+
+test("a planner cannot reroute a clearly timed class question to an information page", async () => {
+  let receivedRequest;
+  const question = "When is the next Pilates class?";
+  const answer = await answerCommunityQuestion(question, {
+    interpretationMode: "structured",
+    now: new Date("2026-09-13T18:00:00Z"),
+    planCommunitySearch: async () => interpretation({
+      intent: "services",
+      goal: "information",
+      goals: ["information"],
+      subject: "homeowner landscape class",
+      dateRange: { kind: "next-seven-days", start: "2026-09-13", end: "2026-09-20", label: "the next seven days" },
+      searchQueries: ["homeowner landscape class"],
+    }),
+    getCommunityEvents: async (request) => {
+      receivedRequest = request;
+      return {
+        events: [{ id: "15", title: "Floor Mat Pilates for Boomers", date: "2026-09-15", time: "09:00", location: "Great Hall", url: "https://alpha.gov/event/15", startDate: "2026-09-15T09:00:00" }],
+        range: request.dateRange,
+        sourceUrl: "https://alpha.gov/calendar",
+        checkedAt: "2026-09-13T18:00:00Z",
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [] },
+      };
+    },
+  });
+  assert.equal(receivedRequest.intent, "events");
+  assert.equal(receivedRequest.goal, "schedule");
+  assert.equal(answer.answerMode, "community-live-events");
+  assert.match(answer.keyDetails.join(" "), /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
+});
+
 test("parser uncertainty cannot produce a verified no-events claim", async () => {
   const answer = await answerCommunityQuestion("What events are tomorrow?", {
     interpretationMode: "structured",
