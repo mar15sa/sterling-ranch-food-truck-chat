@@ -35,6 +35,22 @@
         "status": 200
       },
       {
+        "path": "/atlas/trails.json",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-trails.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-trails.css",
+        "status": 200
+      },
+      {
+        "path": "/atlas/cab-trail-map.png",
+        "status": 200
+      },
+      {
         "path": "/atlas./places.json",
         "status": 404
       },
@@ -85,6 +101,22 @@
       },
       {
         "path": "/atlas/geography.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/trails.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-trails.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-trails.css",
+        "status": 404
+      },
+      {
+        "path": "/atlas/cab-trail-map.png",
         "status": 404
       },
       {

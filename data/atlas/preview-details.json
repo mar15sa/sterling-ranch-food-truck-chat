@@ -308,5 +308,54 @@
       "label": "View location details",
       "url": "https://www.atlascoffees.com/locations"
     }
+  },
+  "mccormick": {
+    "description": "A neighborhood playground and gathering spot on Palmer Lake Avenue, set inside the curved residential street. Open the playground and shelter below to see what is here.",
+    "sourceIds": [
+      "cab-parks"
+    ],
+    "tags": [
+      "Playground",
+      "Shelter",
+      "Providence"
+    ],
+    "visitNotes": [
+      "Use Palmer Lake Avenue to orient yourself; the map marker identifies the park area."
+    ]
+  },
+  "mccormick-play": {
+    "description": "The play structure sits within McCormick Park’s central recreation space.",
+    "sourceIds": [
+      "cab-parks"
+    ],
+    "access": "Neighborhood park playground.",
+    "tags": [
+      "Playground"
+    ]
+  },
+  "pioneer": {
+    "description": "A neighborhood park on Arapahoe Peak Street with a large grassy area, a playground and a shelter for gathering.",
+    "sourceIds": [
+      "cab-parks"
+    ],
+    "tags": [
+      "Playground",
+      "Grass",
+      "Shelter"
+    ],
+    "visitNotes": [
+      "Look for the park among the homes on Arapahoe Peak Street."
+    ]
+  },
+  "pioneer-play": {
+    "description": "A play structure beside Pioneer Park’s large grassy recreation area.",
+    "sourceIds": [
+      "cab-parks"
+    ],
+    "access": "Neighborhood park playground.",
+    "tags": [
+      "Playground",
+      "Grass"
+    ]
   }
 }

@@ -287,5 +287,44 @@
     "locationSource": "https://www.jaadougco.org/",
     "locationMethod": "Operator school calendar location coordinates repeated for on-campus August 2026 events at the published campus address.",
     "locationCheckedAt": "2026-09-13"
+  },
+  "mccormick": {
+    "coordinates": [
+      -105.039998883475,
+      39.500392285463
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "mccormick",
+    "groupName": "McCormick Park",
+    "locationSource": "https://www.openstreetmap.org/way/1194153472",
+    "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "pioneer": {
+    "coordinates": [
+      -105.038305088783,
+      39.50319059039
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "pioneer",
+    "groupName": "Pioneer Park",
+    "locationSource": "https://www.openstreetmap.org/way/914862901",
+    "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "yard-27": {
+    "coordinates": [
+      -105.040810232574,
+      39.490916529897
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "yard-27",
+    "groupName": "Yard 27",
+    "locationSource": "https://www.openstreetmap.org/way/1198829062",
+    "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+    "locationCheckedAt": "2026-09-13"
   }
 }

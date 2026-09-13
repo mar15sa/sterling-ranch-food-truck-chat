@@ -79,3 +79,33 @@ test('aging information is visibly due for review',()=>{
   assert.equal(core.sourceIsDue({checkedAt:'2026-09-13',reviewAfterDays:14},new Date('2026-10-01')),true);
   assert.equal(core.sourceIsDue({checkedAt:'invalid'}),true);
 });
+
+test('directory nests every record under one destination and preserves amenity search',()=>{
+  const groups=core.directoryGroups(catalog.places);
+  const flattened=groups.flatMap(g=>g.matches.map(p=>p.id));
+  assert.equal(new Set(flattened).size,catalog.places.length);
+  assert.equal(flattened.length,catalog.places.length);
+  assert.ok(groups.every(g=>!g.place.parentId));
+  const park=groups.find(g=>g.place.id==='mccormick');
+  assert.deepEqual(new Set(park.children.map(p=>p.id)),new Set(['mccormick-play','mccormick-shelter']));
+  const search=core.directoryGroups(catalog.places,'all','playground');
+  assert.ok(search.find(g=>g.place.id==='mccormick').matches.some(p=>p.id==='mccormick-play'));
+  const coffee=core.directoryGroups(catalog.places,'businesses','coffee');
+  assert.ok(coffee.find(g=>g.place.id==='sterling-center').matches.some(p=>p.id==='atlas-coffee'));
+  assert.ok(!core.directoryGroups(catalog.places,'future','').flatMap(g=>g.matches).some(p=>p.id==='burns-courts'));
+});
+
+test('trail guides retain schematic provenance, connected segments and honest distance totals',()=>{
+  const trails=require('../public/atlas/trails.json');assert.equal(core.validateTrails(trails),trails);
+  const registered=new Set(require('../data/atlas/sources.json').sources.map(s=>s.url));assert.ok(registered.has(trails.source.url));
+  for(const route of trails.routes){assert.ok(route.sourceScope);assert.ok(route.nearbyPlaceIds.every(id=>catalog.places.some(p=>p.id===id)));}
+  const broken=structuredClone(trails);broken.routes.find(r=>r.id==='providence-west').paths[1][0][0]+=30;
+  assert.throws(()=>core.validateTrails(broken),/connect/);
+  const misleading=structuredClone(trails);misleading.routes[0].miles=2;
+  assert.throws(()=>core.validateTrails(misleading),/distance/);
+  const unclosed=structuredClone(trails);unclosed.routes[0].paths[0].pop();
+  assert.throws(()=>core.validateTrails(unclosed),/close/);
+  for(const field of ['steps','nearbyPlaceIds','viewBox','color','startPoint','endPoint']){const missing=structuredClone(trails);delete missing.routes[0][field];assert.throws(()=>core.validateTrails(missing),/review/,field);}
+  assert.deepEqual(core.clampTrailView([9999,-999,200,300],[1242,2000]),[1042,0,200,300]);
+  assert.deepEqual(core.clampTrailView([-999,9999,200,300],[1242,2000]),[0,1700,200,300]);
+});

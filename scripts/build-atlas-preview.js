@@ -34,4 +34,7 @@ const output={version:2,checkedAt:inventory.asOf,status:'staging-prototype',plac
 const file=path.join(root,'public/atlas/places.json'),json=JSON.stringify(output,null,2)+'\n';
 if(process.argv.includes('--check')){if(fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n')!==json)throw Error('Staging catalog is out of sync with reviewed projection');}
 else fs.writeFileSync(file,json);
+const trails=JSON.stringify(read('data/atlas/trails.json'),null,2)+'\n',trailFile=path.join(root,'public/atlas/trails.json');
+if(process.argv.includes('--check')){if(fs.readFileSync(trailFile,'utf8').replace(/\r\n/g,'\n')!==trails)throw Error('Staging trail guide is out of sync');}
+else fs.writeFileSync(trailFile,trails);
 console.log(JSON.stringify({listed:places.length,mapped:places.filter(p=>p.coordinates).length,held:held.length,total:inventory.records.length}));

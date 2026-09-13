@@ -49,7 +49,9 @@ For Community Assistant questions, existing adopted-rule authority and approval 
 
 ## Proposed upkeep routine
 
-Each of the 56 sources has a named owner, exact URL, purpose, limitation, review interval and scope-specific review date in data/atlas/sources.json. Two references need an initial scope follow-up: the exact county GIS boundary layer and School 51 attendance-boundary update. CAB's rental landing page and September calendar were reviewed for discovery; individual bookings/events still need their own checks. The homeowners guide was reviewed only for the Overlook excerpt, not end to end.
+Each of the 60 sources has a named owner, exact URL, purpose, limitation, review interval and scope-specific review date in data/atlas/sources.json. Two references need an initial scope follow-up: the exact county GIS boundary layer and School 51 attendance-boundary update. CAB's rental landing page and September calendar were reviewed for discovery; individual bookings/events still need their own checks. The homeowners guide was reviewed only for the Overlook excerpt, not end to end.
+
+The September 13 nested-directory follow-up presents the same 100 records under 33 destinations. Parent relationships drive both directory grouping and descendant search. Location overrides now place 78 records at 18 map areas; 22 records across 15 places/projects remain directory-only. The three walking guides have their own canonical file, `data/atlas/trails.json`, copied by `scripts/build-atlas-preview.js` into the served catalog. CAB's October 13, 2025 map supplies the trail depiction and printed mileage; current operator pages supply changed facility annotations. Review those scopes separately. When the map changes, compare each highlighted segment, distance and start/finish before replacing the source image. Recheck CAB trail notices and facility access before adding a current-availability claim. A source-file change must not silently convert schematic paths to GPS routes. [Walk evidence and methods](ATLAS-NESTED-PLACES-AND-WALKS.md).
 
 | Check | Proposed cadence | What should happen |
 | --- | --- | --- |

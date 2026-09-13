@@ -1,5 +1,13 @@
 # Sterling Ranch Atlas: staging prototype
 
+## Nested destinations and walking guides: September 13, 2026
+
+Implemented and locally verified; staging release verification pending. The directory now presents 33 destinations containing all 100 searchable records. Related playgrounds, shelters, tenants and future phases expand inside their parent rather than appearing as 100 peer cards. Search and category matches remain discoverable, including grandchildren under Sterling Center. McCormick, Pioneer and Yard 27 gained CAB-reconciled park-center markers: 78 listings share 18 map areas, while 22 listings across 15 places/projects remain directory-only.
+
+The new Trails view includes a browsable official CAB trail map and three source-checked walking guides: Prospect's 0.38-mile inner loop, Providence's 1.04-mile west greenway and the 0.37-mile Titan Road–Overlook link. Each has a highlighted path, distance, walking-time estimate, start/finish, steps and nearby places. These are schematic guides on the published map, not GPS navigation. Current School 51 and Prospect annotations replace older source-image labels. Thirteen focused tests, reproducible catalog checks and actual HTTP staging/production isolation pass; local desktop and phone browser review passed nested navigation and the walk experience.
+
+[Implementation and review](ATLAS-NESTED-PLACES-AND-WALKS.md) · [Three proposed visual directions](ATLAS-NEXT-DESIGN-DIRECTIONS.md). Visual concepts remain proposals. Production launch remains unapproved. Earlier sections below are dated release history, not current counts or current trail behavior.
+
 ## Location and trail correction: September 13, 2026
 
 Verified on staging September 13, 2026 at `c0a7d7c0d73e61dd8c3b732240f0d35ec7506f79`, ready at 18:16 UTC. Four operator property markers add Broadstone, Prose, Primrose and John Adams Academy: 70 located listings at 15 shared map areas, with 30 listings across 18 places/projects still directory-only. These are operator property positions with entrance checks outstanding; attached private amenities retain their access labels. The 100-listing catalog is unchanged in scope. The registry now contains 60 sources. The deployed catalog matched the checked build exactly; Atlas page/catalog/script remained 404 on production. The live browser showed 70 located listings and opened Prose's new marker without errors. Release evidence: `artifacts/atlas/location-release-check.json`.

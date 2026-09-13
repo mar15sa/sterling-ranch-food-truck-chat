@@ -332,17 +332,21 @@
       "village": "Providence",
       "status": "listed",
       "future": false,
-      "description": "Play structures.",
-      "tags": [],
+      "description": "A neighborhood playground and gathering spot on Palmer Lake Avenue, set inside the curved residential street. Open the playground and shelter below to see what is here.",
+      "tags": [
+        "Playground",
+        "Shelter",
+        "Providence"
+      ],
       "aliases": [],
       "sources": [
         {
-          "label": "Developer parks directory",
-          "url": "https://sterlingranch.com/town-life/parks-rec/"
-        },
-        {
           "label": "CAB community parks",
           "url": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        {
+          "label": "Developer parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
         }
       ],
       "checkedAt": "2026-09-13",
@@ -355,12 +359,25 @@
         }
       ],
       "access": null,
-      "visitNotes": [],
+      "visitNotes": [
+        "Use Palmer Lake Avenue to orient yourself; the map marker identifies the park area."
+      ],
       "unknowns": [
         "Confirm public entrance and current access.",
         "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
       ],
-      "address": "Palmer Lake Avenue"
+      "address": "Palmer Lake Avenue",
+      "coordinates": [
+        -105.039998883475,
+        39.500392285463
+      ],
+      "locationPrecision": "park-center",
+      "locationGroup": "mccormick",
+      "groupName": "McCormick Park",
+      "locationSource": "https://www.openstreetmap.org/way/1194153472",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "pat-gallagher",
@@ -420,17 +437,21 @@
       "village": "Providence",
       "status": "listed",
       "future": false,
-      "description": "Play area and shelter.",
-      "tags": [],
+      "description": "A neighborhood park on Arapahoe Peak Street with a large grassy area, a playground and a shelter for gathering.",
+      "tags": [
+        "Playground",
+        "Grass",
+        "Shelter"
+      ],
       "aliases": [],
       "sources": [
         {
-          "label": "Developer parks directory",
-          "url": "https://sterlingranch.com/town-life/parks-rec/"
-        },
-        {
           "label": "CAB community parks",
           "url": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        {
+          "label": "Developer parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
         }
       ],
       "checkedAt": "2026-09-13",
@@ -443,12 +464,25 @@
         }
       ],
       "access": null,
-      "visitNotes": [],
+      "visitNotes": [
+        "Look for the park among the homes on Arapahoe Peak Street."
+      ],
       "unknowns": [
         "Confirm public entrance and current access.",
         "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
       ],
-      "address": "Arapahoe Peak Street"
+      "address": "Arapahoe Peak Street",
+      "coordinates": [
+        -105.038305088783,
+        39.50319059039
+      ],
+      "locationPrecision": "park-center",
+      "locationGroup": "pioneer",
+      "groupName": "Pioneer Park",
+      "locationSource": "https://www.openstreetmap.org/way/914862901",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "providence-park",
@@ -580,7 +614,18 @@
         "Confirm public entrance and current access.",
         "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
       ],
-      "address": "Between Animas River Street and River Peak Circle"
+      "address": "Between Animas River Street and River Peak Circle",
+      "coordinates": [
+        -105.040810232574,
+        39.490916529897
+      ],
+      "locationPrecision": "park-center",
+      "locationGroup": "yard-27",
+      "groupName": "Yard 27",
+      "locationSource": "https://www.openstreetmap.org/way/1198829062",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "high-top",
@@ -2735,8 +2780,10 @@
       "village": "Providence",
       "status": "listed",
       "future": false,
-      "description": "McCormick playground is listed within McCormick Park.",
-      "tags": [],
+      "description": "The play structure sits within McCormick Park’s central recreation space.",
+      "tags": [
+        "Playground"
+      ],
       "aliases": [],
       "sources": [
         {
@@ -2748,12 +2795,23 @@
       "reviewAfterDays": 7,
       "reviewState": "staging-review",
       "facts": [],
-      "access": "Confirm facility-specific access and current availability.",
+      "access": "Neighborhood park playground.",
       "visitNotes": [],
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": null,
+      "coordinates": [
+        -105.039998883475,
+        39.500392285463
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "mccormick",
+      "groupName": "McCormick Park",
+      "locationSource": "https://www.openstreetmap.org/way/1194153472",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "pioneer-play",
@@ -2765,8 +2823,11 @@
       "village": "Providence",
       "status": "listed",
       "future": false,
-      "description": "Pioneer playground is listed within Pioneer Park.",
-      "tags": [],
+      "description": "A play structure beside Pioneer Park’s large grassy recreation area.",
+      "tags": [
+        "Playground",
+        "Grass"
+      ],
       "aliases": [],
       "sources": [
         {
@@ -2778,12 +2839,23 @@
       "reviewAfterDays": 7,
       "reviewState": "staging-review",
       "facts": [],
-      "access": "Confirm facility-specific access and current availability.",
+      "access": "Neighborhood park playground.",
       "visitNotes": [],
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": null,
+      "coordinates": [
+        -105.038305088783,
+        39.50319059039
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "pioneer",
+      "groupName": "Pioneer Park",
+      "locationSource": "https://www.openstreetmap.org/way/914862901",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "zippity-play",
@@ -2903,7 +2975,18 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": null,
+      "coordinates": [
+        -105.040810232574,
+        39.490916529897
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "yard-27",
+      "groupName": "Yard 27",
+      "locationSource": "https://www.openstreetmap.org/way/1198829062",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "high-top-courts",
@@ -4207,7 +4290,18 @@
       "unknowns": [
         "Confirm exact position, current operation and access before visiting."
       ],
-      "address": null
+      "address": null,
+      "coordinates": [
+        -105.039998883475,
+        39.500392285463
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "mccormick",
+      "groupName": "McCormick Park",
+      "locationSource": "https://www.openstreetmap.org/way/1194153472",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "pioneer-shelter",
@@ -4242,7 +4336,18 @@
       "unknowns": [
         "Confirm exact position, current operation and access before visiting."
       ],
-      "address": null
+      "address": null,
+      "coordinates": [
+        -105.038305088783,
+        39.50319059039
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "pioneer",
+      "groupName": "Pioneer Park",
+      "locationSource": "https://www.openstreetmap.org/way/914862901",
+      "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+      "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "broadstone-ev",

@@ -10,7 +10,7 @@
   function add(parent,tag,attrs,text){const n=el(tag,attrs,text);parent.append(n);return n;}
   function link(parent,label,url,cls=''){const safe=C.safeLink(url);if(!safe)return;return add(parent,'a',{href:safe,class:cls,...(safe.startsWith('https:')?{target:'_blank',rel:'noopener noreferrer'}:{})},label);}
   function filtered(){return C.filterPlaces(state.places,state.category,state.query);}
-  function number(p){return String(state.places.indexOf(p)+1).padStart(2,'0');}
+  function number(p){const groups=C.directoryGroups(state.places);return String(groups.findIndex(g=>g.matches.some(item=>item.id===p.id))+1).padStart(2,'0');}
   function point(c){return C.project(c,state.geography.bounds,state.view);}
   function pathData(coords,height=0){return coords.map((c,i)=>{const[x,y]=point(c);return `${i?'L':'M'}${x.toFixed(2)} ${(y-height).toFixed(2)}`;}).join(' ');}
   function screenUnit(){return Math.max(1200/Math.max(1,stage.clientWidth),940/Math.max(1,stage.clientHeight))/state.zoom;}
@@ -50,7 +50,7 @@
     const groups=C.groupPlaces(filtered()), frag=document.createDocumentFragment(), unit=screenUnit(), boxes=[], labelBoxes=[];
     for(const group of groups){
       const selected=group.places.find(p=>p.id===state.selected);
-      const p=selected||group.places[0], category=state.category==='future'?'future':p.category, style=C.categories[category];
+      const p=selected||group.places.find(item=>!item.parentId)||group.places[0], category=state.category==='future'?'future':p.category, style=C.categories[category];
       const [gx,gy]=point(group.coordinates);
       const lift=(state.view==='model'?9:0)+state.explode*style.elevation;
       let x=gx,y=gy-lift;
@@ -62,8 +62,8 @@
         y=gy-lift+Math.sin(theta)*(35+attempt*8)*unit;
       }
       boxes.push({x,y});
-      const label=group.places.length>1?(p.groupName||p.name):p.name;
-      const g=se('g',{class:'map-pin'+(selected?' is-selected':''),role:'button',tabindex:0,'aria-label':label+(group.places.length>1?`, ${group.places.length} places`:''),'aria-pressed':String(Boolean(selected)),'data-pin':p.id,style:'--place-color:'+style.color});
+      const label=p.name;
+      const g=se('g',{class:'map-pin'+(selected?' is-selected':''),role:'button',tabindex:0,'aria-label':label+(group.places.length>1?`, ${group.places.length-1} inside`:''),'aria-pressed':String(Boolean(selected)),'data-pin':p.id,style:'--place-color:'+style.color});
       if(category==='future')g.append(se('ellipse',{cx:gx,cy:gy,rx:24*unit,ry:12*unit,class:'future-ring'}));
       g.append(se('circle',{cx:gx,cy:gy,r:3*unit,class:'pin-ground'}));
       g.append(se('path',{d:`M${gx} ${gy} L${x} ${y}`,class:'pin-line'}));
@@ -72,7 +72,7 @@
       g.append(se('circle',{cx:x,cy:y,r:13*unit,class:'pin-circle'}));
       g.append(se('text',{x,y,class:'pin-number',style:`font-size:${11*unit}px`},number(p)));
       if(state.zoom>1.25 || selected || groups.length<=7){
-        const title=label+(group.places.length>1?' · '+group.places.length+' places':'');
+        const title=label+(group.places.length>1?' · '+(group.places.length-1)+' inside':'');
         const labelText=title.length>32?title.slice(0,30)+'…':title;
         const width=labelText.length*6.2*unit,height=18*unit, preferred=x>760?'end':'start';
         let chosen;
@@ -104,14 +104,31 @@
     else message.textContent='';
   }
   function renderList(){
-    const places=filtered(), mapped=places.filter(p=>p.coordinates).length;
-    $('#result-count').textContent=`${places.length} listings · ${mapped} located`;
+    const places=filtered(), groups=C.directoryGroups(state.places,state.category,state.query), searching=Boolean(state.query.trim())||state.category!=='all';
+    $('#result-count').textContent=`${groups.length} destinations`+(searching?` · ${places.length} matches`:'');
     const frag=document.createDocumentFragment();
-    for(const p of places){
+    function placeButton(p,container,child=false){
       const b=el('button',{type:'button',class:'place-row','aria-pressed':String(p.id===state.selected),'data-place':p.id,style:'--place-color:'+C.categories[p.category].color});
-      add(b,'span',{class:'place-number','aria-hidden':'true'},number(p));
+      if(!child)add(b,'span',{class:'place-number','aria-hidden':'true'},number(p));
       const copy=add(b,'span',{});add(copy,'strong',{},p.name);add(copy,'small',{},(p.parentName?'At '+p.parentName:p.village)+' · '+C.statuses[p.status]+(!p.coordinates?' · Not pinned yet':''));
-      add(b,'span',{class:'row-arrow','aria-hidden':'true'},'↗');b.addEventListener('click',()=>selectPlace(p.id,b));frag.append(b);
+      add(b,'span',{class:'row-arrow','aria-hidden':'true'},'↗');b.addEventListener('click',()=>selectPlace(p.id,b));container.append(b);
+    }
+    function childrenDisclosure(parent,container){
+      const children=state.places.filter(p=>p.parentId===parent.id);if(!children.length)return;
+      const disclosure=add(container,'details',{class:'place-children'});
+      add(disclosure,'summary',{},`Explore ${children.length} inside`);
+      for(const child of children){placeButton(child,disclosure,true);childrenDisclosure(child,disclosure);}
+    }
+    for(const group of groups){
+      const card=add(frag,'article',{class:'destination-card'});placeButton(group.place,card);
+      if(searching){
+        const matches=group.matches.filter(p=>p.id!==group.place.id);
+        if(matches.length){const nested=add(card,'div',{class:'matched-children'});for(const match of matches)placeButton(match,nested,true);}
+        else childrenDisclosure(group.place,card);
+      }else{
+        if(group.children.length)add(card,'p',{class:'destination-preview'},group.children.slice(0,3).map(p=>p.name).join(' · ')+(group.children.length>3?' + more':''));
+        childrenDisclosure(group.place,card);
+      }
     }
     if(!places.length){
       const empty=add(frag,'div',{class:'empty'});
@@ -148,8 +165,24 @@
     if(p.locationPrecision==='street-area')add(detail,'p',{class:'detail-note'},'Approximate area near the streets named by CAB. The marker is not an entrance or a surveyed park location.');
     if(p.locationPrecision==='operator-area')add(detail,'p',{class:'detail-note'},'This property location comes from the operator’s website. The visitor entrance still needs checking.');
     if(p.locationPrecision==='parent-area')add(detail,'p',{class:'detail-note'},'The marker uses the parent facility’s location. The exact position of this feature within it is still being checked.');
-    const relatives=state.places.filter(other=>other.id!==p.id&&(other.parentId===p.id||(p.parentId&&other.parentId===p.parentId)||(p.locationGroup&&other.locationGroup===p.locationGroup)));
-    if(relatives.length){const section=add(detail,'div',{class:'related-places'});add(section,'h3',{},'Also at this location');for(const other of relatives){const b=add(section,'button',{type:'button'},other.name+' ↗');b.addEventListener('click',()=>selectPlace(other.id));}}
+    const children=state.places.filter(other=>other.parentId===p.id);
+    if(children.length){
+      const section=add(detail,'div',{class:'inside-place'});add(section,'h3',{},'Inside '+p.name);
+      function appendChild(child,container){
+        const descendants=state.places.filter(other=>other.parentId===child.id);
+        const entry=add(container,'details',{class:'amenity-entry'}),summary=add(entry,'summary',{});
+        add(summary,'span',{},child.name);add(summary,'small',{},C.statuses[child.status]+(descendants.length?` · ${descendants.length} inside`:''));
+        add(entry,'p',{},child.description);
+        if(child.access&&child.access!==p.access)add(entry,'p',{class:'amenity-access'},child.access);
+        if(child.visitNotes?.length){const notes=add(entry,'ul',{});child.visitNotes.forEach(note=>add(notes,'li',{},note));}
+        if(child.action)link(entry,child.action.label+' ↗',child.action.url);
+        const open=add(entry,'button',{type:'button',class:'sublisting-link'},'View '+child.name+' details ↗');open.addEventListener('click',()=>selectPlace(child.id));
+        if(descendants.length){const nested=add(entry,'div',{class:'nested-amenities'});descendants.forEach(item=>appendChild(item,nested));}
+      }
+      children.forEach(child=>appendChild(child,section));
+    }
+    const relatives=state.places.filter(other=>other.id!==p.id&&other.parentId!==p.id&&((p.parentId&&other.parentId===p.parentId)||(!p.parentId&&p.locationGroup&&other.locationGroup===p.locationGroup)));
+    if(relatives.length){const section=add(detail,'div',{class:'related-places'});add(section,'h3',{},'Also here');for(const other of relatives){const b=add(section,'button',{type:'button'},other.name+' ↗');b.addEventListener('click',()=>selectPlace(other.id));}}
     if(p.unknowns?.length){const check=add(detail,'details',{class:'detail-checks'});add(check,'summary',{},'Details still being checked');const ul=add(check,'ul',{});p.unknowns.forEach(q=>add(ul,'li',{},q));}
     const sources=add(detail,'div',{class:'detail-sources'});add(sources,'strong',{},'SOURCES & REVIEW');
     for(const s of p.sources)link(sources,s.label+' ↗',s.url);
@@ -191,6 +224,8 @@
   $('#zoom-in').addEventListener('click',()=>zoom(.35));$('#zoom-out').addEventListener('click',()=>zoom(-.35));
   $('#reset-map').addEventListener('click',()=>{state.zoom=1;state.pan=[0,0];updateCamera();drawPins();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!detail.hidden)closeDetail();});
+  window.addEventListener('atlas:open-place',event=>{if(state.places.some(p=>p.id===event.detail?.id)){selectPlace(event.detail.id);$('#places-explorer').scrollIntoView({block:'start',behavior:'instant'});}});
+  window.addEventListener('atlas:leave-places',()=>{if(!detail.hidden)closeDetail();});
   svg.addEventListener('keydown',e=>{if(e.target!==svg)return;if(['+','=','-','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key)){e.preventDefault();if(['+','='].includes(e.key))zoom(.35);else if(e.key==='-')zoom(-.35);else if(e.key==='Home')$('#reset-map').click();else{const axis=e.key==='ArrowLeft'||e.key==='ArrowRight'?0:1;state.pan[axis]+=e.key==='ArrowLeft'||e.key==='ArrowUp'?45:-45;limitPan();updateCamera();}}});
   function limitPan(){state.pan=state.pan.map(n=>Math.max(-650*state.zoom,Math.min(650*state.zoom,n)));}
   let drag=null,dragMoved=false;
@@ -198,7 +233,7 @@
   svg.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;dragMoved=Math.abs(dx)+Math.abs(dy)>5;const ratio=Math.max(1200/stage.clientWidth,940/stage.clientHeight);state.pan=[drag.pan[0]+dx*ratio,drag.pan[1]+dy*ratio];limitPan();updateCamera();});
   const stopDrag=()=>{drag=null;setTimeout(()=>{dragMoved=false;},0);};svg.addEventListener('pointerup',stopDrag);svg.addEventListener('pointercancel',stopDrag);
   new ResizeObserver(()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(drawPins);}).observe(stage);
-  async function getJson(url){const response=await fetch(url,{signal:AbortSignal.timeout(15000)});if(!response.ok)throw Error('Could not load '+url);return response.json();}
+  async function getJson(url){const response=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(15000)});if(!response.ok)throw Error('Could not load '+url);return response.json();}
   async function load(){
     stage.setAttribute('aria-busy','true');
     const [catalog,geography]=await Promise.allSettled([getJson('/atlas/places.json').then(C.validateCatalog),getJson('/atlas/geography.json')]);
@@ -206,7 +241,7 @@
       state.places=catalog.value.places;renderList();
       const coverage=catalog.value.coverage;
       if(coverage){
-        $('#inventory-summary').textContent=`${coverage.listed} listings: ${coverage.placeCount} places and projects, ${coverage.featureCount} individual amenities, ${coverage.phaseCount} future phases and ${coverage.recurringCount} recurring uses. ${coverage.heldCount} research leads are still held for review.`;
+        $('#inventory-summary').textContent='Find a place, see what’s inside, and plan your time around the neighborhood.';
         $('#coverage-note').textContent='The collection accounts for the named parks in the developer and CAB directories and the CAB facility list. Features share their parent’s marker when their exact position is unknown. Unlocated entries remain searchable in the directory. The saved map background is incomplete and does not establish a community or property boundary. Use the official full plan below for wider development context.';
         $('#research-summary').textContent=`${coverage.heldCount} research leads still being checked`;
         $('#research-intro').textContent=`${coverage.makerLeadsHeld} neighborhood-business leads are awaiting their owners’ listing permission and public location choice. Other leads below need identity, location or access checks. These are not confirmed destinations or map pins.`;

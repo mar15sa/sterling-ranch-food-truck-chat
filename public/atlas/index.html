@@ -7,10 +7,12 @@
   <title>The Sterling Ranch Atlas | Staging preview</title>
   <meta name="description" content="Explore Sterling Ranch’s parks, gathering places, neighborhood businesses, and plans for the future.">
   <link rel="icon" href="/favicon.svg">
-  <link rel="stylesheet" href="/atlas/atlas.css">
+  <link rel="stylesheet" href="/atlas/atlas.css?v=20260913-walks-1">
+  <link rel="stylesheet" href="/atlas/atlas-trails.css?v=20260913-walks-1">
   <script src="/environment.js"></script>
-  <script src="/atlas/atlas-core.js" defer></script>
-  <script src="/atlas/atlas.js" defer></script>
+  <script src="/atlas/atlas-core.js?v=20260913-walks-1" defer></script>
+  <script src="/atlas/atlas.js?v=20260913-walks-1" defer></script>
+  <script src="/atlas/atlas-trails.js?v=20260913-walks-1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#directory">Skip to place directory</a>
@@ -21,7 +23,8 @@
   <main>
     <div class="atlas-heading"><div><p class="eyebrow">YOUR NEIGHBORHOOD, LAYER BY LAYER</p><h1>The Sterling Ranch Atlas<span>.</span></h1></div><p class="edition">FIELD NOTES / 01<br><strong>Staging prototype</strong></p></div>
     <div class="preview-note"><span class="preview-label">STAGING ONLY</span><span id="inventory-summary">The expanded collection includes places, individual amenities and future phases. Exact locations and access are still being reviewed.</span></div>
-    <section class="explorer" aria-label="Explore Sterling Ranch">
+    <nav class="atlas-tabs" aria-label="Atlas explorer"><button type="button" id="show-places" aria-pressed="true">Places <small>See what’s inside</small></button><button type="button" id="show-trails" aria-pressed="false">Trails <small>Find your next walk</small></button></nav>
+    <section class="explorer" id="places-explorer" aria-label="Explore Sterling Ranch">
       <aside class="directory-panel" id="directory" tabindex="-1">
         <div class="search"><label class="sr-only" for="search">Search places and amenities</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Coffee, a park, pickleball…" autocomplete="off"><button type="button" id="clear-search" aria-label="Clear search" hidden>×</button></div>
         <div class="filters" aria-label="Filter places">
@@ -48,10 +51,13 @@
           <div class="zoom-controls" aria-label="Map controls"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button><button type="button" id="reset-map" aria-label="Reset map view">↺</button></div>
           <div class="map-instruction" id="map-instruction">Select a place to look closer</div>
         </div>
-        <div class="map-footer"><span><i class="legend-path"></i>Background paths, including sidewalks <span class="footer-separator">/</span> Trail routes still being checked</span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a></div>
-        <div class="directory-footer" id="trail-coverage"><strong>Looking for trails?</strong><p>We’ve included Willow Creek Trailhead, the planned Cultural Trail, and the Willow Creek and Sterling Gulch wildlife corridors. Wildlife corridors don’t establish public walking routes. Connected routes, distances, entrances and current access still need checking.</p><a href="https://www.sterlingranchcab.com/273/Trails" target="_blank" rel="noopener noreferrer">CAB’s official trail information ↗</a><p><a href="https://sterlingranchcab.com/DocumentCenter/View/2352" target="_blank" rel="noopener noreferrer">Parks & trails map, October 2025 ↗</a></p><p>CAB’s 30+ miles describes the completed development. The linked map is an older snapshot; check CAB for current access.</p></div>
+        <div class="map-footer"><span><i class="legend-path"></i>Neighborhood paths & sidewalks <span class="footer-separator">/</span> Choose Trails for walking guides</span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a></div>
       </div>
       <section id="place-detail" class="place-detail" aria-labelledby="detail-title" hidden></section>
+    </section>
+    <section id="trail-guide" class="trail-guide" aria-label="Walking trail guide" hidden>
+      <aside class="walk-picker"><p class="eyebrow">ON FOOT</p><h2>Pick a walk.</h2><p class="walk-intro">A quick lap, a longer greenway, or the trail beside the Overlook.</p><div id="walk-list" aria-label="Choose a walk"></div><button type="button" id="trail-network">Explore the full trail map ↗</button></aside>
+      <div class="trail-main"><div class="trail-toolbar"><span id="trail-map-title">Sterling Ranch trails</span><div><button type="button" id="trail-zoom-out" aria-label="Zoom trail map out">−</button><button type="button" id="trail-zoom-in" aria-label="Zoom trail map in">+</button><button type="button" id="trail-reset">Fit route</button></div></div><div class="trail-map-stage"><svg id="trail-map" role="group" tabindex="0" aria-label="Illustrated trail map. Choose a walk to highlight its path; use plus and minus to zoom."><title>Sterling Ranch trail guide</title></svg><p id="trail-map-status" role="status"></p></div><div class="trail-map-caption"><span>Illustrated route guide · distances from CAB</span><a href="https://sterlingranchcab.com/DocumentCenter/View/2352" target="_blank" rel="noopener noreferrer">Official trail map ↗</a></div><div id="walk-detail" class="walk-detail" aria-live="polite"></div></div>
     </section>
     <section class="atlas-notes" id="about-atlas"><div><p class="eyebrow">A GROWING LOCAL COLLECTION</p><h2>There’s more around the corner.</h2></div><p>This collection includes individual playgrounds, courts and gathering spaces alongside their parent places. Home businesses will appear with the owner’s permission. Future plans can change; each place links to its source.</p><details><summary>What’s included in this preview?</summary><p id="coverage-note">Loading inventory coverage…</p><a href="https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf" target="_blank" rel="noopener noreferrer">Official full community plan, June 2026 ↗</a><p><a href="https://sterlingranch.com/town-life/parks-rec/" target="_blank" rel="noopener noreferrer">Official parks directory ↗</a></p></details></section>
     <details class="research-coverage"><summary id="research-summary">Places still being checked</summary><p id="research-intro"></p><ul id="research-list"></ul></details>
