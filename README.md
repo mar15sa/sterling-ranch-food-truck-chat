@@ -4,11 +4,18 @@ This is the source code and operating documentation for the Sterling Ranch Socie
 
 - Food-truck and menu lookups from the community calendar.
 - A source-grounded Community Assistant for rules, services, forms, facilities, prices, contacts, events, and live status.
+- A native community calendar and local weather in the Daily Briefing.
 - Live Overlook outdoor-pool status.
 - An evidence-backed Douglas County-area openings tracker.
 - A staging-only community onboarding demo that turns one official website into a reviewed source-connection plan.
 
 Start with [the configuration reference](docs/CONFIGURATION.md), [the architecture map](docs/ARCHITECTURE.md), [the operating-cost snapshot](docs/OPERATING-COSTS.md), and [the Rules Assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md) when operating or handing off the project.
+
+For a plain-English overview, decision history, and design references, use the [Notion project guide](https://www.notion.so/3dabf909186d81789a09e4648dbb4bbe). Follow [documentation maintenance](docs/DOCUMENTATION-MAINTENANCE.md) when changing or releasing the project.
+
+Current operating references: [release and testing](docs/RELEASE-POLICY.md), [saved question records and access](docs/QUESTION-RECORDS.md), and [design reference/history](docs/DESIGN-REFERENCE.md). The September 13 CI change keeps the full pre-merge gate and replaces the duplicate post-merge suite with an exact-deployment health check. Older test counts and release snapshots describe their original revisions.
+
+Start with [SRS purpose and product values](docs/PRODUCT-VALUES.md) for helpfulness, proactiveness, accuracy, and the intended reusable product for other communities. Marissa is the sole operator today. These values explain the existing project-level engineering requirements.
 
 ## Run it
 
@@ -148,9 +155,9 @@ The private owner page shows the exact sanitized answer, highlights questions th
 
 Set these in your hosting provider's environment-variable settings (see "Put it online"). Never commit the key; `.env` is already gitignored.
 
-The scheduled `Rules answer quality monitor` GitHub workflow runs the full local evaluation and live production journeys every day. It checks the homepage and security headers, pool status, openings catalog, food-truck dates, representative rule answers, prompt injection, and source health. If a check fails, it opens or updates a GitHub issue with a review checklist. When the checks pass again, the workflow comments on and closes that issue automatically. Every uncertain production answer is also written to the server log with the sanitized question, reason, and closest source so it can be researched and added as a permanent regression case. The first occurrence of each distinct uncertain question can alert immediately; repeats of that same question are quiet for 24 hours.
+The scheduled `Rules answer quality monitor` GitHub workflow runs its configured evaluations and live production journeys daily. It checks the homepage and security headers, pool status, openings catalog, food-truck dates, representative rule answers, prompt injection, and source health. Failed checks create or update a review issue; recovery can close it. Operational alerts use question fingerprints and diagnostic details; the separate private Notion/webhook logger holds sanitized question-and-answer records. See [question records and access](docs/QUESTION-RECORDS.md) for the owner's indefinite-retention policy and storage boundaries. The first occurrence of each distinct uncertain question can alert immediately; repeats are quiet for the configured cooldown.
 
-`npm run check` is the release gate. It includes the 122 historical resident questions, authored and unseen rule tests, source/link safety checks, and a 238-question old-versus-upgraded Community Assistant comparison. A smaller corpus, any regression, a lower overall score, or any very-low upgraded answer blocks release. `npm run community:portability:live` separately proves the same engine can crawl and answer end-to-end questions for a second CivicPlus community without community-specific code changes.
+`npm run check` is the complete deterministic pre-merge release gate. It includes the current historical resident corpus, authored and unseen rule tests, source/link checks, and comparative Community Assistant evaluation. Use the candidate's report for counts. A smaller corpus, any regression, a lower overall score, or any very-low upgraded answer blocks release. Post-merge CI checks the exact deployment instead of repeating that suite; see [release and testing](docs/RELEASE-POLICY.md). `npm run community:portability:live` separately checks the configured second CivicPlus community's end-to-end behavior.
 
 The server also has an admin refresh endpoint:
 

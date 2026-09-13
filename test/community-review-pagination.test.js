@@ -42,6 +42,7 @@ test('actual authenticated handler pages resolved statuses without changing sour
   const fs = require('node:fs');
   const vm = require('node:vm');
   const { latestReviewDecision } = require('../lib/community-review-queue');
+  const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
   const { createSessionToken, sessionCookie, isAuthorizedRequest } = require('../lib/community-question-admin');
   const server = fs.readFileSync(require.resolve('../server'), 'utf8');
   const records = fixture.map(item => ({ ...item, recordType: 'review-item', sourceVersion: 'v1' }));
@@ -49,7 +50,7 @@ test('actual authenticated handler pages resolved statuses without changing sour
   let reads = 0;
   const before = JSON.stringify(records);
   const context = vm.createContext({
-    console, latestReviewDecision, paginateReviews,
+    console, latestReviewDecision, paginateReviews, buildCommunitySourceReadiness,
     questionAdminConfig: () => ({ sessionSecret: 'fixture-only' }), isAuthorizedRequest,
     sourceReviewStatus: () => ({ configured: true }), communitySourceStatus: () => ({ retirementPendingPageCount: 4 }),
     listReviewRecords: async () => { reads++; return records; },
@@ -74,6 +75,7 @@ test('actual authenticated handler pages resolved statuses without changing sour
   assert.equal(pending.body.pagination.total, 1968);
   assert.equal(pending.body.items.length, 18);
   assert.equal(pending.body.counts.retirementPendingPageCount, 4);
+  assert.equal(pending.body.readiness.totals.total, 27);
   const detail = {};
   await context.handleCommunitySourceReview(owner, detail, new URL('https://example.test/'), fixture[0].id);
   assert.equal(detail.body.item.status, 'approved');

@@ -57,6 +57,7 @@ async function main() {
 
   console.log(`Wrote ${args.indexPath}`);
   console.log(`Latest job ID: ${index.source.latestJobId}`);
+  console.log(`Refresh mode: ${index.source.lastRefreshMode || "full-content"}`);
   console.log(`Online update date: ${index.source.onlineUpdateDate || "Unknown"}`);
   console.log(`Sections indexed: ${index.source.sectionCount}`);
   console.log(`Search chunks indexed: ${index.source.chunkCount}`);

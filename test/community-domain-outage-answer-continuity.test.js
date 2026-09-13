@@ -17,9 +17,25 @@ function timeout() {
 }
 
 test("a short whole-domain outage preserves useful answers from unchanged exact approved evidence", async () => {
+  const dueIndex = structuredClone(communityIndex);
+  const recentlyExpired = new Date(INCIDENT_NOW - 6 * 60 * 60 * 1000).toISOString();
+  const lastVerifiedAt = new Date(INCIDENT_NOW - 30 * 60 * 60 * 1000).toISOString();
+  const dueSourceIds = new Set(dueIndex.sources.filter((source) => {
+    try { return new URL(source.sourceUrl).hostname === "sterlingranchcab.com"; } catch { return false; }
+  }).map((source) => source.id));
+  for (const source of dueIndex.sources) {
+    if (!dueSourceIds.has(source.id)) continue;
+    source.checkedAt = lastVerifiedAt;
+    source.staleAfter = recentlyExpired;
+  }
+  for (const fact of dueIndex.factLedger || []) {
+    if (!dueSourceIds.has(fact.sourceId)) continue;
+    fact.lastObservedAt = lastVerifiedAt;
+    fact.staleAfter = recentlyExpired;
+  }
   const result = await runBridge({
-    index: communityIndex,
-    baselineIndex: structuredClone(communityIndex),
+    index: dueIndex,
+    baselineIndex: structuredClone(dueIndex),
     now: INCIDENT_NOW,
     auditFn: () => {},
     fetchObservedHashes: async (sourceUrl, approvedSources) => {

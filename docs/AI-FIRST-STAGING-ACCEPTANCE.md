@@ -1,5 +1,7 @@
 # AI-first Community Assistant staging acceptance
 
+Scope clarification, September 13, 2026: this is the acceptance contract for promoting the structured interpreter. Its 24-hour requirement remains attached to that rollout and its approval scope. For ordinary PR testing, post-merge health checks, and separate source/accelerated workflows, start with [RELEASE-POLICY.md](RELEASE-POLICY.md). PRs #118/#119 changed CI timing without granting a waiver of this acceptance contract.
+
 Production must remain in `legacy` mode until this checklist is complete and the owner explicitly approves the exact staging commit.
 
 ## Before deployment

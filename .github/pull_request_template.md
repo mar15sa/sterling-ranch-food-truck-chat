@@ -26,3 +26,14 @@
 - [ ] Live-source and action-link safety were checked where applicable.
 - [ ] The exact candidate build passed the required local, hosted, and staging checks.
 - [ ] Resident-facing before/after behavior and any limitations are documented.
+
+## Documentation impact
+
+Follow [the documentation maintenance guide](https://github.com/mar15sa/sterling-ranch-food-truck-chat/blob/main/docs/DOCUMENTATION-MAINTENANCE.md). Documentation-only changes may skip runtime deployment checks under the engineering principles; existing required repository checks still apply.
+
+- Impacted explanations, decisions, operations, or design references (or a specific no-impact reason):
+- Updated Notion page links (or exact pending update and reason):
+- Implementation revision and live verification evidence, when applicable:
+- [ ] Affected Notion content was fetched before editing, updated, and fetched again to verify it, or a specific no-impact/pending reason is recorded.
+- [ ] The Community Assistant diagram and accessible explanation were updated if its flow changed.
+- [ ] Proposed, approved, implemented, and verified-live states are distinct; dates and evidence links describe only what was actually checked.

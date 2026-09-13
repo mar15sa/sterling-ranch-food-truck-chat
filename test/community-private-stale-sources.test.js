@@ -4,6 +4,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
 const { communitySourceStatus } = require("../lib/community-source-manager");
+const { buildCommunitySourceReadiness } = require("../lib/community-source-readiness");
 const { createSessionToken, sessionCookie, isAuthorizedRequest } = require("../lib/community-question-admin");
 const root = path.join(__dirname, "..");
 const server = fs.readFileSync(path.join(root, "server.js"), "utf8");
@@ -54,7 +55,7 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
     getRulesSearchMetrics: () => ({}), getRulesLlmMetrics: () => ({}),
     getCommunitySearchMetrics: () => ({}), getCommunityLlmMetrics: () => ({}), communityAnswerMetrics: () => ({}),
     communitySourceStatus: (_, now, options) => { statusReads++; return communitySourceStatus(index, now, options); },
-    liveMonitor: { status: () => ({}) },
+    liveMonitor: { status: () => ({}) }, buildCommunitySourceReadiness,
   });
   vm.runInContext(["requireQuestionAdmin", "handleCommunitySourceHealth", "handleHealth"].map(name => functionSource(server, name)).join("\n"), context);
   for (const cookie of ["", sessionCookie(`${createSessionToken("local-test-only")}tampered`)]) {
@@ -68,6 +69,7 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
   await context.handleCommunitySourceHealth({ method: "GET", headers: { cookie: sessionCookie(createSessionToken("local-test-only")) } }, owner);
   assert.equal(owner.status, 200);
   assert.equal(owner.body.community.staleSources[0].contentHash, overdue.contentHash);
+  assert.equal(owner.body.readiness.totals.total, 27);
   const publicResult = {};
   await context.handleHealth({ method: "GET", headers: {} }, publicResult);
   assert.equal(publicResult.status, 200);

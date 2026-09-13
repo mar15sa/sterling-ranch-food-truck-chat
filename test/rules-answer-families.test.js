@@ -363,10 +363,22 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   assert.equal(airConditioner.confidence.canAnswer, true);
   assert.match(airConditioner.answer, /DRC approval is not required/i);
 
-  const landscapeScreens = await answer("Can I add landscape screens for backyard privacy?");
-  assert.equal(landscapeScreens.confidence.canAnswer, true);
-  assert.match(landscapeScreens.answer, /landscape screens/i);
-  assert.match(landscapeScreens.answer, /you'll need DRC approval/i);
+  for (const question of [
+    "Privacy screens",
+    "privacy screen",
+    "Can I install privacy screens",
+    "Can I add landscape screens for backyard privacy?",
+    "Can I install privacy screns?",
+  ]) {
+    const landscapeScreens = await answer(question);
+    assert.equal(landscapeScreens.confidence.canAnswer, true, question);
+    assert.match(landscapeScreens.answer, /landscape screens/i, question);
+    assert.match(landscapeScreens.answer, /DRC approval/i, question);
+    assert.match(landscapeScreens.answer, /freestanding/i, question);
+    assert.match(landscapeScreens.answer, /may not be attached/i, question);
+    assert.match(landscapeScreens.answer, /redwood or cedar|Trex material/i, question);
+    assert.match(landscapeScreens.answer, /painted or stained/i, question);
+  }
 
   const rooflineLights = await answer("Can I install permanent roofline lights?");
   assert.equal(rooflineLights.confidence.canAnswer, true);
@@ -383,10 +395,16 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   assert.equal(privacyFence.confidence.canAnswer, true);
   assert.match(privacyFence.answer, /increase the height or screening capability/i);
 
-  const privacyScreens = await answer("Can I install privacy screens");
-  assert.equal(privacyScreens.confidence.canAnswer, true);
-  assert.match(privacyScreens.answer, /landscape screens/i);
-  assert.match(privacyScreens.answer, /you'll need DRC approval/i);
+  for (const question of ["Do trash cans need privacy screens?", "What enclosure screens recycling bins?"]) {
+    const trashScreen = await answer(question);
+    assert.equal(trashScreen.confidence.reason, "current-trash-storage-rule", question);
+    assert.match(trashScreen.answer, /trash|recycling|container/i, question);
+    assert.doesNotMatch(trashScreen.answer, /Landscape screens|maximum of three screens/i, question);
+  }
+
+  const windowFilm = await answer("Can I put privacy film on my windows?");
+  assert.match(windowFilm.answer, /window coverings|tinted glass/i);
+  assert.doesNotMatch(windowFilm.answer, /Landscape screens|maximum of three screens/i);
 
   const catio = await answer("Can I put up a catio. Not attached to the house");
   assert.match(catio.answer, /do(?:es)? not name catio(?:s)? specifically/i);

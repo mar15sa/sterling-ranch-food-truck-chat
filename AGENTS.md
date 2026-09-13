@@ -18,3 +18,11 @@
 - Keep shared logic reusable for other CivicPlus communities. Put community-specific URLs, labels, facilities, vocabulary, routing values, and vendor details in a community profile or connector adapter.
 - Do not implement or release resident-facing UI changes without explicit owner design approval.
 - Before review or release, record the root cause, question family, resident before/after, authority decision, reuse boundary, family-level tests, live-source safety, and exact release evidence. Use `.github/pull_request_template.md` for pull requests.
+
+# Keep the Notion project guide current
+
+- The owner guide is https://www.notion.so/3dabf909186d81789a09e4648dbb4bbe. Follow `docs/DOCUMENTATION-MAINTENANCE.md` when changing or releasing this project.
+- Before finishing relevant work, update the affected Notion explanation, diagram, decision record, design reference, or operating guide, or record why no documentation change is needed. Fetch each page before editing and preserve unrelated content.
+- Separate proposed, approved, implemented, and verified-live states. Confirm the live revision before labeling a change live. Record the verified date and supporting source/release links.
+- If Notion is unavailable, save the precise pending update and identify documentation as pending; never silently mark it synchronized. Do not block an urgent recovery solely on Notion availability.
+- This documentation rule grants no additional authority to publish code, approve source facts, change settings, or expose resident records.
