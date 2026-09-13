@@ -61,6 +61,7 @@ const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input
 const { rulebookDestination } = require("./lib/community-rulebook");
 const { communitySourceStatus, getCommunityIndex, getCommunityProfile, scheduleCommunityRefresh } = require("./lib/community-source-manager");
 const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
+const { buildCommunitySourceReadiness } = require("./lib/community-source-readiness");
 const { latestReviewDecision } = require("./lib/community-review-queue");
 const { paginateReviews } = require("./lib/community-review-pagination");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
@@ -4989,20 +4990,39 @@ async function communityReviewRecords() {
 
 async function handleCommunitySourceReview(req, res, url, reviewId = "") {
   if (!requireQuestionAdmin(req, res)) return;
-  if (!sourceReviewStatus().configured) {
-    sendJson(res, 503, { error: "The private source-review database is not configured yet." });
-    return;
-  }
+  const reviewAvailable = sourceReviewStatus().configured;
   try {
     if (req.method === "GET") {
-      const items = await communityReviewRecords();
+      let items = [];
+      let reviewError = "";
+      if (reviewAvailable) {
+        try { items = await communityReviewRecords(); }
+        catch (error) { reviewError = error.message || "The private review queue could not be reached."; }
+      } else {
+        reviewError = "The private review queue is not configured.";
+      }
       if (reviewId) {
+        if (reviewError) return sendJson(res, 503, { error: reviewError });
         const item = items.find((record) => record.id === reviewId);
         if (!item) return sendJson(res, 404, { error: "That review item was not found." });
         return sendJson(res, 200, { item });
       }
-      return sendJson(res, 200, { ...paginateReviews(items, url.searchParams), counts: communitySourceStatus() });
+      const page = paginateReviews(items, url.searchParams);
+      const allReviewSummary = {
+        pending: items.filter(item => item.status === "pending").length,
+        sensitive: items.filter(item => item.status === "pending" && item.risk === "high").length,
+        conflicts: items.filter(item => item.status === "pending" && item.conflict).length,
+      };
+      const counts = communitySourceStatus(undefined, Date.now(), { includeApprovedEvidenceCheckTime: true });
+      return sendJson(res, 200, {
+        ...page,
+        counts,
+        readiness: buildCommunitySourceReadiness(counts, allReviewSummary),
+        reviewAvailable,
+        reviewError,
+      });
     }
+    if (!reviewAvailable) return sendJson(res, 503, { error: "The private source-review database is not configured yet." });
     if (req.method !== "POST" || !reviewId) return sendJson(res, 405, { error: "Use GET, or POST on a specific review item." });
     if (!isSameOriginRequest(req)) return sendJson(res, 403, { error: "Source-review decisions must come from the private owner dashboard." });
     const items = await communityReviewRecords();

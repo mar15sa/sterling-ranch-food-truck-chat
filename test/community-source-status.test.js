@@ -59,8 +59,14 @@ test("inventory backlog and expired approved evidence are separate release signa
 
 test("approved evidence is current only when evidence exists without crawl failures or expiry", () => {
   const now = Date.parse("2026-09-02T00:00:00.000Z");
-  const fresh = { communityId: "alpha", failureCount: 0, sources: [{ id: "approved-page", sourceUrl: "https://alpha.gov/hours", staleAfter: "2026-09-03T00:00:00.000Z" }], factLedger: [] };
-  assert.equal(communitySourceStatus(fresh, now).approvedEvidenceCurrent, true);
+  const fresh = { communityId: "alpha", failureCount: 0, sources: [{ id: "approved-page", sourceUrl: "https://alpha.gov/hours", checkedAt: "2026-09-01T12:00:00.000Z", staleAfter: "2026-09-03T00:00:00.000Z" }], factLedger: [] };
+  const publicStatus = communitySourceStatus(fresh, now);
+  assert.equal(publicStatus.approvedEvidenceCurrent, true);
+  assert.equal(Object.hasOwn(publicStatus, "approvedEvidenceLastCheckedAt"), false);
+  assert.equal(
+    communitySourceStatus(fresh, now, { includeApprovedEvidenceCheckTime: true }).approvedEvidenceLastCheckedAt,
+    "2026-09-01T12:00:00.000Z",
+  );
   assert.equal(communitySourceStatus({ ...fresh, failureCount: 1 }, now).approvedEvidenceCurrent, false);
   assert.equal(communitySourceStatus(fresh, now, { refreshError: "refresh timed out" }).approvedEvidenceCurrent, false);
 });

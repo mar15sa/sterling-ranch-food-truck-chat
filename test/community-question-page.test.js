@@ -90,7 +90,14 @@ test("owner can mark an answer as needs work and filter those marks", () => {
 test("source review dashboard is private, version-bound, and has no analytics", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.html"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.js"), "utf8");
-  assert.match(html, /Source review/);
+  assert.match(html, /Answer readiness/);
+  assert.match(html, /Four priority categories/);
+  assert.match(html, /Current approved evidence/);
+  assert.match(html, /Necessary content handled/);
+  assert.match(html, /System-wide conflicts kept out/);
+  assert.match(html, /site-wide discovery bookkeeping/);
+  assert.match(script, /renderReadiness/);
+  assert.match(script, /still safely withheld/);
   assert.match(`${html}\n${script}`, /Before this review/);
   assert.match(`${html}\n${script}`, /Proposed change/);
   assert.match(script, /does not confirm production deployment/);
