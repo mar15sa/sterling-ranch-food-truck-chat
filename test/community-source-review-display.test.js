@@ -98,11 +98,14 @@ test('category cards expose every scoped document, disposition, next step, and o
   const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
   context.category = buildCommunitySourceReadiness({}).categories.find(item => item.id === 'property-changes');
   const nodes = flatten(vm.runInContext('categoryCard(category)', context));
-  assert.equal(nodes.filter(node => node.tag === 'li').length, 14);
+  assert.equal(nodes.filter(node => node.tag === 'li').length, 25);
   assert.ok(nodes.some(node => node.textContent === '2026 landscape application packet'));
   assert.ok(nodes.some(node => String(node.textContent).startsWith('Next: Finish claim-by-claim owner review')));
   assert.ok(nodes.some(node => node.textContent === 'Held'));
   assert.ok(nodes.some(node => node.tag === 'a' && node.href.includes('/DocumentCenter/View/1964/')));
+  assert.ok(nodes.some(node => node.textContent === 'Architectural & Community Standards'));
+  assert.ok(nodes.some(node => node.tag === 'a' && node.href.includes('/198/Architectural-Community-Standards')));
+  assert.ok(nodes.some(node => node.textContent === 'Needs review'));
 });
 
 test('approved review history does not claim the old comparison is current approval or deployment state', () => {
