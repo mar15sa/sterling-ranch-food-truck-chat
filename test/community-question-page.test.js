@@ -68,10 +68,15 @@ test("resident answers use structured formatting and do not repeat link labels a
 });
 
 test("conditional-answer banner explains the caveat without implying yes", () => {
+  const html = fs.readFileSync(
+    path.join(__dirname, "..", "public", "rules-assistant.html"),
+    "utf8"
+  );
   const script = fs.readFileSync(
     path.join(__dirname, "..", "public", "rules-assistant.js"),
     "utf8"
   );
+  assert.match(html, /rules-assistant\.js\?v=20260913-human-friendly-banners/);
   assert.match(script, /answerLabel\.textContent = "Approval or conditions apply"/);
   assert.doesNotMatch(script, /Allowed with approval or conditions/);
 });
