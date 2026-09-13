@@ -168,6 +168,31 @@ test("an unmatched explicit filter retains unfiltered alternatives", async () =>
   assert.equal(result.diagnostics.afterFilterCount, 0);
 });
 
+test("multi-day calendar requests fetch every CivicPlus day before filtering", async () => {
+  const requestedDays = [];
+  const fetchImpl = async (url) => {
+    const day = new URL(url).searchParams.get("day").padStart(2, "0");
+    requestedDays.push(day);
+    const title = day === "11" ? "Yoga w/Laura" : `Community Event ${day}`;
+    return new Response(calendarHtml([{
+      id: day,
+      title,
+      category: day === "11" ? "Fitness" : "Community Events",
+      startDate: `2026-09-${day}T07:30:00`,
+      location: "Great Hall",
+    }]), { status: 200 });
+  };
+  const result = await getCommunityEvents({
+    dateRange: { start: "2026-09-10", end: "2026-09-12", label: "the next three days" },
+    filters: { audience: "", category: "Yoga", facility: "", location: "" },
+  }, { fetchImpl, now: new Date("2026-09-10T18:00:00Z") });
+  assert.deepEqual(requestedDays.sort(), ["10", "11", "12"]);
+  assert.deepEqual(result.events.map((event) => event.title), ["Yoga w/Laura"]);
+  assert.equal(result.diagnostics.beforeFilterCount, 3);
+  assert.equal(result.diagnostics.afterFilterCount, 1);
+  assert.equal(result.diagnostics.requestedDayCount, 3);
+});
+
 test("structured mode interprets every substantive question and passes the plan to events", async () => {
   let plannerCalls = 0;
   let receivedRequest;
