@@ -60,4 +60,11 @@ test("plain-language cleanup keeps prohibitions accurate", () => {
   assert.match(answer, /except domesticated birds/i);
   assert.doesNotMatch(answer, /must be raised|under the cited rule/i);
   assert.deepEqual(residentVoiceIssues(answer), []);
+
+  const nuisance = plainLanguageSourceText(
+    "No animal shall be permitted to make an unreasonable amount of noise or cause any objectionable odor."
+  );
+  assert.equal(nuisance, "No animal can make an unreasonable amount of noise or cause any objectionable odor.");
+  assert.deepEqual(residentVoiceIssues(nuisance), []);
+  assert.deepEqual(residentVoiceIssues("Animal can't be permitted to make noise."), ["passive-prohibition-language"]);
 });
