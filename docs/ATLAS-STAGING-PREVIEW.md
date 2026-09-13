@@ -1,5 +1,11 @@
 # Sterling Ranch Atlas: staging prototype
 
+## Illustrated places, future layers and walking choices: September 13, 2026
+
+Marissa approved implementation with “Make it happen.” Final staging revision `b0b5dc8ab5b025a4df3c877e7e95f4a9006668a9` was verified ready at 20:31:37 UTC. McCormick, Burns and Sterling Center have illustrative landmarks that open into their actual amenities and nested businesses. A Now / With what's coming layer separates planned additions and presents unlocated projects as cards; returning to Now also clears a future-only category selection. Walking choices update the route and map by approximate time and show a start-to-finish summary with nearby activities. [Implementation, browser review and release evidence](ATLAS-OPEN-PLACES-IMPLEMENTATION.md).
+
+The existing 100 records, 33 destinations, 78 located records, 18 map areas and three walking guides remain intact. Sixteen Atlas tests and HTTP isolation pass; all ten checked Atlas paths remain blocked on production. The hosted deployment-health check passed for this exact combined revision. Production launch remains unapproved. Earlier sections below describe prior releases.
+
 ## Nested destinations and walking guides: September 13, 2026
 
 Verified on staging September 13, 2026 at `4b2ac57d1dde197f984023b544a7ab320b3723b7`, ready at 19:20 UTC. Served catalogs and the source image matched the checked build. All eight checked Atlas page/data/script/style/image paths remain 404 on production. [Release evidence](../artifacts/atlas/walks-release-check.json). The directory now presents 33 destinations containing all 100 searchable records. Related playgrounds, shelters, tenants and future phases expand inside their parent rather than appearing as 100 peer cards. Search and category matches remain discoverable, including grandchildren under Sterling Center. McCormick, Pioneer and Yard 27 gained CAB-reconciled park-center markers: 78 listings share 18 map areas, while 22 listings across 15 places/projects remain directory-only.
