@@ -77,7 +77,7 @@ Category totals overlap when one source legitimately supports more than one cate
 ## Verification
 
 - The audit file proves exact count reconciliation, unique URLs, valid category IDs, prior-decision preservation, and no automatic promotion of new content.
-- All **815 automated tests pass** locally.
+- All **818 automated tests pass** locally after integrating the latest `main` release line.
 - Authenticated browser checks pass at 1,440 × 1,000 and 390 × 844. Both show the 1,631/1,631 reconciliation, 197 primary-source total, 105 review/retry count, four expandable categories, and no horizontal overflow.
 - The four category cards contain 207 displayed source rows because 10 of the 197 unique primary sources legitimately appear in two categories.
 
