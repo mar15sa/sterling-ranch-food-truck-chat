@@ -10,6 +10,7 @@ const {
 } = require("../lib/rules-grounding");
 const { isPlantPermissionQuestion } = require("../lib/rules-intent");
 const { composePlainEnglishFallback, rewriteAnswerWithLLM } = require("../lib/rules-llm");
+const { residentVoiceIssues } = require("../lib/resident-answer-voice");
 const communityIndex = require("../data/community-index.json");
 
 const answerWithoutAi = (question) => answerRulesQuestion(question, {
@@ -155,7 +156,7 @@ test("supported answers of different families all use the shared synthesis path"
 
 test("deterministic supported answers expose clean prose across rule families", async () => {
   const cases = [
-    ["Can I install privacy screens?", [/landscape screens/i, /DRC approval is required/i]],
+    ["Can I install privacy screens?", [/landscape screens/i, /DRC approval/i]],
     ["Can I put a trampoline in my backyard?", [/five feet from all property lines/i, /Tall plant material/i]],
     ["Are jellyfish or gemstone lights allowed?", [/Gemstone/i, /Jellyfish/i, /DRC approval/i]],
     ["What flags can I fly?", [/United States flag/i, /Colorado flag/i]],
@@ -166,9 +167,27 @@ test("deterministic supported answers expose clean prose across rule families", 
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.doesNotMatch(result.answer, /Short answer|What I found|Before you act/i, question);
     for (const expected of expectedFacts) assert.match(result.answer, expected, question);
+    assert.deepEqual(residentVoiceIssues(result.answer), [], question);
     assert.ok(result.directAnswer, question);
     assert.ok(Array.isArray(result.keyDetails), question);
   }
+});
+
+test("privacy-screen fallback keeps every sourced limit in neighbor-friendly language", async () => {
+  const result = await answerWithoutAi("Can I install privacy screens?");
+  assert.equal(result.answerMode, "source-derived-structured");
+  assert.match(result.directAnswer, /you'll need DRC approval for landscape screens/i);
+  assert.match(result.answer, /maximum height is 5 feet, measured from ground level/i);
+  assert.match(result.answer, /increase to 6 feet, measured from ground level/i);
+  assert.match(result.answer, /maximum width is 8 feet/i);
+  assert.match(result.answer, /up to 3 screens/i);
+  assert.match(result.answer, /30% transparency/i);
+  assert.match(result.answer, /Vinyl isn't allowed/i);
+  assert.match(result.nextStep, /Landscape Screens One-Sheet/i);
+  assert.match(result.nextStep, /submit a DRC application/i);
+  assert.doesNotMatch(result.answer, /under the cited|Five-foot maximum overall|from grade|We encourage|(?:^|[.!?]\s+)Must be|Vinyl is not permitted/i);
+  assert.deepEqual(result.qualityChecks?.issues, []);
+  assert.deepEqual(residentVoiceIssues([result.answer, result.directAnswer, ...(result.keyDetails || []), result.nextStep].join("\n")), []);
 });
 
 test("successful AI synthesis uses natural prose and retains every sourced holiday-light limit", async () => {
@@ -531,8 +550,9 @@ test("live raspberry rewrites preserve height and spread bindings", async () => 
     assert.equal(Object.hasOwn(rejected, "naturalFallbackProse"), false);
     assert.ok(rejected.keyDetails.every((detail) => !/Height:|Spread\/width:/i.test(detail)));
     assert.ok(rejected.keyDetails.every((detail) => !/Open the linked official section/i.test(detail)));
-    assert.match(rejected.nextStep, /Open the official source for the complete wording/i);
-    assert.equal((rejected.answer.match(/Open the official source for the complete wording/gi) || []).length, 1);
+    assert.match(rejected.nextStep, /Landscape Submittal Packet/i);
+    assert.match(rejected.nextStep, /submit a DRC application/i);
+    assert.equal((rejected.answer.match(/Landscape Submittal Packet/gi) || []).length, 1);
   } finally {
     global.fetch = previousFetch;
     if (previousKey === undefined) delete process.env.ANTHROPIC_API_KEY;

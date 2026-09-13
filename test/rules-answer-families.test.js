@@ -366,7 +366,7 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   const landscapeScreens = await answer("Can I add landscape screens for backyard privacy?");
   assert.equal(landscapeScreens.confidence.canAnswer, true);
   assert.match(landscapeScreens.answer, /landscape screens/i);
-  assert.match(landscapeScreens.answer, /DRC approval is required/i);
+  assert.match(landscapeScreens.answer, /you'll need DRC approval/i);
 
   const rooflineLights = await answer("Can I install permanent roofline lights?");
   assert.equal(rooflineLights.confidence.canAnswer, true);
@@ -386,7 +386,7 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   const privacyScreens = await answer("Can I install privacy screens");
   assert.equal(privacyScreens.confidence.canAnswer, true);
   assert.match(privacyScreens.answer, /landscape screens/i);
-  assert.match(privacyScreens.answer, /DRC approval is required/i);
+  assert.match(privacyScreens.answer, /you'll need DRC approval/i);
 
   const catio = await answer("Can I put up a catio. Not attached to the house");
   assert.match(catio.answer, /do(?:es)? not name catio(?:s)? specifically/i);
@@ -448,7 +448,7 @@ test("current source text controls changing landscaping and rental requirements"
 
   const rear = await answer("What plants are required in the rear landscaping?");
   assert.match(rear.answer, /two trees[\s\S]*one deciduous tree[\s\S]*one evergreen tree/i);
-  assert.match(rear.answer, /30 percent live plant material/i);
+  assert.match(rear.answer, /30% live plant material/i);
 });
 
 test("yard completion deadlines use the controlling installation-date rule", async () => {
