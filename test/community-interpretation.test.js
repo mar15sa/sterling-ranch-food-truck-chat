@@ -258,17 +258,23 @@ test("a planner cannot reroute a clearly timed class question to an information 
     }),
     getCommunityEvents: async (request) => {
       receivedRequest = request;
+      const appliedFilters = Object.entries(request.filters || {})
+        .filter(([, value]) => value)
+        .map(([field, value]) => ({ field, value }));
       return {
         events: [{ id: "15", title: "Floor Mat Pilates for Boomers", date: "2026-09-15", time: "09:00", location: "Great Hall", url: "https://alpha.gov/event/15", startDate: "2026-09-15T09:00:00" }],
         range: request.dateRange,
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-13T18:00:00Z",
-        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [] },
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters },
       };
     },
   });
   assert.equal(receivedRequest.intent, "events");
   assert.equal(receivedRequest.goal, "schedule");
+  assert.equal(receivedRequest.subject, "Pilates");
+  assert.deepEqual(receivedRequest.searchQueries, ["Pilates"]);
+  assert.equal(receivedRequest.filters.category, "Pilates");
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.keyDetails.join(" "), /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
 });
