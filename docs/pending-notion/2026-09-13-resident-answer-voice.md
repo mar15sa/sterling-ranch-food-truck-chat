@@ -2,11 +2,12 @@
 
 - Target page: [How the project works](https://www.notion.so/3dabf909186d8166b507c2a4e1d1aced)
 - Affected section: Community Assistant answer composition, validation, and fallback flow
-- Status: Implemented and verified on staging; production verification pending
+- Status: Implemented and verified live on staging and production; Notion synchronization pending
 - Implementation commits: `ed32a04`, `942608a`
 - Staging commits: `d951f4a`, `f6358a0`
 - Pull request: https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/123
 - Staging evidence: `/api/health` returned revision `f6358a0861efb854b075d912c61eb3f3f45425e0` with current rules and community sources. Test-mode Community Assistant requests returned complete source-derived privacy-screen and animal-rule answers with no quality issues.
+- Production evidence: `/api/health` returned merge revision `e1bfd7879c43124457ab27d09a98ea8694c623a7`, ready with current rules, current community sources, and zero source failures. A test-mode Community Assistant request returned the complete source-derived privacy-screen answer with no quality issues. The post-merge GitHub workflow also passed: https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34767056578
 - Synchronization is pending because the Notion connector is unavailable in the current task.
 
 ## Proposed explanation
@@ -32,6 +33,6 @@ Show both the accepted AI rewrite and the deterministic source-derived fallback 
 
 1. Fetch the Notion page before editing and preserve unrelated owner content.
 2. Update the explanation, accessible diagram text, and hub image if the diagram changes.
-3. Add the final production merge revision and public `/api/health` revision after production is verified.
+3. Carry the verified production revision and evidence links above into the updated page.
 4. Fetch the page again to confirm the content, links, image, and verified-live status.
 5. Remove or resolve this pending record so it cannot be mistaken for unfinished work.
