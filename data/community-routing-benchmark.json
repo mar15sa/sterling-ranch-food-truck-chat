@@ -34,6 +34,8 @@
   { "id": "schedule-recycling", "question": "When is recycling pickup?", "expectedGoal": "schedule", "allowedIntents": ["services"], "subjectIncludesAny": ["recycling"] },
   { "id": "schedule-trash", "question": "What day is trash collected in Sterling Ranch?", "expectedGoal": "schedule", "allowedIntents": ["services"], "subjectIncludesAny": ["trash", "collection"] },
   { "id": "schedule-meeting", "question": "When is the next CAB meeting?", "expectedGoal": "schedule", "allowedIntents": ["events"], "subjectIncludesAny": ["cab meeting", "meeting"] },
+  { "id": "schedule-named-class", "question": "When is the next yoga class", "expectedGoal": "schedule", "allowedIntents": ["events"], "subjectIncludesAny": ["yoga", "class"] },
+  { "id": "schedule-named-class-punctuation", "question": "When is the next Pilates class?", "expectedGoal": "schedule", "allowedIntents": ["events"], "subjectIncludesAny": ["pilates", "class"] },
 
   { "id": "status-pool-open", "question": "Is the Sterling Ranch pool open today?", "expectedGoal": "status", "allowedIntents": ["status"], "subjectIncludesAny": ["pool"] },
   { "id": "status-pool-now", "question": "What's the pool status right now?", "expectedGoal": "status", "allowedIntents": ["status"], "subjectIncludesAny": ["pool"] },
