@@ -284,7 +284,7 @@ test("a named class question without punctuation reaches the live calendar", asy
   assert.equal(plannerCalls, 0);
   assert.equal(receivedRequest, question);
   assert.equal(answer.answerMode, "community-live-events");
-  assert.match(answer.directAnswer, /next yoga event is Yoga w\/Laura on Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
+  assert.match(answer.directAnswer, /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
   assert.match(answer.keyDetails.join(" "), /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
 });
 
@@ -322,7 +322,7 @@ test("a planner cannot reroute a clearly timed class question to an information 
   assert.deepEqual(receivedRequest.searchQueries, ["Pilates"]);
   assert.equal(receivedRequest.filters.category, "Pilates");
   assert.equal(answer.answerMode, "community-live-events");
-  assert.match(answer.directAnswer, /next Pilates event is Floor Mat Pilates for Boomers on Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
+  assert.match(answer.directAnswer, /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
   assert.match(answer.keyDetails.join(" "), /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
 });
 
