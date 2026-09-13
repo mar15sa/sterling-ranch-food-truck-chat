@@ -63,6 +63,6 @@ The webpage-disposition behavior is generic: exact-version matching, live-feed h
 - Pull request: pending.
 - Production revision: not yet verified.
 - Notion operating/design guide: pending update until the implementation revision is known.
-- Automated verification: 810 tests passed on September 13, 2026.
+- Automated verification: 811 tests passed on September 13, 2026, after merging the current `main` release line into the candidate branch.
 - Browser verification: authenticated owner view checked in Chrome at 1440 × 1000 and 390 × 844. All 88 audited page rows rendered, the 28-page review count matched, and neither viewport had horizontal overflow.
 - Visual evidence: `artifacts/community-page-audit-ui/desktop.png`, `desktop-pages.png`, `mobile.png`, `mobile-pages.png`, and `results.json`.
