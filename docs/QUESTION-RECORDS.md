@@ -12,13 +12,15 @@ This is a retention intention for records successfully saved. It is not proof th
 
 ## Where information goes
 
+Owner clarification, September 13: Marissa is a solopreneur, the sole operator, and the only person with access today. This resolves the earlier human-access unknowns. Connected integrations and provider settings are technical configuration details; this confirmation does not enumerate those settings. SRS is being built for other communities in the future; see [product purpose and values](PRODUCT-VALUES.md).
+
 | Location | What it holds | Access boundary and verification |
 | --- | --- | --- |
-| Private Notion question log | Sanitized question/answer text, time, source, verdict, test marker, quality and owner-review metadata | The database exists in the connected workspace. Access depends on Notion page/workspace sharing and connected integrations. The exact member/guest/integration access list was not available in this code review. |
-| Website's private question-review page | Displays and updates review flags on those same Notion records | The server checks the configured owner password at login and a signed, expiring session for private requests. It is another view of the Notion log, not a second permanent question database. Who has the password is not recorded in code. |
-| Optional question-log webhook | Receives the same sanitized entry if configured | The code supports sending to Notion and a webhook independently. The live webhook's enabled state, destination, retention, and account access were not verified. Do not assume a second archive exists. |
+| Private Notion question log | Sanitized question/answer text, time, source, verdict, test marker, quality and owner-review metadata | Marissa confirms sole human access. The database exists in the connected workspace. Connected integration permissions were not independently enumerated. |
+| Website's private question-review page | Displays and updates review flags on those same Notion records | Marissa confirms sole human access. The server checks the configured owner password at login and a signed, expiring session for private requests. It is another view of the Notion log, not a second permanent question database. |
+| Optional question-log webhook | Receives the same sanitized entry if configured | Marissa confirms sole human access to project accounts. The code supports sending to Notion and a webhook independently; its live enabled state, destination, provider permissions, and retention were not verified. Do not assume a second archive exists. |
 | Resident's browser | At most three exchanges for follow-up context | Kept in that browser tab's session storage. Start over clears this working context. It does not delete saved Notion records. |
-| Operational traces and hosting logs | Routing/source/timing summaries and salted fingerprints; no full question wording in the inspected trace record | Bounded in-memory diagnostics also emit to server logs. Hosting account permissions govern those logs; provider retention and exact account members were not verified. This is not the permanent question archive. |
+| Operational traces and hosting logs | Routing/source/timing summaries and salted fingerprints; no full question wording in the inspected trace record | Marissa confirms sole human access. Bounded in-memory diagnostics also emit to server logs. Provider log-retention settings were not independently verified. This is not the permanent question archive. |
 
 The durable question policy does not turn temporary browser context, caches, diagnostic buffers, or GitHub test artifacts into permanent archives. Their existing lifecycles remain as implemented. No record cleanup task is needed to satisfy the owner's question-retention policy.
 
@@ -28,9 +30,9 @@ The current logger limits the saved question to 500 characters and the saved ans
 
 The default private website view hides test records. Test markers and review filters affect visibility, not retention. An owner review change updates the existing Notion row. The inspected application offers list/review operations, without a dedicated question-record delete or bulk-export workflow. The owner's choice not to export/delete is a policy; it is not a claim that Notion or another provider lacks those capabilities.
 
-## Access facts still to verify
+## Remaining configuration details
 
-The remaining access inventory is specific: Notion sharing and connected integrations, people holding the website's owner password, any configured webhook destination, and hosting account/log access. No resident submissions or credentials need to be copied into documentation to establish these facts. Until verified, label those details unknown rather than saying only the owner can access every copy.
+Human ownership and access are owner-confirmed: Marissa alone. Remaining technical details are connected integration permissions, whether a question-log webhook is configured and its destination behavior, and the hosting provider's technical-log retention settings. Record these from authorized configuration evidence when needed. Do not reopen sole-owner access as an unanswered question, or copy resident submissions or credentials into documentation.
 
 ## Sources
 
