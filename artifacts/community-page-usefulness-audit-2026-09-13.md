@@ -59,7 +59,7 @@ The webpage-disposition behavior is generic: exact-version matching, live-feed h
 
 ## Release evidence
 
-- Implementation revision: pending commit.
+- Implementation revision: `3868808`.
 - Pull request: pending.
 - Production revision: not yet verified.
 - Notion operating/design guide: pending update until the implementation revision is known.
