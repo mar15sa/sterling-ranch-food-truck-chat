@@ -193,6 +193,26 @@ test("multi-day calendar requests fetch every CivicPlus day before filtering", a
   assert.equal(result.diagnostics.requestedDayCount, 3);
 });
 
+test("legacy multi-day calendar questions retain their named activity filter", async () => {
+  const fetchImpl = async (url) => {
+    const day = new URL(url).searchParams.get("day").padStart(2, "0");
+    return new Response(calendarHtml([{
+      id: day,
+      title: day === "19" ? "Yoga w/Laura" : `Community Event ${day}`,
+      category: "Community Events",
+      startDate: `2026-09-${day}T07:30:00`,
+      location: "Great Hall",
+    }]), { status: 200 });
+  };
+  const result = await getCommunityEvents("When is the next yoga class", {
+    fetchImpl,
+    now: new Date("2026-09-13T18:00:00Z"),
+  });
+  assert.deepEqual(result.events.map((event) => event.title), ["Yoga w/Laura"]);
+  assert.deepEqual(result.diagnostics.appliedFilters, [{ field: "category", value: "yoga" }]);
+  assert.equal(result.diagnostics.legacyFilterApplied, true);
+});
+
 test("structured mode interprets every substantive question and passes the plan to events", async () => {
   let plannerCalls = 0;
   let receivedRequest;
@@ -257,13 +277,14 @@ test("a named class question without punctuation reaches the live calendar", asy
         range: { kind: "next-seven-days", start: "2026-09-13", end: "2026-09-20", label: "the next seven days" },
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-13T18:00:00Z",
-        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [] },
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "yoga" }] },
       };
     },
   });
   assert.equal(plannerCalls, 0);
   assert.equal(receivedRequest, question);
   assert.equal(answer.answerMode, "community-live-events");
+  assert.match(answer.directAnswer, /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
   assert.match(answer.keyDetails.join(" "), /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
 });
 
@@ -301,6 +322,7 @@ test("a planner cannot reroute a clearly timed class question to an information 
   assert.deepEqual(receivedRequest.searchQueries, ["Pilates"]);
   assert.equal(receivedRequest.filters.category, "Pilates");
   assert.equal(answer.answerMode, "community-live-events");
+  assert.match(answer.directAnswer, /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
   assert.match(answer.keyDetails.join(" "), /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
 });
 
