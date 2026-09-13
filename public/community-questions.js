@@ -22,6 +22,7 @@ const reviewCount = document.querySelector("#reviewCount");
 const qualityConcernCount = document.querySelector("#qualityConcernCount");
 const needsWorkCount = document.querySelector("#needsWorkCount");
 const sourceHealthState = document.querySelector("#sourceHealthState");
+const sourceHealthCompact = document.querySelector("#sourceHealthCompact");
 const sourceReadinessVerdict = document.querySelector("#sourceReadinessVerdict");
 const sourceReadinessHeadline = document.querySelector("#sourceReadinessHeadline");
 const sourceReadinessExplanation = document.querySelector("#sourceReadinessExplanation");
@@ -152,6 +153,7 @@ function renderSourceReadiness(readiness) {
   sourceEvidenceCount.textContent = String(totals.activeEvidence ?? "—");
   sourceHeldCount.textContent = String(totals.heldForReview ?? "—");
   sourceReadinessBreakdown.textContent = `${totals.activeEvidence || 0} documents contribute approved answer evidence · ${totals.actionOnly || 0} provide safe links · ${totals.excluded || 0} were intentionally excluded · ${held} remain withheld.`;
+  sourceHealthCompact.textContent = `${totals.handled ?? "—"} of ${totals.total ?? "—"} scoped documents handled · ${held} held. Select to view details.`;
   sourceCategoryList.replaceChildren(...(readiness.categories || []).map(category => {
     const row = document.createElement("article");
     row.dataset.state = category.complete ? "complete" : "attention";

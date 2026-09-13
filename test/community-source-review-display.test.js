@@ -6,7 +6,7 @@ const vm = require('node:vm');
 
 function display(fetch) {
   function element(tag) {
-    return { tag, children: [], listeners: {}, textContent: '', value: '', append(...nodes) { this.children.push(...nodes); }, replaceChildren(...nodes) { this.children = nodes; }, setAttribute() {}, addEventListener(name, handler) { this.listeners[name] = handler; } };
+    return { tag, children: [], listeners: {}, dataset: {}, style: {}, textContent: '', value: '', append(...nodes) { this.children.push(...nodes); }, replaceChildren(...nodes) { this.children = nodes; }, setAttribute() {}, addEventListener(name, handler) { this.listeners[name] = handler; } };
   }
   const source = fs.readFileSync(path.join(__dirname, '../public/community-sources.js'), 'utf8');
   const elements = new Map();
@@ -91,6 +91,18 @@ test('source evidence links reject executable or malformed destinations', () => 
     context.badUrl = url;
     assert.equal(vm.runInContext('sourceLink(badUrl, "Evidence")', context), null);
   }
+});
+
+test('category cards expose every scoped document, disposition, next step, and official link', () => {
+  const context = display();
+  const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
+  context.category = buildCommunitySourceReadiness({}).categories.find(item => item.id === 'property-changes');
+  const nodes = flatten(vm.runInContext('categoryCard(category)', context));
+  assert.equal(nodes.filter(node => node.tag === 'li').length, 14);
+  assert.ok(nodes.some(node => node.textContent === '2026 landscape application packet'));
+  assert.ok(nodes.some(node => String(node.textContent).startsWith('Next: Finish claim-by-claim owner review')));
+  assert.ok(nodes.some(node => node.textContent === 'Held'));
+  assert.ok(nodes.some(node => node.tag === 'a' && node.href.includes('/DocumentCenter/View/1964/')));
 });
 
 test('approved review history does not claim the old comparison is current approval or deployment state', () => {

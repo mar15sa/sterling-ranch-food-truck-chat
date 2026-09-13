@@ -47,14 +47,16 @@ function setCheck(selector, state, label, detail) {
 }
 
 function categoryCard(category) {
-  const card = document.createElement("article");
+  const card = document.createElement("details");
   card.className = "category-card";
   card.dataset.state = category.complete ? "complete" : "attention";
-  const header = document.createElement("div");
-  header.className = "category-heading";
+  const header = document.createElement("summary");
+  header.className = "category-summary";
+  const heading = document.createElement("div");
+  heading.className = "category-heading";
   const title = textElement("h3", category.title);
   const state = textElement("span", category.complete ? "Handled" : `${category.heldForReview} still held`, "category-state");
-  header.append(title, state);
+  heading.append(title, state);
   const bar = document.createElement("div");
   bar.className = "coverage-bar";
   bar.setAttribute("role", "img");
@@ -67,7 +69,37 @@ function categoryCard(category) {
     bar.append(segment);
   }
   const counts = textElement("p", `${category.activeEvidence} available · ${category.actionOnly} link-only · ${category.excluded} excluded · ${category.heldForReview} held`, "category-counts");
-  card.append(header, bar, counts);
+  const hint = textElement("span", "View documents", "category-hint");
+  header.append(heading, bar, counts, hint);
+  const list = document.createElement("ul");
+  list.className = "category-documents";
+  const statusLabels = { active: "Answer evidence", action: "Safe link", held: "Held", excluded: "Excluded", unclassified: "Unclassified" };
+  for (const sourceDocument of category.documents || []) {
+    const item = document.createElement("li");
+    item.dataset.state = sourceDocument.status;
+    const copy = document.createElement("div");
+    copy.append(textElement("strong", sourceDocument.title), textElement("span", `Document ${sourceDocument.documentId} · ${sourceDocument.reason}`, "document-reason"));
+    if (sourceDocument.nextStep) copy.append(textElement("span", `Next: ${sourceDocument.nextStep}`, "document-next-step"));
+    const controls = document.createElement("div");
+    controls.className = "document-controls";
+    controls.append(textElement("span", statusLabels[sourceDocument.status] || sourceDocument.status, "document-state"));
+    const link = sourceLink(sourceDocument.sourceUrl, "Open official document");
+    if (link) controls.append(link);
+    item.append(copy, controls);
+    list.append(item);
+  }
+  card.append(header, list);
+  return card;
+}
+
+function heldWorkCard(item) {
+  const card = document.createElement("article");
+  card.className = "held-work-card";
+  const header = document.createElement("div");
+  header.append(textElement("span", "WITHHELD", "document-state"), textElement("span", `Document ${item.documentId}`, "held-document-id"));
+  card.append(header, textElement("h3", item.title), textElement("p", item.nextStep));
+  const link = sourceLink(item.sourceUrl, "Open official document");
+  if (link) card.append(link);
   return card;
 }
 
@@ -92,19 +124,26 @@ function renderReadiness(data = {}) {
     row.append(textElement("strong", item.title), document.createTextNode(` — ${item.nextStep}`));
     return row;
   }));
+  $("#heldWorkCount").textContent = String(remainingWork.length);
+  $("#heldWorkList").replaceChildren(...remainingWork.map(heldWorkCard));
+  $("#heldWorkEmpty").hidden = remainingWork.length > 0;
 
   const evidence = readiness.evidence || {};
   setCheck("#freshnessCheck", evidence.current ? "pass" : "attention", evidence.current ? "Current" : "Needs recheck",
     evidence.current
-      ? `All approved evidence passed its current-source checks. ${evidence.sourceCount || 0} source records are available.`
+      ? `All currently approved evidence passed its current-source checks. This does not mean every CAB website page has been indexed. ${evidence.sourceCount || 0} source records are available.`
       : `${evidence.expiredSources || 0} approved sources and ${evidence.expiredFacts || 0} approved facts need to be checked against their official source.`);
   setCheck("#coverageCheck", totals.heldForReview ? "attention" : "pass", totals.heldForReview ? "Gaps remain" : "Complete",
     `${totals.activeEvidence || 0} documents contribute approved evidence, ${totals.actionOnly || 0} provide safe action links, and ${totals.excluded || 0} were intentionally kept out. ${totals.heldForReview || 0} necessary documents remain held.`);
   const conflicts = readiness.safeguards?.withheldConflictCount || 0;
   setCheck("#safetyCheck", conflicts ? "protected" : "pass", conflicts ? "Protected" : "Clear",
-    conflicts ? `Across the complete source bundle, ${conflicts} conflicting facts are blocked from resident answers. They are shown here as a safety guardrail, not as part of your 27-document count.` : "No unresolved conflicting facts are recorded.");
+    conflicts ? `Across the currently indexed source bundle, ${conflicts} conflicting facts are blocked from resident answers. They are shown here as a safety guardrail, not as part of your 27-document count.` : "No unresolved conflicting facts are recorded.");
 
   const inventory = readiness.inventory || {};
+  setCheck("#websiteCheck", inventory.complete ? "pass" : "attention", inventory.complete ? "Complete" : "Still building",
+    inventory.complete
+      ? `All ${inventory.eligible || 0} eligible CAB website pages in this inventory are indexed.`
+      : `${inventory.indexed || 0} of ${inventory.eligible || 0} eligible CAB website pages are indexed; ${inventory.backlog || 0} remain in the site-wide backlog. CAB pages are sources, but the full website inventory is not complete.`);
   $("#inventoryExplanation").textContent = `${inventory.note || ""} Inventory snapshot: ${readableDate(readiness.evidence?.lastSnapshotAt)}.`;
   $("#discoveredCount").textContent = String(inventory.discovered || 0);
   $("#eligibleCount").textContent = String(inventory.eligible || 0);
@@ -213,6 +252,7 @@ function render(data = {}) {
   renderReadiness(data);
   items = data.items || [];
   sourceList.replaceChildren(...items.map(reviewCard)); emptyState.hidden = items.length > 0;
+  $("#emptyState p").textContent = items.length ? "" : "No newly detected source changes match this filter. The scoped documents still withheld are listed above.";
   currentPage = data.pagination?.page || 1;
   pageCount = data.pagination?.pageCount || 1;
   const total = data.pagination?.total ?? items.length;

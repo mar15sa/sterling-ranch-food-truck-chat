@@ -21,7 +21,12 @@ test('readiness reports the approved four-category scope without treating exclud
   assert.equal(result.categories[1].heldForReview, 1);
   assert.equal(result.categories[2].heldForReview, 2);
   assert.equal(result.categories[3].complete, true);
+  assert.equal(result.categories[0].documents.length, 5);
+  assert.equal(result.categories[1].documents.find(item => item.documentId === '1964').status, 'held');
+  assert.equal(result.categories[2].documents.find(item => item.documentId === '2398').sourceUrl, 'https://sterlingranchcab.com/DocumentCenter/View/2398/2026-Water-Quality-Report');
+  assert.equal(result.categories.flatMap(category => category.documents).length, 27);
   assert.deepEqual(result.remainingWork.map(item => item.documentId), ['1964', '2398', '770']);
+  assert.ok(result.remainingWork.every(item => item.sourceUrl?.startsWith('https://sterlingranchcab.com/DocumentCenter/View/')));
 });
 
 test('readiness distinguishes stale evidence, withheld conflicts, and site-wide inventory', () => {

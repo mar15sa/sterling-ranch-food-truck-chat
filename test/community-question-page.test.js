@@ -101,13 +101,27 @@ test("source review dashboard is private, version-bound, and has no analytics", 
   assert.match(html, /Current approved evidence/);
   assert.match(html, /Necessary content handled/);
   assert.match(html, /System-wide conflicts kept out/);
+  assert.match(html, /CAB website coverage/);
+  assert.match(html, /Scoped documents still withheld/);
+  assert.match(html, /New source-change queue/);
   assert.match(html, /site-wide discovery bookkeeping/);
   assert.match(script, /renderReadiness/);
   assert.match(script, /still safely withheld/);
+  assert.match(script, /Open official document/);
+  assert.match(script, /full website inventory is not complete/);
   assert.match(`${html}\n${script}`, /Before this review/);
   assert.match(`${html}\n${script}`, /Proposed change/);
   assert.match(script, /does not confirm production deployment/);
   assert.match(html, /noindex, nofollow, noarchive/);
   assert.match(script, /\/api\/community-sources\/review/);
   assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
+});
+
+test("answer accuracy is collapsed by default so questions stay near the top", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-questions.html"), "utf8");
+  const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-questions.js"), "utf8");
+  assert.match(html, /<details class="source-health"/);
+  assert.doesNotMatch(html, /<details class="source-health"[^>]*\sopen(?:\s|>)/);
+  assert.match(html, /id="sourceHealthCompact"/);
+  assert.match(script, /Select to view details/);
 });
