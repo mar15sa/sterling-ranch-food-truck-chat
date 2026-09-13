@@ -67,6 +67,15 @@ test("resident answers use structured formatting and do not repeat link labels a
   assert.match(css, /\.rules-answer-lead strong/);
 });
 
+test("conditional-answer banner explains the caveat without implying yes", () => {
+  const script = fs.readFileSync(
+    path.join(__dirname, "..", "public", "rules-assistant.js"),
+    "utf8"
+  );
+  assert.match(script, /answerLabel\.textContent = "Approval or conditions apply"/);
+  assert.doesNotMatch(script, /Allowed with approval or conditions/);
+});
+
 test("an expanded owner question stays open across automatic refreshes", () => {
   const script = fs.readFileSync(
     path.join(__dirname, "..", "public", "community-questions.js"),
