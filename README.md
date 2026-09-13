@@ -10,6 +10,8 @@ This is the source code and operating documentation for the Sterling Ranch Socie
 
 Start with [the configuration reference](docs/CONFIGURATION.md), [the architecture map](docs/ARCHITECTURE.md), [the operating-cost snapshot](docs/OPERATING-COSTS.md), and [the Rules Assistant owner guide](docs/RULES-ASSISTANT-OPERATIONS.md) when operating or handing off the project.
 
+For a plain-English overview, decision history, and design references, use the [Notion project guide](https://www.notion.so/3dabf909186d81789a09e4648dbb4bbe). Follow [documentation maintenance](docs/DOCUMENTATION-MAINTENANCE.md) when changing or releasing the project.
+
 ## Run it
 
 ```powershell
