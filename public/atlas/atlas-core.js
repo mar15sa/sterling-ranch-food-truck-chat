@@ -28,6 +28,16 @@
     }
     return [...groups.values()];
   }
+  function placeFamily(places,id){
+    const byId=new Map(places.map(p=>[p.id,p])), selected=byId.get(id);
+    if(!selected)return null;
+    const children=places.filter(p=>p.parentId===id);
+    const parent=children.length||!selected.parentId?selected:byId.get(selected.parentId)||selected;
+    const ancestors=[],seen=new Set([parent.id]);let p=parent;
+    while(p.parentId&&byId.has(p.parentId)&&!seen.has(p.parentId)){p=byId.get(p.parentId);seen.add(p.id);ancestors.unshift(p);}
+    return {selected,parent,ancestors,children:places.filter(p=>p.parentId===parent.id)};
+  }
+  function mapPlaces(places,includeFuture=false){return places.filter(p=>includeFuture||!p.future);}
   function project(coordinates, bounds, view = 'model') {
     const [lon, lat] = coordinates;
     const x = 100 + (lon-bounds.west)/(bounds.east-bounds.west)*1000;
@@ -85,5 +95,5 @@
     return data;
   }
   function clampTrailView(box,imageSize){return box.map((n,i)=>i>1?n:box[i+2]>imageSize[i]?(imageSize[i]-box[i+2])/2:Math.max(0,Math.min(imageSize[i]-box[i+2],n)));}
-  return {categories,statuses,filterPlaces,directoryGroups,project,groupPlaces,safeLink,directionsUrl,sourceIsDue,validateCatalog,validateTrails,clampTrailView};
+  return {categories,statuses,filterPlaces,directoryGroups,placeFamily,mapPlaces,project,groupPlaces,safeLink,directionsUrl,sourceIsDue,validateCatalog,validateTrails,clampTrailView};
 });

@@ -1,11 +1,28 @@
 (function(){
   'use strict';
   const C=window.AtlasCore,$=s=>document.querySelector(s),svg=$('#trail-map');
-  let data=null,places=[],selected=null,currentBox=null,homeBox=null,loading=false;
+  let data=null,places=[],selected=null,currentBox=null,homeBox=null,loading=false,timeChoice='all';
   const ns='http://www.w3.org/2000/svg';
   function add(parent,tag,attrs={},text){const n=document.createElement(tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;parent.append(n);return n;}
   function se(tag,attrs={},text){const n=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n;}
   function link(parent,label,url){const safe=C.safeLink(url);if(safe)add(parent,'a',{href:safe,target:'_blank',rel:'noopener noreferrer'},label);}
+  function walkMinutes(route){return {min:Math.ceil(route.miles/3*60),max:Math.ceil(route.miles/2*60)};}
+  function walkTime(route){const minutes=walkMinutes(route);return minutes.min+'–'+minutes.max+' min';}
+  function timeGroup(route){const upper=walkMinutes(route).max;return upper<=15?'15':upper<=35?'30':null;}
+  function setTimeChoice(value){timeChoice=value;renderTimePicker();const visible=renderWalkList();if(visible.length&&!visible.some(route=>route.id===selected))select(visible[0].id);}
+  function renderWalkList(){
+    const list=$('#walk-list');list.replaceChildren();
+    const visible=data.routes.filter(route=>timeChoice==='all'||timeGroup(route)===timeChoice);
+    if(!visible.length){selected=null;$('#trail-network').setAttribute('aria-pressed','true');draw(null);const detail=$('#walk-detail');detail.replaceChildren();add(detail,'h3',{},'No walks match that time');add(detail,'p',{},'Try another time choice to see a route, or explore the full trail map.');const empty=add(list,'div',{class:'walk-empty',role:'status'});add(empty,'strong',{},'No walks match that time.');const reset=add(empty,'button',{type:'button'},'Show all walks');reset.addEventListener('click',()=>setTimeChoice('all'));return visible;}
+    for(const route of visible){const b=add(list,'button',{type:'button','data-walk':route.id,'aria-pressed':String(selected===route.id),style:'--route-color:'+route.color});add(b,'small',{},route.area+' · '+route.type);add(b,'strong',{},route.name);add(b,'span',{},route.miles.toFixed(2)+' mi · '+walkTime(route));b.addEventListener('click',()=>select(route.id));}
+    return visible;
+  }
+  function renderTimePicker(){
+    let picker=$('#walk-time-picker');
+    if(!picker){picker=add($('#walk-list').parentElement,'div',{id:'walk-time-picker',class:'walk-time-picker',role:'group','aria-label':'Choose a walk length'});$('#walk-list').parentElement.insertBefore(picker,$('#walk-list'));}
+    picker.replaceChildren();add(picker,'span',{},'How much time?');
+    for(const [value,label] of [['all','All walks'],['15','About 15 minutes'],['30','About 30 minutes']]){const b=add(picker,'button',{type:'button','aria-pressed':String(timeChoice===value)},label);b.addEventListener('click',()=>setTimeChoice(value));}
+  }
   function showPlaces(){ $('#trail-guide').hidden=true;$('#places-explorer').hidden=false;$('#show-places').setAttribute('aria-pressed','true');$('#show-trails').setAttribute('aria-pressed','false');}
   async function showTrails(){window.dispatchEvent(new Event('atlas:leave-places'));$('#places-explorer').hidden=true;$('#trail-guide').hidden=false;$('#show-places').setAttribute('aria-pressed','false');$('#show-trails').setAttribute('aria-pressed','true');if(!data&&!loading)await load();}
   $('#show-places').addEventListener('click',showPlaces);$('#show-trails').addEventListener('click',showTrails);
@@ -36,17 +53,19 @@
     $('#walk-list').querySelectorAll('[data-walk]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.walk===id)));$('#trail-network').setAttribute('aria-pressed','false');draw(route);
     const target=$('#walk-detail');target.replaceChildren();target.style.setProperty('--route-color',route.color);
     const heading=add(target,'div',{class:'walk-detail-heading'});add(heading,'h3',{},route.name);add(heading,'span',{class:'walk-type'},route.type);
-    const stats=add(target,'div',{class:'walk-stats'});add(stats,'strong',{},route.miles.toFixed(2)+' mi');add(stats,'span',{},Math.ceil(route.miles/3*60)+'–'+Math.ceil(route.miles/2*60)+' min walking');
     add(target,'p',{},route.description);
-    const endpoints=add(target,'dl',{class:'walk-endpoints'});add(endpoints,'dt',{},'Start');add(endpoints,'dd',{},route.start);add(endpoints,'dt',{},route.type==='Loop'?'Return':'Finish');add(endpoints,'dd',{},route.finish);
+    const journey=add(target,'section',{class:'walk-journey','aria-label':'Walk at a glance'});
+    const journeyStats=add(journey,'div',{class:'walk-journey-stats'});add(journeyStats,'span',{},route.type==='Loop'?'Loop walk':'One-way walk');add(journeyStats,'strong',{},route.miles.toFixed(2)+' mi');add(journeyStats,'span',{},walkTime(route)+' walking');
+    const routeLine=add(journey,'div',{class:'walk-journey-line'});const start=add(routeLine,'div',{class:'walk-journey-stop'});add(start,'small',{},'Start');add(start,'strong',{},route.start);add(routeLine,'span',{class:'walk-journey-arrow','aria-hidden':'true'},'→');const finish=add(routeLine,'div',{class:'walk-journey-stop'});add(finish,'small',{},route.type==='Loop'?'Return':'Finish');add(finish,'strong',{},route.finish);
+    if(route.type!=='Loop')add(journey,'p',{class:'walk-return'},'One way. Return along the same trail for an approximately '+(route.miles*2).toFixed(2)+'-mi out-and-back.');
     const steps=add(target,'ol',{class:'walk-steps'});route.steps.forEach(s=>add(steps,'li',{},s));
     const nearby=route.nearbyPlaceIds.map(id=>places.find(p=>p.id===id)).filter(Boolean);
-    if(nearby.length){const wrap=add(target,'div',{class:'walk-stops'});add(wrap,'h4',{},'Pair it with a place');for(const place of nearby){const b=add(wrap,'button',{type:'button'});add(b,'strong',{},place.name);const children=places.filter(p=>p.parentId===place.id);add(b,'span',{},children.slice(0,2).map(p=>p.name).join(' · ')||place.description);add(b,'small',{},'See amenities & access ↗');b.addEventListener('click',()=>{showPlaces();window.dispatchEvent(new CustomEvent('atlas:open-place',{detail:{id:place.id}}));});}}
+    if(nearby.length){const wrap=add(target,'div',{class:'walk-stops'});add(wrap,'h4',{},'Pair it with a place');add(wrap,'p',{class:'walk-stops-note'},'These are nearby activities to plan separately; this guide does not confirm they are on the route or show their entrances.');const cards=add(wrap,'div',{class:'walk-stop-cards'});for(const place of nearby){const b=add(cards,'button',{type:'button',class:'walk-stop-card'});add(b,'small',{},'Nearby activity');add(b,'strong',{},place.name);add(b,'span',{},place.description);if(place.access)add(b,'em',{},place.access);else{const children=places.filter(p=>p.parentId===place.id);if(children.length)add(b,'em',{},children.slice(0,2).map(p=>p.name).join(' · '));}add(b,'i',{},'See amenities & access →');b.addEventListener('click',()=>{showPlaces();window.dispatchEvent(new CustomEvent('atlas:open-place',{detail:{id:place.id}}));});}}
     const sources=add(target,'details',{class:'walk-source'});add(sources,'summary',{},'Map source & walk details');add(sources,'p',{},data.distanceNote);add(sources,'p',{},data.mapNote);add(sources,'p',{},route.sourceScope);link(sources,data.source.label,data.source.url);link(sources,'CAB trail information',data.source.listingUrl);for(const update of data.annotationUpdates||[])link(sources,update.lines[0]+' · current source',update.sourceUrl);add(sources,'p',{},'Reviewed '+data.checkedAt+'. Surface, gradient and step-free access are not specified for this walk in the source.');
   }
   $('#trail-network').addEventListener('click',()=>{if(!data)return;selected=null;$('#walk-list').querySelectorAll('[data-walk]').forEach(b=>b.setAttribute('aria-pressed','false'));$('#trail-network').setAttribute('aria-pressed','true');draw(null);const detail=$('#walk-detail');detail.replaceChildren();add(detail,'h3',{},'Follow the neighborhood’s trail network');add(detail,'p',{},'Zoom in to read the trail distances and connections on CAB’s map. Choose a highlighted walk for its start, distance and nearby places.');link(detail,'Open the original map at full resolution',data.source.url);});
   async function load(){loading=true;const status=$('#trail-map-status');status.textContent='Opening the trail guide…';try{
     const results=await Promise.all(['/atlas/trails.json','/atlas/places.json'].map(async url=>{const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(15000)});if(!r.ok)throw Error('Unavailable');return r.json();}));
-    data=C.validateTrails(results[0]);places=results[1].places;const list=$('#walk-list');list.replaceChildren();for(const route of data.routes){const b=add(list,'button',{type:'button','data-walk':route.id,'aria-pressed':'false',style:'--route-color:'+route.color});add(b,'small',{},route.area+' · '+route.type);add(b,'strong',{},route.name);add(b,'span',{},route.miles.toFixed(2)+' mi · '+Math.ceil(route.miles/3*60)+'–'+Math.ceil(route.miles/2*60)+' min');b.addEventListener('click',()=>select(route.id));}status.textContent='';select(data.routes[0].id);
+    data=C.validateTrails(results[0]);places=results[1].places;timeChoice='all';renderTimePicker();renderWalkList();status.textContent='';select(data.routes[0].id);
   }catch{data=null;status.replaceChildren();add(status,'span',{},'The trail guide couldn’t load.');const retry=add(status,'button',{type:'button'},'Try again');retry.addEventListener('click',load);}finally{loading=false;}}
 })();

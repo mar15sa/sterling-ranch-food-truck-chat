@@ -3,7 +3,7 @@
   const C=window.AtlasCore;
   const $=selector=>document.querySelector(selector);
   const svg=$('#atlas-map'), stage=$('#map-stage'), list=$('#place-list'), detail=$('#place-detail');
-  const state={places:[],geography:null,category:'all',query:'',selected:null,view:'model',explode:0,zoom:1,pan:[0,0],returnFocus:null};
+  const state={places:[],geography:null,category:'all',query:'',selected:null,includeFuture:false,view:'model',explode:0,zoom:1,pan:[0,0],returnFocus:null};
   let animation=0, frame=0;
   function el(tag,attrs={},text){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n;}
   function se(tag,attrs={},text){const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n;}
@@ -47,10 +47,10 @@
   }
   function drawPins(){
     if(!state.geography)return;
-    const groups=C.groupPlaces(filtered()), frag=document.createDocumentFragment(), unit=screenUnit(), boxes=[], labelBoxes=[];
+    const groups=C.groupPlaces(C.mapPlaces(filtered(),state.includeFuture)), frag=document.createDocumentFragment(), unit=screenUnit(), boxes=[], labelBoxes=[];
     for(const group of groups){
       const selected=group.places.find(p=>p.id===state.selected);
-      const p=selected||group.places.find(item=>!item.parentId)||group.places[0], category=state.category==='future'?'future':p.category, style=C.categories[category];
+      const p=selected||group.places.find(item=>!item.parentId)||group.places[0], category=p.future?'future':p.category, style=C.categories[category];
       const [gx,gy]=point(group.coordinates);
       const lift=(state.view==='model'?9:0)+state.explode*style.elevation;
       let x=gx,y=gy-lift;
@@ -62,15 +62,17 @@
         y=gy-lift+Math.sin(theta)*(35+attempt*8)*unit;
       }
       boxes.push({x,y});
+      const futureCount=group.places.filter(item=>item.future).length;
       const label=p.name;
-      const g=se('g',{class:'map-pin'+(selected?' is-selected':''),role:'button',tabindex:0,'aria-label':label+(group.places.length>1?`, ${group.places.length-1} inside`:''),'aria-pressed':String(Boolean(selected)),'data-pin':p.id,style:'--place-color:'+style.color});
-      if(category==='future')g.append(se('ellipse',{cx:gx,cy:gy,rx:24*unit,ry:12*unit,class:'future-ring'}));
+      const g=se('g',{class:'map-pin'+(selected?' is-selected':''),role:'button',tabindex:0,'aria-label':label+(group.places.length>1?`, ${group.places.length-1} inside`:'')+(futureCount?`, ${futureCount} planned additions`:''),'aria-pressed':String(Boolean(selected)),'data-pin':p.id,style:'--place-color:'+style.color});
+      if(category==='future'||futureCount)g.append(se('ellipse',{cx:gx,cy:gy,rx:28*unit,ry:17*unit,class:'future-ring'}));
       g.append(se('circle',{cx:gx,cy:gy,r:3*unit,class:'pin-ground'}));
       g.append(se('path',{d:`M${gx} ${gy} L${x} ${y}`,class:'pin-line'}));
       g.append(se('circle',{cx:x,cy:y,r:23*unit,class:'pin-hit'}));
       g.append(se('circle',{cx:x,cy:y,r:20*unit,class:'pin-halo'}));
       g.append(se('circle',{cx:x,cy:y,r:13*unit,class:'pin-circle'}));
       g.append(se('text',{x,y,class:'pin-number',style:`font-size:${11*unit}px`},number(p)));
+      if(state.includeFuture&&group.places.some(item=>item.future))g.append(se('circle',{cx:x+12*unit,cy:y-12*unit,r:5*unit,class:'future-beacon'}));
       if(state.zoom>1.25 || selected || groups.length<=7){
         const title=label+(group.places.length>1?' · '+(group.places.length-1)+' inside':'');
         const labelText=title.length>32?title.slice(0,30)+'…':title;
@@ -99,6 +101,7 @@
       frag.append(g);
     }
     $('#map-pins').replaceChildren(frag);
+    window.dispatchEvent(new CustomEvent('atlas:map-rendered',{detail:{includeFuture:state.includeFuture}}));
     const message=$('#map-message');
     if(!groups.length){message.textContent=state.category==='makers'?'Neighborhood makers are next.':filtered().length?'These places still need a confirmed map location.':'No matching places.';}
     else message.textContent='';
@@ -143,6 +146,7 @@
   }
   function selectPlace(id,opener){
     const p=state.places.find(p=>p.id===id);if(!p)return;
+    if(p.future&&!state.includeFuture){state.includeFuture=true;window.dispatchEvent(new CustomEvent('atlas:future-changed',{detail:{includeFuture:true}}));}
     state.returnFocus=opener||state.returnFocus;state.selected=id;
     detail.style.setProperty('--place-color',C.categories[p.category].color);
     detail.replaceChildren();detail.hidden=false;
@@ -193,15 +197,19 @@
     detail.scrollTop=0;
     list.querySelectorAll('[data-place]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.place===id)));
     drawPins();$('#detail-title').focus({preventScroll:true});
+    window.dispatchEvent(new CustomEvent('atlas:place-selected',{detail:{id:p.id}}));
   }
   function closeDetail(){
     detail.hidden=true;const id=state.selected;state.selected=null;
     list.querySelectorAll('[data-place]').forEach(b=>b.setAttribute('aria-pressed','false'));drawPins();
     const target=state.returnFocus?.isConnected?state.returnFocus:list.querySelector(`[data-place="${id}"]`);
-    (target||$('#search')).focus({preventScroll:true});state.returnFocus=null;
+    (target?.getClientRects().length?target:$('#search')).focus({preventScroll:true});state.returnFocus=null;
+    window.dispatchEvent(new Event('atlas:place-closed'));
   }
   function setFilters(){
     if(!detail.hidden){detail.hidden=true;state.selected=null;state.returnFocus=null;}
+    window.dispatchEvent(new Event('atlas:place-closed'));
+    if(state.category==='future'){state.includeFuture=true;window.dispatchEvent(new CustomEvent('atlas:future-changed',{detail:{includeFuture:true}}));}
     document.querySelectorAll('[data-category]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.category===state.category)));
     $('#clear-search').hidden=!state.query;renderList();
   }
@@ -224,8 +232,11 @@
   $('#zoom-in').addEventListener('click',()=>zoom(.35));$('#zoom-out').addEventListener('click',()=>zoom(-.35));
   $('#reset-map').addEventListener('click',()=>{state.zoom=1;state.pan=[0,0];updateCamera();drawPins();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!detail.hidden)closeDetail();});
-  window.addEventListener('atlas:open-place',event=>{if(state.places.some(p=>p.id===event.detail?.id)){selectPlace(event.detail.id);$('#places-explorer').scrollIntoView({block:'start',behavior:'instant'});}});
+  window.addEventListener('atlas:open-place',event=>{if(state.places.some(p=>p.id===event.detail?.id)){selectPlace(event.detail.id);if(!$('#places-explorer').classList.contains('has-place-world'))$('#places-explorer').scrollIntoView({block:'start',behavior:'instant'});}});
   window.addEventListener('atlas:leave-places',()=>{if(!detail.hidden)closeDetail();});
+  window.addEventListener('atlas:close-world',()=>closeDetail());
+  window.addEventListener('atlas:set-future',event=>{state.includeFuture=Boolean(event.detail?.includeFuture);drawPins();});
+  window.addEventListener('atlas:experience-ready',()=>{if(state.places.length)window.dispatchEvent(new CustomEvent('atlas:catalog-ready',{detail:{places:state.places}}));});
   svg.addEventListener('keydown',e=>{if(e.target!==svg)return;if(['+','=','-','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key)){e.preventDefault();if(['+','='].includes(e.key))zoom(.35);else if(e.key==='-')zoom(-.35);else if(e.key==='Home')$('#reset-map').click();else{const axis=e.key==='ArrowLeft'||e.key==='ArrowRight'?0:1;state.pan[axis]+=e.key==='ArrowLeft'||e.key==='ArrowUp'?45:-45;limitPan();updateCamera();}}});
   function limitPan(){state.pan=state.pan.map(n=>Math.max(-650*state.zoom,Math.min(650*state.zoom,n)));}
   let drag=null,dragMoved=false;
@@ -239,6 +250,7 @@
     const [catalog,geography]=await Promise.allSettled([getJson('/atlas/places.json').then(C.validateCatalog),getJson('/atlas/geography.json')]);
     if(catalog.status==='fulfilled'){
       state.places=catalog.value.places;renderList();
+      window.dispatchEvent(new CustomEvent('atlas:catalog-ready',{detail:{places:state.places}}));
       const coverage=catalog.value.coverage;
       if(coverage){
         $('#inventory-summary').textContent='Find a place, see what’s inside, and plan your time around the neighborhood.';
