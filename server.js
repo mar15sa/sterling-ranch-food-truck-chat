@@ -5013,7 +5013,7 @@ async function handleCommunitySourceReview(req, res, url, reviewId = "") {
         sensitive: items.filter(item => item.status === "pending" && item.risk === "high").length,
         conflicts: items.filter(item => item.status === "pending" && item.conflict).length,
       };
-      const counts = communitySourceStatus();
+      const counts = communitySourceStatus(undefined, Date.now(), { includeApprovedEvidenceCheckTime: true });
       return sendJson(res, 200, {
         ...page,
         counts,
