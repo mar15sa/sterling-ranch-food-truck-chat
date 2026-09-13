@@ -22,7 +22,8 @@ test('each v5 approval is bound to its exact version and only its listed claims'
     assert.equal(approval.scopeKind, 'scoped-claims');
     assert.deepEqual(approval.approvedClaims, decision.approvedClaims);
     assert.deepEqual(approval.approvedActions, approvedActionProofs[decision.decisionId] || []);
-    const source = index.sources.find(item => item.contentHash === hash && item.id.startsWith('approved-'));
+    const source = index.sources.find(item => item.contentHash === hash
+      && [...(item.facts || []), ...(item.actions || [])].some(entry => entry.reviewDecisionId === decision.decisionId));
     assert.ok(source, `${decision.decisionId} has a resident projection`);
     const projected = canonicalProjectionEntries(source, index);
     assert.deepEqual(new Set(projected.map(item => item.approvalClaim)), new Set(decision.approvedClaims));
@@ -67,7 +68,9 @@ test('every action-bearing decision rejects a substituted resident destination',
 
 test('every v5 projection is immediately due for protected exact revalidation', () => {
   const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
-  const v5Sources = index.sources.filter(source => source.id.startsWith('approved-') && approvals.decisions.some(decision => source.contentHash === decision.versions[0].contentHash));
+  const v5Sources = index.sources.filter(source => approvals.decisions.some(decision =>
+    decision.versions[0].contentHash === source.contentHash
+      && [...(source.facts || []), ...(source.actions || [])].some(entry => entry.reviewDecisionId === decision.decisionId)));
   const due = new Set(selectRevalidationTargetUrls(index, Date.parse(approvals.decidedAt) + 1));
   assert.equal(v5Sources.length, 10);
   for (const source of v5Sources) assert.ok(due.has(source.sourceUrl), source.id);
