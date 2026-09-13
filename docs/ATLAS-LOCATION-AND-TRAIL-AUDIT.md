@@ -1,5 +1,7 @@
 # Atlas location and trail follow-up · September 13, 2026
 
+Historical release record. The later [nested-place and walking-guide release](ATLAS-NESTED-PLACES-AND-WALKS.md) supersedes the location totals and trail behavior below. The comprehensive CI for this earlier revision subsequently passed: [34774072902](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34774072902), verified September 13, 2026.
+
 Verified on staging September 13, 2026 at `c0a7d7c0d73e61dd8c3b732240f0d35ec7506f79`. The health endpoint reported ready at 18:16 UTC and the deployed catalog exactly matched the checked build. Page/catalog/script returned 200 with no-index headers on staging and 404 on production. Evidence: `artifacts/atlas/location-release-check.json`. Production launch remains unapproved.
 
 The earlier pass reconciled directory names but stopped before completing location research. The 44 unlocated listings represented 22 parent places/projects and 22 child amenities. Finding an operator's embedded map was a useful next step that had been missed.

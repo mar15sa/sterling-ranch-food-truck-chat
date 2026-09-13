@@ -1,0 +1,108 @@
+{
+  "checkedAt": "2026-09-13T19:20:15.593Z",
+  "revision": "4b2ac57d1dde197f984023b544a7ab320b3723b7",
+  "ready": true,
+  "paths": [
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/places.json",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/places.json",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/trails.json",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/trails.json",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-core.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-core.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-trails.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-trails.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-trails.css",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-trails.css",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/cab-trail-map.png",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/cab-trail-map.png",
+      "status": 404,
+      "noindex": null
+    }
+  ],
+  "listed": 100,
+  "destinations": 33,
+  "mapped": 78,
+  "mapAreas": 18,
+  "held": 25,
+  "walks": [
+    {
+      "id": "prospect-loop",
+      "miles": 0.38
+    },
+    {
+      "id": "providence-west",
+      "miles": 1.04
+    },
+    {
+      "id": "overlook-link",
+      "miles": 0.37
+    }
+  ],
+  "exactCatalogAndTrailDataMatchesLocal": true,
+  "sourceImageHashMatchesLocal": true
+}
