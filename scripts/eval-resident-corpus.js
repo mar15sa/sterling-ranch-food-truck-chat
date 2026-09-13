@@ -6,6 +6,7 @@ const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { answerCoverageIssues } = require("../lib/rules-intent");
 const { actionLinkIssues } = require("../lib/rules-action-coverage");
+const { residentVoiceIssues } = require("../lib/resident-answer-voice");
 const storedCommunityIndex = require("../data/community-index.json");
 const communityProfile = require("../data/communities/sterling-ranch.json");
 const { hasAiEvalFixture, planCommunitySearchFixture, synthesizeCommunityAnswerFixture } = require("./community-ai-eval-fixtures");
@@ -74,6 +75,7 @@ function ratingFor(question, result) {
   const issues = [
     ...answerCoverageIssues(question, answer, result.sources || []),
     ...actionLinkIssues(answer, result.sources || []),
+    ...residentVoiceIssues(answer),
     ...(result.qualityChecks?.issues || []),
   ];
   const vague = /I(?:’|')m not sure which community rule|I(?:’|')m only set up|I (?:do not|don't) have enough|closest (?:matches|starting points)|Try rephrasing/i.test(answer);

@@ -81,7 +81,7 @@ const CHECKS = [
   {
     question: "What is the rule on privacy screens in your backyard?",
     firstSourceIncludes: "(b)(54) - Landscape screens",
-    answerIncludes: ["DRC approval", "30 percent"],
+    answerIncludes: ["DRC approval", "30%"],
   },
   {
     question: "Are rooftop solar panels subject to design review?",
