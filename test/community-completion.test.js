@@ -562,9 +562,9 @@ test("live Waste Connections dates replace the undated recycling fallback", asyn
   assert.equal(answer.answerMode, "community-live-recycling");
   assert.match(answer.directAnswer, /starting tomorrow/i);
   assert.deepEqual(answer.keyDetails, [
-    "Providence Village: Monday, August 31, 2026",
-    "Ascent Village: Tuesday, September 1, 2026",
-    "Prospect Village: Thursday, September 3, 2026",
+    "Providence Village: Monday, August 31, 2026.",
+    "Ascent Village: Tuesday, September 1, 2026.",
+    "Prospect Village: Thursday, September 3, 2026.",
   ]);
   assert.match(answer.actions[0].url, /wasteconnections\.com\/pickup-schedule/);
   assert.doesNotMatch(JSON.stringify(answer), /Submit-Your-Feedback|Bulk Item|Recycling Tips/i);

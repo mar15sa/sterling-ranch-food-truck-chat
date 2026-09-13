@@ -21,13 +21,13 @@
     ],
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Landscape Screens One-Sheet"],
-    "answerIncludesAll": ["DRC approval", "rear or side yard", "Five-foot", "six-foot", "Eight-foot", "30 percent"]
+    "answerIncludesAll": ["DRC approval", "rear or side yard", "5 feet", "6 feet", "8 feet", "30%"]
   },
   {
     "question": "What is the rule on privacy screens in your backyard?",
     "expectedFirstAny": ["Sec. 21-22"],
     "expectedAny": ["Landscape Screens One-Sheet"],
-    "answerIncludesAll": ["DRC approval", "freestanding", "outside easements", "maximum of three", "Vinyl is not allowed"]
+    "answerIncludesAll": ["DRC approval", "freestanding", "outside easements", "Up to 3", "Vinyl isn't allowed"]
   },
   {
     "question": "Do I need approval for solar panels?",
@@ -334,7 +334,7 @@
     "variants": ["Can we have chickena", "Can I have chickens?", "Can I keep poultry in my backyard?"],
     "expectedFirstAny": ["Sec. 1-33"],
     "expectedVerdict": "prohibited",
-    "answerIncludesAll": ["No animals, livestock, fowl, or poultry of any kind shall be raised, bred or kept", "except domesticated birds, fish and other small domestic animals confined indoors"]
+    "answerIncludesAll": ["No. Animals, livestock, fowl, or poultry of any kind can't be raised, bred or kept", "except domesticated birds, fish and other small domestic animals confined indoors"]
   },
   {
     "question": "Can I keep dogs?",
