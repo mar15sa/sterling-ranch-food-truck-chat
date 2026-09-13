@@ -11,9 +11,13 @@ test("owner page stays private and does not load analytics", () => {
   assert.match(html, /Owner question log/);
   assert.match(html, /Weak or poor answers/);
   assert.match(html, /Answer quality/);
-  assert.match(html, /Private operations/);
-  assert.match(html, /Source health/);
-  assert.match(html, /CAB page coverage/);
+  assert.match(html, /Answer accuracy/);
+  assert.match(html, /Content readiness/);
+  assert.match(html, /In-scope documents/);
+  assert.match(html, /Fully handled/);
+  assert.match(html, /Available to answers/);
+  assert.match(html, /Held for expert review/);
+  assert.match(html, /View technical source diagnostics/);
   assert.match(html, /Pending review/);
   assert.match(html, /noindex, nofollow, noarchive/);
   assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
@@ -30,9 +34,11 @@ test("resident source details stay simple while owner diagnostics receive full h
   assert.doesNotMatch(residentHtml, /CAB page coverage|Latest online update|Codified through/);
   assert.doesNotMatch(residentScript, /eligible CAB pages remain|excluded with a reason|inventory still building/);
   assert.match(ownerScript, /renderSourceHealth/);
+  assert.match(ownerScript, /renderSourceReadiness/);
   assert.match(ownerScript, /\/api\/community-source-health/);
   assert.match(ownerScript, /pendingSourceCount|pendingPageCount/);
-  assert.match(server, /handleCommunitySourceHealth[\s\S]*rules:[\s\S]*community: communitySourceStatus\(undefined, Date.now\(\), \{ includeStaleSources: true \}\)/);
+  assert.match(server, /handleCommunitySourceHealth[\s\S]*includeStaleSources: true,[\s\S]*includeApprovedEvidenceCheckTime: true/);
+  assert.match(server, /readiness: buildCommunitySourceReadiness\(community\)/);
   assert.match(server, /\/api\/community-source-health/);
 });
 
@@ -59,6 +65,17 @@ test("resident answers use structured formatting and do not repeat link labels a
   assert.match(script, /Belvedere Tan/);
   assert.match(script, /Earthen/);
   assert.match(css, /\.rules-answer-lead strong/);
+  assert.match(css, /\.rules-answer-lead\s*\{[^}]*font-size:\s*1rem;[^}]*line-height:\s*1\.56;/s);
+  assert.match(css, /\.rules-answer-list strong\s*\{[^}]*font-weight:\s*700;/s);
+});
+
+test("conditional-answer banner explains the caveat without implying yes", () => {
+  const script = fs.readFileSync(
+    path.join(__dirname, "..", "public", "rules-assistant.js"),
+    "utf8"
+  );
+  assert.match(script, /answerLabel\.textContent = "Approval or conditions apply"/);
+  assert.doesNotMatch(script, /Allowed with approval or conditions/);
 });
 
 test("an expanded owner question stays open across automatic refreshes", () => {
@@ -90,7 +107,14 @@ test("owner can mark an answer as needs work and filter those marks", () => {
 test("source review dashboard is private, version-bound, and has no analytics", () => {
   const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.html"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.js"), "utf8");
-  assert.match(html, /Source review/);
+  assert.match(html, /Answer readiness/);
+  assert.match(html, /Four priority categories/);
+  assert.match(html, /Current approved evidence/);
+  assert.match(html, /Necessary content handled/);
+  assert.match(html, /System-wide conflicts kept out/);
+  assert.match(html, /site-wide discovery bookkeeping/);
+  assert.match(script, /renderReadiness/);
+  assert.match(script, /still safely withheld/);
   assert.match(`${html}\n${script}`, /Before this review/);
   assert.match(`${html}\n${script}`, /Proposed change/);
   assert.match(script, /does not confirm production deployment/);

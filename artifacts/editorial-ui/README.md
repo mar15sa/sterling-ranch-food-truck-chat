@@ -1,5 +1,7 @@
 # Approved Society editorial UI implementation
 
+Historical implementation record, September 9, 2026. The no-deployment statement and early calendar/pool behavior below describe this work session. The approved site subsequently shipped in [PR #102](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/102), with later weather/homepage/calendar changes. See [current design reference and history](../../docs/DESIGN-REFERENCE.md); preserve the original test evidence below with its date.
+
 Local worktree: `.worktrees/society-editorial-ui-implementation-20260909`
 Branch: `codex/society-editorial-ui-implementation-20260909`
 Base: fetched `origin/main` at `884de8c` on September 9, 2026.

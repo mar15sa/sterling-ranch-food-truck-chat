@@ -874,6 +874,16 @@ test("candidate validation catches missing details, dates, and filters after con
   assert.ok(facilityDecision.reasons.includes("requested-price-missing"));
 });
 
+test("the events shortcut recognizes both class and classes", () => {
+  for (const subject of ["next yoga class", "upcoming fitness classes"]) {
+    const decision = shortcutEligibility("events", {
+      question: subject,
+      plan: plan({ intent: "events", goal: "schedule", goals: ["schedule"], subject, requestedDetails: ["date"] }),
+    });
+    assert.equal(decision.eligible, true, `${subject}: ${decision.reasons.join(", ")}`);
+  }
+});
+
 test("retired proactive price shortcuts stay ineligible even when old candidates carry evidence metadata", () => {
   const costPlan = plan({ intent: "facilities", goal: "cost", goals: ["cost"], subject: "pool rental", requestedDetails: ["price"] });
   const supported = shortcutEligibility("proactive", {

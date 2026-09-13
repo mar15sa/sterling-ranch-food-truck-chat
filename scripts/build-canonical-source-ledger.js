@@ -16,6 +16,7 @@ const formEvidence = require(path.join(root, "data", "community-form-approval-ev
 const legacyDecisions = require(path.join(root, "data", "community-owner-decisions-batch-1-2026-09-08.json"));
 const scopedDecisions = require(path.join(root, "data", "canonical-source-ledger-decisions.json"));
 const v5Decisions = require(path.join(root, "data", "community-source-approvals-v5.json"));
+const v6Decisions = require(path.join(root, "data", "community-source-approvals-v6.json"));
 const outputPath = path.join(root, "data", "canonical-source-ledger.json");
 
 function buildLedger() {
@@ -60,19 +61,33 @@ function buildLedger() {
     }
   }
 
-  ledger.decisionApplications = [];
-  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || [])]) {
+  for (const decision of v6Decisions.decisions || []) {
     for (const version of decision.versions || []) {
+      upsertObservation(ledger, {
+        ...version,
+        title: decision.decisionId,
+        checkedAt: v6Decisions.decidedAt,
+        availability: { checkedAt: v6Decisions.decidedAt, httpStatus: 200, finalUrl: version.canonicalUrl },
+      }, { origin: "community-source-approvals-v6", communityId: v6Decisions.communityId });
+    }
+  }
+
+  ledger.decisionApplications = [];
+  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || [])]) {
+    for (const version of decision.versions || []) {
+      const packageData = (v6Decisions.decisions || []).includes(decision)
+        ? v6Decisions
+        : (v5Decisions.decisions || []).includes(decision) ? v5Decisions : scopedDecisions;
       const result = applyExplicitDecision(ledger, {
         ...decision,
         approvedActions: decision.approvedActions || [],
         decision: decision.decision || "approve-proposed",
         ...version,
-        communityId: decision.decisionId && (v5Decisions.decisions || []).includes(decision) ? v5Decisions.communityId : scopedDecisions.communityId,
-        decidedAt: decision.decisionId && (v5Decisions.decisions || []).includes(decision) ? v5Decisions.decidedAt : scopedDecisions.decidedAt,
+        communityId: packageData.communityId,
+        decidedAt: packageData.decidedAt,
       });
       if (!result.applied) throw new Error(`Could not apply ${decision.decisionId}: ${result.reason}`);
-      ledger.decisionApplications.push({ decisionId: decision.decisionId, communityId: scopedDecisions.communityId, key: result.key });
+      ledger.decisionApplications.push({ decisionId: decision.decisionId, communityId: packageData.communityId, key: result.key });
     }
   }
   ledger.deferred = scopedDecisions.deferred || [];

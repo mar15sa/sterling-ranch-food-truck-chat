@@ -14,7 +14,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  fast:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Run fast deterministic checks
+        env:
+          RULES_LLM_MODE: off
+          RULES_ENABLE_LLM_REWRITE: "false"
+        run: npm run test:fast
+
   quality:
+    if: github.event_name == 'pull_request'
+    needs: fast
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -29,6 +48,9 @@ jobs:
       - name: Revalidate due approved evidence into a temporary snapshot
         uses: ./.github/actions/revalidate-approved-community-evidence
       - name: Run the comprehensive quality gate against temporary evidence
+        env:
+          RULES_LLM_MODE: off
+          RULES_ENABLE_LLM_REWRITE: "false"
         run: |
           npm run check
       - name: Preserve evidence revalidation records
@@ -39,3 +61,25 @@ jobs:
           path: artifacts/
           if-no-files-found: warn
           retention-days: 30
+
+  deployment-smoke:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Select deployed environment
+        shell: bash
+        run: |
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            echo "DEPLOYMENT_BASE_URL=${{ vars.PRODUCTION_BASE_URL || 'https://sterlingranchsociety.com' }}" >> "$GITHUB_ENV"
+          else
+            echo "DEPLOYMENT_BASE_URL=${{ vars.STAGING_BASE_URL || 'https://sterling-ranch-food-truck-chat-staging.up.railway.app' }}" >> "$GITHUB_ENV"
+          fi
+      - name: Wait for and verify the exact deployment
+        env:
+          EXPECTED_DEPLOYMENT_REVISION: ${{ github.sha }}
+        run: npm run check:deployment

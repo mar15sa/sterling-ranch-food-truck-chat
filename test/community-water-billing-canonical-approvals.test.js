@@ -137,6 +137,8 @@ test('real imported exact-version water-billing projections renew after their in
     sources: imported.sources.filter((source) => waterIds.has(source.id)),
     factLedger: imported.factLedger.filter((fact) => waterIds.has(fact.sourceId)),
   };
+  for (const source of expired.sources) source.staleAfter = '2026-09-10T12:00:00Z';
+  for (const fact of expired.factLedger) fact.staleAfter = '2026-09-10T12:00:00Z';
   const pages = expired.sources;
   assert.deepEqual(selectRevalidationTargetUrls(expired, expiredNow), pages.map((source) => source.sourceUrl).sort());
 
