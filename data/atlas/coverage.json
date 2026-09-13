@@ -489,6 +489,13 @@
         "Sterling Ranch / Sterling Ridge HOA"
       ],
       "disposition": "Different Colorado Springs development; exclude from Littleton community inventory."
+    },
+    {
+      "labels": [
+        "Elk River Park",
+        "Cultural Trail Park / Culutral Trail Park"
+      ],
+      "disposition": "Older OpenStreetMap labels seen during the third audit. Identity and possible overlap with current CAB/developer parks remain unresolved; background labels are not additional confirmed destinations."
     }
   ],
   "unresolved": [
@@ -718,5 +725,9 @@
       ],
       "resolution": "Resource Center is an existing/historical venue lead, not automatically a future building. Current role/location needs reconciliation."
     }
+  ],
+  "auditNotes": [
+    "September 13 third pass checked both current park directories, CAB facility pages, the dedicated pickleball and shelter pages, apartment amenities, library plans, and old map labels. Added seven records. Eight Burns pickleball courts were already represented and now have a prominent listing and live booking link.",
+    "The wider OpenStreetMap refresh failed with service errors; the existing bounded background is retained and explicitly described as incomplete. Four street-area markers use matched street junction geometry and CAB location descriptions; no entrance or boundary accuracy is claimed."
   ]
 }

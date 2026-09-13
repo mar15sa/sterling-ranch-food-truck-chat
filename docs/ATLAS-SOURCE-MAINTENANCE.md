@@ -1,6 +1,6 @@
 # Atlas sources, coverage and useful place cards
 
-Research plan and offline inventory implemented September 13, 2026. No production launch, automatic publishing, subscriptions, outreach or recurring Atlas monitor is enabled. The existing staging page remains the 24-entry prototype.
+Research plan and expanded staging build implemented September 13, 2026. No production launch, automatic publishing, subscriptions, outreach or recurring Atlas monitor is enabled. The staging build contains 100 supported listings and separately accounts for 25 held leads. See ATLAS-STAGING-PREVIEW.md for exact deployment verification.
 
 ## Why this pass was needed
 
@@ -91,17 +91,21 @@ Reuse the existing CivicPlus connector/profile boundaries where applicable. Keep
 - Resident Resource Center appears in the older map and March 2026 meeting calendar. It must be reconciled as an existing/historical venue, not automatically labeled a new future building. The older address is now the school's project address.
 - Indigo and Rye, Sourdough Haus, Lemon Zest Bakery, Pup Pilot, Mountain View Photo, BLR Photography, Stephanie Renae Hall Photography and Golden Cowgirl Spray Tans are leads. Lemon Zest has a temporary closure notice; Sourdough Haus's visible order schedule is old.
 
-## Next staging implementation gate
+## Remaining staging refinement
 
 1. Close location, alias and phase-status gaps for the records being added.
 2. Add useful sourced card fields and preserve unknowns. Offer a directory entry without a pin where exact location is unknown.
 3. Reconcile and widen the geography; distinguish nearby context from community destinations.
-4. Add records to the staging catalog only after review. Keep makers held until permission and location choices are documented.
+4. Rebuild the staging catalog with `node scripts/build-atlas-preview.js` after reviewing inventory, location or visitor-detail changes. Check synchronization with `--check`. Keep makers held until permission and location choices are documented.
 5. Validate source links, search aliases, parent/feature counts, phase filters, privacy, geography and stale/failure behavior. Review the revised page with Marissa before any production proposal.
 
 ## Validation and documentation
 
-The offline checker passed for 118 research records, 56 registered references, six audited label sets and all 24 existing staging IDs. It checks missing sources, parent cycles, claim/source linkage, lost baseline entries and accidental home-location or publication promotion. Runtime files are unchanged in this research pass, so no new runtime deployment is claimed.
+The offline checker passes for 125 research records, 58 registered references, six audited label sets and all 100 staging-build IDs. It checks missing sources, parent cycles, claim/source linkage, lost baseline entries and accidental home-location or publication promotion. The runtime catalog is a deterministic projection of non-candidate records; the raw research file and makers remain unserved. Runtime changes are staging-only and require the normal release checks.
+
+The third audit added the Pat Gallagher, McCormick and Pioneer shelters, Broadstone EV charging, the library children's area and drive-through return, and Willow Creek Wildlife Corridor. CAB's dedicated pickleball and park-shelter pages are now registered sources. Pickleball has a prominent shortcut, eight-court detail and official CourtReserve action. Current operating facts require the same scheduled manual review discipline; successful page loads never silently renew their review date.
+
+Fifty-six listings share eleven map locations. Four locations use CAB-described street areas matched to saved OSM junction geometry; they are explicitly approximate and do not offer entrance directions. Forty-four listings remain directory-only. A wider OSM refresh failed with service errors, so the earlier background is retained and labeled incomplete, with a link to the full official planning map. Older Elk River / Cultural Trail Park OSM labels remain unresolved background names, not new confirmed destinations.
 
 The previous staging CI run [34768789499](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34768789499) completed successfully; that result covers the earlier prototype revision, not a production launch.
 

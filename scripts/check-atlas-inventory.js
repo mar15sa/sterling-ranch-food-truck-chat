@@ -83,7 +83,7 @@ if (args.includes('--write-report')) {
     '',
     '**' + counts.place + ' place/project records, ' + counts.feature + ' features inside those places, ' + counts.phase + ' future phases, ' + counts['recurring-use'] + ' recurring uses, and ' + counts.candidate + ' leads.** These are not ' + records.size + ' separate map pins. ' + sources.size + ' source references are registered.',
     '',
-    'The staging page still uses its original ' + staged.places.length + '-entry catalog. This research inventory is separate, is not served by the page, and has not been promoted into Community Assistant evidence.',
+    'The staging build includes ' + staged.places.length + ' supported listings derived from this inventory. Candidate leads remain held separately. The raw research inventory is not served by the page, and no Atlas facts have been promoted into Community Assistant evidence. See ATLAS-STAGING-PREVIEW.md for the verified deployment revision.',
     '',
     '## What is accounted for',
     '',

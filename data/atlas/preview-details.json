@@ -1,0 +1,309 @@
+{
+  "burns-courts": {
+    "status": "existing",
+    "description": "Eight outdoor pickleball courts at Burns Regional Park, near Sterling Ranch Avenue and Middle Fork Street.",
+    "tags": [
+      "Pickleball",
+      "Courts",
+      "Street parking"
+    ],
+    "sourceIds": [
+      "cab-pickleball-guidelines",
+      "developer-parks"
+    ],
+    "visitNotes": [
+      "CAB lists weekday access from 7 a.m. to dusk and weekend access from 8 a.m. to dusk.",
+      "Bring your own paddles and balls. Check CourtReserve for the current open-play and reservation schedule.",
+      "Street parking is available near Sterling Ranch Avenue and Middle Fork Street."
+    ],
+    "unknowns": [
+      "Same-day availability and weather closures must be checked with CAB."
+    ],
+    "action": {
+      "label": "Check courts and reserve",
+      "url": "https://app.courtreserve.com/Online/Portal/Index/15838"
+    },
+    "access": "CAB offers resident and nonresident reservations; check the booking portal for current availability and fees."
+  },
+  "burns": {
+    "tags": [
+      "Pickleball",
+      "Regional park"
+    ],
+    "description": "The first completed amenity is the eight-court pickleball facility. More of the regional park is planned in later phases."
+  },
+  "overlook-pool": {
+    "description": "The Overlook’s seasonal outdoor pool. Use the pool page for the latest opening and closure information.",
+    "tags": [
+      "Pool",
+      "Swimming"
+    ],
+    "action": {
+      "label": "Check current pool status",
+      "url": "/pool"
+    }
+  },
+  "overlook-splash": {
+    "tags": [
+      "Splash pad",
+      "Water play"
+    ],
+    "action": {
+      "label": "Check current pool status",
+      "url": "/pool"
+    }
+  },
+  "overlook-fitness": {
+    "tags": [
+      "Fitness",
+      "Gym"
+    ],
+    "sourceIds": [
+      "cab-fitness"
+    ],
+    "action": {
+      "label": "View fitness access and hours",
+      "url": "https://www.sterlingranchcab.com/186/Fitness"
+    }
+  },
+  "school51": {
+    "tags": [
+      "Elementary school",
+      "School construction",
+      "Enrollment"
+    ],
+    "description": "Sterling Ranch’s new neighborhood elementary school is under construction at 8220 Piney River Avenue. DCSD targets August 2027 for opening, with enrollment anticipated in November 2026.",
+    "visitNotes": [
+      "The working name is Elementary School 51. Use DCSD’s project page for naming, attendance-boundary and enrollment updates."
+    ],
+    "unknowns": [
+      "Final attendance boundaries and enrollment opening date still need confirmation."
+    ],
+    "action": {
+      "label": "See school and enrollment updates",
+      "url": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch"
+    }
+  },
+  "library": {
+    "tags": [
+      "Library",
+      "Books",
+      "Study rooms",
+      "Children"
+    ],
+    "description": "The planned library at 8285 Piney River Avenue includes study and conference rooms, an event hall, children’s space and outdoor gathering areas.",
+    "visitNotes": [
+      "The project targets 2027. Planned rooms and services are not open for use yet."
+    ],
+    "unknowns": [
+      "The exact opening date and room-booking start are not confirmed."
+    ],
+    "action": {
+      "label": "Follow library construction",
+      "url": "https://dcl.org/build/"
+    }
+  },
+  "john-adams": {
+    "tags": [
+      "School",
+      "Charter",
+      "K–8"
+    ],
+    "description": "John Adams Academy’s Sterling Ranch campus is at 7979 Butte Creek Street. The operator describes a K–8 start for fall 2026.",
+    "access": "School campus. Playground or sports-area access outside school activities is not established.",
+    "action": {
+      "label": "View enrollment and school information",
+      "url": "https://www.jaadougco.org/"
+    }
+  },
+  "primrose": {
+    "tags": [
+      "Preschool",
+      "Childcare"
+    ],
+    "access": "School facilities are for enrolled families and authorized visitors. These are not public neighborhood playgrounds.",
+    "action": {
+      "label": "Explore programs and tours",
+      "url": "https://www.primroseschools.com/schools/sterling-ranch"
+    }
+  },
+  "prospect-park": {
+    "tags": [
+      "Playground",
+      "All abilities",
+      "Basketball",
+      "Soccer",
+      "Picnic"
+    ],
+    "description": "An all-abilities playground, turf area and event shell anchor Prospect Park. CAB also lists basketball and other sports facilities; later phases remain separate below.",
+    "sourceIds": [
+      "cab-prospect",
+      "developer-parks"
+    ],
+    "unknowns": [
+      "Confirm current availability of each sports area, entrance details and restroom access."
+    ]
+  },
+  "prospect-basketball": {
+    "tags": [
+      "Basketball",
+      "Court"
+    ],
+    "sourceIds": [
+      "cab-prospect-court"
+    ],
+    "description": "CAB lists a separate basketball-court facility within Prospect Park at 8158 Monte Vista Circle.",
+    "unknowns": [
+      "Current court availability and booking conditions still need checking."
+    ]
+  },
+  "prospect-next": {
+    "tags": [
+      "Future pool",
+      "Beach Club"
+    ],
+    "description": "CAB announced a summer 2026 start for Phase 2, including the Beach Club pool. That announcement does not establish that the pool is open.",
+    "unknowns": [
+      "Actual construction progress and opening date are not yet confirmed."
+    ]
+  },
+  "outcrop": {
+    "tags": [
+      "Climbing",
+      "Nature play",
+      "Planned park"
+    ],
+    "description": "A Parkvale park planned with a climbing wall, rockslide, nature play and picnic/shade areas. The developer’s summer 2026 target needs a current opening check."
+  },
+  "peekaboo": {
+    "tags": [
+      "Playground",
+      "Slides",
+      "Picnic shelter"
+    ],
+    "description": "An Ascent pocket park with a dual-slide play structure and shaded picnic shelter."
+  },
+  "willow-creek": {
+    "tags": [
+      "Trailhead",
+      "Walking",
+      "Biking"
+    ],
+    "description": "A trailhead and gathering place by Willow Creek. CAB places Trailhead Park near Mount Kataka and Mount Ouray; the name match remains under review."
+  },
+  "broadstone": {
+    "tags": [
+      "Apartments",
+      "Private amenities"
+    ],
+    "access": "These amenities belong to the apartment community. Public or general Sterling Ranch resident access is not established."
+  },
+  "prose": {
+    "tags": [
+      "Apartments",
+      "Private amenities",
+      "Dog park"
+    ],
+    "access": "These amenities belong to the apartment community. The dog park is not established as a public CAB off-leash park."
+  },
+  "ranch-social": {
+    "tags": [
+      "Coffee",
+      "Food",
+      "Drinks",
+      "Playground"
+    ],
+    "description": "Sterling Center’s shared food, drink and gathering venue, with tenant businesses and outdoor play/seating areas."
+  },
+  "food-trucks": {
+    "tags": [
+      "Food trucks",
+      "Dinner"
+    ],
+    "description": "Rotating food trucks stop at Ranch Social. Check the daily schedule for who is serving and when.",
+    "action": {
+      "label": "See today’s food truck",
+      "url": "/"
+    }
+  },
+  "farmers-market": {
+    "tags": [
+      "Farmers market",
+      "Wednesday",
+      "Seasonal"
+    ],
+    "description": "The 2026 market runs at Providence Park on Wednesdays, June 24 through October 14, from 3–7 p.m. or sellout.",
+    "action": {
+      "label": "View the market’s current schedule",
+      "url": "https://denverfarmersmarket.com/"
+    }
+  },
+  "sterling-eyecare": {
+    "tags": [
+      "Optometrist",
+      "Eye care"
+    ],
+    "visitNotes": [
+      "Sterling Center, Suite 120. The operator lists a midday lunch closure, so check office hours before visiting."
+    ],
+    "action": {
+      "label": "View hours and appointments",
+      "url": "https://www.sterling-eyecare.com/"
+    }
+  },
+  "rave": {
+    "tags": [
+      "Spa",
+      "Appointments"
+    ],
+    "visitNotes": [
+      "Sterling Center, Suite 230."
+    ],
+    "action": {
+      "label": "View services and booking",
+      "url": "https://raveclinics.com/"
+    }
+  },
+  "zebulon": {
+    "tags": [
+      "Sports",
+      "Future development"
+    ],
+    "description": "Douglas County reports grading and preparation for infrastructure. The proposed sports facilities are not open.",
+    "action": {
+      "label": "Read the county’s project update",
+      "url": "https://www.douglasco.gov/zebulon/"
+    }
+  },
+  "atlas-coffee": {
+    "tags": [
+      "Coffee",
+      "Cafe"
+    ],
+    "action": {
+      "label": "View the Sterling Ranch location",
+      "url": "https://www.atlascoffees.com/locations"
+    }
+  },
+  "salta": {
+    "tags": [
+      "Cocktails",
+      "Wine",
+      "Food"
+    ],
+    "action": {
+      "label": "View location and menu links",
+      "url": "https://www.atlascoffees.com/locations"
+    }
+  },
+  "agora": {
+    "tags": [
+      "Market",
+      "Groceries"
+    ],
+    "action": {
+      "label": "View location details",
+      "url": "https://www.atlascoffees.com/locations"
+    }
+  }
+}

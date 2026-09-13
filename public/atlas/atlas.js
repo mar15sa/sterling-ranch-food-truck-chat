@@ -105,12 +105,12 @@
   }
   function renderList(){
     const places=filtered(), mapped=places.filter(p=>p.coordinates).length;
-    $('#result-count').textContent=`${places.length} places · ${mapped} mapped`;
+    $('#result-count').textContent=`${places.length} listings · ${mapped} located`;
     const frag=document.createDocumentFragment();
     for(const p of places){
       const b=el('button',{type:'button',class:'place-row','aria-pressed':String(p.id===state.selected),'data-place':p.id,style:'--place-color:'+C.categories[p.category].color});
       add(b,'span',{class:'place-number','aria-hidden':'true'},number(p));
-      const copy=add(b,'span',{});add(copy,'strong',{},p.name);add(copy,'small',{},p.village+' · '+(p.coordinates?C.statuses[p.status]:'Location being checked'));
+      const copy=add(b,'span',{});add(copy,'strong',{},p.name);add(copy,'small',{},(p.parentName?'At '+p.parentName:p.village)+' · '+C.statuses[p.status]+(!p.coordinates?' · Not pinned yet':''));
       add(b,'span',{class:'row-arrow','aria-hidden':'true'},'↗');b.addEventListener('click',()=>selectPlace(p.id,b));frag.append(b);
     }
     if(!places.length){
@@ -135,6 +135,9 @@
     add(detail,'p',{class:'detail-location'},p.address||p.village);
     add(detail,'span',{class:'detail-status'},C.statuses[p.status]);
     add(detail,'p',{class:'detail-description'},p.description);
+    if(p.parentId){const parent=add(detail,'button',{type:'button',class:'parent-link'},'Part of '+p.parentName+' ↗');parent.addEventListener('click',()=>selectPlace(p.parentId));}
+    if(p.access)add(detail,'p',{class:'detail-note'},p.access);
+    if(p.visitNotes?.length){const section=add(detail,'div',{class:'visit-details'});add(section,'h3',{},'Plan your visit');const items=add(section,'ul',{});p.visitNotes.forEach(note=>add(items,'li',{},note));}
     const tags=add(detail,'ul',{class:'detail-tags','aria-label':'Amenities'});p.tags.forEach(t=>add(tags,'li',{},t));
     if(p.note)add(detail,'p',{class:'detail-note'},p.note);
     if(!p.coordinates)add(detail,'p',{class:'detail-note'},'The exact location is still being checked. This entry appears in the directory only.');
@@ -142,11 +145,15 @@
     if(p.action)link(actions,p.action.label+' ↗',p.action.url);
     const directions=C.directionsUrl(p);if(directions)link(actions,'Get directions ↗',directions,p.action?'secondary':'');
     link(actions,p.category==='future'?'Read the development update ↗':'View official details ↗',p.sources[0].url,'secondary');
-    const relatives=p.locationGroup?state.places.filter(other=>other.locationGroup===p.locationGroup&&other.id!==p.id):[];
+    if(p.locationPrecision==='street-area')add(detail,'p',{class:'detail-note'},'Approximate area near the streets named by CAB. The marker is not an entrance or a surveyed park location.');
+    if(p.locationPrecision==='parent-area')add(detail,'p',{class:'detail-note'},'The marker uses the parent facility’s location. The exact position of this feature within it is still being checked.');
+    const relatives=state.places.filter(other=>other.id!==p.id&&(other.parentId===p.id||(p.parentId&&other.parentId===p.parentId)||(p.locationGroup&&other.locationGroup===p.locationGroup)));
     if(relatives.length){const section=add(detail,'div',{class:'related-places'});add(section,'h3',{},'Also at this location');for(const other of relatives){const b=add(section,'button',{type:'button'},other.name+' ↗');b.addEventListener('click',()=>selectPlace(other.id));}}
+    if(p.unknowns?.length){const check=add(detail,'details',{class:'detail-checks'});add(check,'summary',{},'Details still being checked');const ul=add(check,'ul',{});p.unknowns.forEach(q=>add(ul,'li',{},q));}
     const sources=add(detail,'div',{class:'detail-sources'});add(sources,'strong',{},'SOURCES & REVIEW');
     for(const s of p.sources)link(sources,s.label+' ↗',s.url);
     if(p.locationSource)link(sources,'Map-location source ↗',p.locationSource);
+    if(p.locationContextSource)link(sources,'Official location description ↗',p.locationContextSource);
     add(sources,'p',{},`Source checked ${new Date(p.checkedAt+'T12:00:00Z').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'})}. ${C.sourceIsDue(p)?'Due for another check.':'Staging review; publication not yet approved.'}`);
     if(p.locationPrecision==='park-center')add(sources,'p',{},'Marker shows the park area, not a confirmed entrance.');
     detail.scrollTop=0;
@@ -177,6 +184,7 @@
   $('#search').addEventListener('input',e=>{state.query=e.target.value;setFilters();});
   $('#clear-search').addEventListener('click',()=>{state.query='';$('#search').value='';setFilters();$('#search').focus();});
   document.querySelectorAll('[data-category]').forEach(b=>b.addEventListener('click',()=>{state.category=b.dataset.category;setFilters();}));
+  document.querySelectorAll('[data-find]').forEach(b=>b.addEventListener('click',()=>{state.category='all';state.query=b.dataset.find;$('#search').value=state.query;setFilters();}));
   document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{state.view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));drawGeography();}));
   $('#explode').addEventListener('click',()=>setExplosion($('#explode').getAttribute('aria-pressed')!=='true'));
   $('#zoom-in').addEventListener('click',()=>zoom(.35));$('#zoom-out').addEventListener('click',()=>zoom(-.35));
@@ -193,7 +201,17 @@
   async function load(){
     stage.setAttribute('aria-busy','true');
     const [catalog,geography]=await Promise.allSettled([getJson('/atlas/places.json').then(C.validateCatalog),getJson('/atlas/geography.json')]);
-    if(catalog.status==='fulfilled'){state.places=catalog.value.places;renderList();}else{list.replaceChildren(el('p',{class:'empty'},'The place collection couldn’t load. Please try again.'));$('#result-count').textContent='Unavailable';}
+    if(catalog.status==='fulfilled'){
+      state.places=catalog.value.places;renderList();
+      const coverage=catalog.value.coverage;
+      if(coverage){
+        $('#inventory-summary').textContent=`${coverage.listed} listings: ${coverage.placeCount} places and projects, ${coverage.featureCount} individual amenities, ${coverage.phaseCount} future phases and ${coverage.recurringCount} recurring uses. ${coverage.heldCount} research leads are still held for review.`;
+        $('#coverage-note').textContent='The collection accounts for the named parks in the developer and CAB directories and the CAB facility list. Features share their parent’s marker when their exact position is unknown. Unlocated entries remain searchable in the directory. The saved map background is incomplete and does not establish a community or property boundary. Use the official full plan below for wider development context.';
+        $('#research-summary').textContent=`${coverage.heldCount} research leads still being checked`;
+        $('#research-intro').textContent=`${coverage.makerLeadsHeld} neighborhood-business leads are awaiting their owners’ listing permission and public location choice. Other leads below need identity, location or access checks. These are not confirmed destinations or map pins.`;
+        const research=$('#research-list');research.replaceChildren();for(const item of coverage.heldReasons){const li=add(research,'li',{});add(li,'strong',{},item.name+': ');add(li,'span',{},item.reason);}
+      }
+    }else{list.replaceChildren(el('p',{class:'empty'},'The place collection couldn’t load. Please try again.'));$('#result-count').textContent='Unavailable';}
     if(geography.status==='fulfilled'&&Array.isArray(geography.value.features)&&geography.value.bounds){state.geography=geography.value;drawGeography();updateCamera();}
     if(catalog.status==='rejected'||geography.status==='rejected'){
       const msg=$('#map-message');msg.textContent=catalog.status==='fulfilled'?'The map couldn’t load. You can still browse the directory.':'The atlas couldn’t load.';const retry=add(msg,'button',{type:'button'},'Try again');retry.addEventListener('click',load);

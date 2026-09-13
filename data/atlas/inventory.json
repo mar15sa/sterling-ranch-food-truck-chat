@@ -1377,29 +1377,53 @@
     },
     {
       "id": "burns-courts",
-      "name": "Burns Park Pickleball",
+      "name": "Burns Park Pickleball Courts",
       "kind": "feature",
       "category": "parks",
       "village": "Between villages",
       "scope": "community",
       "status": "source-listed",
       "sourceIds": [
-        "cab-burns"
+        "cab-burns",
+        "cab-pickleball-guidelines"
       ],
       "claims": [
         {
           "text": "Eight courts at 9020 Middle Fork Street.",
           "sourceId": "cab-burns"
+        },
+        {
+          "text": "Weekdays from 7 a.m. to dusk; weekends from 8 a.m. to dusk.",
+          "sourceId": "cab-pickleball-guidelines"
+        },
+        {
+          "text": "Street parking near Sterling Ranch Avenue and Middle Fork Street.",
+          "sourceId": "cab-pickleball-guidelines"
+        },
+        {
+          "text": "Bring paddles and balls. Reservations and drop-in play are available.",
+          "sourceId": "cab-pickleball-guidelines"
         }
       ],
       "parentId": "burns",
-      "aliases": [],
+      "aliases": [
+        "pickle ball",
+        "pickle-ball",
+        "Burns Park Pickleball",
+        "Pickleball Courts at Burns Park"
+      ],
       "publicationState": "research-only",
       "locationState": "entrance-not-verified",
       "access": "Confirm facility-specific access and current availability.",
       "questions": [
-        "Verify current access, exact position within the parent and relevant visit details."
-      ]
+        "Check the live reservation portal for availability, current fees and booking windows.",
+        "Confirm weather closures and event priority before visiting."
+      ],
+      "action": {
+        "label": "Check courts and reserve",
+        "url": "https://app.courtreserve.com/Online/Portal/Index/15838",
+        "sourceId": "cab-pickleball-guidelines"
+      }
     },
     {
       "id": "prospect-playground",
@@ -3026,6 +3050,188 @@
       "questions": [
         "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
         "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "pat-shelter",
+      "name": "Pat Gallagher park shelter",
+      "parentId": "pat-gallagher",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-rental-guide"
+      ],
+      "claims": [
+        {
+          "text": "Shelter named in CAB rental guide.",
+          "sourceId": "cab-rental-guide"
+        }
+      ],
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm the parent facility’s current access and availability.",
+      "questions": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    {
+      "id": "mccormick-shelter",
+      "name": "McCormick park shelter",
+      "parentId": "mccormick",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-rental-guide"
+      ],
+      "claims": [
+        {
+          "text": "Shelter named in CAB rental guide.",
+          "sourceId": "cab-rental-guide"
+        }
+      ],
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm the parent facility’s current access and availability.",
+      "questions": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    {
+      "id": "pioneer-shelter",
+      "name": "Pioneer park shelter",
+      "parentId": "pioneer",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Neighborhood park shelter.",
+          "sourceId": "cab-parks"
+        }
+      ],
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm the parent facility’s current access and availability.",
+      "questions": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    {
+      "id": "broadstone-ev",
+      "name": "Broadstone EV charging",
+      "parentId": "broadstone",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "broadstone"
+      ],
+      "claims": [
+        {
+          "text": "Apartment amenity; public charging access is not established.",
+          "sourceId": "broadstone"
+        }
+      ],
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    {
+      "id": "library-childrens",
+      "name": "Library children’s area",
+      "parentId": "library",
+      "kind": "feature",
+      "category": "civic",
+      "village": "Providence",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "dcl-build"
+      ],
+      "claims": [
+        {
+          "text": "Planned interactive children’s area.",
+          "sourceId": "dcl-build"
+        }
+      ],
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm the parent facility’s current access and availability.",
+      "questions": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    {
+      "id": "library-return",
+      "name": "Library drive-through book return",
+      "parentId": "library",
+      "kind": "feature",
+      "category": "civic",
+      "village": "Providence",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "dcl-build"
+      ],
+      "claims": [
+        {
+          "text": "Planned drive-through book return.",
+          "sourceId": "dcl-build"
+        }
+      ],
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm the parent facility’s current access and availability.",
+      "questions": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    {
+      "id": "willow-corridor",
+      "name": "Willow Creek Wildlife Corridor",
+      "kind": "place",
+      "category": "trails",
+      "village": "Prospect / wider community",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Named wildlife corridor in the developer’s open-space overview.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Which trail segments and crossings are open to the public?",
+        "Distinguish habitat from usable paths; boundary and trail entrances still need confirmation."
       ]
     }
   ]

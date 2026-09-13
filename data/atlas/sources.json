@@ -619,6 +619,28 @@
       "limitation": "Builder name or housing collection is not a confirmed separate sales-office pin.",
       "lastReviewedAt": "2026-09-13",
       "reviewState": "reviewed-for-stated-scope"
+    },
+    {
+      "id": "cab-pickleball-guidelines",
+      "title": "CAB pickleball hours and reservations",
+      "owner": "Sterling Ranch CAB",
+      "url": "https://sterlingranchcab.com/418/Pickleball-Courts",
+      "reviewEveryDays": 7,
+      "authority": "Pickleball operations, equipment, parking and reservation portal",
+      "limitation": "Check live availability and current rules before booking. Source review is not production approval.",
+      "lastReviewedAt": "2026-09-13",
+      "reviewState": "reviewed-for-stated-scope"
+    },
+    {
+      "id": "cab-shelters",
+      "title": "CAB park shelter rentals",
+      "owner": "Sterling Ranch CAB",
+      "url": "https://sterlingranchcab.com/311/Park-Shelters",
+      "reviewEveryDays": 7,
+      "authority": "Shelter rental process and scope",
+      "limitation": "Check live availability and current rules before booking. Source review is not production approval.",
+      "lastReviewedAt": "2026-09-13",
+      "reviewState": "reviewed-for-stated-scope"
     }
   ]
 }

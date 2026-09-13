@@ -4,9 +4,9 @@ Research reviewed September 13, 2026. Everything remains in research/staging; pr
 
 This inventory accounts for the named destinations in the audited lists below. It does not establish that every physical place has been found. Unnamed sites, home businesses and exact boundaries still need work.
 
-**42 place/project records, 43 features inside those places, 6 future phases, 2 recurring uses, and 25 leads.** These are not 118 separate map pins. 56 source references are registered.
+**43 place/project records, 49 features inside those places, 6 future phases, 2 recurring uses, and 25 leads.** These are not 125 separate map pins. 58 source references are registered.
 
-The staging page still uses its original 24-entry catalog. This research inventory is separate, is not served by the page, and has not been promoted into Community Assistant evidence.
+The staging build includes 100 supported listings derived from this inventory. Candidate leads remain held separately. The raw research inventory is not served by the page, and no Atlas facts have been promoted into Community Assistant evidence. See ATLAS-STAGING-PREVIEW.md for the verified deployment revision.
 
 ## What is accounted for
 
@@ -67,6 +67,7 @@ Source-listed means a source describes the place. It does not promise that every
 | **Larry D. Moore Water Treatment Plant** | Parkvale area | source-listed | Named community infrastructure. [June 2026 community map](https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf) · [Dominion water service plan amendment](https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf) |
 | **Zebulon Regional Sports Complex** | East of current villages | site-preparation | County reports grading and preparation for utilities. [Zebulon project](https://www.douglasco.gov/zebulon/) · [15th amendment staff report and maps, pages 1–39](https://douglascounty.legistar.com/View.ashx?M=F&ID=15131384&GUID=5DA37C87-1054-46A8-BB33-3DE3CAACD685) |
 | **Ascent Village Center** | Ascent | map-concept | Village center label on CAB's illustrative map. [CAB park/trail map dated October 13, 2025](https://sterlingranchcab.com/DocumentCenter/View/2352) · [Future plans](https://sterlingranch.com/whats-next/) |
+| **Willow Creek Wildlife Corridor** | Prospect / wider community | source-listed | Named wildlife corridor in the developer’s open-space overview. [Developer parks directory](https://sterlingranch.com/town-life/parks-rec/) |
 
 ## Features, future phases and recurring uses
 
@@ -78,7 +79,7 @@ Keep these attached to their parent place. Private apartment and school amenitie
 | The Overlook Clubhouse | Great Hall, kitchen and balcony | source-listed | [Facility rental guide](https://sterlingranchcab.com/DocumentCenter/View/1938) |
 | The Overlook Clubhouse | North pavilion, fireplace and turf | source-listed | [Facility rental guide](https://sterlingranchcab.com/DocumentCenter/View/1938) |
 | The Overlook Clubhouse | South pavilion and grill | source-listed | [Facility rental guide](https://sterlingranchcab.com/DocumentCenter/View/1938) |
-| Burns Regional Park | Burns Park Pickleball | source-listed | [Burns pickleball courts](https://sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11) |
+| Burns Regional Park | Burns Park Pickleball Courts | source-listed | [Burns pickleball courts](https://sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11) · [CAB pickleball hours and reservations](https://sterlingranchcab.com/418/Pickleball-Courts) |
 | Prospect Regional Park | Prospect all-abilities playground | source-listed | [Developer parks directory](https://sterlingranch.com/town-life/parks-rec/) |
 | Prospect Regional Park | Prospect event shell | source-listed | [Developer parks directory](https://sterlingranch.com/town-life/parks-rec/) |
 | Prospect Regional Park | Prospect play lawn / turf area | source-listed | [Developer parks directory](https://sterlingranch.com/town-life/parks-rec/) |
@@ -125,6 +126,12 @@ Keep these attached to their parent place. Private apartment and school amenitie
 | The Overlook Clubhouse | Overlook fitness center | source-listed | [Overlook fitness](https://www.sterlingranchcab.com/186/Fitness) |
 | The Overlook Clubhouse | Overlook splash pad | seasonal | [2026 new homeowners guide](https://sterlingranchcab.com/DocumentCenter/View/1455/New-Homeowners-Guide) |
 | Peekaboo Park | Peekaboo playground / shelter | source-listed | [Developer parks directory](https://sterlingranch.com/town-life/parks-rec/) |
+| Pat Gallagher Park | Pat Gallagher park shelter | source-listed | [Facility rental guide](https://sterlingranchcab.com/DocumentCenter/View/1938) |
+| McCormick Park | McCormick park shelter | source-listed | [Facility rental guide](https://sterlingranchcab.com/DocumentCenter/View/1938) |
+| Pioneer Park | Pioneer park shelter | source-listed | [CAB community parks](https://www.sterlingranchcab.com/335/Community-Parks) |
+| Broadstone Sterling Ranch | Broadstone EV charging | source-listed | [Broadstone amenities](https://broadstonesr.com/amenities/) |
+| Sterling Ranch Community Library | Library children’s area | planned | [Sterling Ranch library construction](https://dcl.org/build/) |
+| Sterling Ranch Community Library | Library drive-through book return | planned | [Sterling Ranch library construction](https://dcl.org/build/) |
 
 ## Leads needing confirmation
 
@@ -180,6 +187,7 @@ These are research leads, not publishable listings. Home-business addresses are 
 - **Roxborough Primary, Roxborough Intermediate, Coyote Creek Elementary, Ben Franklin Academy, Ranch View Middle, ThunderRidge High:** Developer education page's nearby context. Separate offsite school audit needed; attendance assignment must use DCSD.
 - **Dogs in the Driveway:** Public site describes serving Sterling Ranch; no local premises established. Service-area mention is not a neighborhood business location.
 - **Sterling Ranch Family Daycare (Colorado Springs), Sterling Ranch / Sterling Ridge HOA:** Different Colorado Springs development; exclude from Littleton community inventory.
+- **Elk River Park, Cultural Trail Park / Culutral Trail Park:** Older OpenStreetMap labels seen during the third audit. Identity and possible overlap with current CAB/developer parks remain unresolved; background labels are not additional confirmed destinations.
 
 ## Source conflicts and stale labels
 

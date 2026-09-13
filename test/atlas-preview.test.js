@@ -27,10 +27,40 @@ test('future browsing keeps planned amenities distinct from existing courts and 
 });
 test('co-located places group without fabricating separate map coordinates',()=>{
   const groups=core.groupPlaces(catalog.places);
-  assert.equal(groups.find(g=>g.key==='sterling-center').places.length,5);
+  const center=groups.find(g=>g.key==='sterling-center');
+  for(const id of ['sterling-center','atlas-coffee','salta','agora','uchealth','lake-family-dental','sterling-eyecare','rave'])assert.ok(center.places.some(p=>p.id===id),id);
+  const pat=groups.find(g=>g.key==='pat-gallagher');
+  assert.ok(pat.places.some(p=>p.id==='pat-shelter'));
   const groupsFuture=core.groupPlaces(core.filterPlaces(catalog.places,'future',''));
   assert.equal(groupsFuture.find(g=>g.key==='burns').places[0].id,'burns-next');
   assert.ok(!groups.some(g=>g.places.some(p=>!p.coordinates)));
+});
+
+test('every audited record is either listed or explicitly held without losing park coverage',()=>{
+  const inventory=require('../data/atlas/inventory.json');
+  const coverage=require('../data/atlas/coverage.json');
+  const listed=new Set(catalog.places.map(p=>p.id)),held=new Set(catalog.coverage.heldIds);
+  assert.equal(listed.size+held.size,inventory.records.length);
+  for(const r of inventory.records){assert.notEqual(listed.has(r.id),held.has(r.id),r.id);assert.equal(held.has(r.id),r.kind==='candidate',r.id);}
+  for(const baseline of coverage.baselines)for(const entry of baseline.entries)assert.ok(listed.has(entry.recordId)||held.has(entry.recordId),entry.label);
+  assert.equal(catalog.coverage.listed,listed.size);
+  assert.equal(catalog.coverage.exhaustive,false);
+  assert.ok(!catalog.places.some(p=>p.category==='makers'));
+  for(const p of catalog.places)if(p.parentId)assert.ok(listed.has(p.parentId),p.name);
+});
+
+test('pickleball, missing playgrounds and the new school are discoverable with useful details',()=>{
+  for(const query of ['pickleball','pickle ball court','pickle-ball'])assert.ok(core.filterPlaces(catalog.places,'all',query).some(p=>p.id==='burns-courts'),query);
+  const courts=catalog.places.find(p=>p.id==='burns-courts');
+  assert.match(courts.description,/eight|8/i);assert.match(courts.action.url,/courtreserve\.com/);assert.match(courts.visitNotes.join(' '),/paddles/i);
+  for(const id of ['school51','peekaboo','prospect-basketball','willow-corridor','pat-shelter','library-childrens'])assert.ok(catalog.places.some(p=>p.id===id),id);
+  assert.ok(core.filterPlaces(catalog.places,'services','school').some(p=>p.id==='school51'));
+  assert.ok(core.filterPlaces(catalog.places,'future','').some(p=>p.id==='library-childrens'));
+  for(const p of catalog.places.filter(p=>['street-area','parent-area'].includes(p.locationPrecision)))assert.equal(core.directionsUrl(p),null,p.id);
+});
+
+test('the served staging catalog is reproducible from its source inventory',()=>{
+  require('node:child_process').execFileSync(process.execPath,['scripts/build-atlas-preview.js','--check'],{cwd:require('node:path').join(__dirname,'..')});
 });
 test('directions are restricted to sourced facility addresses, not reference or unknown locations',()=>{
   const byId=id=>catalog.places.find(p=>p.id===id);

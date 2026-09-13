@@ -8,14 +8,15 @@
     parks: {label:'Parks & trails', color:'#427865', elevation:48},
     amenities: {label:'Pools & gathering', color:'#336b80', elevation:76},
     businesses: {label:'Local businesses', color:'#946443', elevation:112},
+    services: {label:'Schools & services', color:'#51618b', elevation:96},
     makers: {label:'Neighborhood makers', color:'#956477', elevation:130},
     future: {label:'What’s coming', color:'#79618e', elevation:160},
   };
-  const statuses = {existing:'Here today',seasonal:'Seasonal amenity',planned:'Planned',construction:'Site preparation',partial:'Open, with more planned',unconfirmed:'Opening status needs checking'};
+  const statuses = {existing:'Here today',listed:'Listed by source',building:'Under construction',seasonal:'Seasonal amenity',planned:'Planned',construction:'Site preparation',partial:'Open, with more planned',unconfirmed:'Opening status needs checking'};
   const normalize = value => String(value || '').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
   function filterPlaces(places, category, query) {
     const words = normalize(query).split(' ').filter(Boolean);
-    return places.filter(p => (category === 'all' || p.category === category || (category === 'future' && p.future)) && words.every(word => normalize([p.name,p.village,p.description,...p.tags,...(p.aliases||[])].join(' ')).includes(word)));
+    return places.filter(p => (category === 'all' || p.category === category || (category === 'future' && p.future)) && words.every(word => normalize([p.name,p.parentName,p.village,p.description,...p.tags,...(p.aliases||[])].join(' ')).includes(word)));
   }
   function project(coordinates, bounds, view = 'model') {
     const [lon, lat] = coordinates;

@@ -20,7 +20,7 @@
   </header>
   <main>
     <div class="atlas-heading"><div><p class="eyebrow">YOUR NEIGHBORHOOD, LAYER BY LAYER</p><h1>The Sterling Ranch Atlas<span>.</span></h1></div><p class="edition">FIELD NOTES / 01<br><strong>Staging prototype</strong></p></div>
-    <div class="preview-note"><span class="preview-label">IN PROGRESS</span><span>A first collection of places. Sources and map locations are being reviewed before launch.</span></div>
+    <div class="preview-note"><span class="preview-label">STAGING ONLY</span><span id="inventory-summary">The expanded collection includes places, individual amenities and future phases. Exact locations and access are still being reviewed.</span></div>
     <section class="explorer" aria-label="Explore Sterling Ranch">
       <aside class="directory-panel" id="directory" tabindex="-1">
         <div class="search"><label class="sr-only" for="search">Search places and amenities</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Coffee, a park, pickleball…" autocomplete="off"><button type="button" id="clear-search" aria-label="Clear search" hidden>×</button></div>
@@ -29,9 +29,11 @@
           <button type="button" data-category="parks" aria-pressed="false"><i class="swatch parks"></i>Parks & trails</button>
           <button type="button" data-category="amenities" aria-pressed="false"><i class="swatch amenities"></i>Pools & gathering</button>
           <button type="button" data-category="businesses" aria-pressed="false"><i class="swatch businesses"></i>Local businesses</button>
+          <button type="button" data-category="services" aria-pressed="false"><i class="swatch services"></i>Schools & services</button>
           <button type="button" data-category="makers" aria-pressed="false"><i class="swatch makers"></i>Neighborhood makers</button>
           <button type="button" data-category="future" aria-pressed="false"><i class="swatch future"></i>What’s coming</button>
         </div>
+        <div class="quick-finds" aria-label="Popular things to find"><button type="button" data-find="pickleball">Pickleball courts</button><button type="button" data-find="playground">Playgrounds</button><button type="button" data-find="school">Schools</button></div>
         <div class="list-heading"><h2>Places to know</h2><span id="result-count" role="status" aria-live="polite">Loading…</span></div>
         <div id="place-list" class="place-list"><p class="empty">Opening the atlas…</p></div>
         <div class="directory-footer"><span>Know a place we should include?</span><a id="suggest-link" href="mailto:hello@ideakitchen.ai?subject=Sterling%20Ranch%20Atlas%20suggestion&amp;body=Place%20or%20business%20name%3A%0A%0APublic%20website%20or%20social%20page%3A%0A%0AVillage%3A%0A%0AWhat%20should%20neighbors%20know%3F%0A%0AIf%20this%20is%20your%20home%20business%2C%20what%20location%20information%20would%20you%20like%20shown%3F%0A">Suggest a place by email ↗</a></div>
@@ -50,7 +52,8 @@
       </div>
       <section id="place-detail" class="place-detail" aria-labelledby="detail-title" hidden></section>
     </section>
-    <section class="atlas-notes" id="about-atlas"><div><p class="eyebrow">A GROWING LOCAL COLLECTION</p><h2>There’s more around the corner.</h2></div><p>This first edition brings together public place information and development plans. Home businesses will appear with the owner’s permission. Future plans can change; each place links to its source.</p><details><summary>What’s included in this preview?</summary><p id="coverage-note">The map uses a saved OpenStreetMap extract. Some directory entries still need a confirmed map location. Building heights are illustrative, and this map does not show property lines or navigation routes.</p><a href="https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf" target="_blank" rel="noopener noreferrer">Official community map, June 2026 ↗</a><p><a href="https://sterlingranch.com/town-life/parks-rec/" target="_blank" rel="noopener noreferrer">Official parks directory ↗</a></p></details></section>
+    <section class="atlas-notes" id="about-atlas"><div><p class="eyebrow">A GROWING LOCAL COLLECTION</p><h2>There’s more around the corner.</h2></div><p>This collection includes individual playgrounds, courts and gathering spaces alongside their parent places. Home businesses will appear with the owner’s permission. Future plans can change; each place links to its source.</p><details><summary>What’s included in this preview?</summary><p id="coverage-note">Loading inventory coverage…</p><a href="https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf" target="_blank" rel="noopener noreferrer">Official full community plan, June 2026 ↗</a><p><a href="https://sterlingranch.com/town-life/parks-rec/" target="_blank" rel="noopener noreferrer">Official parks directory ↗</a></p></details></section>
+    <details class="research-coverage"><summary id="research-summary">Places still being checked</summary><p id="research-intro"></p><ul id="research-list"></ul></details>
   </main>
   <noscript><p class="no-script">This interactive map needs JavaScript. <a href="https://sterlingranch.com/town-life/parks-rec/">Browse the official parks directory</a> or <a href="https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf">open the official community map</a>.</p></noscript>
 </body>

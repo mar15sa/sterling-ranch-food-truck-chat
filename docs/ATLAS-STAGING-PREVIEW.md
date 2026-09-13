@@ -1,5 +1,19 @@
 # Sterling Ranch Atlas: staging prototype
 
+## Current expansion: September 13, 2026
+
+Implemented locally; staging release verification is pending. Marissa requested a third completeness check, specifically pickleball, and asked that staging reflect the full supported list. Production launch remains unapproved.
+
+- 100 searchable listings: 43 places/projects, 49 child amenities, 6 future phases and 2 recurring uses. All 125 research IDs are accounted for exactly once as a listing or one of 25 held leads. Eight home-business leads remain permission-pending and absent from place cards.
+- Sources increased from 56 to 58. Seven additions cover three park shelters, private apartment EV charging, two library features and Willow Creek Wildlife Corridor. Six official baseline lists are fully reconciled, without claiming every unnamed physical feature has been discovered.
+- Burns Park Pickleball Courts is first in the directory, with a quick-find button, eight-court description, weekday/weekend hours, parking, equipment reminder and official CourtReserve link. Added school/playground shortcuts, a Schools & services filter, parent-place navigation, useful visit notes and explicit unresolved details.
+- 56 listings share 11 sourced or explicitly approximate map areas. Four CAB-described street areas use saved OSM junction geometry; child features share parent markers. Forty-four entries are directory-only. The saved background remains incomplete, with a prominent official full-plan link; it is not a community boundary.
+- Rebuild with `node scripts/build-atlas-preview.js`; verify with `--check`. Research facts remain separate from approved Assistant evidence. The staging-only server guard is unchanged.
+
+Local checks: 11 Atlas tests, all 125 research records and actual HTTP staging/production isolation pass. Desktop and 390 × 844 browser review confirmed shortcuts, court and school details, planned status, directory-only labeling and no horizontal mobile overflow. Complete project checks and release verification are recorded below when finished.
+
+The sections below retain the first edition and initial research history.
+
 ## Authorization and release boundary
 
 On September 13, 2026, Marissa approved starting the illustrated atlas direction: a geographically grounded map with subtle depth, selectable places, categories, and an optional separated-layer view. She explicitly required all work to stay in staging until she approves launching the new page. This is approval to build and stage a prototype, not production design or launch approval.
