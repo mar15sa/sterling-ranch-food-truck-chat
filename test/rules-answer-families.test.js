@@ -366,12 +366,14 @@ test("named-project authority guard preserves supported objects, synonyms, and c
   for (const question of [
     "Privacy screens",
     "privacy screen",
+    "Can I install privacy screens",
     "Can I add landscape screens for backyard privacy?",
     "Can I install privacy screns?",
   ]) {
     const landscapeScreens = await answer(question);
     assert.equal(landscapeScreens.confidence.canAnswer, true, question);
-    assert.match(landscapeScreens.answer, /landscape screens: DRC approval is required/i, question);
+    assert.match(landscapeScreens.answer, /landscape screens/i, question);
+    assert.match(landscapeScreens.answer, /DRC approval/i, question);
     assert.match(landscapeScreens.answer, /freestanding/i, question);
     assert.match(landscapeScreens.answer, /may not be attached/i, question);
     assert.match(landscapeScreens.answer, /redwood or cedar|Trex material/i, question);
@@ -464,7 +466,7 @@ test("current source text controls changing landscaping and rental requirements"
 
   const rear = await answer("What plants are required in the rear landscaping?");
   assert.match(rear.answer, /two trees[\s\S]*one deciduous tree[\s\S]*one evergreen tree/i);
-  assert.match(rear.answer, /30 percent live plant material/i);
+  assert.match(rear.answer, /30% live plant material/i);
 });
 
 test("yard completion deadlines use the controlling installation-date rule", async () => {

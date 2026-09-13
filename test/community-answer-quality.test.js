@@ -1,12 +1,38 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { handoffIsQuestionSpecific, scoreCommunityAnswer } = require("../lib/community-answer-quality");
+const { plainLanguageSourceText, residentVoiceIssues } = require("../lib/resident-answer-voice");
 const { expectedNoSourceEvidenceBoundary, normalizeEvaluationQuestion, quarantineWithholdsRequiredEvidence, safeHoldSupersedesLegacyBaseline } = require("../scripts/eval-community-assistant");
 const authoredCases = require("../scripts/rules-eval-cases.json");
 
 function source(title) {
   return { title, sourceUrl: "https://sterlingranchcab.com/example", text: title };
 }
+
+test("rulebook fragments cannot earn a Good quality rating", () => {
+  const rawAnswer = [
+    "Landscape screens. DRC approval is required.",
+    "Five-foot maximum overall height for exposed landscape screen from grade. We encourage plantings around base of screens and, therefore, will allow a six-foot maximum overall height from grade if plantings are installed around the screen base.",
+    "Must be freestanding in the rear or side yard.",
+    "Landscape screens must have 30 percent required transparency. Vinyl is not allowed under the cited material rule: Vinyl is not permitted.",
+  ].join("\n\n");
+  const result = scoreCommunityAnswer("Can I install privacy screens?", {
+    answer: rawAnswer,
+    directAnswer: "Landscape screens. DRC approval is required.",
+    answerMode: "source-derived-structured",
+    confidence: { canAnswer: true, reason: "source-validated-topic-answer" },
+    sources: [source("Landscape screen rule")],
+  });
+  assert.equal(result.rating, "Weak");
+  assert.ok(result.issues.includes("source-meta-language"));
+  assert.ok(result.issues.includes("sentence-fragment"));
+  assert.ok(result.issues.includes("rulebook-measurement-language"));
+  assert.ok(result.issues.includes("source-author-voice"));
+  assert.ok(result.issues.includes("duplicated-claim"));
+
+  const cleaned = plainLanguageSourceText(rawAnswer);
+  assert.deepEqual(residentVoiceIssues(cleaned), []);
+});
 
 test("a source-backed answer can still rate weak when it misses the question", () => {
   const result = scoreCommunityAnswer("what time is the latest i can do a firepit fire", {
