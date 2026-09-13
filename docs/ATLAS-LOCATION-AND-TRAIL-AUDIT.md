@@ -1,6 +1,6 @@
 # Atlas location and trail follow-up · September 13, 2026
 
-Implemented locally; staging verification pending. Production launch remains unapproved.
+Verified on staging September 13, 2026 at `c0a7d7c0d73e61dd8c3b732240f0d35ec7506f79`. The health endpoint reported ready at 18:16 UTC and the deployed catalog exactly matched the checked build. Page/catalog/script returned 200 with no-index headers on staging and 404 on production. Evidence: `artifacts/atlas/location-release-check.json`. Production launch remains unapproved.
 
 The earlier pass reconciled directory names but stopped before completing location research. The 44 unlocated listings represented 22 parent places/projects and 22 child amenities. Finding an operator's embedded map was a useful next step that had been missed.
 
@@ -33,4 +33,6 @@ The directory includes Willow Creek Trailhead, planned Cultural Trail, and the S
 
 The county outdoors GIS has nearby regional routes but did not supply Sterling Ranch's complete internal CAB trail network in the inspected area. Remaining work: reconcile every illustrated segment to geographically grounded geometry, connect entrances and crossings, distinguish walking paths from sidewalks and habitat, establish current access and open/planned status, and derive distances only from verified connected routes. Do not infer accessibility or closure status from geometry alone.
 
-No Assistant evidence, resident records, production navigation or production settings change. Owner guide updates are pending staging verification; the related Assistant diagrams are unaffected.
+No Assistant evidence, resident records, production navigation or production settings change. The [inventory guide](https://www.notion.so/3dabf909186d8164930fc37c1865c026) and [design reference](https://www.notion.so/3dabf909186d81b99d91ddd39861536b) were updated and fetched back to verify the counts, revision, sources and remaining gaps. The related Assistant diagrams are unaffected.
+
+Validation: 11 focused Atlas tests, source/coverage reconciliation, deterministic catalog check and actual HTTP isolation passed. Desktop browser selection opened the new Broadstone marker and its access/location notes; 390 × 844 review had no horizontal overflow. The live staging browser showed 70 located listings and opened Prose's new marker with its address, private-access note and related features, with no browser errors. [Hosted comprehensive CI](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34774072902) was still running at this documentation checkpoint; earlier CI success is not attributed to this revision.

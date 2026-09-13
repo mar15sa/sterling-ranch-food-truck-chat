@@ -2,7 +2,7 @@
 
 ## Location and trail correction: September 13, 2026
 
-Implemented locally, ready for staging verification. Four operator property markers add Broadstone, Prose, Primrose and John Adams Academy: 70 located listings at 15 shared map areas, with 30 listings across 18 places/projects still directory-only. These are operator property positions with entrance checks outstanding; attached private amenities retain their access labels. The 100-listing catalog is unchanged in scope. The registry now contains 60 sources.
+Verified on staging September 13, 2026 at `c0a7d7c0d73e61dd8c3b732240f0d35ec7506f79`, ready at 18:16 UTC. Four operator property markers add Broadstone, Prose, Primrose and John Adams Academy: 70 located listings at 15 shared map areas, with 30 listings across 18 places/projects still directory-only. These are operator property positions with entrance checks outstanding; attached private amenities retain their access labels. The 100-listing catalog is unchanged in scope. The registry now contains 60 sources. The deployed catalog matched the checked build exactly; Atlas page/catalog/script remained 404 on production. The live browser showed 70 located listings and opened Prose's new marker without errors. Release evidence: `artifacts/atlas/location-release-check.json`.
 
 The page now explains that trail coverage is partial and links CAB's dedicated trail page and dated October 2025 map. Background paths include sidewalks; corridors do not establish public walking routes. Connected routes, distances, entrances and open/planned segments remain unfinished. [Evidence and remaining work](ATLAS-LOCATION-AND-TRAIL-AUDIT.md).
 
