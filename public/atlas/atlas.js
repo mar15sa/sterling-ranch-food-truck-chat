@@ -103,7 +103,7 @@
     $('#map-pins').replaceChildren(frag);
     window.dispatchEvent(new CustomEvent('atlas:map-rendered',{detail:{includeFuture:state.includeFuture}}));
     const message=$('#map-message');
-    if(!groups.length){message.textContent=state.category==='makers'?'Neighborhood makers are next.':filtered().length?'These places still need a confirmed map location.':'No matching places.';}
+    if(!groups.length){message.textContent=state.category==='makers'?'Neighborhood makers are next.':!state.includeFuture&&filtered().length&&filtered().every(p=>p.future)?'These are future places. Choose “With what’s coming” to explore them.':filtered().length?'These places still need a confirmed map location.':'No matching places.';}
     else message.textContent='';
   }
   function renderList(){
@@ -235,7 +235,7 @@
   window.addEventListener('atlas:open-place',event=>{if(state.places.some(p=>p.id===event.detail?.id)){selectPlace(event.detail.id);if(!$('#places-explorer').classList.contains('has-place-world'))$('#places-explorer').scrollIntoView({block:'start',behavior:'instant'});}});
   window.addEventListener('atlas:leave-places',()=>{if(!detail.hidden)closeDetail();});
   window.addEventListener('atlas:close-world',()=>closeDetail());
-  window.addEventListener('atlas:set-future',event=>{state.includeFuture=Boolean(event.detail?.includeFuture);drawPins();});
+  window.addEventListener('atlas:set-future',event=>{state.includeFuture=Boolean(event.detail?.includeFuture);if(!state.includeFuture&&state.category==='future'){state.category='all';setFilters();}else drawPins();});
   window.addEventListener('atlas:experience-ready',()=>{if(state.places.length)window.dispatchEvent(new CustomEvent('atlas:catalog-ready',{detail:{places:state.places}}));});
   svg.addEventListener('keydown',e=>{if(e.target!==svg)return;if(['+','=','-','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key)){e.preventDefault();if(['+','='].includes(e.key))zoom(.35);else if(e.key==='-')zoom(-.35);else if(e.key==='Home')$('#reset-map').click();else{const axis=e.key==='ArrowLeft'||e.key==='ArrowRight'?0:1;state.pan[axis]+=e.key==='ArrowLeft'||e.key==='ArrowUp'?45:-45;limitPan();updateCamera();}}});
   function limitPan(){state.pan=state.pan.map(n=>Math.max(-650*state.zoom,Math.min(650*state.zoom,n)));}
