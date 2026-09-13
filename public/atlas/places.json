@@ -1,0 +1,649 @@
+{
+  "version": 1,
+  "checkedAt": "2026-09-13",
+  "status": "staging-prototype",
+  "places": [
+    {
+      "id": "atlas-coffee",
+      "name": "Atlas Coffee",
+      "category": "businesses",
+      "village": "Providence",
+      "status": "existing",
+      "description": "Coffee and a place to settle in at Sterling Center.",
+      "tags": [
+        "Coffee",
+        "Remote work"
+      ],
+      "sources": [
+        {
+          "label": "Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.037492,
+        39.506824
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "sterling-center",
+      "groupName": "Sterling Center",
+      "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+    },
+    {
+      "id": "salta",
+      "name": "Salta",
+      "category": "businesses",
+      "village": "Providence",
+      "status": "existing",
+      "description": "Cocktails, wine and flatbreads at the Sterling Ranch location.",
+      "tags": [
+        "Cocktails",
+        "Wine",
+        "Flatbreads"
+      ],
+      "sources": [
+        {
+          "label": "Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.037492,
+        39.506824
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "sterling-center",
+      "groupName": "Sterling Center",
+      "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+    },
+    {
+      "id": "agora",
+      "name": "Agora Market",
+      "category": "businesses",
+      "village": "Providence",
+      "status": "existing",
+      "description": "A specialty market inside the Sterling Ranch store.",
+      "tags": [
+        "Groceries",
+        "Prepared meals"
+      ],
+      "sources": [
+        {
+          "label": "Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.037492,
+        39.506824
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "sterling-center",
+      "groupName": "Sterling Center",
+      "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+    },
+    {
+      "id": "uchealth",
+      "name": "UCHealth",
+      "category": "businesses",
+      "village": "Providence",
+      "status": "existing",
+      "description": "Healthcare services at Sterling Center.",
+      "tags": [
+        "Health services"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Center directory",
+          "url": "https://sterlingranch.com/town-life/sterling-center/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.037492,
+        39.506824
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "sterling-center",
+      "groupName": "Sterling Center",
+      "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+    },
+    {
+      "id": "lake-family-dental",
+      "name": "Lake Family Dental",
+      "category": "businesses",
+      "village": "Providence",
+      "status": "existing",
+      "description": "Dental care at Sterling Center.",
+      "tags": [
+        "Dentist"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Center directory",
+          "url": "https://sterlingranch.com/town-life/sterling-center/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.037492,
+        39.506824
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "sterling-center",
+      "groupName": "Sterling Center",
+      "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+    },
+    {
+      "id": "overlook",
+      "name": "The Overlook Clubhouse",
+      "category": "amenities",
+      "village": "Providence",
+      "status": "existing",
+      "description": "A resident gathering place with a fitness center and outdoor pool.",
+      "tags": [
+        "Fitness",
+        "Gathering space"
+      ],
+      "sources": [
+        {
+          "label": "CAB facility information",
+          "url": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.0318231,
+        39.5026661
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "overlook",
+      "groupName": "The Overlook",
+      "address": "7853 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://www.openstreetmap.org/way/1285399278"
+    },
+    {
+      "id": "overlook-pool",
+      "name": "Overlook Outdoor Pool",
+      "category": "amenities",
+      "village": "Providence",
+      "status": "seasonal",
+      "description": "The outdoor pool at the Overlook Clubhouse.",
+      "tags": [
+        "Pool",
+        "Seasonal"
+      ],
+      "sources": [
+        {
+          "label": "CAB pool page",
+          "url": "https://sterlingranchcab.com/187/Pool"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.0318231,
+        39.5026661
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "overlook",
+      "groupName": "The Overlook",
+      "address": "7853 Piney River Avenue, Sterling Ranch, CO 80125",
+      "locationSource": "https://www.openstreetmap.org/way/1285399278",
+      "action": {
+        "label": "Check current pool status",
+        "url": "/pool"
+      },
+      "note": "Seasonal amenity. Check pool status before visiting; this listing does not mean the pool is open today."
+    },
+    {
+      "id": "pat-gallagher",
+      "name": "Pat Gallagher Park",
+      "category": "parks",
+      "village": "Providence",
+      "status": "existing",
+      "description": "Neighborhood greenspace for a walk or a quiet break.",
+      "tags": [
+        "Walking",
+        "Greenspace"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.0363191,
+        39.50316795
+      ],
+      "locationPrecision": "park-center",
+      "locationSource": "https://www.openstreetmap.org/way/914862735"
+    },
+    {
+      "id": "burns-courts",
+      "name": "Burns Park Pickleball",
+      "category": "parks",
+      "village": "Ascent",
+      "status": "existing",
+      "description": "Eight outdoor courts at Burns Regional Park.",
+      "tags": [
+        "Pickleball",
+        "Courts"
+      ],
+      "sources": [
+        {
+          "label": "CAB facility information",
+          "url": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.044373872245,
+        39.493107823419
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "burns",
+      "groupName": "Burns Park",
+      "address": "9020 Middle Fork Street, Sterling Ranch, CO 80125",
+      "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+    },
+    {
+      "id": "burns-next",
+      "name": "More at Burns Regional Park",
+      "category": "future",
+      "village": "Ascent / Providence / Parkvale",
+      "status": "planned",
+      "description": "Additional park amenities and trails are planned in future phases.",
+      "tags": [
+        "Future parks",
+        "Trails"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        {
+          "label": "Sterling Ranch future plans",
+          "url": "https://sterlingranch.com/whats-next/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 14,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.044373872245,
+        39.493107823419
+      ],
+      "locationPrecision": "area-reference",
+      "locationGroup": "burns",
+      "groupName": "Burns Park",
+      "address": null,
+      "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11",
+      "note": "This marker points to the existing courts as a reference. It does not mark the boundaries of future work.",
+      "future": true
+    },
+    {
+      "id": "ascent-pavilion",
+      "name": "Ascent Village Pavilion Park",
+      "category": "parks",
+      "village": "Ascent",
+      "status": "existing",
+      "description": "A neighborhood gathering place on Watercress Drive.",
+      "tags": [
+        "Pavilion",
+        "Picnic areas"
+      ],
+      "sources": [
+        {
+          "label": "CAB facility information",
+          "url": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.031151419984,
+        39.4898776474823
+      ],
+      "locationPrecision": "facility",
+      "address": "7180 Watercress Drive, Sterling Ranch, CO 80125",
+      "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10"
+    },
+    {
+      "id": "prospect-park",
+      "name": "Prospect Park",
+      "category": "parks",
+      "village": "Prospect",
+      "status": "existing",
+      "description": "An inclusive playground, turf area and gathering spaces.",
+      "tags": [
+        "Inclusive playground",
+        "Turf field",
+        "Pavilions"
+      ],
+      "sources": [
+        {
+          "label": "CAB facility information",
+          "url": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.069455963122,
+        39.4801306675546
+      ],
+      "locationPrecision": "facility",
+      "locationGroup": "prospect",
+      "groupName": "Prospect Park",
+      "address": "8158 Monte Vista Circle, Littleton, CO 80125",
+      "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+      "note": "Sports-court descriptions differ between the CAB facility page and development pages. Check CAB for current availability."
+    },
+    {
+      "id": "prospect-next",
+      "name": "Prospect Park: future phases",
+      "category": "future",
+      "village": "Prospect",
+      "status": "planned",
+      "description": "Further amenities, including a pool, appear in the developer’s plans.",
+      "tags": [
+        "Future pool",
+        "Park expansion"
+      ],
+      "sources": [
+        {
+          "label": "Prospect Park opening and future plans",
+          "url": "https://sterlingranch.com/happenings/news/prospect-park-an-all-abilities-park-at-sterling-ranch/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 14,
+      "reviewState": "staging-review",
+      "coordinates": [
+        -105.069455963122,
+        39.4801306675546
+      ],
+      "locationPrecision": "area-reference",
+      "locationGroup": "prospect",
+      "groupName": "Prospect Park",
+      "address": null,
+      "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+      "note": "Shown at the existing park for orientation. The planned pool is not shown as open. Its current schedule still needs review.",
+      "future": true
+    },
+    {
+      "id": "pioneer",
+      "name": "Pioneer Park",
+      "category": "parks",
+      "village": "Providence",
+      "status": "existing",
+      "description": "A lawn, play structure and sun shelter.",
+      "tags": [
+        "Playground",
+        "Shade"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review"
+    },
+    {
+      "id": "mccormick",
+      "name": "McCormick Park",
+      "category": "parks",
+      "village": "Providence",
+      "status": "existing",
+      "description": "A neighborhood park with play structures.",
+      "tags": [
+        "Playground"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review"
+    },
+    {
+      "id": "horsebrush",
+      "name": "Horsebrush Park",
+      "category": "parks",
+      "village": "Providence",
+      "status": "existing",
+      "description": "Bocce and charcoal grills along the trail system.",
+      "tags": [
+        "Bocce",
+        "Grills"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review"
+    },
+    {
+      "id": "zippity",
+      "name": "Zippity Park",
+      "category": "parks",
+      "village": "Ascent",
+      "status": "existing",
+      "description": "A zipline, play structure and covered picnic area.",
+      "tags": [
+        "Zipline",
+        "Playground",
+        "Shade"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review",
+      "aliases": [
+        "Zipline Park"
+      ]
+    },
+    {
+      "id": "trailrock",
+      "name": "Trailrock Park",
+      "category": "parks",
+      "village": "Ascent",
+      "status": "existing",
+      "description": "Climbing structures, a picnic area and trail.",
+      "tags": [
+        "Climbing",
+        "Playground"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review"
+    },
+    {
+      "id": "yard-27",
+      "name": "Yard 27",
+      "category": "parks",
+      "village": "Ascent",
+      "status": "existing",
+      "description": "Cornhole courts and a picnic area.",
+      "tags": [
+        "Cornhole",
+        "Picnic"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review"
+    },
+    {
+      "id": "willow-creek",
+      "name": "Willow Creek Trailhead",
+      "category": "parks",
+      "village": "Prospect",
+      "status": "existing",
+      "description": "A meeting spot for trails along Willow Creek.",
+      "tags": [
+        "Trailhead",
+        "Walking"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 30,
+      "reviewState": "staging-review"
+    },
+    {
+      "id": "heritage",
+      "name": "Heritage Regional Park",
+      "category": "future",
+      "village": "Parkvale",
+      "status": "planned",
+      "description": "A regional park in the early design phase.",
+      "tags": [
+        "Future park",
+        "Open space"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 14,
+      "reviewState": "staging-review",
+      "future": true,
+      "note": "Location and boundaries will be added after map review."
+    },
+    {
+      "id": "medley",
+      "name": "Medley Park",
+      "category": "future",
+      "village": "Ascent",
+      "status": "planned",
+      "description": "A planned greenway along the Middle Fork corridor.",
+      "tags": [
+        "Future park",
+        "Greenway"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch parks directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 14,
+      "reviewState": "staging-review",
+      "future": true,
+      "note": "The developer lists 2026–2027. Opening status and the map location still need confirmation."
+    },
+    {
+      "id": "library",
+      "name": "Sterling Ranch Community Library",
+      "category": "future",
+      "village": "Providence",
+      "status": "planned",
+      "description": "A community library is planned for Providence Village.",
+      "tags": [
+        "Library",
+        "Books",
+        "Study"
+      ],
+      "sources": [
+        {
+          "label": "Sterling Ranch future plans",
+          "url": "https://sterlingranch.com/whats-next/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 14,
+      "reviewState": "staging-review",
+      "future": true,
+      "note": "The developer lists 2027. This is an announced target, not a confirmed opening date."
+    },
+    {
+      "id": "zebulon",
+      "name": "Zebulon Regional Sports Complex",
+      "category": "future",
+      "village": "Near Sterling Ranch",
+      "status": "construction",
+      "description": "The county reports grading and preparation for infrastructure.",
+      "tags": [
+        "Sports",
+        "Development"
+      ],
+      "sources": [
+        {
+          "label": "Douglas County project status",
+          "url": "https://www.douglasco.gov/zebulon/"
+        }
+      ],
+      "checkedAt": "2026-09-13",
+      "reviewAfterDays": 14,
+      "reviewState": "staging-review",
+      "future": true,
+      "note": "The project boundary and facility phases still need map review. This listing does not mean the facilities are open."
+    }
+  ]
+}
