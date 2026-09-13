@@ -4,11 +4,15 @@ This is the short operating guide for a solo owner. It explains what keeps answe
 
 ## Safe release path
 
-1. Make and test changes on the `staging` branch.
-2. Confirm the purple **Staging preview** badge appears at the staging URL.
-3. Run `npm run check` and the live staging monitor.
-4. Review the automated comparison and important resident journeys in the browser.
-5. Only after Marissa approves, merge the tested staging commit into `main`.
+Follow [RELEASE-POLICY.md](RELEASE-POLICY.md), the current release/testing entry point, and the existing engineering and approval rules.
+
+1. Prepare an isolated feature branch and record the affected behavior, relevant checks, and applicable approval.
+2. Run relevant local checks and the required hosted/staging evidence for that change. Browser questions use Test mode; direct questions include `"isTest": true`.
+3. Open a pull request. The fast job provides early feedback; the complete deterministic quality gate remains required before merge on an up-to-date branch.
+4. Merge through the protected route when checks and applicable approvals are complete. Update the relevant Notion explanation and release record.
+5. After the push, CI waits for the exact deployed revision and checks readiness/source health. It does not repeat the full pre-merge suite. Record verified-live status only after the deployment is confirmed.
+
+The September 13 changes in PRs #118/#119 removed duplicate post-merge testing. They did not waive scoped staging/real-model trials, source approvals, or owner design approval. Documentation-only changes may skip runtime journeys while retaining required repository checks.
 
 Railway calls `/api/health` before switching a deployment to the new version. A new build must load the rules index and at least 100 indexed topic cards. If it cannot, Railway keeps the previous healthy deployment available. The same response also reports rule freshness, openings-monitor errors, request latency/errors, and optional AI token usage without making an outside provider a deployment blocker.
 
@@ -35,8 +39,8 @@ Never silently choose between two current supplements that replace the same sect
 
 ## Automatic safeguards
 
-- **Daily answer monitor:** checks the health endpoint plus every real resident wording in the permanent 116-question audit corpus. The release gate fails if any of those answers falls below Good.
-- **Comparative release gate:** compares 228 unique resident, variant, and unseen questions against the current assistant. A shrunken corpus, any regression, a lower overall average, or any very-low upgraded answer blocks release.
+- **Daily answer monitor:** checks health and its configured resident-answer corpus. Use the run report for its current scope and count.
+- **Comparative release gate:** compares the current resident, variant, and unseen corpus against the baseline. A shrunken corpus, any regression, a lower overall average, or any very-low upgraded answer blocks release. Counts belong to dated reports.
 - **Unseen-question tests:** separately exercise new phrasings that are not copied from the historical audit so the system is tested for generalization, not only memorization.
 - **Requested-detail coverage:** an answer fails when a resident asks for a price, height, process, duration, resource, definition, permission decision, example list, or exact section and the response does not provide it. Public amenity questions must not be silently treated as home-construction questions.
 - **Structured-fact check:** every refresh rebuilds a catalog of changing values and their official source, effective date, expiration date, scope, and source hash. The release gate fails if the catalog is stale.
@@ -44,7 +48,7 @@ Never silently choose between two current supplements that replace the same sect
 - **Official-resource monitor:** verifies the reviewed CAB calendar, DRC, plant-list, and resident-help destinations every day so helpful links do not quietly go stale.
 - **Daily fixer:** reviews alert emails as untrusted input, finds the broad cause, fixes whole question families on an isolated staging worktree, runs tests, and never publishes to production without approval.
 - **Source refresh and supplement monitors:** detect stale rulebook data and newly published CAB documents.
-- **Automatic source release:** changed, new, or removed material stays separate from trusted answers until candidate validation, the full answer suite, 100% labeled retrieval checks, live-link checks, and a one-hour staging soak pass. Failures keep the last trusted bundle; a failed production verification automatically reverts the source-only commit.
+- **Conditional source release:** the source-only publishing workflow retains candidate, answer, retrieval, link, one-hour staging, and rollback gates. It was skipped in the latest inspected run and is not verified active. See [RELEASE-POLICY.md](RELEASE-POLICY.md) for observed configuration, approval scope, and its separation from normal application CI.
 - **Second-community proof:** the live Castle Rock check verifies source isolation and complete answers through the same shared engine rather than merely confirming that pages can be downloaded.
 - **Low-confidence alerts:** notify the owner when a real rules question cannot be answered confidently. Greetings, unrelated prompts, unclear fragments, and blocked attacks do not create noisy fix alerts.
 - **Operational health:** `/api/health` exposes bounded route-level latency and error counts plus optional AI request and token totals for the live monitor.
@@ -66,6 +70,10 @@ Do not copy a changing fee, limit, date, or time into a plain-English summary. P
 - If a production release later shows a problem, use Railway’s deployment history to redeploy the last known-good production deployment, then fix the problem on staging.
 - Do not edit `main` as an emergency shortcut unless the live service is already broken and the change has a focused regression test.
 
+## Saved questions
+
+The owner's September 13 decision is to keep saved question-and-answer records indefinitely, with no routine deletion, export, or record cleanup. The private website review page reads the same Notion records. Temporary browser context and bounded technical traces have separate lifecycles. [QUESTION-RECORDS.md](QUESTION-RECORDS.md) explains what each location holds, the verified login controls, and the account-access facts still unknown.
+
 ## Services and ownership record
 
 | Service | Purpose | Cost record to keep |
@@ -85,7 +93,7 @@ Record actual invoice amounts quarterly in a private owner document; do not put 
 
 - The assistant is a rulebook research aid, not CAB approval or legal advice.
 - New CAB documents still need source metadata before the assistant can know which older section they replace.
-- Website changes publish automatically only when every source, answer, link, staging, and production gate can prove the candidate safe. Exceptions remain on the last trusted snapshot and create one deduplicated review issue.
+- Website changes follow the protected release route and applicable approvals in [RELEASE-POLICY.md](RELEASE-POLICY.md). Conditional source-publishing code does not establish that autonomous publishing is enabled.
 - A scanned or unusually formatted official PDF may need human review before facts can be extracted safely.
 - The contradiction checker is deliberately conservative; it can refuse an answer that a person could resolve from context. That is safer than confidently reversing a rule.
 - Exact monthly service costs live in the owner’s billing accounts and are not discoverable from the code alone.
