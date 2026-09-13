@@ -1,14 +1,18 @@
-# Pending Notion update: resident answer voice gate
+# Resolved Notion update: resident answer voice gate
 
 - Target page: [How the project works](https://www.notion.so/3dabf909186d8166b507c2a4e1d1aced)
 - Affected section: Community Assistant answer composition, validation, and fallback flow
-- Status: Implemented and verified live on staging and production; Notion synchronization pending
+- Status: Synchronized to Notion and re-fetched successfully on September 13, 2026
 - Implementation commits: `ed32a04`, `942608a`
 - Staging commits: `d951f4a`, `f6358a0`
 - Pull request: https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/123
 - Staging evidence: `/api/health` returned revision `f6358a0861efb854b075d912c61eb3f3f45425e0` with current rules and community sources. Test-mode Community Assistant requests returned complete source-derived privacy-screen and animal-rule answers with no quality issues.
 - Production evidence: `/api/health` returned merge revision `e1bfd7879c43124457ab27d09a98ea8694c623a7`, ready with current rules, current community sources, and zero source failures. A test-mode Community Assistant request returned the complete source-derived privacy-screen answer with no quality issues. The post-merge GitHub workflow also passed: https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34767056578
-- Synchronization is pending because the Notion connector is unavailable in the current task.
+- Synchronized page: https://www.notion.so/3dabf909186d8166b507c2a4e1d1aced
+- Final production revision checked: `fcb46c5a2fb5d984f502d83a953b5f9f873c5ab3`
+- Privacy-screen follow-up pull request: https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/122
+- Exact-revision deployment check: https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34768898498
+- The page now includes the plain-language voice gate in the diagram and accessible text, plus the verified privacy-screen example. The updated page was fetched after editing to confirm the new image, text, revision, and evidence links.
 
 ## Proposed explanation
 
@@ -29,10 +33,10 @@ Source-independent wording and formatting; preserves claims, citations, and auth
 
 Show both the accepted AI rewrite and the deterministic source-derived fallback entering this gate. Show a failed voice check sending the AI path back to the deterministic fallback. Keep grounding, coverage, and action-link validation after the voice gate and before the answer is shown to the resident.
 
-## Verification needed after synchronization
+## Completed verification
 
-1. Fetch the Notion page before editing and preserve unrelated owner content.
-2. Update the explanation, accessible diagram text, and hub image if the diagram changes.
-3. Carry the verified production revision and evidence links above into the updated page.
-4. Fetch the page again to confirm the content, links, image, and verified-live status.
-5. Remove or resolve this pending record so it cannot be mistaken for unfinished work.
+1. Fetched the Notion page before editing and preserved unrelated owner content.
+2. Updated the explanation, accessible diagram text, Mermaid flow, and hub image.
+3. Added the verified production revision, pull request, and deployment-check links.
+4. Fetched the page again and confirmed the updated image, text, revision, and evidence links.
+5. Resolved this record so it cannot be mistaken for unfinished work.
