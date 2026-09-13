@@ -1,5 +1,7 @@
 # Community Assistant control-tower plan
 
+Historical work-plan snapshot. The status, score, and publishing holds below describe the September 10 plan. The [September 11 closeout](COMMUNITY-ASSISTANT-GOAL-CLOSEOUT-2026-09-11.md) records later releases; use [RELEASE-POLICY.md](RELEASE-POLICY.md) and [DESIGN-REFERENCE.md](DESIGN-REFERENCE.md) for current operating references. Historical statements here do not reinstate a superseded release hold or authorize a new release.
+
 Updated September 10, 2026. This is the source-of-truth work plan for concerns 1–4 and item 6. It supplements the engineering principles, connector architecture, and source-accuracy plan. When documents disagree, the stricter claim-level evidence boundary controls. The Society redesign and other general UI work are explicitly outside this goal and will continue separately after the accuracy goal is complete.
 
 ## Outcome and non-negotiable rules
