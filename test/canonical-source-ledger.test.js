@@ -71,7 +71,7 @@ test("one source version can serve multiple communities without sharing approval
 test("A/B/C/D reconciliation preserves packet work and exact approvals remain version-scoped", () => {
   const ledger = buildLedger();
   assert.deepEqual(ledger.reconciliation.historicalSnapshots.map(snapshot => snapshot.count), [222, 917]);
-  assert.equal(ledger.summary.uniqueVersions, 37);
+  assert.equal(ledger.summary.uniqueVersions, 38);
   assert.equal(ledger.summary.approvedEvidence, 5);
   assert.equal(ledger.unmatchedLegacyDecisions.length, 0);
   assert.equal(ledger.records.filter(record => record.packetRefs.some(ref => /batch-[bc]/.test(ref)) && !record.canonicalUrl.endsWith('/187/Pool'))
@@ -91,9 +91,9 @@ test("Decision Swipe approvals are exact-version, community-scoped claim boundar
     "trash-recurring-service", "mailbox-keys-route", "streetlight-report-route", "courtreserve-portal", "great-hall-booking-link",
     "overlook-clubhouse-navigation", "cab-contact-directory-route", "rules-hub-municode-link", "water-reports-directory", "landscape-class-calendar",
     "approved-landscapers-directory-link", "recycling-tips-visual-link", "providence-elements-fence-specifications",
-    "solar-panel-appearance-specifications", "chase-drain-adopted-policy",
+    "solar-panel-appearance-specifications", "chase-drain-adopted-policy", "pickleball-current-operating-claims",
   ]));
-  assert.equal(ledger.decisionApplications.length, 32);
+  assert.equal(ledger.decisionApplications.length, 33);
   const paymentPage = ledger.records.find(record => record.canonicalUrl.endsWith("/334/Water-Billing-Payment-Options"));
   assert.equal(paymentPage.disposition, "pending-review");
   assert.equal(approvalForCommunity(paymentPage, "sterling-ranch", "water-payment-primary-page").scopeKind, "scoped-claims");

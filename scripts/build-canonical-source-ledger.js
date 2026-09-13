@@ -17,6 +17,7 @@ const legacyDecisions = require(path.join(root, "data", "community-owner-decisio
 const scopedDecisions = require(path.join(root, "data", "canonical-source-ledger-decisions.json"));
 const v5Decisions = require(path.join(root, "data", "community-source-approvals-v5.json"));
 const v6Decisions = require(path.join(root, "data", "community-source-approvals-v6.json"));
+const v7Decisions = require(path.join(root, "data", "community-source-approvals-v7.json"));
 const outputPath = path.join(root, "data", "canonical-source-ledger.json");
 
 function buildLedger() {
@@ -72,11 +73,23 @@ function buildLedger() {
     }
   }
 
-  ledger.decisionApplications = [];
-  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || [])]) {
+  for (const decision of v7Decisions.decisions || []) {
     for (const version of decision.versions || []) {
-      const packageData = (v6Decisions.decisions || []).includes(decision)
-        ? v6Decisions
+      upsertObservation(ledger, {
+        ...version,
+        title: decision.decisionId,
+        checkedAt: v7Decisions.decidedAt,
+        availability: { checkedAt: v7Decisions.decidedAt, httpStatus: 200, finalUrl: version.canonicalUrl },
+      }, { origin: "community-source-approvals-v7", communityId: v7Decisions.communityId });
+    }
+  }
+
+  ledger.decisionApplications = [];
+  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || []), ...(v7Decisions.decisions || [])]) {
+    for (const version of decision.versions || []) {
+      const packageData = (v7Decisions.decisions || []).includes(decision)
+        ? v7Decisions
+        : (v6Decisions.decisions || []).includes(decision) ? v6Decisions
         : (v5Decisions.decisions || []).includes(decision) ? v5Decisions : scopedDecisions;
       const result = applyExplicitDecision(ledger, {
         ...decision,

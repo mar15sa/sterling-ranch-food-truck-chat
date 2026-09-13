@@ -27,12 +27,12 @@
     "pages": 678,
     "documents": 953,
     "byDisposition": {
-      "answer-evidence": 16,
+      "answer-evidence": 17,
       "duplicate": 155,
       "excluded": 44,
       "live-feed": 1,
       "out-of-scope": 655,
-      "review-required": 101,
+      "review-required": 100,
       "safe-link": 31,
       "technical-exclusion": 624,
       "unavailable-recheck": 4
@@ -85,10 +85,10 @@
         "primarySources": 67,
         "pages": 64,
         "documents": 3,
-        "answerEvidence": 1,
+        "answerEvidence": 2,
         "safeLink": 20,
         "liveFeed": 1,
-        "reviewRequired": 24,
+        "reviewRequired": 23,
         "unavailableRecheck": 0,
         "excluded": 21,
         "duplicates": 70,
@@ -2134,12 +2134,12 @@
       "categoryIds": [
         "facilities-live-services"
       ],
-      "disposition": "review-required",
-      "reason": "Useful recreation page, but its operating facts are not yet fully claim-reviewed.",
+      "disposition": "answer-evidence",
+      "reason": "Useful recreation page with exact-version approval for the reviewed current operating claims; live availability and historical launch dates remain withheld.",
       "versionFingerprint": "5957a2aa2613d0185a5eb534697c1810b44bf3928f18dd3b45b86a9c38982759",
       "indexed": true,
       "duplicateOf": "",
-      "approvedRole": ""
+      "approvedRole": "Exact-version current operating claims"
     },
     {
       "sourceUrl": "https://sterlingranchcab.com/419/RAVE-Clinics",

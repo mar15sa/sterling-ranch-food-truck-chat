@@ -16,10 +16,10 @@ test('readiness reports the reconciled full-site audit and keeps unapproved sour
     inScopeUrls: 463,
     primarySources: 197,
     outOfScope: 1168,
-    answerEvidence: 16,
+    answerEvidence: 17,
     safeLink: 31,
     liveFeed: 1,
-    reviewRequired: 101,
+    reviewRequired: 100,
     unavailableRecheck: 4,
     excluded: 44,
     duplicates: 155,
@@ -29,14 +29,14 @@ test('readiness reports the reconciled full-site audit and keeps unapproved sour
   assert.equal(result.inventory.pending, 0);
   assert.equal(result.state, 'needs-attention');
   assert.match(result.headline, /Full inventory complete/);
-  assert.equal(result.sourceRemainingWork.length, 105);
+  assert.equal(result.sourceRemainingWork.length, 104);
   assert.deepEqual(result.remainingWork.map(item => item.documentId), ['1964', '2398', '770']);
   assert.equal(result.categories.length, 4);
   assert.equal(result.categories[0].total, 50);
   assert.equal(result.categories[0].documents.length, 14);
   assert.equal(result.categories[0].pages.length, 36);
   assert.equal(result.categories[3].liveFeed, 1);
-  assert.equal(result.categories[3].pages.find(item => item.sourceUrl.endsWith('/418/Pickleball-Courts')).status, 'held');
+  assert.equal(result.categories[3].pages.find(item => item.sourceUrl.endsWith('/418/Pickleball-Courts')).status, 'active');
 });
 
 test('readiness distinguishes evidence freshness from completed inventory triage', () => {
@@ -51,6 +51,6 @@ test('readiness distinguishes evidence freshness from completed inventory triage
   assert.equal(result.inventory.reconciled, true);
   assert.match(result.inventory.note, /every discovered CAB URL/i);
   assert.match(result.reasons[0], /5 approved sources and 11 approved facts/);
-  assert.match(result.reasons[1], /101 useful sources/);
+  assert.match(result.reasons[1], /100 useful sources/);
   assert.match(result.reasons[3], /out-of-scope CAB route/);
 });

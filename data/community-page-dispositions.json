@@ -561,8 +561,8 @@
     },
     {
       "categoryId": "facilities-live-services",
-      "disposition": "review-required",
-      "reason": "Useful recreation page, but its operating facts are not yet fully claim-reviewed.",
+      "disposition": "answer-evidence",
+      "reason": "Useful recreation page with exact-version approval for the reviewed current operating claims; live availability and historical launch dates remain withheld.",
       "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
       "title": "Pickleball Courts",
       "versionFingerprint": "f8cdf0596966feee4282c1d0b0251e80c616099c9bd7cbb31e0753f32def9186"

@@ -8,7 +8,7 @@
 
 This supersedes the earlier 88-page review. The complete crawl discovered **1,631 unique CAB URLs**, and every one now has a recorded scope decision. There are **0 unclassified URLs**.
 
-The audit found **463 URLs** that touch the four categories. After consolidating duplicate URLs and technical presentations, those represent **197 primary sources**. Inventory triage is complete, but answer approval is not: **101 primary sources need exact claim review**, and **4 need a retrieval retry**. They remain withheld from supplying unapproved facts.
+The audit found **463 URLs** that touch the four categories. After consolidating duplicate URLs and technical presentations, those represent **197 primary sources**. Inventory triage is complete, but answer approval is not: after the Pickleball Courts claim review, **100 primary sources need exact claim review**, and **4 need a retrieval retry**. They remain withheld from supplying unapproved facts.
 
 ## Full inventory reconciliation
 
@@ -28,10 +28,10 @@ The crawler recorded one access error: `/364/Sign-Up-for-E-News` returned HTTP 4
 
 | Source role | Count | What it means |
 | --- | ---: | --- |
-| Approved answer evidence | 16 | Exact previously approved claims may support answers; this is not blanket page approval |
+| Approved answer evidence | 17 | Exact previously approved claims may support answers; this is not blanket page approval |
 | Safe link | 31 | Useful official next action or navigation only |
 | Live feed | 1 | Current calendar facts come from the live connector, not cached page text |
-| Review required | 101 | Useful source identified; claims remain withheld pending exact review |
+| Review required | 100 | Useful source identified; claims remain withheld pending exact review |
 | Retrieval retry | 4 | Relevant route found, but a versioned content record must be retrieved before review |
 | Intentionally excluded | 44 | Historical, superseded, duplicate-purpose, or otherwise unsuitable as current evidence |
 

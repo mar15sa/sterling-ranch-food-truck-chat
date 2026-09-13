@@ -2153,6 +2153,84 @@
       "packetRefs": [
         "community-source-approvals-v6"
       ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/418/Pickleball-Courts#sha256:39b0904479e937d8d57bcfe869b04d91a8377b0fbf271117ca83527c4534e682",
+      "canonicalUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
+      "contentHash": "39b0904479e937d8d57bcfe869b04d91a8377b0fbf271117ca83527c4534e682",
+      "hashScheme": "page-text-v1",
+      "title": "pickleball-current-operating-claims",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-13T20:07:18.687Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v7",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "pickleball-current-operating-claims",
+          "scope": "Current public Pickleball Courts operations: hours, play windows, prices, advance-booking and daily limits, location and parking, equipment and conduct rules, weather and snow cautions, child supervision, rotation etiquette, contact number, and the CourtReserve handoff. The exact current page version must be revalidated before release and after any change.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "pickleball-general-hours",
+            "pickleball-location-parking-pets",
+            "pickleball-play-modes-daily-limit",
+            "pickleball-advance-booking-limits",
+            "pickleball-current-prices",
+            "pickleball-open-play-hours",
+            "pickleball-reservation-hours",
+            "pickleball-program-precedence",
+            "pickleball-equipment-guidance",
+            "pickleball-court-use-restrictions",
+            "pickleball-weather-snow-guidance",
+            "pickleball-child-supervision",
+            "pickleball-rotation-etiquette",
+            "pickleball-contact-number",
+            "pickleball-courtreserve-route"
+          ],
+          "withheldClaims": [
+            "live-court-availability",
+            "booking-outcomes",
+            "opening-date",
+            "nonresident-program-launch-date",
+            "courtreserve-account-setup-instructions",
+            "private-court-construction-rules"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Court Reserve",
+                "url": "https://sterlingranchcab.com/420/Court-Reserve",
+                "context": "Court Reserve"
+              },
+              "display": {
+                "label": "Open CourtReserve",
+                "actionType": "booking"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-13T20:07:18.687Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v7"
+      ]
     }
   ],
   "decisionApplications": [
@@ -2315,6 +2393,11 @@
       "decisionId": "chase-drain-adopted-policy",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED#sha256:415a8643b714600a7162c41d069cbf73d19aaea21dd0ecf137365f563e91bd98"
+    },
+    {
+      "decisionId": "pickleball-current-operating-claims",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/418/Pickleball-Courts#sha256:39b0904479e937d8d57bcfe869b04d91a8377b0fbf271117ca83527c4534e682"
     }
   ],
   "deferred": [
@@ -2342,17 +2425,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 37,
+    "uniqueVersions": 38,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 32,
+      "pending-review": 33,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 37,
-    "pendingReview": 32
+    "scopedApprovals": 38,
+    "pendingReview": 33
   }
 }
