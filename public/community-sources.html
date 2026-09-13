@@ -4,18 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
-    <title>Community Source Review</title>
+    <title>Community Answer Readiness</title>
     <link rel="icon" href="/favicon.svg?v=20260912-editorial" type="image/svg+xml" />
     <link rel="stylesheet" href="/community-questions.css?v=20260901-4" />
-    <link rel="stylesheet" href="/community-sources.css?v=20260908-pagination" />
+    <link rel="stylesheet" href="/community-sources.css?v=20260913-readiness2" />
   </head>
   <body>
     <main class="owner-shell">
       <section class="login-panel" id="loginPanel" aria-labelledby="loginTitle">
         <img src="/rules-icon.svg" alt="" class="owner-mark" />
         <p class="eyebrow">Sterling Ranch Community Assistant</p>
-        <h1 id="loginTitle">Source review</h1>
-        <p class="intro">Enter the private owner password to review proposed source changes.</p>
+        <h1 id="loginTitle">Answer readiness</h1>
+        <p class="intro">Enter the private owner password to see whether the assistant's sources are current and complete.</p>
         <form id="loginForm">
           <label for="ownerPassword">Owner password</label>
           <input id="ownerPassword" name="password" type="password" autocomplete="current-password" required />
@@ -28,8 +28,8 @@
         <header class="owner-header">
           <div>
             <p class="eyebrow">Sterling Ranch Community Assistant</p>
-            <h1>Source review</h1>
-            <p class="intro">Nothing shown here can change resident answers until it passes review and release checks.</p>
+            <h1>Answer readiness</h1>
+            <p class="intro">A plain-English view of whether the assistant has the current, approved content it needs for your four priority categories.</p>
           </div>
           <div class="header-actions">
             <a href="/community-assistant/questions" class="secondary-action">Question log</a>
@@ -37,13 +37,68 @@
           </div>
         </header>
 
-        <section class="summary" aria-label="Source review summary">
-          <div><span>Pending reviews</span><strong id="pendingCount">0</strong></div>
-          <div><span>Sensitive</span><strong id="sensitiveCount">0</strong></div>
-          <div class="review-summary"><span>Conflicts</span><strong id="conflictCount">0</strong></div>
-          <div><span>Retirement pending</span><strong id="retirementCount">0</strong></div>
+        <section class="readiness-hero" id="readinessHero" data-state="loading" aria-labelledby="readinessTitle">
+          <div class="readiness-verdict">
+            <p class="eyebrow">Overall status</p>
+            <h2 id="readinessTitle">Checking answer readiness…</h2>
+            <p id="readinessExplanation">Confirming current sources, approved evidence, and remaining content gaps.</p>
+            <p class="checked-time" id="readinessCheckedAt"></p>
+          </div>
+          <ul class="readiness-reasons" id="readinessReasons"></ul>
         </section>
 
+        <section class="readiness-section" aria-labelledby="scopeTitle">
+          <div class="section-heading">
+            <div><p class="eyebrow">Your approved scope</p><h2 id="scopeTitle">Four priority categories</h2></div>
+            <p id="scopeSummary">Loading the 27-document audit…</p>
+          </div>
+          <div class="scope-legend" aria-label="Document status key">
+            <span><i class="dot active"></i>Available to answers</span>
+            <span><i class="dot action"></i>Safe link only</span>
+            <span><i class="dot held"></i>Held for review</span>
+            <span><i class="dot excluded"></i>Intentionally excluded</span>
+          </div>
+          <div class="category-list" id="categoryList"></div>
+          <div class="remaining-work" id="remainingWork" hidden>
+            <h3>What still needs to happen</h3>
+            <ul id="remainingWorkList"></ul>
+          </div>
+        </section>
+
+        <section class="readiness-section" aria-labelledby="checksTitle">
+          <div class="section-heading">
+            <div><p class="eyebrow">What determines the verdict</p><h2 id="checksTitle">Currentness, completeness, and safety</h2></div>
+          </div>
+          <div class="check-grid">
+            <article class="check-card" id="freshnessCheck"><span class="check-state">Checking</span><h3>Current approved evidence</h3><p id="freshnessDetail"></p></article>
+            <article class="check-card" id="coverageCheck"><span class="check-state">Checking</span><h3>Necessary content handled</h3><p id="coverageDetail"></p></article>
+            <article class="check-card" id="safetyCheck"><span class="check-state">Checking</span><h3>System-wide conflicts kept out</h3><p id="safetyDetail"></p></article>
+          </div>
+          <details class="inventory-details">
+            <summary>See site-wide discovery bookkeeping</summary>
+            <p id="inventoryExplanation"></p>
+            <dl class="inventory-grid">
+              <div><dt>Discovered</dt><dd id="discoveredCount">0</dd></div>
+              <div><dt>Eligible</dt><dd id="eligibleCount">0</dd></div>
+              <div><dt>Indexed</dt><dd id="indexedCount">0</dd></div>
+              <div><dt>Excluded</dt><dd id="inventoryExcludedCount">0</dd></div>
+              <div><dt>Backlog</dt><dd id="inventoryBacklogCount">0</dd></div>
+            </dl>
+          </details>
+        </section>
+
+        <section class="review-work" aria-labelledby="reviewWorkTitle">
+          <div class="section-heading">
+            <div><p class="eyebrow">Owner decisions</p><h2 id="reviewWorkTitle">Items needing a decision</h2></div>
+            <p>These proposed changes are withheld from resident answers until reviewed and released.</p>
+          </div>
+          <section class="summary" aria-label="Source review queue summary">
+            <div><span>Pending reviews</span><strong id="pendingCount">0</strong></div>
+            <div><span>Sensitive pending</span><strong id="sensitiveCount">0</strong></div>
+            <div class="review-summary"><span>Pending conflicts</span><strong id="conflictCount">0</strong></div>
+            <div><span>Retirement pending</span><strong id="retirementCount">0</strong></div>
+          </section>
+          <p class="queue-note" id="reviewAvailability"></p>
         <section class="filters" aria-label="Source filters">
           <label>Risk<select id="riskFilter"><option value="">All risks</option><option value="high">Sensitive</option><option value="medium">Standard</option></select></label>
           <label>Status<select id="statusFilter"><option value="pending">Pending</option><option value="">All statuses</option><option value="approved">Approved</option><option value="kept-current">Kept current</option><option value="escalated">Escalated</option></select></label>
@@ -58,8 +113,9 @@
         </nav>
         <section class="source-list" id="sourceList" aria-label="Source review cards"></section>
         <div class="empty-state" id="emptyState" hidden><h2>No matching reviews</h2><p>The current filter has no review items.</p></div>
+        </section>
       </section>
     </main>
-    <script src="/community-sources.js?v=20260908-pagination"></script>
+    <script src="/community-sources.js?v=20260913-readiness3"></script>
   </body>
 </html>

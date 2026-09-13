@@ -32,6 +32,88 @@ function sourceLink(url, label) {
   return link;
 }
 
+function readableDate(value) {
+  if (!value) return "Time not available";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Time not available";
+  return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(date);
+}
+
+function setCheck(selector, state, label, detail) {
+  const card = $(selector);
+  card.dataset.state = state;
+  card.querySelector(".check-state").textContent = label;
+  card.querySelector("p").textContent = detail;
+}
+
+function categoryCard(category) {
+  const card = document.createElement("article");
+  card.className = "category-card";
+  card.dataset.state = category.complete ? "complete" : "attention";
+  const header = document.createElement("div");
+  header.className = "category-heading";
+  const title = textElement("h3", category.title);
+  const state = textElement("span", category.complete ? "Handled" : `${category.heldForReview} still held`, "category-state");
+  header.append(title, state);
+  const bar = document.createElement("div");
+  bar.className = "coverage-bar";
+  bar.setAttribute("role", "img");
+  bar.setAttribute("aria-label", `${category.handled} of ${category.total} documents handled`);
+  for (const [name, count] of [["active", category.activeEvidence], ["action", category.actionOnly], ["excluded", category.excluded], ["held", category.heldForReview]]) {
+    if (!count) continue;
+    const segment = document.createElement("span");
+    segment.className = name;
+    segment.style.flexGrow = String(count);
+    bar.append(segment);
+  }
+  const counts = textElement("p", `${category.activeEvidence} available · ${category.actionOnly} link-only · ${category.excluded} excluded · ${category.heldForReview} held`, "category-counts");
+  card.append(header, bar, counts);
+  return card;
+}
+
+function renderReadiness(data = {}) {
+  const readiness = data.readiness;
+  if (!readiness) return;
+  const hero = $("#readinessHero");
+  hero.dataset.state = readiness.state;
+  $("#readinessTitle").textContent = readiness.headline;
+  $("#readinessExplanation").textContent = readiness.explanation;
+  $("#readinessCheckedAt").textContent = `Dashboard checked ${readableDate(readiness.checkedAt)} · Approved evidence rechecked ${readableDate(readiness.evidence?.lastApprovedEvidenceCheckAt)}`;
+  const reasons = readiness.reasons || [];
+  $("#readinessReasons").replaceChildren(...reasons.map(reason => textElement("li", reason)));
+
+  const totals = readiness.totals || {};
+  $("#scopeSummary").textContent = `${totals.classified || 0} of ${totals.total || 0} documents classified. ${totals.handled || 0} are fully handled; ${totals.heldForReview || 0} are still safely withheld.`;
+  $("#categoryList").replaceChildren(...(readiness.categories || []).map(categoryCard));
+  const remainingWork = readiness.remainingWork || [];
+  $("#remainingWork").hidden = remainingWork.length === 0;
+  $("#remainingWorkList").replaceChildren(...remainingWork.map(item => {
+    const row = document.createElement("li");
+    row.append(textElement("strong", item.title), document.createTextNode(` — ${item.nextStep}`));
+    return row;
+  }));
+
+  const evidence = readiness.evidence || {};
+  setCheck("#freshnessCheck", evidence.current ? "pass" : "attention", evidence.current ? "Current" : "Needs recheck",
+    evidence.current
+      ? `All approved evidence passed its current-source checks. ${evidence.sourceCount || 0} source records are available.`
+      : `${evidence.expiredSources || 0} approved sources and ${evidence.expiredFacts || 0} approved facts need to be checked against their official source.`);
+  setCheck("#coverageCheck", totals.heldForReview ? "attention" : "pass", totals.heldForReview ? "Gaps remain" : "Complete",
+    `${totals.activeEvidence || 0} documents contribute approved evidence, ${totals.actionOnly || 0} provide safe action links, and ${totals.excluded || 0} were intentionally kept out. ${totals.heldForReview || 0} necessary documents remain held.`);
+  const conflicts = readiness.safeguards?.withheldConflictCount || 0;
+  setCheck("#safetyCheck", conflicts ? "protected" : "pass", conflicts ? "Protected" : "Clear",
+    conflicts ? `Across the complete source bundle, ${conflicts} conflicting facts are blocked from resident answers. They are shown here as a safety guardrail, not as part of your 27-document count.` : "No unresolved conflicting facts are recorded.");
+
+  const inventory = readiness.inventory || {};
+  $("#inventoryExplanation").textContent = `${inventory.note || ""} Inventory snapshot: ${readableDate(readiness.evidence?.lastSnapshotAt)}.`;
+  $("#discoveredCount").textContent = String(inventory.discovered || 0);
+  $("#eligibleCount").textContent = String(inventory.eligible || 0);
+  $("#indexedCount").textContent = String(inventory.indexed || 0);
+  $("#inventoryExcludedCount").textContent = String(inventory.excluded || 0);
+  $("#inventoryBacklogCount").textContent = String(inventory.backlog || 0);
+  $("#reviewAvailability").textContent = data.reviewError || "The private review queue is connected.";
+}
+
 async function decide(item, decision, note, status) {
   status.textContent = "Saving decision…";
   const response = await fetch(`/api/community-sources/review/${encodeURIComponent(item.id)}/decision`, {
@@ -128,6 +210,7 @@ function reviewCard(item) {
 }
 
 function render(data = {}) {
+  renderReadiness(data);
   items = data.items || [];
   sourceList.replaceChildren(...items.map(reviewCard)); emptyState.hidden = items.length > 0;
   currentPage = data.pagination?.page || 1;

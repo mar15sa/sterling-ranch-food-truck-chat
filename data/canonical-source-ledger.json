@@ -1706,6 +1706,17 @@
           "communityIds": [
             "sterling-ranch"
           ]
+        },
+        {
+          "observedAt": "2026-09-13T02:48:44.600Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v6",
+          "communityIds": [
+            "sterling-ranch"
+          ]
         }
       ],
       "approvals": [
@@ -1755,10 +1766,43 @@
             }
           ],
           "decidedAt": "2026-09-10T20:00:00.000Z"
+        },
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "recycling-tips-visual-link",
+          "scope": "Current official recycling-tips PDF destination only. The handout does not establish current accepted materials, service terms, schedules, contacts, or provider promises.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "recycling-tips-visual-route"
+          ],
+          "withheldClaims": [
+            "accepted-materials",
+            "service-terms",
+            "schedule",
+            "contacts",
+            "provider-promises"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Waste Connection Recycling Tips (PDF)",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+                "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+              },
+              "display": {
+                "label": "Open the recycling tips visual",
+                "actionType": "information"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-13T02:48:44.600Z"
         }
       ],
       "packetRefs": [
-        "community-source-approvals-v5"
+        "community-source-approvals-v5",
+        "community-source-approvals-v6"
       ]
     },
     {
@@ -1875,6 +1919,239 @@
       ],
       "packetRefs": [
         "community-source-approvals-v5"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/414/Approved-Landscapers-List#sha256:d7ef8100507ef3c999c454f1e63f6ecda9fa338475797725e6bdd37e174a12f2",
+      "canonicalUrl": "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+      "contentHash": "d7ef8100507ef3c999c454f1e63f6ecda9fa338475797725e6bdd37e174a12f2",
+      "hashScheme": "page-text-v1",
+      "title": "approved-landscapers-directory-link",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-13T02:48:44.600Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v6",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "approved-landscapers-directory-link",
+          "scope": "Current official approved-landscapers PDF destination only. Do not ingest or repeat company names, services, phone numbers, email addresses, or endorsement claims.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "approved-landscapers-directory-route"
+          ],
+          "withheldClaims": [
+            "company-names",
+            "company-services",
+            "company-contacts",
+            "endorsement",
+            "availability",
+            "recommendations"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Sterling Ranch Approved Landscapers",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-",
+                "context": "These companies are familiar with our community standards. Sterling Ranch Approved Landscapers"
+              },
+              "display": {
+                "label": "Open the current approved landscapers directory",
+                "actionType": "information"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-13T02:48:44.600Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v6"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-#sha256:300fd6595440215cfbbb7f502d9218dde5671be41e2fb920c90bc548b3510cdf",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-",
+      "contentHash": "300fd6595440215cfbbb7f502d9218dde5671be41e2fb920c90bc548b3510cdf",
+      "hashScheme": "page-text-v1",
+      "title": "providence-elements-fence-specifications",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-13T02:48:44.600Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v6",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "providence-elements-fence-specifications",
+          "scope": "Document 617, page 1 only: unique product, height, and gate-width specifications for Lennar Elements homes in Providence Village. The Code and current DRC page control approval and submission requirements.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "providence-elements-fence-product",
+            "providence-elements-fence-height",
+            "providence-elements-gate-width"
+          ],
+          "withheldClaims": [
+            "approval-requirement",
+            "application-route",
+            "meeting-cadence",
+            "review-timeline",
+            "fee",
+            "mailing-address",
+            "enforcement"
+          ],
+          "controllingSources": [],
+          "approvedActions": [],
+          "decidedAt": "2026-09-13T02:48:44.600Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v6"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-#sha256:a8781758136f38693ba79a3f0a762222bf482f1831d409465f10e2f887e39534",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-",
+      "contentHash": "a8781758136f38693ba79a3f0a762222bf482f1831d409465f10e2f887e39534",
+      "hashScheme": "page-text-v1",
+      "title": "solar-panel-appearance-specifications",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-13T02:48:44.600Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v6",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "solar-panel-appearance-specifications",
+          "scope": "Document 619, page 1 only: roof-mounted, black, uniform gridded installation appearance. The Code controls whether approval is required, and current DRC sources control submission steps.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "solar-panels-roof-mounted",
+            "solar-panels-black",
+            "solar-panels-uniform-grid"
+          ],
+          "withheldClaims": [
+            "approval-requirement",
+            "home-prewiring",
+            "resale-value",
+            "energy-savings",
+            "payback-period",
+            "electricity-offset",
+            "warranty",
+            "application-route",
+            "review-timeline",
+            "fee"
+          ],
+          "controllingSources": [],
+          "approvedActions": [],
+          "decidedAt": "2026-09-13T02:48:44.600Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v6"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED#sha256:415a8643b714600a7162c41d069cbf73d19aaea21dd0ecf137365f563e91bd98",
+      "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED",
+      "contentHash": "415a8643b714600a7162c41d069cbf73d19aaea21dd0ecf137365f563e91bd98",
+      "hashScheme": "page-text-v1",
+      "title": "chase-drain-adopted-policy",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-13T02:48:44.600Z",
+          "httpStatus": 200,
+          "finalUrl": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v6",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "chase-drain-adopted-policy",
+          "scope": "Document 1384's adopted policy: definition, inspection and case-specific discretion, CAB construction and maintenance responsibilities, homeowner access and indemnity duties, and homeowner initial-cost responsibility. Current amount, form, routing, and response timing remain live-source facts.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "chase-drain-definition",
+            "chase-drain-inspection-and-discretion",
+            "chase-drain-cab-construction-and-maintenance",
+            "chase-drain-homeowner-access-and-indemnity",
+            "chase-drain-homeowner-initial-cost-responsibility"
+          ],
+          "withheldClaims": [
+            "current-fee-amount",
+            "current-form",
+            "current-county-route",
+            "response-time",
+            "guaranteed-approval",
+            "guaranteed-outcome"
+          ],
+          "controllingSources": [],
+          "approvedActions": [],
+          "decidedAt": "2026-09-13T02:48:44.600Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v6"
       ]
     }
   ],
@@ -2013,6 +2290,31 @@
       "decisionId": "landscape-class-calendar",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/338/Homeowner-Landscape-Class#sha256:995c41f74be5a3a882a9f4f5821cfe79f2cba33676cbc7e3efeb6c2814b9885a"
+    },
+    {
+      "decisionId": "approved-landscapers-directory-link",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/414/Approved-Landscapers-List#sha256:d7ef8100507ef3c999c454f1e63f6ecda9fa338475797725e6bdd37e174a12f2"
+    },
+    {
+      "decisionId": "recycling-tips-visual-link",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44"
+    },
+    {
+      "decisionId": "providence-elements-fence-specifications",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-#sha256:300fd6595440215cfbbb7f502d9218dde5671be41e2fb920c90bc548b3510cdf"
+    },
+    {
+      "decisionId": "solar-panel-appearance-specifications",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-#sha256:a8781758136f38693ba79a3f0a762222bf482f1831d409465f10e2f887e39534"
+    },
+    {
+      "decisionId": "chase-drain-adopted-policy",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED#sha256:415a8643b714600a7162c41d069cbf73d19aaea21dd0ecf137365f563e91bd98"
     }
   ],
   "deferred": [
@@ -2040,17 +2342,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 33,
+    "uniqueVersions": 37,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 28,
+      "pending-review": 32,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 32,
-    "pendingReview": 28
+    "scopedApprovals": 37,
+    "pendingReview": 32
   }
 }
