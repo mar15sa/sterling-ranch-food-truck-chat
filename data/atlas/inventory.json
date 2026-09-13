@@ -1,0 +1,3032 @@
+{
+  "version": 1,
+  "asOf": "2026-09-13",
+  "status": "research-only",
+  "exhaustive": false,
+  "notServedByAtlas": true,
+  "records": [
+    {
+      "id": "burns",
+      "name": "Burns Regional Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Between villages",
+      "scope": "community",
+      "status": "partly-open",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "104-acre regional park; first courts open.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "heritage",
+      "name": "Heritage Regional Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "design",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Early design.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "prospect-park",
+      "name": "Prospect Regional Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "partly-open",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "All-abilities play area, lawn and event shell.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Prospect Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "providence-regional",
+      "name": "Providence Regional Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Natural area east of the Overlook.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "horsebrush",
+      "name": "Horsebrush Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Bocce and charcoal grills.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Horseshoe Bend Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Horsebrush Lane / Merino Circle",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "mccormick",
+      "name": "McCormick Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Play structures.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Palmer Lake Avenue",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "pat-gallagher",
+      "name": "Pat Gallagher Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Grass and walking paths.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Eagle River Loop off Eagle River Street",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "pioneer",
+      "name": "Pioneer Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Play area and shelter.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Arapahoe Peak Street",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "providence-park",
+      "name": "The Lawn at Providence",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Gathering lawn across from Ranch Social.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Providence Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Piney River Avenue / Eagle River Street, across Sterling Center",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "steve-bloom",
+      "name": "Steve Bloom Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Natural space and birding.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "yard-27",
+      "name": "Yard 27",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Cornhole and picnic space.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Animas River Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Between Animas River Street and River Peak Circle",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "high-top",
+      "name": "High Top Court",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Basketball, field and picnic space.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Basketball Park",
+        "Ascent Basketball Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Waterton Road / Snake River Street",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "trailrock",
+      "name": "Trailrock Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Climbing and play equipment.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Climbing Park",
+        "Ascent Climbing Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Eagle River Street / Snake River Street",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "medley",
+      "name": "Medley Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Linear greenway, target 2026–2027.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "ascent-pavilion",
+      "name": "Gathering Green",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Pavilion, bocce and play area.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Pavilion Park",
+        "Ascent Village Pavilion Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Watercress Drive / Yellowcress Street",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "zippity",
+      "name": "Zippity Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Zipline and covered picnic area.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Swan River Zipline Park",
+        "Zipline Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Swan River Street / Sterling Ranch Avenue",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "peekaboo",
+      "name": "Peekaboo Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Picnic shelter and dual-slide play structure.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "willow-creek",
+      "name": "Willow Creek Trailhead",
+      "kind": "place",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks",
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Trailhead named on developer directory.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Trailhead Park"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "Working match from location/features; CAB naming confirmation still due",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ],
+      "locationDescription": {
+        "text": "Mount Kataka Street / Mount Ouray Road",
+        "sourceId": "cab-parks",
+        "precision": "street-area-not-entrance"
+      }
+    },
+    {
+      "id": "outcrop",
+      "name": "Outcrop Park",
+      "kind": "place",
+      "category": "parks",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "unconfirmed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Planned climbing/nature play. Summer 2026 target needs recheck.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "aliasReview": "not-applicable",
+      "questions": [
+        "Confirm public entrance and current access.",
+        "Verify restrooms, shade, parking, play ages and accessible route before displaying badges."
+      ]
+    },
+    {
+      "id": "sterling-gulch",
+      "name": "Sterling Gulch Wildlife Corridor",
+      "kind": "place",
+      "category": "trails",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "cab-parks",
+        "cab-trails"
+      ],
+      "claims": [
+        {
+          "text": "Future corridor and Waterton crossing.",
+          "sourceId": "cab-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Which segments and crossing are actually open?",
+        "Obtain official segment geometry; distinguish habitat from public trail."
+      ]
+    },
+    {
+      "id": "cultural-trail",
+      "name": "Cultural Trail",
+      "kind": "place",
+      "category": "trails",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Future Middle Fork median trail/amenity nodes.",
+          "sourceId": "cab-parks"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "relatedIds": [
+        "medley"
+      ],
+      "questions": [
+        "Is this the same project, or a component of Medley Park? Keep separate until confirmed."
+      ]
+    },
+    {
+      "id": "overlook",
+      "name": "The Overlook Clubhouse",
+      "kind": "place",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-overlook",
+        "cab-facilities"
+      ],
+      "claims": [
+        {
+          "text": "Facility at 7853 Piney River Avenue.",
+          "sourceId": "cab-overlook"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "7853 Piney River Avenue",
+      "access": "Resident/guest and rental rules need activity-specific confirmation.",
+      "questions": [
+        "Which areas require resident access?",
+        "Current fitness hours, class schedule, guest passes and rental process?"
+      ]
+    },
+    {
+      "id": "sterling-center",
+      "name": "Sterling Center",
+      "kind": "place",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-center",
+        "cab-facilities"
+      ],
+      "claims": [
+        {
+          "text": "Tenant building at 8155 Piney River Avenue.",
+          "sourceId": "developer-center"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "8155 Piney River Avenue",
+      "questions": [
+        "Accessible entrances, parking and tenant-specific wayfinding?"
+      ]
+    },
+    {
+      "id": "ranch-social",
+      "name": "Ranch Social",
+      "kind": "place",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-social",
+        "cab-facilities"
+      ],
+      "claims": [
+        {
+          "text": "Shared food, drink and gathering venue.",
+          "sourceId": "developer-social"
+        }
+      ],
+      "parentId": "sterling-center",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current event and food-truck schedule?",
+        "Which seating or gathering spaces require reservations?"
+      ]
+    },
+    {
+      "id": "info-center",
+      "name": "Sterling Ranch Info Center",
+      "kind": "place",
+      "category": "services",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-center",
+        "cab-facilities"
+      ],
+      "claims": [
+        {
+          "text": "Suite 110 at Sterling Center.",
+          "sourceId": "developer-center"
+        }
+      ],
+      "parentId": "sterling-center",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "8155 Piney River Avenue, Suite 110",
+      "questions": [
+        "Distinguish developer welcome desk from CAB resident-service hours."
+      ]
+    },
+    {
+      "id": "school51",
+      "name": "Elementary School 51",
+      "kind": "place",
+      "category": "schools",
+      "village": "Providence",
+      "scope": "community",
+      "status": "under-construction",
+      "sourceIds": [
+        "dcsd-school51",
+        "developer-education"
+      ],
+      "claims": [
+        {
+          "text": "Opening target August 2027; enrollment anticipated November 2026.",
+          "sourceId": "dcsd-school51"
+        },
+        {
+          "text": "8220 Piney River Avenue; capacity up to 750 students.",
+          "sourceId": "dcsd-school51"
+        }
+      ],
+      "parentId": null,
+      "aliases": [
+        "Sterling Ranch elementary school",
+        "DCSD elementary school"
+      ],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "8220 Piney River Avenue",
+      "questions": [
+        "Final school name, approved attendance boundary and enrollment opening date?",
+        "Before/after care, preschool, walking crossings, transport and playground access after school?"
+      ]
+    },
+    {
+      "id": "john-adams",
+      "name": "John Adams Academy",
+      "kind": "place",
+      "category": "schools",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "opening-season",
+      "sourceIds": [
+        "jaa",
+        "developer-future"
+      ],
+      "claims": [
+        {
+          "text": "Operator describes K–8 for fall 2026 and August 1 ribbon cutting.",
+          "sourceId": "jaa"
+        },
+        {
+          "text": "7979 Butte Creek Street.",
+          "sourceId": "jaa"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "7979 Butte Creek Street",
+      "questions": [
+        "Confirm current grades and grade expansion year by year.",
+        "Tour/enrollment links, before/after care, visitor entrance and campus recreation access?"
+      ]
+    },
+    {
+      "id": "primrose",
+      "name": "Primrose School of Sterling Ranch",
+      "kind": "place",
+      "category": "schools",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "primrose",
+        "developer-education"
+      ],
+      "claims": [
+        {
+          "text": "Private early-childhood school with school-specific outdoor play areas.",
+          "sourceId": "primrose"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "School access; public playground use not established.",
+      "questions": [
+        "Exact public entrance/address and offered age programs?",
+        "Tour/availability links, tuition inquiry and school calendar?"
+      ]
+    },
+    {
+      "id": "library",
+      "name": "Sterling Ranch Community Library",
+      "kind": "place",
+      "category": "civic",
+      "village": "Providence",
+      "scope": "community",
+      "status": "construction-project",
+      "sourceIds": [
+        "dcl-build",
+        "developer-education"
+      ],
+      "claims": [
+        {
+          "text": "Planned at 8285 Piney River Avenue.",
+          "sourceId": "dcl-build"
+        },
+        {
+          "text": "Design includes study/conference rooms, event space, children's area and outdoor garden.",
+          "sourceId": "dcl-build"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "8285 Piney River Avenue",
+      "questions": [
+        "Confirmed opening date and Roxborough service transition?",
+        "Which rooms are reservable, when will booking open, and what is the access policy?"
+      ]
+    },
+    {
+      "id": "atlas-coffee",
+      "name": "Atlas Coffee",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "atlas-operator",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Coffee; exact Sterling Ranch menu/order links need field review.",
+          "sourceId": "atlas-operator"
+        }
+      ],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "salta",
+      "name": "Salta",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "atlas-operator",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Food and drinks within Ranch Social.",
+          "sourceId": "atlas-operator"
+        }
+      ],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "agora",
+      "name": "Agora Market",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "atlas-operator",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Neighborhood market within Ranch Social.",
+          "sourceId": "atlas-operator"
+        }
+      ],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "living-dream",
+      "name": "Living the Dream Sterling Ranch Taproom",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "living-dream",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Sterling Ranch taproom, distinct from brewery address.",
+          "sourceId": "living-dream"
+        }
+      ],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "uchealth",
+      "name": "UCHealth Sterling Ranch Medical Center",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "uchealth",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Primary care, urgent care and physical therapy directory.",
+          "sourceId": "uchealth"
+        }
+      ],
+      "parentId": "sterling-center",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Choose the correct clinic, entrance, appointment link and clinic-specific hours."
+      ]
+    },
+    {
+      "id": "lake-family-dental",
+      "name": "Lake Family Dental",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "dental",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Dental practice listed at Sterling Center.",
+          "sourceId": "dental"
+        }
+      ],
+      "parentId": "sterling-center",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "sterling-eyecare",
+      "name": "Sterling Eyecare",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "eyecare",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Suite 120; operator lists a midday lunch closure.",
+          "sourceId": "eyecare"
+        }
+      ],
+      "parentId": "sterling-center",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "rave",
+      "name": "RAVE Spa & Clinic",
+      "kind": "place",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "rave",
+        "developer-center"
+      ],
+      "claims": [
+        {
+          "text": "Suite 230; operator booking available.",
+          "sourceId": "rave"
+        }
+      ],
+      "parentId": "sterling-center",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current exact-location hours and closure notices?",
+        "Direct menu/order/booking link and useful visit details?"
+      ]
+    },
+    {
+      "id": "broadstone",
+      "name": "Broadstone Sterling Ranch",
+      "kind": "place",
+      "category": "housing",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "operator-listed",
+      "sourceIds": [
+        "broadstone",
+        "community-map-2026"
+      ],
+      "claims": [
+        {
+          "text": "8425 Old Ski Run Circle.",
+          "sourceId": "broadstone"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "8425 Old Ski Run Circle",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Which facilities are open and who may use them?",
+        "Visitor/leasing entrance and resident guest rules?"
+      ]
+    },
+    {
+      "id": "prose",
+      "name": "Prose at Parkvale",
+      "kind": "place",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "operator-listed",
+      "sourceIds": [
+        "prose",
+        "community-map-2026"
+      ],
+      "claims": [
+        {
+          "text": "8749 Waterton Road.",
+          "sourceId": "prose"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "publicAddress": "8749 Waterton Road",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Which facilities are open and who may use them?",
+        "Visitor/leasing entrance and guest rules?"
+      ]
+    },
+    {
+      "id": "water-plant",
+      "name": "Larry D. Moore Water Treatment Plant",
+      "kind": "place",
+      "category": "infrastructure",
+      "village": "Parkvale area",
+      "scope": "infrastructure-context",
+      "status": "source-listed",
+      "sourceIds": [
+        "community-map-2026",
+        "dominion"
+      ],
+      "claims": [
+        {
+          "text": "Named community infrastructure.",
+          "sourceId": "community-map-2026"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Not a visitor destination; public access not established.",
+      "questions": [
+        "Confirm map label and boundary placement; do not add visitor directions."
+      ]
+    },
+    {
+      "id": "zebulon",
+      "name": "Zebulon Regional Sports Complex",
+      "kind": "place",
+      "category": "future",
+      "village": "East of current villages",
+      "scope": "regional-project-boundary-review",
+      "status": "site-preparation",
+      "sourceIds": [
+        "zebulon",
+        "county-pd15-staff"
+      ],
+      "claims": [
+        {
+          "text": "County reports grading and preparation for utilities.",
+          "sourceId": "zebulon"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Final footprint and relation to adopted PD expansion?",
+        "Phase-specific approvals, construction starts and opening dates?"
+      ]
+    },
+    {
+      "id": "ascent-village-center",
+      "name": "Ascent Village Center",
+      "kind": "place",
+      "category": "future",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "map-concept",
+      "sourceIds": [
+        "cab-map-2025",
+        "developer-future"
+      ],
+      "claims": [
+        {
+          "text": "Village center label on CAB's illustrative map.",
+          "sourceId": "cab-map-2025"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Current project name, program, approved plan and timeline?",
+        "Does the older map location still apply?"
+      ]
+    },
+    {
+      "id": "resident-resource-center",
+      "name": "Resident Resource Center",
+      "kind": "candidate",
+      "category": "civic",
+      "village": "Providence",
+      "scope": "community",
+      "status": "current-location-unconfirmed",
+      "sourceIds": [
+        "cab-map-2025",
+        "cab-march-calendar"
+      ],
+      "claims": [
+        {
+          "text": "Separate map label near school/library sites.",
+          "sourceId": "cab-map-2025"
+        },
+        {
+          "text": "March 2026 calendar still uses this venue name; current location and role need checking.",
+          "sourceId": "cab-march-calendar"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Confirm current location and visitor access; old 8220 Piney River address is now used for School 51.",
+        "Is it relocated, renamed, or still distinct from Info Center?"
+      ]
+    },
+    {
+      "id": "overlook-pool",
+      "name": "Overlook Outdoor Pool",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "seasonal",
+      "sourceIds": [
+        "cab-facilities"
+      ],
+      "claims": [
+        {
+          "text": "Current opening/closure belongs to the existing pool status page.",
+          "sourceId": "cab-facilities"
+        }
+      ],
+      "parentId": "overlook",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Resident/guest and rental rules need activity-specific confirmation.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "overlook-great-hall",
+      "name": "Great Hall, kitchen and balcony",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-rental-guide"
+      ],
+      "claims": [],
+      "parentId": "overlook",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Resident/guest and rental rules need activity-specific confirmation.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "overlook-north-pavilion",
+      "name": "North pavilion, fireplace and turf",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-rental-guide"
+      ],
+      "claims": [],
+      "parentId": "overlook",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Resident/guest and rental rules need activity-specific confirmation.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "overlook-south-pavilion",
+      "name": "South pavilion and grill",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-rental-guide"
+      ],
+      "claims": [],
+      "parentId": "overlook",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Resident/guest and rental rules need activity-specific confirmation.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "burns-courts",
+      "name": "Burns Park Pickleball",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Between villages",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-burns"
+      ],
+      "claims": [
+        {
+          "text": "Eight courts at 9020 Middle Fork Street.",
+          "sourceId": "cab-burns"
+        }
+      ],
+      "parentId": "burns",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-playground",
+      "name": "Prospect all-abilities playground",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-shell",
+      "name": "Prospect event shell",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-lawn",
+      "name": "Prospect play lawn / turf area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-basketball",
+      "name": "Prospect Park Basketball Court",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-prospect-court"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-volleyball",
+      "name": "Prospect volleyball area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-prospect"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-soccer",
+      "name": "Prospect soccer area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-prospect"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-walking",
+      "name": "Prospect walking track",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-prospect"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-pavilion",
+      "name": "Prospect pavilion / picnic area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-prospect"
+      ],
+      "claims": [],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "providence-pavilion",
+      "name": "Providence Park Pavilion",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-facilities"
+      ],
+      "claims": [],
+      "parentId": "providence-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "horsebrush-bocce",
+      "name": "Horsebrush bocce courts",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "horsebrush",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "horsebrush-shelters",
+      "name": "Horsebrush shelters and grills",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "horsebrush",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "mccormick-play",
+      "name": "McCormick playground",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "mccormick",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "pioneer-play",
+      "name": "Pioneer playground",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "pioneer",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "zippity-play",
+      "name": "Zippity zipline and playground",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "zippity",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "zippity-shelter",
+      "name": "Zippity covered picnic area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "zippity",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "yard-cornhole",
+      "name": "Yard 27 cornhole / picnic area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "yard-27",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "high-top-courts",
+      "name": "High Top basketball courts / field",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "high-top",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "trailrock-play",
+      "name": "Trailrock climbing / play area",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "trailrock",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "gathering-play",
+      "name": "Gathering Green playground",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "ascent-pavilion",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "gathering-bocce",
+      "name": "Gathering Green bocce / turf",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [],
+      "parentId": "ascent-pavilion",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "gathering-pavilion",
+      "name": "Gathering Green pavilion",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-pavilion"
+      ],
+      "claims": [],
+      "parentId": "ascent-pavilion",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "ranch-playground",
+      "name": "Ranch Social log playground",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-social"
+      ],
+      "claims": [],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "ranch-patio",
+      "name": "Ranch Social patio / fire pit",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-social"
+      ],
+      "claims": [],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "primary-care",
+      "name": "UCHealth Primary Care",
+      "kind": "feature",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "uchealth"
+      ],
+      "claims": [],
+      "parentId": "uchealth",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "urgent-care",
+      "name": "UCHealth Urgent Care",
+      "kind": "feature",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "uchealth"
+      ],
+      "claims": [],
+      "parentId": "uchealth",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "physical-therapy",
+      "name": "UCHealth Physical Therapy",
+      "kind": "feature",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "uchealth"
+      ],
+      "claims": [],
+      "parentId": "uchealth",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "broadstone-pool",
+      "name": "Broadstone pool and spa",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "broadstone"
+      ],
+      "claims": [],
+      "parentId": "broadstone",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "broadstone-fitness",
+      "name": "Broadstone fitness / yoga",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "broadstone"
+      ],
+      "claims": [],
+      "parentId": "broadstone",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "broadstone-work",
+      "name": "Broadstone coworking / conference space",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "broadstone"
+      ],
+      "claims": [],
+      "parentId": "broadstone",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "broadstone-lounge",
+      "name": "Broadstone clubhouse / rooftop lounge",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "broadstone"
+      ],
+      "claims": [],
+      "parentId": "broadstone",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prose-pool",
+      "name": "Prose pool",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "prose"
+      ],
+      "claims": [],
+      "parentId": "prose",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prose-fitness",
+      "name": "Prose fitness center",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "prose"
+      ],
+      "claims": [],
+      "parentId": "prose",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prose-dog",
+      "name": "Prose dog park",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "prose"
+      ],
+      "claims": [],
+      "parentId": "prose",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prose-work",
+      "name": "Prose work space / clubhouse",
+      "kind": "feature",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "prose"
+      ],
+      "claims": [],
+      "parentId": "prose",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Apartment amenities; public use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "primrose-play",
+      "name": "Primrose school playgrounds and garden",
+      "kind": "feature",
+      "category": "schools",
+      "village": "Providence",
+      "scope": "community",
+      "status": "school-access-only",
+      "sourceIds": [
+        "primrose"
+      ],
+      "claims": [
+        {
+          "text": "Operator names infant, Tree House, Thumbs Up and Firetruck playgrounds; Primrose Patch garden.",
+          "sourceId": "primrose"
+        }
+      ],
+      "parentId": "primrose",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "School access; public playground use not established.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "burns-next",
+      "name": "Burns Regional Park: later phases",
+      "kind": "phase",
+      "category": "parks",
+      "village": "Between villages",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "cab-updates"
+      ],
+      "claims": [
+        {
+          "text": "Further park work; phase-specific completion unverified.",
+          "sourceId": "cab-updates"
+        }
+      ],
+      "parentId": "burns",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "prospect-next",
+      "name": "Prospect Park: later phases / Beach Club",
+      "kind": "phase",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "cab-updates"
+      ],
+      "claims": [
+        {
+          "text": "CAB announced a summer 2026 Phase 2 pool construction start. Actual start and opening not verified.",
+          "sourceId": "cab-updates"
+        }
+      ],
+      "parentId": "prospect-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "willow-repair",
+      "name": "Willow Creek trailhead bike repair station",
+      "kind": "phase",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "cab-parks"
+      ],
+      "claims": [
+        {
+          "text": "Future installation in CAB description; current availability unknown.",
+          "sourceId": "cab-parks"
+        }
+      ],
+      "parentId": "willow-creek",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "library-outdoors",
+      "name": "Library terrace, plaza and children's garden",
+      "kind": "phase",
+      "category": "civic",
+      "village": "Providence",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "dcl-build"
+      ],
+      "claims": [
+        {
+          "text": "Planned outdoor library spaces.",
+          "sourceId": "dcl-build"
+        }
+      ],
+      "parentId": "library",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "library-rooms",
+      "name": "Library study rooms, conference rooms and event hall",
+      "kind": "phase",
+      "category": "civic",
+      "village": "Providence",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "dcl-build"
+      ],
+      "claims": [
+        {
+          "text": "Planned spaces; reservations are not yet verified.",
+          "sourceId": "dcl-build"
+        }
+      ],
+      "parentId": "library",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "zebulon-lifestyle",
+      "name": "Zebulon area shopping, dining and lodging concept",
+      "kind": "phase",
+      "category": "future",
+      "village": "East of current villages",
+      "scope": "community",
+      "status": "planned",
+      "sourceIds": [
+        "developer-future"
+      ],
+      "claims": [
+        {
+          "text": "Future district concept; no individual tenants or dates established.",
+          "sourceId": "developer-future"
+        }
+      ],
+      "parentId": "zebulon",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "access": "Confirm facility-specific access and current availability.",
+      "questions": [
+        "Verify current access, exact position within the parent and relevant visit details."
+      ]
+    },
+    {
+      "id": "farmers-market",
+      "name": "Sterling Ranch Farmers' Market",
+      "kind": "recurring-use",
+      "category": "recurring",
+      "village": "Providence",
+      "scope": "community",
+      "status": "seasonal-or-scheduled",
+      "sourceIds": [
+        "farmers-market"
+      ],
+      "claims": [
+        {
+          "text": "2026 season: Wednesdays June 24–October 14, 3–7 p.m. or sellout; operator gives 8100 Piney River Avenue.",
+          "sourceId": "farmers-market"
+        }
+      ],
+      "parentId": "providence-park",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Check the date-specific schedule and cancellation notice before a visit."
+      ]
+    },
+    {
+      "id": "food-trucks",
+      "name": "Ranch Social food-truck stop",
+      "kind": "recurring-use",
+      "category": "recurring",
+      "village": "Providence",
+      "scope": "community",
+      "status": "seasonal-or-scheduled",
+      "sourceIds": [
+        "developer-social",
+        "cab-calendar"
+      ],
+      "claims": [
+        {
+          "text": "Reuse the site's existing daily truck schedule; vendors are not permanent map locations.",
+          "sourceId": "developer-social"
+        }
+      ],
+      "parentId": "ranch-social",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Check the date-specific schedule and cancellation notice before a visit."
+      ]
+    },
+    {
+      "id": "indigo-rye",
+      "name": "Indigo and Rye Bakery",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "candidate",
+      "sourceIds": [
+        "indigo",
+        "indigo-order"
+      ],
+      "claims": [
+        {
+          "text": "Public local bakery; pickup slots and local delivery listed.",
+          "sourceId": "indigo"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "sourdough-haus",
+      "name": "Sourdough Haus",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "current-ordering-unconfirmed",
+      "sourceIds": [
+        "sourdough"
+      ],
+      "claims": [
+        {
+          "text": "Public Sterling Ranch cottage bakery; visible schedule is old.",
+          "sourceId": "sourdough"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "lemon-zest",
+      "name": "Lemon Zest Bakery",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "temporarily-closed-source-reported",
+      "sourceIds": [
+        "lemon"
+      ],
+      "claims": [
+        {
+          "text": "Public bakery website carries temporary closure notice.",
+          "sourceId": "lemon"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "pup-pilot",
+      "name": "Pup Pilot",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "candidate",
+      "sourceIds": [
+        "pup"
+      ],
+      "claims": [
+        {
+          "text": "Local dog outing/pickup service.",
+          "sourceId": "pup"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "mountain-view-photo",
+      "name": "Mountain View Photo",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "candidate",
+      "sourceIds": [
+        "mountain-photo"
+      ],
+      "claims": [
+        {
+          "text": "Sterling Ranch home-studio connection; visits by appointment.",
+          "sourceId": "mountain-photo"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "blr-photo",
+      "name": "BLR Photography",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "lead",
+      "sourceIds": [
+        "photo-lead"
+      ],
+      "claims": [
+        {
+          "text": "Local photographer mentioned by a secondary community article.",
+          "sourceId": "photo-lead"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "stephanie-photo",
+      "name": "Stephanie Renae Hall Photography",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "lead",
+      "sourceIds": [
+        "chamber-lead"
+      ],
+      "claims": [
+        {
+          "text": "Directory lead; operator confirmation needed.",
+          "sourceId": "chamber-lead"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Confirm owner wants to be listed.",
+        "Collect public display area or service-only choice, order/booking link, lead time, delivery/pickup rules and update contact."
+      ],
+      "access": "No walk-in location established. No home address retained."
+    },
+    {
+      "id": "occupational-medicine",
+      "name": "UCHealth Occupational Medicine",
+      "kind": "candidate",
+      "category": "businesses",
+      "village": "Providence",
+      "scope": "community",
+      "status": "lead",
+      "sourceIds": [
+        "cab-uchealth"
+      ],
+      "claims": [
+        {
+          "text": "CAB lists service; operator medical-center directory needs reconciliation.",
+          "sourceId": "cab-uchealth"
+        }
+      ],
+      "parentId": "uchealth",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Still offered here, renamed, or moved?"
+      ]
+    },
+    {
+      "id": "fraser-river",
+      "name": "Fraser River Park (historical name)",
+      "kind": "candidate",
+      "category": "parks",
+      "village": "Unresolved",
+      "scope": "community",
+      "status": "historical-lead",
+      "sourceIds": [
+        "cab-historical-rules"
+      ],
+      "claims": [
+        {
+          "text": "Appears in a 2021 rental list; absent from current named directories.",
+          "sourceId": "cab-historical-rules"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Former name for an existing park, planned site, or retired listing?"
+      ]
+    },
+    {
+      "id": "cab-tbd-prospect",
+      "name": "Unnamed park marker: north Prospect",
+      "kind": "candidate",
+      "category": "parks",
+      "village": "Prospect",
+      "scope": "community",
+      "status": "map-lead",
+      "sourceIds": [
+        "cab-map-2025"
+      ],
+      "claims": [
+        {
+          "text": "Map marker near Mount Kataka / Mount Ouray; likely Trailhead Park, match still unverified.",
+          "sourceId": "cab-map-2025"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "relatedIds": [
+        "willow-creek"
+      ],
+      "questions": [
+        "Reconcile against the June 2026 map and current park plan; do not count as an additional confirmed park."
+      ]
+    },
+    {
+      "id": "cab-tbd-middle-fork",
+      "name": "Unnamed park marker: west Ascent / Middle Fork",
+      "kind": "candidate",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "map-lead",
+      "sourceIds": [
+        "cab-map-2025"
+      ],
+      "claims": [
+        {
+          "text": "Map marker beside Middle Fork; possible Medley/Cultural Trail relationship.",
+          "sourceId": "cab-map-2025"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "relatedIds": [
+        "medley"
+      ],
+      "questions": [
+        "Reconcile against the June 2026 map and current park plan; do not count as an additional confirmed park."
+      ]
+    },
+    {
+      "id": "cab-tbd-east-ascent",
+      "name": "Unnamed park marker: east Ascent",
+      "kind": "candidate",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "map-lead",
+      "sourceIds": [
+        "cab-map-2025"
+      ],
+      "claims": [
+        {
+          "text": "Map marker north of Pavilion Park; possible Peekaboo relationship.",
+          "sourceId": "cab-map-2025"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "relatedIds": [
+        "peekaboo"
+      ],
+      "questions": [
+        "Reconcile against the June 2026 map and current park plan; do not count as an additional confirmed park."
+      ]
+    },
+    {
+      "id": "cab-tbd-se-ascent",
+      "name": "Unnamed park marker: southeast Ascent",
+      "kind": "candidate",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "map-lead",
+      "sourceIds": [
+        "cab-map-2025"
+      ],
+      "claims": [
+        {
+          "text": "Map marker east of basketball park; name and relationship unresolved.",
+          "sourceId": "cab-map-2025"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "relatedIds": [],
+      "questions": [
+        "Reconcile against the June 2026 map and current park plan; do not count as an additional confirmed park."
+      ]
+    },
+    {
+      "id": "overlook-fitness",
+      "name": "Overlook fitness center",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "cab-fitness"
+      ],
+      "claims": [
+        {
+          "text": "Fitness access and seasonal hours have their own official page.",
+          "sourceId": "cab-fitness"
+        }
+      ],
+      "parentId": "overlook",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Confirm current location, access and useful visit details."
+      ]
+    },
+    {
+      "id": "overlook-splash",
+      "name": "Overlook splash pad",
+      "kind": "feature",
+      "category": "amenities",
+      "village": "Providence",
+      "scope": "community",
+      "status": "seasonal",
+      "sourceIds": [
+        "cab-homeowners"
+      ],
+      "claims": [
+        {
+          "text": "Confirm seasonal operation alongside pool status.",
+          "sourceId": "cab-homeowners"
+        }
+      ],
+      "parentId": "overlook",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Confirm current location, access and useful visit details."
+      ]
+    },
+    {
+      "id": "peekaboo-play",
+      "name": "Peekaboo playground / shelter",
+      "kind": "feature",
+      "category": "parks",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "source-listed",
+      "sourceIds": [
+        "developer-parks"
+      ],
+      "claims": [
+        {
+          "text": "Dual-slide play structure and shaded picnic shelter.",
+          "sourceId": "developer-parks"
+        }
+      ],
+      "parentId": "peekaboo",
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Confirm current location, access and useful visit details."
+      ]
+    },
+    {
+      "id": "golden-cowgirl",
+      "name": "Golden Cowgirl Spray Tans",
+      "kind": "candidate",
+      "category": "makers",
+      "village": "Unpublished",
+      "scope": "community",
+      "status": "candidate",
+      "sourceIds": [
+        "golden-cowgirl"
+      ],
+      "claims": [
+        {
+          "text": "Public home/mobile tanning business in Sterling Ranch; owner permission pending.",
+          "sourceId": "golden-cowgirl"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "withheld",
+      "ownerConsent": false,
+      "preciseLocationConsent": false,
+      "questions": [
+        "Collect permission, public display area, appointment link and update contact."
+      ]
+    },
+    {
+      "id": "cab-office",
+      "name": "CAB administrative / mailing location",
+      "kind": "candidate",
+      "category": "services",
+      "village": "Unresolved",
+      "scope": "community",
+      "status": "visitor-access-unconfirmed",
+      "sourceIds": [
+        "cab-contact"
+      ],
+      "claims": [
+        {
+          "text": "9350 Roxborough Park Road is a mailing address; do not direct visitors without confirmation.",
+          "sourceId": "cab-contact"
+        }
+      ],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Confirm current location, access and useful visit details."
+      ]
+    },
+    {
+      "id": "builder-weekley",
+      "name": "David Weekley Homes: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-lennar",
+      "name": "Lennar: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-lion",
+      "name": "Lion Residential: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Parkvale",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-pulte",
+      "name": "Pulte Homes: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Ascent / Parkvale",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-richmond",
+      "name": "Richmond American: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Ascent / Parkvale",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-sheffield",
+      "name": "Sheffield Homes: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Unresolved",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-taylor",
+      "name": "Taylor Morrison: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-tripointe",
+      "name": "Tri Pointe Homes: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Ascent",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    },
+    {
+      "id": "builder-trumark",
+      "name": "Trumark Homes: sales/model location lead",
+      "kind": "candidate",
+      "category": "housing",
+      "village": "Ascent / Parkvale",
+      "scope": "community",
+      "status": "operator-location-unconfirmed",
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "claims": [],
+      "parentId": null,
+      "aliases": [],
+      "publicationState": "research-only",
+      "locationState": "entrance-not-verified",
+      "questions": [
+        "Follow the developer's operator link; identify current visitor-facing sales/model offices and collection aliases.",
+        "Avoid occupied homes, sold-out models, and one pin per floor plan."
+      ]
+    }
+  ]
+}

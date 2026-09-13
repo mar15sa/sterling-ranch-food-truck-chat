@@ -1,0 +1,722 @@
+{
+  "version": 1,
+  "asOf": "2026-09-13",
+  "exhaustive": false,
+  "meaning": "Each baseline label has a disposition. Matching a label is not confirmation of identity, coordinates, operating status, public access or exhaustiveness.",
+  "baselines": [
+    {
+      "sourceId": "developer-parks",
+      "scope": "All 19 named regional/neighborhood parks and trailhead entries. Overlook tracked in facilities.",
+      "entries": [
+        {
+          "label": "Burns Regional Park",
+          "recordId": "burns"
+        },
+        {
+          "label": "Heritage Regional Park",
+          "recordId": "heritage"
+        },
+        {
+          "label": "Prospect Regional Park",
+          "recordId": "prospect-park"
+        },
+        {
+          "label": "Providence Regional Park",
+          "recordId": "providence-regional"
+        },
+        {
+          "label": "Horsebrush Park",
+          "recordId": "horsebrush"
+        },
+        {
+          "label": "McCormick Park",
+          "recordId": "mccormick"
+        },
+        {
+          "label": "Pat Gallagher Park",
+          "recordId": "pat-gallagher"
+        },
+        {
+          "label": "Pioneer Park",
+          "recordId": "pioneer"
+        },
+        {
+          "label": "The Lawn at Providence",
+          "recordId": "providence-park"
+        },
+        {
+          "label": "Steve Bloom Park",
+          "recordId": "steve-bloom"
+        },
+        {
+          "label": "Yard 27",
+          "recordId": "yard-27"
+        },
+        {
+          "label": "High Top Court",
+          "recordId": "high-top"
+        },
+        {
+          "label": "Trailrock Park",
+          "recordId": "trailrock"
+        },
+        {
+          "label": "Medley Park",
+          "recordId": "medley"
+        },
+        {
+          "label": "Gathering Green",
+          "recordId": "ascent-pavilion"
+        },
+        {
+          "label": "Zippity Park",
+          "recordId": "zippity"
+        },
+        {
+          "label": "Peekaboo Park",
+          "recordId": "peekaboo"
+        },
+        {
+          "label": "Willow Creek Trailhead",
+          "recordId": "willow-creek"
+        },
+        {
+          "label": "Outcrop Park",
+          "recordId": "outcrop"
+        }
+      ]
+    },
+    {
+      "sourceId": "cab-parks",
+      "scope": "All 16 named park/corridor entries, including future projects.",
+      "entries": [
+        {
+          "label": "Providence Park",
+          "recordId": "providence-park"
+        },
+        {
+          "label": "Steve Bloom Park",
+          "recordId": "steve-bloom"
+        },
+        {
+          "label": "Pat Gallagher Park",
+          "recordId": "pat-gallagher"
+        },
+        {
+          "label": "McCormick Park",
+          "recordId": "mccormick"
+        },
+        {
+          "label": "Pioneer Park",
+          "recordId": "pioneer"
+        },
+        {
+          "label": "Horseshoe Bend Park",
+          "recordId": "horsebrush"
+        },
+        {
+          "label": "Swan River Zipline Park",
+          "recordId": "zippity"
+        },
+        {
+          "label": "Animas River Park",
+          "recordId": "yard-27"
+        },
+        {
+          "label": "Basketball Park",
+          "recordId": "high-top"
+        },
+        {
+          "label": "Climbing Park",
+          "recordId": "trailrock"
+        },
+        {
+          "label": "Pavilion Park",
+          "recordId": "ascent-pavilion"
+        },
+        {
+          "label": "Prospect Park",
+          "recordId": "prospect-park"
+        },
+        {
+          "label": "Trailhead Park",
+          "recordId": "willow-creek"
+        },
+        {
+          "label": "Burns Regional Park",
+          "recordId": "burns"
+        },
+        {
+          "label": "Sterling Gulch Wildlife Corridor",
+          "recordId": "sterling-gulch"
+        },
+        {
+          "label": "Cultural Trail",
+          "recordId": "cultural-trail"
+        }
+      ]
+    },
+    {
+      "sourceId": "cab-facilities",
+      "scope": "All 12 results read in browser, Show 100. Overlook & Virtual is a meeting-mode duplicate, not another physical facility.",
+      "entries": [
+        {
+          "label": "Ascent Village Pavilion Park",
+          "recordId": "ascent-pavilion"
+        },
+        {
+          "label": "Great Hall",
+          "recordId": "overlook-great-hall"
+        },
+        {
+          "label": "Overlook & Virtual",
+          "recordId": "overlook"
+        },
+        {
+          "label": "Overlook Clubhouse",
+          "recordId": "overlook"
+        },
+        {
+          "label": "Pickleball Courts at Burns Park",
+          "recordId": "burns-courts"
+        },
+        {
+          "label": "Pool",
+          "recordId": "overlook-pool"
+        },
+        {
+          "label": "Prospect Park",
+          "recordId": "prospect-park"
+        },
+        {
+          "label": "Prospect Park Basketball Court",
+          "recordId": "prospect-basketball"
+        },
+        {
+          "label": "Providence Park",
+          "recordId": "providence-park"
+        },
+        {
+          "label": "Providence Park Pavilion",
+          "recordId": "providence-pavilion"
+        },
+        {
+          "label": "Ranch Social",
+          "recordId": "ranch-social"
+        },
+        {
+          "label": "Sterling Center",
+          "recordId": "sterling-center"
+        }
+      ]
+    },
+    {
+      "sourceId": "community-map-2026",
+      "scope": "Named community destinations and named Prospect/Burns features. Repeated Burns labels reconcile to one park. Nearby destinations, waterways, roads and village labels separately dispositioned below.",
+      "entries": [
+        {
+          "label": "Burns Regional Park",
+          "recordId": "burns"
+        },
+        {
+          "label": "Heritage Regional Park",
+          "recordId": "heritage"
+        },
+        {
+          "label": "Prospect Regional Park",
+          "recordId": "prospect-park"
+        },
+        {
+          "label": "Providence Regional Park",
+          "recordId": "providence-regional"
+        },
+        {
+          "label": "Horsebrush Park",
+          "recordId": "horsebrush"
+        },
+        {
+          "label": "McCormick Park",
+          "recordId": "mccormick"
+        },
+        {
+          "label": "Pat Gallagher Park",
+          "recordId": "pat-gallagher"
+        },
+        {
+          "label": "Pioneer Park",
+          "recordId": "pioneer"
+        },
+        {
+          "label": "The Lawn at Providence",
+          "recordId": "providence-park"
+        },
+        {
+          "label": "Steve Bloom Park",
+          "recordId": "steve-bloom"
+        },
+        {
+          "label": "Yard 27",
+          "recordId": "yard-27"
+        },
+        {
+          "label": "High Top Court",
+          "recordId": "high-top"
+        },
+        {
+          "label": "Trailrock Park",
+          "recordId": "trailrock"
+        },
+        {
+          "label": "Medley Park",
+          "recordId": "medley"
+        },
+        {
+          "label": "Gathering Green",
+          "recordId": "ascent-pavilion"
+        },
+        {
+          "label": "Zippity Park",
+          "recordId": "zippity"
+        },
+        {
+          "label": "Peekaboo Park",
+          "recordId": "peekaboo"
+        },
+        {
+          "label": "Willow Creek Trailhead",
+          "recordId": "willow-creek"
+        },
+        {
+          "label": "Outcrop Park",
+          "recordId": "outcrop"
+        },
+        {
+          "label": "John Adams Academy",
+          "recordId": "john-adams"
+        },
+        {
+          "label": "Elementary School 51",
+          "recordId": "school51"
+        },
+        {
+          "label": "Prose at Parkvale",
+          "recordId": "prose"
+        },
+        {
+          "label": "Broadstone Sterling Ranch",
+          "recordId": "broadstone"
+        },
+        {
+          "label": "Larry D. Moore Water Treatment Plant",
+          "recordId": "water-plant"
+        },
+        {
+          "label": "Zebulon Regional Sports Complex",
+          "recordId": "zebulon"
+        },
+        {
+          "label": "Sterling Ranch Info Center",
+          "recordId": "info-center"
+        },
+        {
+          "label": "Ranch Social",
+          "recordId": "ranch-social"
+        },
+        {
+          "label": "Sterling Center",
+          "recordId": "sterling-center"
+        },
+        {
+          "label": "Primrose School of Sterling Ranch",
+          "recordId": "primrose"
+        },
+        {
+          "label": "The Overlook Clubhouse",
+          "recordId": "overlook"
+        },
+        {
+          "label": "Prospect all-abilities playground",
+          "recordId": "prospect-playground"
+        },
+        {
+          "label": "Prospect play lawn / turf area",
+          "recordId": "prospect-lawn"
+        },
+        {
+          "label": "Prospect event shell",
+          "recordId": "prospect-shell"
+        },
+        {
+          "label": "Burns Park Pickleball",
+          "recordId": "burns-courts"
+        }
+      ]
+    },
+    {
+      "sourceId": "cab-map-2025",
+      "scope": "Unresolved labels needing reconciliation; this is an older illustrative map.",
+      "entries": [
+        {
+          "label": "Unnamed park marker: north Prospect",
+          "recordId": "cab-tbd-prospect"
+        },
+        {
+          "label": "Unnamed park marker: west Ascent / Middle Fork",
+          "recordId": "cab-tbd-middle-fork"
+        },
+        {
+          "label": "Unnamed park marker: east Ascent",
+          "recordId": "cab-tbd-east-ascent"
+        },
+        {
+          "label": "Unnamed park marker: southeast Ascent",
+          "recordId": "cab-tbd-se-ascent"
+        },
+        {
+          "label": "Resident Resource Center",
+          "recordId": "resident-resource-center"
+        },
+        {
+          "label": "Ascent Village Center",
+          "recordId": "ascent-village-center"
+        }
+      ]
+    },
+    {
+      "sourceId": "developer-builders",
+      "scope": "All nine listed builders retained as visitor-location leads, not nine confirmed offices.",
+      "entries": [
+        {
+          "label": "David Weekley Homes: sales/model location lead",
+          "recordId": "builder-weekley"
+        },
+        {
+          "label": "Lennar: sales/model location lead",
+          "recordId": "builder-lennar"
+        },
+        {
+          "label": "Lion Residential: sales/model location lead",
+          "recordId": "builder-lion"
+        },
+        {
+          "label": "Pulte Homes: sales/model location lead",
+          "recordId": "builder-pulte"
+        },
+        {
+          "label": "Richmond American: sales/model location lead",
+          "recordId": "builder-richmond"
+        },
+        {
+          "label": "Sheffield Homes: sales/model location lead",
+          "recordId": "builder-sheffield"
+        },
+        {
+          "label": "Taylor Morrison: sales/model location lead",
+          "recordId": "builder-taylor"
+        },
+        {
+          "label": "Tri Pointe Homes: sales/model location lead",
+          "recordId": "builder-tripointe"
+        },
+        {
+          "label": "Trumark Homes: sales/model location lead",
+          "recordId": "builder-trumark"
+        }
+      ]
+    }
+  ],
+  "contextDispositions": [
+    {
+      "labels": [
+        "Chatfield State Park",
+        "Roxborough State Park",
+        "Waterton Canyon"
+      ],
+      "disposition": "Nearby destinations named on June map; separate nearby layer. Operator detail/entrance audit remains due."
+    },
+    {
+      "labels": [
+        "South Platte River",
+        "Plum Creek",
+        "High Line Canal",
+        "Chatfield Reservoir",
+        "Platte Canyon Reservoir"
+      ],
+      "disposition": "Regional natural/background features. Public access is not inferred from label; trailheads and crossings require separate verification."
+    },
+    {
+      "labels": [
+        "Providence",
+        "Ascent",
+        "Prospect",
+        "Parkvale"
+      ],
+      "disposition": "Village labels, not separate amenity records. Full village outlines remain unverified."
+    },
+    {
+      "labels": [
+        "Future Development"
+      ],
+      "disposition": "Repeated planning-area text; not evidence of a named, approved or funded project at each label."
+    },
+    {
+      "labels": [
+        "Roads, route numbers and Denver direction label"
+      ],
+      "disposition": "Navigation/background, outside destination census."
+    },
+    {
+      "labels": [
+        "Roxborough Primary",
+        "Roxborough Intermediate",
+        "Coyote Creek Elementary",
+        "Ben Franklin Academy",
+        "Ranch View Middle",
+        "ThunderRidge High"
+      ],
+      "disposition": "Developer education page's nearby context. Separate offsite school audit needed; attendance assignment must use DCSD."
+    },
+    {
+      "labels": [
+        "Dogs in the Driveway"
+      ],
+      "disposition": "Public site describes serving Sterling Ranch; no local premises established. Service-area mention is not a neighborhood business location.",
+      "sourceUrl": "https://www.dogsinthedriveway.com/"
+    },
+    {
+      "labels": [
+        "Sterling Ranch Family Daycare (Colorado Springs)",
+        "Sterling Ranch / Sterling Ridge HOA"
+      ],
+      "disposition": "Different Colorado Springs development; exclude from Littleton community inventory."
+    }
+  ],
+  "unresolved": [
+    {
+      "id": "boundary",
+      "priority": 1,
+      "records": [],
+      "sourceIds": [
+        "county-pd15",
+        "county-pd15-staff",
+        "county-gis",
+        "community-map-2026"
+      ],
+      "task": "Obtain final recorded PD exhibit/current county layer, reconcile annexed areas, overlay with current map bounds and verify west Prospect/southern Parkvale. Current rectangle is not the community boundary."
+    },
+    {
+      "id": "names",
+      "priority": 1,
+      "records": [
+        "horsebrush",
+        "yard-27",
+        "high-top",
+        "trailrock",
+        "zippity",
+        "ascent-pavilion",
+        "providence-park",
+        "willow-creek",
+        "medley",
+        "cultural-trail",
+        "fraser-river"
+      ],
+      "sourceIds": [
+        "cab-parks",
+        "developer-parks",
+        "cab-historical-rules"
+      ],
+      "task": "Confirm working name matches, resolve Cultural Trail/Medley overlap and historical Fraser River name without adding duplicate pins."
+    },
+    {
+      "id": "unnamed",
+      "priority": 1,
+      "records": [
+        "cab-tbd-prospect",
+        "cab-tbd-middle-fork",
+        "cab-tbd-east-ascent",
+        "cab-tbd-se-ascent"
+      ],
+      "sourceIds": [
+        "cab-map-2025",
+        "community-map-2026"
+      ],
+      "task": "Resolve four older unnamed map markers; they may be current named parks, not additions."
+    },
+    {
+      "id": "status",
+      "priority": 1,
+      "records": [
+        "outcrop",
+        "prospect-next",
+        "heritage",
+        "medley",
+        "school51",
+        "library",
+        "resident-resource-center"
+      ],
+      "sourceIds": [
+        "cab-updates",
+        "developer-parks",
+        "dcsd-school51",
+        "dcl-build",
+        "cab-march-calendar"
+      ],
+      "task": "Confirm passed targets, current phase boundaries, library site stage, School 51 naming/boundaries, and current Resource Center location."
+    },
+    {
+      "id": "maker-opt-in",
+      "priority": 1,
+      "records": [
+        "indigo-rye",
+        "sourdough-haus",
+        "lemon-zest",
+        "pup-pilot",
+        "mountain-view-photo",
+        "blr-photo",
+        "stephanie-photo",
+        "golden-cowgirl"
+      ],
+      "sourceIds": [
+        "indigo",
+        "sourdough",
+        "lemon",
+        "pup",
+        "mountain-photo",
+        "photo-lead",
+        "chamber-lead",
+        "golden-cowgirl"
+      ],
+      "task": "Publicly discovered leads are incomplete. Obtain explicit owner opt-in and public listing choices before promotion; no outreach sent."
+    },
+    {
+      "id": "visit-details",
+      "priority": 1,
+      "records": [
+        "burns",
+        "heritage",
+        "prospect-park",
+        "providence-regional",
+        "horsebrush",
+        "mccormick",
+        "pat-gallagher",
+        "pioneer",
+        "providence-park",
+        "steve-bloom",
+        "yard-27",
+        "high-top",
+        "trailrock",
+        "medley",
+        "ascent-pavilion",
+        "zippity",
+        "peekaboo",
+        "willow-creek",
+        "outcrop"
+      ],
+      "sourceIds": [
+        "cab-parks",
+        "cab-facilities"
+      ],
+      "task": "Verify entrances, play equipment/age suitability, shade, restrooms, water, parking, access and accessible routes. Unknowns stay unknown, not absent."
+    },
+    {
+      "id": "tenant-review",
+      "priority": 2,
+      "records": [
+        "info-center",
+        "living-dream",
+        "occupational-medicine",
+        "atlas-coffee",
+        "salta",
+        "agora",
+        "lake-family-dental",
+        "rave",
+        "sterling-eyecare"
+      ],
+      "sourceIds": [
+        "developer-center",
+        "atlas-operator",
+        "living-dream",
+        "uchealth",
+        "cab-uchealth",
+        "cab-contact"
+      ],
+      "task": "Verify exact-location operator actions and hours. Resolve info-desk/office hours, seasonal taproom schedule and occupational-medicine listing."
+    },
+    {
+      "id": "builder-locations",
+      "priority": 2,
+      "records": [
+        "builder-weekley",
+        "builder-lennar",
+        "builder-lion",
+        "builder-pulte",
+        "builder-richmond",
+        "builder-sheffield",
+        "builder-taylor",
+        "builder-tripointe",
+        "builder-trumark"
+      ],
+      "sourceIds": [
+        "developer-builders"
+      ],
+      "task": "Follow all nine builder links and reconcile visitor-facing model/sales offices by collection; do not pin occupied homes."
+    },
+    {
+      "id": "micro-amenities",
+      "priority": 2,
+      "records": [],
+      "sourceIds": [
+        "cab-trails",
+        "cab-facilities",
+        "cab-homeowners"
+      ],
+      "task": "Field/official plan audit of unnamed pocket parks, standalone trailheads, toilets, drinking fountains, bike stations, art, charging and picnic sites. No public directory proves these complete."
+    }
+  ],
+  "staleOrConflictingEvidence": [
+    {
+      "records": [
+        "school51"
+      ],
+      "sourceIds": [
+        "cab-map-2025",
+        "dcsd-school51"
+      ],
+      "resolution": "Use DCSD's August 2027 target; CAB map's 2026 label is historical."
+    },
+    {
+      "records": [
+        "prospect-basketball"
+      ],
+      "sourceIds": [
+        "cab-prospect",
+        "cab-prospect-court",
+        "developer-parks"
+      ],
+      "resolution": "Current CAB explicitly lists a basketball child facility. Developer omission alone is not contradictory. Verify availability separately."
+    },
+    {
+      "records": [
+        "outcrop",
+        "prospect-next"
+      ],
+      "sourceIds": [
+        "developer-parks",
+        "cab-updates"
+      ],
+      "resolution": "Passed planned start/opening dates are not proof of completion."
+    },
+    {
+      "records": [
+        "resident-resource-center",
+        "school51"
+      ],
+      "sourceIds": [
+        "cab-map-2025",
+        "cab-march-calendar",
+        "dcsd-school51"
+      ],
+      "resolution": "Resource Center is an existing/historical venue lead, not automatically a future building. Current role/location needs reconciliation."
+    }
+  ]
+}

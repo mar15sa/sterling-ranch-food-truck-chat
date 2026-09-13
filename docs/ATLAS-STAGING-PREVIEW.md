@@ -56,6 +56,10 @@ Initial implementation: September 13, 2026, on `codex/sterling-atlas-20260913`, 
 
 On September 13, 2026, staging reported revision `a228cd2e8df1db9b35bf25257d99a460b37a6929` and `deploymentReady: true`. The page is available at https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas . The page, `places.json` and `atlas.js` returned HTTP 200 with `X-Robots-Tag: noindex, nofollow, noarchive`; the corresponding production routes returned 404. A browser visit confirmed the staging banner, loaded map and directory, and clicking the Sterling Center circle opened the Atlas Coffee card without browser errors. No Assistant HTTP questions or emails were submitted.
 
-Release checks: https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34768789499 . CI result is pending as this record is prepared; local quality stages and atlas checks passed as recorded above.
+Release checks: https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34768789499 . The run completed successfully, checked September 13, 2026. Local quality stages and atlas checks passed as recorded above.
+
+## Inventory follow-up, September 13, 2026
+
+Marissa's initial review liked categories, search, the directory and clickable details. Requested follow-up: a more distinctive map, specific and useful place details, full-community coverage and a much more complete inventory with maintainable sources. The next work focused on research: [master inventory](ATLAS-INVENTORY.md) and [source/coverage maintenance plan](ATLAS-SOURCE-MAINTENANCE.md). The research inventory is separate from the 24-entry staging catalog; no runtime or production deployment is part of this follow-up. The map's rectangular background is not the full development boundary. Current CAB now has an explicit Prospect basketball-court listing; omission from a shorter developer description alone does not prove a conflict.
 
 Notion synchronized: Design and experience reference, https://www.notion.so/3dabf909186d81b99d91ddd39861536b . The atlas section records the verified staging revision, preview link, tests, remaining review and explicit production-launch hold; the existing production reference was preserved.
