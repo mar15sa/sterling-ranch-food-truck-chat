@@ -1,6 +1,19 @@
 # Changelog
 
-## Unreleased — staging
+## September 2026 release anchors
+
+Added September 13 after checking the merged history and live revision `0bb9a4d`. These links provide the later release trail; older entries below retain their original scope.
+
+- September 13: [#118](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/118) and [#119](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/119) retain the full pre-merge gate, add fast feedback, disable ordinary-CI model rewriting, and replace duplicate post-merge testing with a warm-up-aware exact-deployment health check.
+- September 13: [#120](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/120) adds shared Notion maintenance instructions and a documentation-impact PR checklist.
+- September 11-12: [#102](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/102), [#105](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/105), and [#116](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/116) establish the approved editorial site, weather artwork, and later homepage/calendar changes.
+- More recent source, answer, and owner-review work is recorded in the [merged pull requests](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pulls?q=is%3Apr+is%3Amerged). This short index is not an exhaustive changelog of every intervening change.
+
+Current guides: [release/testing](docs/RELEASE-POLICY.md), [question retention/access](docs/QUESTION-RECORDS.md), and [design/history](docs/DESIGN-REFERENCE.md).
+
+## Historical staging snapshot — formerly labeled Unreleased
+
+This retained section predates the September release records. It does not establish today's staging or production status. Consult the release anchors and verify the deployed revision before treating a listed change as pending or live.
 
 ### Broader answer reliability
 

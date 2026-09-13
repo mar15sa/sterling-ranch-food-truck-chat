@@ -610,7 +610,7 @@ function addAnswer(data, question) {
     answerLabel.textContent = "Rule says no";
     answerLabel.dataset.state = "prohibited";
   } else if (data.answerVerdict === "conditional") {
-    answerLabel.textContent = "Allowed with approval or conditions";
+    answerLabel.textContent = "Approval or conditions apply";
     answerLabel.dataset.state = "conditional";
   } else if (data.answerVerdict === "allowed") {
     answerLabel.textContent = "Rule says yes";

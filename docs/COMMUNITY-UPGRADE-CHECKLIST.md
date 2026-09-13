@@ -1,5 +1,7 @@
 # Community Assistant reconciliation
 
+Historical September 6 reconciliation checklist. Preserve its original statuses as evidence of that stage. For subsequent shipment see [the September 11 closeout](COMMUNITY-ASSISTANT-GOAL-CLOSEOUT-2026-09-11.md); for today's process use [RELEASE-POLICY.md](RELEASE-POLICY.md). The unfinished statuses below do not describe the current deployment.
+
 Updated September 6, 2026. Integration owner: task `01a0778a-7ed3-7082-817e-8975a841763f`.
 
 Statuses: Local → Staging → Verified → Live. Blocked items name the missing requirement. No production promotion without owner review of the verified release.
