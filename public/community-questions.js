@@ -22,6 +22,17 @@ const reviewCount = document.querySelector("#reviewCount");
 const qualityConcernCount = document.querySelector("#qualityConcernCount");
 const needsWorkCount = document.querySelector("#needsWorkCount");
 const sourceHealthState = document.querySelector("#sourceHealthState");
+const sourceReadinessVerdict = document.querySelector("#sourceReadinessVerdict");
+const sourceReadinessHeadline = document.querySelector("#sourceReadinessHeadline");
+const sourceReadinessExplanation = document.querySelector("#sourceReadinessExplanation");
+const sourceReadinessChecked = document.querySelector("#sourceReadinessChecked");
+const sourceReadinessReasons = document.querySelector("#sourceReadinessReasons");
+const sourceScopeCount = document.querySelector("#sourceScopeCount");
+const sourceHandledCount = document.querySelector("#sourceHandledCount");
+const sourceEvidenceCount = document.querySelector("#sourceEvidenceCount");
+const sourceHeldCount = document.querySelector("#sourceHeldCount");
+const sourceReadinessBreakdown = document.querySelector("#sourceReadinessBreakdown");
+const sourceCategoryList = document.querySelector("#sourceCategoryList");
 const sourceApprovedCount = document.querySelector("#sourceApprovedCount");
 const sourceCoverage = document.querySelector("#sourceCoverage");
 const sourcePendingCount = document.querySelector("#sourcePendingCount");
@@ -114,17 +125,67 @@ function renderStaleSources(sources) {
   }
 }
 
+function renderSourceReadiness(readiness) {
+  if (!readiness) {
+    sourceReadinessVerdict.dataset.state = "error";
+    sourceReadinessHeadline.textContent = "Content readiness unavailable";
+    sourceReadinessExplanation.textContent = "The technical source details below may still be available.";
+    sourceReadinessChecked.textContent = "";
+    sourceReadinessReasons.replaceChildren();
+    sourceCategoryList.replaceChildren();
+    return;
+  }
+  const totals = readiness.totals || {};
+  const evidence = readiness.evidence || {};
+  const held = Number(totals.heldForReview || 0);
+  sourceReadinessVerdict.dataset.state = readiness.state || "needs-attention";
+  sourceReadinessHeadline.textContent = readiness.headline || "Content readiness checked";
+  sourceReadinessExplanation.textContent = readiness.explanation || "";
+  sourceReadinessChecked.textContent = `Dashboard checked ${formatDateTime(readiness.checkedAt)} · Approved evidence rechecked ${formatDateTime(evidence.lastApprovedEvidenceCheckAt)}`;
+  sourceReadinessReasons.replaceChildren(...(readiness.reasons || []).map(reason => {
+    const item = document.createElement("li");
+    item.textContent = reason;
+    return item;
+  }));
+  sourceScopeCount.textContent = String(totals.total ?? "—");
+  sourceHandledCount.textContent = `${totals.handled ?? "—"} of ${totals.total ?? "—"}`;
+  sourceEvidenceCount.textContent = String(totals.activeEvidence ?? "—");
+  sourceHeldCount.textContent = String(totals.heldForReview ?? "—");
+  sourceReadinessBreakdown.textContent = `${totals.activeEvidence || 0} documents contribute approved answer evidence · ${totals.actionOnly || 0} provide safe links · ${totals.excluded || 0} were intentionally excluded · ${held} remain withheld.`;
+  sourceCategoryList.replaceChildren(...(readiness.categories || []).map(category => {
+    const row = document.createElement("article");
+    row.dataset.state = category.complete ? "complete" : "attention";
+    const copy = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = category.title;
+    const detail = document.createElement("span");
+    detail.textContent = `${category.handled} of ${category.total} handled`;
+    copy.append(title, detail);
+    const state = document.createElement("span");
+    state.className = "source-category-state";
+    state.textContent = category.complete ? "Handled" : `${category.heldForReview} held`;
+    row.append(copy, state);
+    return row;
+  }));
+  const current = evidence.current === true;
+  sourceHealthState.textContent = current && held === 0 ? "Ready" : current ? "Current · gaps remain" : "Needs attention";
+  sourceHealthState.dataset.state = current && held === 0 ? "healthy" : "monitoring";
+}
+
 function renderSourceHealth(sourceHealth = {}) {
   const rules = sourceHealth.rules || {};
   const community = sourceHealth.community || {};
+  renderSourceReadiness(sourceHealth.readiness);
   renderStaleSources(community.staleSources);
   const pendingReview = community.pendingReview || null;
   const hasError = !rules.exists || Boolean(community.lastRefreshError) || Number(community.failureCount || 0) > 0;
   const isWorking = Boolean(rules.refreshing || community.refreshing);
   const needsMonitoring = Boolean(rules.isStale || community.stale || !community.inventoryComplete || pendingReview);
   const state = hasError ? "Needs attention" : isWorking ? "Refreshing" : needsMonitoring ? "Monitoring" : "Healthy";
-  sourceHealthState.textContent = state;
-  sourceHealthState.dataset.state = hasError ? "error" : isWorking ? "working" : needsMonitoring ? "monitoring" : "healthy";
+  if (!sourceHealth.readiness) {
+    sourceHealthState.textContent = state;
+    sourceHealthState.dataset.state = hasError ? "error" : isWorking ? "working" : needsMonitoring ? "monitoring" : "healthy";
+  }
 
   sourceApprovedCount.textContent = String(community.sourceCount ?? "—");
   sourceCoverage.textContent = community.inventoryAvailable
@@ -376,6 +437,7 @@ async function loadSourceHealth() {
     if (!response.ok) throw new Error(data.error || "Could not load source health.");
     renderSourceHealth(data);
   } catch {
+    renderSourceReadiness(undefined);
     renderStaleSources(undefined);
     sourceHealthState.textContent = "Unavailable";
     sourceHealthState.dataset.state = "error";
