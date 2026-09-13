@@ -361,7 +361,7 @@ test("an existing authoritative specification limitation is not repeated as a ge
   assert.doesNotMatch(answer.answer, /could not verify/i);
 });
 
-test("freshness alone cannot authorize an exact static specification sheet when governing evidence is unavailable", async () => {
+test("freshness alone cannot authorize or offer an excluded static specification sheet when governing evidence is unavailable", async () => {
   const freshIndex = structuredClone(communityIndex);
   const sourceUrl = "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-";
   for (const source of freshIndex.sources || []) {
@@ -392,7 +392,7 @@ test("freshness alone cannot authorize an exact static specification sheet when 
   assert.deepEqual(answer.completion.resolvedDetails, []);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["specification"]);
   assert.doesNotMatch(answer.answer, /#3002.*Belvedere Tan/i);
-  assert.ok(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)));
+  assert.equal(answer.actions.some((action) => /DocumentCenter\/View\/618/.test(action.url)), false);
 });
 
 test("full-route fence questions resolve permission and exact finishes from the controlling rule", async () => {

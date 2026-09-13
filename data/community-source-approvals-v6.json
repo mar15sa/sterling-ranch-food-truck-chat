@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-13T02:48:44.600Z",
+  "purpose": "Owner-directed completion of the four-category document audit. Each decision is limited to an exact URL and content hash. Link-only decisions approve navigation, not document contents; factual decisions approve only the listed claims.",
+  "decisions": [
+    {
+      "decisionId": "approved-landscapers-directory-link",
+      "scopeKind": "scoped-claims",
+      "scope": "Current official approved-landscapers PDF destination only. Do not ingest or repeat company names, services, phone numbers, email addresses, or endorsement claims.",
+      "approvedClaims": ["approved-landscapers-directory-route"],
+      "withheldClaims": ["company-names", "company-services", "company-contacts", "endorsement", "availability", "recommendations"],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "Sterling Ranch Approved Landscapers",
+            "url": "https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-",
+            "context": "These companies are familiar with our community standards. Sterling Ranch Approved Landscapers"
+          },
+          "display": {"label": "Open the current approved landscapers directory", "actionType": "information"}
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+          "contentHash": "d7ef8100507ef3c999c454f1e63f6ecda9fa338475797725e6bdd37e174a12f2",
+          "hashScheme": "page-text-v1"
+        }
+      ]
+    },
+    {
+      "decisionId": "recycling-tips-visual-link",
+      "scopeKind": "scoped-claims",
+      "scope": "Current official recycling-tips PDF destination only. The handout does not establish current accepted materials, service terms, schedules, contacts, or provider promises.",
+      "approvedClaims": ["recycling-tips-visual-route"],
+      "withheldClaims": ["accepted-materials", "service-terms", "schedule", "contacts", "provider-promises"],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "Waste Connection Recycling Tips (PDF)",
+            "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+            "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+          },
+          "display": {"label": "Open the recycling tips visual", "actionType": "information"}
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentHash": "e0a02f58b088c4182c190f6262a90f1af8308594f2c0f3593015c9f97bd78b44",
+          "hashScheme": "page-text-actions-v1"
+        }
+      ]
+    },
+    {
+      "decisionId": "providence-elements-fence-specifications",
+      "scopeKind": "scoped-claims",
+      "scope": "Document 617, page 1 only: unique product, height, and gate-width specifications for Lennar Elements homes in Providence Village. The Code and current DRC page control approval and submission requirements.",
+      "approvedClaims": ["providence-elements-fence-product", "providence-elements-fence-height", "providence-elements-gate-width"],
+      "withheldClaims": ["approval-requirement", "application-route", "meeting-cadence", "review-timeline", "fee", "mailing-address", "enforcement"],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-",
+          "contentHash": "300fd6595440215cfbbb7f502d9218dde5671be41e2fb920c90bc548b3510cdf",
+          "hashScheme": "page-text-v1"
+        }
+      ]
+    },
+    {
+      "decisionId": "solar-panel-appearance-specifications",
+      "scopeKind": "scoped-claims",
+      "scope": "Document 619, page 1 only: roof-mounted, black, uniform gridded installation appearance. The Code controls whether approval is required, and current DRC sources control submission steps.",
+      "approvedClaims": ["solar-panels-roof-mounted", "solar-panels-black", "solar-panels-uniform-grid"],
+      "withheldClaims": ["approval-requirement", "home-prewiring", "resale-value", "energy-savings", "payback-period", "electricity-offset", "warranty", "application-route", "review-timeline", "fee"],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-",
+          "contentHash": "a8781758136f38693ba79a3f0a762222bf482f1831d409465f10e2f887e39534",
+          "hashScheme": "page-text-v1"
+        }
+      ]
+    },
+    {
+      "decisionId": "chase-drain-adopted-policy",
+      "scopeKind": "scoped-claims",
+      "scope": "Document 1384's adopted policy: definition, inspection and case-specific discretion, CAB construction and maintenance responsibilities, homeowner access and indemnity duties, and homeowner initial-cost responsibility. Current amount, form, routing, and response timing remain live-source facts.",
+      "approvedClaims": ["chase-drain-definition", "chase-drain-inspection-and-discretion", "chase-drain-cab-construction-and-maintenance", "chase-drain-homeowner-access-and-indemnity", "chase-drain-homeowner-initial-cost-responsibility"],
+      "withheldClaims": ["current-fee-amount", "current-form", "current-county-route", "response-time", "guaranteed-approval", "guaranteed-outcome"],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED",
+          "contentHash": "415a8643b714600a7162c41d069cbf73d19aaea21dd0ecf137365f563e91bd98",
+          "hashScheme": "page-text-v1"
+        }
+      ]
+    }
+  ]
+}
