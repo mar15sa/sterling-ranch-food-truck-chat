@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-09-13T17:47:22.857Z",
+  "revision": "ed1f2c19e3a19b0140dfca9e193d943326a138e7",
+  "ready": true,
+  "paths": [
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/places.json",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/places.json",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas.js",
+      "status": 404,
+      "noindex": null
+    }
+  ],
+  "catalog": {
+    "listed": 100,
+    "mapped": 56,
+    "locations": 11,
+    "held": 25
+  }
+}

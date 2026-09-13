@@ -2,7 +2,7 @@
 
 ## Current expansion: September 13, 2026
 
-Implemented locally; staging release verification is pending. Marissa requested a third completeness check, specifically pickleball, and asked that staging reflect the full supported list. Production launch remains unapproved.
+Verified on staging September 13, 2026 at `ed1f2c19e3a19b0140dfca9e193d943326a138e7`. Marissa requested a third completeness check, specifically pickleball, and asked that staging reflect the full supported list. Production launch remains unapproved.
 
 - 100 searchable listings: 43 places/projects, 49 child amenities, 6 future phases and 2 recurring uses. All 125 research IDs are accounted for exactly once as a listing or one of 25 held leads. Eight home-business leads remain permission-pending and absent from place cards.
 - Sources increased from 56 to 58. Seven additions cover three park shelters, private apartment EV charging, two library features and Willow Creek Wildlife Corridor. Six official baseline lists are fully reconciled, without claiming every unnamed physical feature has been discovered.
@@ -10,7 +10,11 @@ Implemented locally; staging release verification is pending. Marissa requested 
 - 56 listings share 11 sourced or explicitly approximate map areas. Four CAB-described street areas use saved OSM junction geometry; child features share parent markers. Forty-four entries are directory-only. The saved background remains incomplete, with a prominent official full-plan link; it is not a community boundary.
 - Rebuild with `node scripts/build-atlas-preview.js`; verify with `--check`. Research facts remain separate from approved Assistant evidence. The staging-only server guard is unchanged.
 
-Local checks: 11 Atlas tests, all 125 research records and actual HTTP staging/production isolation pass. Desktop and 390 × 844 browser review confirmed shortcuts, court and school details, planned status, directory-only labeling and no horizontal mobile overflow. Complete project checks and release verification are recorded below when finished.
+Local checks: 11 Atlas tests, all 125 research records and actual HTTP staging/production isolation pass. Desktop and 390 × 844 browser review confirmed shortcuts, court and school details, planned status, directory-only labeling, parent navigation, held-lead disclosure and no horizontal mobile overflow or browser errors. The complete `npm run check` finished with exit 0: all 793 tests, rules checks/evaluations, 122-question resident corpus, 249-question Assistant evaluation with zero regressions, and source retrieval 20/20. Pre-existing expired evidence used the earlier disposable revalidated snapshot; approved evidence files were unchanged.
+
+At 17:47 UTC, the staging health endpoint reported this exact revision and `deploymentReady: true`. The page, catalog and script returned 200 with no-index headers; production counterparts returned 404. The deployed catalog contains 100 listings, 56 located entries, 11 shared map areas and 25 held leads. A live browser check confirmed the 100-listing banner and opened the new pickleball card, including hours, parking and CourtReserve action. HTTP evidence: `artifacts/atlas/expansion-release-check.json`.
+
+Hosted CI: [34772515545](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34772515545) completed successfully, verified September 13, 2026. Notion inventory and design sections have been updated and fetched back to verify the deployed revision, completed checks and scope. No Assistant diagram change is needed: this is a separate staging page and dataset, with no source-approval or answer-flow changes. No Assistant HTTP questions or messages were submitted.
 
 The sections below retain the first edition and initial research history.
 
