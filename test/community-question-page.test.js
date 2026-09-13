@@ -11,9 +11,13 @@ test("owner page stays private and does not load analytics", () => {
   assert.match(html, /Owner question log/);
   assert.match(html, /Weak or poor answers/);
   assert.match(html, /Answer quality/);
-  assert.match(html, /Private operations/);
-  assert.match(html, /Source health/);
-  assert.match(html, /CAB page coverage/);
+  assert.match(html, /Answer accuracy/);
+  assert.match(html, /Content readiness/);
+  assert.match(html, /In-scope documents/);
+  assert.match(html, /Fully handled/);
+  assert.match(html, /Available to answers/);
+  assert.match(html, /Held for expert review/);
+  assert.match(html, /View technical source diagnostics/);
   assert.match(html, /Pending review/);
   assert.match(html, /noindex, nofollow, noarchive/);
   assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
@@ -30,9 +34,11 @@ test("resident source details stay simple while owner diagnostics receive full h
   assert.doesNotMatch(residentHtml, /CAB page coverage|Latest online update|Codified through/);
   assert.doesNotMatch(residentScript, /eligible CAB pages remain|excluded with a reason|inventory still building/);
   assert.match(ownerScript, /renderSourceHealth/);
+  assert.match(ownerScript, /renderSourceReadiness/);
   assert.match(ownerScript, /\/api\/community-source-health/);
   assert.match(ownerScript, /pendingSourceCount|pendingPageCount/);
-  assert.match(server, /handleCommunitySourceHealth[\s\S]*rules:[\s\S]*community: communitySourceStatus\(undefined, Date.now\(\), \{ includeStaleSources: true \}\)/);
+  assert.match(server, /handleCommunitySourceHealth[\s\S]*includeStaleSources: true,[\s\S]*includeApprovedEvidenceCheckTime: true/);
+  assert.match(server, /readiness: buildCommunitySourceReadiness\(community\)/);
   assert.match(server, /\/api\/community-source-health/);
 });
 
