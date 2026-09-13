@@ -39,7 +39,7 @@ Building heights are illustrative. Village labels indicate general areas, not ex
 2. Confirm the remaining 11 place locations; verify village labels, facility entrance points, and map coverage. Add additional amenities and businesses from reviewed sources.
 3. Confirm development footprints from current county/CAB planning documents and separate individual phases. Review the Prospect court conflict and the library/park opening targets.
 4. Collect owner permission and preferred public location information for home-business listings.
-5. Complete desktop/mobile browser interaction and visual review, including label collisions, zoomed touch interaction, keyboard focus, reduced motion and 200% text zoom. This turn did not perform browser QA; it ran source/core and real HTTP route checks.
+5. Continue accessibility and device coverage before launch: real touch dragging, reduced-motion interaction and 200% text zoom remain to be checked. The initial desktop and 390px mobile browser review passed search, no-results and makers states, business/future cards, separated layers, overhead view, zoom and Escape focus restoration. Map labels remain an area for further visual refinement.
 6. Run the project's release checks on the final candidate and get explicit new-page launch approval. Only then propose production navigation and the removal of the server lock.
 
 ## Verification record
@@ -49,5 +49,7 @@ Initial implementation: September 13, 2026, on `codex/sterling-atlas-20260913`, 
 - Eight atlas core tests cover deployment isolation, encoded/direct route variants, inventory validation, future statuses, co-location, direction/link safety, owner consent, and freshness.
 - `scripts/check-atlas-http.js` checks the actual server for staging availability and production 404s, including a spoofed staging Host and direct data/asset paths. Existing homepage, pool and openings routes also respond successfully. No questions are submitted.
 - The first general quality check stopped at pre-existing expired Assistant evidence. The established revalidation script wrote a disposable test snapshot; approved source content was not changed. Final gate and staging revision results belong in the release record after completion.
+- The broad local gate passed 790 tests, rules evaluations and the resident corpus before the local app session ended during the remaining Community Assistant evaluation. Only the interrupted evaluation and subsequent retrieval check were resumed. This is not yet a claim that the full gate passed.
+- September 13 browser review used the local staging-only server. Desktop and 390 × 844 layouts were inspected; no horizontal page overflow appeared on mobile. Business and future cards showed source links and the draft-review notice. Escape closed the future card and restored focus to its directory entry. Search's accessible label was corrected and rechecked. No browser errors were logged. Atlas tests and real HTTP isolation checks passed again after that HTML change.
 
 Notion target: Design and experience reference, https://www.notion.so/3dabf909186d81b99d91ddd39861536b . Append the atlas as a staging prototype; do not replace the existing production reference or mark the atlas verified-live in production.

@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-09-13T16:13:14.753Z",
+  "checkedAt": "2026-09-13T16:30:02.983Z",
   "baseRevision": "f6358a0861efb854b075d912c61eb3f3f45425e0",
   "files": {
     "server.js": "32f9955f31413426a7d3d087f4f15895f2d5553f5627eccfb66d10d0a61567a2",
     "lib/atlas-preview.js": "b799ebcc55db0b7fe27bfc91f15dea3c8deec20efd7dde87ab5ec1fc23eb56e2",
-    "public/atlas/index.html": "71a8152753edce787081b23cf6fb60b25396745d5df81182b7746e7ae089e628",
+    "public/atlas/index.html": "5790ba33d00c31e3439f3efcc64df6d464a95fc8ca73496bfd061f64d4f75b34",
     "public/atlas/atlas.css": "8c9e59f8391afdeefe29ada0f009afa8ca30516e1f89f22802da2492000ef3fd",
     "public/atlas/atlas.js": "be39cc4ab2f5dcca90585db7ac15cbb2f358472aa14cbf9e88b3219cea4af418",
     "public/atlas/atlas-core.js": "fdc11c568d58bacd523c521ddac763a82893a0e7c8c13dbe0bb5045120a66a35",
