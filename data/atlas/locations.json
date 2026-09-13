@@ -235,5 +235,57 @@
       1272871637,
       1076764644
     ]
+  },
+  "broadstone": {
+    "coordinates": [
+      -105.07230747799973,
+      39.48329654419095
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "broadstone",
+    "groupName": "Broadstone Sterling Ranch",
+    "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+    "locationSource": "https://broadstonesr.com/amenities/",
+    "locationMethod": "Operator JSON-LD property coordinates.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "prose": {
+    "coordinates": [
+      -105.0497721,
+      39.4819045
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "prose",
+    "groupName": "Prose at Parkvale",
+    "address": "8749 Waterton Road, Littleton, CO 80125",
+    "locationSource": "https://proseparkvale.com/neighborhood/",
+    "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "primrose": {
+    "coordinates": [
+      -105.037713,
+      39.506356
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "primrose",
+    "groupName": "Primrose School",
+    "address": "8159 Piney River Avenue, Littleton, CO 80125",
+    "locationSource": "https://www.primroseschools.com/schools/sterling-ranch",
+    "locationMethod": "Operator JSON-LD school coordinates.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "john-adams": {
+    "coordinates": [
+      -105.037912,
+      39.4855297
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "john-adams",
+    "groupName": "John Adams Academy",
+    "address": "7979 Butte Creek Street, Roxborough, CO 80125",
+    "locationSource": "https://www.jaadougco.org/",
+    "locationMethod": "Operator school calendar location coordinates repeated for on-campus August 2026 events at the published campus address.",
+    "locationCheckedAt": "2026-09-13"
   }
 }

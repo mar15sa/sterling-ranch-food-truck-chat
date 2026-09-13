@@ -641,6 +641,28 @@
       "limitation": "Check live availability and current rules before booking. Source review is not production approval.",
       "lastReviewedAt": "2026-09-13",
       "reviewState": "reviewed-for-stated-scope"
+    },
+    {
+      "id": "prose-location",
+      "title": "Prose at Parkvale neighborhood map",
+      "owner": "Prose at Parkvale",
+      "url": "https://proseparkvale.com/neighborhood/",
+      "reviewEveryDays": 90,
+      "authority": "Operator property marker and public address",
+      "limitation": "Property marker does not verify a leasing entrance or locations of individual amenities.",
+      "lastReviewedAt": "2026-09-13",
+      "reviewState": "reviewed-for-stated-scope"
+    },
+    {
+      "id": "cab-trail-network",
+      "title": "CAB trails and existing trail map",
+      "owner": "Sterling Ranch CAB",
+      "url": "https://www.sterlingranchcab.com/273/Trails",
+      "reviewEveryDays": 30,
+      "authority": "Official trail-map link and completed-development mileage context",
+      "limitation": "30+ miles is upon completion. Linked illustration is dated October 13, 2025; current closures, access and route geometry require further checks.",
+      "lastReviewedAt": "2026-09-13",
+      "reviewState": "reviewed-for-stated-scope"
     }
   ]
 }

@@ -204,7 +204,10 @@
       "Private amenities",
       "Dog park"
     ],
-    "access": "These amenities belong to the apartment community. The dog park is not established as a public CAB off-leash park."
+    "access": "These amenities belong to the apartment community. The dog park is not established as a public CAB off-leash park.",
+    "sourceIds": [
+      "prose-location"
+    ]
   },
   "ranch-social": {
     "tags": [

@@ -65,7 +65,7 @@ test('the served staging catalog is reproducible from its source inventory',()=>
 test('directions are restricted to sourced facility addresses, not reference or unknown locations',()=>{
   const byId=id=>catalog.places.find(p=>p.id===id);
   assert.match(core.directionsUrl(byId('atlas-coffee')),/destination=Atlas/);
-  for(const id of ['burns-next','prospect-next','pat-gallagher','library','zebulon'])assert.equal(core.directionsUrl(byId(id)),null,id);
+  for(const id of ['burns-next','prospect-next','pat-gallagher','library','zebulon','broadstone','prose','primrose','john-adams'])assert.equal(core.directionsUrl(byId(id)),null,id);
   assert.equal(core.safeLink('javascript:alert(1)'),null);assert.equal(core.safeLink('//evil.test'),null);assert.equal(core.safeLink('https://user:pass@example.com'),null);
 });
 test('home business records require opt-in and extra consent for precise home pins',()=>{

@@ -4,7 +4,7 @@ Research reviewed September 13, 2026. Everything remains in research/staging; pr
 
 This inventory accounts for the named destinations in the audited lists below. It does not establish that every physical place has been found. Unnamed sites, home businesses and exact boundaries still need work.
 
-**43 place/project records, 49 features inside those places, 6 future phases, 2 recurring uses, and 25 leads.** These are not 125 separate map pins. 58 source references are registered.
+**43 place/project records, 49 features inside those places, 6 future phases, 2 recurring uses, and 25 leads.** These are not 125 separate map pins. 60 source references are registered.
 
 The staging build includes 100 supported listings derived from this inventory. Candidate leads remain held separately. The raw research inventory is not served by the page, and no Atlas facts have been promoted into Community Assistant evidence. See ATLAS-STAGING-PREVIEW.md for the verified deployment revision.
 

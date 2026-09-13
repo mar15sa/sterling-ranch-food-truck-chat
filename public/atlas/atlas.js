@@ -146,6 +146,7 @@
     const directions=C.directionsUrl(p);if(directions)link(actions,'Get directions ↗',directions,p.action?'secondary':'');
     link(actions,p.category==='future'?'Read the development update ↗':'View official details ↗',p.sources[0].url,'secondary');
     if(p.locationPrecision==='street-area')add(detail,'p',{class:'detail-note'},'Approximate area near the streets named by CAB. The marker is not an entrance or a surveyed park location.');
+    if(p.locationPrecision==='operator-area')add(detail,'p',{class:'detail-note'},'This property location comes from the operator’s website. The visitor entrance still needs checking.');
     if(p.locationPrecision==='parent-area')add(detail,'p',{class:'detail-note'},'The marker uses the parent facility’s location. The exact position of this feature within it is still being checked.');
     const relatives=state.places.filter(other=>other.id!==p.id&&(other.parentId===p.id||(p.parentId&&other.parentId===p.parentId)||(p.locationGroup&&other.locationGroup===p.locationGroup)));
     if(relatives.length){const section=add(detail,'div',{class:'related-places'});add(section,'h3',{},'Also at this location');for(const other of relatives){const b=add(section,'button',{type:'button'},other.name+' ↗');b.addEventListener('click',()=>selectPlace(other.id));}}

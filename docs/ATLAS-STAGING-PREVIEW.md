@@ -1,5 +1,13 @@
 # Sterling Ranch Atlas: staging prototype
 
+## Location and trail correction: September 13, 2026
+
+Implemented locally, ready for staging verification. Four operator property markers add Broadstone, Prose, Primrose and John Adams Academy: 70 located listings at 15 shared map areas, with 30 listings across 18 places/projects still directory-only. These are operator property positions with entrance checks outstanding; attached private amenities retain their access labels. The 100-listing catalog is unchanged in scope. The registry now contains 60 sources.
+
+The page now explains that trail coverage is partial and links CAB's dedicated trail page and dated October 2025 map. Background paths include sidewalks; corridors do not establish public walking routes. Connected routes, distances, entrances and open/planned segments remain unfinished. [Evidence and remaining work](ATLAS-LOCATION-AND-TRAIL-AUDIT.md).
+
+Validation: 11 focused Atlas tests, inventory reconciliation and actual staging/production HTTP isolation pass. Local desktop marker selection opened Broadstone with its address, private-access note, operator-location caveat and related amenities. Phone-sized 390 × 844 review found no horizontal overflow; trail links were present and no browser errors were reported. Earlier broad CI evidence below covers the earlier revision only.
+
 ## Current expansion: September 13, 2026
 
 Verified on staging September 13, 2026 at `ed1f2c19e3a19b0140dfca9e193d943326a138e7`. Marissa requested a third completeness check, specifically pickleball, and asked that staging reflect the full supported list. Production launch remains unapproved.

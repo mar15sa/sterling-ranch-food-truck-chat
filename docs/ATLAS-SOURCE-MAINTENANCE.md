@@ -93,6 +93,8 @@ Reuse the existing CivicPlus connector/profile boundaries where applicable. Keep
 
 ## Remaining staging refinement
 
+September 13 location follow-up: four operator property markers now locate 70 listings at 15 map areas; 30 listings at 18 places/projects remain directory-only. The source register contains 60 references. [Location/trail audit](ATLAS-LOCATION-AND-TRAIL-AUDIT.md) records methods and remaining work. Trail coverage is partial: CAB's dedicated trails page and older official map are now linked from the preview, but routes, entrances, distances and current access are not yet reconciled. Historical counts later in this document describe the preceding release.
+
 1. Close location, alias and phase-status gaps for the records being added.
 2. Add useful sourced card fields and preserve unknowns. Offer a directory entry without a pin where exact location is unknown.
 3. Reconcile and widen the geography; distinguish nearby context from community destinations.

@@ -1339,7 +1339,17 @@
         "Confirm current grades and grade expansion year by year.",
         "Tour/enrollment links, before/after care, visitor entrance and campus recreation access?"
       ],
-      "address": "7979 Butte Creek Street",
+      "address": "7979 Butte Creek Street, Roxborough, CO 80125",
+      "coordinates": [
+        -105.037912,
+        39.4855297
+      ],
+      "locationPrecision": "operator-area",
+      "locationGroup": "john-adams",
+      "groupName": "John Adams Academy",
+      "locationSource": "https://www.jaadougco.org/",
+      "locationMethod": "Operator school calendar location coordinates repeated for on-campus August 2026 events at the published campus address.",
+      "locationCheckedAt": "2026-09-13",
       "action": {
         "label": "View enrollment and school information",
         "url": "https://www.jaadougco.org/"
@@ -1386,7 +1396,17 @@
         "Exact public entrance/address and offered age programs?",
         "Tour/availability links, tuition inquiry and school calendar?"
       ],
-      "address": null,
+      "address": "8159 Piney River Avenue, Littleton, CO 80125",
+      "coordinates": [
+        -105.037713,
+        39.506356
+      ],
+      "locationPrecision": "operator-area",
+      "locationGroup": "primrose",
+      "groupName": "Primrose School",
+      "locationSource": "https://www.primroseschools.com/schools/sterling-ranch",
+      "locationMethod": "Operator JSON-LD school coordinates.",
+      "locationCheckedAt": "2026-09-13",
       "action": {
         "label": "Explore programs and tours",
         "url": "https://www.primroseschools.com/schools/sterling-ranch"
@@ -1910,7 +1930,17 @@
         "Which facilities are open and who may use them?",
         "Visitor/leasing entrance and resident guest rules?"
       ],
-      "address": "8425 Old Ski Run Circle"
+      "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+      "coordinates": [
+        -105.07230747799973,
+        39.48329654419095
+      ],
+      "locationPrecision": "operator-area",
+      "locationGroup": "broadstone",
+      "groupName": "Broadstone Sterling Ranch",
+      "locationSource": "https://broadstonesr.com/amenities/",
+      "locationMethod": "Operator JSON-LD property coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "prose",
@@ -1930,6 +1960,10 @@
       ],
       "aliases": [],
       "sources": [
+        {
+          "label": "Prose at Parkvale neighborhood map",
+          "url": "https://proseparkvale.com/neighborhood/"
+        },
         {
           "label": "Prose at Parkvale amenities",
           "url": "https://proseparkvale.com/amenities/"
@@ -1954,7 +1988,17 @@
         "Which facilities are open and who may use them?",
         "Visitor/leasing entrance and guest rules?"
       ],
-      "address": "8749 Waterton Road"
+      "address": "8749 Waterton Road, Littleton, CO 80125",
+      "coordinates": [
+        -105.0497721,
+        39.4819045
+      ],
+      "locationPrecision": "operator-area",
+      "locationGroup": "prose",
+      "groupName": "Prose at Parkvale",
+      "locationSource": "https://proseparkvale.com/neighborhood/",
+      "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "water-plant",
@@ -3267,7 +3311,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+      "coordinates": [
+        -105.07230747799973,
+        39.48329654419095
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "broadstone",
+      "groupName": "Broadstone Sterling Ranch",
+      "locationSource": "https://broadstonesr.com/amenities/",
+      "locationMethod": "Operator JSON-LD property coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "broadstone-fitness",
@@ -3297,7 +3351,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+      "coordinates": [
+        -105.07230747799973,
+        39.48329654419095
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "broadstone",
+      "groupName": "Broadstone Sterling Ranch",
+      "locationSource": "https://broadstonesr.com/amenities/",
+      "locationMethod": "Operator JSON-LD property coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "broadstone-work",
@@ -3327,7 +3391,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+      "coordinates": [
+        -105.07230747799973,
+        39.48329654419095
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "broadstone",
+      "groupName": "Broadstone Sterling Ranch",
+      "locationSource": "https://broadstonesr.com/amenities/",
+      "locationMethod": "Operator JSON-LD property coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "broadstone-lounge",
@@ -3357,7 +3431,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+      "coordinates": [
+        -105.07230747799973,
+        39.48329654419095
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "broadstone",
+      "groupName": "Broadstone Sterling Ranch",
+      "locationSource": "https://broadstonesr.com/amenities/",
+      "locationMethod": "Operator JSON-LD property coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "prose-pool",
@@ -3387,7 +3471,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8749 Waterton Road, Littleton, CO 80125",
+      "coordinates": [
+        -105.0497721,
+        39.4819045
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "prose",
+      "groupName": "Prose at Parkvale",
+      "locationSource": "https://proseparkvale.com/neighborhood/",
+      "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "prose-fitness",
@@ -3417,7 +3511,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8749 Waterton Road, Littleton, CO 80125",
+      "coordinates": [
+        -105.0497721,
+        39.4819045
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "prose",
+      "groupName": "Prose at Parkvale",
+      "locationSource": "https://proseparkvale.com/neighborhood/",
+      "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "prose-dog",
@@ -3447,7 +3551,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8749 Waterton Road, Littleton, CO 80125",
+      "coordinates": [
+        -105.0497721,
+        39.4819045
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "prose",
+      "groupName": "Prose at Parkvale",
+      "locationSource": "https://proseparkvale.com/neighborhood/",
+      "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "prose-work",
@@ -3477,7 +3591,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8749 Waterton Road, Littleton, CO 80125",
+      "coordinates": [
+        -105.0497721,
+        39.4819045
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "prose",
+      "groupName": "Prose at Parkvale",
+      "locationSource": "https://proseparkvale.com/neighborhood/",
+      "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "primrose-play",
@@ -3512,7 +3636,17 @@
       "unknowns": [
         "Verify current access, exact position within the parent and relevant visit details."
       ],
-      "address": null
+      "address": "8159 Piney River Avenue, Littleton, CO 80125",
+      "coordinates": [
+        -105.037713,
+        39.506356
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "primrose",
+      "groupName": "Primrose School",
+      "locationSource": "https://www.primroseschools.com/schools/sterling-ranch",
+      "locationMethod": "Operator JSON-LD school coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "burns-next",
@@ -4143,7 +4277,17 @@
       "unknowns": [
         "Confirm exact position, current operation and access before visiting."
       ],
-      "address": null
+      "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+      "coordinates": [
+        -105.07230747799973,
+        39.48329654419095
+      ],
+      "locationPrecision": "parent-area",
+      "locationGroup": "broadstone",
+      "groupName": "Broadstone Sterling Ranch",
+      "locationSource": "https://broadstonesr.com/amenities/",
+      "locationMethod": "Operator JSON-LD property coordinates.",
+      "locationCheckedAt": "2026-09-13"
     },
     {
       "id": "library-childrens",
