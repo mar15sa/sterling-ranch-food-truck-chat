@@ -53,14 +53,14 @@ async function checkDeployment(options, dependencies = {}) {
       const health = await response.json();
       if (response.ok && health.deploymentRevision === options.expectedRevision) {
         const issues = healthIssues(health);
-        if (issues.length) throw new Error(`Expected deployment is unhealthy: ${issues.join("; ")}.`);
-        return health;
+        if (!issues.length) return health;
+        lastObservation = `expected revision is still refreshing or unhealthy: ${issues.join("; ")}`;
+      } else {
+        lastObservation = response.ok
+          ? `revision ${health.deploymentRevision || "missing"}`
+          : `HTTP ${response.status}`;
       }
-      lastObservation = response.ok
-        ? `revision ${health.deploymentRevision || "missing"}`
-        : `HTTP ${response.status}`;
     } catch (error) {
-      if (/Expected deployment is unhealthy/.test(error.message || "")) throw error;
       lastObservation = error.message || String(error);
     }
 

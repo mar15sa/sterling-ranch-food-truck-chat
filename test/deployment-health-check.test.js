@@ -52,17 +52,41 @@ test("deployment health waits past an older healthy revision", async () => {
   assert.equal(observed.deploymentRevision, "expected");
 });
 
-test("deployment health rejects stale or failed evidence on the expected revision", async () => {
+test("deployment health waits while the expected revision refreshes its evidence", async () => {
+  const refreshing = healthy();
+  refreshing.rules.isStale = true;
+  let clock = 0;
+  const responses = [response(refreshing), response(healthy())];
+  const observed = await checkDeployment({
+    baseUrl: "https://example.test",
+    expectedRevision: "expected",
+    waitMs: 5000,
+    intervalMs: 1000,
+    requestTimeoutMs: 1000,
+  }, {
+    fetchImpl: async () => responses.shift(),
+    sleepImpl: async () => { clock += 1000; },
+    now: () => clock,
+  });
+  assert.equal(observed.deploymentRevision, "expected");
+});
+
+test("deployment health rejects evidence that stays unhealthy through the deadline", async () => {
   const body = healthy();
   body.communitySources.stale = true;
   body.communitySources.failureCount = 2;
+  let clock = 0;
   await assert.rejects(() => checkDeployment({
     baseUrl: "https://example.test",
     expectedRevision: "expected",
-    waitMs: 0,
+    waitMs: 2000,
     intervalMs: 1000,
     requestTimeoutMs: 1000,
-  }, { fetchImpl: async () => response(body) }), /community evidence is stale; 2 source failures/);
+  }, {
+    fetchImpl: async () => response(body),
+    sleepImpl: async () => { clock += 1000; },
+    now: () => clock,
+  }), /community evidence is stale; 2 source failures/);
 });
 
 test("deployment health options come from explicit CI environment values", () => {
