@@ -93,14 +93,13 @@ test('source evidence links reject executable or malformed destinations', () => 
   }
 });
 
-test('category cards expose every scoped document, disposition, next step, and official link', () => {
+test('category cards expose every primary source, disposition, next step, and official link', () => {
   const context = display();
   const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
   context.category = buildCommunitySourceReadiness({}).categories.find(item => item.id === 'property-changes');
   const nodes = flatten(vm.runInContext('categoryCard(category)', context));
-  assert.equal(nodes.filter(node => node.tag === 'li').length, 25);
-  assert.ok(nodes.some(node => node.textContent === '2026 landscape application packet'));
-  assert.ok(nodes.some(node => String(node.textContent).startsWith('Next: Finish claim-by-claim owner review')));
+  assert.equal(nodes.filter(node => node.tag === 'li').length, 54);
+  assert.ok(nodes.some(node => String(node.textContent).startsWith('Next: Review the exact claims')));
   assert.ok(nodes.some(node => node.textContent === 'Held'));
   assert.ok(nodes.some(node => node.tag === 'a' && node.href.includes('/DocumentCenter/View/1964/')));
   assert.ok(nodes.some(node => node.textContent === 'Architectural & Community Standards'));

@@ -55,23 +55,22 @@ function categoryCard(category) {
   const heading = document.createElement("div");
   heading.className = "category-heading";
   const title = textElement("h3", category.title);
-  const pageReviewCount = category.pageCounts?.reviewRequired || 0;
-  const remainingCount = (category.heldForReview || 0) + pageReviewCount;
+  const remainingCount = category.heldForReview || 0;
   const state = textElement("span", category.complete ? "Handled" : `${remainingCount} still need review`, "category-state");
   heading.append(title, state);
   const bar = document.createElement("div");
   bar.className = "coverage-bar";
   bar.setAttribute("role", "img");
-  bar.setAttribute("aria-label", `${category.handled} of ${category.total} documents handled`);
-  for (const [name, count] of [["active", category.activeEvidence], ["action", category.actionOnly], ["excluded", category.excluded], ["held", category.heldForReview]]) {
+  bar.setAttribute("aria-label", `${category.handled} of ${category.total} primary sources handled`);
+  for (const [name, count] of [["active", category.activeEvidence], ["action", (category.actionOnly || 0) + (category.liveFeed || 0)], ["excluded", category.excluded], ["held", category.heldForReview]]) {
     if (!count) continue;
     const segment = document.createElement("span");
     segment.className = name;
     segment.style.flexGrow = String(count);
     bar.append(segment);
   }
-  const counts = textElement("p", `${category.total} documents · ${category.pageCounts?.total || 0} CAB pages`, "category-counts");
-  const hint = textElement("span", "View documents and pages", "category-hint");
+  const counts = textElement("p", `${category.total} primary sources (${category.documents?.length || 0} documents + ${category.pages?.length || 0} pages) · ${category.auditedUrls} URLs assessed`, "category-counts");
+  const hint = textElement("span", "View every primary document and page", "category-hint");
   header.append(heading, bar, counts, hint);
   const list = document.createElement("ul");
   list.className = "category-documents";
@@ -80,7 +79,7 @@ function categoryCard(category) {
     const item = document.createElement("li");
     item.dataset.state = sourceDocument.status;
     const copy = document.createElement("div");
-    copy.append(textElement("strong", sourceDocument.title), textElement("span", `Document ${sourceDocument.documentId} · ${sourceDocument.reason}`, "document-reason"));
+    copy.append(textElement("strong", sourceDocument.title), textElement("span", sourceDocument.reason, "document-reason"));
     if (sourceDocument.nextStep) copy.append(textElement("span", `Next: ${sourceDocument.nextStep}`, "document-next-step"));
     const controls = document.createElement("div");
     controls.className = "document-controls";
@@ -92,7 +91,7 @@ function categoryCard(category) {
   }
   const pageSection = document.createElement("section");
   pageSection.className = "category-pages-section";
-  pageSection.append(textElement("h4", "CAB website pages"), textElement("p", `${category.pageCounts?.answerEvidence || 0} provide approved answer evidence · ${category.pageCounts?.safeLink || 0} are link-only · ${category.pageCounts?.liveFeed || 0} use a live feed · ${category.pageCounts?.reviewRequired || 0} need claim review · ${category.pageCounts?.excluded || 0} are excluded`, "category-page-counts"));
+  pageSection.append(textElement("h4", "CAB website pages"), textElement("p", `${category.pageCounts?.answerEvidence || 0} provide approved answer evidence · ${category.pageCounts?.safeLink || 0} are link-only · ${category.pageCounts?.liveFeed || 0} use a live feed · ${category.pageCounts?.reviewRequired || 0} need claim review · ${category.pageCounts?.unavailableRecheck || 0} need retry · ${category.pageCounts?.excluded || 0} are intentionally excluded`, "category-page-counts"));
   const pageList = document.createElement("ul");
   pageList.className = "category-pages";
   const pageStatusLabels = { active: "Approved claims", action: "Safe link", live: "Live feed", held: "Needs review", excluded: "Excluded" };
@@ -110,7 +109,8 @@ function categoryCard(category) {
     pageList.append(item);
   }
   pageSection.append(pageList);
-  card.append(header, textElement("h4", "Official documents", "category-subheading"), list, pageSection);
+  const routeNote = textElement("p", `${category.duplicateUrls || 0} duplicate URLs and ${category.technicalRoutes || 0} technical routes were also assessed and consolidated here.`, "category-route-note");
+  card.append(header, textElement("h4", "Official documents", "category-subheading"), list, pageSection, routeNote);
   return card;
 }
 
@@ -137,8 +137,7 @@ function renderReadiness(data = {}) {
   $("#readinessReasons").replaceChildren(...reasons.map(reason => textElement("li", reason)));
 
   const totals = readiness.totals || {};
-  const pageTotals = totals.pages || {};
-  $("#scopeSummary").textContent = `${totals.classified || 0} of ${totals.total || 0} documents classified, plus ${pageTotals.total || 0} CAB pages audited for usefulness. ${totals.heldForReview || 0} documents are still safely withheld, and ${pageTotals.reviewRequired || 0} useful pages still need claim review.`;
+  $("#scopeSummary").textContent = `${totals.audited || 0} of ${totals.audited || 0} discovered CAB URLs assessed. ${totals.inScopeUrls || 0} touch these categories and consolidate to ${totals.primarySources || 0} primary sources. ${totals.reviewRequired || 0} need claim review and ${totals.unavailableRecheck || 0} need a retry.`;
   $("#categoryList").replaceChildren(...(readiness.categories || []).map(categoryCard));
   const remainingWork = readiness.remainingWork || [];
   $("#remainingWork").hidden = remainingWork.length === 0;
@@ -150,34 +149,33 @@ function renderReadiness(data = {}) {
   $("#heldWorkCount").textContent = String(remainingWork.length);
   $("#heldWorkList").replaceChildren(...remainingWork.map(heldWorkCard));
   $("#heldWorkEmpty").hidden = remainingWork.length > 0;
-  const pageRemainingWork = readiness.pageRemainingWork || [];
-  $("#pageWorkCount").textContent = String(pageRemainingWork.length);
-  $("#pageWorkSummary").textContent = pageRemainingWork.length
-    ? `${pageRemainingWork.length} useful pages are indexed for discovery but their unapproved claims cannot be used in resident answers. Open the category cards above to see each page.`
-    : "Every useful page in the four categories has completed claim review.";
+  const sourceRemainingWork = readiness.sourceRemainingWork || [];
+  $("#pageWorkCount").textContent = String(sourceRemainingWork.length);
+  $("#pageWorkSummary").textContent = sourceRemainingWork.length
+    ? `${sourceRemainingWork.length} primary sources are identified but cannot supply unapproved claims to resident answers. Open the category cards above to see exactly which ones.`
+    : "Every useful source in the four categories has completed claim review.";
 
   const evidence = readiness.evidence || {};
   setCheck("#freshnessCheck", evidence.current ? "pass" : "attention", evidence.current ? "Current" : "Needs recheck",
     evidence.current
-      ? `All currently approved evidence passed its current-source checks. This does not mean every CAB website page has been indexed. ${evidence.sourceCount || 0} source records are available.`
+      ? `All currently approved evidence passed its current-source checks. ${evidence.sourceCount || 0} source records are available to the answer system.`
       : `${evidence.expiredSources || 0} approved sources and ${evidence.expiredFacts || 0} approved facts need to be checked against their official source.`);
-  const coverageGaps = (totals.heldForReview || 0) + (pageTotals.reviewRequired || 0);
+  const coverageGaps = (totals.reviewRequired || 0) + (totals.unavailableRecheck || 0);
   setCheck("#coverageCheck", coverageGaps ? "attention" : "pass", coverageGaps ? "Gaps remain" : "Complete",
-    `${totals.activeEvidence || 0} documents and ${pageTotals.answerEvidence || 0} CAB pages contain exact approved answer evidence. ${totals.actionOnly || 0} documents and ${pageTotals.safeLink || 0} pages are link-only. ${totals.heldForReview || 0} documents and ${pageTotals.reviewRequired || 0} pages still need review.`);
+    `${totals.answerEvidence || 0} sources can support approved claims, ${totals.safeLink || 0} are safe links, and ${totals.liveFeed || 0} uses a live feed. ${totals.reviewRequired || 0} still need claim review; ${totals.unavailableRecheck || 0} need retrieval retry.`);
   const conflicts = readiness.safeguards?.withheldConflictCount || 0;
   setCheck("#safetyCheck", conflicts ? "protected" : "pass", conflicts ? "Protected" : "Clear",
-    conflicts ? `Across the currently indexed source bundle, ${conflicts} conflicting facts are blocked from resident answers. They are shown here as a safety guardrail, not as part of your 27-document count.` : "No unresolved conflicting facts are recorded.");
+    conflicts ? `Across the currently indexed source bundle, ${conflicts} conflicting facts are blocked from resident answers.` : "No unresolved conflicting facts are recorded.");
 
   const inventory = readiness.inventory || {};
-  const pageAudit = readiness.pageAudit || {};
-  setCheck("#websiteCheck", pageTotals.reviewRequired ? "attention" : "pass", pageTotals.reviewRequired ? "Partially answer-ready" : "Answer-ready",
-    `${pageAudit.total || 0} page routes in your four categories have a usefulness decision. ${pageTotals.answerEvidence || 0} contain exact approved claims, ${pageTotals.safeLink || 0} are link-only, ${pageTotals.liveFeed || 0} use a live connector, ${pageTotals.excluded || 0} duplicate views are excluded, and ${pageTotals.reviewRequired || 0} still need claim review.`);
-  $("#inventoryExplanation").textContent = `${inventory.note || ""} Inventory snapshot: ${readableDate(readiness.evidence?.lastSnapshotAt)}. ${inventory.complete ? "The full website inventory is complete." : "The full website inventory is not complete."}`;
+  setCheck("#websiteCheck", inventory.reconciled ? "pass" : "attention", inventory.reconciled ? "Fully assessed" : "Inventory gap",
+    `${inventory.audited || 0} of ${inventory.discovered || 0} discovered CAB URLs have a recorded scope decision. ${inventory.pending || 0} remain unclassified.`);
+  $("#inventoryExplanation").textContent = `${inventory.note || ""} Audit completed ${readableDate(readiness.decidedAt)}. ${inventory.failureCount || 0} access error is explicitly recorded; it is outside the four selected categories.`;
   $("#discoveredCount").textContent = String(inventory.discovered || 0);
   $("#eligibleCount").textContent = String(inventory.eligible || 0);
-  $("#indexedCount").textContent = String(inventory.indexed || 0);
-  $("#inventoryExcludedCount").textContent = String(inventory.excluded || 0);
-  $("#inventoryBacklogCount").textContent = String(inventory.backlog || 0);
+  $("#indexedCount").textContent = String(inventory.audited || 0);
+  $("#inventoryExcludedCount").textContent = String(inventory.technicalExclusions || 0);
+  $("#inventoryBacklogCount").textContent = String(inventory.pending || 0);
   $("#reviewAvailability").textContent = data.reviewError || "The private review queue is connected.";
 }
 

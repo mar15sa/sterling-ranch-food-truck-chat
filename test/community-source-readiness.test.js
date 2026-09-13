@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
 
-test('readiness reports the approved four-category scope without treating excluded documents as missing', () => {
+test('readiness reports the reconciled full-site audit and keeps unapproved sources withheld', () => {
   const result = buildCommunitySourceReadiness({
     approvedEvidenceCurrent: true,
     sourceCount: 100,
@@ -10,46 +10,47 @@ test('readiness reports the approved four-category scope without treating exclud
     liveConnectorCount: 8,
     approvedEvidenceLastCheckedAt: '2026-09-13T14:31:07.000Z',
     conflictedFactCount: 0,
-    failureCount: 0,
   });
   assert.deepEqual(result.totals, {
-    total: 27, classified: 27, handled: 24, activeEvidence: 7, actionOnly: 2, heldForReview: 3, excluded: 15,
-    pages: { total: 88, answerEvidence: 9, safeLink: 30, liveFeed: 1, reviewRequired: 28, excluded: 20 },
+    audited: 1631,
+    inScopeUrls: 463,
+    primarySources: 197,
+    outOfScope: 1168,
+    answerEvidence: 16,
+    safeLink: 31,
+    liveFeed: 1,
+    reviewRequired: 101,
+    unavailableRecheck: 4,
+    excluded: 44,
+    duplicates: 155,
+    technicalExclusions: 624,
   });
+  assert.equal(result.inventory.reconciled, true);
+  assert.equal(result.inventory.pending, 0);
   assert.equal(result.state, 'needs-attention');
-  assert.equal(result.evidence.lastApprovedEvidenceCheckAt, '2026-09-13T14:31:07.000Z');
-  assert.equal(result.categories[0].complete, false);
-  assert.equal(result.categories[1].heldForReview, 1);
-  assert.equal(result.categories[2].heldForReview, 2);
-  assert.equal(result.categories[3].complete, false);
-  assert.equal(result.categories[0].documents.length, 5);
-  assert.equal(result.categories[1].documents.find(item => item.documentId === '1964').status, 'held');
-  assert.equal(result.categories[2].documents.find(item => item.documentId === '2398').sourceUrl, 'https://sterlingranchcab.com/DocumentCenter/View/2398/2026-Water-Quality-Report');
-  assert.equal(result.categories.flatMap(category => category.documents).length, 27);
-  assert.equal(result.categories.flatMap(category => category.pages).length, 88);
-  assert.equal(result.categories[3].pages.find(item => item.sourceUrl.endsWith('/418/Pickleball-Courts')).status, 'held');
-  assert.equal(result.pageRemainingWork.length, 28);
+  assert.match(result.headline, /Full inventory complete/);
+  assert.equal(result.sourceRemainingWork.length, 105);
   assert.deepEqual(result.remainingWork.map(item => item.documentId), ['1964', '2398', '770']);
-  assert.ok(result.remainingWork.every(item => item.sourceUrl?.startsWith('https://sterlingranchcab.com/DocumentCenter/View/')));
+  assert.equal(result.categories.length, 4);
+  assert.equal(result.categories[0].total, 50);
+  assert.equal(result.categories[0].documents.length, 14);
+  assert.equal(result.categories[0].pages.length, 36);
+  assert.equal(result.categories[3].liveFeed, 1);
+  assert.equal(result.categories[3].pages.find(item => item.sourceUrl.endsWith('/418/Pickleball-Courts')).status, 'held');
 });
 
-test('readiness distinguishes stale evidence, withheld conflicts, and site-wide inventory', () => {
+test('readiness distinguishes evidence freshness from completed inventory triage', () => {
   const result = buildCommunitySourceReadiness({
     approvedEvidenceCurrent: false,
     expiredApprovedSourceCount: 5,
     expiredApprovedFactCount: 11,
     conflictedFactCount: 17,
-    failureCount: 0,
-    discoveredPageCount: 1140,
-    eligiblePageCount: 757,
-    pageCount: 408,
-    excludedPageCount: 383,
-    inventoryBacklog: 222,
   });
   assert.equal(result.evidence.current, false);
   assert.equal(result.safeguards.withheldConflictCount, 17);
-  assert.equal(result.inventory.backlog, 222);
-  assert.match(result.inventory.note, /separate/i);
+  assert.equal(result.inventory.reconciled, true);
+  assert.match(result.inventory.note, /every discovered CAB URL/i);
   assert.match(result.reasons[0], /5 approved sources and 11 approved facts/);
-  assert.match(result.reasons[2], /28 useful CAB pages/);
+  assert.match(result.reasons[1], /101 useful sources/);
+  assert.match(result.reasons[3], /out-of-scope CAB route/);
 });

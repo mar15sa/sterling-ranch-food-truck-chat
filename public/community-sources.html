@@ -7,7 +7,7 @@
     <title>Community Answer Readiness</title>
     <link rel="icon" href="/favicon.svg?v=20260912-editorial" type="image/svg+xml" />
     <link rel="stylesheet" href="/community-questions.css?v=20260901-4" />
-    <link rel="stylesheet" href="/community-sources.css?v=20260913-pageaudit1" />
+    <link rel="stylesheet" href="/community-sources.css?v=20260913-fullaudit1" />
   </head>
   <body>
     <main class="owner-shell">
@@ -50,9 +50,9 @@
         <section class="readiness-section" aria-labelledby="scopeTitle">
           <div class="section-heading">
             <div><p class="eyebrow">Your approved scope</p><h2 id="scopeTitle">Four priority categories</h2></div>
-            <p id="scopeSummary">Loading the 27-document audit…</p>
+            <p id="scopeSummary">Loading the full CAB inventory audit…</p>
           </div>
-          <p class="category-instruction">Select a category to see every audited document and CAB page, what each one is allowed to do, and its official source.</p>
+          <p class="category-instruction">Select a category to see every primary document and CAB page, what each one is allowed to do, and its official source. A source can appear in more than one category.</p>
           <div class="scope-legend" aria-label="Document status key">
             <span><i class="dot active"></i>Available to answers</span>
             <span><i class="dot action"></i>Safe link only</span>
@@ -77,14 +77,14 @@
             <article class="check-card" id="safetyCheck"><span class="check-state">Checking</span><h3>System-wide conflicts kept out</h3><p id="safetyDetail"></p></article>
           </div>
           <details class="inventory-details">
-            <summary>See site-wide discovery bookkeeping</summary>
+            <summary>See the complete CAB URL reconciliation</summary>
             <p id="inventoryExplanation"></p>
             <dl class="inventory-grid">
               <div><dt>Discovered</dt><dd id="discoveredCount">0</dd></div>
               <div><dt>Eligible</dt><dd id="eligibleCount">0</dd></div>
-              <div><dt>Indexed</dt><dd id="indexedCount">0</dd></div>
-              <div><dt>Excluded</dt><dd id="inventoryExcludedCount">0</dd></div>
-              <div><dt>Backlog</dt><dd id="inventoryBacklogCount">0</dd></div>
+              <div><dt>Assessed</dt><dd id="indexedCount">0</dd></div>
+              <div><dt>Technical routes</dt><dd id="inventoryExcludedCount">0</dd></div>
+              <div><dt>Unclassified</dt><dd id="inventoryBacklogCount">0</dd></div>
             </dl>
           </details>
         </section>
@@ -92,15 +92,15 @@
         <section class="review-work" aria-labelledby="reviewWorkTitle">
           <div class="section-heading">
             <div><p class="eyebrow">Outstanding content work</p><h2 id="reviewWorkTitle">What still needs review</h2></div>
-            <p>Scoped held documents and newly detected source changes are different queues. Both are shown here.</p>
+            <p>The full inventory and newly detected source changes are different queues. Both are shown here.</p>
           </div>
           <section class="held-work" aria-labelledby="heldWorkTitle">
-            <div class="held-work-heading"><div><h3 id="heldWorkTitle">Scoped documents still withheld</h3><p>These are the held items included in the 27-document audit.</p></div><strong id="heldWorkCount">0</strong></div>
+            <div class="held-work-heading"><div><h3 id="heldWorkTitle">Previously selected documents still withheld</h3><p>These owner decisions remain important within the larger full-site audit.</p></div><strong id="heldWorkCount">0</strong></div>
             <div class="held-work-list" id="heldWorkList"></div>
             <p class="queue-note" id="heldWorkEmpty" hidden>No scoped documents are withheld.</p>
           </section>
           <section class="page-review-summary" aria-labelledby="pageWorkTitle">
-            <div><h3 id="pageWorkTitle">Useful CAB pages still needing claim review</h3><p id="pageWorkSummary">Checking the audited page list…</p></div>
+            <div><h3 id="pageWorkTitle">Primary sources still needing claim review or retry</h3><p id="pageWorkSummary">Checking the complete audited source list…</p></div>
             <strong id="pageWorkCount">0</strong>
           </section>
           <div class="queue-divider"><span>New source-change queue</span><p>Only pages or facts whose official source changed appear below. An empty queue does not clear the scoped held documents above.</p></div>
@@ -128,6 +128,6 @@
         </section>
       </section>
     </main>
-    <script src="/community-sources.js?v=20260913-pageaudit1"></script>
+    <script src="/community-sources.js?v=20260913-fullaudit1"></script>
   </body>
 </html>

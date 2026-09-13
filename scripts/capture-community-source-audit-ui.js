@@ -71,7 +71,7 @@ async function evaluate(cdp, expression) {
   const readiness = await evaluate(cdp, `(async()=>{const r=await fetch('/api/community-source-health');const d=await r.json();if(!r.ok)return {ok:false,status:r.status};render({readiness:d.readiness,items:[],summary:{pending:0,sensitive:0,conflicts:0},counts:{}});showDashboard();return {ok:true}})()`);
   if (!readiness?.ok) throw new Error(`Local readiness request failed: ${readiness?.status}`);
   for (let attempt = 0; attempt < 80; attempt++) {
-    const loaded = await evaluate(cdp, `document.querySelector('#scopeSummary')?.textContent.includes('CAB pages audited')`);
+    const loaded = await evaluate(cdp, `document.querySelector('#scopeSummary')?.textContent.includes('discovered CAB URLs assessed')`);
     if (loaded) break;
     await new Promise(resolve => setTimeout(resolve, 100));
   }
@@ -82,7 +82,7 @@ async function evaluate(cdp, expression) {
   for (const viewport of [{ name: 'desktop', width: 1440, height: 1000 }, { name: 'mobile', width: 390, height: 844 }]) {
     await cdp.command('Emulation.setDeviceMetricsOverride', { width: viewport.width, height: viewport.height, deviceScaleFactor: 1, mobile: viewport.name === 'mobile' });
     await evaluate(cdp, `scrollTo(0,0)`);
-    const layout = await evaluate(cdp, `({innerWidth,scrollWidth:document.documentElement.scrollWidth,headline:document.querySelector('#readinessTitle')?.textContent,summary:document.querySelector('#scopeSummary')?.textContent,categoryCount:document.querySelectorAll('.category-card').length,pageRows:document.querySelectorAll('.category-pages li').length,reviewCount:document.querySelector('#pageWorkCount')?.textContent})`);
+    const layout = await evaluate(cdp, `({innerWidth,scrollWidth:document.documentElement.scrollWidth,headline:document.querySelector('#readinessTitle')?.textContent,summary:document.querySelector('#scopeSummary')?.textContent,categoryCount:document.querySelectorAll('.category-card').length,primaryRows:document.querySelectorAll('.category-documents li,.category-pages li').length,reviewCount:document.querySelector('#pageWorkCount')?.textContent})`);
     const shot = await cdp.command('Page.captureScreenshot', { format: 'png', captureBeyondViewport: false });
     const file = path.join(outDir, `${viewport.name}.png`);
     fs.writeFileSync(file, Buffer.from(shot.data, 'base64'));
