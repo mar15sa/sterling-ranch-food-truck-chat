@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>Community Assistant Questions</title>
     <link rel="icon" href="/favicon.svg?v=20260912-editorial" type="image/svg+xml" />
-    <link rel="stylesheet" href="/community-questions.css?v=20260901-owner-review1" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260913-readiness1" />
   </head>
   <body>
     <main class="owner-shell">
@@ -40,22 +40,40 @@
         <section class="source-health" aria-labelledby="sourceHealthTitle">
           <div class="source-health-heading">
             <div>
-              <p class="eyebrow">Private operations</p>
-              <h2 id="sourceHealthTitle">Source health</h2>
-              <p>Coverage and refresh details shown only inside this password-protected owner view.</p>
+              <p class="eyebrow">Answer accuracy</p>
+              <h2 id="sourceHealthTitle">Content readiness</h2>
+              <p>Are the four categories you approved current and complete enough to support accurate, specific answers?</p>
             </div>
             <strong class="source-health-state" id="sourceHealthState">Checking…</strong>
           </div>
 
-          <div class="source-health-summary" aria-label="Source health summary">
-            <div><span>Approved sources</span><strong id="sourceApprovedCount">—</strong></div>
-            <div><span>CAB page coverage</span><strong id="sourceCoverage">—</strong></div>
-            <div><span>Pages pending</span><strong id="sourcePendingCount">—</strong></div>
-            <div><span>Pages excluded</span><strong id="sourceExcludedCount">—</strong></div>
+          <div class="source-readiness-verdict" id="sourceReadinessVerdict" data-state="loading">
+            <div>
+              <h3 id="sourceReadinessHeadline">Checking content readiness…</h3>
+              <p id="sourceReadinessExplanation">Confirming approved evidence, document coverage, and remaining gaps.</p>
+              <p class="source-readiness-checked" id="sourceReadinessChecked"></p>
+            </div>
+            <ul id="sourceReadinessReasons"></ul>
           </div>
 
+          <div class="source-health-summary" aria-label="Content readiness summary">
+            <div><span>In-scope documents</span><strong id="sourceScopeCount">—</strong></div>
+            <div><span>Fully handled</span><strong id="sourceHandledCount">—</strong></div>
+            <div><span>Available to answers</span><strong id="sourceEvidenceCount">—</strong></div>
+            <div class="source-held-summary"><span>Held for expert review</span><strong id="sourceHeldCount">—</strong></div>
+          </div>
+          <p class="source-readiness-breakdown" id="sourceReadinessBreakdown"></p>
+          <div class="source-category-list" id="sourceCategoryList" aria-label="Readiness by approved category"></div>
+          <a class="source-readiness-link" href="/community-assistant/sources">Open full content-readiness details and review queue</a>
+
           <details class="source-health-expanded">
-            <summary>View full source diagnostics</summary>
+            <summary>View technical source diagnostics</summary>
+            <div class="source-health-summary source-technical-summary" aria-label="Technical source summary">
+              <div><span>Approved sources</span><strong id="sourceApprovedCount">—</strong></div>
+              <div><span>CAB page coverage</span><strong id="sourceCoverage">—</strong></div>
+              <div><span>Pages pending</span><strong id="sourcePendingCount">—</strong></div>
+              <div><span>Pages excluded</span><strong id="sourceExcludedCount">—</strong></div>
+            </div>
             <div class="source-health-details">
               <section aria-labelledby="rulebookHealthTitle">
                 <h3 id="rulebookHealthTitle">Rules and Regulations</h3>
@@ -172,6 +190,6 @@
         <button type="button" class="load-more" id="loadMoreButton" hidden>Load more</button>
       </section>
     </main>
-    <script src="/community-questions.js?v=20260901-owner-review1"></script>
+    <script src="/community-questions.js?v=20260913-readiness1"></script>
   </body>
 </html>

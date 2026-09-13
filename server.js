@@ -4894,13 +4894,18 @@ async function handleCommunitySourceHealth(req, res) {
   }
   if (!requireQuestionAdmin(req, res)) return;
   const rules = await getRulesIndexStatus();
+  const community = communitySourceStatus(undefined, Date.now(), {
+    includeStaleSources: true,
+    includeApprovedEvidenceCheckTime: true,
+  });
   sendJson(res, 200, {
     checkedAt: new Date().toISOString(),
     rules: {
       ...rules,
       refreshing: Boolean(rulesRefreshPromise),
     },
-    community: communitySourceStatus(undefined, Date.now(), { includeStaleSources: true }),
+    community,
+    readiness: buildCommunitySourceReadiness(community),
   });
 }
 
