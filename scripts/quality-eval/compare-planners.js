@@ -4,6 +4,7 @@ const {RATES,summarize}=require('./usage');
 const {hash}=require('./flow-evidence');
 const {resolveLivePlan}=require('./live-request-plan');
 const {createObservedFetch}=require('./observe-fetch');
+const {compactRequest,resolveCompactLivePlan}=require('./compact-live-plan');
 const models=['claude-haiku-4-5','claude-sonnet-5'];
 function plannerRequest(original,model){
  if(!models.includes(model)||original?.model!=='claude-haiku-4-5'||original.thinking?.type!=='disabled'||original.max_tokens!==1100||
@@ -32,15 +33,23 @@ function prepare(manifest,trials,profile){
  return {jobs,plannedUpper,capUsd,priorReserved};
 }
 async function main(){
- const [priorArg,outArg]=process.argv.slice(2);if(!priorArg||!outArg||!process.env.ANTHROPIC_API_KEY)throw Error('Require capture, new output directory and existing credential');
+ const [priorArg,outArg,flag,accountingArg]=process.argv.slice(2);if(!priorArg||!outArg||!process.env.ANTHROPIC_API_KEY)throw Error('Require capture, new output directory and existing credential');
+ const compact=flag==='--compact-contract';if(flag&&!compact||compact&&!accountingArg||!compact&&accountingArg)throw Error('Invalid contract replay arguments');
  const prior=path.resolve(priorArg),out=path.resolve(outArg);if(fs.existsSync(out))throw Error('Use a new capture directory');
  const read=f=>JSON.parse(fs.readFileSync(path.join(prior,f),'utf8')),previous=read('manifest.json'),profile=read(previous.snapshotFiles.profile);
  const trials=previous.runs.filter(r=>r.variant==='sonnet-compose').map(r=>read(r.id+'.json'));
- const {jobs,plannedUpper,capUsd,priorReserved}=prepare(previous,trials,profile),calls=[];let active={};
+ let {jobs,plannedUpper,capUsd,priorReserved}=prepare(previous,trials,profile);const calls=[];let active={};
+ if(compact){
+  const accounting=JSON.parse(fs.readFileSync(path.join(path.resolve(accountingArg),'manifest.json'),'utf8'));
+  if(accounting.status!=='captured'||accounting.mode!=='model-only-planner-replay'||path.resolve(accounting.priorCapture)!==prior||accounting.profileHash!==hash(profile))throw Error('Require completed matching planner-phase accounting');
+  priorReserved=accounting.priorReservedUpperUsd+accounting.reservedUpperUsd;capUsd=Math.min(.8,5-priorReserved);
+  jobs=jobs.map(j=>({...j,body:compactRequest(j.body)}));plannedUpper=jobs.reduce((s,j)=>s+upperCost(j.body),0);
+  if(!Number.isFinite(capUsd)||capUsd<=0||plannedUpper>capUsd)throw Error('Complete compact design exceeds remaining phase reservation');
+ }
  const contextNow=Date.parse(previous.startedAt);if(!Number.isFinite(contextNow))throw Error('Original date context required');
- fs.mkdirSync(out,{recursive:true});const manifest={status:'running',isTest:true,mode:'model-only-planner-replay',startedAt:new Date().toISOString(),contextNow,
+ fs.mkdirSync(out,{recursive:true});const manifest={status:'running',isTest:true,mode:compact?'compact-contract-planner-replay':'model-only-planner-replay',startedAt:new Date().toISOString(),contextNow,
   priorCapture:prior,priorReservedUpperUsd:priorReserved,capUsd,plannedUpper,models,repetitions:2,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-  profileHash:hash(profile),runs:[],limitations:['Interpretation only; not full-answer quality/cost.','Authored known cases, not unseen or independent human calibration.','Original date context retained; no source evidence fetched or declared current.']};
+  profileHash:hash(profile),accountingCapture:accountingArg?path.resolve(accountingArg):null,runs:[],limitations:['Interpretation only; not full-answer quality/cost.','Authored known cases, not unseen or independent human calibration.','Original date context retained; no source evidence fetched or declared current.',...(compact?['Bundled contract revision changes schema, corresponding instructions and supported-capability metadata; individual contributions are not isolated.']:[])]};
  const observed=createObservedFetch(fetch,{calls,capUsd,captureRequests:true,onCall:c=>{Object.assign(c,active);fs.appendFileSync(path.join(out,'calls.jsonl'),JSON.stringify(c)+'\n');}});
  const save=()=>{manifest.costs=summarize(calls);manifest.reservedUpperUsd=observed.reservedUsd();fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');};
  fs.copyFileSync(__filename,path.join(out,'runner.js'));fs.writeFileSync(path.join(out,'profile.json'),JSON.stringify(profile,null,2));save();
@@ -49,7 +58,7 @@ async function main(){
   active={caseId:job.caseId,repetition:job.repetition,model:job.model};const start=Date.now();let providerResponse=null,raw=null,resolved=null,error=null;
   try{const response=await observed('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','anthropic-version':'2023-06-01','x-api-key':process.env.ANTHROPIC_API_KEY},body:JSON.stringify(job.body),signal:AbortSignal.timeout(45000)});
    providerResponse=await response.json();if(!response.ok||providerResponse.stop_reason!=='tool_use')throw Error('Provider response incomplete or rejected');
-   raw=providerResponse.content?.find(c=>c.type==='tool_use'&&c.name==='route_community_question')?.input;resolved=resolveLivePlan(raw,job.row,profile,contextNow);
+   raw=providerResponse.content?.find(c=>c.type==='tool_use'&&c.name==='route_community_question')?.input;resolved=(compact?resolveCompactLivePlan:resolveLivePlan)(raw,job.row,profile,contextNow);
   }catch(e){error=e.message;}
   const record={id:'planner-'+String(i+1).padStart(2,'0'),isTest:true,...active,originalTrial:job.originalTrial,requestHash:hash(job.body),row:job.row,providerResponse,raw,resolved,error,durationMs:Date.now()-start};
   fs.writeFileSync(path.join(out,record.id+'.json'),JSON.stringify(record,null,2)+'\n');manifest.runs.push(record);save();
