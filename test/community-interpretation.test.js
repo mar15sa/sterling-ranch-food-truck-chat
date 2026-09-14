@@ -443,6 +443,7 @@ test("structured validation keeps holiday lighting schedules out of live events"
 
 test("permission plus application questions consult the controlling rule before forms", async () => {
   const ask = (question, subject) => answerCommunityQuestion(question, {
+    now: NOW,
     interpretationMode: "structured", index: communityIndex, communityId: "sterling-ranch",
     answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
     planCommunitySearch: async () => interpretation({

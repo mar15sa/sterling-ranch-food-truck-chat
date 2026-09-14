@@ -441,6 +441,8 @@ test("conflicted official contact versions do not expose the prior internet numb
 test("the approved recurring schedule stays useful when the live calendar is temporarily unavailable", async () => {
   let liveCalls = 0;
   const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
+    // This positive fixture predates the stored approval's expiry.
+    now: new Date("2026-09-13T18:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
@@ -478,6 +480,7 @@ test("the approved recurring schedule stays useful when the live calendar is tem
 test("the homepage pickup answer adds the next recycling date for every village", async () => {
   const checkedAt = new Date().toISOString();
   const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
+    now: new Date("2026-09-13T18:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     communityProfile,

@@ -197,6 +197,8 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
     "What's the online place for settling my monthly utility charge?",
   ]) {
     const answer = await answerCommunityQuestion(question, {
+      // Test the current approved snapshot; expiry has separate negative cases.
+      now: new Date("2026-09-13T18:00:00Z"),
       index: communityIndex,
       communityId: "sterling-ranch",
       answerRulesQuestion,
@@ -231,6 +233,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   assert.equal(plannerCalls, 6);
 
   const outageFallback = await answerCommunityQuestion("Where can I pay my water bill?", {
+    now: new Date("2026-09-13T18:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
@@ -246,6 +249,7 @@ test("AI goal-and-subject routing sends payment questions to the current portal,
   assert.doesNotMatch(outageFallback.answer, /possible disconnection|past-due notice/i);
 
   const rejectedSynthesisFallback = await answerCommunityQuestion("Where can I pay my water bill?", {
+    now: new Date("2026-09-13T18:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
@@ -493,6 +497,7 @@ test("conditional project submissions combine the controlling rule with the appr
     "Where do I submit a rain barrel project that needs approval?",
   ]) {
     const answer = await answerCommunityQuestion(question, {
+      now: new Date("2026-09-13T18:00:00Z"),
       index: communityIndex,
       communityId: "sterling-ranch",
       planCommunitySearch: false,
