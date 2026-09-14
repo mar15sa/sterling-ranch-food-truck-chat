@@ -1,6 +1,18 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { spawn } = require('node:child_process');
+const { spawn, execFileSync, spawnSync } = require('node:child_process');
+
+const root = path.resolve(__dirname, '..');
+const runtimePaths = ['lib', 'public', 'scripts', 'server.js', 'test', 'config', 'data/communities',
+  'data/community-index.json', 'data/rules-index.json', 'data/canonical-source-ledger.json',
+  'data/community-source-approvals*.json'];
+function candidateState() {
+  return { revision: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, windowsHide: true, encoding: 'utf8' }).trim(),
+    runtimeInputsClean: spawnSync('git', ['diff', '--quiet', 'HEAD', '--', ...runtimePaths],
+      { cwd: root, windowsHide: true }).status === 0 };
+}
+const before = candidateState();
+if (!before.runtimeInputsClean) throw new Error('Commit the runtime candidate before the exact-revision release check.');
 
 const output = path.resolve(__dirname, '../artifacts/source-review-2026-09-14/local-release-check.log');
 const log = fs.createWriteStream(output);
@@ -14,10 +26,13 @@ for (const stream of [child.stdout, child.stderr]) stream.on('data', chunk => { 
 child.on('error', error => { console.error(error.message); process.exitCode = 1; });
 child.on('close', exitCode => {
   log.end();
-  const result = { startedAt, completedAt: new Date().toISOString(), exitCode,
+  const after = candidateState();
+  const candidateUnchanged = before.revision === after.revision && after.runtimeInputsClean;
+  const result = { startedAt, completedAt: new Date().toISOString(), revision: before.revision,
+    candidateUnchanged, exitCode: candidateUnchanged ? exitCode : 1,
     failures: captured.split(/\r?\n/).filter(line => /^✖|^not ok/.test(line)),
     summary: captured.split(/\r?\n/).filter(line => /^ℹ (tests|pass|fail|duration)|^# (tests|pass|fail)/.test(line)) };
   fs.writeFileSync(output.replace(/\.log$/, '.json'), `${JSON.stringify(result, null, 2)}\n`);
   console.log(JSON.stringify(result));
-  process.exitCode = exitCode || 0;
+  process.exitCode = result.exitCode || 0;
 });
