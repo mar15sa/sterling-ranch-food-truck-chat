@@ -16,18 +16,22 @@ function prepare(profile,now){
  return cases.flatMap(row=>[1,2].map(repetition=>({row,repetition,body:liveUnderstandingRequest(row,'claude-haiku-4-5',profile,now),order:crypto.randomBytes(8).toString('hex')})));
 }
 async function main(){
- const [priorArg,outArg]=process.argv.slice(2);if(!priorArg||!outArg||!process.env.ANTHROPIC_API_KEY)throw new Error('Require prior phase accounting, new output and existing credential');
+ const [priorArg,outArg,flag]=process.argv.slice(2);if(flag&&flag!=='--without-strict')throw new Error('Unknown replay flag');const replay=flag==='--without-strict';
+ if(!priorArg||!outArg||!process.env.ANTHROPIC_API_KEY)throw new Error('Require prior phase accounting, new output and existing credential');
  const prior=path.resolve(priorArg),out=path.resolve(outArg),p=JSON.parse(fs.readFileSync(path.join(prior,'manifest.json'),'utf8'));
- if(p.status!=='captured'||p.mode!=='paired-writer-only')throw new Error('Require completed paired-writer phase accounting');
- const priorReserved=p.priorReservedUpperUsd+p.reservedUpperUsd,capUsd=Math.min(.28,3-priorReserved);
+ if(p.status!=='captured'||(replay?!(p.model==='claude-haiku-4-5'&&p.runs.length===16):p.mode!=='paired-writer-only'))throw new Error('Require completed prior phase accounting');
+ const priorReserved=p.priorReservedUpperUsd+p.reservedUpperUsd,capUsd=Math.min(replay?.07:.28,3-priorReserved);
  if(!Number.isFinite(capUsd)||capUsd<=0)throw new Error('No phase reservation remains');
  if(fs.existsSync(out))throw new Error('Use a new capture directory');
- const profile=require('../../data/communities/sterling-ranch.json'),now=Date.now(),jobs=prepare(profile,now),r=RATES['claude-haiku-4-5'];
+ const profile=require('../../data/communities/sterling-ranch.json'),now=replay?p.now:Date.now();let jobs=prepare(profile,now);const r=RATES['claude-haiku-4-5'];
+ if(replay){const captured=fs.readFileSync(path.join(prior,'calls.jsonl'),'utf8').trim().split(/\n/).map(JSON.parse);
+  jobs=jobs.filter(j=>['yoga','pool-now'].includes(j.row.id)).map(j=>{const body=structuredClone(captured.find(c=>c.caseId===j.row.id)?.request);if(body?.tools?.[0]?.strict!==true)throw new Error('Require original strict request');delete body.tools[0].strict;return {...j,body};});
+ }
  const plannedUpper=jobs.reduce((s,j)=>s+((Buffer.byteLength(JSON.stringify(j.body))+1024)*r.input+j.body.max_tokens*r.output)/1e6,0);
  if(plannedUpper>capUsd)throw new Error('Complete repeated design exceeds remaining reservation: '+plannedUpper);
  fs.mkdirSync(out,{recursive:true});const calls=[];let active={};
  const manifest={isTest:true,status:'running',startedAt:new Date(now).toISOString(),now,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-  cases,model:'claude-haiku-4-5',repetitions:2,priorCapture:prior,priorReservedUpperUsd:priorReserved,capUsd,plannedUpper,runs:[],
+  cases:cases.filter(c=>jobs.some(j=>j.row.id===c.id)),mode:replay?'strict-option-only-replay':'live-planning',model:'claude-haiku-4-5',repetitions:2,priorCapture:prior,priorReservedUpperUsd:priorReserved,capUsd,plannedUpper,runs:[],
   limitations:['Authored development cases, not unseen holdout or human calibration.','Interpretation only; no source execution or answer quality/cost measured.','Configured but unintegrated capabilities must remain gaps, not substituted sources.']};
  const observed=createObservedFetch(fetch,{calls,capUsd,captureRequests:true,onCall:c=>{Object.assign(c,active);fs.appendFileSync(path.join(out,'calls.jsonl'),JSON.stringify(c)+'\n');}});
  const save=()=>{manifest.costs=summarize(calls);manifest.reservedUpperUsd=observed.reservedUsd();fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');};
