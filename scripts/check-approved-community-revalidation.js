@@ -38,9 +38,12 @@ function quarantineUnchangedUnavailableEvidence(temporaryIndex, checks = [], bas
   return quarantined;
 }
 
-async function runBridge({ index, baselineIndex, now = Date.now(), fetchObservedHashes, auditFn = audit, staleAfterMs } = {}) {
+async function runBridge({ index, baselineIndex, now = Date.now(), fetchObservedHashes, auditFn = audit, staleAfterMs, refreshAheadMs = 30 * 60_000 } = {}) {
   const beforeFingerprint = approvedFingerprint(index);
-  const result = await revalidateApprovedEvidence(index, { now, fetchObservedHashes, ...(staleAfterMs === undefined ? {} : { staleAfterMs }) });
+  // Recheck versions that would expire during the bounded quality run. This
+  // selects more live checks; it never advances the clock or renews without
+  // the same exact source/action/document proof. Runtime defaults stay unchanged.
+  const result = await revalidateApprovedEvidence(index, { now, fetchObservedHashes, refreshAheadMs, ...(staleAfterMs === undefined ? {} : { staleAfterMs }) });
   const graced = applyDomainOutageGrace(result.temporaryIndex, result.checks, baselineIndex, { now });
   const gracedIds = new Set(graced.map((source) => source.id));
   const quarantined = quarantineUnchangedUnavailableEvidence(result.temporaryIndex, result.checks, baselineIndex, gracedIds);
@@ -60,6 +63,7 @@ async function runBridge({ index, baselineIndex, now = Date.now(), fetchObserved
     beforeApprovedFingerprint: beforeFingerprint,
     afterApprovedFingerprint: afterFingerprint,
     checkedAt: new Date(now).toISOString(),
+    refreshAheadMs,
     status: gateErrors.length ? "failed" : graced.length ? "passed-with-grace-evidence" : quarantined.length ? "passed-with-withheld-evidence" : "passed",
     checks: result.checks,
     graced,
