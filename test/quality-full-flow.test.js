@@ -3,7 +3,7 @@ const {assertBinding,needSearchOptions,makeRetriever}=require('../scripts/qualit
 const {planIssues,packetIssues,draftIssues,coverageIssues,runCandidate}=require('../scripts/quality-eval/full-flow-candidate');
 const plan={standaloneQuestion:'May I build a shed?',usedPriorContext:false,scope:'community',clarificationQuestion:'',needs:[{subject:'shed',task:'permission',request:'Permission to build',evidenceKind:'governing-rule'}],constraints:[],searchQueries:['shed approval']};
 const packet={communityId:'alpha',sources:[{id:'rule',communityId:'alpha',sourceUrl:'https://alpha.example/rule',version:'v1',text:'Sheds require approval.',role:'governing-rule',actions:[]}],actions:[]};
-const check={outcome:'complete',hardFailures:[],needs:[{needId:'need-1',request:'Shed permission',status:'addressed',supportSourceIds:['rule']}]};
+const check={actionReviews:[],failureDetails:[],outcome:'complete',hardFailures:[],needs:[{needId:'need-1',request:'Shed permission',status:'addressed',supportSourceIds:['rule']}]};
 const draft={answer:'Sheds require approval.',actionIds:[]};
 function provider(outputs){let i=0;const requests=[];return {requests,fetch:async(_url,init)=>{const body=JSON.parse(init.body);requests.push(body);const output=outputs[i++];if(output instanceof Error)throw output;return new Response(JSON.stringify({stop_reason:'tool_use',content:[{type:'tool_use',name:body.tools[0].name,input:output}],usage:{input_tokens:1,output_tokens:1}}));}};}
 const opts={communityId:'alpha',apiKey:'test-only-key',retrieve:async()=>structuredClone(packet)};
@@ -73,5 +73,26 @@ test('alternate rule ranking cannot replace text identity or restore ineligible 
  for(const replacement of [{...doc,text:'Unapproved replacement text'},{...doc,id:'other-version'},{...doc,communityId:'beta'}]){
   const retrieve=makeRetriever({...context,ruleSearch:async()=>[replacement]});
   await assert.rejects(()=>retrieve({...plan,needs:plan.needs.map(n=>({...n,id:'need-1'}))}));
+ }
+});
+test('expanded sections appear once with every matching chunk retained as provenance',async()=>{
+ const communityId='alpha',base='https://rules.example/alpha',url='https://alpha.example/policy';
+ const docs=[1,2].map(n=>({id:'policy::'+n,nodeId:'policy-'+n,communityId,sourceUrl:url,parentSupplementId:'policy-parent',sourceTextHash:'same-hash',isSupplemental:true,title:'Shed policy',text:n===1?'A shed requires approval.':'Submit the plan before installation.'}));
+ const context={communityId,profile:{communityId,website:'https://alpha.example',allowedHosts:['rules.example'],connectors:[{type:'municode',baseUrl:base}]},communityIndex:{communityId,sources:[],factLedger:[]},rulesIndex:{source:{sourceUrl:base,supplementalDocuments:[{sourceUrl:url}]},documents:docs},ruleSearch:async()=>docs};
+ const mapped={...plan,needs:plan.needs.map(n=>({...n,id:'need-1'}))};
+ const packet=await makeRetriever(context)(mapped);assert.equal(packet.sources.length,1);assert.deepEqual(packet.sources[0].matchedSourceIds,['policy::1','policy::2']);assert.deepEqual(packet.sources[0].contextChunkIds,['policy::1','policy::2']);assert.match(packet.sources[0].text,/requires approval/);assert.match(packet.sources[0].text,/before installation/);
+ const changed=docs.map((d,i)=>({...d,sourceTextHash:i?'different-hash':d.sourceTextHash}));
+ const separate=await makeRetriever({...context,rulesIndex:{...context.rulesIndex,documents:changed},ruleSearch:async()=>changed})(mapped);assert.equal(separate.sources.length,2);
+});
+
+test('catalog form lookup skips rule noise while separate permission needs retain rules',async()=>{
+ for(const communityId of ['alpha','beta']){
+  const base='https://rules.example/'+communityId;
+  const doc={id:'rule',nodeId:'rule',communityId,sourceUrl:base+'?nodeId=rule',jobId:1,productId:1,title:'Approval',text:'Approval is required.'};
+  let searches=0;
+  const retrieve=makeRetriever({communityId,communityMode:'complete-catalog',profile:{communityId,website:'https://'+communityId+'.example',allowedHosts:['rules.example'],connectors:[{type:'municode',baseUrl:base}]},communityIndex:{communityId,sources:[],factLedger:[]},rulesIndex:{source:{sourceUrl:base},documents:[doc]},ruleSearch:async()=>{searches++;return [doc];}});
+  const form={id:'need-1',subject:'shed',task:'form',request:'Application form',evidenceKind:'official-action'};
+  const onlyForm=await retrieve({...plan,needs:[form]});assert.equal(searches,0);assert.equal(onlyForm.sources.length,0);
+  const both=await retrieve({...plan,needs:[form,{...plan.needs[0],id:'need-2'}]});assert.equal(searches,1);assert.equal(both.sources.length,1);assert.deepEqual(both.sources[0].retrievedForNeedIds,['need-2']);
  }
 });

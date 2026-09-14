@@ -2,6 +2,7 @@
 // Evaluation only; no resident runtime imports this candidate.
 const {candidateRequest,validationIssues}=require('./understanding-candidate');
 const {acceptanceRequest,acceptanceIssues}=require('./compact-acceptance-candidate');
+const {flowAcceptanceRequest,flowCheckIssues}=require('./flow-acceptance');
 const {ensureAllowedModel}=require('./usage');
 const {hash}=require('./flow-evidence');
 const draftSchema={type:'object',additionalProperties:false,required:['answer','actionIds'],properties:{answer:{type:'string'},actionIds:{type:'array',items:{type:'string'}}}};
@@ -11,11 +12,17 @@ const COMPOSE=[
   'Lead with the direct supported answer in plain natural language. Include useful specific details and the next relevant official step without inventing extra hurdles.',
   'Answer a process question with practical supported steps first. Apply each requirement only to the resident role and project type supported by the evidence. Do not add every stage, fee, contact or prerequisite found nearby in a general rule. If applicability is unknown, omit the optional claim or clearly identify the unresolved requested detail.',
   'Use governing rules for permission or requirements. Action-only evidence proves a destination, not fees, permission, availability or a binding rule. Respect evidence roles and source scope.',
+  'A complete catalog is an inventory, not a list of recommendations. Select only actions useful for the actual requested task and subject. Retrieval associations do not prove relevance. Do not show an unrelated link to fill a gap.',
   'A request for a form needs the actual form or a clear explanation of the remaining gap. A submission email does not replace a requested application.',
   'If only part is supported, give it first and explicitly say which requested part cannot be confirmed. Do not infer absence from missing search results. Missing optional extras do not undo a supported core answer.',
   'Return no more than 180 words, plus IDs selected only from the top-level actions inventory. Evidence source IDs and nested source action IDs are not selectable action IDs. Never invent a URL, contact, amount, date, rule or action ID. No writing-quality scores.',
   'A repair must address the provided check failures using the same evidence; the previous draft and check are not new facts.'
 ].join('\n');
+function modelEvidence(sources){return sources.map(s=>({id:s.id,title:s.title,role:s.role,text:s.text,sourceUrl:s.sourceUrl,
+  ...(s.approvalScope?{approvalScope:s.approvalScope}:{}),...(s.withheldScope?.length?{withheldScope:s.withheldScope}:{}),
+  ...(s.effectiveDate?{effectiveDate:s.effectiveDate}:{}),...(s.stagingOnly?{stagingOnly:true}:{}),
+  ...(s.catalogContext?{catalogContext:true}:{})}));}
+function modelActions(actions){return actions.map(a=>({id:a.id,label:a.label,url:a.url,sourceId:a.sourceId,actionType:a.actionType,...(a.stagingOnly?{stagingOnly:true}:{})}));}
 function compositionSchema(packet){
   const schema=structuredClone(draftSchema);
   schema.properties.actionIds.items=packet.actions.length?{type:'string',enum:packet.actions.map(a=>a.id)}:{type:'string'};
@@ -42,9 +49,8 @@ function draftIssues(draft,packet){
   for(const match of draft.answer.matchAll(/https?:\/\/[^\s<>\])]+/g))if(!urls.has(match[0].replace(/[.,;]+$/,'')))issues.push('unverified-answer-url');
   return [...new Set(issues)];
 }
-function coverageIssues(check,plan,packet){
-  const normalized=check&&{...check,needs:Array.isArray(check.needs)?check.needs.map(n=>{if(!n)return n;const {needId,...rest}=n;return rest;}):check.needs};
-  const issues=acceptanceIssues(normalized,packet.sources.map(s=>s.id));if(issues.length)return issues;
+function coverageIssues(check,plan,packet,actions=[]){
+  const issues=flowCheckIssues(check,plan,packet.sources.map(s=>s.id),actions);if(issues.length)return issues;
   const expected=plan.needs.map(n=>n.id),actual=check.needs.map(n=>n.needId);
   if(actual.length!==expected.length||new Set(actual).size!==actual.length||actual.some(id=>!expected.includes(id)))issues.push('need-identity-mismatch');
   for(const n of check.needs){const need=plan.needs.find(p=>p.id===n.needId);if(!['addressed','partial'].includes(n.status)||!need)continue;
@@ -87,18 +93,12 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
     try{
       const body={model:models.compose,max_tokens:650,thinking:{type:'disabled'},...(/haiku/.test(models.compose)?{temperature:0}:{}),system:COMPOSE,
         tools:[{name:'compose_requested_answer',description:'Write the supported answer and select supplied action IDs.',input_schema:compositionSchema(packet),strict:true}],tool_choice:{type:'tool',name:'compose_requested_answer'},
-        messages:[{role:'user',content:JSON.stringify({question:row.question,priorResidentQuestions,requiredNeeds:plan.needs,constraints:plan.constraints,evidence:packet.sources,actions:packet.actions,previousAttempt:previous})}]};
+        messages:[{role:'user',content:JSON.stringify({question:row.question,priorResidentQuestions,requiredNeeds:plan.needs,constraints:plan.constraints,evidence:modelEvidence(packet.sources),actions:modelActions(packet.actions),previousAttempt:previous})}]};
       const draft=await invoke(body,'compose_requested_answer'),issues=draftIssues(draft,packet);trace.push({stage:attempt?'repair':'composition',draft,issues});
       if(issues.length){previous={draft,issues};continue;}
       const actions=packet.actions.filter(a=>draft.actionIds.includes(a.id)),response={answer:draft.answer,actions,sources:packet.sources};
-      const request=acceptanceRequest({question:row.question,priorResidentQuestions,response},models.check);
-      request.tools[0].name='check_planned_answer_acceptance';request.tool_choice.name='check_planned_answer_acceptance';
-      request.tools[0].input_schema=structuredClone(request.tools[0].input_schema);
-      request.tools[0].input_schema.properties.needs.items.required.push('needId');
-      request.tools[0].input_schema.properties.needs.items.properties.needId={type:'string',description:'The exact stable required need ID, for example need-1.'};
-      request.system+='\nRequired needs carry stable IDs. Return each exact need ID in needId once each, and a short description in request. Judge the original question too: flag missed-requested-part if the interpretation omitted a requested part. Do not add optional proactive suggestions as required needs.';
-      const payload=JSON.parse(request.messages[0].content);payload.requiredNeeds=plan.needs;request.messages[0].content=JSON.stringify(payload);
-      const check=await invoke(request,'check_planned_answer_acceptance'),checkIssues=coverageIssues(check,plan,packet);trace.push({stage:'acceptance',check,issues:checkIssues});
+      const request=flowAcceptanceRequest({question:row.question,priorResidentQuestions,response:{...response,sources:modelEvidence(packet.sources),actions:modelActions(actions)}},plan,models.check);
+      const check=await invoke(request,'check_planned_answer_acceptance'),checkIssues=coverageIssues(check,plan,packet,actions);trace.push({stage:'acceptance',check,issues:checkIssues});
       if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
       if(checkIssues.length||check.hardFailures.length){previous={draft,check,issues:checkIssues};continue;}
       const outcome={complete:'complete',partial:'verified-partial',clarification:'ambiguous','missing-evidence':'missing-evidence'}[check.outcome];
@@ -108,4 +108,4 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
   }
   return unresolved('repair-limit',{plan});
 }
-module.exports={COMPOSE,compositionSchema,planIssues,packetIssues,draftIssues,coverageIssues,runCandidate};
+module.exports={COMPOSE,modelEvidence,modelActions,compositionSchema,planIssues,packetIssues,draftIssues,coverageIssues,runCandidate};

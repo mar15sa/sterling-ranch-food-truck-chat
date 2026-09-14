@@ -1,4 +1,4 @@
-# Full-answer cost comparison and decision ó September 14, 2026
+# Full-answer cost comparison and decision ‚Äî September 14, 2026
 
 **Decision: neither tested candidate is ready to recommend or release.** Both are more expensive and slower, and each failed to deliver an accepted answer on 2 of 16 attempts. Accepted answers also contain demonstrated relevance failures. The goal remains active.
 
@@ -12,7 +12,7 @@ This is a completed, balanced diagnostic comparison: eight authored document-que
 
 Both candidates use Haiku 4.5 for interpretation and Sonnet 5 for acceptance. The writer is Haiku 4.5 or Sonnet 5 as labeled. Fable/Astra are excluded. Every interpretation, composition, acceptance, repair, and failed final answer is included in these per-attempted-question costs. No v7 provider request has unknown usage. All recorded cache-read and cache-write token counts are zero; thinking is disabled on the candidate calls. No separate unobserved reasoning-token charge is invented. Prices are dated standard token rates, not an invoice. With only 16 observations per arm, the reported nearest-rank p95 is the maximum observed duration and is not a stable population estimate.
 
-The baseline marked all 16 responses complete. That is not a quality result: both unanchored ìHow much does it cost?î attempts returned water rates despite no identified subject. The two candidate arms correctly asked for clarification in those trials. The candidates nevertheless failed their own acceptance on 12.5% of attempts, so even assuming every delivered answer were useful, neither reaches 95% useful in this diagnostic sample.
+The baseline marked all 16 responses complete. That is not a quality result: both unanchored ‚ÄúHow much does it cost?‚Äù attempts returned water rates despite no identified subject. The two candidate arms correctly asked for clarification in those trials. The candidates nevertheless failed their own acceptance on 12.5% of attempts, so even assuming every delivered answer were useful, neither reaches 95% useful in this diagnostic sample.
 
 ## Calls and tokens by stage
 
@@ -29,9 +29,9 @@ The baseline marked all 16 responses complete. That is not a quality result: bot
 | Sonnet writer + Sonnet checker / composition | 16 | 178,894 | 7,093 | $0.428718 |
 | Sonnet writer + Sonnet checker / answer-acceptance | 18 | 199,652 | 4,031 | $0.439614 |
 
-The acceptance stage consumed $0.873286 of the runís $1.554620 total (about 56%). Each candidate made two repair attempts. The current compact checker still accepted an unrelated landscaper-directory action on a lighting-application follow-up (`flow-028`). The accepted answer also mixed seasonal requirements with general lighting requirements. Supplying an approved destination does not establish its relevance. The checkerís generic failure labels did not identify specific offending claims for repair; this is another remaining integration gap.
+The acceptance stage consumed $0.873286 of the run‚Äôs $1.554620 total (about 56%). Each candidate made two repair attempts. The current compact checker still accepted an unrelated landscaper-directory action on a lighting-application follow-up (`flow-028`). The accepted answer also mixed seasonal requirements with general lighting requirements. Supplying an approved destination does not establish its relevance. The checker‚Äôs generic failure labels did not identify specific offending claims for repair; this is another remaining integration gap.
 
-## Monthly scenarios ó answering AI only
+## Monthly scenarios ‚Äî answering AI only
 
 These scenarios assume the same question mix and behavior as this small diagnostic. They are comparisons, not a proposed recurring bill.
 
@@ -49,7 +49,17 @@ No new subscription, vector database, storage service or release was created. Ex
 
 The separate offline semantic packet comparison completed seven captured interpretations with no paid API call. It recovered the specific gazebo/pergola governing section for the compound and multiple-form questions where keyword ranking omitted that section. It did not repair community action retrieval: lighting questions still received unrelated directory, venue and billing links. This is evidence to test improved retrieval, not proof that a vector database improves final answers.
 
-Continue with shared semantic selection of approved process/actions and explicit action relevance, preserve full applicable rule context, and give a repair the specific unsupported claim or wrong action. Reuse the existing source controls and live adapters. Compare a simpler, better-evidenced answer flow against the current three-stage candidate; more AI calls must demonstrate their value. Human calibration, the final holdout, live adapters, semantic final-answer measurements, complete operating costs and release verification remain outstanding.
+Compare the complete approved community catalog before adding semantic selection for community actions: the verified snapshot has 25 eligible projections totaling 5,502 text characters. Semantic ranking remains a separate option for the larger rules corpus. Preserve full applicable rule context and give repair the specific unsupported claim or wrong action. Reuse existing source controls and live adapters. More AI calls must demonstrate their value. Human calibration, final holdout, live adapters, final-answer measurements, complete operating costs and release verification remain outstanding.
+
+## Follow-up action checking: diagnostic gain, still unselected
+
+Ten Sonnet checks (five examples, twice each) completed September 14 at 21:06 UTC. Both repeats caught the recorded lighting-to-landscaper mistake. All six positive controls retained correct forms, an honest fallback contact, or a supported next step. The two repeats containing a correct form plus an unrelated utility-payment action identified that action as irrelevant but returned an inconsistent failure code and empty repair details. Local validation rejected both; they are not successful checks. Result: 8/10 valid expected checks, 2/10 invalid, no tested flawed answer admitted. Four examples were synthetic and one was a known diagnostic failure, not unseen human calibration.
+
+Checker-only latency was median 10.738 seconds and p95 18.720 seconds, already exceeding the proposed full-answer target. Ten calls used 52,250 input and 2,967 output tokens, costing $0.134170 at dated standard rates ($13.417 per 1,000 checks for this small mix). This is neither a complete answer estimate nor a commitment. The larger recorded policy example disproportionately affects this sample. Comparison against a different earlier sample is not a controlled model cost comparison.
+
+The follow-up reserved $0.386548 of the remaining fresh-phase budget. Combined fresh-phase known cost is now $1.691728 plus the earlier rejected request's unknown charge; conservative reservation is $4.676218 of $5. No new budget, subscription, deployment, model selection or production source approval was made. Evidence: `artifacts/quality-eval/flow-action-checks-20260914`.
+
+Offline catalog replay completed seven saved interpretations in three modes with no provider calls. Complete catalog retrieval found the approved directory; separately enabled staging navigation supplied both previously staging-approved form URLs. The lighting form follow-up used 5,502 source-text characters versus 16,253 for keyword retrieval. Other question packets grew, so this is not a general cost-saving claim. No final answers were generated in this replay. Evidence: `artifacts/quality-eval/complete-catalog-replay-v2-20260914`.
 
 ## Reproducibility and spending
 

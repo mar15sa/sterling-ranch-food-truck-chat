@@ -5,6 +5,7 @@ const {availableSectionContext}=require('../../lib/rules-section-context');
 const {budgetEvidenceText}=require('../../lib/evidence-prompt-budget');
 const {searchCommunityIndex}=require('../../lib/community-search');
 const {isDynamicSource}=require('../../lib/community-source-identity');
+const {communityProjectionCorpus,stagingFormNavigation}=require('./community-projection-corpus');
 const {eligibleCorpus,eligibleForQuestion}=require('./semantic-corpus');
 const hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
 function needSearchOptions(need){
@@ -24,41 +25,53 @@ function assertBinding({profile,communityIndex,rulesIndex,communityId}){
   }
 }
 function makeRetriever(context){
-  assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now(),ruleSearch=rules.searchRulesIndex}=context;
+  assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now(),ruleSearch=rules.searchRulesIndex,
+    communityMode='keyword',stagingFormApproval=null}=context;
+  if(!['keyword','complete-catalog'].includes(communityMode)||stagingFormApproval&&communityMode!=='complete-catalog')throw new Error('Invalid experimental catalog mode');
   const docs=eligibleCorpus(rulesIndex,communityId,now),index={...rulesIndex,documents:docs};
   const hosts=new Set(profile.allowedHosts||[]);hosts.add(new URL(profile.website).hostname);
+  const catalog=communityMode==='complete-catalog'?[...communityProjectionCorpus(communityIndex,{communityId,now}),
+    ...stagingFormNavigation(communityIndex,{profile,approval:stagingFormApproval,now,enabled:Boolean(stagingFormApproval)})]:[];
+  if(catalog.length>50||catalog.reduce((n,s)=>n+s.text.length,0)>10000)throw new Error('Complete approved catalog exceeds experimental bound');
   return async function retrieve(plan){
     const all=new Map(),diagnostics=[];
+    function add(kind,s,needId,rank,query){
+      if(!s)return;
+      if(s.communityId&&s.communityId!==communityId)throw new Error('Cross-community retrieval result');
+      if(!hosts.has(new URL(s.sourceUrl).hostname))throw new Error('Undeclared evidence host');
+      if(kind==='rules'&&!docs.some(d=>d.id===s.id&&d.text===s.text))throw new Error('Rule text and identity do not match');
+      const expanded=kind==='rules'?availableSectionContext(s,docs,{now,eligible:d=>eligibleForQuestion(d,query)}):null;
+      const role=kind==='rules'?'governing-rule':s.canonicalActionOnlyProjection?'official-action':
+        ['municode','adopted-document'].includes(s.authorityClass)?'governing-rule':'official-process';
+      const source={...s,text:expanded?.text||s.text,evidenceContext:expanded||s.evidenceContext};
+      const version=kind==='rules'?hash([s.sourceUrl,s.productId,s.jobId,s.sourceTextHash,s.parentSupplementId]):s.contentHash;
+      if(!version)throw new Error('Evidence version missing');
+      const identity=expanded?.expanded?expanded.chunkIds:s.id;
+      const key=hash([communityId,kind,identity,s.sourceUrl,version,source.text,kind==='rules'?[]:s.actions||[]]);
+      const prior=all.get(key);if(prior){
+        if(needId&&!prior.retrievedForNeedIds.includes(needId))prior.retrievedForNeedIds.push(needId);
+        if(!prior.matchedSourceIds.includes(s.id))prior.matchedSourceIds.push(s.id);return;
+      }
+      all.set(key,{id:'e-'+key.slice(0,20),sourceId:s.stagingAuthorization?.sourceId||s.id,matchedSourceIds:[s.id],contextChunkIds:expanded?.chunkIds||[],communityId,sourceUrl:s.sourceUrl,title:s.title,version,
+        approvalScope:s.ownerReview?.approvedScope||s.stagingAuthorization?.scope||null,withheldScope:s.ownerReview?.withheldScope||[],effectiveDate:s.effectiveDate||s.approvedDate||null,
+        role,retrievedForNeedIds:needId?[needId]:[],catalogContext:!needId,rank,source,text:source.text,actions:kind==='community'?(s.actions||[]):[],
+        stagingOnly:Boolean(s.stagingOnly),stagingAuthorization:s.stagingAuthorization||null,
+        reviewStatus:s.stagingOnly?'existing-owner-approval-for-staging-navigation-only':'eligible-by-existing-gate',freshness:'current-at-snapshot'});
+    }
     for(const need of plan.needs){
       const query=`${need.subject} ${need.request}`;
-      // Live-operation needs must go through the existing live adapters in the next integration stage.
       if(need.evidenceKind==='live-operation'){diagnostics.push({needId:need.id,reason:'live-adapter-not-integrated'});continue;}
-      const rr=(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
-      const cr=searchCommunityIndex(query,{index:communityIndex,communityId,now,limit:4,includeActionOnlyProjections:true,allowPartialRequestedDetails:true,...needSearchOptions(need)}).sources.filter(s=>!isDynamicSource(s));
-      // Interleave ranked sources so one source family cannot use the whole budget first.
-      for(let rank=0;rank<Math.max(rr.length,cr.length);rank++)for(const [kind,s] of [['rules',rr[rank]],['community',cr[rank]]]){
-        if(!s)continue;
-        if(s.communityId&&s.communityId!==communityId)throw new Error('Cross-community retrieval result');
-        if(!hosts.has(new URL(s.sourceUrl).hostname))throw new Error('Undeclared evidence host');
-        const original=kind==='rules'?docs.find(d=>d.id===s.id&&d.text===s.text):null;
-        if(kind==='rules'&&!original)throw new Error('Rule text and identity do not match');
-        const expanded=kind==='rules'?availableSectionContext(s,docs,{now,eligible:d=>eligibleForQuestion(d,query)}):null;
-        const role=kind==='rules'?'governing-rule':s.canonicalActionOnlyProjection?'official-action':
-          ['municode','adopted-document'].includes(s.authorityClass)?'governing-rule':'official-process';
-        const source={...s,text:expanded?.text||s.text,evidenceContext:expanded||s.evidenceContext};
-        const version=kind==='rules'?hash([s.sourceUrl,s.productId,s.jobId,s.sourceTextHash,s.parentSupplementId]):s.contentHash;
-        if(!version)throw new Error('Evidence version missing');
-        const key=hash([communityId,kind,s.id,s.sourceUrl,version,source.text]);
-        const prior=all.get(key);if(prior){prior.needIds.push(need.id);continue;}
-        all.set(key,{id:'e-'+key.slice(0,20),sourceId:s.id,communityId,sourceUrl:s.sourceUrl,title:s.title,version,
-          approvalScope:s.ownerReview?.approvedScope||null,withheldScope:s.ownerReview?.withheldScope||[],effectiveDate:s.effectiveDate||s.approvedDate||null,
-          role,needIds:[need.id],rank,source,text:source.text,actions:kind==='community'?(s.actions||[]):[],reviewStatus:'eligible-by-existing-gate',freshness:'current-at-snapshot'});
-      }
+      const rr=communityMode==='complete-catalog'&&need.evidenceKind==='official-action'?[]:(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
+      const cr=communityMode==='keyword'?searchCommunityIndex(query,{index:communityIndex,communityId,now,limit:4,includeActionOnlyProjections:true,allowPartialRequestedDetails:true,...needSearchOptions(need)}).sources.filter(s=>!isDynamicSource(s)):[];
+      for(let rank=0;rank<Math.max(rr.length,cr.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',cr[rank],need.id,rank,query);}
     }
-    const units=budgetEvidenceText([...all.values()].sort((a,b)=>a.rank-b.rank),{maxSources:12,maxChars:30000,project:s=>s.text});
+    const ruleUnits=budgetEvidenceText([...all.values()].sort((a,b)=>a.rank-b.rank),{maxSources:12,maxChars:30000,project:s=>s.text});
+    const existing=new Set(all.keys());for(const source of catalog)add('community',source,null,0,'');
+    const catalogUnits=budgetEvidenceText([...all.entries()].filter(([key])=>!existing.has(key)).map(([,s])=>s),{maxSources:50,maxChars:10000,project:s=>s.text});
+    const units=[...ruleUnits,...catalogUnits];
     const sources=units.filter(u=>u.text).map(u=>{const {source:internal,...s}=u.source;return {...s,text:u.text,contextCoverage:u.contextCoverage};});
-    const actions=sources.flatMap(s=>s.actions.map((a,i)=>({id:`${s.id}-a${i}`,label:a.label,url:a.url,sourceId:s.id,communityId,version:s.version})));
-    return {communityId,sources,actions,diagnostics,snapshotHash:hash([communityId,communityIndex,rulesIndex]),
+    const actions=sources.flatMap(s=>s.actions.map((a,i)=>({id:`${s.id}-a${i}`,label:a.label,url:a.url,actionType:a.actionType,sourceId:s.id,communityId,version:s.version,stagingOnly:s.stagingOnly})));
+    return {communityId,communityMode,stagingNavigationEnabled:Boolean(stagingFormApproval),sources,actions,diagnostics,snapshotHash:hash([communityId,communityIndex,rulesIndex,stagingFormApproval]),
       omissions:units.filter(u=>!u.text).map(u=>({id:u.source.id,reason:u.contextCoverage}))};
   };
 }
