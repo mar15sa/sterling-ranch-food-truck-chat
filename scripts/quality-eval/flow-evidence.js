@@ -51,6 +51,7 @@ function makeRetriever(context){
         const key=hash([communityId,kind,s.id,s.sourceUrl,version,source.text]);
         const prior=all.get(key);if(prior){prior.needIds.push(need.id);continue;}
         all.set(key,{id:'e-'+key.slice(0,20),sourceId:s.id,communityId,sourceUrl:s.sourceUrl,title:s.title,version,
+          approvalScope:s.ownerReview?.approvedScope||null,withheldScope:s.ownerReview?.withheldScope||[],effectiveDate:s.effectiveDate||s.approvedDate||null,
           role,needIds:[need.id],rank,source,text:source.text,actions:kind==='community'?(s.actions||[]):[],reviewStatus:'eligible-by-existing-gate',freshness:'current-at-snapshot'});
       }
     }

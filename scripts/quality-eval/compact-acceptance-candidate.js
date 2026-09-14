@@ -1,6 +1,6 @@
 "use strict";
 const {SYSTEM_V2,schema:assessmentSchema}=require('./answer-assessment-candidate');
-const statuses=['addressed','disclosed-gap','unanswered','clarification-needed'];
+const statuses=['addressed','partial','disclosed-gap','unanswered','clarification-needed'];
 const schema={type:'object',additionalProperties:false,required:['outcome','hardFailures','needs'],properties:{
   outcome:assessmentSchema.properties.outcome,hardFailures:assessmentSchema.properties.hardFailures,
   needs:{type:'array',items:{type:'object',additionalProperties:false,required:['request','status','supportSourceIds'],properties:{
@@ -8,6 +8,8 @@ const schema={type:'object',additionalProperties:false,required:['outcome','hard
 }};
 const SYSTEM=SYSTEM_V2.split('\n').filter(line=>!line.startsWith('Score each dimension')&&!line.startsWith('For a genuinely necessary clarification')&&!line.startsWith('Return only')&&!line.includes('score directResolution')).join('\n')+'\n'+[
   'Return only a compact acceptance check: delivered outcome, critical failures and one short entry per actual requested need. No quality scores or prose review.',
+  'Use partial when one requested need has both a supported delivered portion and an explicitly disclosed remaining gap. Cite support for the delivered portion. Its overall outcome must be partial, never complete.',
+  'Check every material claim and action in the delivered answer, including optional extras. Text appearing somewhere in a source does not establish that a fee, stage, prerequisite, contact or deadline applies to this resident role, project type and requested task. Unsupported applicability is unsupported-material-claim. Do not approve extra burdens merely because the core need is answered.',
   'Use addressed only for a requested outcome correctly supplied and supported by the listed evidence IDs. Use disclosed-gap when the answer explicitly and accurately explains missing evidence for that need. Use unanswered when a requested part is skipped. Use clarification-needed for a genuinely necessary clarification actually asked.',
   'An honest missing-evidence answer or partial answer may be useful without being complete. Do not flag missing-core-answer solely because evidence is unavailable when the answer clearly discloses that gap and gives any supported portions. Do flag skipped requested needs and claims or actions that replace the requested outcome.',
   'The result describes the answer as delivered. Complete requires all needs addressed and no critical failures. Necessary clarification does not require the missing final fact and is not missing-core-answer. Keep each request description under twelve words.',
@@ -27,14 +29,15 @@ function acceptanceIssues(value,sourceIds=[]){
   else for(const n of value.needs){
     if(!n||typeof n.request!=='string'||!n.request.trim()||n.request.length>200||!statuses.includes(n.status)||Object.keys(n).some(k=>!['request','status','supportSourceIds'].includes(k))||
       !Array.isArray(n.supportSourceIds)||n.supportSourceIds.some(id=>!known.has(id)))issues.push('invalid-need-or-source');
-    if(n?.status==='addressed'&&Array.isArray(n.supportSourceIds)&&!n.supportSourceIds.length)issues.push('missing-support-reference');
+    if(['addressed','partial'].includes(n?.status)&&Array.isArray(n.supportSourceIds)&&!n.supportSourceIds.length)issues.push('missing-support-reference');
   }
   if(value.outcome==='complete'&&((Array.isArray(value.needs)&&value.needs.some(n=>n?.status!=='addressed'))||value.hardFailures?.length))issues.push('contradictory-completion');
   if(Array.isArray(value.needs)&&value.needs.some(n=>n?.status==='unanswered')&&Array.isArray(value.hardFailures)&&!value.hardFailures.length)issues.push('unflagged-unanswered-need');
   if(Array.isArray(value.hardFailures)&&!value.hardFailures.length){
     if(value.outcome==='wrong-topic')issues.push('unflagged-wrong-topic');
     if(value.outcome==='clarification'&&Array.isArray(value.needs)&&!value.needs.some(n=>n?.status==='clarification-needed'))issues.push('unrepresented-clarification');
-    if(['partial','missing-evidence'].includes(value.outcome)&&Array.isArray(value.needs)&&!value.needs.some(n=>n?.status==='disclosed-gap'))issues.push('unrepresented-evidence-gap');
+    if(['partial','missing-evidence'].includes(value.outcome)&&Array.isArray(value.needs)&&!value.needs.some(n=>['partial','disclosed-gap'].includes(n?.status)))issues.push('unrepresented-evidence-gap');
+    if(value.outcome!=='partial'&&Array.isArray(value.needs)&&value.needs.some(n=>n?.status==='partial'))issues.push('contradictory-partial-need');
   }
   return [...new Set(issues)];
 }

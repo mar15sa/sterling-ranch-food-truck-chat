@@ -3,6 +3,19 @@ const fs=require('node:fs');
 const {audit}=require('../check-community-sources');
 const {approvedFingerprint,inputFingerprint,VERIFIER_VERSION}=require('../revalidate-approved-community');
 const {sourceEvidenceIdentity}=require('../../lib/community-approved-revalidation');
+const {hash}=require('./flow-evidence');
+function validateRulesSnapshot(index,attestation,communityId,now=Date.now()){
+  if(attestation?.status!=='passed'||attestation.communityId!==communityId||attestation.sourceSnapshotHash!==hash(index)||
+    attestation.baseSourceUrl!==index.source?.sourceUrl||String(attestation.latestJobId)!==String(index.source?.latestJobId)||
+    !attestation.sourcePublicationUnchanged||!attestation.baseDocumentsUnchanged)
+    throw new Error('Require passing exact rules snapshot verification');
+  const checked=Date.parse(attestation.checkedAt),expires=Date.parse(attestation.staleAfter);
+  if(!Number.isFinite(checked)||checked>now||!Number.isFinite(expires)||expires<now)throw new Error('Rules verification is expired or future dated');
+  const urls=new Set((index.source?.supplementalDocuments||[]).map(s=>s.sourceUrl));
+  if(!Array.isArray(attestation.checks)||attestation.checks.length!==urls.size||new Set(attestation.checks.map(c=>c.sourceUrl)).size!==urls.size||
+    attestation.checks.some(c=>!urls.has(c.sourceUrl)||c.status!=='unchanged'||!c.approvedScopePreserved))throw new Error('Rules supplement verification is incomplete');
+  return index;
+}
 function validateSnapshot(index,attestation,baseline,{now=Date.now(),auditFn=audit}={}){
   if(!index?.communityId||index.communityId!==baseline?.communityId)throw new Error('Snapshot community mismatch');
   if(attestation?.status!=='passed'||attestation.verifierVersion!==VERIFIER_VERSION||attestation.gateErrors?.length)
@@ -37,4 +50,4 @@ function loadSnapshot(indexPath,attestationPath,baseline){
   validateSnapshot(index,attestation,baseline);
   return {index,attestation};
 }
-module.exports={validateSnapshot,loadSnapshot};
+module.exports={validateSnapshot,loadSnapshot,validateRulesSnapshot};

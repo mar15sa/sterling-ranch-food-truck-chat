@@ -24,3 +24,20 @@ test('composer action selection is constrained to the packet inventory, not sour
   assert.equal(schema.properties.actionIds.items.enum.includes('e-source'),false);
   assert.equal(compositionSchema({actions:[]}).properties.actionIds.maxItems,0);
 });
+const {validateRulesSnapshot}=require('../scripts/quality-eval/flow-snapshot');
+const {hash}=require('../scripts/quality-eval/flow-evidence');
+const {acceptanceIssues}=require('../scripts/quality-eval/compact-acceptance-candidate');
+test('rules verification binds all supplements and exact loaded evidence to community and time',()=>{
+ const index={source:{sourceUrl:'https://rules.example/alpha',latestJobId:1,supplementalDocuments:[{sourceUrl:'https://alpha.example/policy'}]},documents:[{id:'one',text:'Approved rule'}]};
+ const now=Date.parse('2026-09-14T12:00Z'),a={status:'passed',communityId:'alpha',sourceSnapshotHash:hash(index),baseSourceUrl:index.source.sourceUrl,latestJobId:1,sourcePublicationUnchanged:true,baseDocumentsUnchanged:true,checkedAt:'2026-09-14T11:00Z',staleAfter:'2026-09-15T11:00Z',checks:[{sourceUrl:'https://alpha.example/policy',status:'unchanged',approvedScopePreserved:true}]};
+ assert.equal(validateRulesSnapshot(index,a,'alpha',now),index);
+ for(const mutate of [x=>x.sourceSnapshotHash='other',x=>x.status='failed',x=>x.checks=[],x=>x.checks.push(x.checks[0]),x=>x.checks[0].approvedScopePreserved=false,x=>x.staleAfter='2026-09-13T11:00Z',x=>x.checkedAt='2026-09-15T11:00Z']){const b=structuredClone(a);mutate(b);assert.throws(()=>validateRulesSnapshot(index,b,'alpha',now));}
+ assert.throws(()=>validateRulesSnapshot(index,a,'beta',now));
+});
+test('a partially supplied need is useful partial, never complete or unsupported',()=>{
+ const value={outcome:'partial',hardFailures:[],needs:[{request:'Process and destination',status:'partial',supportSourceIds:['known']}]};
+ assert.deepEqual(acceptanceIssues(value,['known']),[]);
+ assert.ok(acceptanceIssues({...value,outcome:'complete'},['known']).length);
+ assert.ok(acceptanceIssues({...value,outcome:'missing-evidence'},['known']).length);
+ assert.ok(acceptanceIssues({...value,needs:[{...value.needs[0],supportSourceIds:[]}]},['known']).length);
+});
