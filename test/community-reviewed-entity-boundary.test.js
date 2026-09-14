@@ -82,6 +82,14 @@ test('a requested finding period cannot borrow a different year, while publicati
   assert.match(publication.answer, /result was .absent. of coliform and e-coli/);
 });
 
+test('a matching year for one system cannot complete another requested system period', async () => {
+  const result = await ask('What did the CAB and Dominion water quality report say about violations in 2025?');
+  assert.notEqual(result.answerStatus, 'verified', result.answer);
+  assert.notEqual(result.completion?.outcome, 'complete');
+  assert.doesNotMatch(result.answer, /2\/13\/2026|4\/24\/2026|F325|M610/);
+  assert.ok((result.actions || []).some(action => /\/DocumentCenter\/View\/2398\//.test(action.url)), JSON.stringify(result.actions));
+});
+
 test('a compound report answer represents all three requested systems before extra findings', async () => {
   const result = await ask('What did the CAB, Dominion and Castle Rock water quality report say about violations?');
   assert.equal(result.answerStatus, 'verified', result.answer);
@@ -92,6 +100,18 @@ test('a compound report answer represents all three requested systems before ext
   for (const subject of ['water-report-cab-2025', 'water-report-dominion-2026', 'water-report-castle-rock-2025']) {
     assert.ok(selectedClaims.some(id => id.includes(subject)), `Missing reviewed finding for ${subject}`);
   }
+});
+
+test('different finding years stay bound to their own named system clauses', async () => {
+  const swapped = await ask('What did the CAB water quality report find in 2026 and Dominion find in 2025?');
+  assert.notEqual(swapped.answerStatus, 'verified', swapped.answer);
+  assert.notEqual(swapped.completion?.outcome, 'complete');
+  assert.doesNotMatch(swapped.answer, /January 15th, 2025|2\/13\/2026|4\/24\/2026/);
+  const supported = await ask('What did the CAB water quality report find in 2025 and Dominion find in 2026?');
+  assert.equal(supported.answerStatus, 'verified', supported.answer);
+  assert.match(supported.answer, /January 15th, 2025/);
+  assert.match(supported.answer, /Dominion/);
+  assert.match(supported.answer, /2\/13\/2026/);
 });
 
 test('caregiver cost and conditions cannot borrow a nonresident membership price', async () => {

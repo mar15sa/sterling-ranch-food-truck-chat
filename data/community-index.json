@@ -35362,7 +35362,8 @@
           "context": "Cost $300 per calendar year, no prorations permitted.",
           "facet": "fee",
           "scopeKey": "caregiver-cost",
-          "supportingQuote": "Cost $300 per calendar year, no prorations permitted."
+          "supportingQuote": "Cost $300 per calendar year, no prorations permitted.",
+          "subjectKey": "caregiver-pass"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-f0b8e4d67852",
@@ -35377,7 +35378,8 @@
           "context": "Caregivers using the pass must be with the person they are giving care to when using the facility. One caregiver membership card will be issued per household, a list of approved caregivers must be provided. One caregiver can use the pass at each visit.",
           "facet": "reservation-policy",
           "scopeKey": "caregiver-use",
-          "supportingQuote": "Caregivers using the pass must be with the person they are giving care to when using the facility. One caregiver membership card will be issued per household, a list of approved caregivers must be provided. One caregiver can use the pass at each visit."
+          "supportingQuote": "Caregivers using the pass must be with the person they are giving care to when using the facility. One caregiver membership card will be issued per household, a list of approved caregivers must be provided. One caregiver can use the pass at each visit.",
+          "subjectKey": "caregiver-pass"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-f0b8e4d67852",
@@ -35392,7 +35394,8 @@
           "context": "Complete the Annual Caregiver Pass Form . Allow 48 hours for the Resident Services Team to process your request. You will receive a confirmation email from the Resident Services Team with instructions to pick up your caregiver pass. Payment will be due at pickup. Acceptable payment options include credit/debit card, check, and cash.",
           "facet": "information",
           "scopeKey": "caregiver-process",
-          "supportingQuote": "Complete the Annual Caregiver Pass Form . Allow 48 hours for the Resident Services Team to process your request. You will receive a confirmation email from the Resident Services Team with instructions to pick up your caregiver pass. Payment will be due at pickup. Acceptable payment options include credit/debit card, check, and cash."
+          "supportingQuote": "Complete the Annual Caregiver Pass Form . Allow 48 hours for the Resident Services Team to process your request. You will receive a confirmation email from the Resident Services Team with instructions to pick up your caregiver pass. Payment will be due at pickup. Acceptable payment options include credit/debit card, check, and cash.",
+          "subjectKey": "caregiver-pass"
         }
       ],
       "actions": [
@@ -35447,7 +35450,8 @@
           "context": "There is no additional cost for club memberships for Sterling Ranch residents.",
           "facet": "fee",
           "scopeKey": "resident-membership-cost",
-          "supportingQuote": "There is no additional cost for club memberships for Sterling Ranch residents."
+          "supportingQuote": "There is no additional cost for club memberships for Sterling Ranch residents.",
+          "subjectKey": "resident-membership"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
@@ -35462,7 +35466,8 @@
           "context": "Once you close on your home in Sterling Ranch, complete the Resident Amenity Form . List each member of your household that lives in the house (including children). Memberships will not be given to family members not residing in the home.",
           "facet": "information",
           "scopeKey": "membership-application",
-          "supportingQuote": "Once you close on your home in Sterling Ranch, complete the Resident Amenity Form . List each member of your household that lives in the house (including children). Memberships will not be given to family members not residing in the home."
+          "supportingQuote": "Once you close on your home in Sterling Ranch, complete the Resident Amenity Form . List each member of your household that lives in the house (including children). Memberships will not be given to family members not residing in the home.",
+          "subjectKey": "resident-membership"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
@@ -35477,7 +35482,8 @@
           "context": "Proof of Sterling Ranch address will be required by all adults listed on the Resident Amenity Form that are 21 or older. Anyone 20 years of age or younger is not required proof of residency. Acceptable documentation includes closing documents, utility bills, driver's licenses, etc.",
           "facet": "information",
           "scopeKey": "membership-residency",
-          "supportingQuote": "Proof of Sterling Ranch address will be required by all adults listed on the Resident Amenity Form that are 21 or older. Anyone 20 years of age or younger is not required proof of residency. Acceptable documentation includes closing documents, utility bills, driver's licenses, etc."
+          "supportingQuote": "Proof of Sterling Ranch address will be required by all adults listed on the Resident Amenity Form that are 21 or older. Anyone 20 years of age or younger is not required proof of residency. Acceptable documentation includes closing documents, utility bills, driver's licenses, etc.",
+          "subjectKey": "resident-membership"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
@@ -35492,7 +35498,8 @@
           "context": "You will receive a confirmation email when your membership cards are ready to be picked up from recreation@sterlingranchcab.com . Allow the Resident Services Team two business days to process your membership request and prepare your access cards.",
           "facet": "information",
           "scopeKey": "membership-pickup",
-          "supportingQuote": "You will receive a confirmation email when your membership cards are ready to be picked up from recreation@sterlingranchcab.com . Allow the Resident Services Team two business days to process your membership request and prepare your access cards."
+          "supportingQuote": "You will receive a confirmation email when your membership cards are ready to be picked up from recreation@sterlingranchcab.com . Allow the Resident Services Team two business days to process your membership request and prepare your access cards.",
+          "subjectKey": "resident-membership"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
@@ -35507,7 +35514,8 @@
           "context": "Each resident requires a membership card (or a picture of your card) to access the Clubhouse. If you have lost your card, you may purchase a new one for $5.00.",
           "facet": "fee",
           "scopeKey": "replacement-membership-card",
-          "supportingQuote": "Each resident requires a membership card (or a picture of your card) to access the Clubhouse. If you have lost your card, you may purchase a new one for $5.00."
+          "supportingQuote": "Each resident requires a membership card (or a picture of your card) to access the Clubhouse. If you have lost your card, you may purchase a new one for $5.00.",
+          "subjectKey": "replacement-membership-card"
         }
       ],
       "actions": [
@@ -35862,7 +35870,8 @@
           "context": "The Overlook Clubhouse offers a Great Hall with a warming kitchen, an outdoor deck, and an indoor/outdoor fireplace. This space can be reserved for private use.",
           "facet": "information",
           "scopeKey": "great-hall-features",
-          "supportingQuote": "The Overlook Clubhouse offers a Great Hall with a warming kitchen, an outdoor deck, and an indoor/outdoor fireplace. This space can be reserved for private use."
+          "supportingQuote": "The Overlook Clubhouse offers a Great Hall with a warming kitchen, an outdoor deck, and an indoor/outdoor fireplace. This space can be reserved for private use.",
+          "subjectKey": "great-hall"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
@@ -35877,7 +35886,8 @@
           "context": "Hourly Pricing $100.00 per hour with a 2-hour minimum. All rentals include the use of the indoor space and balcony. A refundable security deposit of 250.00 will also be due upon rental confirmation.",
           "facet": "fee",
           "scopeKey": "great-hall-cost",
-          "supportingQuote": "Hourly Pricing $100.00 per hour with a 2-hour minimum. All rentals include the use of the indoor space and balcony. A refundable security deposit of 250.00 will also be due upon rental confirmation."
+          "supportingQuote": "Hourly Pricing $100.00 per hour with a 2-hour minimum. All rentals include the use of the indoor space and balcony. A refundable security deposit of 250.00 will also be due upon rental confirmation.",
+          "subjectKey": "great-hall"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
@@ -35892,7 +35902,8 @@
           "context": "North Pavilion Larger space that includes an outdoor fireplace and convertible picnic tables South Pavilion Smaller space that includes an outdoor BBQ grill and two picnic tables",
           "facet": "information",
           "scopeKey": "pavilion-features",
-          "supportingQuote": "North Pavilion Larger space that includes an outdoor fireplace and convertible picnic tables South Pavilion Smaller space that includes an outdoor BBQ grill and two picnic tables"
+          "supportingQuote": "North Pavilion Larger space that includes an outdoor fireplace and convertible picnic tables South Pavilion Smaller space that includes an outdoor BBQ grill and two picnic tables",
+          "subjectKey": "pavilion"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
@@ -35907,7 +35918,8 @@
           "context": "Hourly Pricing $25 per hour.",
           "facet": "fee",
           "scopeKey": "pavilion-cost",
-          "supportingQuote": "Hourly Pricing $25 per hour."
+          "supportingQuote": "Hourly Pricing $25 per hour.",
+          "subjectKey": "pavilion"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
@@ -36349,7 +36361,8 @@
           "context": "Annual Membership Fee $850.00 up to two persons, per year. No prorations are permitted.",
           "facet": "fee",
           "scopeKey": "nonresident-membership-fee",
-          "supportingQuote": "Annual Membership Fee $850.00 up to two persons, per year. No prorations are permitted."
+          "supportingQuote": "Annual Membership Fee $850.00 up to two persons, per year. No prorations are permitted.",
+          "subjectKey": "nonresident-membership"
         },
         {
           "reviewDecisionId": "complete-cab-review-20260914-90c1234386bf",
@@ -36364,7 +36377,8 @@
           "context": "To purchase a non-resident membership, please visit the Overlook Clubhouse front desk during regular operating hours.",
           "facet": "information",
           "scopeKey": "nonresident-membership-purchase",
-          "supportingQuote": "To purchase a non-resident membership, please visit the Overlook Clubhouse front desk during regular operating hours."
+          "supportingQuote": "To purchase a non-resident membership, please visit the Overlook Clubhouse front desk during regular operating hours.",
+          "subjectKey": "nonresident-membership"
         }
       ],
       "actions": [
@@ -110073,9 +110087,9 @@
       "claimKey": "sterling-ranch:calculating-outdoor-water-usage-scoped-landscape-method:method:water-method-mature-area"
     },
     {
-      "id": "7c4f9ac25de755ef3873f13a6872a7ce",
+      "id": "328fb3aee891fb255b32dbe55239f292",
       "communityId": "sterling-ranch",
-      "subjectKey": "annual-caregiver-pass",
+      "subjectKey": "caregiver-pass",
       "facet": "fee",
       "scopeKey": "caregiver-cost",
       "factType": "money",
@@ -110106,12 +110120,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-f0b8e4d67852",
       "approvalClaim": "complete-cab-review-20260914-f0b8e4d67852-operations-caregiver-cost",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:annual-caregiver-pass:fee:caregiver-cost"
+      "claimKey": "sterling-ranch:caregiver-pass:fee:caregiver-cost"
     },
     {
-      "id": "2e85c61e099bed4fc2281efb21f16722",
+      "id": "baad2bf131b8681604e25df9c819d721",
       "communityId": "sterling-ranch",
-      "subjectKey": "annual-caregiver-pass",
+      "subjectKey": "caregiver-pass",
       "facet": "reservation-policy",
       "scopeKey": "caregiver-use",
       "factType": "information",
@@ -110142,12 +110156,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-f0b8e4d67852",
       "approvalClaim": "complete-cab-review-20260914-f0b8e4d67852-operations-caregiver-use",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:annual-caregiver-pass:reservation-policy:caregiver-use"
+      "claimKey": "sterling-ranch:caregiver-pass:reservation-policy:caregiver-use"
     },
     {
-      "id": "db1f20ac9b8a84dd7ba0c0caefff4f84",
+      "id": "8a5505ed87da99306b780455182660d5",
       "communityId": "sterling-ranch",
-      "subjectKey": "annual-caregiver-pass",
+      "subjectKey": "caregiver-pass",
       "facet": "information",
       "scopeKey": "caregiver-process",
       "factType": "information",
@@ -110178,12 +110192,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-f0b8e4d67852",
       "approvalClaim": "complete-cab-review-20260914-f0b8e4d67852-operations-caregiver-process",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:annual-caregiver-pass:information:caregiver-process"
+      "claimKey": "sterling-ranch:caregiver-pass:information:caregiver-process"
     },
     {
-      "id": "b4210ff1546d33b4bcea33763b3f1c89",
+      "id": "6eb480961f7320e671149e95056b1854",
       "communityId": "sterling-ranch",
-      "subjectKey": "memberships",
+      "subjectKey": "resident-membership",
       "facet": "fee",
       "scopeKey": "resident-membership-cost",
       "factType": "information",
@@ -110214,12 +110228,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
       "approvalClaim": "complete-cab-review-20260914-5ca87824ba21-operations-resident-membership-cost",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:memberships:fee:resident-membership-cost"
+      "claimKey": "sterling-ranch:resident-membership:fee:resident-membership-cost"
     },
     {
-      "id": "44f2cdfa9985a32fd0e1118f76eaea50",
+      "id": "c4a507836cdcd56c2dd3487cddd93386",
       "communityId": "sterling-ranch",
-      "subjectKey": "memberships",
+      "subjectKey": "resident-membership",
       "facet": "information",
       "scopeKey": "membership-application",
       "factType": "information",
@@ -110250,12 +110264,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
       "approvalClaim": "complete-cab-review-20260914-5ca87824ba21-operations-membership-application",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:memberships:information:membership-application"
+      "claimKey": "sterling-ranch:resident-membership:information:membership-application"
     },
     {
-      "id": "95488d703c51ee587ada18e57edb65d6",
+      "id": "97728e181b3d3ccb87f9a1949353effb",
       "communityId": "sterling-ranch",
-      "subjectKey": "memberships",
+      "subjectKey": "resident-membership",
       "facet": "information",
       "scopeKey": "membership-residency",
       "factType": "information",
@@ -110286,12 +110300,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
       "approvalClaim": "complete-cab-review-20260914-5ca87824ba21-operations-membership-residency",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:memberships:information:membership-residency"
+      "claimKey": "sterling-ranch:resident-membership:information:membership-residency"
     },
     {
-      "id": "bd55811918fae27707a2c12c47b707e2",
+      "id": "46e176880dbc1a915f44a5c78f9a6f50",
       "communityId": "sterling-ranch",
-      "subjectKey": "memberships",
+      "subjectKey": "resident-membership",
       "facet": "information",
       "scopeKey": "membership-pickup",
       "factType": "information",
@@ -110322,12 +110336,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
       "approvalClaim": "complete-cab-review-20260914-5ca87824ba21-operations-membership-pickup",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:memberships:information:membership-pickup"
+      "claimKey": "sterling-ranch:resident-membership:information:membership-pickup"
     },
     {
-      "id": "a48498e28021d684217a2870f1c42af0",
+      "id": "18bfbd4b8818eaf700bbf388ea96db22",
       "communityId": "sterling-ranch",
-      "subjectKey": "memberships",
+      "subjectKey": "replacement-membership-card",
       "facet": "fee",
       "scopeKey": "replacement-membership-card",
       "factType": "money",
@@ -110358,7 +110372,7 @@
       "reviewDecisionId": "complete-cab-review-20260914-5ca87824ba21",
       "approvalClaim": "complete-cab-review-20260914-5ca87824ba21-operations-replacement-membership-card",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:memberships:fee:replacement-membership-card"
+      "claimKey": "sterling-ranch:replacement-membership-card:fee:replacement-membership-card"
     },
     {
       "id": "a58f11d0ca346ded3c5a20cb53eb2a59",
@@ -110649,9 +110663,9 @@
       "claimKey": "sterling-ranch:snow-removal:information:townhome-snow-support"
     },
     {
-      "id": "3040b05437d9369b636ae944ebc9112a",
+      "id": "c1c27b7c7d83114fbecd32bc70f2df85",
       "communityId": "sterling-ranch",
-      "subjectKey": "rent-the-facility",
+      "subjectKey": "great-hall",
       "facet": "information",
       "scopeKey": "great-hall-features",
       "factType": "information",
@@ -110682,12 +110696,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
       "approvalClaim": "complete-cab-review-20260914-97b97fbb46ee-operations-great-hall-features",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:rent-the-facility:information:great-hall-features"
+      "claimKey": "sterling-ranch:great-hall:information:great-hall-features"
     },
     {
-      "id": "bba76a43e61bbbf5c027a5b8d2be8dd4",
+      "id": "f07ab2e89f42abcbcdccad5188ed71f8",
       "communityId": "sterling-ranch",
-      "subjectKey": "rent-the-facility",
+      "subjectKey": "great-hall",
       "facet": "fee",
       "scopeKey": "great-hall-cost",
       "factType": "money",
@@ -110718,12 +110732,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
       "approvalClaim": "complete-cab-review-20260914-97b97fbb46ee-operations-great-hall-cost",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:rent-the-facility:fee:great-hall-cost"
+      "claimKey": "sterling-ranch:great-hall:fee:great-hall-cost"
     },
     {
-      "id": "fdb7926de96c7a55edc16ea43c7d422a",
+      "id": "6c8934d2cbf2ab538a2dce6d740fd2ef",
       "communityId": "sterling-ranch",
-      "subjectKey": "rent-the-facility",
+      "subjectKey": "pavilion",
       "facet": "information",
       "scopeKey": "pavilion-features",
       "factType": "information",
@@ -110754,12 +110768,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
       "approvalClaim": "complete-cab-review-20260914-97b97fbb46ee-operations-pavilion-features",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:rent-the-facility:information:pavilion-features"
+      "claimKey": "sterling-ranch:pavilion:information:pavilion-features"
     },
     {
-      "id": "3731b8c8e33afad7d722e0c7384253d3",
+      "id": "39be2b9ef555ed22298b6c08599ad7a1",
       "communityId": "sterling-ranch",
-      "subjectKey": "rent-the-facility",
+      "subjectKey": "pavilion",
       "facet": "fee",
       "scopeKey": "pavilion-cost",
       "factType": "money",
@@ -110790,7 +110804,7 @@
       "reviewDecisionId": "complete-cab-review-20260914-97b97fbb46ee",
       "approvalClaim": "complete-cab-review-20260914-97b97fbb46ee-operations-pavilion-cost",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:rent-the-facility:fee:pavilion-cost"
+      "claimKey": "sterling-ranch:pavilion:fee:pavilion-cost"
     },
     {
       "id": "441f605533aad0446f69606d186cb682",
@@ -111009,9 +111023,9 @@
       "claimKey": "sterling-ranch:sterling-ranch-311:information:311-submission-steps"
     },
     {
-      "id": "2858dcaedcbb350b41052a5bb1158da3",
+      "id": "b79fa02814c354163745b81ba37b0686",
       "communityId": "sterling-ranch",
-      "subjectKey": "non-resident-memberships",
+      "subjectKey": "nonresident-membership",
       "facet": "fee",
       "scopeKey": "nonresident-membership-fee",
       "factType": "money",
@@ -111042,12 +111056,12 @@
       "reviewDecisionId": "complete-cab-review-20260914-90c1234386bf",
       "approvalClaim": "complete-cab-review-20260914-90c1234386bf-operations-nonresident-membership-fee",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:non-resident-memberships:fee:nonresident-membership-fee"
+      "claimKey": "sterling-ranch:nonresident-membership:fee:nonresident-membership-fee"
     },
     {
-      "id": "f3b3989720801f76ed27e4bb057f8403",
+      "id": "791a32915d0d61089faf65c8e6f62856",
       "communityId": "sterling-ranch",
-      "subjectKey": "non-resident-memberships",
+      "subjectKey": "nonresident-membership",
       "facet": "information",
       "scopeKey": "nonresident-membership-purchase",
       "factType": "information",
@@ -111078,7 +111092,7 @@
       "reviewDecisionId": "complete-cab-review-20260914-90c1234386bf",
       "approvalClaim": "complete-cab-review-20260914-90c1234386bf-operations-nonresident-membership-purchase",
       "lifecycle": "current",
-      "claimKey": "sterling-ranch:non-resident-memberships:information:nonresident-membership-purchase"
+      "claimKey": "sterling-ranch:nonresident-membership:information:nonresident-membership-purchase"
     },
     {
       "id": "8ff8f241b6e9dab11f459aef887848ab",

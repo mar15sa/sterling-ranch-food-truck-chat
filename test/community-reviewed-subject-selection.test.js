@@ -112,4 +112,23 @@ test.describe('reviewed subject selection across related claims', () => {
     assert.match(method.answer, /each plant at full growth/);
     assert.doesNotMatch(method.answer, /\$|currently running|is running right now/);
   });
+
+  test('inferred ledger subjects never become hard reviewed entity boundaries', () => {
+    const index = fixture();
+    const { sourceReviewState } = require('../lib/community-source-answerability');
+    const unkeyed = index.sources.find(source => /\/243\//.test(source.sourceUrl));
+    const entries = sourceReviewState(index, now).entriesFor(unkeyed).filter(entry => entry.factType !== 'link');
+    assert.ok(entries.some(entry => entry.subjectKey));
+    assert.ok(entries.every(entry => entry.reviewedSubjectKey === ''));
+  });
+
+  test('both canonical and ledger copies retain the same explicit reviewed entity boundary', () => {
+    const index = fixture();
+    const { sourceReviewState } = require('../lib/community-source-answerability');
+    const membership = index.sources.find(source => /\/183\//.test(source.sourceUrl));
+    const claim = membership.facts.find(fact => fact.subjectKey === 'resident-membership').approvalClaim;
+    const copies = sourceReviewState(index, now).entriesFor(membership).filter(entry => entry.approvalClaim === claim);
+    assert.ok(copies.length >= 2);
+    assert.ok(copies.every(entry => entry.reviewedSubjectKey === 'resident-membership'));
+  });
 });
