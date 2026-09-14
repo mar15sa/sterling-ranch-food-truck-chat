@@ -5,6 +5,7 @@ const {createConnectorAdapters}=require('../../lib/community-connector-adapter')
 const {getCommunityEvents}=require('../../lib/community-events');
 const {getCommunityPoolStatus}=require('../../lib/community-pool-status');
 const {hash}=require('./flow-evidence');
+const {fetchExtraLive,projectExtraLive}=require('./extra-live-evidence');
 
 function requireCurrent(value,now){
  const checked=Date.parse(value?.checkedAt),expires=Date.parse(value?.staleAfter);
@@ -49,6 +50,8 @@ function projectLiveResult(result,adapter,request,{now=Date.now(),timezone}={}){
   data={kind:'current-status',timezone,observedAt:envelope.observedAt,headline:result.headline,summary:result.summary,
    scopeLimit:'Current operational status only; does not establish regular hours, future availability, season dates or permission.'};
   title=adapter.labels.openAction||'Official current status';
+ }else if(['food-truck-schedule','live-waste-schedule'].includes(adapter.family)){
+  const projected=projectExtraLive(result,adapter,request);title=projected.title;data={...projected.data,timezone,observedAt:envelope.observedAt};
  }else throw new Error('Live adapter family not integrated');
  const checkedAt=envelope.evidence.map(e=>e.checkedAt).sort()[0],staleAfter=envelope.evidence.map(e=>e.staleAfter).sort()[0];
  const sourceUrl=safeUrl(result.sourceUrl,adapter),text=JSON.stringify(data),contentHash=hash([adapter.adapterId,envelope,text,actions]);
@@ -72,6 +75,8 @@ function createLiveEvidenceRetriever({profile,requests={},fetchImpl=fetch,clock=
     const configured=(profile.connectors||[]).filter(c=>c.adapter?.poolStatus);
     if(configured.length!==1||configured[0].id!==adapter.connectorId)throw new Error('Exact status adapter binding unavailable');
     result=await getCommunityPoolStatus({profile,fetchImpl,now:()=>new Date(clock())});
+   }else if(['food-truck','waste-schedule'].includes(request.kind)){
+    result=await fetchExtraLive(request,{profile,adapter,fetchImpl,clock});
    }else throw new Error('Requested live capability not integrated');
    return {sources:[projectLiveResult(result,adapter,request,{now:clock(),timezone:profile.timezone})],diagnostics:[]};
   }catch(error){return {sources:[],diagnostics:[{needId:need.id,reason:'live-evidence-unavailable',detail:error.message}]};}
