@@ -40,4 +40,10 @@ This task does not authorize production release. Before any promotion, the exact
 
 ## Documentation impact
 
-The affected Notion pages are the owner hub, How the project works, and Documentation audit and follow-ups. They must show the repair as implemented locally and awaiting review, while retaining the separate released and verified-live states. The calendar diagram should replace the pending-gap branch with the conservative range rule. The exact Notion edit and post-edit fetch are completed separately after this implementation has a commit identifier.
+The following Notion pages were fetched before editing, updated to show implementation commit `be795dc2c13b0ed7a77ce6544e3b94574619ffd8` as local and awaiting review, then fetched again to verify the new text and preserved diagrams/images:
+
+- [Documentation audit and follow-ups](https://www.notion.so/3dabf909186d81a2a090c2cb90183e96): finding advanced from repair pending to implemented locally; the original reproduction attachment remains present.
+- [Sterling Ranch Society · Project Guide](https://www.notion.so/3dabf909186d81789a09e4648dbb4bbe): current calendar diagram and accessible explanation now show conservative range status, freshness, and empty-result handling.
+- [How the project works](https://www.notion.so/3dabf909186d8166b507c2a4e1d1aced): the matching calendar diagram and accessible explanation were updated while preserving the separate facility/vendor route and earlier images.
+
+All three pages keep production at revision `e5e533896f9553681193b453fa2492a60dadf7a5` and explicitly say the repair is not pushed, merged, released, or verified live.
