@@ -1,5 +1,7 @@
 # Open places, walks and future layers
 
+Superseded visual treatment: Marissa rejected the illustrated place view on September 13, 2026 because it looked poor and did not add usefulness. The illustrated screens and artwork have been removed in the [staging correction](ATLAS-ILLUSTRATION-REMOVAL.md). The record below describes the earlier release, not a current visual approval. Grouped listings, walking guides and future controls are retained.
+
 September 13, 2026. Marissa approved implementing the proposed visual directions with “Make it happen.” Authorization covers staging only; production launch remains unapproved.
 
 Final staging revision: `b0b5dc8ab5b025a4df3c877e7e95f4a9006668a9`, verified ready September 13, 2026 at 20:31:37 UTC. The ten checked Atlas page/data/script/style paths matched the reviewed build and remained 404 on production. [Final release evidence](../artifacts/atlas/open-places-final-release-check.json). [Final deployment-health CI](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34780924188) passed; this push workflow does not run the full suite. The initial combined release `2201ef4` was verified at 20:19 UTC with [earlier release evidence](../artifacts/atlas/open-places-release-check.json) and [successful deployment checks](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/34780380106).

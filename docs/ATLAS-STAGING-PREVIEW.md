@@ -1,5 +1,9 @@
 # Sterling Ranch Atlas: staging prototype
 
+## Current correction: illustrated place view removed
+
+Marissa rejected the illustrated treatment on September 13, 2026. The [correction record](ATLAS-ILLUSTRATION-REMOVAL.md) covers restoring direct details on the geographic map while retaining grouped amenities, all 100 records, walking choices and future-project controls. Earlier illustrated screenshots and approval notes below are historical. Production launch remains unapproved.
+
 ## Illustrated places, future layers and walking choices: September 13, 2026
 
 Marissa approved implementation with “Make it happen.” Final staging revision `b0b5dc8ab5b025a4df3c877e7e95f4a9006668a9` was verified ready at 20:31:37 UTC. McCormick, Burns and Sterling Center have illustrative landmarks that open into their actual amenities and nested businesses. A Now / With what's coming layer separates planned additions and presents unlocated projects as cards; returning to Now also clears a future-only category selection. Walking choices update the route and map by approximate time and show a start-to-finish summary with nearby activities. [Implementation, browser review and release evidence](ATLAS-OPEN-PLACES-IMPLEMENTATION.md).

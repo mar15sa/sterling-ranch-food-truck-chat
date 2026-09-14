@@ -1,0 +1,112 @@
+{
+  "checkedAt": "2026-09-14T02:18:37.822Z",
+  "revision": "0a8e9b15fc4f43a6c202128d3728b9e82c9b2110",
+  "ready": true,
+  "checks": [
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/experience.json",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/experience.json",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/places.json",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/places.json",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-art.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-art.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-core.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-core.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-experience.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-experience.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-experience.css",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-experience.css",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-trails.js",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-trails.js",
+      "status": 404,
+      "noindex": null
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/atlas-trails.css",
+      "status": 200,
+      "noindex": "noindex, nofollow, noarchive"
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/atlas-trails.css",
+      "status": 404,
+      "noindex": null
+    }
+  ],
+  "exactAssetsMatch": true,
+  "listed": 100,
+  "destinations": 33,
+  "illustratedViewRemoved": true,
+  "productionLaunched": false
+}
