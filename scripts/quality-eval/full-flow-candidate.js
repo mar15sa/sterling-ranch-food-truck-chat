@@ -45,6 +45,7 @@ function packetIssues(packet,communityId){
 function draftIssues(draft,packet){
   if(!draft||typeof draft.answer!=='string'||!draft.answer.trim()||draft.answer.length>3000||!Array.isArray(draft.actionIds)||Object.keys(draft).some(k=>!['answer','actionIds'].includes(k)))return ['invalid-draft'];
   const issues=[];if(new Set(draft.actionIds).size!==draft.actionIds.length||draft.actionIds.some(id=>!packet.actions.some(a=>a.id===id)))issues.push('unknown-action');
+  if(/(?:<|&lt;)\/?(?:answer|actionIds|tool[_-]?(?:call|use|result)|function[_-]?call|parameter)\b/i.test(draft.answer))issues.push('tool-markup-in-answer');
   const urls=new Set([...packet.sources.map(s=>s.sourceUrl),...packet.actions.map(a=>a.url)]);
   for(const match of draft.answer.matchAll(/https?:\/\/[^\s<>\])]+/g))if(!urls.has(match[0].replace(/[.,;]+$/,'')))issues.push('unverified-answer-url');
   return [...new Set(issues)];

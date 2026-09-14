@@ -109,3 +109,10 @@ test('offline review is explicit, never labels a draft verified, and retains str
  assert.equal(rejected.status,'unresolved-experiment');assert.equal(rejected.answer,null);assert.equal(bad.requests.length,2);
  await assert.rejects(()=>runCandidate({question:'Example'},{...opts,assessmentMode:'unknown'}));
 });
+
+test('serialized tool fields inside answer prose are rejected rather than silently cleaned',()=>{
+ for(const answer of ['Supported text.</answer><actionIds">["a"]</actionIds>','Supported text. &lt;/answer&gt;','<tool_call>apply</tool_call>']){
+  assert.ok(draftIssues({answer,actionIds:[]},packet).includes('tool-markup-in-answer'));
+ }
+ assert.deepEqual(draftIssues({answer:'Use the application form. The committee can answer questions.',actionIds:[]},packet),[]);
+});
