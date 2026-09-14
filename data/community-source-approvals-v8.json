@@ -2909,6 +2909,7 @@
       "facts": [
         {
           "id": "complete-cab-review-20260914-f0b8e4d67852-operations-caregiver-cost",
+          "subjectKey": "caregiver-pass",
           "text": "Cost $300 per calendar year, no prorations permitted.",
           "facet": "fee",
           "type": "money",
@@ -2919,6 +2920,7 @@
         },
         {
           "id": "complete-cab-review-20260914-f0b8e4d67852-operations-caregiver-use",
+          "subjectKey": "caregiver-pass",
           "text": "Caregivers using the pass must be with the person they are giving care to when using the facility. One caregiver membership card will be issued per household, a list of approved caregivers must be provided. One caregiver can use the pass at each visit.",
           "facet": "reservation-policy",
           "type": "information",
@@ -2929,6 +2931,7 @@
         },
         {
           "id": "complete-cab-review-20260914-f0b8e4d67852-operations-caregiver-process",
+          "subjectKey": "caregiver-pass",
           "text": "Complete the Annual Caregiver Pass Form . Allow 48 hours for the Resident Services Team to process your request. You will receive a confirmation email from the Resident Services Team with instructions to pick up your caregiver pass. Payment will be due at pickup. Acceptable payment options include credit/debit card, check, and cash.",
           "facet": "information",
           "type": "information",
@@ -3003,6 +3006,7 @@
       "facts": [
         {
           "id": "complete-cab-review-20260914-5ca87824ba21-operations-resident-membership-cost",
+          "subjectKey": "resident-membership",
           "text": "There is no additional cost for club memberships for Sterling Ranch residents.",
           "facet": "fee",
           "type": "information",
@@ -3013,6 +3017,7 @@
         },
         {
           "id": "complete-cab-review-20260914-5ca87824ba21-operations-membership-application",
+          "subjectKey": "resident-membership",
           "text": "Once you close on your home in Sterling Ranch, complete the Resident Amenity Form . List each member of your household that lives in the house (including children). Memberships will not be given to family members not residing in the home.",
           "facet": "information",
           "type": "information",
@@ -3023,6 +3028,7 @@
         },
         {
           "id": "complete-cab-review-20260914-5ca87824ba21-operations-membership-residency",
+          "subjectKey": "resident-membership",
           "text": "Proof of Sterling Ranch address will be required by all adults listed on the Resident Amenity Form that are 21 or older. Anyone 20 years of age or younger is not required proof of residency. Acceptable documentation includes closing documents, utility bills, driver's licenses, etc.",
           "facet": "information",
           "type": "information",
@@ -3033,6 +3039,7 @@
         },
         {
           "id": "complete-cab-review-20260914-5ca87824ba21-operations-membership-pickup",
+          "subjectKey": "resident-membership",
           "text": "You will receive a confirmation email when your membership cards are ready to be picked up from recreation@sterlingranchcab.com . Allow the Resident Services Team two business days to process your membership request and prepare your access cards.",
           "facet": "information",
           "type": "information",
@@ -3043,6 +3050,7 @@
         },
         {
           "id": "complete-cab-review-20260914-5ca87824ba21-operations-replacement-membership-card",
+          "subjectKey": "replacement-membership-card",
           "text": "Each resident requires a membership card (or a picture of your card) to access the Clubhouse. If you have lost your card, you may purchase a new one for $5.00.",
           "facet": "fee",
           "type": "money",
@@ -3475,6 +3483,7 @@
       "facts": [
         {
           "id": "complete-cab-review-20260914-97b97fbb46ee-operations-great-hall-features",
+          "subjectKey": "great-hall",
           "text": "The Overlook Clubhouse offers a Great Hall with a warming kitchen, an outdoor deck, and an indoor/outdoor fireplace. This space can be reserved for private use.",
           "facet": "information",
           "type": "information",
@@ -3485,6 +3494,7 @@
         },
         {
           "id": "complete-cab-review-20260914-97b97fbb46ee-operations-great-hall-cost",
+          "subjectKey": "great-hall",
           "text": "Hourly Pricing $100.00 per hour with a 2-hour minimum. All rentals include the use of the indoor space and balcony. A refundable security deposit of 250.00 will also be due upon rental confirmation.",
           "facet": "fee",
           "type": "money",
@@ -3495,6 +3505,7 @@
         },
         {
           "id": "complete-cab-review-20260914-97b97fbb46ee-operations-pavilion-features",
+          "subjectKey": "pavilion",
           "text": "North Pavilion Larger space that includes an outdoor fireplace and convertible picnic tables South Pavilion Smaller space that includes an outdoor BBQ grill and two picnic tables",
           "facet": "information",
           "type": "information",
@@ -3505,6 +3516,7 @@
         },
         {
           "id": "complete-cab-review-20260914-97b97fbb46ee-operations-pavilion-cost",
+          "subjectKey": "pavilion",
           "text": "Hourly Pricing $25 per hour.",
           "facet": "fee",
           "type": "money",
@@ -4082,6 +4094,7 @@
       "facts": [
         {
           "id": "complete-cab-review-20260914-90c1234386bf-operations-nonresident-membership-fee",
+          "subjectKey": "nonresident-membership",
           "text": "Annual Membership Fee $850.00 up to two persons, per year. No prorations are permitted.",
           "facet": "fee",
           "type": "money",
@@ -4092,6 +4105,7 @@
         },
         {
           "id": "complete-cab-review-20260914-90c1234386bf-operations-nonresident-membership-purchase",
+          "subjectKey": "nonresident-membership",
           "text": "To purchase a non-resident membership, please visit the Overlook Clubhouse front desk during regular operating hours.",
           "facet": "information",
           "type": "information",
