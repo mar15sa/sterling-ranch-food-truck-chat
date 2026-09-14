@@ -2,6 +2,8 @@
 
 **Decision: neither tested candidate is ready to recommend or release.** Both are more expensive and slower, and each failed to deliver an accepted answer on 2 of 16 attempts. Accepted answers also contain demonstrated relevance failures. The goal remains active.
 
+Subsequent local runtime repair preserves a validated clarification for a still-context-dependent request before guessed retrieval. It reuses the existing conversation decision and makes no additional model call. Existing clarification-producing interpretation cost remains; avoided retrieval/composition savings have not been remeasured. The historical comparison below is unchanged and must not be relabeled as a benchmark of the newly repaired revision.
+
 This is a completed, balanced diagnostic comparison: eight authored document-question scenarios, twice per arm, using the same exact source snapshot and recorded date. All questions are tests. It is not a frozen unseen benchmark, independent human review, or the production invoice. The local baseline includes the context, identity and expiry repairs already made in this worktree.
 
 | Flow | AI calls / 16 questions | Answer present | Median / p95 time | AI cost / attempted question | AI cost / 1,000 questions |
