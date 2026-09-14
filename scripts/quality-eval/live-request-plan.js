@@ -17,7 +17,7 @@ function liveUnderstandingRequest(row,model,profile,now=Date.now()){
  need.required.push('liveRequest');need.properties.liveRequest={type:'object',additionalProperties:false,required:['connectorId','kind','dateText','filters'],properties:{
   connectorId:{type:'string',enum:['',...choices.filter(c=>c.kind!=='unavailable').map(c=>c.connectorId)]},kind:{type:'string',enum:['none','calendar','current-status']},dateText:{type:'string'},
   filters:{type:'object',additionalProperties:false,required:['category','location'],properties:{category:{type:'string'},location:{type:'string'}}}}};
- request.tools[0].input_schema=schema;request.tools[0].strict=true;
+ request.tools[0].input_schema=schema;
  request.system+='\n'+[
   'For each need, record liveRequest using only the supplied configured connector choices. For non-live or unavailable capabilities return kind none, connectorId empty, dateText empty and both filter strings empty.',
   'Calendar supplies scheduled events/classes/meetings for a bounded period. Current-status supplies only its named facility status now, never normal hours, future opening, prices, booking, permission or events. Do not substitute an available connector for another unintegrated family such as waste or food trucks.',
@@ -32,7 +32,12 @@ function resolveLivePlan(raw,row,profile,now=Date.now()){
  const plan=structuredClone(raw),requests={},diagnostics=[],choices=connectorChoices(profile);
  if(!Array.isArray(plan?.needs))return {plan,issues:['missing-needs'],requests,diagnostics};
  const live=plan.needs.map(n=>n.liveRequest);plan.needs=plan.needs.map(({liveRequest,...n})=>n);
- const issues=validationIssues(plan);if(issues.length)return {plan,issues,requests,diagnostics};
+ const issues=validationIssues(plan);
+ if(typeof plan.clarificationQuestion==='string'){
+  if(plan.scope!=='ambiguous'&&plan.clarificationQuestion.trim())issues.push('unnecessary-plan-clarification');
+  if(plan.clarificationQuestion.length>400||/<\/?(?:antml|parameter)\b/i.test(plan.clarificationQuestion))issues.push('invalid-clarification-text');
+ }
+ if(issues.length)return {plan,issues,requests,diagnostics};
  const original=[row.question,...(plan.usedPriorContext?(row.context||[]).slice(-3).map(c=>c.question):[])].map(normalize);
  const copied=s=>typeof s==='string'&&s.length<=160&&(!s.trim()||original.some(q=>q.includes(normalize(s))));
  for(const [i,need] of plan.needs.entries()){
