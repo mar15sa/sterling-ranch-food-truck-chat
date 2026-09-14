@@ -8,4 +8,6 @@ test('comparison counts all attempts without treating unreviewed answers as qual
  assert.throws(()=>buildComparison({...manifest,status:'running'},records));
  assert.throws(()=>buildComparison(manifest,records.slice(1)));
  const duplicate=structuredClone(records);duplicate[1].repetition=1;assert.throws(()=>buildComparison(manifest,duplicate));
+ const retrieval={method:'local-semantic-plus-keyword',initializationMs:1200,embeddingApiCostUsd:0,hostingCostUsd:null};
+ const semantic=buildComparison({...manifest,retrieval},records);assert.deepEqual(semantic.retrieval,retrieval);assert.equal(semantic.arms.a.medianMs,150);
 });

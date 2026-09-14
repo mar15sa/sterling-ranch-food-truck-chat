@@ -22,6 +22,7 @@ function buildComparison(manifest,records){
  }
  const total=summarize(records.flatMap(r=>r.calls));
  return {isTest:true,sourceRevision:manifest.codeRevision,assessmentMode:manifest.assessmentMode||'inline',communityMode:manifest.communityMode||'keyword',
+  retrieval:manifest.retrieval||{method:'keyword',initializationMs:null},
   cases:caseIds.length,repetitions:manifest.repetitions,trials:records.length,arms,total,reservedUpperUsd:manifest.reservedUpperEstimateUsd,
   limitations:['Answer presence and local/model acceptance are not independently measured usefulness or excellence.',
    'Small authored diagnostic, not unseen holdout or human calibration. The p95 is a nearest-rank sample estimate.',

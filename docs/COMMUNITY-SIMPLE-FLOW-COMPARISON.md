@@ -1,5 +1,7 @@
 # Simpler answer flow: September 14 diagnostic
 
+Later evidence: [Full-flow semantic comparison](COMMUNITY-SEMANTIC-FULL-FLOW-COMPARISON.md) measures fresh interpretation, semantic retrieval and composition across 48 completed trials. Candidate costs were $11.92/$28.17 per 1,000, with remaining evidence-use failures; neither writer is selected. The original keyword comparison below remains unchanged.
+
 No candidate is selected for release. Removing the serial AI checker substantially reduced answering costs, and the complete approved community catalog improved application-directory selection. The answers still contain confirmed relevance and source-interpretation failures. All candidate outputs remain explicitly unreviewed.
 
 ## Full answering comparison
