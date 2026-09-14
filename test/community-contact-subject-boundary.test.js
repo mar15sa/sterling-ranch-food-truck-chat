@@ -48,3 +48,19 @@ test('an approved specialized email does not borrow the neighboring general phon
   assert.match(answer, /network@example.gov/);
   assert.doesNotMatch(answer, /303-555-0101|frontdesk/);
 });
+
+test('a shared billing task cannot substitute a different service contact', () => {
+  const water = { title: 'Water Billing & Payment Options', facts: [{ type: 'phone', value: '303-555-0103',
+    context: 'For billing and account assistance, contact the customer service team at 303-555-0103.' }] };
+  for (const question of ['What is the internet billing phone number?', 'Who do I contact about internet billing?',
+    'Who handles internet bill payments?', 'What is the phone number for internet customer service?']) {
+    assert.equal(bestContactContext(question, [water]), '', question);
+  }
+  for (const question of ['What is the water billing phone number?', 'Who do I contact about water bill payments?',
+    'Who do I contact about billing?']) {
+    assert.match(bestContactContext(question, [water]), /303-555-0103/, question);
+  }
+  const internet = { title: 'Internet Service', facts: [{ type: 'phone', value: '303-555-0104',
+    context: 'For account questions call 303-555-0104.' }] };
+  assert.match(bestContactContext('What is the internet billing phone number?', [water, internet]), /303-555-0104/);
+});

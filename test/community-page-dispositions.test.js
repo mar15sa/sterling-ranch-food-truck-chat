@@ -13,14 +13,14 @@ function fixtureFor(url) {
   };
 }
 
-test('the four-category CAB page audit records every page with an exact version disposition', () => {
+test('the historical 88-page CAB audit retains every exact version disposition', () => {
   assert.equal(decisions.records.length, 88);
   assert.equal(new Set(decisions.records.map(record => record.sourceUrl)).size, 88);
   assert.ok(decisions.records.every(record => record.categoryId && record.disposition && record.reason && record.versionFingerprint));
   assert.deepEqual(Object.fromEntries([...new Set(decisions.records.map(record => record.disposition))].map(disposition => [disposition, decisions.records.filter(record => record.disposition === disposition).length])), {
-    'answer-evidence': 9,
+    'answer-evidence': 10,
     'safe-link': 30,
-    'review-required': 28,
+    'review-required': 27,
     'live-feed': 1,
     excluded: 20,
   });

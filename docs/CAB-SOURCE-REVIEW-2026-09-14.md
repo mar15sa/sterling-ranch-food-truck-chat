@@ -35,6 +35,8 @@ Before this work, a completed URL inventory was mistaken for a completed answer 
 
 The implementation validates each claim against its own exact quotation, converts metadata to the shared fact/action contracts, and keeps approval scope in data. Answer selection must preserve the resident's requested subject, process and authority. It cannot use a related word or a page's overall approval to supply an unsupported claim.
 
+Final integration checks extended this boundary to shared task words: internet billing cannot borrow a water-billing contact or payment link, utility infrastructure fees cannot become clubhouse rental fees, and pool-party wording cannot borrow a Great Hall booking answer. Evaluation time is propagated consistently through fallback searches. The synthetic date used by the new review-family tests is scoped to that suite so it cannot expire unrelated fixtures when the complete test runner loads files together.
+
 Canonical approved projections now require a valid future source expiry, including when a ledger copy exists. Newly reviewed PDFs opt into exact binary fingerprint checks: an image-only change fails closed even if extracted text is unchanged. Existing dynamic connector behavior is preserved. Changed or unavailable evidence does not inherit approval.
 
 ## Owner view
@@ -48,6 +50,8 @@ Current evidence, completed inventory, content decisions and an external source-
 The review package, inventory reconciliation, exact PDF identity, stale canonical projections, typed contacts/methods, action proof and admin presentation have dedicated tests. Package-derived question-family tests exercise supported answers, current-safety exclusions, unrelated contacts, changed hashes and expiry. All hosted requests must include `isTest: true`; browser questions require `/community-assistant?test=1` and its visible Test mode banner.
 
 Run the protected pull-request quality checks, deploy the candidate to staging while preserving staging-only work, verify representative test-mode answers, then release and verify the exact production revision. No source-publishing mode, model configuration, owner access or resident records are changed by this review.
+
+Release tracking: [production PR 138](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/138) and [staging PR 139](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/139). Initial complete checks exposed outdated test assumptions, a shared test-clock leak, and the selection collisions above; they were not bypassed. Exact passing checks and deployment verification will be attached to those release records. The local admin preview confirmed expandable category/source details, readable allowed-versus-excluded claims, and the answer-accuracy section collapsed above the question filters. Local preview is not evidence of production deployment.
 
 Review evidence: `artifacts/source-review-2026-09-14/{property,utilities,operations}.json` and accompanying readable reports. Rebuild with `scripts/complete-community-source-review.js`, then renew through `scripts/revalidate-approved-community.js --write`. The full inventory is updated in place; an older partial crawl cannot replace a completed inventory.
 
