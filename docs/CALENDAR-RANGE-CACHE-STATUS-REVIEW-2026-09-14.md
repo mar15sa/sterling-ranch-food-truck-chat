@@ -1,6 +1,6 @@
 # Calendar range cache-status repair review
 
-Status: implemented locally on `codex/calendar-range-cache-status-20260914`; not pushed, merged, released, or verified live. Prepared September 14, 2026 from GitHub main revision `e5e533896f9553681193b453fa2492a60dadf7a5`.
+Status: implemented and pushed for review on `codex/calendar-range-cache-status-20260914` in [draft PR #136](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/136); not merged, released, or verified live. Prepared September 14, 2026 from GitHub main revision `e5e533896f9553681193b453fa2492a60dadf7a5`.
 
 ## Resident problem and root cause
 
@@ -40,7 +40,7 @@ This task does not authorize production release. Before any promotion, the exact
 
 ## Documentation impact
 
-The following Notion pages were fetched before editing, updated to show implementation commit `be795dc2c13b0ed7a77ce6544e3b94574619ffd8` as local and awaiting review, then fetched again to verify the new text and preserved diagrams/images:
+The following Notion pages were fetched before editing, updated to show implementation commit `be795dc2c13b0ed7a77ce6544e3b94574619ffd8` on the review branch in draft PR #136, then fetched again to verify the new text and preserved diagrams/images:
 
 - [Documentation audit and follow-ups](https://www.notion.so/3dabf909186d81a2a090c2cb90183e96): finding advanced from repair pending to implemented locally; the original reproduction attachment remains present.
 - [Sterling Ranch Society · Project Guide](https://www.notion.so/3dabf909186d81789a09e4648dbb4bbe): current calendar diagram and accessible explanation now show conservative range status, freshness, and empty-result handling.
