@@ -2,6 +2,9 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process');
 async function main(){
   const out=path.resolve(process.argv[2]),capUsd=process.argv[3]?Number(process.argv[3]):5;
+  const flags=process.argv.slice(7);if(flags.some(f=>!['--offline-review','--complete-catalog'].includes(f)))throw new Error('Unknown comparison flag');
+  const assessmentMode=flags.includes('--offline-review')?'offline-review':'inline',communityMode=flags.includes('--complete-catalog')?'complete-catalog':'keyword';
+  if(assessmentMode==='offline-review'&&capUsd>3)throw new Error('Offline-review phase maximum is $3');
   if(!Number.isFinite(capUsd)||capUsd<=0||capUsd>5)throw new Error('Invalid reservation cap');
   const baseline=require('../../data/community-index.json');
   const {validateRulesSnapshot}=require('./flow-snapshot');
@@ -25,13 +28,14 @@ async function main(){
   const cases=ids.map(id=>{const c=corpus.find(c=>c.id===id);return {...c,context:c.contextCaseId?[{question:corpus.find(p=>p.id===c.contextCaseId).question}]:[]};});
   const variants=[{id:'current-local',current:true},{id:'haiku-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'}},
     {id:'sonnet-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-sonnet-5',check:'claude-sonnet-5'}}];
-  const retrieve=makeRetriever({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime()});
-  const manifest={status:'running',isTest:true,startedAt:now,today,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
+  const retrieve=makeRetriever({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime(),communityMode});
+  const manifest={status:'running',isTest:true,assessmentMode,communityMode,stagingNavigationEnabled:false,startedAt:now,today,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
     sourceSnapshotHash:hash([profile.communityId,communityIndex,rulesIndex]),snapshotFiles:{community:'snapshots/community-index.json',rules:'snapshots/rules-index.json',profile:'snapshots/profile.json',attestation:'snapshots/attestation.json',rulesAttestation:'snapshots/rules-attestation.json'},profileHash:hash(profile),casesHash:hash(cases),capUsd,variants,repetitions:2,runs:[],
-    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','understanding-candidate.js','compact-acceptance-candidate.js','compare-full-flow.js','flow-snapshot.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
+    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','community-projection-corpus.js','understanding-candidate.js','compact-acceptance-candidate.js','flow-acceptance.js','compare-full-flow.js','flow-snapshot.js','observe-fetch.js','usage.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
     limitations:['Document-based local snapshot comparison, not deployed revision or exact production billing.','No live adapter execution or semantic retrieval in this first full-document-flow pilot.',
       'Authored diagnostic cases, not unseen holdout or human quality calibration.','Unresolved results must count against usefulness; model acceptance is not independent quality evidence.',
-      'Current-local includes earlier scoped-context and identity repairs; not an untouched historical baseline.','No background detailed grading, hosting or storage costs included.']};
+      'Current-local includes earlier scoped-context, identity, clarification and calendar repairs; not an untouched historical baseline.','No background detailed grading, hosting or storage costs included.',
+      'Offline-review outputs, when enabled, are unreviewed drafts with no verified completion claim. Answer presence is not quality.']};
   fs.mkdirSync(path.join(out,'snapshots'),{recursive:true});
   for(const [key,value] of Object.entries({community:communityIndex,rules:rulesIndex,profile,attestation,rulesAttestation}))fs.writeFileSync(path.join(out,manifest.snapshotFiles[key]),JSON.stringify(value)+'\n',{flag:'wx'});
   fs.mkdirSync(path.join(out,'code'),{recursive:true});
@@ -42,9 +46,9 @@ async function main(){
     try{require('./flow-snapshot').validateSnapshot(communityIndex,attestation,baseline);validateRulesSnapshot(rulesIndex,rulesAttestation,profile.communityId);}
     catch(error){manifest.status='stopped-invalid-snapshot';manifest.snapshotError=error.message;save();break;}
     active={caseId:row.id,variant:variant.id,repetition};const start=Date.now(),before=calls.length,id='flow-'+String(i+1).padStart(3,'0');let response=null,error=null;
-    try{if(variant.current){const resolved=resolveConversationQuestion(row.question,row.context);
+    try{if(variant.current){const resolved=resolveConversationQuestion(row.question,row.context.map(c=>({...c,answer:'Evaluation transcript placeholder; never used as evidence.'})));
       response=await answerCommunityQuestion(resolved.resolvedQuestion,{index:communityIndex,communityId:profile.communityId,communityProfile:profile,answerRulesQuestion,now:new Date(now)});
-    }else response=await runCandidate(row,{communityId:profile.communityId,retrieve,models:variant.models,fetchImpl:observed,now:today});}
+    }else response=await runCandidate(row,{communityId:profile.communityId,retrieve,models:variant.models,fetchImpl:observed,now:today,assessmentMode,maxRepairs:assessmentMode==='offline-review'?0:1});}
     catch(e){error=e.message;}
     const result={id,isTest:true,...active,question:row.question,context:row.context,response,error,durationMs:Date.now()-start,calls:calls.slice(before)};
     fs.writeFileSync(path.join(out,id+'.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});

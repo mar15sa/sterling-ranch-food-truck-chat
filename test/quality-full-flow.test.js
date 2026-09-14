@@ -96,3 +96,16 @@ test('catalog form lookup skips rule noise while separate permission needs retai
   const both=await retrieve({...plan,needs:[form,{...plan.needs[0],id:'need-2'}]});assert.equal(searches,1);assert.equal(both.sources.length,1);assert.deepEqual(both.sources[0].retrievedForNeedIds,['need-2']);
  }
 });
+
+test('offline review is explicit, never labels a draft verified, and retains structural evidence checks',async()=>{
+ const p=provider([plan,draft]);
+ const result=await runCandidate({question:'May I build a shed?'},{...opts,fetchImpl:p.fetch,assessmentMode:'offline-review',maxRepairs:0});
+ assert.equal(p.requests.length,2);assert.equal(result.answer,draft.answer);assert.equal(result.status,'unreviewed-experiment');assert.equal(result.reviewRequired,true);assert.equal(result.completion,undefined);
+ const ambiguous={...plan,scope:'ambiguous',needs:[],searchQueries:[],clarificationQuestion:'Which project?'};
+ const q=provider([ambiguous]);const clarification=await runCandidate({question:'How much does it cost?'},{...opts,fetchImpl:q.fetch,assessmentMode:'offline-review',maxRepairs:0});
+ assert.equal(q.requests.length,1);assert.equal(clarification.status,'unreviewed-experiment');assert.equal(clarification.completion,undefined);
+ const bad=provider([plan,{answer:'Use an invented link.',actionIds:['invented']}]);
+ const rejected=await runCandidate({question:'May I build a shed?'},{...opts,fetchImpl:bad.fetch,assessmentMode:'offline-review',maxRepairs:0});
+ assert.equal(rejected.status,'unresolved-experiment');assert.equal(rejected.answer,null);assert.equal(bad.requests.length,2);
+ await assert.rejects(()=>runCandidate({question:'Example'},{...opts,assessmentMode:'unknown'}));
+});

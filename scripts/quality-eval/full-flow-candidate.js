@@ -61,8 +61,8 @@ function coverageIssues(check,plan,packet,actions=[]){
   }
   return [...new Set(issues)];
 }
-async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1}={}){
-  Object.values(models).forEach(ensureAllowedModel);if(!communityId||!apiKey||![0,1].includes(maxRepairs))throw new Error('Invalid bounded candidate configuration');
+async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline'}={}){
+  Object.values(models).forEach(ensureAllowedModel);if(!communityId||!apiKey||![0,1].includes(maxRepairs)||!['inline','offline-review'].includes(assessmentMode))throw new Error('Invalid bounded candidate configuration');
   const trace=[],start=Date.now();
   async function invoke(body,tool){
     const response=await fetchImpl('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','anthropic-version':'2023-06-01','x-api-key':apiKey},body:JSON.stringify(body),signal:AbortSignal.timeout(45000)});
@@ -71,6 +71,7 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
     return data.content?.find(b=>b.type==='tool_use'&&b.name===tool)?.input;
   }
   const unresolved=(reason,extra={})=>({isTest:true,status:'unresolved-experiment',answer:null,completion:{outcome:'missing-evidence'},reason,trace,durationMs:Date.now()-start,...extra});
+  const unreviewed=(response,plan,extra={})=>({isTest:true,status:'unreviewed-experiment',reviewRequired:true,...response,plan,...extra,trace,durationMs:Date.now()-start});
   let plan;
   try{const request=candidateRequest(row,models.interpret,now,'v2');
     plan=await invoke(request,'route_community_question');const issues=planIssues(plan);trace.push({stage:'interpretation',issues});if(issues.length)return unresolved('invalid-interpretation',{plan});
@@ -80,6 +81,7 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
   // Clarifications are also checked against the original wording and prior resident context.
   if(plan.scope==='ambiguous'){
     const response={answer:plan.clarificationQuestion,sources:[],actions:[]};
+    if(assessmentMode==='offline-review')return unreviewed(response,plan);
     try{const request=acceptanceRequest({question:row.question,priorResidentQuestions:(row.context||[]).map(r=>r.question),response},models.check),check=await invoke(request,'check_answer_acceptance');
       const issues=acceptanceIssues(check,[]);trace.push({stage:'clarification-check',check,issues});
       if(issues.length||check.hardFailures.length||check.outcome!=='clarification')return unresolved('clarification-rejected',{plan});
@@ -97,6 +99,8 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
       const draft=await invoke(body,'compose_requested_answer'),issues=draftIssues(draft,packet);trace.push({stage:attempt?'repair':'composition',draft,issues});
       if(issues.length){previous={draft,issues};continue;}
       const actions=packet.actions.filter(a=>draft.actionIds.includes(a.id)),response={answer:draft.answer,actions,sources:packet.sources};
+      if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
+      if(assessmentMode==='offline-review')return unreviewed(response,plan,{evidenceSnapshotHash:snapshot});
       const request=flowAcceptanceRequest({question:row.question,priorResidentQuestions,response:{...response,sources:modelEvidence(packet.sources),actions:modelActions(actions)}},plan,models.check);
       const check=await invoke(request,'check_planned_answer_acceptance'),checkIssues=coverageIssues(check,plan,packet,actions);trace.push({stage:'acceptance',check,issues:checkIssues});
       if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
