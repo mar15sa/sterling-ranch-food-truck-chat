@@ -21,3 +21,21 @@ Three initial attempts failed before embeddings were produced: local-cache confi
 Three focused checks pass: community/lifecycle/owner withholding, complete source-window coverage within token budgets, and rank fusion preserving source versions. The normal test-runner subprocess was denied by the local sandbox, so the same test module was executed directly and all three tests passed. This is local tool validation, not a release gate.
 
 Resident retrieval behavior remains unchanged; the only runtime-module edit exposes three existing source-eligibility helpers for the experiment. The shared request/evidence repair is planned separately in `COMMUNITY-REQUEST-EVIDENCE-CONTRACT-PROPOSAL.md`. No current-flow diagram update is needed for these experimental tools and proposal; runtime integration will require one.
+
+## Completed capture and first review
+
+The fourth run subsequently completed all 32 diagnostic cases and exited successfully. Its manifest reports `captured`, finishing September 14 at 16:59:53 UTC. `comparison.json` contains the descriptive rankings. The earlier running checkpoint above is history.
+
+Local measurements: embedding 1,569 windows took 475.043 seconds; stored vectors occupy 2,409,984 bytes (about 2.30 MiB), in addition to the cached 34,014,426-byte quantized model and runtime dependencies. Peak memory for the entire capture process was 1,071,366,144 bytes (about 1 GiB); this includes experiment overhead and does not establish a production memory requirement. Query embedding plus the exhaustive vector scan had median 220 ms and sample p95 262 ms. Keyword retrieval had median 1,799 ms and sample p95 2,441 ms in this harness, which constructs a freshly filtered index per question while the model remains loaded. This is not a fair production cache benchmark or a demonstrated end-to-end speedup. Hybrid retrieval also pays keyword work. No paid API calls or new subscriptions occurred.
+
+Initial evidence review, not blind scoring:
+
+- Fence and updated lighting evidence already rank first with keyword search. Meaning-based search preserves the first hit but also introduces nearby topics. Full matching-section assembly remains necessary regardless of retrieval method.
+- For the combined pergola approval/form question, keyword search's top ten contain no titled forms or pergola subsection. Semantic search returns the general architectural forms section at rank 2 and the pergola subsection at rank 5. Fusion retains them at ranks 5 and 10. This is a concrete candidate-recall improvement, not proof of a correct composed answer. The landscape forms section ranks even higher semantically and must not be substituted for the requested architectural form.
+- For the direct design-review-application question, no method returns a titled forms section in its top ten. The same corpus demonstrably contains one. This shows that embeddings alone still miss available relevant evidence, and supports testing need-specific queries and reranking.
+- For the unanchored cost question, all methods return fee-related documents. None has evidence identifying what the resident means. These results must be rejected at the request/evidence boundary; similarity cannot resolve a missing subject.
+- The event-contractor question returns ordinary guest, membership and commercial-event rules. Those passages do not by themselves establish contractor eligibility. Changing their rank cannot supply the missing distinction.
+
+No retrieval winner, useful/excellent rate, production hosting cost or demo readiness is established. Next compare retrieval per explicit need, candidate reranking and full answers with the shared acceptance gate. Preserve this original run rather than retroactively changing its query strategy or labels.
+
+Notion synchronization is pending: automatic approval review rejected the external checkpoint update. The exact reviewable draft is retained in `docs/pending-notion/2026-09-14-semantic-retrieval-checkpoint.md`; the guide must not be described as synchronized.
