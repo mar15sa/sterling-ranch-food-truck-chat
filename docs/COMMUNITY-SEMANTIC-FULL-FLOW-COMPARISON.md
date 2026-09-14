@@ -1,5 +1,7 @@
 # Full-flow semantic comparison — September 14, 2026
 
+Later evidence: [Controlled writer replay](COMMUNITY-WRITER-REPLAY.md) compares Haiku, Sonnet and Opus on identical evidence for two known failures. Opus shows targeted promise at higher composition cost; its full-answer price and representative quality remain unmeasured.
+
 **Decision: retain semantic retrieval as a promising development candidate; select neither writer for release.** All eight candidate pergola trials retrieved and used the specific governing subsection that the earlier keyword packets missed. Both candidates still have material evidence-use failures and miss the proposed 10-second p95 target. No representative useful/excellent rate or human agreement has been established.
 
 ## What was measured
