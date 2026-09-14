@@ -12,7 +12,8 @@ const { answerCommunityQuestion, sourcedAnswer } = require("../lib/community-ass
 const { llmRewriteIssues } = require("../lib/rules-grounding");
 const { planCommunitySearch } = require("../lib/community-llm");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
-const communityIndex = require("../data/community-index.json");
+const { loadCommunityEvidenceFixture } = require('./helpers/community-evidence');
+const communityIndex = loadCommunityEvidenceFixture();
 
 const NOW = new Date("2026-09-01T18:00:00Z");
 

@@ -4,7 +4,8 @@ const { answerCommunityQuestion, directlyAnswersQuestionForm } = require("../lib
 const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { nextDrcReview, proactiveCommunityAnswer } = require("../lib/community-proactive");
 const { residentEffortAssessment } = require("../scripts/eval-community-assistant");
-const communityIndex = require("../data/community-index.json");
+const { loadCommunityEvidenceFixture } = require('./helpers/community-evidence');
+const communityIndex = loadCommunityEvidenceFixture();
 
 // Approval-boundary negatives must not depend on the production inventory
 // remaining unapproved. Keep its raw/projection content as adversarial input,
