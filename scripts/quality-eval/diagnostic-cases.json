@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "id": "september-2026-diagnostic-v1",
+  "purpose": "Development diagnosis only; never count these cases as unseen holdout evidence.",
+  "authorship": "Public/synthetic questions authored for this evaluation; no resident-log export.",
+  "cases": [
+    {
+      "id": "trash-short",
+      "family": "waste",
+      "question": "When is trash pickup?",
+      "expectedOutcome": "Provide supported recurring guidance, with village conditions; do not require a live date to answer the recurring schedule."
+    },
+    {
+      "id": "trash-reference",
+      "family": "waste",
+      "question": "When are trash and recycling picked up?",
+      "expectedOutcome": "Explain village-specific pickup and recycling timing, with appropriate live-date boundaries."
+    },
+    {
+      "id": "lighting-process",
+      "family": "design-process",
+      "question": "What is the process to get permanent lights approved for seasonal/holiday use?",
+      "expectedOutcome": "Explain the approval steps and relevant official action; distinguish process from product restrictions."
+    },
+    {
+      "id": "contractor",
+      "family": "facility-eligibility",
+      "question": "Can a non resident be event contractor at the clubhouse?",
+      "expectedOutcome": "Address event-contractor eligibility; construction warranty and ordinary guest permission do not establish it."
+    },
+    {
+      "id": "fence",
+      "family": "design-rules",
+      "question": "What kind of fence can I put in my backyard?",
+      "expectedOutcome": "Preserve fence versus gate/screen scope and conditions; ask a useful clarification only if necessary."
+    },
+    {
+      "id": "raspberry",
+      "family": "landscaping",
+      "question": "Can I plant raspberries in my yard?",
+      "expectedOutcome": "Do not generalize one named plant to all raspberries or infer absence from incomplete search."
+    },
+    {
+      "id": "application",
+      "family": "design-process",
+      "question": "Where is the design review application?",
+      "expectedOutcome": "Identify the exact verified application; a submission email alone does not answer."
+    },
+    {
+      "id": "shed",
+      "family": "design-rules",
+      "question": "Can I put a shed in my backyard?",
+      "expectedOutcome": "Answer permission, important limits, and approval next step from controlling evidence."
+    },
+    {
+      "id": "rental-cost",
+      "family": "facility-booking",
+      "question": "How much is the Great Hall and how do I reserve it?",
+      "expectedOutcome": "Address both current cost and booking steps, keeping conditions and authority."
+    },
+    {
+      "id": "yoga",
+      "family": "events",
+      "question": "When is the next yoga class?",
+      "expectedOutcome": "Provide the next matching future class, date, time, location, and relevant official event link."
+    },
+    {
+      "id": "truck",
+      "family": "food-trucks",
+      "question": "Which food truck is here today?",
+      "expectedOutcome": "Name the confirmed truck and logistics; a missing optional menu must not invalidate the core answer."
+    },
+    {
+      "id": "pool",
+      "family": "pool",
+      "question": "Is the pool open right now?",
+      "expectedOutcome": "Use current status and timestamp; distinguish normal hours from live status."
+    },
+    {
+      "id": "water-pay",
+      "family": "utilities",
+      "question": "Where can I pay my water bill?",
+      "expectedOutcome": "Give the verified payment action directly."
+    },
+    {
+      "id": "water-late",
+      "family": "utilities",
+      "question": "What happens if I pay my water bill late?",
+      "expectedOutcome": "Explain consequences from controlling evidence; payment instructions alone are incomplete."
+    },
+    {
+      "id": "gate",
+      "family": "design-rules",
+      "question": "Can I replace just my fence gate?",
+      "expectedOutcome": "Keep gate requirements distinct from whole-fence restrictions."
+    },
+    {
+      "id": "pets",
+      "family": "rules",
+      "question": "How many dogs can I have?",
+      "expectedOutcome": "Answer the relevant limit with any conditions; do not infer permission from pet amenities."
+    },
+    {
+      "id": "firepit",
+      "family": "rules",
+      "question": "How late can I use a fire pit?",
+      "expectedOutcome": "Answer the time restriction if supported; approval requirements alone do not resolve it."
+    },
+    {
+      "id": "privacy",
+      "family": "design-rules",
+      "question": "Can I add a privacy screen beside my patio?",
+      "expectedOutcome": "Explain applicable screen requirements with dimensions and conditions in natural language."
+    },
+    {
+      "id": "recycle-miss",
+      "family": "waste",
+      "question": "My recycling wasn't collected. What should I do?",
+      "expectedOutcome": "Provide the verified service-resolution action and useful checks without claiming an unverified delay."
+    },
+    {
+      "id": "calendar-range",
+      "family": "events",
+      "question": "What family activities are happening this weekend?",
+      "expectedOutcome": "Use requested dates and audience, preserve future timing and event actions."
+    },
+    {
+      "id": "pickleball",
+      "family": "facility-booking",
+      "question": "How do I reserve a pickleball court?",
+      "expectedOutcome": "Use current public-court booking guidance; private court construction is unrelated."
+    },
+    {
+      "id": "cancel",
+      "family": "facility-booking",
+      "question": "Can I get a refund if I cancel a room reservation?",
+      "expectedOutcome": "State applicable cancellation conditions or the exact missing policy; do not invent current fee rules."
+    },
+    {
+      "id": "forms-multi",
+      "family": "design-process",
+      "question": "Do I need approval for a pergola, and which form do I use?",
+      "expectedOutcome": "Resolve both governing permission and the exact application action."
+    },
+    {
+      "id": "landscape",
+      "family": "landscaping",
+      "question": "I'm replacing my front lawn. What do I need to submit?",
+      "expectedOutcome": "Explain submission requirements for this change and the appropriate next step."
+    },
+    {
+      "id": "parking",
+      "family": "rules",
+      "question": "Can my visitor park an RV on the street overnight?",
+      "expectedOutcome": "Preserve visitor, vehicle, location, and timing scope in the controlling restriction."
+    },
+    {
+      "id": "water-contact",
+      "family": "utilities",
+      "question": "Who should I contact about a water bill that looks wrong?",
+      "expectedOutcome": "Supply a relevant billing-resolution contact, not just payment or unrelated utility rules."
+    },
+    {
+      "id": "holiday",
+      "family": "waste",
+      "question": "Does a holiday change our collection day?",
+      "expectedOutcome": "Explain supported holiday guidance and date uncertainty without inventing a specific live delay."
+    },
+    {
+      "id": "facility-access",
+      "family": "facility-eligibility",
+      "question": "Can my guests use the pool if I'm not there?",
+      "expectedOutcome": "Resolve accompaniment and any verified exception with conditions and action."
+    },
+    {
+      "id": "registration",
+      "family": "events",
+      "question": "How do I sign up for community classes?",
+      "expectedOutcome": "Give general registration steps without requiring one particular class."
+    },
+    {
+      "id": "ambiguity",
+      "family": "clarification",
+      "question": "How much does it cost?",
+      "expectedOutcome": "Ask one useful clarification when no prior context identifies the subject."
+    },
+    {
+      "id": "compound",
+      "family": "design-rules",
+      "question": "Can I add a hot tub and a pergola, and do they need approval?",
+      "expectedOutcome": "Track and answer both improvements without treating evidence for one as covering both."
+    },
+    {
+      "id": "lighting-followup",
+      "family": "design-process",
+      "question": "But where is the application?",
+      "expectedOutcome": "Retain the previous lighting-process context and provide the application or a specific limitation.",
+      "contextCaseId": "lighting-process"
+    }
+  ]
+}
