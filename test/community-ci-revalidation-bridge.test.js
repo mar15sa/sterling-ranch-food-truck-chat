@@ -2,7 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { fingerprint } = require("../lib/community-release");
 const { sourceReviewState } = require("../lib/community-source-answerability");
-const { actionIdentity, actionUrlIdentity, observeCanonicalSource, sourceHash } = require("../lib/community-approved-revalidation");
+const { actionIdentity, actionUrlIdentity, observeCanonicalSource, sourceHash, selectRevalidationTargetUrls } = require("../lib/community-approved-revalidation");
 const { chunkText, pageText } = require("../lib/community-ingest");
 const { runBridge } = require("../scripts/check-approved-community-revalidation");
 
@@ -30,6 +30,56 @@ test("unchanged proof renews only a temporary index and preserves the approved f
   assert.equal(result.attestation.beforeApprovedFingerprint, fingerprint(approved));
   assert.equal(result.attestation.beforeApprovedFingerprint, result.attestation.afterApprovedFingerprint);
   assert.equal(result.temporaryIndex.sources[0].checkedAt, new Date(NOW).toISOString());
+});
+
+test("refresh lookahead is opt-in and selects only active approved exact versions", () => {
+  const approved = index();
+  const soon = new Date(NOW + 5 * 60_000).toISOString();
+  const later = new Date(NOW + 60 * 60_000).toISOString();
+  approved.sources[0].staleAfter = soon;
+  approved.factLedger[0].staleAfter = later;
+  assert.deepEqual(selectRevalidationTargetUrls(approved, NOW), [], "runtime default does not refresh ahead");
+  assert.deepEqual(selectRevalidationTargetUrls(approved, NOW, { refreshAheadMs: 30 * 60_000 }), [URL]);
+  approved.sources[0].staleAfter = later;
+  approved.factLedger[0].staleAfter = soon;
+  assert.deepEqual(selectRevalidationTargetUrls(approved, NOW, { refreshAheadMs: 30 * 60_000 }), [URL], "a near-expiry approved fact also needs proof");
+  approved.factLedger[0].sourceVersion = "unapproved-version";
+  assert.deepEqual(selectRevalidationTargetUrls(approved, NOW, { refreshAheadMs: 30 * 60_000 }), []);
+  approved.factLedger[0].sourceVersion = "same";
+  approved.factLedger[0].reviewStatus = "candidate";
+  assert.deepEqual(selectRevalidationTargetUrls(approved, NOW, { refreshAheadMs: 30 * 60_000 }), []);
+});
+
+test("CI rechecks near-expiry evidence using actual time and unchanged approval identity", async () => {
+  const approved = index();
+  approved.sources[0].staleAfter = approved.factLedger[0].staleAfter = new Date(NOW + 5 * 60_000).toISOString();
+  const before = structuredClone(approved);
+  let observations = 0;
+  const result = await runBridge({ index: approved, now: NOW, fetchObservedHashes: async () => { observations++; return observer(); }, auditFn: normalGate });
+  assert.equal(observations, 1);
+  assert.equal(result.valid, true);
+  assert.equal(result.attestation.refreshAheadMs, 30 * 60_000);
+  assert.equal(result.attestation.checkedAt, new Date(NOW).toISOString());
+  assert.equal(result.temporaryIndex.sources[0].checkedAt, new Date(NOW).toISOString());
+  assert.equal(result.temporaryIndex.sources[0].staleAfter, new Date(NOW + 86_400_000).toISOString());
+  assert.equal(result.attestation.beforeApprovedFingerprint, result.attestation.afterApprovedFingerprint);
+  assert.deepEqual(approved, before);
+});
+
+test("lookahead cannot renew changed or unavailable near-expiry evidence", async () => {
+  for (const observed of [
+    async () => ({ observedHashes: ["changed"], actionMismatch: false }),
+    async () => ({ observedHashes: ["same"], actionMismatch: true }),
+    async () => { throw new Error("unavailable"); },
+  ]) {
+    const approved = index();
+    const soon = new Date(NOW + 5 * 60_000).toISOString();
+    approved.sources[0].staleAfter = approved.factLedger[0].staleAfter = soon;
+    const result = await runBridge({ index: approved, now: NOW, fetchObservedHashes: observed, auditFn: normalGate });
+    assert.equal(result.valid, false);
+    assert.equal(result.checks[0].outcome, "review-required");
+    assert.equal(result.temporaryIndex.sources[0].staleAfter, soon);
+  }
 });
 
 test("changed, missing, and fetch failures fail closed with review records", async () => {

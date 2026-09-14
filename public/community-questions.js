@@ -22,6 +22,7 @@ const reviewCount = document.querySelector("#reviewCount");
 const qualityConcernCount = document.querySelector("#qualityConcernCount");
 const needsWorkCount = document.querySelector("#needsWorkCount");
 const sourceHealthState = document.querySelector("#sourceHealthState");
+const sourceHealthCompact = document.querySelector("#sourceHealthCompact");
 const sourceReadinessVerdict = document.querySelector("#sourceReadinessVerdict");
 const sourceReadinessHeadline = document.querySelector("#sourceReadinessHeadline");
 const sourceReadinessExplanation = document.querySelector("#sourceReadinessExplanation");
@@ -137,7 +138,7 @@ function renderSourceReadiness(readiness) {
   }
   const totals = readiness.totals || {};
   const evidence = readiness.evidence || {};
-  const held = Number(totals.heldForReview || 0);
+  const held = Number(totals.reviewRequired || 0) + Number(totals.unavailableRecheck || 0);
   sourceReadinessVerdict.dataset.state = readiness.state || "needs-attention";
   sourceReadinessHeadline.textContent = readiness.headline || "Content readiness checked";
   sourceReadinessExplanation.textContent = readiness.explanation || "";
@@ -147,11 +148,12 @@ function renderSourceReadiness(readiness) {
     item.textContent = reason;
     return item;
   }));
-  sourceScopeCount.textContent = String(totals.total ?? "—");
-  sourceHandledCount.textContent = `${totals.handled ?? "—"} of ${totals.total ?? "—"}`;
-  sourceEvidenceCount.textContent = String(totals.activeEvidence ?? "—");
-  sourceHeldCount.textContent = String(totals.heldForReview ?? "—");
-  sourceReadinessBreakdown.textContent = `${totals.activeEvidence || 0} documents contribute approved answer evidence · ${totals.actionOnly || 0} provide safe links · ${totals.excluded || 0} were intentionally excluded · ${held} remain withheld.`;
+  sourceScopeCount.textContent = String(totals.primarySources ?? "—");
+  sourceHandledCount.textContent = `${totals.audited ?? "—"} of ${totals.audited ?? "—"}`;
+  sourceEvidenceCount.textContent = String(totals.answerEvidence ?? "—");
+  sourceHeldCount.textContent = String(held);
+  sourceReadinessBreakdown.textContent = `${totals.answerEvidence || 0} sources contribute approved answer evidence · ${totals.safeLink || 0} provide safe links · ${totals.liveFeed || 0} uses live data · ${held} need review or retry.`;
+  sourceHealthCompact.textContent = `${totals.answerEvidence ?? "—"} approved answer sources · ${totals.primarySources ?? "—"} relevant items inventoried, including links and exclusions · ${held} need review or retry. Select to view details.`;
   sourceCategoryList.replaceChildren(...(readiness.categories || []).map(category => {
     const row = document.createElement("article");
     row.dataset.state = category.complete ? "complete" : "attention";
@@ -168,7 +170,7 @@ function renderSourceReadiness(readiness) {
     return row;
   }));
   const current = evidence.current === true;
-  sourceHealthState.textContent = current && held === 0 ? "Ready" : current ? "Current · gaps remain" : "Needs attention";
+  sourceHealthState.textContent = current && held === 0 ? "Ready" : current ? "Inventory complete · review remains" : "Needs attention";
   sourceHealthState.dataset.state = current && held === 0 ? "healthy" : "monitoring";
 }
 

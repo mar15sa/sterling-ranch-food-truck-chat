@@ -1,6 +1,6 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
-const { renewExactApprovedEvidence, selectRevalidationTargetUrls } = require("../scripts/revalidate-approved-community");
+const { refreshTruthStatus, renewExactApprovedEvidence, selectRevalidationTargetUrls } = require("../scripts/revalidate-approved-community");
 const { factIsAnswerable } = require('../lib/community-truth');
 
 const url = "https://alpha.gov/pool";
@@ -49,4 +49,26 @@ test("an expired approved fact targets its active exact source version even when
 
   const missingVersion = { ...value, factLedger: [{ ...value.factLedger[0], sourceVersion: "different" }] };
   assert.deepEqual(selectRevalidationTargetUrls(missingVersion, Date.parse("2026-09-08T12:00:00.000Z")), []);
+});
+
+test("saved truth status is refreshed after exact evidence renewal", () => {
+  const value = index();
+  value.factLedger[0] = {
+    ...value.factLedger[0],
+    reviewDecisionId: "decision-1",
+    reviewedAt: old,
+    reviewedBy: "owner",
+  };
+  value.factLedger[1].facet = "fee";
+  value.truthStatus = { staleFactCount: 99, pendingSensitiveReviewCount: 99 };
+
+  renewExactApprovedEvidence(value, { sourceUrl: url, observedHashes: ["same"], checkedAt, staleAfter });
+  refreshTruthStatus(value, checkedAt);
+
+  assert.equal(value.truthStatus.totalFactCount, 3);
+  assert.equal(value.truthStatus.approvedFactCount, 1);
+  assert.equal(value.truthStatus.candidateFactCount, 2);
+  assert.equal(value.truthStatus.staleFactCount, 0);
+  assert.equal(value.truthStatus.pendingSensitiveReviewCount, 1);
+  assert.equal(value.truthStatus.generatedAt, checkedAt);
 });

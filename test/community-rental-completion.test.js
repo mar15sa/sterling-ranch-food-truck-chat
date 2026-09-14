@@ -7,6 +7,9 @@ const { createConnectorAdapters, emitEvidenceEnvelope } = require("../lib/commun
 const sterlingRanch = require("../data/communities/sterling-ranch.json");
 const castleRock = require("../data/communities/castle-rock.json");
 const index = require("../data/community-index.json");
+// Preserve unapproved content as adversarial input without inheriting later
+// explicit owner decisions from the production inventory.
+const unapprovedIndex = { ...index, factLedger: [], canonicalSourceLedger: { records: [] } };
 
 const now = new Date("2026-09-08T18:00:00Z");
 function plan(facility) {
@@ -17,9 +20,9 @@ function plan(facility) {
     searchQueries: [`${facility} rental reservation`], scope: "community", needsClarification: false,
   };
 }
-async function ask(question, facility) {
+async function ask(question, facility, evidenceIndex = unapprovedIndex) {
   return answerCommunityQuestion(question, {
-    now, index, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+    now, index: evidenceIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
     planCommunitySearch: async () => plan(facility),
     answerRulesQuestion: async () => ({ confidence: { canAnswer: false, reason: "no-rule-answer" } }),
   });
@@ -36,12 +39,12 @@ test("held-out rental wording is withheld until the exact booking action is appr
     const result = await ask(question, facility);
     assert.equal(result.answerStatus, "source-unavailable", question);
     assert.equal(result.confidence.canAnswer, false, question);
-    assert.ok(result.sources.some((source) => /Rent-the-Facility|Park-Shelters/i.test(source.sourceUrl)), question);
+    assert.ok(result.sources.some((source) => /Rent-the-Facility|Park-Shelters|Overlook-Clubhouse-1/i.test(source.sourceUrl)), question);
     assert.ok(result.actions.every((action) => !/secure\.rec1\.com/i.test(action.url)), question);
     assert.doesNotMatch(JSON.stringify(result.sources), /\/187\/Pool|pool FAQ/i, question);
   }
 
-  const greatHall = await ask("How do I book the Great Hall?", "Great Hall");
+  const greatHall = await ask("How do I book the Great Hall?", "Great Hall", index);
   assert.equal(greatHall.answerStatus, "verified");
   assert.equal(greatHall.answerMode, "community-approved-operational");
   assert.deepEqual(greatHall.actions.map((action) => action.url), [
@@ -112,12 +115,12 @@ test("a canonical facility name cannot make an unapproved rental action answerab
 test("planless clubhouse questions keep the withheld facility page separate from the Overlook pool", async () => {
   for (const question of ["How do I reserve the Overlook Clubhouse?", "What does it cost to rent the Overlook Clubhouse?"]) {
     const result = await answerCommunityQuestion(question, {
-      now, index, communityId: "sterling-ranch", planCommunitySearch: false, synthesizeCommunityAnswer: false,
+      now, index: unapprovedIndex, communityId: "sterling-ranch", planCommunitySearch: false, synthesizeCommunityAnswer: false,
       answerRulesQuestion: async () => ({ confidence: { canAnswer: false, reason: "no-rule-answer" } }),
     });
     assert.equal(result.answerStatus, "source-unavailable", question);
     assert.equal(result.answerMode, "community-freshness-withheld", question);
-    assert.ok(result.sources.some((source) => /Rent-the-Facility/i.test(source.sourceUrl || "")), question);
+    assert.ok(result.sources.some((source) => /Rent-the-Facility|Overlook-Clubhouse-1/i.test(source.sourceUrl || "")), question);
     assert.doesNotMatch(JSON.stringify(result), /\/187\/Pool|Overlook Outdoor Pool/i, question);
     assert.ok(result.actions.every((action) => action.actionType === "information"), question);
   }
@@ -158,7 +161,7 @@ test("raw facility prices cannot create a proactive rental shortcut", () => {
 test("generic clubhouse prices remain withheld without exact approved claims", async () => {
   for (const question of ["How much does the clubhouse cost?", "How much does Overlook cost?"]) {
     const result = await answerCommunityQuestion(question, {
-      now, index, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+      now, index: unapprovedIndex, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
       planCommunitySearch: async () => ({ ...plan("Overlook Clubhouse"), goal: "cost", goals: ["cost"], requestedDetails: ["price", "action"] }),
       answerRulesQuestion: async () => ({ confidence: { canAnswer: false } }),
     });
