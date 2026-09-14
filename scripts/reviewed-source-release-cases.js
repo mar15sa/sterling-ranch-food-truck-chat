@@ -1,5 +1,6 @@
 const { approvedActionIssues } = require('./reviewed-source-hosted-proof');
-const actionDecisions = require('../data/community-source-approvals-v5.json').decisions;
+const actionDecisions = [...require('../data/community-source-approvals-v5.json').decisions,
+  ...require('../data/community-source-approvals-v7.json').decisions];
 
 const CASES = [
   { id: 'water-billing-contact', question: 'Who can help with my water bill?', positive: true, must: /833[\s)-]*772[\s-]*2240|amcobi/i },
@@ -30,6 +31,10 @@ const CASES = [
   { id: 'equipment-live-status-boundary', question: 'Is my sprinkler running right now?', notVerified: true },
   { id: 'home-control-access-support', question: 'I lost access to home seer steward system. How do I restore it?', positive: true, must: /Lumiere\.technology\/help/i, also: /help@lumierefiber\.com/i },
   { id: 'mature-plant-method', question: 'How do I calculate the watering area for mature plants?', positive: true, must: /full growth|matur/i, forbidden: /\$\s*\d/ },
+  { id: 'pickleball-hours', question: 'What are the pickleball court hours?', positive: true, complete: true, sourcePattern: /\/418\//, must: /7 a\.m\. to dusk/, also: /8 a\.m\. to dusk/, forbidden: /couldn.t confirm.{0,30}date/i },
+  { id: 'pickleball-booking', question: 'How do I reserve a pickleball court?', positive: true, complete: true, requiredActionDecision: 'pickleball-current-operating-claims', must: /two hours per day/i, also: /(?=[\s\S]*seven days in advance)(?=[\s\S]*three days in advance)/i, forbidden: /couldn.t confirm.{0,30}methods/i },
+  { id: 'pickleball-live-availability-boundary', question: 'Is a pickleball court available right now?', notVerified: true, forbidden: /(?:court|it) is available right now/i },
+  { id: 'pickleball-private-construction-boundary', question: 'Can I build a pickleball court in my backyard?', positive: true, sourcePattern: /library\.municode\.com/, forbiddenSourcePattern: /\/418\//, must: /DRC approval/i, forbidden: /7 a\.m\.|\$40|paddles|CourtReserve/i },
 ];
 
 function answerIssues(body, item) {
@@ -39,6 +44,7 @@ function answerIssues(body, item) {
   if (item.notVerified && body.answerStatus === 'verified') errors.push('Unsupported request was labeled fully verified');
   if (item.complete && (body.answerStatus !== 'verified' || body.completion?.outcome !== 'complete')) errors.push('Fully supported request was left incomplete');
   if (item.sourcePattern && !(body.sources || []).some(source => item.sourcePattern.test(source.sourceUrl || source.url || ''))) errors.push('Required current operational source absent');
+  if (item.forbiddenSourcePattern && (body.sources || []).some(source => item.forbiddenSourcePattern.test(source.sourceUrl || source.url || ''))) errors.push('Wrong authority source attached');
   if (item.reportSystems) {
     const report = require('../data/community-source-approvals-v8.json').decisions
       .find(decision => decision.decisionId === 'complete-cab-review-20260914-6611da97506a');
