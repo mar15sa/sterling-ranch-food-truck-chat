@@ -32,6 +32,10 @@ test.describe('original operational subject and authority with the full approved
         goals: ['cost'], filters: { facility: 'Great Hall' }, searchQueries: ['Great Hall cost', 'Great Hall rental price', 'Great Hall fee'] }), /\$100\.00 per hour/, /\/269\//],
       ['How much is non-resident membership?', plan('non-resident membership', ['price'], { goal: 'cost', goals: ['cost'],
         searchQueries: ['non-resident membership cost', 'non-resident membership fee', 'non-resident membership price'] }), /\$850/, /\/309\//],
+      ['How much is nonresident clubhouse membership?', plan('nonresident clubhouse membership', ['price'], { goal: 'cost', goals: ['cost'],
+        searchQueries: ['nonresident clubhouse membership cost', 'clubhouse membership fee nonresident', 'nonresident membership price'] }), /\$850/, /\/309\//],
+      ['How much is resident clubhouse membership?', plan('resident clubhouse membership', ['price'], { goal: 'cost', goals: ['cost'],
+        searchQueries: ['resident clubhouse membership cost', 'clubhouse membership fee resident'] }), /no additional cost/i, /\/183\//],
       ['What does the annual caregiver pass cost and who is eligible?', plan('annual caregiver pass', ['price', 'eligibility'],
         { goal: 'cost', goals: ['cost'], searchQueries: ['annual caregiver pass cost price', 'caregiver pass eligibility requirements', 'caregiver pass'] }), /\$300/, /\/182\//],
     ];
@@ -70,7 +74,8 @@ test.describe('original operational subject and authority with the full approved
       plan('spacecraft reactor', ['action'], { scope: 'unrelated' }));
     assert.equal(unrelated.answerStatus, 'out-of-scope');
     for (const question of ['How much does spacecraft club membership cost?',
-      'What is the price of spacecraft clubhouse support?', 'How much is a lunar caregiver pass?']) {
+      'What is the price of spacecraft clubhouse support?', 'How much is a lunar caregiver pass?',
+      'How much is nonresident lunar clubhouse membership?']) {
       const unknownPrice = await ask(question, plan(question, ['price'], {
         scope: 'unrelated', goal: 'cost', goals: ['cost'],
       }));
