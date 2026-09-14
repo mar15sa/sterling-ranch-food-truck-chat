@@ -40,6 +40,42 @@ test("AI cannot misroute a home rental to CAB facility cancellation rules", asyn
   assert.doesNotMatch(result.answer, /refund|security deposit/i);
 });
 
+test("unrelated rulebook sections cannot combine into a clubhouse contractor answer", async () => {
+  for (const question of [
+    "Can a non resident be event contractor at the clubhouse",
+    "Can a nonresident contractor work an event at the clubhouse?",
+    "Non resident event contractor at clubhouse?",
+    "Can a non residnet contractor work at the clubhouse?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.confidence?.canAnswer, false, question);
+    assert.equal(result.confidence?.reason, "no-single-source-support", question);
+    assert.equal(result.answerMode, "source-evidence-boundary", question);
+    assert.deepEqual(result.sources, [], question);
+    assert.doesNotMatch(result.answer, /Guests must be accompanied|District may.*repair|additional guests beyond six/i, question);
+  }
+});
+
+test("coherent cross-section rule answers and ordinary clubhouse rentals still work", async () => {
+  for (const question of [
+    "What is the dog leash rule?",
+    "Do I need permission to replant a dead tree?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.equal(result.confidence?.reason, "compatible-governing-rule-claims", question);
+  }
+
+  const rental = await answer("Can I rent the clubhouse?");
+  assert.equal(rental.confidence?.canAnswer, true);
+  assert.match(rental.confidence?.reason || "", /semantic-concept-supported:facility-reservations/);
+  assert.doesNotMatch(rental.answer, /Contractor fails to make such repairs/i);
+
+  const guests = await answer("What are the clubhouse guest rules?");
+  assert.equal(guests.confidence?.canAnswer, true);
+  assert.match(guests.answer, /Guests must be accompanied/i);
+});
+
 test("RV duration answers compare the requested stay with the current source limit", async () => {
   for (const question of [
     "Can I park my RV in my driveway for a week?",

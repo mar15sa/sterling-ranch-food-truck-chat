@@ -6,6 +6,18 @@ const { answerCommunityQuestion } = require('../lib/community-assistant');
 const now = new Date('2026-09-06T21:00:00Z');
 const poolQuestion = 'Are there any events or giveaways happening at the pool today?';
 
+test('clubhouse contractor eligibility routes to facility evidence, not the events calendar', () => {
+  for (const question of [
+    'Can a non resident be event contractor at the clubhouse',
+    'Can a nonresident contractor work an event at the clubhouse?',
+    'Non resident event contractor at clubhouse?',
+    'Can a non residnet contractor work at the clubhouse?',
+  ]) assert.equal(classifyCommunityIntent(question), 'facilities', question);
+
+  assert.equal(classifyCommunityIntent('What events are at the clubhouse today?'), 'events');
+  assert.equal(classifyCommunityIntent('When is the next yoga class at the clubhouse?'), 'events');
+});
+
 test('owner pool-event discovery reaches the calendar even when a planner proposes opening status', async () => {
   assert.equal(classifyCommunityIntent(poolQuestion), 'events');
   const plan = normalizedRoutingPlan({ intent: 'status', goal: 'status', scope: 'community', subject: 'pool', searchQueries: ['pool events'] }, poolQuestion, { now });
