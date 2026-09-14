@@ -1,6 +1,7 @@
 "use strict";
 const { RATES, ensureAllowedModel }=require("./usage");
 function stageFor(body) {
+  if ((body.tools||[]).some(t=>t.name==="assess_resident_answer"))return "answer-assessment";
   if ((body.tools||[]).some(t=>t.name==="route_community_question"))return "understanding";
   const system=typeof body.system==="string"?body.system:JSON.stringify(body.system||"");
   if(system.startsWith("You interpret resident questions for a search system"))return "rules-search-planning";
