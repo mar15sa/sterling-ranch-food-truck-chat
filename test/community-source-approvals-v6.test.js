@@ -6,6 +6,7 @@ const { approvals, buildApprovedV6Sources } = require('../data/community-source-
 const { applyCommunitySourceApprovalsV6 } = require('../scripts/apply-community-source-approvals-v6');
 const { canonicalProjectionEntries, sourceReviewState } = require('../lib/community-source-answerability');
 const { searchCommunityIndex } = require('../lib/community-search');
+const { renewExactApprovedEvidence } = require('../lib/community-approved-revalidation');
 
 test('the completed four-category package contains five exact, narrow decisions', () => {
   assert.equal(approvals.decisions.length, 5);
@@ -40,9 +41,13 @@ test('every v6 projection is backed by the exact canonical ledger decision', () 
 
 test('the two outbound documents are action-only and cannot establish facts', () => {
   const index = applyCommunitySourceApprovalsV6(structuredClone(baseIndex));
-  const state = sourceReviewState(index, Date.parse(approvals.decidedAt));
+  const now = Date.parse(approvals.decidedAt);
   for (const id of ['approved-landscapers-directory-link', 'approved-recycling-tips-visual-link']) {
     const source = index.sources.find(candidate => candidate.id === id);
+    assert.equal(sourceReviewState(index, now).canUseActionProjection(source), false, 'approval waits for exact-source renewal');
+    renewExactApprovedEvidence(index, { sourceUrl: source.sourceUrl, observedHashes: [source.contentHash],
+      checkedAt: approvals.decidedAt, staleAfter: new Date(now + 3600000).toISOString(), documentFingerprint: source.documentFingerprint || '' });
+    const state = sourceReviewState(index, now);
     assert.equal(state.canUseProjection(source), false);
     assert.equal(state.canUseActionProjection(source), true);
     assert.equal(state.entriesFor(source).every(entry => entry.factType === 'link'), true);
@@ -73,10 +78,16 @@ test('a changed source version cannot inherit a v6 approval', () => {
 
 test('resident retrieval can reach the approved links and narrow document facts', () => {
   const index = applyCommunitySourceApprovalsV6(structuredClone(baseIndex));
+  const now = new Date(Date.parse(approvals.decidedAt) + 1000);
+  for (const expected of buildApprovedV6Sources()) {
+    const source = index.sources.find(candidate => candidate.id === expected.id);
+    renewExactApprovedEvidence(index, { sourceUrl: source.sourceUrl, observedHashes: [source.contentHash],
+      checkedAt: now.toISOString(), staleAfter: new Date(now.getTime() + 3600000).toISOString(), documentFingerprint: source.documentFingerprint || '' });
+  }
   const options = {
     index,
     communityId: approvals.communityId,
-    now: new Date('2026-09-12T20:00:00-06:00'),
+    now,
     limit: 10,
     includeActionOnlyProjections: true,
     allowPartialRequestedDetails: true,

@@ -6,9 +6,18 @@ const { nextDrcReview, proactiveCommunityAnswer } = require("../lib/community-pr
 const { residentEffortAssessment } = require("../scripts/eval-community-assistant");
 const communityIndex = require("../data/community-index.json");
 
-async function ask(question, now = new Date("2026-08-31T18:00:00Z")) {
+// Approval-boundary negatives must not depend on the production inventory
+// remaining unapproved. Keep its raw/projection content as adversarial input,
+// but remove both independent routes by which claims can receive approval.
+const unapprovedIndex = {
+  ...communityIndex,
+  factLedger: [],
+  canonicalSourceLedger: { records: [] },
+};
+
+async function ask(question, now = new Date("2026-08-31T18:00:00Z"), index = communityIndex) {
   return answerCommunityQuestion(question, {
-    index: communityIndex,
+    index,
     communityId: "sterling-ranch",
     answerRulesQuestion,
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
@@ -18,9 +27,9 @@ async function ask(question, now = new Date("2026-08-31T18:00:00Z")) {
   });
 }
 
-async function askWithDraft(question, draft) {
+async function askWithDraft(question, draft, index = communityIndex) {
   return answerCommunityQuestion(question, {
-    index: communityIndex,
+    index,
     communityId: "sterling-ranch",
     answerRulesQuestion,
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
@@ -44,6 +53,12 @@ test("revalidated projections cannot answer an unrelated directory lookup", asyn
     "approved-mailbox-keys-route",
     "approved-great-hall-booking-link",
   ]);
+  // Isolate the two projections whose renewal this test exercises. Other
+  // later-approved facility pages may legitimately win live-index ranking.
+  renewed.sources = renewed.sources.filter((source) => renewedIds.has(source.id)
+    || /\/414\/Approved-Landscapers-List/.test(source.sourceUrl || ""));
+  const fixtureSourceIds = new Set(renewed.sources.map((source) => source.id));
+  renewed.factLedger = (renewed.factLedger || []).filter((fact) => fixtureSourceIds.has(fact.sourceId));
   renewed.sources = renewed.sources.map((source) => renewedIds.has(source.id)
     ? { ...source, checkedAt: "2026-09-11T05:00:00Z", staleAfter: "2099-01-01T00:00:00Z" }
     : source);
@@ -80,6 +95,8 @@ test("approved water-usage monitoring instructions do not borrow payment facts",
   assert.match(answer.answer, /select Registration/i);
   assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i);
   assert.doesNotMatch(answer.answer, /Pay Online|rate|billing help|AmCoBi/i);
+  assert.doesNotMatch(answer.answer, /plant irrigated|gals\/sf|DRC|Design Review/i);
+  assert.doesNotMatch(JSON.stringify(answer.sources), /DocumentCenter\/View\/770\//i);
 });
 
 test("structured routing separates online water-usage access from billing and payment", async () => {
@@ -122,6 +139,8 @@ test("structured routing separates online water-usage access from billing and pa
     assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i, question);
     assert.match(answer.answer, /Registration/i, question);
     assert.doesNotMatch(answer.answer, /ClientCare@AmCoBi\.com|833[-)\s]772[-\s]2240|Pay Online|water rate/i, question);
+    assert.doesNotMatch(answer.answer, /plant irrigated|gals\/sf|DRC|Design Review/i, question);
+    assert.doesNotMatch(JSON.stringify(answer.sources), /DocumentCenter\/View\/770\//i, question);
   }
 
   const paymentPageOnlyIndex = {
@@ -277,7 +296,7 @@ test("unapproved facility rental facts and booking actions stay withheld", async
     "How do I reserve an Overlook space?",
     "How much does the Overlook Great Hall cost?",
   ]) {
-    const answer = await ask(question);
+    const answer = await ask(question, undefined, unapprovedIndex);
     assert.equal(answer.answerStatus, "source-unavailable", question);
     assert.equal(answer.answerMode, "community-freshness-withheld", question);
     assert.ok(answer.actions.every((action) => action.actionType === "information"), question);
@@ -290,7 +309,7 @@ test("an AI draft cannot restore a retired static rental shortcut", async () => 
     directAnswer: "Open the live rental catalog, choose the Overlook space you want, and select an available date and time.",
     keyDetails: ["The official facility page lists separate rentable spaces and conditions."],
     nextStep: "Use the live rental catalog to start the reservation.",
-  });
+  }, unapprovedIndex);
   assert.equal(tailored.answerStatus, "source-unavailable");
   assert.equal(tailored.answerMode, "community-freshness-withheld");
   assert.doesNotMatch(tailored.answer, /live rental catalog|select an available date/i);
@@ -302,7 +321,7 @@ test("a price-heavy AI draft also cannot bypass the static approval boundary", a
     directAnswer: "Yes. The Great Hall is $100 per hour with a two-hour minimum ($200 minimum rental).",
     keyDetails: ["North and South outdoor pavilions are currently listed at $25 per hour."],
     nextStep: "Open the live catalog to check your date and start the reservation.",
-  });
+  }, unapprovedIndex);
   assert.equal(mismatched.answerStatus, "source-unavailable");
   assert.equal(mismatched.answerMode, "community-freshness-withheld");
   assert.doesNotMatch(mismatched.answer, /\$100|\$25|live catalog/i);

@@ -69,7 +69,7 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
   await context.handleCommunitySourceHealth({ method: "GET", headers: { cookie: sessionCookie(createSessionToken("local-test-only")) } }, owner);
   assert.equal(owner.status, 200);
   assert.equal(owner.body.community.staleSources[0].contentHash, overdue.contentHash);
-  assert.equal(owner.body.readiness.totals.total, 27);
+  assert.equal(owner.body.readiness.totals.audited, 1631);
   const publicResult = {};
   await context.handleHealth({ method: "GET", headers: {} }, publicResult);
   assert.equal(publicResult.status, 200);

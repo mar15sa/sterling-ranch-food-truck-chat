@@ -7,7 +7,7 @@
     <title>Community Answer Readiness</title>
     <link rel="icon" href="/favicon.svg?v=20260912-editorial" type="image/svg+xml" />
     <link rel="stylesheet" href="/community-questions.css?v=20260901-4" />
-    <link rel="stylesheet" href="/community-sources.css?v=20260913-readiness2" />
+    <link rel="stylesheet" href="/community-sources.css?v=20260913-fullaudit1" />
   </head>
   <body>
     <main class="owner-shell">
@@ -50,8 +50,9 @@
         <section class="readiness-section" aria-labelledby="scopeTitle">
           <div class="section-heading">
             <div><p class="eyebrow">Your approved scope</p><h2 id="scopeTitle">Four priority categories</h2></div>
-            <p id="scopeSummary">Loading the 27-document audit…</p>
+            <p id="scopeSummary">Loading the full CAB inventory audit…</p>
           </div>
+          <p class="category-instruction">Select a category to see every primary document and CAB page, what each one is allowed to do, and its official source. A source can appear in more than one category.</p>
           <div class="scope-legend" aria-label="Document status key">
             <span><i class="dot active"></i>Available to answers</span>
             <span><i class="dot action"></i>Safe link only</span>
@@ -72,26 +73,37 @@
           <div class="check-grid">
             <article class="check-card" id="freshnessCheck"><span class="check-state">Checking</span><h3>Current approved evidence</h3><p id="freshnessDetail"></p></article>
             <article class="check-card" id="coverageCheck"><span class="check-state">Checking</span><h3>Necessary content handled</h3><p id="coverageDetail"></p></article>
+            <article class="check-card" id="websiteCheck"><span class="check-state">Checking</span><h3>CAB website coverage</h3><p></p></article>
             <article class="check-card" id="safetyCheck"><span class="check-state">Checking</span><h3>System-wide conflicts kept out</h3><p id="safetyDetail"></p></article>
           </div>
           <details class="inventory-details">
-            <summary>See site-wide discovery bookkeeping</summary>
+            <summary>See the complete CAB URL reconciliation</summary>
             <p id="inventoryExplanation"></p>
             <dl class="inventory-grid">
               <div><dt>Discovered</dt><dd id="discoveredCount">0</dd></div>
               <div><dt>Eligible</dt><dd id="eligibleCount">0</dd></div>
-              <div><dt>Indexed</dt><dd id="indexedCount">0</dd></div>
-              <div><dt>Excluded</dt><dd id="inventoryExcludedCount">0</dd></div>
-              <div><dt>Backlog</dt><dd id="inventoryBacklogCount">0</dd></div>
+              <div><dt>Assessed</dt><dd id="indexedCount">0</dd></div>
+              <div><dt>Technical routes</dt><dd id="inventoryExcludedCount">0</dd></div>
+              <div><dt>Unclassified</dt><dd id="inventoryBacklogCount">0</dd></div>
             </dl>
           </details>
         </section>
 
         <section class="review-work" aria-labelledby="reviewWorkTitle">
           <div class="section-heading">
-            <div><p class="eyebrow">Owner decisions</p><h2 id="reviewWorkTitle">Items needing a decision</h2></div>
-            <p>These proposed changes are withheld from resident answers until reviewed and released.</p>
+            <div><p class="eyebrow">Outstanding content work</p><h2 id="reviewWorkTitle">What still needs review</h2></div>
+            <p>The full inventory and newly detected source changes are different queues. Both are shown here.</p>
           </div>
+          <section class="held-work" aria-labelledby="heldWorkTitle">
+            <div class="held-work-heading"><div><h3 id="heldWorkTitle">Previously selected documents still withheld</h3><p>These owner decisions remain important within the larger full-site audit.</p></div><strong id="heldWorkCount">0</strong></div>
+            <div class="held-work-list" id="heldWorkList"></div>
+            <p class="queue-note" id="heldWorkEmpty" hidden>No scoped documents are withheld.</p>
+          </section>
+          <section class="page-review-summary" aria-labelledby="pageWorkTitle">
+            <div><h3 id="pageWorkTitle">Primary sources still needing claim review or retry</h3><p id="pageWorkSummary">Checking the complete audited source list…</p></div>
+            <strong id="pageWorkCount">0</strong>
+          </section>
+          <div class="queue-divider"><span>New source-change queue</span><p>Only pages or facts whose official source changed appear below. An empty queue does not clear the scoped held documents above.</p></div>
           <section class="summary" aria-label="Source review queue summary">
             <div><span>Pending reviews</span><strong id="pendingCount">0</strong></div>
             <div><span>Sensitive pending</span><strong id="sensitiveCount">0</strong></div>
@@ -112,10 +124,10 @@
           <button type="button" class="secondary" id="nextPage" disabled>Next</button>
         </nav>
         <section class="source-list" id="sourceList" aria-label="Source review cards"></section>
-        <div class="empty-state" id="emptyState" hidden><h2>No matching reviews</h2><p>The current filter has no review items.</p></div>
+        <div class="empty-state" id="emptyState" hidden><h2>No new source changes waiting</h2><p>No newly detected source changes match this filter. The scoped documents still withheld are listed above.</p></div>
         </section>
       </section>
     </main>
-    <script src="/community-sources.js?v=20260913-readiness3"></script>
+    <script src="/community-sources.js?v=20260913-fullaudit1"></script>
   </body>
 </html>

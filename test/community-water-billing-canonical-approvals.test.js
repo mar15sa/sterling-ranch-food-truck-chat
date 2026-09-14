@@ -77,7 +77,11 @@ test('real community index exposes approved payment/contact claims while raw and
   assert.equal(paymentPage.actions.some((action) => /amcobi/i.test(action.url)), false);
 
   const payment = searchCommunityIndex('AmCoBi water billing email', { index, communityId: 'sterling-ranch', now: NOW });
-  assert.deepEqual(payment.sources.map((source) => source.id), ['sterling-ranch-water-billing-payment-options-334']);
+  assert.equal(payment.sources[0].id, 'sterling-ranch-water-billing-payment-options-334');
+  for (const source of payment.sources) {
+    assert.ok(state.entriesFor(source).some(entry => entry.facet === 'contact'), source.id);
+    assert.match(source.text, /AmCoBi/i, 'Additional reviewed sources must independently support the named billing service');
+  }
   assert.match(payment.sources[0].text, /ClientCare@AmCoBi\.com/);
   assert.doesNotMatch(payment.sources[0].text, /Venmo|Resident Resource Center|720-661-9694/);
   const answer = await answerCommunityQuestion('AmCoBi water billing email', {
@@ -115,6 +119,10 @@ test('water-payment routing uses only the exact-version approved process, method
   assert.doesNotMatch(fee.answer, /threshold|alerts?|monitor|tier|water rate/i);
 
   const changed = JSON.parse(JSON.stringify(index));
+  // Isolate this approval family: the completed review now includes independent
+  // corroborating payment evidence, which must not be revoked by this page change.
+  changed.sources = changed.sources.filter(source => waterIds.has(source.id));
+  changed.factLedger = changed.factLedger.filter(fact => waterIds.has(fact.sourceId));
   changed.sources.find((source) => source.id === 'sterling-ranch-water-billing-payment-options-334').contentHash = 'e'.repeat(64);
   const withdrawn = await answerCommunityQuestion('What payment methods can I use for my water bill?', { ...baseOptions, index: changed });
   assert.equal(withdrawn.answerStatus, 'source-unavailable');

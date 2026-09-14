@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>Community Assistant Questions</title>
     <link rel="icon" href="/favicon.svg?v=20260912-editorial" type="image/svg+xml" />
-    <link rel="stylesheet" href="/community-questions.css?v=20260913-readiness1" />
+    <link rel="stylesheet" href="/community-questions.css?v=20260913-collapse1" />
   </head>
   <body>
     <main class="owner-shell">
@@ -37,15 +37,17 @@
           </div>
         </header>
 
-        <section class="source-health" aria-labelledby="sourceHealthTitle">
-          <div class="source-health-heading">
+        <details class="source-health" aria-labelledby="sourceHealthTitle">
+          <summary class="source-health-heading">
             <div>
               <p class="eyebrow">Answer accuracy</p>
               <h2 id="sourceHealthTitle">Content readiness</h2>
-              <p>Are the four categories you approved current and complete enough to support accurate, specific answers?</p>
+              <p id="sourceHealthCompact">Checking the four approved categories…</p>
             </div>
             <strong class="source-health-state" id="sourceHealthState">Checking…</strong>
-          </div>
+          </summary>
+          <div class="source-health-body">
+            <p class="source-health-purpose">Are the four categories you approved current and complete enough to support accurate, specific answers?</p>
 
           <div class="source-readiness-verdict" id="sourceReadinessVerdict" data-state="loading">
             <div>
@@ -57,10 +59,10 @@
           </div>
 
           <div class="source-health-summary" aria-label="Content readiness summary">
-            <div><span>In-scope documents</span><strong id="sourceScopeCount">—</strong></div>
-            <div><span>Fully handled</span><strong id="sourceHandledCount">—</strong></div>
-            <div><span>Available to answers</span><strong id="sourceEvidenceCount">—</strong></div>
-            <div class="source-held-summary"><span>Held for expert review</span><strong id="sourceHeldCount">—</strong></div>
+            <div><span>Relevant items inventoried</span><strong id="sourceScopeCount">—</strong></div>
+            <div><span>CAB URLs assessed</span><strong id="sourceHandledCount">—</strong></div>
+            <div><span>Approved answer sources</span><strong id="sourceEvidenceCount">—</strong></div>
+            <div class="source-held-summary"><span>Need review or retry</span><strong id="sourceHeldCount">—</strong></div>
           </div>
           <p class="source-readiness-breakdown" id="sourceReadinessBreakdown"></p>
           <div class="source-category-list" id="sourceCategoryList" aria-label="Readiness by approved category"></div>
@@ -69,7 +71,7 @@
           <details class="source-health-expanded">
             <summary>View technical source diagnostics</summary>
             <div class="source-health-summary source-technical-summary" aria-label="Technical source summary">
-              <div><span>Approved sources</span><strong id="sourceApprovedCount">—</strong></div>
+              <div><span>Source records</span><strong id="sourceApprovedCount">—</strong></div>
               <div><span>CAB page coverage</span><strong id="sourceCoverage">—</strong></div>
               <div><span>Pages pending</span><strong id="sourcePendingCount">—</strong></div>
               <div><span>Pages excluded</span><strong id="sourceExcludedCount">—</strong></div>
@@ -115,7 +117,8 @@
               </dl>
             </details>
           </details>
-        </section>
+          </div>
+        </details>
 
         <section class="summary" aria-label="Visible question summary">
           <div><span>Visible questions</span><strong id="questionCount">0</strong></div>
@@ -190,6 +193,6 @@
         <button type="button" class="load-more" id="loadMoreButton" hidden>Load more</button>
       </section>
     </main>
-    <script src="/community-questions.js?v=20260913-readiness1"></script>
+    <script src="/community-questions.js?v=20260913-collapse1"></script>
   </body>
 </html>

@@ -13,10 +13,10 @@ test("owner page stays private and does not load analytics", () => {
   assert.match(html, /Answer quality/);
   assert.match(html, /Answer accuracy/);
   assert.match(html, /Content readiness/);
-  assert.match(html, /In-scope documents/);
-  assert.match(html, /Fully handled/);
-  assert.match(html, /Available to answers/);
-  assert.match(html, /Held for expert review/);
+  assert.match(html, /Primary in-scope sources/);
+  assert.match(html, /CAB URLs assessed/);
+  assert.match(html, /Approved answer sources/);
+  assert.match(html, /Need review or retry/);
   assert.match(html, /View technical source diagnostics/);
   assert.match(html, /Pending review/);
   assert.match(html, /noindex, nofollow, noarchive/);
@@ -112,13 +112,27 @@ test("source review dashboard is private, version-bound, and has no analytics", 
   assert.match(html, /Current approved evidence/);
   assert.match(html, /Necessary content handled/);
   assert.match(html, /System-wide conflicts kept out/);
-  assert.match(html, /site-wide discovery bookkeeping/);
+  assert.match(html, /CAB website coverage/);
+  assert.match(html, /Previously selected documents still withheld/);
+  assert.match(html, /New source-change queue/);
+  assert.match(html, /complete CAB URL reconciliation/);
   assert.match(script, /renderReadiness/);
-  assert.match(script, /still safely withheld/);
+  assert.match(script, /cannot supply unapproved claims/);
+  assert.match(script, /Open official document/);
+  assert.match(script, /discovered CAB URLs have a recorded scope decision/);
   assert.match(`${html}\n${script}`, /Before this review/);
   assert.match(`${html}\n${script}`, /Proposed change/);
   assert.match(script, /does not confirm production deployment/);
   assert.match(html, /noindex, nofollow, noarchive/);
   assert.match(script, /\/api\/community-sources\/review/);
   assert.doesNotMatch(html, /environment\.js|googletagmanager|google-analytics/);
+});
+
+test("answer accuracy is collapsed by default so questions stay near the top", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-questions.html"), "utf8");
+  const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-questions.js"), "utf8");
+  assert.match(html, /<details class="source-health"/);
+  assert.doesNotMatch(html, /<details class="source-health"[^>]*\sopen(?:\s|>)/);
+  assert.match(html, /id="sourceHealthCompact"/);
+  assert.match(script, /Select to view details/);
 });

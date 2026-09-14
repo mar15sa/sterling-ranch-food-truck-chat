@@ -6,7 +6,7 @@ const vm = require('node:vm');
 
 function display(fetch) {
   function element(tag) {
-    return { tag, children: [], listeners: {}, textContent: '', value: '', append(...nodes) { this.children.push(...nodes); }, replaceChildren(...nodes) { this.children = nodes; }, setAttribute() {}, addEventListener(name, handler) { this.listeners[name] = handler; } };
+    return { tag, children: [], listeners: {}, dataset: {}, style: {}, textContent: '', value: '', append(...nodes) { this.children.push(...nodes); }, replaceChildren(...nodes) { this.children = nodes; }, setAttribute() {}, addEventListener(name, handler) { this.listeners[name] = handler; } };
   }
   const source = fs.readFileSync(path.join(__dirname, '../public/community-sources.js'), 'utf8');
   const elements = new Map();
@@ -93,6 +93,21 @@ test('source evidence links reject executable or malformed destinations', () => 
   }
 });
 
+test('category cards expose every primary source, disposition, next step, and official link', () => {
+  const context = display();
+  const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
+  context.category = buildCommunitySourceReadiness({}).categories.find(item => item.id === 'property-changes');
+  const nodes = flatten(vm.runInContext('categoryCard(category)', context));
+  assert.equal(nodes.filter(node => node.tag === 'li' && node.dataset.state).length, 54);
+  assert.ok(nodes.some(node => String(node.textContent).includes('approved details')));
+  assert.ok(nodes.some(node => node.textContent === 'Available to answers'));
+  assert.ok(nodes.some(node => node.tag === 'a' && node.href.includes('/DocumentCenter/View/1964/')));
+  assert.ok(nodes.some(node => node.textContent === 'Architectural & Community Standards'));
+  assert.ok(nodes.some(node => node.tag === 'a' && node.href.includes('/198/Architectural-Community-Standards')));
+  assert.ok(nodes.some(node => node.textContent === 'Approved claims'));
+  assert.ok(!nodes.some(node => node.textContent === 'Needs review'));
+});
+
 test('approved review history does not claim the old comparison is current approval or deployment state', () => {
   const context = display();
   context.item = { status: 'approved', currentValue: 'Not currently approved', proposedValue: '$100', releaseFingerprint: 'earlier-release' };
@@ -117,6 +132,14 @@ test('rendering a large inventory page keeps full totals but only mounts 25 card
   context.render(paginateReviews(inventory, new URLSearchParams('page=79')));
   assert.equal(vm.runInContext('sourceList.children.length', context), 19);
   assert.equal(vm.runInContext('$("#nextPage").disabled', context), true);
+});
+
+test('an unavailable source-change queue cannot appear to have zero pending changes', () => {
+  const context = display();
+  context.render({ items: [], reviewError: 'The private review queue is not configured.' });
+  assert.equal(vm.runInContext('$("#pendingCount").textContent', context), 'Unknown');
+  assert.equal(vm.runInContext('$("#emptyState h2").textContent', context), 'Source-change queue unavailable');
+  assert.match(vm.runInContext('$("#emptyState p").textContent', context), /not confirmation/);
 });
 
 test('older filter responses and failures cannot replace the latest page or reopen a signed-out dashboard', async () => {
