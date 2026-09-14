@@ -43,6 +43,8 @@ The complete regression gate also caught a compatibility gap in subject matching
 
 Canonical approved projections now require a valid future source expiry, including when a ledger copy exists. Newly reviewed PDFs opt into exact binary fingerprint checks: an image-only change fails closed even if extracted text is unchanged. Existing dynamic connector behavior is preserved. Changed or unavailable evidence does not inherit approval.
 
+The broader answer audit also found an action-only support link ending recovery questions too early. Recovery and troubleshooting requests now continue to grounded guidance when the proposed shortcut has no reviewed explanation. A support destination remains a useful next step, not proof of a reset procedure, restored access or successful repair. This preserves the existing support evidence without approving new contact details or inventing device instructions.
+
 ## Owner view
 
 The category cards distinguish evidence, links, live feeds and exclusions. Expanding a category shows all primary documents and pages; expanding a source shows its allowed details and limits. Expanded categories use the full available width. The question log's answer-accuracy section is collapsible.
