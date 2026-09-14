@@ -16,3 +16,11 @@ Costs: measured usage multiplied by a dated price snapshot is an estimate, not a
 Model exclusions: Fable and Astra are forbidden. Model choice may differ by stage. Initial available staging provider: Anthropic. OpenAI and Gemini keys were absent when checked September 14, 2026. Model-list access is not proof that a paid generation succeeds.
 
 No deployment is performed by these tools. A paid pilot has explicit model/case/repetition limits and a conservative reservation cap. Run through the existing staging environment without changing its variables or copying secrets to files.
+
+## Independent grading and compact acceptance
+
+`compare-answer-assessment.js OUT_DIR [v1|v2] [comma-separated-case-ids] [cap-usd]` compares detailed grading with Haiku 4.5 and Sonnet 5. Revision v2 enables strict tool output and clarifies necessary-clarification scoring. `compare-acceptance.js OUT_DIR` compares the compact coverage/correctness contract on fifteen invented diagnostic cases, twice per model, with a $1 conservative reservation. These tools never call the resident question route. All fixtures and result records are tests; synthetic facts are not approved resident evidence.
+
+`analyze-answer-assessment.js OUT_DIR` summarizes either completed run. Historical field names such as `estimatedPerAssessmentUsd` mean the single evaluated stage; the manifest's `kind` distinguishes detailed grading from compact acceptance. Costs are additional stage costs, not the complete proposed system. Invalid/inconsistent outputs remain unassessed, not successful or free. Captures preserve original dispositions; any later validator recheck must record differences separately.
+
+See `docs/COMMUNITY-ANSWER-ASSESSMENT-EXPERIMENT.md` and `docs/COMMUNITY-COMPACT-ACCEPTANCE-EXPERIMENT.md` for results and limitations. No candidate has been selected for runtime use or calibrated against independent human ratings.
