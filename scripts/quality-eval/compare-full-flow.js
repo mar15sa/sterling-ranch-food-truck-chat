@@ -2,11 +2,13 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process');
 async function main(){
   const out=path.resolve(process.argv[2]),capUsd=process.argv[3]?Number(process.argv[3]):5;
-  const flags=process.argv.slice(7);if(flags.some(f=>!['--offline-review','--complete-catalog'].includes(f)&&!f.startsWith('--semantic-cache=')))throw new Error('Unknown comparison flag');
+  const flags=process.argv.slice(7);if(flags.some(f=>!['--offline-review','--complete-catalog','--live-mixed'].includes(f)&&!f.startsWith('--semantic-cache=')))throw new Error('Unknown comparison flag');
+  const liveMixed=flags.includes('--live-mixed');
   const semanticFlags=flags.filter(f=>f.startsWith('--semantic-cache='));if(semanticFlags.length>1||semanticFlags.some(f=>!f.slice('--semantic-cache='.length)))throw new Error('Supply one semantic cache directory');
   const semanticDirectory=semanticFlags.length?path.resolve(semanticFlags[0].slice('--semantic-cache='.length)):null;
   const assessmentMode=flags.includes('--offline-review')?'offline-review':'inline',communityMode=flags.includes('--complete-catalog')?'complete-catalog':'keyword';
-  if(assessmentMode==='offline-review'&&capUsd>3)throw new Error('Offline-review phase maximum is $3');
+  if(liveMixed&&assessmentMode!=='offline-review')throw new Error('Mixed development comparison requires offline review');
+  if(assessmentMode==='offline-review'&&capUsd>(liveMixed?5:3))throw new Error('Offline-review phase maximum exceeded');
   if(!Number.isFinite(capUsd)||capUsd<=0||capUsd>5)throw new Error('Invalid reservation cap');
   const baseline=require('../../data/community-index.json');
   const {validateRulesSnapshot}=require('./flow-snapshot');
@@ -27,16 +29,17 @@ async function main(){
   const now=new Date().toISOString(),today=new Intl.DateTimeFormat('en-CA',{timeZone:profile.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now));
   const corpus=require('./diagnostic-cases.json').cases;
   const ids=['trash-reference','lighting-process','application','shed','forms-multi','ambiguity','compound','lighting-followup'];
-  const cases=ids.map(id=>{const c=corpus.find(c=>c.id===id);return {...c,context:c.contextCaseId?[{question:corpus.find(p=>p.id===c.contextCaseId).question}]:[]};});
-  const variants=[{id:'current-local',current:true},{id:'haiku-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'}},
+  const mixed=require('./mixed-flow-config'),live=liveMixed?mixed.liveOptions(profile,{fetchImpl:observed}):null;
+  const cases=liveMixed?mixed.cases:ids.map(id=>{const c=corpus.find(c=>c.id===id);return {...c,context:c.contextCaseId?[{question:corpus.find(p=>p.id===c.contextCaseId).question}]:[]};});
+  const variants=liveMixed?mixed.variants:[{id:'current-local',current:true},{id:'haiku-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'}},
     {id:'sonnet-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-sonnet-5',check:'claude-sonnet-5'}}];
-  const retrievalSession=await require('./flow-retrieval-session').createRetrievalSession({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime(),communityMode},{semanticDirectory});
+  const retrievalSession=await require('./flow-retrieval-session').createRetrievalSession({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime(),communityMode,...(live?{liveRetrieve:live.liveRetrieve}:{})},{semanticDirectory});
   try {
   const retrieve=retrievalSession.retrieve;
-  const manifest={status:'running',isTest:true,assessmentMode,communityMode,stagingNavigationEnabled:false,startedAt:now,today,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
+  const manifest={status:'running',isTest:true,assessmentMode,communityMode,liveMixed,stagingNavigationEnabled:false,startedAt:now,today,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
     retrieval:retrievalSession.metadata,sourceSnapshotHash:hash([profile.communityId,communityIndex,rulesIndex]),snapshotFiles:{community:'snapshots/community-index.json',rules:'snapshots/rules-index.json',profile:'snapshots/profile.json',attestation:'snapshots/attestation.json',rulesAttestation:'snapshots/rules-attestation.json'},profileHash:hash(profile),casesHash:hash(cases),capUsd,variants,repetitions:2,runs:[],
-    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','flow-retrieval-session.js','semantic-ranker.mjs','semantic-corpus.js','community-projection-corpus.js','understanding-candidate.js','compact-acceptance-candidate.js','flow-acceptance.js','compare-full-flow.js','flow-snapshot.js','observe-fetch.js','usage.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
-    limitations:['Document-based local snapshot comparison, not deployed revision or exact production billing.','No live adapter execution in this document-flow pilot.',
+    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','flow-retrieval-session.js','semantic-ranker.mjs','semantic-corpus.js','community-projection-corpus.js','understanding-candidate.js','compact-acceptance-candidate.js','flow-acceptance.js','compare-full-flow.js','flow-snapshot.js','observe-fetch.js','usage.js','mixed-flow-config.js','live-evidence.js','extra-live-evidence.js','live-request-plan.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
+    limitations:['Local snapshot comparison, not deployed revision or exact production billing.',liveMixed?'Live sources are queried per trial; compare captured facts before attributing differences to writers.':'No live adapter execution in this document-flow pilot.',
       'Shared model initialization is recorded separately; per-question retrieval is included in full trial latency.',
       'Authored diagnostic cases, not unseen holdout or human quality calibration.','Unresolved results must count against usefulness; model acceptance is not independent quality evidence.',
       'Current-local includes earlier scoped-context, identity, clarification and calendar repairs; not an untouched historical baseline.','No background detailed grading, hosting or storage costs included.',
@@ -52,8 +55,8 @@ async function main(){
     catch(error){manifest.status='stopped-invalid-snapshot';manifest.snapshotError=error.message;save();break;}
     active={caseId:row.id,variant:variant.id,repetition};const start=Date.now(),before=calls.length,id='flow-'+String(i+1).padStart(3,'0');let response=null,error=null;
     try{if(variant.current){const resolved=resolveConversationQuestion(row.question,row.context.map(c=>({...c,answer:'Evaluation transcript placeholder; never used as evidence.'})));
-      response=await answerCommunityQuestion(resolved.resolvedQuestion,{index:communityIndex,communityId:profile.communityId,communityProfile:profile,answerRulesQuestion,now:new Date(now)});
-    }else response=await runCandidate(row,{communityId:profile.communityId,retrieve,models:variant.models,fetchImpl:observed,now:today,assessmentMode,maxRepairs:assessmentMode==='offline-review'?0:1});}
+      response=await answerCommunityQuestion(resolved.resolvedQuestion,{index:communityIndex,communityId:profile.communityId,communityProfile:profile,answerRulesQuestion,now:new Date(now),...(live?.current||{})});
+    }else response=await runCandidate(row,{communityId:profile.communityId,...(liveMixed?{profile}:{}),retrieve,models:variant.models,fetchImpl:observed,now:today,assessmentMode,maxRepairs:assessmentMode==='offline-review'?0:1});}
     catch(e){error=e.message;}
     const result={id,isTest:true,...active,question:row.question,context:row.context,response,error,durationMs:Date.now()-start,calls:calls.slice(before)};
     fs.writeFileSync(path.join(out,id+'.json'),JSON.stringify(result,null,2)+'\n',{flag:'wx'});
