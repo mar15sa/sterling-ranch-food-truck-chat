@@ -13,7 +13,7 @@ test("owner page stays private and does not load analytics", () => {
   assert.match(html, /Answer quality/);
   assert.match(html, /Answer accuracy/);
   assert.match(html, /Content readiness/);
-  assert.match(html, /Primary in-scope sources/);
+  assert.match(html, /Relevant items inventoried/);
   assert.match(html, /CAB URLs assessed/);
   assert.match(html, /Approved answer sources/);
   assert.match(html, /Need review or retry/);
@@ -117,7 +117,8 @@ test("source review dashboard is private, version-bound, and has no analytics", 
   assert.match(html, /New source-change queue/);
   assert.match(html, /complete CAB URL reconciliation/);
   assert.match(script, /renderReadiness/);
-  assert.match(script, /cannot supply unapproved claims/);
+  assert.match(script, /Available to answers/);
+  assert.match(script, /Not approved from this source/);
   assert.match(script, /Open official document/);
   assert.match(script, /discovered CAB URLs have a recorded scope decision/);
   assert.match(`${html}\n${script}`, /Before this review/);

@@ -8,6 +8,9 @@ const { buildFactLedger } = require('../lib/community-truth');
 const { searchCommunityIndex } = require('../lib/community-search');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
 
+// The release runner loads all test files into one process. Keep the synthetic
+// date inside this suite so it cannot expire unrelated approved-source fixtures.
+test.describe('reviewed source families with an isolated verification clock', () => {
 const now = new Date('2026-09-15T12:00:00.000Z');
 const future = '2026-09-16T12:00:00.000Z';
 const sourceMatches = (source, fragment) => source.sourceUrl.includes(fragment);
@@ -142,4 +145,5 @@ test('all newly reviewed families fail closed when their approved version expire
   const answer = await ask(fixture(['/248/Water-Sewer'], 'stale'), 'What is the water billing phone number?');
   assert.notEqual(answer.answerStatus, 'verified');
   assert.doesNotMatch(answer.answer, /833[)\s-]*772[\s-]*2240/);
+});
 });

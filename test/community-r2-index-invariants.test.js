@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const index = require('../data/community-index.json');
-const { normalizeUrl } = require('../lib/community-truth');
+const { normalizeUrl, factApprovalIsExplicit } = require('../lib/community-truth');
 
 test('Release 2 exact reviewed evidence remains intact in later source releases', () => {
   const sourceIds = new Set(index.sources.map(source => source.id));
@@ -49,8 +49,12 @@ test('Release 2 exact reviewed evidence remains intact in later source releases'
     assert.ok((source.facts || []).every(fact => fact.sourceVersion === contentHash));
     assert.ok((source.actions || []).every(action => action.sourceVersion === contentHash));
   }
-  assert.ok(index.factLedger.every(entry => entry.reviewStatus === 'approved' && entry.lifecycle === 'current'));
-  assert.equal(index.factLedger.filter(entry => releaseTwoIds.has(entry.sourceId)).length, 18 + 7);
+  const releaseTwoFacts = index.factLedger.filter(entry => releaseTwoIds.has(entry.sourceId));
+  assert.ok(releaseTwoFacts.every(entry => factApprovalIsExplicit(entry) && entry.lifecycle === 'current'));
+  assert.equal(releaseTwoFacts.length, 18 + 7);
+  // Later inventory observations are allowed to coexist, never to inherit the
+  // earlier release's approval merely because its bundle was trusted.
+  assert.ok(index.factLedger.filter(entry => entry.reviewStatus === 'candidate').every(entry => !factApprovalIsExplicit(entry)));
   assert.equal(index.truthStatus.migrationMode, 'trusted-baseline');
   const versions = new Set(index.sources.map(source => `${source.id}:${source.contentHash}`));
   assert.ok(index.factLedger.every(entry => versions.has(`${entry.sourceId}:${entry.sourceVersion}`)));
