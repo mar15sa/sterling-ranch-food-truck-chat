@@ -5,9 +5,19 @@ const ledger = require('../data/canonical-source-ledger.json');
 const { approvals, buildApprovedV7Sources } = require('../data/community-source-approvals-v7');
 const { applyCommunitySourceApprovalsV7 } = require('../scripts/apply-community-source-approvals-v7');
 const { canonicalProjectionEntries, sourceReviewState } = require('../lib/community-source-answerability');
-const { selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
+const { selectRevalidationTargetUrls, renewExactApprovedEvidence } = require('../lib/community-approved-revalidation');
 const { searchCommunityIndex } = require('../lib/community-search');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
+
+function renewPickleballFixture(index) {
+  const source = index.sources.find(item => item.id === 'approved-pickleball-current-operations');
+  const checkedAt = new Date().toISOString();
+  // Positive answer tests represent the subsequent successful exact-source
+  // check, not a newly approved source that is deliberately immediately due.
+  renewExactApprovedEvidence(index, { sourceUrl: source.sourceUrl, observedHashes: [source.contentHash],
+    checkedAt, staleAfter: new Date(Date.parse(checkedAt) + 3600000).toISOString() });
+  return source;
+}
 
 test('pickleball approval is exact-version and limited to fifteen current operating claims', () => {
   assert.equal(approvals.decisions.length, 1);
@@ -39,7 +49,8 @@ test('pickleball projection exposes every approved claim and none of the withhel
 
 test('pickleball resident searches reach approved facts but cannot infer live availability', () => {
   const index = applyCommunitySourceApprovalsV7(structuredClone(baseIndex));
-  const now = Date.parse(approvals.decidedAt);
+  const renewed = renewPickleballFixture(index);
+  const now = Date.parse(renewed.checkedAt);
   const cases = [
     ['What are the pickleball court hours?', /7 a\.m\. to dusk/],
     ['How much does pickleball cost for nonresidents?', /\$40 per court/],
@@ -65,12 +76,15 @@ test('pickleball resident searches reach approved facts but cannot infer live av
 
 test('pickleball projection is due for exact revalidation and a changed hash cannot inherit approval', () => {
   const index = applyCommunitySourceApprovalsV7(structuredClone(baseIndex));
-  const source = buildApprovedV7Sources()[0];
+  const source = index.sources.find(item => item.id === 'approved-pickleball-current-operations');
   const due = selectRevalidationTargetUrls(index, Date.parse(approvals.decidedAt) + 1);
   assert.ok(due.includes(source.sourceUrl));
   const changed = { ...source, contentHash: 'f'.repeat(64) };
   assert.deepEqual(canonicalProjectionEntries(changed, index), []);
-  assert.equal(sourceReviewState(index, Date.parse(approvals.decidedAt)).canUseProjection(source), true);
+  assert.equal(sourceReviewState(index, Date.parse(approvals.decidedAt)).canUseProjection(source), false);
+  renewPickleballFixture(index);
+  assert.equal(sourceReviewState(index, Date.parse(source.checkedAt)).canUseProjection(source), true);
+  assert.equal(sourceReviewState(index, Date.parse(source.staleAfter)).canUseProjection(source), false);
 });
 
 test('rebuilding the index removes misleading approval labels without proof', () => {
@@ -85,10 +99,11 @@ test('rebuilding the index removes misleading approval labels without proof', ()
 
 test('resident pickleball answers lead with the fact, offer CourtReserve, and keep private construction separate', async () => {
   const index = applyCommunitySourceApprovalsV7(structuredClone(baseIndex));
+  const renewed = renewPickleballFixture(index);
   const options = {
     index,
     communityId: approvals.communityId,
-    now: new Date(approvals.decidedAt),
+    now: new Date(renewed.checkedAt),
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
     answerRulesQuestion: async (question) => /backyard/i.test(question) ? ({

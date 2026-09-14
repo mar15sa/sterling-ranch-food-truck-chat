@@ -289,6 +289,24 @@ function auditTechnicalExclusion(exclusion) {
 const eligibleRecords = (index.inventory?.eligibleUrls || []).map(auditEligible);
 const excludedRecords = (index.inventory?.exclusions || []).map(auditTechnicalExclusion);
 const records = [...eligibleRecords, ...excludedRecords].sort((a, b) => a.sourceUrl.localeCompare(b.sourceUrl));
+const completedReviewPath = path.join(root, 'data', 'community-source-review-completion.json');
+if (fs.existsSync(completedReviewPath)) {
+  const completed = JSON.parse(fs.readFileSync(completedReviewPath, 'utf8'));
+  const decisions = new Map(completed.records.map(record => [record.sourceUrl, record]));
+  for (const record of records) {
+    const decision = decisions.get(record.sourceUrl);
+    if (!decision) continue;
+    Object.assign(record, { title: decision.title || record.title,
+      disposition: decision.disposition, reason: decision.reason,
+      reviewedAt: decision.checkedAt, approvedClaimCount: decision.approvedClaimCount,
+      approvedActionCount: decision.approvedActionCount,
+      approvedClaims: decision.approvedClaims || [],
+      withheldClaims: decision.withheldClaims || [], verification: decision.verification,
+      reviewedContentHash: decision.contentHash || '',
+    });
+    if (decision.disposition === 'duplicate') record.duplicateOf = decision.verification?.replacementUrl || record.duplicateOf;
+  }
+}
 const uniqueUrls = new Set(records.map(record => record.sourceUrl));
 if (uniqueUrls.size !== records.length) throw new Error('The full CAB audit contains duplicate URL records.');
 if (records.length !== Number(index.inventory?.discoveredCount || 0)) {
@@ -344,5 +362,11 @@ const payload = {
   records,
 };
 
+if (fs.existsSync(outputPath)) {
+  const previous = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
+  if (previous.inventory?.pending === 0 && payload.inventory.pending > 0) {
+    throw new Error('Refusing to replace the completed inventory with an older incomplete crawl. Apply content decisions with scripts/apply-community-review-dispositions.js.');
+  }
+}
 fs.writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`);
 console.log(JSON.stringify({ outputPath, inventory: payload.inventory, totals: payload.totals }, null, 2));

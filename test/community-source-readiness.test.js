@@ -16,21 +16,21 @@ test('readiness reports the reconciled full-site audit and keeps unapproved sour
     inScopeUrls: 463,
     primarySources: 197,
     outOfScope: 1168,
-    answerEvidence: 17,
-    safeLink: 31,
+    answerEvidence: 43,
+    safeLink: 67,
     liveFeed: 1,
-    reviewRequired: 100,
-    unavailableRecheck: 4,
-    excluded: 44,
+    reviewRequired: 0,
+    unavailableRecheck: 0,
+    excluded: 86,
     duplicates: 155,
     technicalExclusions: 624,
   });
   assert.equal(result.inventory.reconciled, true);
   assert.equal(result.inventory.pending, 0);
-  assert.equal(result.state, 'needs-attention');
-  assert.match(result.headline, /Full inventory complete/);
-  assert.equal(result.sourceRemainingWork.length, 104);
-  assert.deepEqual(result.remainingWork.map(item => item.documentId), ['1964', '2398', '770']);
+  assert.equal(result.state, 'ready');
+  assert.match(result.headline, /Reviewed content is ready/);
+  assert.equal(result.sourceRemainingWork.length, 0);
+  assert.deepEqual(result.remainingWork, []);
   assert.equal(result.categories.length, 4);
   assert.equal(result.categories[0].total, 50);
   assert.equal(result.categories[0].documents.length, 14);
@@ -51,6 +51,6 @@ test('readiness distinguishes evidence freshness from completed inventory triage
   assert.equal(result.inventory.reconciled, true);
   assert.match(result.inventory.note, /every discovered CAB URL/i);
   assert.match(result.reasons[0], /5 approved sources and 11 approved facts/);
-  assert.match(result.reasons[1], /100 useful sources/);
-  assert.match(result.reasons[3], /out-of-scope CAB route/);
+  assert.match(result.headline, /freshness checks need attention/);
+  assert.match(result.reasons[1], /out-of-scope CAB route/);
 });

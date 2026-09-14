@@ -153,7 +153,7 @@ function renderSourceReadiness(readiness) {
   sourceEvidenceCount.textContent = String(totals.answerEvidence ?? "—");
   sourceHeldCount.textContent = String(held);
   sourceReadinessBreakdown.textContent = `${totals.answerEvidence || 0} sources contribute approved answer evidence · ${totals.safeLink || 0} provide safe links · ${totals.liveFeed || 0} uses live data · ${held} need review or retry.`;
-  sourceHealthCompact.textContent = `${totals.audited ?? "—"} discovered CAB URLs assessed · ${totals.primarySources ?? "—"} primary in-scope sources · ${held} need review or retry. Select to view details.`;
+  sourceHealthCompact.textContent = `${totals.answerEvidence ?? "—"} approved answer sources · ${totals.primarySources ?? "—"} relevant items inventoried, including links and exclusions · ${held} need review or retry. Select to view details.`;
   sourceCategoryList.replaceChildren(...(readiness.categories || []).map(category => {
     const row = document.createElement("article");
     row.dataset.state = category.complete ? "complete" : "attention";

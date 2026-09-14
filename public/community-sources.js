@@ -46,6 +46,24 @@ function setCheck(selector, state, label, detail) {
   card.querySelector("p").textContent = detail;
 }
 
+function appendReviewDetails(parent, source) {
+  if (source.reviewedAt) parent.append(textElement('span', `Content reviewed ${readableDate(source.reviewedAt)}`, 'document-reason'));
+  const approved = source.approvedClaims || [];
+  const withheld = source.withheldClaims || [];
+  const scopes = source.approvedScopes || [];
+  if (!approved.length && !withheld.length && !scopes.length) return;
+  const details = document.createElement('details');
+  details.append(textElement('summary', `${approved.length} approved details · ${withheld.length} limits or exclusions`));
+  for (const [label, values] of [['Approved use', scopes], ['Available to answers', approved], ['Not approved from this source', withheld]]) {
+    if (!values.length) continue;
+    details.append(textElement('strong', label));
+    const list = document.createElement('ul');
+    for (const value of values) list.append(textElement('li', typeof value === 'string' ? value : value.reason || value.claim));
+    details.append(list);
+  }
+  parent.append(details);
+}
+
 function categoryCard(category) {
   const card = document.createElement("details");
   card.className = "category-card";
@@ -61,7 +79,7 @@ function categoryCard(category) {
   const bar = document.createElement("div");
   bar.className = "coverage-bar";
   bar.setAttribute("role", "img");
-  bar.setAttribute("aria-label", `${category.handled} of ${category.total} primary sources handled`);
+  bar.setAttribute("aria-label", `${category.handled} of ${category.total} inventoried items reviewed`);
   for (const [name, count] of [["active", category.activeEvidence], ["action", (category.actionOnly || 0) + (category.liveFeed || 0)], ["excluded", category.excluded], ["held", category.heldForReview]]) {
     if (!count) continue;
     const segment = document.createElement("span");
@@ -69,7 +87,7 @@ function categoryCard(category) {
     segment.style.flexGrow = String(count);
     bar.append(segment);
   }
-  const counts = textElement("p", `${category.total} primary sources (${category.documents?.length || 0} documents + ${category.pages?.length || 0} pages) · ${category.auditedUrls} URLs assessed`, "category-counts");
+  const counts = textElement("p", `${category.total} inventoried items (${category.documents?.length || 0} documents + ${category.pages?.length || 0} pages), including links and exclusions · ${category.auditedUrls} URLs assessed`, "category-counts");
   const hint = textElement("span", "View every primary document and page", "category-hint");
   header.append(heading, bar, counts, hint);
   const list = document.createElement("ul");
@@ -81,6 +99,7 @@ function categoryCard(category) {
     const copy = document.createElement("div");
     copy.append(textElement("strong", sourceDocument.title), textElement("span", sourceDocument.reason, "document-reason"));
     if (sourceDocument.nextStep) copy.append(textElement("span", `Next: ${sourceDocument.nextStep}`, "document-next-step"));
+    appendReviewDetails(copy, sourceDocument);
     const controls = document.createElement("div");
     controls.className = "document-controls";
     controls.append(textElement("span", statusLabels[sourceDocument.status] || sourceDocument.status, "document-state"));
@@ -103,6 +122,7 @@ function categoryCard(category) {
     const controls = document.createElement("div");
     controls.className = "document-controls";
     controls.append(textElement("span", pageStatusLabels[page.status] || page.status, "document-state"));
+    appendReviewDetails(copy, page);
     const link = sourceLink(page.sourceUrl, "Open official page");
     if (link) controls.append(link);
     item.append(copy, controls);
@@ -137,7 +157,7 @@ function renderReadiness(data = {}) {
   $("#readinessReasons").replaceChildren(...reasons.map(reason => textElement("li", reason)));
 
   const totals = readiness.totals || {};
-  $("#scopeSummary").textContent = `${totals.audited || 0} of ${totals.audited || 0} discovered CAB URLs assessed. ${totals.inScopeUrls || 0} touch these categories and consolidate to ${totals.primarySources || 0} primary sources. ${totals.reviewRequired || 0} need claim review and ${totals.unavailableRecheck || 0} need a retry.`;
+  $("#scopeSummary").textContent = `${totals.answerEvidence || 0} sources provide approved answer evidence. ${totals.primarySources || 0} relevant items were inventoried, including ${totals.safeLink || 0} link-only items and ${totals.excluded || 0} exclusions. ${totals.reviewRequired || 0} need claim review and ${totals.unavailableRecheck || 0} need a retry. The full inventory assessed ${totals.audited || 0} discovered CAB URLs.`;
   $("#categoryList").replaceChildren(...(readiness.categories || []).map(categoryCard));
   const remainingWork = readiness.remainingWork || [];
   $("#remainingWork").hidden = remainingWork.length === 0;
@@ -152,20 +172,24 @@ function renderReadiness(data = {}) {
   const sourceRemainingWork = readiness.sourceRemainingWork || [];
   $("#pageWorkCount").textContent = String(sourceRemainingWork.length);
   $("#pageWorkSummary").textContent = sourceRemainingWork.length
-    ? `${sourceRemainingWork.length} primary sources are identified but cannot supply unapproved claims to resident answers. Open the category cards above to see exactly which ones.`
+    ? `${sourceRemainingWork.length} inventoried items still need review or retrieval. Open the category cards above to see each item and the reason.`
     : "Every useful source in the four categories has completed claim review.";
 
   const evidence = readiness.evidence || {};
   setCheck("#freshnessCheck", evidence.current ? "pass" : "attention", evidence.current ? "Current" : "Needs recheck",
     evidence.current
-      ? `All currently approved evidence passed its current-source checks. ${evidence.sourceCount || 0} source records are available to the answer system.`
+      ? `All currently approved evidence passed its current-source checks. The broader index contains ${evidence.sourceCount || 0} records; only approved, eligible details can support answers.`
       : `${evidence.expiredSources || 0} approved sources and ${evidence.expiredFacts || 0} approved facts need to be checked against their official source.`);
   const coverageGaps = (totals.reviewRequired || 0) + (totals.unavailableRecheck || 0);
   setCheck("#coverageCheck", coverageGaps ? "attention" : "pass", coverageGaps ? "Gaps remain" : "Complete",
     `${totals.answerEvidence || 0} sources can support approved claims, ${totals.safeLink || 0} are safe links, and ${totals.liveFeed || 0} uses a live feed. ${totals.reviewRequired || 0} still need claim review; ${totals.unavailableRecheck || 0} need retrieval retry.`);
   const conflicts = readiness.safeguards?.withheldConflictCount || 0;
+  const approvedConflicts = readiness.safeguards?.approvedConflictGroupCount;
+  const candidateConflicts = readiness.safeguards?.candidateConflictGroupCount;
   setCheck("#safetyCheck", conflicts ? "protected" : "pass", conflicts ? "Protected" : "Clear",
-    conflicts ? `Across the currently indexed source bundle, ${conflicts} conflicting facts are blocked from resident answers.` : "No unresolved conflicting facts are recorded.");
+    Number.isFinite(approvedConflicts) && Number.isFinite(candidateConflicts)
+      ? `${approvedConflicts} unresolved conflict groups involve approved evidence. ${candidateConflicts} additional groups are unapproved extraction diagnostics, not approved answers; their details remain withheld.`
+      : conflicts ? `${conflicts} extracted conflict groups remain withheld; this total is not a count of conflicting approved answers.` : "No unresolved conflicting facts are recorded.");
 
   const inventory = readiness.inventory || {};
   setCheck("#websiteCheck", inventory.reconciled ? "pass" : "attention", inventory.reconciled ? "Fully assessed" : "Inventory gap",
@@ -290,6 +314,13 @@ function render(data = {}) {
   $("#sensitiveCount").textContent = String(data.summary?.sensitive ?? items.filter(item => item.risk === "high").length);
   $("#conflictCount").textContent = String(data.summary?.conflicts ?? items.filter(item => item.conflict).length);
   $("#retirementCount").textContent = String(data.counts?.retirementPendingPageCount || 0);
+  if (data.reviewError) {
+    for (const selector of ['#pendingCount', '#sensitiveCount', '#conflictCount']) $(selector).textContent = 'Unknown';
+    $("#emptyState h2").textContent = 'Source-change queue unavailable';
+    $("#emptyState p").textContent = `${data.reviewError} The completed content audit above is available, but this is not confirmation that no new changes need review.`;
+  } else {
+    $("#emptyState h2").textContent = 'No new source changes waiting';
+  }
 }
 
 async function loadReviews(page = currentPage) {

@@ -5,78 +5,419 @@
   "decisionId": "source-necessity-audit-four-categories-2026-09-12",
   "scope": "Document-level classification only. Retained review candidates do not gain claim approval. Excluded and action-only PDF bodies cannot participate in resident retrieval.",
   "categories": [
-    {"id":"current-actions","title":"Fees, payments, contacts, reservations, and booking","documentIds":["2434","2472","2473","2474","2615"]},
-    {"id":"property-changes","title":"DRC, property changes, landscaping, and amendments","documentIds":["1964","1965","617","618","619","621","622","623","624","625","626","710","748","828"]},
-    {"id":"utilities-support","title":"Utilities, trash, water quality, and equipment support","documentIds":["1384","146","168","2398","520","686","770"]},
-    {"id":"facilities-live-services","title":"Facilities, recreation, events, and live services","documentIds":["159"]}
+    {
+      "id": "current-actions",
+      "title": "Fees, payments, contacts, reservations, and booking",
+      "documentIds": [
+        "2434",
+        "2472",
+        "2473",
+        "2474",
+        "2615"
+      ]
+    },
+    {
+      "id": "property-changes",
+      "title": "DRC, property changes, landscaping, and amendments",
+      "documentIds": [
+        "1964",
+        "1965",
+        "617",
+        "618",
+        "619",
+        "621",
+        "622",
+        "623",
+        "624",
+        "625",
+        "626",
+        "710",
+        "748",
+        "828"
+      ]
+    },
+    {
+      "id": "utilities-support",
+      "title": "Utilities, trash, water quality, and equipment support",
+      "documentIds": [
+        "1384",
+        "146",
+        "168",
+        "2398",
+        "520",
+        "686",
+        "770"
+      ]
+    },
+    {
+      "id": "facilities-live-services",
+      "title": "Facilities, recreation, events, and live services",
+      "documentIds": [
+        "159"
+      ]
+    }
   ],
   "documents": [
-    {"documentId":"2434","title":"2026 notice of setting water, sewer, and stormwater rates and fees","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/2434"},
-    {"documentId":"2472","title":"2026 tap and facility fees","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees"},
-    {"documentId":"2473","title":"2026 water, sanitary sewer, and stormwater fees","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees"},
-    {"documentId":"2474","title":"2026 CAB fees","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees"},
-    {"documentId":"2615","title":"Amended delinquent utility-fee collection process","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE"},
-    {"documentId":"1964","title":"2026 landscape application packet","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026"},
-    {"documentId":"1965","title":"Approved landscapers list","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-"},
-    {"documentId":"617","title":"Providence fencing specifications","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-"},
-    {"documentId":"618","title":"Standard three-rail fencing","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-"},
-    {"documentId":"619","title":"Solar panel specifications","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-"},
-    {"documentId":"621","title":"Exterior light replacement","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/621/Exterior-Light-Replacement"},
-    {"documentId":"622","title":"Trash screening","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/622/Trash-Screening-"},
-    {"documentId":"623","title":"Rear patio lights","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/623/Rear-Patio-Lights-"},
-    {"documentId":"624","title":"Landscape screens","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/624/Landscape-Screens-"},
-    {"documentId":"625","title":"Controlled pet areas","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/625/Controlled-Pet-Areas-"},
-    {"documentId":"626","title":"Backyard utility sheds","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/626/Backyard-Utility-Sheds"},
-    {"documentId":"710","title":"Overlook facility Code amendment","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/710/Amendment-to-the-Sterling-Ranch-Code-of-Rules-Overlook-Facility"},
-    {"documentId":"748","title":"Roll-off containers","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/748/Roll-Off-Containers"},
-    {"documentId":"828","title":"Community Standards and Design Review rules and fees amendment","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/828/Resolution-Modifying-Code-of-Rules-Community-Standards-and-Design-Review-Rules-and-Fees"},
-    {"documentId":"1384","title":"Chase Drain installation resolution","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED"},
-    {"documentId":"146","title":"Waste Connections recycling tips (duplicate)","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/146/Waste-Connection-Recycling-Tips-PDF"},
-    {"documentId":"168","title":"Waste Connections recycling tips","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF"},
-    {"documentId":"2398","title":"2026 annual drinking-water report","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/2398/2026-Water-Quality-Report"},
-    {"documentId":"520","title":"Waste Connections recycling presentation","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/520/Waste-Connections-Recycling-Right-Presentation-PDF"},
-    {"documentId":"686","title":"Improperly connected outdoor-use water meters policy","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/686/Resolution-No-2021-07-02Adopting-a-Policy-re-Improperly-Connected-Water-Meters-for-Outdoor-Use"},
-    {"documentId":"770","title":"Outdoor water-use calculation method","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/770/Calculating-Outdoor-Water-Usage"},
-    {"documentId":"159","title":"Caregiver registration form","sourceUrl":"https://sterlingranchcab.com/DocumentCenter/View/159/Caregiver-Registration-Form-PDF"}
+    {
+      "documentId": "2434",
+      "title": "2026 notice of setting water, sewer, and stormwater rates and fees",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2434"
+    },
+    {
+      "documentId": "2472",
+      "title": "2026 tap and facility fees",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2472/Res-No-2025-11-04-2026-Tap-and-Facility-Fees"
+    },
+    {
+      "documentId": "2473",
+      "title": "2026 water, sanitary sewer, and stormwater fees",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2473/Res-No-2025-11-03-2026-Water-Sanitary-Sewer-and-Stormwater-Fees"
+    },
+    {
+      "documentId": "2474",
+      "title": "2026 CAB fees",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2474/Res-No-2025-11-02-2026-CAB-Fees"
+    },
+    {
+      "documentId": "2615",
+      "title": "Amended delinquent utility-fee collection process",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2615/Res-No-2025-06-01-Amended-and-Restated-Collection-Process-for-Delinquent-Utility-Fees-FE"
+    },
+    {
+      "documentId": "1964",
+      "title": "2026 landscape application packet",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1964/Landscape-Submittal-Packet-2026"
+    },
+    {
+      "documentId": "1965",
+      "title": "Approved landscapers list",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1965/Sterling-Ranch-Approved-Landscapers-"
+    },
+    {
+      "documentId": "617",
+      "title": "Providence fencing specifications",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/617/Fencing---Elements-Providence-"
+    },
+    {
+      "documentId": "618",
+      "title": "Standard three-rail fencing",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/618/Standard-3-Rail-Fencing-"
+    },
+    {
+      "documentId": "619",
+      "title": "Solar panel specifications",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/619/Solar-Panels-"
+    },
+    {
+      "documentId": "621",
+      "title": "Exterior light replacement",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/621/Exterior-Light-Replacement"
+    },
+    {
+      "documentId": "622",
+      "title": "Trash screening",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/622/Trash-Screening-"
+    },
+    {
+      "documentId": "623",
+      "title": "Rear patio lights",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/623/Rear-Patio-Lights-"
+    },
+    {
+      "documentId": "624",
+      "title": "Landscape screens",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/624/Landscape-Screens-"
+    },
+    {
+      "documentId": "625",
+      "title": "Controlled pet areas",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/625/Controlled-Pet-Areas-"
+    },
+    {
+      "documentId": "626",
+      "title": "Backyard utility sheds",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/626/Backyard-Utility-Sheds"
+    },
+    {
+      "documentId": "710",
+      "title": "Overlook facility Code amendment",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/710/Amendment-to-the-Sterling-Ranch-Code-of-Rules-Overlook-Facility"
+    },
+    {
+      "documentId": "748",
+      "title": "Roll-off containers",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/748/Roll-Off-Containers"
+    },
+    {
+      "documentId": "828",
+      "title": "Community Standards and Design Review rules and fees amendment",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/828/Resolution-Modifying-Code-of-Rules-Community-Standards-and-Design-Review-Rules-and-Fees"
+    },
+    {
+      "documentId": "1384",
+      "title": "Chase Drain installation resolution",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1384/Res-No-2023-06-02---Chase-Drain-Installation-EXECUTED"
+    },
+    {
+      "documentId": "146",
+      "title": "Waste Connections recycling tips (duplicate)",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/146/Waste-Connection-Recycling-Tips-PDF"
+    },
+    {
+      "documentId": "168",
+      "title": "Waste Connections recycling tips",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF"
+    },
+    {
+      "documentId": "2398",
+      "title": "2026 annual drinking-water report",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2398/2026-Water-Quality-Report"
+    },
+    {
+      "documentId": "520",
+      "title": "Waste Connections recycling presentation",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/520/Waste-Connections-Recycling-Right-Presentation-PDF"
+    },
+    {
+      "documentId": "686",
+      "title": "Improperly connected outdoor-use water meters policy",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/686/Resolution-No-2021-07-02Adopting-a-Policy-re-Improperly-Connected-Water-Meters-for-Outdoor-Use"
+    },
+    {
+      "documentId": "770",
+      "title": "Outdoor water-use calculation method",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/770/Calculating-Outdoor-Water-Usage"
+    },
+    {
+      "documentId": "159",
+      "title": "Caregiver registration form",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/159/Caregiver-Registration-Form-PDF"
+    }
   ],
   "answerReadiness": {
-    "activeEvidenceDocumentIds": ["2472","2473","2474","2615","617","619","1384"],
-    "actionOnlyDocumentIds": ["1965","168"],
-    "heldForReviewDocumentIds": ["1964","2398","770"],
-    "heldDetails": [
-      {"documentId":"1964","title":"2026 landscape application packet","nextStep":"Finish claim-by-claim owner review before its procedures can be used in resident answers."},
-      {"documentId":"2398","title":"2026 annual drinking-water report","nextStep":"CAB or a water specialist must verify each water system's numerical, health, and compliance claims."},
-      {"documentId":"770","title":"Outdoor water-use calculation method","nextStep":"CAB or a water specialist must confirm the calculation method; its old rate and email remain excluded."}
+    "activeEvidenceDocumentIds": [
+      "2472",
+      "2473",
+      "2474",
+      "2615",
+      "617",
+      "619",
+      "1384",
+      "1964",
+      "2398",
+      "770"
     ],
-    "excludedDocumentIds": ["2434","618","621","622","623","624","625","626","710","748","828","146","520","686","159"]
+    "actionOnlyDocumentIds": [
+      "1965",
+      "168"
+    ],
+    "heldForReviewDocumentIds": [],
+    "heldDetails": [],
+    "excludedDocumentIds": [
+      "2434",
+      "618",
+      "621",
+      "622",
+      "623",
+      "624",
+      "625",
+      "626",
+      "710",
+      "748",
+      "828",
+      "146",
+      "520",
+      "686",
+      "159"
+    ]
   },
   "records": [
-    {"documentId":"2434","disposition":"excluded","contentFingerprint":"","reason":"Historical hearing notice; later adopted 2026 fee resolutions control."},
-    {"documentId":"2472","disposition":"retained-reviewed","contentFingerprint":"5dd2d5be89a8e923247a4dfa65617ff3ab3b56a623bdc36e8a2e3f5d74b7df15","reason":"Necessary adopted 2026 tap and facility fee source; existing narrow approval boundary is unchanged."},
-    {"documentId":"2473","disposition":"retained-reviewed","contentFingerprint":"fb5f4aab15d250fbade0b201d0f7093bffbed12f070e48db6cb149dc72cc6631","reason":"Necessary adopted 2026 water, sewer, and stormwater fee source; existing narrow approval boundary is unchanged."},
-    {"documentId":"2474","disposition":"retained-reviewed","contentFingerprint":"91de88375e9853f567b1ec49403d3128e91bfe165412e47e5214c3d1b42520d1","reason":"Necessary adopted 2026 CAB fee source; existing effective-date hold is unchanged."},
-    {"documentId":"2615","disposition":"retained-reviewed","contentFingerprint":"06222bc8216d88afeb3cf43a2de2810d0dadb32f1ffc74c5223013a828e7a066","reason":"Necessary adopted delinquent utility-fee collection source; existing freshness boundary is unchanged."},
-    {"documentId":"1964","disposition":"retained-review-required","contentFingerprint":"2086886c5652f743a9170dade1d69042ce063b4c67a753c37bd907d5b0f603bd","reason":"Necessary 2026 landscape process source; preserve staging-only claim boundaries."},
-    {"documentId":"1965","disposition":"action-only","contentFingerprint":"14e21805ae4cbd99f3670d3455247a6535c21284e9b11ee83275f3a15f062d7e","reason":"Offer the current directory route only; company names and contacts are not durable resident evidence."},
-    {"documentId":"617","disposition":"retained-review-required","contentFingerprint":"efe9e07a8941b05aa78291a5ab32dd2a9e59b76a81e19cb1367ae74979d65ed0","reason":"Narrow Providence fencing specifications require claim-level review."},
-    {"documentId":"618","disposition":"excluded","contentFingerprint":"272add5f78d7e33274bfdccfb68c32526617a27731f1620eb78a65acfb299a56","reason":"Duplicative of the controlling Code; not necessary as independent evidence."},
-    {"documentId":"619","disposition":"retained-review-required","contentFingerprint":"ed7267cd195fff08c703927d52b7f2ae5db09009ed9c40ec90b690a7408f772d","reason":"Narrow solar installation specifications require claim-level review."},
-    {"documentId":"621","disposition":"excluded","contentFingerprint":"45bc292dc28b08a002b0d85e72d30201c1290dff3afb765abad101eedabbf3f5","reason":"Superseded by the later adopted exterior-lighting amendment."},
-    {"documentId":"622","disposition":"excluded","contentFingerprint":"03b117e016f1767c40f54f6c6f289b9129f0423c4b585cf1197a548311483cae","reason":"Duplicative of the controlling Code; not necessary as independent evidence."},
-    {"documentId":"623","disposition":"excluded","contentFingerprint":"ee5685c3dee57752efc8657cce5950766248cad08ea59940efbd56a212665323","reason":"Conflicts with the later adopted exterior-lighting amendment."},
-    {"documentId":"624","disposition":"excluded","contentFingerprint":"ca83213b6e4d181056815f457dab51a9bff18715894df22398b96219540e9b59","reason":"Incomplete duplicate of the controlling landscape-screen Code provision."},
-    {"documentId":"625","disposition":"excluded","contentFingerprint":"c93e36def6a36ae27c72faddcdfdbcd5409af1fb8f374a1839f347f051a92249","reason":"Conflicts with the controlling Code on invisible fencing."},
-    {"documentId":"626","disposition":"excluded","contentFingerprint":"42f47086138472c8fa22df13f51be3b8b90be270f913c22f4987cbf89e6a4e27","reason":"Duplicative of the controlling shed requirements in the Code."},
-    {"documentId":"710","disposition":"excluded","contentFingerprint":"1101a89127b7d4fea60b43849e1bbaaccd4360a437d4670d7ecca3ffac62555c","reason":"Historical Overlook amendment superseded by later rules and live operating sources."},
-    {"documentId":"748","disposition":"excluded","contentFingerprint":"b6ae76fb132449e4ac3f9314599d0d0704f112d5a53074b739810ca4667b77e2","reason":"Duplicative Code material with an obsolete submission address."},
-    {"documentId":"828","disposition":"excluded","contentFingerprint":"de81ba393f9de36197bcfe860387f80cc5cb73bf15b28dbb86473dd920c20daa","reason":"Historical enforcement and lighting material superseded by later adopted policy."},
-    {"documentId":"1384","disposition":"retained-review-required","contentFingerprint":"6ab10d0db153695031ab86e72a0e266313c5c484c9940062561e6b620e4aa031","reason":"Necessary controlling Chase Drain resolution; claims require exact scoped review."},
-    {"documentId":"146","disposition":"excluded","contentFingerprint":"775a5b07dbe9a00ce09b701f56dd4d628dd8a51e9b1f6ba165799a0df55496d1","reason":"Exact duplicate of document 168."},
-    {"documentId":"168","disposition":"action-only","contentFingerprint":"775a5b07dbe9a00ce09b701f56dd4d628dd8a51e9b1f6ba165799a0df55496d1","reason":"Outbound recycling visual only; changing recycling facts must come from current live sources."},
-    {"documentId":"2398","disposition":"retained-specialist-review","contentFingerprint":"59260fc03731cca60350bd9708d9c006668d9785291ed03246457d3d7ba9821e","reason":"Necessary annual water report; system-specific numerical, health, and compliance claims require specialist review."},
-    {"documentId":"520","disposition":"excluded","contentFingerprint":"fc71bc4a8915dc1759e6ffe1ed351c499e7c52dd295b0a6d49c8bddbb550d1ca","reason":"Undated general recycling education that adds no current operational authority."},
-    {"documentId":"686","disposition":"excluded","contentFingerprint":"00666f4c08cf4a7cddb7222d5865064de4ce39574f7fd58bc0be2898cf3aa8dc","reason":"Historical targeted remediation policy with an incomplete reimbursement amount."},
-    {"documentId":"770","disposition":"retained-specialist-review","contentFingerprint":"0d624a683d46396577d5b8a1b7962a96ea8960eefbf188b7d49adc434ba251bb","reason":"Narrow water-budget method requires specialist confirmation; obsolete rates and contact details remain withheld."},
-    {"documentId":"159","disposition":"excluded","contentFingerprint":"a8354e0eff6746e9008443e28f1bb6e6fa523f19d51d8dc135b36c2e18c0ae7d","reason":"Stale 2020 caregiver form conflicts with the current online submission and payment process."}
+    {
+      "documentId": "2434",
+      "disposition": "excluded",
+      "contentFingerprint": "",
+      "reason": "Historical hearing notice; later adopted 2026 fee resolutions control."
+    },
+    {
+      "documentId": "2472",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "5dd2d5be89a8e923247a4dfa65617ff3ab3b56a623bdc36e8a2e3f5d74b7df15",
+      "reason": "Necessary adopted 2026 tap and facility fee source; existing narrow approval boundary is unchanged."
+    },
+    {
+      "documentId": "2473",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "fb5f4aab15d250fbade0b201d0f7093bffbed12f070e48db6cb149dc72cc6631",
+      "reason": "Necessary adopted 2026 water, sewer, and stormwater fee source; existing narrow approval boundary is unchanged."
+    },
+    {
+      "documentId": "2474",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "91de88375e9853f567b1ec49403d3128e91bfe165412e47e5214c3d1b42520d1",
+      "reason": "Necessary adopted 2026 CAB fee source; existing effective-date hold is unchanged."
+    },
+    {
+      "documentId": "2615",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "06222bc8216d88afeb3cf43a2de2810d0dadb32f1ffc74c5223013a828e7a066",
+      "reason": "Necessary adopted delinquent utility-fee collection source; existing freshness boundary is unchanged."
+    },
+    {
+      "documentId": "1964",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "2086886c5652f743a9170dade1d69042ce063b4c67a753c37bd907d5b0f603bd",
+      "reason": "Current /201 explicitly publishes the four-page 2026 Landscape Submittal Packet. Approve the complete application package, checklist identity, inspection scheduling instructions and submission contacts. Binding landscape requirements and fees remain governed by Code/fee records.",
+      "reviewedAt": "2026-09-14T15:30:59.293Z",
+      "withheldClaims": [
+        "Mailing addresses differ between pages 1 and 4 and across CAB pages.",
+        "Form amounts must not override current adopted fee authority.",
+        "120-day completion deadline, soil specification, approval obligations and water-budget requirements must retain controlling Code context and exceptions.",
+        "48 hours notice is a submission instruction, not a guaranteed completed inspection."
+      ]
+    },
+    {
+      "documentId": "1965",
+      "disposition": "action-only",
+      "contentFingerprint": "14e21805ae4cbd99f3670d3455247a6535c21284e9b11ee83275f3a15f062d7e",
+      "reason": "Offer the current directory route only; company names and contacts are not durable resident evidence."
+    },
+    {
+      "documentId": "617",
+      "disposition": "retained-review-required",
+      "contentFingerprint": "efe9e07a8941b05aa78291a5ab32dd2a9e59b76a81e19cb1367ae74979d65ed0",
+      "reason": "Narrow Providence fencing specifications require claim-level review."
+    },
+    {
+      "documentId": "618",
+      "disposition": "excluded",
+      "contentFingerprint": "272add5f78d7e33274bfdccfb68c32526617a27731f1620eb78a65acfb299a56",
+      "reason": "Duplicative of the controlling Code; not necessary as independent evidence."
+    },
+    {
+      "documentId": "619",
+      "disposition": "retained-review-required",
+      "contentFingerprint": "ed7267cd195fff08c703927d52b7f2ae5db09009ed9c40ec90b690a7408f772d",
+      "reason": "Narrow solar installation specifications require claim-level review."
+    },
+    {
+      "documentId": "621",
+      "disposition": "excluded",
+      "contentFingerprint": "45bc292dc28b08a002b0d85e72d30201c1290dff3afb765abad101eedabbf3f5",
+      "reason": "Superseded by the later adopted exterior-lighting amendment."
+    },
+    {
+      "documentId": "622",
+      "disposition": "excluded",
+      "contentFingerprint": "03b117e016f1767c40f54f6c6f289b9129f0423c4b585cf1197a548311483cae",
+      "reason": "Duplicative of the controlling Code; not necessary as independent evidence."
+    },
+    {
+      "documentId": "623",
+      "disposition": "excluded",
+      "contentFingerprint": "ee5685c3dee57752efc8657cce5950766248cad08ea59940efbd56a212665323",
+      "reason": "Conflicts with the later adopted exterior-lighting amendment."
+    },
+    {
+      "documentId": "624",
+      "disposition": "excluded",
+      "contentFingerprint": "ca83213b6e4d181056815f457dab51a9bff18715894df22398b96219540e9b59",
+      "reason": "Incomplete duplicate of the controlling landscape-screen Code provision."
+    },
+    {
+      "documentId": "625",
+      "disposition": "excluded",
+      "contentFingerprint": "c93e36def6a36ae27c72faddcdfdbcd5409af1fb8f374a1839f347f051a92249",
+      "reason": "Conflicts with the controlling Code on invisible fencing."
+    },
+    {
+      "documentId": "626",
+      "disposition": "excluded",
+      "contentFingerprint": "42f47086138472c8fa22df13f51be3b8b90be270f913c22f4987cbf89e6a4e27",
+      "reason": "Duplicative of the controlling shed requirements in the Code."
+    },
+    {
+      "documentId": "710",
+      "disposition": "excluded",
+      "contentFingerprint": "1101a89127b7d4fea60b43849e1bbaaccd4360a437d4670d7ecca3ffac62555c",
+      "reason": "Historical Overlook amendment superseded by later rules and live operating sources."
+    },
+    {
+      "documentId": "748",
+      "disposition": "excluded",
+      "contentFingerprint": "b6ae76fb132449e4ac3f9314599d0d0704f112d5a53074b739810ca4667b77e2",
+      "reason": "Duplicative Code material with an obsolete submission address."
+    },
+    {
+      "documentId": "828",
+      "disposition": "excluded",
+      "contentFingerprint": "de81ba393f9de36197bcfe860387f80cc5cb73bf15b28dbb86473dd920c20daa",
+      "reason": "Historical enforcement and lighting material superseded by later adopted policy."
+    },
+    {
+      "documentId": "1384",
+      "disposition": "retained-review-required",
+      "contentFingerprint": "6ab10d0db153695031ab86e72a0e266313c5c484c9940062561e6b620e4aa031",
+      "reason": "Necessary controlling Chase Drain resolution; claims require exact scoped review."
+    },
+    {
+      "documentId": "146",
+      "disposition": "excluded",
+      "contentFingerprint": "775a5b07dbe9a00ce09b701f56dd4d628dd8a51e9b1f6ba165799a0df55496d1",
+      "reason": "Exact duplicate of document 168."
+    },
+    {
+      "documentId": "168",
+      "disposition": "action-only",
+      "contentFingerprint": "775a5b07dbe9a00ce09b701f56dd4d628dd8a51e9b1f6ba165799a0df55496d1",
+      "reason": "Outbound recycling visual only; changing recycling facts must come from current live sources."
+    },
+    {
+      "documentId": "2398",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "59260fc03731cca60350bd9708d9c006668d9785291ed03246457d3d7ba9821e",
+      "reason": "The currently linked 2026 compilation supports report scope and explicitly bounded historical findings: CAB 2025 coliform response and backflow-program violation; the appended Dominion 2026 inspection notice; and Castle Rock 2025 monitoring violations and instrument response. Each complete quote retains entity and date context. It cannot establish current tap-water safety or blend water-system results.",
+      "reviewedAt": "2026-09-14T15:30:37.652Z",
+      "withheldClaims": [
+        "Current water is safe or unsafe for a person or a particular home.",
+        "No contaminants or no violations across the compilation.",
+        "Numerical contaminant-level interpretation, medical recommendations, or extrapolation between water systems.",
+        "Historical 2025 or February-May 2026 disclosures as current status or advice to do nothing today.",
+        "A claim all pages concern 2025: the attached Dominion inspection notice concerns 2026.",
+        "Claiming the Dominion CCR no-violations line negates the appended 2026 inspection notice.",
+        "PWS identity extrapolation: CAB footer CO0118724 and backflow narrative CO0118742 differ.",
+        "Omitting the entity, report context or date from an approved findings passage."
+      ]
+    },
+    {
+      "documentId": "520",
+      "disposition": "excluded",
+      "contentFingerprint": "fc71bc4a8915dc1759e6ffe1ed351c499e7c52dd295b0a6d49c8bddbb550d1ca",
+      "reason": "Undated general recycling education that adds no current operational authority."
+    },
+    {
+      "documentId": "686",
+      "disposition": "excluded",
+      "contentFingerprint": "00666f4c08cf4a7cddb7222d5865064de4ce39574f7fd58bc0be2898cf3aa8dc",
+      "reason": "Historical targeted remediation policy with an incomplete reimbursement amount."
+    },
+    {
+      "documentId": "770",
+      "disposition": "retained-reviewed",
+      "contentFingerprint": "0d624a683d46396577d5b8a1b7962a96ea8960eefbf188b7d49adc434ba251bb",
+      "reason": "Current CAB design-review documents still link this method guide. Approve the text-only plant-area calculation method, confirmed visually across both pages; exclude the old rate table, contact details, allocations and eligibility conclusions.",
+      "reviewedAt": "2026-09-14T15:30:38.627Z",
+      "withheldClaims": [
+        "$8.20 per 1,000 gallons rate example and monthly/lot budget table.",
+        "Old submit@sterlingranchdrc.com email/address.",
+        "Assuming the front yard always consumes exactly 30% or every backyard receives exactly 70%.",
+        "Actual water bills, plant category classification, compliance or final landscape approval."
+      ]
+    },
+    {
+      "documentId": "159",
+      "disposition": "excluded",
+      "contentFingerprint": "a8354e0eff6746e9008443e28f1bb6e6fa523f19d51d8dc135b36c2e18c0ae7d",
+      "reason": "Stale 2020 caregiver form conflicts with the current online submission and payment process."
+    }
   ]
 }
