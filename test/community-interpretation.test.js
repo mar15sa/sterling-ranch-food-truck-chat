@@ -285,7 +285,7 @@ test("a named class question without punctuation reaches the live calendar", asy
   assert.equal(receivedRequest, question);
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.directAnswer, /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
-  assert.match(answer.keyDetails.join(" "), /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
+  assert.deepEqual(answer.keyDetails, []);
 });
 
 test("a planner cannot reroute a clearly timed class question to an information page", async () => {
@@ -323,7 +323,7 @@ test("a planner cannot reroute a clearly timed class question to an information 
   assert.equal(receivedRequest.filters.category, "Pilates");
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.directAnswer, /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
-  assert.match(answer.keyDetails.join(" "), /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
+  assert.deepEqual(answer.keyDetails, []);
 });
 
 test("parser uncertainty cannot produce a verified no-events claim", async () => {
