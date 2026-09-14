@@ -288,6 +288,30 @@ test("a named class question without punctuation reaches the live calendar", asy
   assert.deepEqual(answer.keyDetails, []);
 });
 
+test("a named activity without an event noun reaches the live calendar", async () => {
+  let receivedRequest;
+  const question = "When is the next bingo";
+  const answer = await answerCommunityQuestion(question, {
+    interpretationMode: "legacy",
+    now: new Date("2026-09-14T18:00:00Z"),
+    planCommunitySearch: async () => null,
+    getCommunityEvents: async (request) => {
+      receivedRequest = request;
+      return {
+        events: [{ id: "20", title: "Bingo Night", date: "2026-09-17", time: "18:30", location: "Sterling Center", url: "https://alpha.gov/event/20", startDate: "2026-09-17T18:30:00" }],
+        range: { kind: "next-seven-days", start: "2026-09-14", end: "2026-09-21", label: "the next seven days" },
+        sourceUrl: "https://alpha.gov/calendar",
+        checkedAt: "2026-09-14T18:00:00Z",
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "bingo" }] },
+      };
+    },
+  });
+  assert.equal(receivedRequest, question);
+  assert.equal(answer.answerMode, "community-live-events");
+  assert.match(answer.directAnswer, /Bingo Night is Thursday, September 17 at 6:30 p\.m\. in Sterling Center/i);
+  assert.deepEqual(answer.keyDetails, []);
+});
+
 test("a planner cannot reroute a clearly timed class question to an information page", async () => {
   let receivedRequest;
   const question = "When is the next Pilates class?";
