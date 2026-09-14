@@ -21,3 +21,29 @@ Preimplementation plan for a separate contract revision: remove duplicate model-
 Advertise only capabilities this candidate implements. In particular, the profile's general food adapter advertises menu/price facets while this candidate only projects schedules. The compact interface must expose schedule capability only. This resolves contradictory tool metadata without promoting new facts or widening source authority. Invalid connector IDs, wrong evidence kinds and copied-area/date failures remain explicit gaps. No resident module or profile changes.
 
 Compare the compact contract on the same six saved questions, date/context and two repetitions using both models (24 calls), retaining all raw outputs. This is a bundled contract revision, so any gain applies to that revision; it does not isolate the contribution of each removed field. Reuse the original capture's requests as the base. Preflight the entire design against at most $0.80 of the remaining existing phase reservation before paid calls. Add synthetic multi-need, cross-profile, missing-field, unavailable-capability, date-correction and source-role checks before evaluating it. Do not activate it in resident answering or label source facts current from this historical interpretation test.
+
+## Compact contract result
+
+Completed all 24 calls at 23:57:20 UTC, September 14, on revision `9a31a62a8b03ad4fd44fdb984c3eaf3854da51b0`. Twenty focused tests passed before the run. Capture: `artifacts/quality-eval/compact-planner-replay-20260914`; raw requests/responses and token counts are retained. The compact contract remains an experimental diagnostic and is not integrated into the candidate full-answer runner or resident answering.
+
+| Interpretation measure | Haiku 4.5 | Sonnet 5 |
+| --- | ---: | ---: |
+| Calls | 12 | 12 |
+| Structurally valid | 12 | 12 |
+| No rejected source binding | 8 | 12 |
+| Input / output tokens | 29,498 / 3,811 | 38,602 / 4,627 |
+| Measured token-priced cost | $0.048553 | $0.123474 |
+| Interpretation only, per 1,000 calls | $4.05 | $10.29 |
+| Median / sample p95 | 2,450 / 2,586 ms | 3,202.5 / 3,893 ms |
+
+Total $0.172027, zero unknown-usage calls, conservative reservation $0.536010. Current mixed phase including the preceding model-only replay: $1.441015 known cost, $3.841712 reserved of $5, leaving $1.158288 reservation headroom. No additional service subscription, live source request, resident question, or deployment. Thinking was disabled; these prices cover interpretation only, not writing, checking, hosting or full-answer latency.
+
+The format result improved, but it is not an answer-quality win. Manual inspection found:
+
+- Haiku's two yoga plans now include request text, but classify a specific tomorrow occurrence as ordinary information while selecting a live calendar. The role check correctly rejects both bindings (planner-01 and planner-08).
+- Both Haiku food plans supply an unsupported category filter to the schedule-only connector (planner-22 and planner-23). One also drops the menu subquestion from its needs, despite retaining it in the standalone question. Silently dropping that filter would not repair the lost request.
+- Sonnet selects valid bindings in all twelve plans. However, planner-10 changes the lighting follow-up from remaining installed to remaining installed **and operating**, and assumes the lights already have approval. The prior message asks how to get approval, not whether approval exists. The other Sonnet repetition preserves the installation question. Haiku planner-18 also phrases approval as already granted. Such unsupported presuppositions require separate semantic review even when source bindings pass.
+
+No model or contract is selected. This small, known-case comparison supports investigating shared instruction/schema consistency and meaning preservation; it does not establish statistical significance, representative useful/excellent rates, or demo readiness. Stronger models still change the requested meaning, and cheap models still omit needs. The software's existing role and copied-filter checks must remain intact. Next compare source relevance and full-answer costs only after preserving the complete request; evaluate gains on more than these development examples. Human communication judgments and an unseen acceptance set remain outstanding.
+
+Documentation impact: local experimental planning and model-choice evidence only. No resident flow/UI or diagram changed. Exact Notion update is pending in `docs/pending-notion/2026-09-14-planner-comparisons.md` under the previously rejected external-write approval; do not label synchronization or deployment complete.
