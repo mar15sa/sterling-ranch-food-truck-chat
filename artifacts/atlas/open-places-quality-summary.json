@@ -1,0 +1,17 @@
+{
+  "verifiedAt": "2026-09-13",
+  "command": "npm run check",
+  "exitCode": 0,
+  "broadRunStartedOnRevision": "2201ef40c7ee01ba9737f61ef622d40dc7dd6900",
+  "mainTests": { "passed": 827, "failed": 0 },
+  "rulesVariants": { "passed": 140, "total": 140 },
+  "unseenRules": { "passed": 7, "total": 7 },
+  "residentCorpus": { "questions": 122, "withheldUnscored": 2, "ratings": { "4": 98, "5": 22 } },
+  "assistantAudit": { "questions": 249, "withheldUnscored": 5, "improved": 36, "retained": 208, "regressed": 0 },
+  "controllingSourceRetrieval": { "passed": 20, "total": 20 },
+  "temporaryEvidenceRevalidation": { "urlsPassed": 55, "approvedIndexChanged": false },
+  "finalFollowupRevision": "b0b5dc8ab5b025a4df3c877e7e95f4a9006668a9",
+  "followupChecks": { "atlasTestsPassed": 16, "syntax": "passed", "deployedBrowser": "passed", "deployedAssetsAndProductionIsolation": "passed" },
+  "residentQuestionsSubmitted": 0,
+  "productionLaunch": false
+}

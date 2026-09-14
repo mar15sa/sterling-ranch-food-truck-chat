@@ -37,4 +37,7 @@ else fs.writeFileSync(file,json);
 const trails=JSON.stringify(read('data/atlas/trails.json'),null,2)+'\n',trailFile=path.join(root,'public/atlas/trails.json');
 if(process.argv.includes('--check')){if(fs.readFileSync(trailFile,'utf8').replace(/\r\n/g,'\n')!==trails)throw Error('Staging trail guide is out of sync');}
 else fs.writeFileSync(trailFile,trails);
+const experience=JSON.stringify(read('data/atlas/experience.json'),null,2)+'\n',experienceFile=path.join(root,'public/atlas/experience.json');
+if(process.argv.includes('--check')){if(fs.readFileSync(experienceFile,'utf8').replace(/\r\n/g,'\n')!==experience)throw Error('Atlas display configuration is out of sync');}
+else fs.writeFileSync(experienceFile,experience);
 console.log(JSON.stringify({listed:places.length,mapped:places.filter(p=>p.coordinates).length,held:held.length,total:inventory.records.length}));

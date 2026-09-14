@@ -19,7 +19,7 @@ async function check(environment,port){
       interval=setInterval(()=>{if(output.includes('Food truck chat is running'))finish();},100);interval.unref();
     });
     const results=[];
-    for(const url of ['/atlas','/atlas/','/atlas/index.html','/atlas/atlas.js','/atlas/atlas-core.js','/atlas/atlas.css','/atlas/places.json','/atlas/geography.json','/atlas/trails.json','/atlas/atlas-trails.js','/atlas/atlas-trails.css','/atlas/cab-trail-map.png','/atlas./places.json','/ATLAS/places.json','/%61tlas/places.json','/atlas%20/places.json']){
+    for(const url of ['/atlas','/atlas/','/atlas/index.html','/atlas/atlas.js','/atlas/atlas-core.js','/atlas/atlas.css','/atlas/places.json','/atlas/geography.json','/atlas/trails.json','/atlas/atlas-trails.js','/atlas/atlas-trails.css','/atlas/cab-trail-map.png','/atlas/experience.json','/atlas/atlas-art.js','/atlas/atlas-experience.js','/atlas/atlas-experience.css','/atlas./places.json','/ATLAS/places.json','/%61tlas/places.json','/atlas%20/places.json']){
       const r=await fetch(`http://127.0.0.1:${port}${url}`,{headers:{Host:'sterling-ranch-food-truck-chat-staging.up.railway.app'}});
       const expected=environment==='production'?404:(/^\/atlas(?:\/|$)/.test(url)?200:null);
       if(expected!==null)assert.equal(r.status,expected,environment+' '+url);

@@ -310,7 +310,7 @@
     }
   },
   "mccormick": {
-    "description": "A neighborhood playground and gathering spot on Palmer Lake Avenue, set inside the curved residential street. Open the playground and shelter below to see what is here.",
+    "description": "A neighborhood playground and gathering spot on Palmer Lake Avenue, set inside the curved residential street. Select the playground or shelter to see what is here.",
     "sourceIds": [
       "cab-parks"
     ],

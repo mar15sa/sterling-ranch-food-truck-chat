@@ -1,0 +1,22 @@
+{
+  "reviewedAt": "2026-09-13",
+  "stagingRevision": "b0b5dc8ab5b025a4df3c877e7e95f4a9006668a9",
+  "initialReviewedRevision": "2201ef40c7ee01ba9737f61ef622d40dc7dd6900",
+  "localViewports": [[1440, 1000], [390, 844]],
+  "horizontalOverflow": false,
+  "verifiedInteractions": [
+    "McCormick landmark opens playground and shelter cards",
+    "Sterling Center > Ranch Social > Atlas Coffee retains nested membership and official detail actions",
+    "A future-only school project closes when switching to Now",
+    "Burns later phase returns to its existing parent when switching to Now",
+    "About 30 minutes shows only Providence west and synchronizes its map and 21-32 minute summary",
+    "Selecting a phone amenity brings its detail heading to the top of the viewport",
+    "Neighborhood return restores the current landmark opener",
+    "Overview contains three illustrated map landmarks"
+  ],
+  "deployedReview": "On final b0b5dc8 assets, selected the future category then Now: Everything became selected, future became unselected, the directory restored 33 destinations and the map restored 18 pins. Opened McCormick and visually verified its illustrated world, playground and shelter cards. Left this view open for the owner.",
+  "deployedBrowserWarningsOrErrors": [],
+  "notClaimed": ["Real touch dragging", "OS-level reduced-motion session", "Field or GPS route verification"],
+  "residentQuestionsSubmitted": 0,
+  "productionLaunch": false
+}

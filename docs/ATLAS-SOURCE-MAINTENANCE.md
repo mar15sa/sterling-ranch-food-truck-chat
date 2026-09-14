@@ -95,7 +95,7 @@ Reuse the existing CivicPlus connector/profile boundaries where applicable. Keep
 
 ## Remaining staging refinement
 
-September 13 location follow-up: four operator property markers now locate 70 listings at 15 map areas; 30 listings at 18 places/projects remain directory-only. The source register contains 60 references. [Location/trail audit](ATLAS-LOCATION-AND-TRAIL-AUDIT.md) records methods and remaining work. Trail coverage is partial: CAB's dedicated trails page and older official map are now linked from the preview, but routes, entrances, distances and current access are not yet reconciled. Historical counts later in this document describe the preceding release.
+September 13 nested-place/walk follow-up: 78 listings share 18 map areas; 22 listings at 15 places/projects remain directory-only. The source register contains 60 references. The three walking guides and complete browsable CAB map are implemented on staging. [Walk evidence](ATLAS-NESTED-PLACES-AND-WALKS.md) records their source-based distances and schematic paths. Future work includes additional routes, visitor entrances, route-specific surface/access information and current closure notices. [The earlier location audit](ATLAS-LOCATION-AND-TRAIL-AUDIT.md) is retained as release history.
 
 1. Close location, alias and phase-status gaps for the records being added.
 2. Add useful sourced card fields and preserve unknowns. Offer a directory entry without a pin where exact location is unknown.
@@ -103,7 +103,7 @@ September 13 location follow-up: four operator property markers now locate 70 li
 4. Rebuild the staging catalog with `node scripts/build-atlas-preview.js` after reviewing inventory, location or visitor-detail changes. Check synchronization with `--check`. Keep makers held until permission and location choices are documented.
 5. Validate source links, search aliases, parent/feature counts, phase filters, privacy, geography and stale/failure behavior. Review the revised page with Marissa before any production proposal.
 
-## Validation and documentation
+## Earlier expansion validation and documentation
 
 The offline checker passes for 125 research records, 58 registered references, six audited label sets and all 100 staging-build IDs. It checks missing sources, parent cycles, claim/source linkage, lost baseline entries and accidental home-location or publication promotion. The runtime catalog is a deterministic projection of non-candidate records; the raw research file and makers remain unserved. Runtime changes are staging-only and require the normal release checks.
 

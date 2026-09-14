@@ -1,5 +1,7 @@
 # A map that helps you know the neighborhood
 
+Update, September 13, 2026: Marissa approved staging implementation with “Make it happen.” The first illustrated-place views, future reveal and walk-time experience are implemented in the [open-places release](ATLAS-OPEN-PLACES-IMPLEMENTATION.md). This document preserves the original brainstorm and its longer-term ideas. Production launch remains unapproved.
+
 Brainstorm prepared September 13, 2026. These are design directions for discussion, not approved production designs. The grouped directory and first walking guides are implemented separately; the visual concepts below are proposals.
 
 ## Recommended: places that open up

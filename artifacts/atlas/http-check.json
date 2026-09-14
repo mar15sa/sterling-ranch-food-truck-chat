@@ -51,6 +51,22 @@
         "status": 200
       },
       {
+        "path": "/atlas/experience.json",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-art.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-experience.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-experience.css",
+        "status": 200
+      },
+      {
         "path": "/atlas./places.json",
         "status": 404
       },
@@ -117,6 +133,22 @@
       },
       {
         "path": "/atlas/cab-trail-map.png",
+        "status": 404
+      },
+      {
+        "path": "/atlas/experience.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-art.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-experience.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-experience.css",
         "status": 404
       },
       {
