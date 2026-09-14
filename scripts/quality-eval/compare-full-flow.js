@@ -2,7 +2,9 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process');
 async function main(){
   const out=path.resolve(process.argv[2]),capUsd=process.argv[3]?Number(process.argv[3]):5;
-  const flags=process.argv.slice(7);if(flags.some(f=>!['--offline-review','--complete-catalog'].includes(f)))throw new Error('Unknown comparison flag');
+  const flags=process.argv.slice(7);if(flags.some(f=>!['--offline-review','--complete-catalog'].includes(f)&&!f.startsWith('--semantic-cache=')))throw new Error('Unknown comparison flag');
+  const semanticFlags=flags.filter(f=>f.startsWith('--semantic-cache='));if(semanticFlags.length>1||semanticFlags.some(f=>!f.slice('--semantic-cache='.length)))throw new Error('Supply one semantic cache directory');
+  const semanticDirectory=semanticFlags.length?path.resolve(semanticFlags[0].slice('--semantic-cache='.length)):null;
   const assessmentMode=flags.includes('--offline-review')?'offline-review':'inline',communityMode=flags.includes('--complete-catalog')?'complete-catalog':'keyword';
   if(assessmentMode==='offline-review'&&capUsd>3)throw new Error('Offline-review phase maximum is $3');
   if(!Number.isFinite(capUsd)||capUsd<=0||capUsd>5)throw new Error('Invalid reservation cap');
@@ -28,11 +30,14 @@ async function main(){
   const cases=ids.map(id=>{const c=corpus.find(c=>c.id===id);return {...c,context:c.contextCaseId?[{question:corpus.find(p=>p.id===c.contextCaseId).question}]:[]};});
   const variants=[{id:'current-local',current:true},{id:'haiku-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'}},
     {id:'sonnet-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-sonnet-5',check:'claude-sonnet-5'}}];
-  const retrieve=makeRetriever({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime(),communityMode});
+  const retrievalSession=await require('./flow-retrieval-session').createRetrievalSession({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime(),communityMode},{semanticDirectory});
+  try {
+  const retrieve=retrievalSession.retrieve;
   const manifest={status:'running',isTest:true,assessmentMode,communityMode,stagingNavigationEnabled:false,startedAt:now,today,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-    sourceSnapshotHash:hash([profile.communityId,communityIndex,rulesIndex]),snapshotFiles:{community:'snapshots/community-index.json',rules:'snapshots/rules-index.json',profile:'snapshots/profile.json',attestation:'snapshots/attestation.json',rulesAttestation:'snapshots/rules-attestation.json'},profileHash:hash(profile),casesHash:hash(cases),capUsd,variants,repetitions:2,runs:[],
-    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','community-projection-corpus.js','understanding-candidate.js','compact-acceptance-candidate.js','flow-acceptance.js','compare-full-flow.js','flow-snapshot.js','observe-fetch.js','usage.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
-    limitations:['Document-based local snapshot comparison, not deployed revision or exact production billing.','No live adapter execution or semantic retrieval in this first full-document-flow pilot.',
+    retrieval:retrievalSession.metadata,sourceSnapshotHash:hash([profile.communityId,communityIndex,rulesIndex]),snapshotFiles:{community:'snapshots/community-index.json',rules:'snapshots/rules-index.json',profile:'snapshots/profile.json',attestation:'snapshots/attestation.json',rulesAttestation:'snapshots/rules-attestation.json'},profileHash:hash(profile),casesHash:hash(cases),capUsd,variants,repetitions:2,runs:[],
+    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','flow-retrieval-session.js','semantic-ranker.mjs','semantic-corpus.js','community-projection-corpus.js','understanding-candidate.js','compact-acceptance-candidate.js','flow-acceptance.js','compare-full-flow.js','flow-snapshot.js','observe-fetch.js','usage.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
+    limitations:['Document-based local snapshot comparison, not deployed revision or exact production billing.','No live adapter execution in this document-flow pilot.',
+      'Shared model initialization is recorded separately; per-question retrieval is included in full trial latency.',
       'Authored diagnostic cases, not unseen holdout or human quality calibration.','Unresolved results must count against usefulness; model acceptance is not independent quality evidence.',
       'Current-local includes earlier scoped-context, identity, clarification and calendar repairs; not an untouched historical baseline.','No background detailed grading, hosting or storage costs included.',
       'Offline-review outputs, when enabled, are unreviewed drafts with no verified completion claim. Answer presence is not quality.']};
@@ -60,5 +65,6 @@ async function main(){
   }
   if(manifest.status==='running')manifest.status=manifest.runs.length===jobs.length?'captured':'incomplete';
   manifest.finishedAt=new Date().toISOString();manifest.costsByVariant=Object.fromEntries(variants.map(v=>[v.id,summarize(calls.filter(c=>c.variant===v.id))]));save();
+  } finally { await retrievalSession.dispose(); }
 }
 if(require.main===module)main().catch(e=>{console.error(e.message);process.exitCode=1;});
