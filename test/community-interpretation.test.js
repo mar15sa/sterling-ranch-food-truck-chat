@@ -168,6 +168,51 @@ test("an unmatched explicit filter retains unfiltered alternatives", async () =>
   assert.equal(result.diagnostics.afterFilterCount, 0);
 });
 
+test("multi-day calendar requests fetch every CivicPlus day before filtering", async () => {
+  const requestedDays = [];
+  const fetchImpl = async (url) => {
+    const day = new URL(url).searchParams.get("day").padStart(2, "0");
+    requestedDays.push(day);
+    const title = day === "11" ? "Yoga w/Laura" : `Community Event ${day}`;
+    return new Response(calendarHtml([{
+      id: day,
+      title,
+      category: day === "11" ? "Fitness" : "Community Events",
+      startDate: `2026-09-${day}T07:30:00`,
+      location: "Great Hall",
+    }]), { status: 200 });
+  };
+  const result = await getCommunityEvents({
+    dateRange: { start: "2026-09-10", end: "2026-09-12", label: "the next three days" },
+    filters: { audience: "", category: "Yoga", facility: "", location: "" },
+  }, { fetchImpl, now: new Date("2026-09-10T18:00:00Z") });
+  assert.deepEqual(requestedDays.sort(), ["10", "11", "12"]);
+  assert.deepEqual(result.events.map((event) => event.title), ["Yoga w/Laura"]);
+  assert.equal(result.diagnostics.beforeFilterCount, 3);
+  assert.equal(result.diagnostics.afterFilterCount, 1);
+  assert.equal(result.diagnostics.requestedDayCount, 3);
+});
+
+test("legacy multi-day calendar questions retain their named activity filter", async () => {
+  const fetchImpl = async (url) => {
+    const day = new URL(url).searchParams.get("day").padStart(2, "0");
+    return new Response(calendarHtml([{
+      id: day,
+      title: day === "19" ? "Yoga w/Laura" : `Community Event ${day}`,
+      category: "Community Events",
+      startDate: `2026-09-${day}T07:30:00`,
+      location: "Great Hall",
+    }]), { status: 200 });
+  };
+  const result = await getCommunityEvents("When is the next yoga class", {
+    fetchImpl,
+    now: new Date("2026-09-13T18:00:00Z"),
+  });
+  assert.deepEqual(result.events.map((event) => event.title), ["Yoga w/Laura"]);
+  assert.deepEqual(result.diagnostics.appliedFilters, [{ field: "category", value: "yoga" }]);
+  assert.equal(result.diagnostics.legacyFilterApplied, true);
+});
+
 test("structured mode interprets every substantive question and passes the plan to events", async () => {
   let plannerCalls = 0;
   let receivedRequest;
@@ -232,14 +277,15 @@ test("a named class question without punctuation reaches the live calendar", asy
         range: { kind: "next-seven-days", start: "2026-09-13", end: "2026-09-20", label: "the next seven days" },
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-13T18:00:00Z",
-        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [] },
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "yoga" }] },
       };
     },
   });
   assert.equal(plannerCalls, 0);
   assert.equal(receivedRequest, question);
   assert.equal(answer.answerMode, "community-live-events");
-  assert.match(answer.keyDetails.join(" "), /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
+  assert.match(answer.directAnswer, /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
+  assert.deepEqual(answer.keyDetails, []);
 });
 
 test("a planner cannot reroute a clearly timed class question to an information page", async () => {
@@ -258,19 +304,26 @@ test("a planner cannot reroute a clearly timed class question to an information 
     }),
     getCommunityEvents: async (request) => {
       receivedRequest = request;
+      const appliedFilters = Object.entries(request.filters || {})
+        .filter(([, value]) => value)
+        .map(([field, value]) => ({ field, value }));
       return {
         events: [{ id: "15", title: "Floor Mat Pilates for Boomers", date: "2026-09-15", time: "09:00", location: "Great Hall", url: "https://alpha.gov/event/15", startDate: "2026-09-15T09:00:00" }],
         range: request.dateRange,
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-13T18:00:00Z",
-        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [] },
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters },
       };
     },
   });
   assert.equal(receivedRequest.intent, "events");
   assert.equal(receivedRequest.goal, "schedule");
+  assert.equal(receivedRequest.subject, "Pilates");
+  assert.deepEqual(receivedRequest.searchQueries, ["Pilates"]);
+  assert.equal(receivedRequest.filters.category, "Pilates");
   assert.equal(answer.answerMode, "community-live-events");
-  assert.match(answer.keyDetails.join(" "), /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
+  assert.match(answer.directAnswer, /Floor Mat Pilates for Boomers is Tuesday, September 15 at 9 a\.m\. in Great Hall/i);
+  assert.deepEqual(answer.keyDetails, []);
 });
 
 test("parser uncertainty cannot produce a verified no-events claim", async () => {
