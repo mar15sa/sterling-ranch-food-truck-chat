@@ -64,3 +64,23 @@ test('live evidence expiring during writing is withheld even in offline-review m
  const governingPlan={needs:[{id:'need-1',evidenceKind:'governing-rule'}]},check={outcome:'complete',hardFailures:[],failureDetails:[],actionReviews:[],needs:[{needId:'need-1',request:'Permission',status:'addressed',supportSourceIds:['live']}]};
  assert.ok(coverageIssues(check,governingPlan,packet).includes('missing-governing-support'));
 });
+
+test('full candidate passes actual adapter evidence and source failures to the writer with need identity intact',async()=>{
+ for(const fail of [false,true]){
+  clearCommunityEventsCache();const live=createLiveEvidenceRetriever({profile:sterling,requests:{'need-1':request(sterling)},clock,fetchImpl:async()=>new Response(fail?'Unavailable':html,{status:fail?503:200})});
+  const retrieve=makeRetriever(context(sterling,live));
+  const {id,...unidentifiedNeed}=need;
+  const plan={standaloneQuestion:need.request,scope:'community',usedPriorContext:false,clarificationQuestion:'',needs:[unidentifiedNeed],constraints:[],searchQueries:['yoga class']};
+  let calls=0;
+  const result=await runCandidate({question:need.request},{communityId:sterling.communityId,apiKey:'synthetic-only',retrieve,clock,assessmentMode:'offline-review',maxRepairs:0,fetchImpl:async(_url,init)=>{
+   const body=JSON.parse(init.body);calls++;let output=plan;
+   if(calls===2){const payload=JSON.parse(body.messages[0].content);assert.equal(payload.requiredNeeds[0].id,'need-1');
+    if(fail){assert.equal(payload.evidence.length,0);assert.equal(payload.evidenceGaps[0].reason,'live-evidence-unavailable');}
+    else{assert.equal(payload.evidence[0].role,'live-operation');assert.match(payload.evidence[0].text,/Yoga class/);assert.equal(payload.evidence[0].checkedAt,new Date(now).toISOString());}
+    output={answer:fail?'I could not check the calendar.':'Yoga class is listed for tomorrow at Town Hall.',actionIds:payload.actions.map(a=>a.id)};
+   }
+   return new Response(JSON.stringify({stop_reason:'tool_use',content:[{type:'tool_use',name:body.tools[0].name,input:output}]}));
+  }});
+  assert.equal(calls,2);assert.equal(result.status,'unreviewed-experiment');assert.equal(result.completion,undefined);assert.equal(result.sources.length,fail?0:1);
+ }
+});
