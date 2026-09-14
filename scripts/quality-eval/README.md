@@ -24,3 +24,9 @@ No deployment is performed by these tools. A paid pilot has explicit model/case/
 `analyze-answer-assessment.js OUT_DIR` summarizes either completed run. Historical field names such as `estimatedPerAssessmentUsd` mean the single evaluated stage; the manifest's `kind` distinguishes detailed grading from compact acceptance. Costs are additional stage costs, not the complete proposed system. Invalid/inconsistent outputs remain unassessed, not successful or free. Captures preserve original dispositions; any later validator recheck must record differences separately.
 
 See `docs/COMMUNITY-ANSWER-ASSESSMENT-EXPERIMENT.md` and `docs/COMMUNITY-COMPACT-ACCEPTANCE-EXPERIMENT.md` for results and limitations. No candidate has been selected for runtime use or calibrated against independent human ratings.
+
+## Whole document-flow prototype
+
+`compare-full-flow.js OUT_DIR [reservation-cap-usd]` compares the current local coordinator and two candidate composer variants on eight authored document scenarios, twice each. Candidate stages are interpretation, existing scoped retrieval, composition and independent acceptance, with at most one repair. Separate need IDs survive all stages; malformed plans and unaccepted drafts remain unresolved. Live adapters and semantic retrieval are not included in this first integration scope. Prototype failures must not be presented as a production model decision.
+
+`analyze-full-flow.js OUT_DIR` preserves incomplete runs and unknown charges. `audit-flow-freshness.js OUT_DIR` requires the same exact source snapshot and records expired static sources supplied to a model. The v5 run was stopped after finding an expiry gap in existing canonical projection eligibility; its answers cannot establish safe quality improvement. Fix the shared boundary and prepare genuinely current approved evidence before any further paid run. See `docs/COMMUNITY-FULL-FLOW-EXPERIMENT.md` for the full development/error/spend record.

@@ -1,7 +1,8 @@
 "use strict";
 const { RATES, ensureAllowedModel }=require("./usage");
 function stageFor(body) {
-  if ((body.tools||[]).some(t=>t.name==="check_answer_acceptance"))return "answer-acceptance";
+  if ((body.tools||[]).some(t=>t.name==="compose_requested_answer"))return "composition";
+  if ((body.tools||[]).some(t=>["check_answer_acceptance","check_planned_answer_acceptance"].includes(t.name)))return "answer-acceptance";
   if ((body.tools||[]).some(t=>t.name==="assess_resident_answer"))return "answer-assessment";
   if ((body.tools||[]).some(t=>t.name==="route_community_question"))return "understanding";
   const system=typeof body.system==="string"?body.system:JSON.stringify(body.system||"");
