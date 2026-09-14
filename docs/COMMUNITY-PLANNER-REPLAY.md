@@ -1,0 +1,11 @@
+# Controlled planner comparison — September 14, 2026
+
+Preimplementation plan. The complete mixed-flow comparison lost all four yoga follow-ups because Haiku omitted required request text. Changing the answer writer could not recover those plans. Compare Haiku and Sonnet on the exact captured interpretation requests before deciding which stage merits a stronger model. Do not fix the schema, prompt, context or output validator at the same time.
+
+Replay the six authored mixed cases and both captured repetitions to each model: 24 new interpretation calls. Only model ID and its required temperature compatibility may differ; keep thinking disabled, the existing schema, instructions and date context unchanged. Reconstruct rows/profile from the exact completed capture, verify their identity against the payload, and retain complete raw provider tool output before validation. Compare structural validity, preserved intent/context, connector/date/filter binding and latency independently. A structurally valid plan is not proof of a useful final answer.
+
+Use at most **$0.80 conservative reservation** from the existing mixed-comparison $5 phase, which has $2.236680 remaining after its $2.763320 reservation. Preflight all 24 exact request bodies before making any call. Never start if the entire design cannot fit. Keep earlier phase totals, incomplete/unknown usage and source-context dates explicit. This is interpretation-only: no live fetches, resident questions, writer calls, subscriptions or deployment.
+
+The original provider output was not fully retained for rejected mixed-flow plans, so this replay saves the entire response object as well as the unmodified tool input and resolved plan. It does not fabricate missing historical output. Validate the replay builder offline for model-only changes, input identity, missing/duplicate repetitions, excluded models and preflight costs. Then record all outcomes, including invalid plans, without silently repairing or retrying them.
+
+This is a local development diagnostic, not unseen or independent human calibration. Owner communication cards remain pending. Notion update stays in a precise local pending record under the prior automatic external-write rejection. Resident flow/UI and diagrams are unchanged.
