@@ -84,3 +84,18 @@ test('full candidate passes actual adapter evidence and source failures to the w
   assert.equal(calls,2);assert.equal(result.status,'unreviewed-experiment');assert.equal(result.completion,undefined);assert.equal(result.sources.length,fail?0:1);
  }
 });
+
+test('profile-aware interpretation automatically binds and invokes the calendar without a manual request map',async()=>{
+ clearCommunityEventsCache();let sourceCalls=0,modelCalls=0;
+ const profile=sterling,live=createLiveEvidenceRetriever({profile,clock,fetchImpl:async()=>{sourceCalls++;return new Response(html);}});
+ const plan={standaloneQuestion:need.request,scope:'community',usedPriorContext:false,clarificationQuestion:'',constraints:[],searchQueries:['yoga'],needs:[{
+  subject:'yoga class',task:'schedule',request:need.request,evidenceKind:'live-operation',liveRequest:{kind:'calendar',connectorId:request(profile).connectorId,dateText:'tomorrow',filters:{category:'yoga',location:''}}
+ }]};
+ const result=await runCandidate({question:need.request},{communityId:profile.communityId,profile,apiKey:'synthetic-only',retrieve:makeRetriever(context(profile,live)),clock,assessmentMode:'offline-review',maxRepairs:0,fetchImpl:async(_url,init)=>{
+  const body=JSON.parse(init.body),payload=JSON.parse(body.messages[0].content);modelCalls++;
+  if(modelCalls===1)assert.ok(payload.connectors.some(c=>c.kind==='calendar'));
+  else assert.match(payload.evidence[0].text,/2026-09-15/);
+  return new Response(JSON.stringify({stop_reason:'tool_use',content:[{type:'tool_use',name:body.tools[0].name,input:modelCalls===1?plan:{answer:'Yoga class is listed tomorrow at Town Hall.',actionIds:payload.actions.map(a=>a.id)}}]}));
+ }});
+ assert.equal(modelCalls,2);assert.equal(sourceCalls,1);assert.equal(result.status,'unreviewed-experiment');assert.equal(result.plan.liveRequests['need-1'].dateRange.start,'2026-09-15');
+});

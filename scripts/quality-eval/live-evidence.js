@@ -58,10 +58,10 @@ function projectLiveResult(result,adapter,request,{now=Date.now(),timezone}={}){
 
 function createLiveEvidenceRetriever({profile,requests={},fetchImpl=fetch,clock=Date.now}={}){
  const adapters=createConnectorAdapters(profile);
- return async need=>{
-  const request=requests[need.id];
+ return async (need,plan={})=>{
+  const request=requests[need.id]||plan.liveRequests?.[need.id];
   if(need.evidenceKind!=='live-operation')throw new Error('Live bridge requires a live need');
-  if(!request)return {sources:[],diagnostics:[{needId:need.id,reason:'live-request-not-resolved'}]};
+  if(!request)return {sources:[],diagnostics:plan.liveRequestDiagnostics?.filter(d=>d.needId===need.id).length?plan.liveRequestDiagnostics.filter(d=>d.needId===need.id):[{needId:need.id,reason:'live-request-not-resolved'}]};
   const adapter=adapters.find(a=>a.connectorId===request.connectorId);
   try{
    if(!adapter)throw new Error('Live connector is not configured');
