@@ -1,0 +1,129 @@
+{
+  "stagingRevision": "ddcb3b3cd011824c5ac5ffeff4270ec6e643cd53",
+  "observedAt": "2026-09-14T22:37:21.117Z",
+  "isTest": true,
+  "rows": [
+    {
+      "id": "pickleball-hours",
+      "question": "What are the pickleball court hours?",
+      "routingPlan": {
+        "intent": "facilities",
+        "goal": "schedule",
+        "goals": [
+          "schedule"
+        ],
+        "subject": "pickleball court hours",
+        "requestedDetails": [
+          "date",
+          "hours"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "pickleball court",
+          "location": ""
+        },
+        "searchQueries": [
+          "pickleball court hours",
+          "pickleball court schedule",
+          "when are pickleball courts open"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "pickleball-booking",
+      "question": "How do I reserve a pickleball court?",
+      "routingPlan": {
+        "intent": "facilities",
+        "goal": "booking",
+        "goals": [
+          "booking"
+        ],
+        "subject": "pickleball court reservation",
+        "requestedDetails": [
+          "action",
+          "methods"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "pickleball court reservation",
+          "how to reserve pickleball court",
+          "pickleball court booking"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "pickleball-live-availability-boundary",
+      "question": "Is a pickleball court available right now?",
+      "routingPlan": {
+        "intent": "status",
+        "goal": "status",
+        "goals": [
+          "status"
+        ],
+        "subject": "pickleball court",
+        "requestedDetails": [
+          "status"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "pickleball court availability",
+          "pickleball court open now",
+          "pickleball court status"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "pickleball-private-construction-boundary",
+      "question": "Can I build a pickleball court in my backyard?",
+      "routingPlan": {
+        "intent": "rules",
+        "goal": "permission",
+        "goals": [
+          "permission"
+        ],
+        "subject": "backyard pickleball court",
+        "requestedDetails": [
+          "permission"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "backyard pickleball court allowed",
+          "residential pickleball court permission",
+          "build pickleball court rules"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    }
+  ]
+}
