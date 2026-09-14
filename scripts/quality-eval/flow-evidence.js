@@ -26,7 +26,7 @@ function assertBinding({profile,communityIndex,rulesIndex,communityId}){
 }
 function makeRetriever(context){
   assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now(),ruleSearch=rules.searchRulesIndex,
-    communityMode='keyword',stagingFormApproval=null}=context;
+    communityMode='keyword',stagingFormApproval=null,liveRetrieve=null}=context;
   if(!['keyword','complete-catalog'].includes(communityMode)||stagingFormApproval&&communityMode!=='complete-catalog')throw new Error('Invalid experimental catalog mode');
   const docs=eligibleCorpus(rulesIndex,communityId,now),index={...rulesIndex,documents:docs};
   const hosts=new Set(profile.allowedHosts||[]);hosts.add(new URL(profile.website).hostname);
@@ -41,7 +41,9 @@ function makeRetriever(context){
       if(!hosts.has(new URL(s.sourceUrl).hostname))throw new Error('Undeclared evidence host');
       if(kind==='rules'&&!docs.some(d=>d.id===s.id&&d.text===s.text))throw new Error('Rule text and identity do not match');
       const expanded=kind==='rules'?availableSectionContext(s,docs,{now,eligible:d=>eligibleForQuestion(d,query)}):null;
-      const role=kind==='rules'?'governing-rule':s.canonicalActionOnlyProjection?'official-action':
+      const liveNow=kind==='live'?(context.clock||Date.now)():now;
+      if(kind==='live'&&(s.controllingSourceRole!=='operational'||!Number.isFinite(Date.parse(s.checkedAt))||!Number.isFinite(Date.parse(s.staleAfter))||Date.parse(s.checkedAt)>liveNow||Date.parse(s.staleAfter)<=liveNow))throw new Error('Invalid current operational evidence');
+      const role=kind==='live'?'live-operation':kind==='rules'?'governing-rule':s.canonicalActionOnlyProjection?'official-action':
         ['municode','adopted-document'].includes(s.authorityClass)?'governing-rule':'official-process';
       const source={...s,text:expanded?.text||s.text,evidenceContext:expanded||s.evidenceContext};
       const version=kind==='rules'?hash([s.sourceUrl,s.productId,s.jobId,s.sourceTextHash,s.parentSupplementId]):s.contentHash;
@@ -54,13 +56,19 @@ function makeRetriever(context){
       }
       all.set(key,{id:'e-'+key.slice(0,20),sourceId:s.stagingAuthorization?.sourceId||s.id,matchedSourceIds:[s.id],contextChunkIds:expanded?.chunkIds||[],communityId,sourceUrl:s.sourceUrl,title:s.title,version,
         approvalScope:s.ownerReview?.approvedScope||s.stagingAuthorization?.scope||null,withheldScope:s.ownerReview?.withheldScope||[],effectiveDate:s.effectiveDate||s.approvedDate||null,
-        role,retrievedForNeedIds:needId?[needId]:[],catalogContext:!needId,rank,source,text:source.text,actions:kind==='community'?(s.actions||[]):[],
+        role,retrievedForNeedIds:needId?[needId]:[],catalogContext:!needId,rank,source,text:source.text,actions:kind!=='rules'?(s.actions||[]):[],
+        ...(kind==='live'?{checkedAt:s.checkedAt,staleAfter:s.staleAfter,adapterId:s.adapterId,liveScope:s.liveScope}:{}),
         stagingOnly:Boolean(s.stagingOnly),stagingAuthorization:s.stagingAuthorization||null,
         reviewStatus:s.stagingOnly?'existing-owner-approval-for-staging-navigation-only':'eligible-by-existing-gate',freshness:'current-at-snapshot'});
     }
     for(const need of plan.needs){
       const query=`${need.subject} ${need.request}`;
-      if(need.evidenceKind==='live-operation'){diagnostics.push({needId:need.id,reason:'live-adapter-not-integrated'});continue;}
+      if(need.evidenceKind==='live-operation'){
+        if(!liveRetrieve){diagnostics.push({needId:need.id,reason:'live-adapter-not-integrated'});continue;}
+        const result=await liveRetrieve(need,plan);diagnostics.push(...(result.diagnostics||[]));
+        for(const source of result.sources||[])add('live',source,need.id,0,query);
+        continue;
+      }
       const rr=communityMode==='complete-catalog'&&need.evidenceKind==='official-action'?[]:(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
       const cr=communityMode==='keyword'?searchCommunityIndex(query,{index:communityIndex,communityId,now,limit:4,includeActionOnlyProjections:true,allowPartialRequestedDetails:true,...needSearchOptions(need)}).sources.filter(s=>!isDynamicSource(s)):[];
       for(let rank=0;rank<Math.max(rr.length,cr.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',cr[rank],need.id,rank,query);}

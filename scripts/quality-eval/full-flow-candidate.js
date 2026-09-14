@@ -21,7 +21,7 @@ const COMPOSE=[
 function modelEvidence(sources){return sources.map(s=>({id:s.id,title:s.title,role:s.role,text:s.text,sourceUrl:s.sourceUrl,
   ...(s.approvalScope?{approvalScope:s.approvalScope}:{}),...(s.withheldScope?.length?{withheldScope:s.withheldScope}:{}),
   ...(s.effectiveDate?{effectiveDate:s.effectiveDate}:{}),...(s.stagingOnly?{stagingOnly:true}:{}),
-  ...(s.catalogContext?{catalogContext:true}:{})}));}
+  ...(s.catalogContext?{catalogContext:true}:{}),...(s.role==='live-operation'?{checkedAt:s.checkedAt,staleAfter:s.staleAfter}:{} )}));}
 function modelActions(actions){return actions.map(a=>({id:a.id,label:a.label,url:a.url,sourceId:a.sourceId,actionType:a.actionType,...(a.stagingOnly?{stagingOnly:true}:{})}));}
 function compositionSchema(packet){
   const schema=structuredClone(draftSchema);
@@ -34,10 +34,12 @@ function planIssues(plan){const issues=validationIssues(plan);if(issues.length)r
   if(plan.scope!=='ambiguous'&&plan.clarificationQuestion.trim())issues.push('unnecessary-plan-clarification');
   return issues;
 }
-function packetIssues(packet,communityId){
+function packetIssues(packet,communityId,now=Date.now()){
   if(!packet||packet.communityId!==communityId||!Array.isArray(packet.sources)||!Array.isArray(packet.actions))return ['invalid-evidence-packet'];
   const ids=new Set(),issues=[];
-  for(const s of packet.sources){if(!s.id||ids.has(s.id)||s.communityId!==communityId||!s.version||!s.text||!s.role)issues.push('invalid-evidence-identity');ids.add(s.id);}
+  for(const s of packet.sources){if(!s.id||ids.has(s.id)||s.communityId!==communityId||!s.version||!s.text||!s.role)issues.push('invalid-evidence-identity');ids.add(s.id);
+    if(s.role==='live-operation'&&(!Number.isFinite(Date.parse(s.checkedAt))||!Number.isFinite(Date.parse(s.staleAfter))||Date.parse(s.checkedAt)>now||Date.parse(s.staleAfter)<=now))issues.push('live-evidence-expired-or-invalid');
+  }
   const actionIds=new Set();for(const a of packet.actions){const source=packet.sources.find(s=>s.id===a.sourceId);
     if(!a.id||actionIds.has(a.id)||a.communityId!==communityId||!source||a.version!==source.version||!source.actions?.some(sa=>sa.url===a.url&&sa.label===a.label))issues.push('invalid-action-identity');actionIds.add(a.id);}
   return [...new Set(issues)];
@@ -62,7 +64,7 @@ function coverageIssues(check,plan,packet,actions=[]){
   }
   return [...new Set(issues)];
 }
-async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline'}={}){
+async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline',clock=Date.now}={}){
   Object.values(models).forEach(ensureAllowedModel);if(!communityId||!apiKey||![0,1].includes(maxRepairs)||!['inline','offline-review'].includes(assessmentMode))throw new Error('Invalid bounded candidate configuration');
   const trace=[],start=Date.now();
   async function invoke(body,tool){
@@ -89,22 +91,24 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
       return {isTest:true,status:'checked-candidate',...response,plan,completion:{outcome:'ambiguous'},trace,durationMs:Date.now()-start};
     }catch(e){return unresolved('clarification-check-failed',{plan,errorType:e.message});}
   }
-  let packet;try{packet=await retrieve(plan);const issues=packetIssues(packet,communityId);trace.push({stage:'retrieval',issues,sourceCount:packet?.sources?.length});if(issues.length)return unresolved('invalid-evidence',{plan});}
+  let packet;try{packet=await retrieve(plan);const issues=packetIssues(packet,communityId,clock());trace.push({stage:'retrieval',issues,sourceCount:packet?.sources?.length,diagnostics:packet?.diagnostics||[]});if(issues.length)return unresolved('invalid-evidence',{plan});}
   catch(e){return unresolved('retrieval-failed',{plan,errorType:e.message});}
   const snapshot=hash(packet),priorResidentQuestions=(row.context||[]).map(r=>r.question);let previous=null;
   for(let attempt=0;attempt<=maxRepairs;attempt++){
     try{
       const body={model:models.compose,max_tokens:650,thinking:{type:'disabled'},...(/haiku/.test(models.compose)?{temperature:0}:{}),system:COMPOSE,
         tools:[{name:'compose_requested_answer',description:'Write the supported answer and select supplied action IDs.',input_schema:compositionSchema(packet),strict:true}],tool_choice:{type:'tool',name:'compose_requested_answer'},
-        messages:[{role:'user',content:JSON.stringify({question:row.question,priorResidentQuestions,requiredNeeds:plan.needs,constraints:plan.constraints,evidence:modelEvidence(packet.sources),actions:modelActions(packet.actions),previousAttempt:previous})}]};
+        messages:[{role:'user',content:JSON.stringify({question:row.question,priorResidentQuestions,requiredNeeds:plan.needs,constraints:plan.constraints,evidence:modelEvidence(packet.sources),evidenceGaps:packet.diagnostics||[],actions:modelActions(packet.actions),previousAttempt:previous})}]};
       const draft=await invoke(body,'compose_requested_answer'),issues=draftIssues(draft,packet);trace.push({stage:attempt?'repair':'composition',draft,issues});
       if(issues.length){previous={draft,issues};continue;}
       const actions=packet.actions.filter(a=>draft.actionIds.includes(a.id)),response={answer:draft.answer,actions,sources:packet.sources};
       if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
+      if(packetIssues(packet,communityId,clock()).length)return unresolved('evidence-expired-during-answer',{plan});
       if(assessmentMode==='offline-review')return unreviewed(response,plan,{evidenceSnapshotHash:snapshot});
       const request=flowAcceptanceRequest({question:row.question,priorResidentQuestions,response:{...response,sources:modelEvidence(packet.sources),actions:modelActions(actions)}},plan,models.check);
       const check=await invoke(request,'check_planned_answer_acceptance'),checkIssues=coverageIssues(check,plan,packet,actions);trace.push({stage:'acceptance',check,issues:checkIssues});
       if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
+      if(packetIssues(packet,communityId,clock()).length)return unresolved('evidence-expired-during-answer',{plan});
       if(checkIssues.length||check.hardFailures.length){previous={draft,check,issues:checkIssues};continue;}
       const outcome={complete:'complete',partial:'verified-partial',clarification:'ambiguous','missing-evidence':'missing-evidence'}[check.outcome];
       if(!outcome)return unresolved('unaccepted-outcome',{plan});
