@@ -3,6 +3,8 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 async function main(){
   const out=path.resolve(process.argv[2]),capUsd=process.argv[3]?Number(process.argv[3]):5;
   if(!Number.isFinite(capUsd)||capUsd<=0||capUsd>5)throw new Error('Invalid reservation cap');
+  const baseline=require('../../data/community-index.json');
+  const {index:communityIndex,attestation}=require('./flow-snapshot').loadSnapshot(process.argv[4],process.argv[5],baseline);
   if(!process.env.ANTHROPIC_API_KEY)throw new Error('Existing provider credential required');
   fs.mkdirSync(out,{recursive:true});const mp=path.join(out,'manifest.json');if(fs.existsSync(mp))throw new Error('Use a new output directory');
   Object.assign(process.env,{COMMUNITY_INTERPRETATION_MODE:'legacy',COMMUNITY_LLM_MODEL:'claude-haiku-4-5',RULES_LLM_MODEL:'claude-haiku-4-5',
@@ -12,7 +14,7 @@ async function main(){
     Object.assign(entry,active);fs.appendFileSync(path.join(out,'calls.jsonl'),JSON.stringify(entry)+'\n');}});global.fetch=observed;
   const {answerCommunityQuestion}=require('../../lib/community-assistant'),{answerRulesQuestion,loadRulesIndex}=require('../../lib/rules-assistant');
   const {resolveConversationQuestion}=require('../../lib/community-conversation'),{runCandidate}=require('./full-flow-candidate'),{makeRetriever,hash}=require('./flow-evidence');
-  const profile=require('../../data/communities/sterling-ranch.json'),communityIndex=require('../../data/community-index.json'),rulesIndex=await loadRulesIndex();
+  const profile=require('../../data/communities/sterling-ranch.json'),rulesIndex=await loadRulesIndex();
   const now=new Date().toISOString(),today=new Intl.DateTimeFormat('en-CA',{timeZone:profile.timezone,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now));
   const corpus=require('./diagnostic-cases.json').cases;
   const ids=['trash-reference','lighting-process','application','shed','forms-multi','ambiguity','compound','lighting-followup'];
@@ -21,16 +23,20 @@ async function main(){
     {id:'sonnet-compose',models:{interpret:'claude-haiku-4-5',compose:'claude-sonnet-5',check:'claude-sonnet-5'}}];
   const retrieve=makeRetriever({profile,communityIndex,rulesIndex,communityId:profile.communityId,now:new Date(now).getTime()});
   const manifest={status:'running',isTest:true,startedAt:now,today,codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
-    sourceSnapshotHash:hash([profile.communityId,communityIndex,rulesIndex]),profileHash:hash(profile),casesHash:hash(cases),capUsd,variants,repetitions:2,runs:[],
-    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','understanding-candidate.js','compact-acceptance-candidate.js','compare-full-flow.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
+    sourceSnapshotHash:hash([profile.communityId,communityIndex,rulesIndex]),snapshotFiles:{community:'snapshots/community-index.json',rules:'snapshots/rules-index.json',profile:'snapshots/profile.json',attestation:'snapshots/attestation.json'},profileHash:hash(profile),casesHash:hash(cases),capUsd,variants,repetitions:2,runs:[],
+    codeHashes:Object.fromEntries(['full-flow-candidate.js','flow-evidence.js','understanding-candidate.js','compact-acceptance-candidate.js','compare-full-flow.js','flow-snapshot.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,file))).digest('hex')])),
     limitations:['Document-based local snapshot comparison, not deployed revision or exact production billing.','No live adapter execution or semantic retrieval in this first full-document-flow pilot.',
       'Authored diagnostic cases, not unseen holdout or human quality calibration.','Unresolved results must count against usefulness; model acceptance is not independent quality evidence.',
       'Current-local includes earlier scoped-context and identity repairs; not an untouched historical baseline.','No background detailed grading, hosting or storage costs included.']};
+  fs.mkdirSync(path.join(out,'snapshots'),{recursive:true});
+  for(const [key,value] of Object.entries({community:communityIndex,rules:rulesIndex,profile,attestation}))fs.writeFileSync(path.join(out,manifest.snapshotFiles[key]),JSON.stringify(value)+'\n',{flag:'wx'});
   fs.mkdirSync(path.join(out,'code'),{recursive:true});
   for(const file of Object.keys(manifest.codeHashes))fs.copyFileSync(path.join(__dirname,file),path.join(out,'code',file));
   const save=()=>{manifest.costs=summarize(calls);manifest.reservedUpperEstimateUsd=observed.reservedUsd();fs.writeFileSync(mp,JSON.stringify(manifest,null,2)+'\n');};save();
   const jobs=[];for(let repetition=1;repetition<=2;repetition++)for(const row of cases)for(const variant of variants)jobs.push({row,variant,repetition,order:crypto.randomBytes(8).toString('hex')});jobs.sort((a,b)=>a.order.localeCompare(b.order));
   for(const [i,{row,variant,repetition}] of jobs.entries()){
+    try{require('./flow-snapshot').validateSnapshot(communityIndex,attestation,baseline);}
+    catch(error){manifest.status='stopped-invalid-snapshot';manifest.snapshotError=error.message;save();break;}
     active={caseId:row.id,variant:variant.id,repetition};const start=Date.now(),before=calls.length,id='flow-'+String(i+1).padStart(3,'0');let response=null,error=null;
     try{if(variant.current){const resolved=resolveConversationQuestion(row.question,row.context);
       response=await answerCommunityQuestion(resolved.resolvedQuestion,{index:communityIndex,communityId:profile.communityId,communityProfile:profile,answerRulesQuestion,now:new Date(now)});

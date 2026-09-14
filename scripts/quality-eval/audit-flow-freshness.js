@@ -2,9 +2,11 @@
 const fs=require('node:fs'),path=require('node:path');
 const {hash}=require('./flow-evidence');
 async function audit(directory){
-  const manifest=JSON.parse(fs.readFileSync(path.join(directory,'manifest.json'))),index=require('../../data/community-index.json');
-  const rules=await require('../../lib/rules-assistant').loadRulesIndex();
-  if(hash([index.communityId,index,rules])!==manifest.sourceSnapshotHash)throw new Error('Repository snapshot no longer matches captured evidence');
+  const manifest=JSON.parse(fs.readFileSync(path.join(directory,'manifest.json')));
+  const readSnapshot=key=>JSON.parse(fs.readFileSync(path.join(directory,manifest.snapshotFiles[key]),'utf8'));
+  const index=manifest.snapshotFiles?readSnapshot('community'):require('../../data/community-index.json');
+  const rules=manifest.snapshotFiles?readSnapshot('rules'):await require('../../lib/rules-assistant').loadRulesIndex();
+  if(hash([index.communityId,index,rules])!==manifest.sourceSnapshotHash)throw new Error('Snapshot no longer matches captured evidence');
   const records=new Map();
   for(const line of fs.readFileSync(path.join(directory,'calls.jsonl'),'utf8').trim().split('\n').filter(Boolean)){
     const call=JSON.parse(line);for(const message of call.request?.messages||[]){let payload;try{payload=JSON.parse(message.content);}catch{continue;}
@@ -17,7 +19,7 @@ async function audit(directory){
   }
   const rows=[...records.values()],report={checkedAt:new Date().toISOString(),captureStartedAt:manifest.startedAt,sourceSnapshotHash:manifest.sourceSnapshotHash,
     exactSnapshotVerified:true,staticRecordsProvided:rows.length,expiredRecordsProvided:rows.filter(r=>r.expired).length,records:rows,
-    implication:'Expired evidence was provided to models. This does not prove every resulting fact is false, but the run cannot establish current-source-safe quality.'};
+    implication:rows.some(r=>r.expired)?'Expired evidence was provided to models. This does not prove every resulting fact is false, but the run cannot establish current-source-safe quality.':'No expired community records found in captured composer evidence. This does not independently verify rules freshness or answer quality.'};
   fs.writeFileSync(path.join(directory,'freshness-audit.json'),JSON.stringify(report,null,2)+'\n');return report;
 }
 if(require.main===module)audit(path.resolve(process.argv[2])).then(r=>console.log(JSON.stringify({records:r.staticRecordsProvided,expired:r.expiredRecordsProvided,exactSnapshotVerified:r.exactSnapshotVerified}))).catch(e=>{console.error(e.message);process.exitCode=1;});

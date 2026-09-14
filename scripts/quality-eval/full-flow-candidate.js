@@ -12,9 +12,15 @@ const COMPOSE=[
   'Use governing rules for permission or requirements. Action-only evidence proves a destination, not fees, permission, availability or a binding rule. Respect evidence roles and source scope.',
   'A request for a form needs the actual form or a clear explanation of the remaining gap. A submission email does not replace a requested application.',
   'If only part is supported, give it first and explicitly say which requested part cannot be confirmed. Do not infer absence from missing search results. Missing optional extras do not undo a supported core answer.',
-  'Return no more than 180 words, plus IDs of useful actions supplied in this packet. Never invent a URL, contact, amount, date, rule or action ID. No writing-quality scores.',
+  'Return no more than 180 words, plus IDs selected only from the top-level actions inventory. Evidence source IDs and nested source action IDs are not selectable action IDs. Never invent a URL, contact, amount, date, rule or action ID. No writing-quality scores.',
   'A repair must address the provided check failures using the same evidence; the previous draft and check are not new facts.'
 ].join('\n');
+function compositionSchema(packet){
+  const schema=structuredClone(draftSchema);
+  schema.properties.actionIds.items=packet.actions.length?{type:'string',enum:packet.actions.map(a=>a.id)}:{type:'string'};
+  if(!packet.actions.length)schema.properties.actionIds.maxItems=0;
+  return schema;
+}
 function planIssues(plan){const issues=validationIssues(plan);if(issues.length)return issues;
   if(plan.scope==='ambiguous'&&(plan.needs.length||plan.searchQueries.length))issues.push('ambiguous-plan-guesses-subject');
   if(plan.scope!=='ambiguous'&&plan.clarificationQuestion.trim())issues.push('unnecessary-plan-clarification');
@@ -79,7 +85,7 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
   for(let attempt=0;attempt<=maxRepairs;attempt++){
     try{
       const body={model:models.compose,max_tokens:650,thinking:{type:'disabled'},...(/haiku/.test(models.compose)?{temperature:0}:{}),system:COMPOSE,
-        tools:[{name:'compose_requested_answer',description:'Write the supported answer and select supplied action IDs.',input_schema:draftSchema,strict:true}],tool_choice:{type:'tool',name:'compose_requested_answer'},
+        tools:[{name:'compose_requested_answer',description:'Write the supported answer and select supplied action IDs.',input_schema:compositionSchema(packet),strict:true}],tool_choice:{type:'tool',name:'compose_requested_answer'},
         messages:[{role:'user',content:JSON.stringify({question:row.question,priorResidentQuestions,requiredNeeds:plan.needs,constraints:plan.constraints,evidence:packet.sources,actions:packet.actions,previousAttempt:previous})}]};
       const draft=await invoke(body,'compose_requested_answer'),issues=draftIssues(draft,packet);trace.push({stage:attempt?'repair':'composition',draft,issues});
       if(issues.length){previous={draft,issues};continue;}
@@ -101,4 +107,4 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
   }
   return unresolved('repair-limit',{plan});
 }
-module.exports={COMPOSE,planIssues,packetIssues,draftIssues,coverageIssues,runCandidate};
+module.exports={COMPOSE,compositionSchema,planIssues,packetIssues,draftIssues,coverageIssues,runCandidate};

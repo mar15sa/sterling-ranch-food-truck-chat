@@ -41,3 +41,5 @@ flowchart LR
 ```
 
 The hub image at https://www.notion.so/3dabf909186d81789a09e4648dbb4bbe must be updated from the amended whole-flow diagram if/when this documentation is applied. This file prepares the change; it does not claim the image or external pages were updated.
+
+Additional proposed audit paragraph: The experiment now requires a passing, unchanged and unexpired community revalidation before making model calls, rechecks it between questions, and saves the exact snapshots used. Eight offline experiment checks pass. Current community-page verification does not independently verify the separate rules snapshot. No additional paid capture, model selection or production release is implied.
