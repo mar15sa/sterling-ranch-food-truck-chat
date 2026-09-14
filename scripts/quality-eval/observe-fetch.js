@@ -35,7 +35,7 @@ function createObservedFetch(fetchImpl, { calls=[], modelsByStage={}, capUsd=5, 
     try {
       const response=await fetchImpl(input,{...init,body:encoded});
       entry.httpStatus=response.status;
-      try{const data=await response.clone().json();entry.usage=data.usage||null;entry.providerModel=data.model||null;entry.stopReason=data.stop_reason||null;}
+      try{const data=await response.clone().json();entry.usage=data.usage||null;entry.providerModel=data.model||null;entry.stopReason=data.stop_reason||null;if(!response.ok&&data.error){entry.providerErrorType=String(data.error.type||'unknown');entry.providerErrorMessage=String(data.error.message||'').slice(0,1200);}}
       catch{entry.usage=null;entry.usageReadError=true;}
       return response;
     }catch(e){entry.errorType=e.name;throw e;}

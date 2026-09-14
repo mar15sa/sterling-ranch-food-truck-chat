@@ -22,7 +22,9 @@ test('composer action selection is constrained to the packet inventory, not sour
   const schema=compositionSchema({actions:[{id:'e-source-a0'},{id:'e-source-a1'}]});
   assert.deepEqual(schema.properties.actionIds.items.enum,['e-source-a0','e-source-a1']);
   assert.equal(schema.properties.actionIds.items.enum.includes('e-source'),false);
-  assert.equal(compositionSchema({actions:[]}).properties.actionIds.maxItems,0);
+  assert.equal(Object.hasOwn(compositionSchema({actions:[]}).properties.actionIds,'maxItems'),false);
+  const {draftIssues}=require('../scripts/quality-eval/full-flow-candidate');
+  assert.ok(draftIssues({answer:'A supported gap',actionIds:['invented']},{sources:[],actions:[]}).includes('unknown-action'));
 });
 const {validateRulesSnapshot}=require('../scripts/quality-eval/flow-snapshot');
 const {hash}=require('../scripts/quality-eval/flow-evidence');

@@ -19,7 +19,7 @@ const COMPOSE=[
 function compositionSchema(packet){
   const schema=structuredClone(draftSchema);
   schema.properties.actionIds.items=packet.actions.length?{type:'string',enum:packet.actions.map(a=>a.id)}:{type:'string'};
-  if(!packet.actions.length)schema.properties.actionIds.maxItems=0;
+  if(!packet.actions.length)schema.properties.actionIds.description='No actions are available. Return an empty array.';
   return schema;
 }
 function planIssues(plan){const issues=validationIssues(plan);if(issues.length)return issues;

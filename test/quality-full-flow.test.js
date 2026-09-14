@@ -66,3 +66,12 @@ test('actual retrieval keeps two communities and rule versions separate',async()
   assert.notEqual(packets[0].sources[0].id,packets[1].sources[0].id);
   assert.notEqual(packets[0].sources[0].version,packets[1].sources[0].version);
 });
+test('alternate rule ranking cannot replace text identity or restore ineligible evidence',async()=>{
+ const communityId='alpha',base='https://rules.example/alpha';
+ const doc={id:'shed::1',nodeId:'shed',communityId,sourceUrl:base+'?nodeId=shed',productId:1,jobId:1,title:'Shed requirements',text:'A shed requires approval.'};
+ const context={communityId,profile:{communityId,website:'https://alpha.example',allowedHosts:['rules.example'],connectors:[{type:'municode',baseUrl:base}]},communityIndex:{communityId,sources:[],factLedger:[]},rulesIndex:{source:{sourceUrl:base},documents:[doc]}};
+ for(const replacement of [{...doc,text:'Unapproved replacement text'},{...doc,id:'other-version'},{...doc,communityId:'beta'}]){
+  const retrieve=makeRetriever({...context,ruleSearch:async()=>[replacement]});
+  await assert.rejects(()=>retrieve({...plan,needs:plan.needs.map(n=>({...n,id:'need-1'}))}));
+ }
+});

@@ -24,7 +24,7 @@ function assertBinding({profile,communityIndex,rulesIndex,communityId}){
   }
 }
 function makeRetriever(context){
-  assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now()}=context;
+  assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now(),ruleSearch=rules.searchRulesIndex}=context;
   const docs=eligibleCorpus(rulesIndex,communityId,now),index={...rulesIndex,documents:docs};
   const hosts=new Set(profile.allowedHosts||[]);hosts.add(new URL(profile.website).hostname);
   return async function retrieve(plan){
@@ -33,7 +33,7 @@ function makeRetriever(context){
       const query=`${need.subject} ${need.request}`;
       // Live-operation needs must go through the existing live adapters in the next integration stage.
       if(need.evidenceKind==='live-operation'){diagnostics.push({needId:need.id,reason:'live-adapter-not-integrated'});continue;}
-      const rr=rules.searchRulesIndex(index,query,4).filter(d=>eligibleForQuestion(d,query));
+      const rr=(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
       const cr=searchCommunityIndex(query,{index:communityIndex,communityId,now,limit:4,includeActionOnlyProjections:true,allowPartialRequestedDetails:true,...needSearchOptions(need)}).sources.filter(s=>!isDynamicSource(s));
       // Interleave ranked sources so one source family cannot use the whole budget first.
       for(let rank=0;rank<Math.max(rr.length,cr.length);rank++)for(const [kind,s] of [['rules',rr[rank]],['community',cr[rank]]]){
