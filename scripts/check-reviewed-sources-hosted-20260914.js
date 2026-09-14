@@ -37,6 +37,7 @@ const cases = [
   { id: 'guest-quantity-boundary', question: 'How many guest passes come with membership?', notVerified: true, forbidden: /(?:six|6|25) guest passes/i },
   { id: 'equipment-check-instructions', question: 'How can I check whether my Rachio watering schedule is running?', positive: true, must: /Rachio|schedule|tab/i },
   { id: 'equipment-live-status-boundary', question: 'Is my sprinkler running right now?', notVerified: true },
+  { id: 'home-control-access-support', question: 'I lost access to home seer steward system. How do I restore it?', positive: true, must: /Lumiere\.technology\/help/i, also: /help@lumierefiber\.com/i },
   { id: 'mature-plant-method', question: 'How do I calculate the watering area for mature plants?', positive: true, must: /full growth|matur/i, forbidden: /\$\s*\d/ },
 ];
 
