@@ -14,6 +14,7 @@ test("owner page stays private and does not load analytics", () => {
   assert.match(html, /Answer accuracy/);
   assert.match(html, /Content readiness/);
   assert.match(html, /Relevant items inventoried/);
+  assert.match(html, /community-questions\.js\?v=20260914-reviewed1/);
   assert.match(html, /CAB URLs assessed/);
   assert.match(html, /Approved answer sources/);
   assert.match(html, /Need review or retry/);
@@ -108,6 +109,7 @@ test("source review dashboard is private, version-bound, and has no analytics", 
   const html = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.html"), "utf8");
   const script = fs.readFileSync(path.join(__dirname, "..", "public", "community-sources.js"), "utf8");
   assert.match(html, /Answer readiness/);
+  assert.match(html, /community-sources\.(?:css|js)\?v=20260914-reviewed1/);
   assert.match(html, /Four priority categories/);
   assert.match(html, /Current approved evidence/);
   assert.match(html, /Necessary content handled/);
