@@ -7,11 +7,15 @@ import corpusTools from './semantic-corpus.js';
 const {eligibleCorpus,eligibleForQuestion,sectionKey,windowsForDocument,fuse}=corpusTools;
 const root=fileURLToPath(new URL('../../',import.meta.url));
 const out=path.resolve(process.argv[2]||path.join(root,'artifacts/quality-eval/semantic-comparison-20260914'));
+const reuseDirectory=process.argv[3]?path.resolve(process.argv[3]):null;
 fs.mkdirSync(out,{recursive:true});const manifestPath=path.join(out,'manifest.json');
 if(fs.existsSync(manifestPath))throw new Error('Use a new output directory');
 const readiness=JSON.parse(fs.readFileSync(path.join(root,'artifacts/quality-eval/semantic-runtime/ready.json'),'utf8'));
 const profile=JSON.parse(fs.readFileSync(path.join(root,'data/communities/sterling-ranch.json'),'utf8'));
-const cases=JSON.parse(fs.readFileSync(path.join(root,'scripts/quality-eval/diagnostic-cases.json'),'utf8')).cases;
+const casesPath=process.argv[4]?path.resolve(process.argv[4]):path.join(root,'scripts/quality-eval/diagnostic-cases.json');
+const cases=JSON.parse(fs.readFileSync(casesPath,'utf8')).cases;
+if(!Array.isArray(cases)||!cases.length||cases.length>100||new Set(cases.map(c=>c.id)).size!==cases.length||
+  cases.some(c=>!c.question||!/^[a-z0-9-]+$/.test(c.id)))throw new Error('Invalid authored test cases');
 const loaded=await rules.loadRulesIndex();const documents=eligibleCorpus(loaded,profile.communityId);
 if(!documents.length||documents.length>5000)throw new Error('Unexpected diagnostic corpus size');
 const hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
@@ -33,22 +37,36 @@ const started=Date.now();const units=[];
 for(const document of documents)units.push(...await windowsForDocument(document,tokenCount));
 report.windows=units.length;report.windowPlanningMs=Date.now()-started;save();
 const vectors=new Float32Array(units.length*384);const embedStart=Date.now();
-for(let i=0;i<units.length;i+=16){
+if(reuseDirectory){
+  const previous=JSON.parse(fs.readFileSync(path.join(reuseDirectory,'manifest.json'),'utf8'));
+  const corpus=JSON.parse(fs.readFileSync(path.join(reuseDirectory,'corpus.json'),'utf8'));
+  const bytes=fs.readFileSync(path.join(reuseDirectory,'vectors.f32'));
+  if(previous.status!=='captured'||previous.model!==report.model||previous.modelRevision!==report.modelRevision||
+    previous.dimensions!==384||previous.dtype!==report.dtype||previous.pooling!==report.pooling||
+    previous.communityId!==report.communityId||previous.eligibleCorpusSha256!==report.eligibleCorpusSha256||
+    hash(corpus.documents)!==report.eligibleCorpusSha256||hash(corpus.units)!==hash(units.map(({input,...w})=>w))||
+    bytes.byteLength!==vectors.byteLength)throw new Error('Cached embeddings do not match this exact scoped corpus and model');
+  vectors.set(new Float32Array(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength)));
+  if(vectors.some(n=>!Number.isFinite(n)))throw new Error('Non-finite cached embedding');
+  report.reusedEmbeddingsFrom=path.relative(root,reuseDirectory);report.embeddedWindows=0;
+}else for(let i=0;i<units.length;i+=16){
   const batch=units.slice(i,i+16);const value=await extractor(batch.map(w=>w.input),{pooling:'cls',normalize:true});
   if(value.dims[1]!==384||value.data.some(n=>!Number.isFinite(n)))throw new Error('Invalid embedding batch');
   vectors.set(value.data,i*384);report.embeddedWindows=Math.min(i+16,units.length);save();
   if(i%160===0)console.log(JSON.stringify({embedded:report.embeddedWindows,total:units.length}));
 }
-report.embeddingMs=Date.now()-embedStart;report.vectorBytes=vectors.byteLength;
+report.embeddingMs=reuseDirectory?0:Date.now()-embedStart;report.embeddingLoadOrBuildMs=Date.now()-embedStart;report.vectorBytes=vectors.byteLength;
 fs.writeFileSync(path.join(out,'vectors.f32'),Buffer.from(vectors.buffer));
 fs.writeFileSync(path.join(out,'corpus.json'),JSON.stringify({documents,units:units.map(({input,...w})=>w)},null,2));
 report.status='querying';save();
 const byId=new Map(documents.map(d=>[d.id,d]));
 for(const row of cases){
   const prior=cases.find(c=>c.id===row.contextCaseId);
-  const query=prior?`Regarding ${prior.question} ${row.question}`:row.question;
-  const eligible=documents.filter(d=>eligibleForQuestion(d,query)),ids=new Set(eligible.map(d=>d.id));
+  const query=row.query||(prior?`Regarding ${prior.question} ${row.question}`:row.question);
+  const eligibilityQuestion=row.eligibilityQuestion||query;
+  const eligible=documents.filter(d=>eligibleForQuestion(d,eligibilityQuestion)),ids=new Set(eligible.map(d=>d.id));
   const queryStart=Date.now();const q=await extractor('Represent this sentence for searching relevant passages: '+query,{pooling:'cls',normalize:true});
+  if(q.dims[1]!==384||q.data.some(n=>!Number.isFinite(n)))throw new Error('Invalid query embedding');
   const queryEmbeddingMs=Date.now()-queryStart;const scanStart=Date.now();const best=new Map();
   for(let i=0;i<units.length;i++){
     const unit=units[i];if(!ids.has(unit.documentId))continue;
@@ -59,13 +77,15 @@ for(const row of cases){
   const keywordStart=Date.now();const keyword=rules.searchRulesIndex({...loaded,documents:eligible},query,30).map(document=>({document,score:document.score}));
   const keywordMs=Date.now()-keywordStart;const fused=fuse(keyword,dense,10);
   const serialize=rows=>rows.slice(0,10).map(r=>{
-    const d=byId.get(r.document.id)||r.document;
-    const context=sectionContext.availableSectionContext(d,documents,{eligible:x=>eligibleForQuestion(x,query)});
+    const d=byId.get(r.document.id);
+    if(!d||d.text!==r.document.text)throw new Error('Retrieved identity does not match the selected source text');
+    const context=sectionContext.availableSectionContext(d,documents,{eligible:x=>eligibleForQuestion(x,eligibilityQuestion)});
     return {id:d.id,nodeId:d.nodeId,title:d.title,sourceUrl:d.sourceUrl,score:r.score,fusionScore:r.fusionScore,ranks:r.ranks,
       selectedText:d.text,matchedWindow:r.window?{start:r.window.start,end:r.window.end,text:d.text.slice(r.window.start,r.window.end)}:null,
       context};
   });
   fs.writeFileSync(path.join(out,row.id+'.json'),JSON.stringify({id:row.id,question:row.question,query,isTest:true,
+    caseId:row.caseId,planId:row.planId,needId:row.needId,need:row.need,eligibilityQuestion,
     latency:{queryEmbeddingMs,scanMs,keywordMs},keyword:serialize(keyword),semantic:serialize(dense),hybrid:serialize(fused)},null,2));
   report.completedCases++;save();console.log(JSON.stringify({caseId:row.id,completed:report.completedCases,total:cases.length}));
 }

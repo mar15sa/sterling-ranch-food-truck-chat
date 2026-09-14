@@ -24,6 +24,8 @@ Resident retrieval behavior remains unchanged; the only runtime-module edit expo
 
 ## Completed capture and first review
 
+**Correction:** the later search-identity audit found a serialization defect affecting keyword/hybrid passage text and expansion metadata. The corrected capture is `semantic-identity-recapture-20260914`. Preserve the original capture as history. See `COMMUNITY-SEARCH-IDENTITY-REPAIR-2026-09-14.md` for before/after evidence and the later per-need experiments. Title/rank observations below do not establish correct passage selection.
+
 The fourth run subsequently completed all 32 diagnostic cases and exited successfully. Its manifest reports `captured`, finishing September 14 at 16:59:53 UTC. `comparison.json` contains the descriptive rankings. The earlier running checkpoint above is history.
 
 Local measurements: embedding 1,569 windows took 475.043 seconds; stored vectors occupy 2,409,984 bytes (about 2.30 MiB), in addition to the cached 34,014,426-byte quantized model and runtime dependencies. Peak memory for the entire capture process was 1,071,366,144 bytes (about 1 GiB); this includes experiment overhead and does not establish a production memory requirement. Query embedding plus the exhaustive vector scan had median 220 ms and sample p95 262 ms. Keyword retrieval had median 1,799 ms and sample p95 2,441 ms in this harness, which constructs a freshly filtered index per question while the model remains loaded. This is not a fair production cache benchmark or a demonstrated end-to-end speedup. Hybrid retrieval also pays keyword work. No paid API calls or new subscriptions occurred.
