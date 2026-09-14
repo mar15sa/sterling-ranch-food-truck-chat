@@ -7,6 +7,7 @@ const communityIndex = inputPath ? JSON.parse(fs.readFileSync(inputPath, "utf8")
 const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { sourceReviewState } = require('../lib/community-source-answerability');
 
 const CASES = [
   ["Can I build a shed in my backyard?", /Backyard utility sheds/i],
@@ -14,14 +15,21 @@ const CASES = [
   ["What are the landscaping and yard rules?", /Required lot landscape/i],
   ["What fees do residents pay?", /water, sanitary sewer, and stormwater/i],
   ["What are the rules for parks and open spaces?", /17-54/i],
-  // The facility page is relevant, but its booking claim/action remains
-  // withheld until its exact current version receives a scoped decision.
-  ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i, false],
+  // v8 approves private-use information and the rental-details handoff, not
+  // live availability or a completed booking. Require exact scoped evidence.
+  ["How do I reserve the Overlook Clubhouse?", /Rent the Facility/i, true, {
+    sourceUrl: 'https://sterlingranchcab.com/269/Rent-the-Facility',
+    requiredClaims: ['complete-cab-review-20260914-97b97fbb46ee-operations-great-hall-features'],
+    actionUrl: 'https://sterlingranchcab.com/269/Rent-the-Facility',
+  }],
   ["Who do I contact about water billing?", /Water Billing/i],
-  // The current court-page version is withheld while its hours, fee, and
-  // booking claims await a scoped decision. Public-court wording must point to
-  // that page without borrowing the private backyard sport-court rule.
-  ["What are the neighborhood pickleball court rules?", /Pickleball Courts/i, false],
+  // v7 approves current public-court operations, not private construction,
+  // live availability, launch history, account setup, or booking outcomes.
+  ["What are the neighborhood pickleball court rules?", /Pickleball Courts/i, true, {
+    sourceUrl: 'https://sterlingranchcab.com/418/Pickleball-Courts',
+    requiredClaims: ['pickleball-general-hours', 'pickleball-play-modes-daily-limit'],
+    actionUrl: 'https://sterlingranchcab.com/420/Court-Reserve',
+  }],
   ["What is the maximum height a freestanding flag pole can be?", /2024 CAB Code amendments/i],
   ["What trees can we plant?", /5-131|Preapproved plant list/i],
   ["What are the rules for yard art?", /2024 CAB Code amendments/i],
@@ -32,31 +40,70 @@ const CASES = [
   ["Can I park on the street?", /1-37|Vehicles; parking/i],
   ["Can I build a greenhouse?", /Greenhouses/i],
   ["What day is trash pickup?", /Trash & Recycling/i],
-  ["Who do I contact about internet service?", /Important Contact Information/i, false],
+  ["Who do I contact about internet service?", /Internet Service/i, false, {
+    sourceUrl: 'https://sterlingranchcab.com/242/Internet-Service',
+    answerMode: 'community-contact-boundary', reason: 'missing-requested-contact-info',
+    contactMustRemainMissing: true,
+  }],
   ["What email do I use for design review questions?", /Design Review contact and submission/i],
 ];
+
+function retrievalCaseIssues(answer, testCase, index, now = Date.now()) {
+  const [, expected, expectedCanAnswer = true, evidence = {}] = testCase;
+  const issues = [];
+  const firstSource = answer.sources?.[0];
+  if (!expected.test(firstSource?.title || '')) issues.push('wrong-controlling-source');
+  if (answer.confidence?.canAnswer !== expectedCanAnswer) issues.push('wrong-answerability');
+  if (!expectedCanAnswer && (answer.answerMode !== (evidence.answerMode || 'community-freshness-withheld')
+    || answer.confidence?.reason !== (evidence.reason || 'source-review-required'))) issues.push('wrong-withholding-boundary');
+  if (evidence.sourceUrl && firstSource?.sourceUrl !== evidence.sourceUrl) issues.push('wrong-source-identity');
+  if (evidence.requiredClaims) {
+    const source = index.sources.find(source => source.id === firstSource?.id
+      && source.sourceUrl === evidence.sourceUrl && source.contentHash === firstSource?.contentHash);
+    const entries = source ? sourceReviewState(index, now).entriesFor(source) : [];
+    const allowed = new Set(entries.map(entry => entry.approvalClaim).filter(Boolean));
+    const claims = answer.claims || [];
+    const selected = claims.flatMap(claim => claim.approvalClaimIds || []);
+    if (!source || !entries.length || claims.some(claim => !claim.verified || !claim.approvalClaimIds?.length
+      || !claim.evidenceSourceIds?.includes(source.id))
+      || selected.some(id => !allowed.has(id))
+      || evidence.requiredClaims.some(id => !allowed.has(id) || !selected.includes(id))) issues.push('missing-exact-approved-claims');
+    const action = (answer.actions || []).find(action => action.url === evidence.actionUrl);
+    if (!action || !entries.some(entry => entry.factType === 'link' && entry.normalizedValue === action.url
+      && entry.approvalClaim === action.approvalClaim)
+      || (answer.actions || []).some(action => action.url !== evidence.actionUrl)) issues.push('missing-exact-approved-action');
+    if ((answer.sources || []).some(item => item.sourceUrl !== evidence.sourceUrl)) issues.push('unrelated-source-claim');
+    if (/\b(?:available now|booking confirmed|reservation confirmed|your booking is confirmed)\b/i.test(answer.answer || '')) issues.push('unsupported-live-outcome');
+  }
+  if (evidence.contactMustRemainMissing) {
+    const text = answer.answer || '';
+    if ((answer.claims || []).length || (answer.sources || []).some(source => (source.facts || []).length)
+      || /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|\b\d{3}[-.\s)]\s*\d{3}[-.\s]\d{4}\b/i.test(text)) issues.push('unsupported-contact');
+    if (!(answer.actions || []).length || (answer.actions || []).some(action => action.url !== evidence.sourceUrl)
+      || (answer.sources || []).some(source => source.sourceUrl !== evidence.sourceUrl)) issues.push('unrelated-contact-handoff');
+  }
+  return issues;
+}
 
 async function main() {
   let passed = 0;
   const failures = [];
-  for (const [question, expected, expectedCanAnswer = true] of CASES) {
+  for (const testCase of CASES) {
+    const [question, expected, expectedCanAnswer = true] = testCase;
     const answer = await answerCommunityQuestion(question, {
       index: communityIndex,
       communityId: "sterling-ranch",
       communityProfile,
+      isTest: true,
       answerRulesQuestion,
       rulesOptions: { searchMode: "legacy", llmMode: "off" },
       planCommunitySearch: false,
       synthesizeCommunityAnswer: false,
     });
     const firstSource = answer.sources?.[0]?.title || "";
-    const safeOutcome = expectedCanAnswer
-      ? answer.confidence?.canAnswer === true
-      : answer.confidence?.canAnswer === false
-        && answer.answerMode === "community-freshness-withheld"
-        && answer.confidence?.reason === "source-review-required";
-    if (expected.test(firstSource) && safeOutcome) passed += 1;
-    else failures.push({ question, expected: String(expected), expectedCanAnswer, firstSource, reason: answer.confidence?.reason });
+    const issues = retrievalCaseIssues(answer, testCase, communityIndex);
+    if (!issues.length) passed += 1;
+    else failures.push({ question, expected: String(expected), expectedCanAnswer, firstSource, reason: answer.confidence?.reason, issues });
   }
   const recall = passed / CASES.length;
   console.log(`Community controlling-source retrieval: ${passed}/${CASES.length} (${Math.round(recall * 100)}%).`);
@@ -71,4 +118,5 @@ async function main() {
   }
 }
 
-main().catch((error) => { console.error(error.message); process.exitCode = 1; });
+if (require.main === module) main().catch((error) => { console.error(error.message); process.exitCode = 1; });
+module.exports = { CASES, retrievalCaseIssues };

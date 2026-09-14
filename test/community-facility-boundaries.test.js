@@ -10,6 +10,9 @@ const index = { ...storedIndex,
   factLedger: (storedIndex.factLedger || []).map((fact) => ({ ...fact, staleAfter: '2099-01-01T00:00:00Z' })),
   truthStatus: { migrationMode: 'trusted-baseline' },
 };
+// These negatives model absent approval, not today's changing inventory.
+// Retain the hostile content but remove both independent approval routes.
+const unapprovedIndex = { ...index, factLedger: [], canonicalSourceLedger: { records: [] } };
 const unavailableRules = async () => ({ confidence: { canAnswer: false, reason: 'no-rule-answer' } });
 function plan(goal, facility) {
   return { intent: 'facilities', goal, goals: [goal], subject: facility, requestedDetails: ['action'],
@@ -31,7 +34,7 @@ const liveStagingAccessPlan = {
 };
 
 test('live permission and account-access plans withhold unapproved clubhouse setup instructions', async () => {
-  const realTimestampIndex = { ...storedIndex };
+  const realTimestampIndex = { ...storedIndex, factLedger: [], canonicalSourceLedger: { records: [] } };
   const cases = [
     ['How do I get access to the Overlook Clubhouse?', liveStagingAccessPlan],
     ['Where can I request access to the Overlook Clubhouse?', { ...liveStagingAccessPlan, goal: 'permission', goals: ['permission'] }],
@@ -56,7 +59,7 @@ test('live permission and account-access plans withhold unapproved clubhouse set
 
 test('clubhouse access wording never falls into rental, pricing, or an unapproved form', async () => {
   for (const question of ['How do I get access to the Overlook Clubhouse?', 'Where do I sign up for clubhouse access?', 'I need an access card for the clubhouse.']) {
-    const result = await answerCommunityQuestion(question, { now, index, communityId: 'sterling-ranch',
+    const result = await answerCommunityQuestion(question, { now, index: unapprovedIndex, communityId: 'sterling-ranch',
       planCommunitySearch: async () => plan('booking', 'Overlook Clubhouse'), synthesizeCommunityAnswer: false,
       answerRulesQuestion: unavailableRules });
     assert.equal(result.answerStatus, 'source-unavailable', question);
@@ -121,7 +124,7 @@ test('utility infrastructure fees outrank a hostile facility-cost handoff plan',
 test('amenity costs and ambiguous facility fees retain the withheld rental handoff', async () => {
   for (const question of ['How much does the clubhouse cost to rent?', 'What are the facility fees?']) {
     const result = await answerCommunityQuestion(question, {
-      now, index, communityId: 'sterling-ranch', planCommunitySearch: async () => plan('cost', 'Overlook Clubhouse'),
+      now, index: unapprovedIndex, communityId: 'sterling-ranch', planCommunitySearch: async () => plan('cost', 'Overlook Clubhouse'),
       synthesizeCommunityAnswer: false, answerRulesQuestion: unavailableRules,
     });
     assert.equal(result.answerStatus, 'source-unavailable', question);

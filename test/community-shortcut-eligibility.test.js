@@ -884,6 +884,24 @@ test("the events shortcut recognizes both class and classes", () => {
   }
 });
 
+test("the events shortcut recognizes a timed named activity without an event noun", () => {
+  const decision = shortcutEligibility("events", {
+    question: "When is the next bingo",
+    plan: plan({ intent: "events", goal: "schedule", subject: "When is the next bingo", requestedDetails: ["date"] }),
+  });
+  assert.equal(decision.eligible, true);
+});
+
+test("a named-activity calendar pattern does not take over service schedules", () => {
+  for (const question of ["When is the next trash pickup", "When is the next recycling collection", "When is the next water bill due"]) {
+    const decision = shortcutEligibility("events", {
+      question,
+      plan: plan({ intent: "services", goal: "schedule", subject: question, requestedDetails: ["date"] }),
+    });
+    assert.equal(decision.eligible, false, question);
+  }
+});
+
 test("retired proactive price shortcuts stay ineligible even when old candidates carry evidence metadata", () => {
   const costPlan = plan({ intent: "facilities", goal: "cost", goals: ["cost"], subject: "pool rental", requestedDetails: ["price"] });
   const supported = shortcutEligibility("proactive", {

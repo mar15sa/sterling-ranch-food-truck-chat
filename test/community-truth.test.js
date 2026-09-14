@@ -146,6 +146,30 @@ test("fact ledger backfills trusted facts as candidates until a claim decision e
   assert.equal(fact.sourceVersion, "source-version");
 });
 
+test("a legacy approved label without an exact decision is normalized back to candidate", () => {
+  const index = {
+    communityId: "alpha",
+    generatedAt: "2026-09-01T00:00:00.000Z",
+    sources: [{
+      id: "pickleball",
+      communityId: "alpha",
+      title: "Pickleball Courts",
+      sourceUrl: "https://alpha.gov/pickleball",
+      sourceType: "facilities",
+      connectorType: "civicplus-pages",
+      contentHash: "source-version",
+      checkedAt: "2026-09-01T00:00:00.000Z",
+      staleAfter: "2026-09-02T00:00:00.000Z",
+      facts: [{ factKey: "weekday-hours", type: "time", value: "7 a.m.", context: "Weekday hours are 7 a.m. to dusk." }],
+    }],
+  };
+  const candidate = buildFactLedger(index)[0];
+  const malformedPrior = { ...candidate, reviewStatus: "approved", reviewedAt: "", reviewedBy: "", reviewDecisionId: "" };
+  const rebuilt = buildFactLedger(index, { previousLedger: [malformedPrior] })[0];
+  assert.equal(rebuilt.reviewStatus, "candidate");
+  assert.equal(rebuilt.reviewDecisionId, "");
+});
+
 test("duplicates and non-overlapping historical facts are not unresolved conflicts", () => {
   const duplicate = resolveFactLedger([entry(), entry({ id: "two", sourceUrl: "https://alpha.gov/hours", sourceVersion: "v2" })], profile);
   assert.equal(duplicate.groups[0].classification, "duplicate");

@@ -75,7 +75,7 @@ test('actual authenticated handler pages resolved statuses without changing sour
   assert.equal(pending.body.pagination.total, 1968);
   assert.equal(pending.body.items.length, 18);
   assert.equal(pending.body.counts.retirementPendingPageCount, 4);
-  assert.equal(pending.body.readiness.totals.total, 27);
+  assert.equal(pending.body.readiness.totals.audited, 1631);
   const detail = {};
   await context.handleCommunitySourceReview(owner, detail, new URL('https://example.test/'), fixture[0].id);
   assert.equal(detail.body.item.status, 'approved');

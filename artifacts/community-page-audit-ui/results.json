@@ -1,0 +1,38 @@
+[
+  {
+    "viewport": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    "layout": {
+      "innerWidth": 1440,
+      "scrollWidth": 1425,
+      "headline": "Full inventory complete; answer review remains",
+      "summary": "1631 of 1631 discovered CAB URLs assessed. 463 touch these categories and consolidate to 197 primary sources. 101 need claim review and 4 need a retry.",
+      "categoryCount": 4,
+      "primaryRows": 207,
+      "reviewCount": "105"
+    },
+    "file": "C:\\Users\\mar15\\.codex\\worktrees\\8773\\my-community-does-daily-food-trucks\\artifacts\\community-page-audit-ui\\desktop.png",
+    "pageFile": "C:\\Users\\mar15\\.codex\\worktrees\\8773\\my-community-does-daily-food-trucks\\artifacts\\community-page-audit-ui\\desktop-pages.png"
+  },
+  {
+    "viewport": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    "layout": {
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "headline": "Full inventory complete; answer review remains",
+      "summary": "1631 of 1631 discovered CAB URLs assessed. 463 touch these categories and consolidate to 197 primary sources. 101 need claim review and 4 need a retry.",
+      "categoryCount": 4,
+      "primaryRows": 207,
+      "reviewCount": "105"
+    },
+    "file": "C:\\Users\\mar15\\.codex\\worktrees\\8773\\my-community-does-daily-food-trucks\\artifacts\\community-page-audit-ui\\mobile.png",
+    "pageFile": "C:\\Users\\mar15\\.codex\\worktrees\\8773\\my-community-does-daily-food-trucks\\artifacts\\community-page-audit-ui\\mobile-pages.png"
+  }
+]

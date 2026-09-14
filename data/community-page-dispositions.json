@@ -1,0 +1,731 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-13",
+  "decisionId": "cab-page-usefulness-audit-four-categories-2026-09-13",
+  "scope": "Page-level usefulness classification for the four owner-selected categories. A useful page does not gain blanket claim approval. Exact claim approvals and live-connector freshness still control resident answers.",
+  "categories": [
+    {
+      "id": "current-actions",
+      "title": "Fees, payments, contacts, reservations, and booking"
+    },
+    {
+      "id": "property-changes",
+      "title": "DRC, property changes, landscaping, and amendments"
+    },
+    {
+      "id": "utilities-support",
+      "title": "Utilities, trash, water quality, and equipment support"
+    },
+    {
+      "id": "facilities-live-services",
+      "title": "Facilities, recreation, events, and live services"
+    }
+  ],
+  "records": [
+    {
+      "categoryId": "current-actions",
+      "disposition": "answer-evidence",
+      "reason": "Useful current billing or payment page with exact-version claim approvals.",
+      "sourceUrl": "https://sterlingranchcab.com/332/View-and-Pay-Your-Water-Bill",
+      "title": "View and Pay Your Water Bill",
+      "versionFingerprint": "a10a8d919f3e08fcd6c49043054dfaacfa16f2f040b2f8b08f12d363bf1502f7"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "answer-evidence",
+      "reason": "Useful current billing or payment page with exact-version claim approvals.",
+      "sourceUrl": "https://sterlingranchcab.com/333/Understanding-Your-Water-Bill",
+      "title": "Understanding Your Water Bill",
+      "versionFingerprint": "3bc028d994923aaeb9a5f2d6dcb4d4067700ac864f2c9b76312f587ceb9b2a21"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "answer-evidence",
+      "reason": "Useful current billing or payment page with exact-version claim approvals.",
+      "sourceUrl": "https://sterlingranchcab.com/334/Water-Billing-Payment-Options",
+      "title": "Water Billing & Payment Options",
+      "versionFingerprint": "5cfa26bc7ba226aca93afdf5ab601028ad4108f5259ea3adfe0be2ce3e58dad8"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "answer-evidence",
+      "reason": "Useful current billing or payment page with exact-version claim approvals.",
+      "sourceUrl": "https://sterlingranchcab.com/390/Monthly-Fee-Billing-Payment-Options",
+      "title": "Monthly Fee Billing & Payment Options",
+      "versionFingerprint": "753293465ee8d89e3565ef332b4a2d0bcef568fd458e074fe9d4f8f0544772e2"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation or booking route; only its exact approved link is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/227/Mailbox-Keys",
+      "title": "Mailbox Keys",
+      "versionFingerprint": "18db2fca1820255a006566433611c99831869bfa78f9ba685327a48e4af9ea32"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation or booking route; only its exact approved link is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/400/Contact-Us",
+      "title": "Contact Us",
+      "versionFingerprint": "c1ca8f0084eb3da927212db3a1e919e653774a7b7a95bed89f231060290b67e1"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation or booking route; only its exact approved link is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/420/Court-Reserve",
+      "title": "Court Reserve",
+      "versionFingerprint": "b2ac59f44836e426b7c936235df02cb46de48ef6f820b3a47e6b7389f6ec4089"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation or booking route; only its exact approved link is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Great-Hall-3",
+      "title": "Facilities • Great Hall",
+      "versionFingerprint": "fec4d6eeb0adb15f748540ac8ff38411e3d07f348fba05331aac79a70f7f47a9"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation or booking route; only its exact approved link is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+      "title": "Facilities • Overlook Clubhouse",
+      "versionFingerprint": "4af077f990dcbb9012b22354e47e9ef5edd016f54d2446a6a404ab34a2ad7643"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/182/Annual-Caregiver-Pass",
+      "title": "Annual Caregiver Pass",
+      "versionFingerprint": "129122bfd35e93e57e152c41af4d69fd55365fbc26ca0b529a7392eadf153a93"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/183/Memberships",
+      "title": "Memberships",
+      "versionFingerprint": "dc54a01d5c120475e0771a54f398ec7333c98a6e4c4cfabc21b2fffdd06cf467"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/204/Billing",
+      "title": "Billing",
+      "versionFingerprint": "6c7207e8f145b73f631cb60bc04120a490624cf4f6eb7d700b1efbcc42199cfc"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/206/Water-Billing",
+      "title": "Water Billing",
+      "versionFingerprint": "1bb2173237d1e5ac9e676f41fabcf80d88f455b00ec68cfe87b64b92917ee32a"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/257/Amenity-Rentals",
+      "title": "Amenity Rentals",
+      "versionFingerprint": "fe3b6c498fb09000cb4b74ec63ec72e4e27189e96aeffe8ddc8d16ffcacf07d3"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/269/Rent-the-Facility",
+      "title": "Rent the Facility",
+      "versionFingerprint": "85ffe07e4f7e0156abd8fa7ceb00e4e9810cc8f78743cb99b6c0e8068d9783fa"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/309/Non-Resident-Memberships",
+      "title": "Non-Resident Memberships",
+      "versionFingerprint": "1944abc17c4e1ee9884c2bea77619d35cbe722db001de94ca222c86e30f013cd"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/310/Guest-Passes",
+      "title": "Guest Passes",
+      "versionFingerprint": "783a1713b4769520b0bcdf88a2c722f7cce1c4ced0f39ac9e32261fe953ec821"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/311/Park-Shelters",
+      "title": "Park Shelters",
+      "versionFingerprint": "ac950c3f1ab45a3101ae3d2069a8e0a8a9fc45e659d46bd4f0ab842efc195463"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/324/Important-Contact-Information",
+      "title": "Important Contact Information",
+      "versionFingerprint": "1d7b9a0d01dc18841d78f7661dd26e90ae4275efda744ef6e0ba5f68238706d8"
+    },
+    {
+      "categoryId": "current-actions",
+      "disposition": "review-required",
+      "reason": "Useful current page, but unapproved claims remain withheld until exact claim review.",
+      "sourceUrl": "https://sterlingranchcab.com/Directory.aspx",
+      "title": "Staff Directory &#x2022; Sterling Ranch Community Authority Board, CO &#x2022; CivicEngage",
+      "versionFingerprint": "32a8c0e71d9eaf616d41ffe988b09b91d8dad2e01e9b56156c6fc0949f75b4c7"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "answer-evidence",
+      "reason": "Useful DRC page with exact-version approvals for limited process or contact claims.",
+      "sourceUrl": "https://sterlingranchcab.com/175/Design-Review",
+      "title": "Design Review",
+      "versionFingerprint": "20c2c23239c4b9df12eaadb770930b2cf148e89678e7c4883d42e4f6b1539535"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "answer-evidence",
+      "reason": "Useful DRC page with exact-version approvals for limited process or contact claims.",
+      "sourceUrl": "https://sterlingranchcab.com/201/Design-Review-Documents",
+      "title": "Documents, Applications, and Forms",
+      "versionFingerprint": "62c7383af9163eec0e8a6caef736f92b8efcf89fb1848ef26bf027763c732544"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation route; page text does not independently establish a rule.",
+      "sourceUrl": "https://sterlingranchcab.com/168/Rules-Regulations",
+      "title": "Rules & Regulations",
+      "versionFingerprint": "998710c08c9448eabfa4379fa02f510273b298e361d41ef436c06db39b7d1852"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation route; page text does not independently establish a rule.",
+      "sourceUrl": "https://sterlingranchcab.com/338/Homeowner-Landscape-Class",
+      "title": "Homeowner Landscape Class",
+      "versionFingerprint": "ff7d018ff6fe4c3a2df7e2e0c840771500b43ba4a53023fe50a853dac6d1b6ab"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "safe-link",
+      "reason": "Useful official navigation route; page text does not independently establish a rule.",
+      "sourceUrl": "https://sterlingranchcab.com/414/Approved-Landscapers-List",
+      "title": "Approved Landscapers List",
+      "versionFingerprint": "41c0f6a8e5941b6af1527889e00cf4290fe6371cf1f0e3aeedad947d262e94df"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "review-required",
+      "reason": "Useful property-change page, but controlling requirements must remain claim-reviewed.",
+      "sourceUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+      "title": "Architectural & Community Standards",
+      "versionFingerprint": "dd9c8d8bece94cac7a70532ff546912e1e0da8e3154b06df682f5c835a6a0e30"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "review-required",
+      "reason": "Useful property-change page, but controlling requirements must remain claim-reviewed.",
+      "sourceUrl": "https://sterlingranchcab.com/202/Enforcement",
+      "title": "Enforcement",
+      "versionFingerprint": "1245b4e69ac9360247666630b01a8951acd3c215de83a8da53f9d297daf2dde3"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "review-required",
+      "reason": "Useful property-change page, but controlling requirements must remain claim-reviewed.",
+      "sourceUrl": "https://sterlingranchcab.com/237/Common-Area-Maintenance",
+      "title": "Common Area Maintenance",
+      "versionFingerprint": "8e5a636e1eda044c7334fe8558cd5a706dfff0b7db4389c5726752748e38e011"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "review-required",
+      "reason": "Useful property-change page, but controlling requirements must remain claim-reviewed.",
+      "sourceUrl": "https://sterlingranchcab.com/357/Rules-and-Regulations",
+      "title": "Rules and Regulations",
+      "versionFingerprint": "8e782df5046540b58be6abe96e42e6f86d50c8d1c0b2482592606ee0163ff9b8"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "review-required",
+      "reason": "Useful property-change page, but controlling requirements must remain claim-reviewed.",
+      "sourceUrl": "https://sterlingranchcab.com/402/Chase-Drain-Information",
+      "title": "Chase Drain Information",
+      "versionFingerprint": "42ac16c2ebd4c02875585408f3225e1eba2db853837f322232d9d1bc1d7cb173"
+    },
+    {
+      "categoryId": "property-changes",
+      "disposition": "review-required",
+      "reason": "Useful property-change page, but controlling requirements must remain claim-reviewed.",
+      "sourceUrl": "https://sterlingranchcab.com/415/Fire-Mitigation-Strategies",
+      "title": "Fire Mitigation Strategies",
+      "versionFingerprint": "ddb891e0228d4c6897f6a521add5679613565532dd9005011f03878764744878"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "answer-evidence",
+      "reason": "Useful current service page with exact-version approvals for limited operational claims.",
+      "sourceUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "title": "Trash & Recycling",
+      "versionFingerprint": "801aaf75e328abb1f3f95855c9df5a198fd71920243375312b1eaa6324496a0a"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "answer-evidence",
+      "reason": "Useful current service page with exact-version approvals for limited operational claims.",
+      "sourceUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+      "title": "FAQs - CivicPlus.CMS.FAQ",
+      "versionFingerprint": "28dae75d37e0b00752049057a9baad7cf97ffbd36822768cb98e285db8db9430"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "safe-link",
+      "reason": "Useful official support or report route; only the reviewed action is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/239/Streetlights",
+      "title": "Streetlights",
+      "versionFingerprint": "9b0d5b5b55db7ccfd400ee43832f6e34518484714f1fc4747b68181e69ac38cb"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "safe-link",
+      "reason": "Useful official support or report route; only the reviewed action is available to answers.",
+      "sourceUrl": "https://sterlingranchcab.com/395/Water-Reports",
+      "title": "Water Reports",
+      "versionFingerprint": "6d21b321d13ad3cc5e5264d01a393e2102e2095bb8be5f2e284d5290e2461469"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/242/Internet-Service",
+      "title": "Internet Service",
+      "versionFingerprint": "56d5b067afec4e1793d060004a8fc15a813ff3f2f3b12e7bc0fc69882ba4776e"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/243/Rachio-Irrigation-Controller",
+      "title": "Rachio Irrigation Controller",
+      "versionFingerprint": "deaa50f581df9d15dc04df10c042f87d87ecfab265692ab58cff11fdebf3390c"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/244/Smart-Home-Upgrades",
+      "title": "Smart Home Upgrades",
+      "versionFingerprint": "31691a36aaa28438d30b609d471d6c63d4a2d8b36f9743dc1f59ace557a17f92"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/245/STEWARD-Home-Automation-System",
+      "title": "STEWARD Home Automation System",
+      "versionFingerprint": "c17c67e8c3acb9ef518f2b543a68a9c8ae95969d8d1c10c6b2b1eff410c4501d"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/246/Utilities",
+      "title": "Utilities",
+      "versionFingerprint": "e2a3e7d3471b9b6362ee694227f699cef753675ab78cade3245a87b826d338de"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/248/Water-Sewer",
+      "title": "Water & Sewer",
+      "versionFingerprint": "da6c3c1cbcf57dfe7e65f98bc7e2748d245de7e243302fe8131bcd99a58cbb18"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/385/Toubleshooting-Your-Water-Meter",
+      "title": "Toubleshooting Your Water Meter",
+      "versionFingerprint": "5a0a90eb762375f2068b56ea10dd76b06a1661318cee46f5a7344a53ed8f3bdb"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/386/SedimentDebris-in-Water",
+      "title": "Sediment/Debris in Water",
+      "versionFingerprint": "406e4911246a504fb574229c4536349d1b191a279915c68b34704dda8fba9911"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/387/Water-Pressure",
+      "title": "Water Pressure",
+      "versionFingerprint": "daeb4da551d23ba5b54aba148c9f91184e557f843a52091becbf453498f40729"
+    },
+    {
+      "categoryId": "utilities-support",
+      "disposition": "review-required",
+      "reason": "Useful utility or equipment-support page whose factual claims still require exact review.",
+      "sourceUrl": "https://sterlingranchcab.com/412/Leak-Forgiveness-Policy",
+      "title": "Leak Forgiveness Policy",
+      "versionFingerprint": "bca23849a78de51ae9f82050e5f699b134b59b47d89c546cad5af47439a263a9"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "answer-evidence",
+      "reason": "Useful facility page with exact-version approvals for limited seasonal hours.",
+      "sourceUrl": "https://sterlingranchcab.com/187/Pool",
+      "title": "Overlook Outdoor Pool",
+      "versionFingerprint": "ec73e574df9de045271ee18c72234f11d87c7ed02ca597b2360946aa16239410"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "live-feed",
+      "reason": "Useful current calendar route; dated answers must come from the live connector rather than cached page text.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=list",
+      "title": "Calendar • Sterling Ranch Community Authority Board, CO • Ci",
+      "versionFingerprint": "5c733100d58f74486586e10cb663160a319ad994fe814fd21303ef3b52121e76"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/31/Amenities",
+      "title": "Our Amenities",
+      "versionFingerprint": "1eefa1d94d282453f2db3300667072d24b45f9de89fb6634d42e0537e0fd4436"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/186/Fitness",
+      "title": "Fitness",
+      "versionFingerprint": "a3e24804fd6d33b12b1c3cf3fc7eaff6591658b2d9347935b008a470c5ff9f86"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/188/Indoor-Facilities",
+      "title": "Indoor Facilities",
+      "versionFingerprint": "e5d2b18de1ab185a8d3810bfaaf42c7216f872397b9d79d85c736548d04fa525"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/258/The-Overlook-Clubhouse",
+      "title": "The Overlook Clubhouse",
+      "versionFingerprint": "a062253b630c976dd001a3746e741b95e3a5a3d4f38dd7256dec6eadc8b1c92f"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/260/Clubs-Groups",
+      "title": "Clubs & Groups",
+      "versionFingerprint": "57d9cc0694dc8ba9da9d222dbc271cf36b8f08fa9b119b8462e501b25924be22"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/262/Food-Trucks",
+      "title": "Food Trucks",
+      "versionFingerprint": "2b387e5ca38a2e23f7225ab4b5c58a4c69e9798c4ec813cddb0832b453462144"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/265/Programs",
+      "title": "Programs",
+      "versionFingerprint": "5173f413f164c36d5a97c3acea53719b3b6e51aa4b71cf962ae73214d927984f"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails",
+      "title": "Parks & Trails",
+      "versionFingerprint": "05b4f9025010a4d1cd24108d8256458605f35f498afdd339dca969964f131411"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/272/State-Parks-Pass",
+      "title": "Colorado State Park Pass",
+      "versionFingerprint": "1c3c69cc5517e5d8cceadc91ce72cb103c2d7847f4d01ff434f34c1bed88789d"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/273/Trails",
+      "title": "Trails",
+      "versionFingerprint": "0c4e7b759d29feb50b0f64ddf21da5b65d3eec847ac09f0b4ae73882ff89edcf"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks",
+      "title": "Community Parks",
+      "versionFingerprint": "d3952b644c144b927b5e7d58407e5dc50563fdaf59ff04c1b8665aed215cf007"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/376/Parks-Trails-and-Open-Spaces",
+      "title": "Parks, Trails and Open Spaces",
+      "versionFingerprint": "47d18a1d2d3ac4ba7f88ee2483082327f0f10b9ac8250ce0a182263954d4acdd"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates",
+      "title": "Parks Updates",
+      "versionFingerprint": "349419d7aadec2a8f26232196185df17ce4e6c0f282640b7aa4e3659ff153661"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities",
+      "title": "Facilities • Sterling Ranch Community Authority Board, CO •",
+      "versionFingerprint": "0cc7081901dd4c7128997365b36e60a92f92805be04681ddce4045997c5b1298"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/FeatureOverview",
+      "title": "Facilities • Sterling Ranch Community Authority Board, CO •",
+      "versionFingerprint": "75bdda244553caf07273c684c6d46864e05b6b9a0338aecd49f2661d3e9f8dac"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10",
+      "title": "Facilities • Ascent Village Pavilion Park",
+      "versionFingerprint": "c24785b6ea09db2d95a86d6aa5fe5a3a3efdd81eff92361028d15ae069aaed4d"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Virtual-8",
+      "title": "Facilities • Overlook & Virtual",
+      "versionFingerprint": "4c3ee20dbad2683fa78bf04da7fa9907907b1f0e2410f7ae196c2dbd6596ee19"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11",
+      "title": "Facilities • Pickleball Courts at Burns Park",
+      "versionFingerprint": "60e3d33bdb4a3fec0d5698ced0609ba4cb22d3414119c2311b6b74ec655f8714"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Providence-Park-4",
+      "title": "Facilities • Providence Park",
+      "versionFingerprint": "bcda619052dc9b9109e30e7124b84a16cdfe2459e7258ace1be09800db47a055"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "safe-link",
+      "reason": "Useful official facility or recreation route; it is retained primarily for navigation.",
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Sterling-Center-6",
+      "title": "Facilities • Sterling Center",
+      "versionFingerprint": "89249900b94396da69ed0220cb59cb9e54ad9f40fede9d4b39943e2f31bb23c9"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "answer-evidence",
+      "reason": "Useful recreation page with exact-version approval for the reviewed current operating claims; live availability and historical launch dates remain withheld.",
+      "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
+      "title": "Pickleball Courts",
+      "versionFingerprint": "f8cdf0596966feee4282c1d0b0251e80c616099c9bd7cbb31e0753f32def9186"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/Calendar.aspx",
+      "title": "Calendar • Sterling Ranch Community Authority Board, CO • Ci",
+      "versionFingerprint": "0830082c283d681cb36071cd9a137c2a79cc1909d18f8f14c1e7f29b2a76d3fb"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=0&view=week",
+      "title": "Calendar • Sterling Ranch Community Authority Board, CO • Ci",
+      "versionFingerprint": "fe9fa4cd8eb35ca88c369b3ba6e8c03779505eed0c60ac82c98e48659561496e"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=24",
+      "title": "Calendar • Community Events",
+      "versionFingerprint": "fdec2f11708c6ab0198eacb7e5fff51a333f95deeb4b495d0ba8e74690254ffe"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=24&view=list",
+      "title": "Calendar • Community Events",
+      "versionFingerprint": "80d082cb46ffaa66ef870096b02b0be3c333f0dde5c2c56608677cb0893e5594"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=24&view=week",
+      "title": "Calendar • Community Events",
+      "versionFingerprint": "885c83b0538d2ffda17124e727cc06d55c2614894913ad347fea4fcadf68ce5a"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=27",
+      "title": "Calendar • Youth Events",
+      "versionFingerprint": "c9e3ebcae2123a45c6b1d1ce9e9e81282c471597cd6a8cc4895570ab23cf987d"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=27&view=list",
+      "title": "Calendar • Youth Events",
+      "versionFingerprint": "d87e341f3ef841d94dc22525306746ba7f6d0a7e6aec5faa7a86a70fde48b731"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=27&view=week",
+      "title": "Calendar • Youth Events",
+      "versionFingerprint": "e67312bd3ef3cb06e6ff26994c5e8b21fdf4ef583b92a79bae5928f85303f795"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=28",
+      "title": "Calendar • Adult Events",
+      "versionFingerprint": "6f1caa2f4fec4e0ddd670e66fa69e9bee95a73eb3405611d5665419f38e2e35d"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=28&view=list",
+      "title": "Calendar • Adult Events",
+      "versionFingerprint": "331ba70be768f55d6a265e4aa11f05db9aab122f09e350477bb36addc31c97c7"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=28&view=week",
+      "title": "Calendar • Adult Events",
+      "versionFingerprint": "c49c69c8ff7c2fcf35fb2709cc0a0118c5f67fc2ebe8335b115ac27042240f00"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=29",
+      "title": "Calendar • Education",
+      "versionFingerprint": "7b1c9154390791ba077393025ab436a4a6bf5e166bb4b0168663d04ee433ed29"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=29&view=list",
+      "title": "Calendar • Education",
+      "versionFingerprint": "d70e0da04fc44f02f08d4de3d31a929efa344742619c089ea63d4945dfdd9dd9"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=29&view=week",
+      "title": "Calendar • Education",
+      "versionFingerprint": "9fcf8574355fb898524af4e060b3255780002ae9fa5c54f89124cc08169f793a"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=30",
+      "title": "Calendar • Food Truck Schedule",
+      "versionFingerprint": "943123a65b33ac927ce6a3017c781d07c24c59c6c16c7cbb16a2c09d578e36e7"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=30&view=list",
+      "title": "Calendar • Food Truck Schedule",
+      "versionFingerprint": "e741887877edb4b568152426b7156cd963624ea64f66ee7052e485f8a9c0428b"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=30&view=week",
+      "title": "Calendar • Food Truck Schedule",
+      "versionFingerprint": "c8bec06d5155f835dac548c7fa801a2b02a655eb8ee7ce6856e6d34621e5b6e3"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=32",
+      "title": "Calendar • Resident Clubs",
+      "versionFingerprint": "d7fcb4e2c586a2460d4c886311ef6fd1f4aa961d01265373c4778e4ee464143f"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=32&view=list",
+      "title": "Calendar • Resident Clubs",
+      "versionFingerprint": "a5078ec0cacf857845f1349872ecab27708b6dfa242cfdeab4da2499d8f640e8"
+    },
+    {
+      "categoryId": "facilities-live-services",
+      "disposition": "excluded",
+      "reason": "Duplicate calendar presentation; the single audited live calendar feed controls dated event answers.",
+      "sourceUrl": "https://sterlingranchcab.com/calendar.aspx?CID=32&view=week",
+      "title": "Calendar • Resident Clubs",
+      "versionFingerprint": "cec01fb605cca504e2c9cbd0d6e0ffbb13b86c417c71b7d3892c3f51ea656a9b"
+    }
+  ]
+}

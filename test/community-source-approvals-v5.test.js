@@ -6,7 +6,7 @@ const { approvals } = require('../data/community-source-approvals-v5');
 const { applyCommunitySourceApprovalsV5 } = require('../scripts/apply-community-source-approvals-v5');
 const { canonicalProjectionEntries } = require('../lib/community-source-answerability');
 const { approvedActionProofs, buildApprovedV5Sources } = require('../data/community-source-approvals-v5');
-const { selectRevalidationTargetUrls } = require('../lib/community-approved-revalidation');
+const { selectRevalidationTargetUrls, renewExactApprovedEvidence } = require('../lib/community-approved-revalidation');
 const { observeCanonicalSource, sourceHash, versionHash } = require('../lib/community-approved-revalidation');
 const { pageText, sourceContentHash } = require('../lib/community-ingest');
 
@@ -43,9 +43,14 @@ test('v5 negative controls keep date, availability, contact, and water claims ou
 
 test('action-only approvals do not create factual answer authority', () => {
   const index = applyCommunitySourceApprovalsV5(structuredClone(baseIndex));
-  const state = require('../lib/community-source-answerability').sourceReviewState(index, Date.parse(approvals.decidedAt));
+  const { sourceReviewState } = require('../lib/community-source-answerability');
+  const now = Date.parse(approvals.decidedAt);
   for (const id of ['approved-great-hall-booking-link', 'approved-overlook-clubhouse-navigation']) {
     const source = index.sources.find(item => item.id === id);
+    assert.equal(sourceReviewState(index, now).canUseActionProjection(source), false, 'approval waits for exact-source renewal');
+    renewExactApprovedEvidence(index, { sourceUrl: source.sourceUrl, observedHashes: [source.contentHash],
+      checkedAt: approvals.decidedAt, staleAfter: new Date(now + 3600000).toISOString() });
+    const state = sourceReviewState(index, now);
     assert.equal(state.canUseProjection(source), false, `${id} must not establish facts`);
     assert.equal(state.canUseActionProjection(source), true, `${id} keeps its reviewed navigation`);
   }
