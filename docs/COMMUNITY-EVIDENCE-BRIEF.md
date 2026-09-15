@@ -1,0 +1,25 @@
+# Evidence brief experiment
+
+Planned September 15, 2026 UTC / September 14 Denver, following the 96-call writer comparison. No resident integration or selection is implied.
+
+Root cause: the writer receives complete evidence but sometimes omits a material qualification, changes a numeric condition, skips a requested form gap, or attributes an adapter limitation to an official page. These affect permission, process, mixed live/static, and multi-part question families. Additional retrieval alone cannot repair a transformation error after the relevant source has arrived.
+
+Proposed behavior: an optional preparation model identifies one evidence brief entry per existing requested need, with an explicitly proposed completion outcome, exact source quotes for the direct answer, qualifications, process steps or conflicts, supplied action IDs, and a description of the remaining requested gap. The writer uses this as a reading aid alongside all original evidence. The existing final acceptance check independently checks both the brief and final answer against the full sources. Invalid preparation stops the experimental candidate without a verified answer; there is no silent extra retry.
+
+The brief is a model hypothesis, not approved evidence or a new completion contract. Exact quotes prove copying, not relevance, completeness or truth. Software checks every need ID, quote, role, action ID and source/packet version, while preserving the full packet, diagnostics and conflicting sources. It does not generate summaries as new source facts or discard unselected sources. Bind the brief to the original question, prior resident questions, interpretation and packet hash. Recheck binding and live freshness before writing, repair and acceptance. Existing retrieval eligibility remains responsible for static approval/currentness.
+
+Live quote validation uses the existing separated fact projection, so assistant timestamps and scope limits cannot be quoted as official source facts. The same community timezone and historical/live clock rules apply. A failed connector remains an explicit evidence gap, never an empty authoritative result. An action-only source cannot prove a governing or operational fact. A directory action may help with a gap, but exact form applicability remains a semantic question.
+
+The shared core owns structure, identity and validation. Profiles and adapters continue owning local names, URLs, source facts, normalized live values, authority and coverage. No community-specific answer text, condition, schedule or special-case branch belongs in this helper. No resident UI or diagram changes.
+
+Before/after target: a multi-part resident request currently receives a fluent answer missing a condition or a requested detail. With preparation, the answer should preserve the supported decision and conditions, explicitly name the missing part and offer the relevant approved next action. This is a testable target, not an observed improvement.
+
+Validation: two-community fixtures; exact/changed quotes and numeric qualifiers; wrong role/need/action; missing and duplicate needs; unavailable live detail; conflicting sources; changed source/action/version/question/context; expiry during preparation and repair; checks retaining all evidence and the same brief. Existing writer-presentation and acceptance regressions must pass. Then compare eligible preparation models and writers on historical development captures, retaining failures and measuring the extra call. Require matched full-flow, representative blind/repeated quality evidence, cost and latency before adoption. Reuse existing acceptance and bounded repair; do not add a second checker or silently select a winner.
+
+Evaluation follows the distinction between task-specific automated tests and human calibration in [OpenAI's evaluation guidance](https://developers.openai.com/api/docs/guides/evaluation-best-practices). A passing structural test is not a usefulness rating.
+
+Documentation impact: local experimental flow and decision/audit only. Save exact Notion text locally while the prior external-write rejection is unresolved. No source approval, publication, subscription or paid call is authorized by this design document itself.
+
+## Bounded model comparison
+
+Within the owner's authorized model-comparison work, compare Haiku 4.5 and Sonnet 5 preparation across the same eight historical inputs, twice each (32 calls). Freeze input hashes, request hashes and the randomized order before calling. Maximum phase cap $5; the complete design preflight reserves $1.989356. The previous writer-presentation phase is closed at $1.898477 priced usage, with no reuse of its reservation. No subscription. This run measures preparation only, not complete answers. Retain invalid quotes and missing-condition cases; stop on provider failure/incomplete output or unknown usage without silently retrying. Software rejections remain in the denominator and do not stop the remaining diagnostic cases. Review coverage against full original sources before any writer comparison or selection.

@@ -1,6 +1,7 @@
 "use strict";
 const { RATES, ensureAllowedModel }=require("./usage");
 function stageFor(body) {
+  if ((body.tools||[]).some(t=>t.name==="prepare_evidence_brief"))return "evidence-preparation";
   if ((body.tools||[]).some(t=>t.name==="select_relevant_evidence"))return "evidence-selection";
   if ((body.tools||[]).some(t=>t.name==="compose_requested_answer"))return "composition";
   if ((body.tools||[]).some(t=>["check_answer_acceptance","check_planned_answer_acceptance"].includes(t.name)))return "answer-acceptance";
