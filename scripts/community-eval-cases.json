@@ -3,5 +3,48 @@
     "question": "What are the pool hours for Labor Day?",
     "expectedFirstAny": ["Overlook Outdoor Pool"],
     "answerIncludesAll": ["5:00 am", "9:00 am", "8:45 pm"]
+  },
+  {
+    "question": "Where can I find trash and recycling information?",
+    "variants": ["Where is the garbage info page?", "Open recycling information", "trash/recycling info?", "Where can I find recyling info?"],
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Trash & Recycling"],
+    "mustExclude": ["until this source version is reviewed", "being reconfirmed"]
+  },
+  {
+    "question": "Where can we find internet information?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Internet Service"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
+  },
+  {
+    "question": "Where can I find utility information?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Water Billing"],
+    "mustExclude": ["Drinking Water Quality Report", "being reconfirmed"]
+  },
+  {
+    "question": "Where can I find information about reservations?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Pickleball Courts"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
+  },
+  {
+    "question": "Where can I find landscaping information?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Common Area Maintenance"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
+  },
+  {
+    "question": "Where is the recreation center website?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Sterling Center"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
   }
 ]

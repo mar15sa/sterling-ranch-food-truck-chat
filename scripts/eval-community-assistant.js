@@ -118,7 +118,7 @@ function isSafeNoClaimHold(result = {}, assessment = {}) {
   return boundaryMode
     && result.confidence?.canAnswer === false
     && !(result.claims || []).length
-    && assessment.score >= 4
+    && (assessment.contentScore ?? assessment.score) >= 4
     && !(assessment.issues || []).some((issue) => disqualifyingIssues.has(issue));
 }
 
@@ -149,22 +149,24 @@ async function main() {
       ? "withheld-unscored"
       : "scored";
     const safeHoldBaseline = safeHoldSupersedesLegacyBaseline(question, current, currentAssessment, upgraded, upgradedAssessment, expectation);
-    const scoreChange = safeHoldBaseline && upgradedAssessment.score < currentAssessment.score
+    const currentContentScore = currentAssessment.contentScore ?? currentAssessment.score;
+    const upgradedContentScore = upgradedAssessment.contentScore ?? upgradedAssessment.score;
+    const scoreChange = safeHoldBaseline && upgradedContentScore < currentContentScore
       ? 0
-      : upgradedAssessment.score - currentAssessment.score;
+      : upgradedContentScore - currentContentScore;
     rows.push({
       question,
       intent: classifyCommunityIntent(question),
       current: { ...currentAssessment, answer: current.answer, mode: current.answerMode, sourceCount: current.sources?.length || 0 },
-      upgraded: { ...upgradedAssessment, answer: upgraded.answer, mode: upgraded.answerMode, sourceCount: upgraded.sources?.length || 0, sourceIds: (upgraded.sources || []).map((source) => source.id || source.nodeId || source.sourceUrl), actions: upgraded.actions || [], claims: upgraded.claims || [] },
+      upgraded: { ...upgradedAssessment, completionOutcome: upgraded.completion?.outcome || 'unknown', answer: upgraded.answer, mode: upgraded.answerMode, sourceCount: upgraded.sources?.length || 0, sourceIds: (upgraded.sources || []).map((source) => source.id || source.nodeId || source.sourceUrl), actions: upgraded.actions || [], claims: upgraded.claims || [] },
       scoreChange,
       qualityDisposition,
       baselineSupersededBySafeHold: safeHoldBaseline,
       changeReason: safeHoldBaseline
         ? "The upgraded answer safely withheld an unsupported claim; the legacy baseline used stale, non-specific, or explicitly non-answerable evidence."
-        : upgradedAssessment.score > currentAssessment.score
+        : upgradedContentScore > currentContentScore
         ? "The upgraded answer passed more usefulness and grounding checks."
-        : upgradedAssessment.score < currentAssessment.score
+        : upgradedContentScore < currentContentScore
           ? "The upgraded answer lost a required usefulness or grounding check."
           : "The upgraded answer retained the prior quality score.",
     });
@@ -179,6 +181,11 @@ async function main() {
     withheldUnscoredQuestions: withheldRows.map((row) => row.question),
     current: summary(scoredRows, "current"),
     upgraded: summary(scoredRows, "upgraded"),
+    unresolvedQuestionCount: scoredRows.filter(row => row.upgraded.issues.includes('answer-incomplete')).length,
+    contentQuality: {
+      currentAverage: scoredRows.reduce((sum, row) => sum + (row.current.contentScore ?? row.current.score), 0) / scoredRows.length,
+      upgradedAverage: scoredRows.reduce((sum, row) => sum + (row.upgraded.contentScore ?? row.upgraded.score), 0) / scoredRows.length,
+    },
     improved: scoredRows.filter((row) => row.scoreChange > 0).length,
     retained: scoredRows.filter((row) => row.scoreChange === 0).length,
     regressed: scoredRows.filter((row) => row.scoreChange < 0).length,
@@ -196,6 +203,7 @@ async function main() {
   console.log(`Upgraded: ${JSON.stringify(report.upgraded)}.`);
   console.log(`Improved ${report.improved}; retained ${report.retained}; regressed ${report.regressed}.`);
   console.log(`Resident effort: ${JSON.stringify(report.upgradedResidentEffort)}.`);
+  console.log(`Unresolved requests: ${report.unresolvedQuestionCount}. Content safety/usefulness and task completion are separate measures; a passing content gate is not proof that every request is resolved.`);
   for (const row of scoredRows.filter((item) => item.upgraded.score < 4 || item.scoreChange < 0).slice(0, 30)) {
     console.log(`\n[${row.upgraded.score}; ${row.scoreChange >= 0 ? "+" : ""}${row.scoreChange}] ${row.question}\n${row.upgraded.issues.join(", ")}\n${row.upgraded.answer.replace(/\s+/g, " ").slice(0, 420)}`);
   }
@@ -203,9 +211,9 @@ async function main() {
     const releaseFailures = [];
     if (report.questionCount < 200) releaseFailures.push(`evaluation corpus unexpectedly shrank to ${report.questionCount} questions`);
     if (report.regressed) releaseFailures.push(`${report.regressed} answer regressions`);
-    if (report.upgraded.average < report.current.average) releaseFailures.push("upgraded average is lower than the current assistant");
-    const belowGood = scoredRows.filter((row) => row.upgraded.score < 4);
-    if (belowGood.length) releaseFailures.push(`${belowGood.length} upgraded answers scored below Good`);
+    if (report.contentQuality.upgradedAverage < report.contentQuality.currentAverage) releaseFailures.push("upgraded content quality is lower than the current assistant");
+    const belowGood = scoredRows.filter((row) => (row.upgraded.contentScore ?? row.upgraded.score) < 4);
+    if (belowGood.length) releaseFailures.push(`${belowGood.length} upgraded answers failed content safety/usefulness`);
     if (report.unsupportedClaimCount) releaseFailures.push(`${report.unsupportedClaimCount} unsupported claims were returned`);
     if (report.upgradedResidentEffort.highEffortQuestions) releaseFailures.push(`${report.upgradedResidentEffort.highEffortQuestions} answers still leave high resident effort`);
     if (report.upgradedResidentEffort.average < 4.5) releaseFailures.push(`resident-effort score ${report.upgradedResidentEffort.average} is below 4.5`);
