@@ -120,6 +120,7 @@ test('structured incomplete outcomes cannot receive Good or Resolved from a rele
       actions: [{ label: 'Open information', url: 'https://example.org/information' }],
     });
     assert.ok(assessment.score < 4, outcome);
+    assert.equal(assessment.contentScore, 4, 'An honest limitation retains its separate content assessment');
     assert.notEqual(assessment.residentEffort.rating, 'Resolved', outcome);
   }
   const legacy = scoreCommunityAnswer('Where can I find information?', {
@@ -127,4 +128,18 @@ test('structured incomplete outcomes cannot receive Good or Resolved from a rele
     sources: [{ title: 'Information' }], actions: [{ label: 'Open information', url: 'https://example.org/information' }],
   });
   assert.notEqual(legacy.residentEffort.rating, 'Resolved');
+});
+
+test('separate content assessment never excuses wrong sources or a required answer miss', () => {
+  const answer = { answer: 'Open the swimming page.', directAnswer: 'Open the swimming page.',
+    answerMode: 'community-freshness-withheld', confidence: { canAnswer: false },
+    completion: { outcome: 'missing-evidence' }, sources: [{ title: 'Swimming', sourceUrl: 'https://example.org/swimming' }], claims: [] };
+  const wrongSource = scoreCommunityAnswer('Where can I find recycling information?', answer);
+  assert.ok(wrongSource.contentScore < 4);
+  const requiredAnswer = scoreCommunityAnswer('Where can I find swimming information?', answer,
+    { expectation: { expectedAnswerMode: 'community-approved-information-resource' } });
+  assert.ok(requiredAnswer.contentScore < 4);
+  const requiredCompletion = scoreCommunityAnswer('Where can I find swimming information?', answer,
+    { expectation: { expectedCompletion: 'complete' } });
+  assert.ok(requiredCompletion.contentScore < 4);
 });

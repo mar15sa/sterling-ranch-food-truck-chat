@@ -3,5 +3,13 @@
     "question": "What are the pool hours for Labor Day?",
     "expectedFirstAny": ["Overlook Outdoor Pool"],
     "answerIncludesAll": ["5:00 am", "9:00 am", "8:45 pm"]
+  },
+  {
+    "question": "Where can I find trash and recycling information?",
+    "variants": ["Where is the garbage info page?", "Open recycling information", "trash/recycling info?", "Where can I find recyling info?"],
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Trash & Recycling"],
+    "mustExclude": ["until this source version is reviewed", "being reconfirmed"]
   }
 ]
