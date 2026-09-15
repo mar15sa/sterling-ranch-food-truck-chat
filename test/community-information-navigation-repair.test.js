@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { normalizeInterpretation, isOfficialInformationPageRequest } = require('../lib/community-interpretation');
+const { correctNavigationSubject, normalizeInterpretation, isOfficialInformationPageRequest } = require('../lib/community-interpretation');
 const { answerCommunityQuestion } = require('../lib/community-assistant');
 const { scoreCommunityAnswer } = require('../lib/community-answer-quality');
 const index = require('../data/community-index.json');
@@ -41,7 +41,7 @@ test('captured live planner mistake and its siblings return the approved resourc
 test('navigation remains correct with legacy routing and unavailable or disabled AI', async () => {
   for (const interpretationMode of ['legacy', 'structured']) {
     for (const planCommunitySearch of [false, async () => null]) {
-      for (const question of navigationQuestions.slice(0, 4)) {
+      for (const question of navigationQuestions.slice(0, 5)) {
         const answer = await answerCommunityQuestion(question, { index, communityProfile: profile, communityId: profile.id,
           now, interpretationMode, synthesizeCommunityAnswer: false, planCommunitySearch });
         assert.equal(answer.answerMode, 'community-approved-information-resource', question + interpretationMode);
@@ -51,6 +51,15 @@ test('navigation remains correct with legacy routing and unavailable or disabled
       }
     }
   }
+});
+
+test('navigation spelling correction is uniquely title-backed and cannot invent a topic', () => {
+  assert.equal(correctNavigationSubject('recyling', ['Trash & Recycling']), 'recycling');
+  assert.equal(correctNavigationSubject('recyling', ['Unrelated report']), 'recyling');
+  assert.equal(correctNavigationSubject('markels', ['Markets', 'Markers']), 'markels');
+  assert.equal(correctNavigationSubject('Markers', ['Markers', 'Markets']), 'Markers');
+  assert.equal(correctNavigationSubject('watre 2026', ['Water 2025']), 'watre 2026');
+  assert.equal(correctNavigationSubject('recyling', []), 'recyling');
 });
 
 test('adjacent navigation topics use relevant approved facts or action-only destinations, never generic report matches', async () => {
