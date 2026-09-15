@@ -7,6 +7,7 @@ const {
   cleanQuestionForLog,
   deriveReviewStatus,
   notionProperties,
+  qualityAssessmentForLog,
   queryQuestionLogs,
   questionLogDateRange,
   resetQuestionLogCachesForTest,
@@ -64,8 +65,11 @@ test("log entry stores the displayed answer and test marker", () => {
   assert.equal(entry.isTest, true);
   assert.equal(entry.reviewStatus, "Answered");
   assert.equal(entry.topSourceUrl, "https://example.com/shed");
-  assert.ok(["Excellent", "Good", "Mixed", "Weak", "Poor"].includes(entry.qualityRating));
-  assert.ok(entry.qualityScore >= 1 && entry.qualityScore <= 5);
+  assert.equal(entry.qualityRating, "Not rated");
+  assert.equal(entry.qualityScore, 0);
+  assert.match(entry.qualityIssues, /automatic-rating-calibration-required/);
+  assert.equal(entry.residentEffort, "Not rated");
+  assert.equal(entry.residentEffortScore, 0);
   const properties = notionProperties(entry);
   assert.equal(properties.Answer.rich_text[0].text.content, entry.answer);
   assert.equal(properties.Testing.checkbox, true);
@@ -73,6 +77,41 @@ test("log entry stores the displayed answer and test marker", () => {
   assert.equal(properties["Quality rating"].select.name, entry.qualityRating);
   assert.equal(properties["Quality score"].number, entry.qualityScore);
   assert.equal(properties["Needs work"].checkbox, false);
+});
+
+test("question log publishes only an explicitly calibrated assessment", () => {
+  const answer = {
+    answer: "The next pickup is Tuesday. Return the bins to a screened location by the end of pickup day.",
+    confidence: { canAnswer: true },
+    sources: [{ title: "Waste schedule and container rules", sourceUrl: "https://example.com/waste" }],
+  };
+  const uncalibrated = qualityAssessmentForLog("When is pickup and where do the bins go?", answer, {
+    qualityAssessment: {
+      calibrated: false,
+      version: "owner-rubric-v1",
+      rating: "Excellent",
+      score: 5,
+      residentEffort: "Resolved",
+      residentEffortScore: 5,
+    },
+  });
+  assert.equal(uncalibrated.rating, "Not rated");
+
+  const calibrated = qualityAssessmentForLog("When is pickup and where do the bins go?", answer, {
+    qualityAssessment: {
+      calibrated: true,
+      version: "owner-rubric-v1",
+      rating: "Good",
+      score: 4,
+      issues: ["proactiveness-could-improve"],
+      residentEffort: "Resolved",
+      residentEffortScore: 5,
+    },
+  });
+  assert.equal(calibrated.rating, "Good");
+  assert.equal(calibrated.score, 4);
+  assert.deepEqual(calibrated.issues, ["proactiveness-could-improve"]);
+  assert.deepEqual(calibrated.residentEffort, { rating: "Resolved", score: 5 });
 });
 
 test("Denver date presets use the correct daylight-saving boundaries", () => {

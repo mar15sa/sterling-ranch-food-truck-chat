@@ -1,0 +1,58 @@
+# Community Assistant first-principles reset — September 15, 2026
+
+Status: local decision and first repair only. No model comparison, paid model call, source approval, setting change, release, or resident question occurred in this phase.
+
+## Resident outcome
+
+A resident should receive the answer to every part of the question, using current authoritative evidence, in plain language, with the most useful next step when one exists. The system must never label an answer complete or excellent merely because its internal route completed successfully.
+
+## What the completed traces establish
+
+The current flow can lose part of the request before retrieval and then evaluate the answer against that smaller request:
+
+- “Which food truck is here today, and what is on its menu?” was represented as only a `date` detail. The answer named the truck, admitted the menu was missing, and still carried a complete verified result.
+- “What’s the next recycling pickup for Ascent Village, and where can I keep my bins?” was represented as only an `action` detail. The current answer omitted the pickup date, included unrelated landscaping text, and still carried a complete verified result.
+- “Is the pool open right now, and what are the regular hours?” preserved the two goals, but an early connector decision rejected live status because the primary goal was schedule. Both requested parts were withheld even though the status connector could answer one independently.
+- A CAB reporting question selected a water-billing contact, showing that a completed contact route does not establish subject relevance.
+
+The shared completion layer runs after many specialized early-return paths. It reconstructs requested details from the original wording or trusts the details attached by the selected path. It has no stable list of the resident’s individual needs and no proof that each need received relevant evidence. The automatic rating then scores presentation and metadata proxies and defaults an answer without a recognized defect to Good. The owner audit found positive automatic ratings on 17 of 25 answers the owner had marked Needs work.
+
+This is one system failure: **the product does not preserve the resident’s complete request as the invariant that every later stage must satisfy.** More model comparisons, a vector database, or more phrase exceptions cannot repair that invariant by themselves.
+
+## Architecture decision
+
+Freeze broad model selection. Replace the route-first contract with a need-first contract:
+
+1. Turn the current question and safe conversation context into a list of distinct resident needs. Each need retains its subject, requested outcome, conditions, date or location, and original wording.
+2. Retrieve evidence independently for each need. One source or connector may satisfy several needs, but success on one cannot erase another.
+3. Record for each need whether it is supported, missing, ambiguous, conflicting, or blocked by an unavailable live source.
+4. Give the writer only the resident needs and the approved evidence assigned to each need. The writer may improve wording; it may not change exact qualifications or mark needs complete.
+5. Validate the final answer against the same need list. A verified partial answer must name the unresolved need and preserve every supported one.
+6. Derive quality dimensions from this evidence, then calibrate the published rating against owner judgments. Until calibration passes on both positive and negative held-out examples, publish `Not rated` instead of a confident grade.
+
+This structure can use an affordable model to interpret unfamiliar wording, deterministic connectors for live facts, keyword or semantic retrieval for candidate evidence, and a separate writer when it measurably helps. Those are replaceable components inside the contract, not the architecture itself.
+
+## First repair completed locally
+
+New question-log entries no longer publish the uncalibrated legacy score as Excellent, Good, Mixed, Weak, or Poor. They publish `Not rated` with a calibration-required diagnostic unless the caller supplies a valid, explicitly calibrated, versioned assessment. The old scorer remains available for development diagnostics. Owner Needs work marks remain unchanged.
+
+Twenty rating tests and eight question-log tests pass when run directly. The normal multi-file test runner could not start child processes in the current sandbox (`spawn EPERM`); this is an environment limitation, not a test assertion failure. No full release check or deployment has been run.
+
+## Shadow need-contract result
+
+The first shadow slice is now implemented and replayed against all 12 questions in the latest paired capture without model calls. It:
+
+- preserves truck plus menu, recycling date plus storage, pool status plus hours, and shed rules plus form as separate needs;
+- represents the CAB water-quality-report request as an information/action need instead of the old contact detail;
+- keeps one-part payment, booking, price, access, and out-of-scope questions as one need; and
+- attaches the contract only when shadow mode is explicitly enabled, so resident-facing answers remain unchanged.
+
+The shadow representation is an improvement, not an accepted answer router. Short dependent follow-ups still need the safely resolved prior subject attached to the contract. Some broad goals also need validation against the preserved need text before evidence can be assigned. Do not enable this contract for resident answers until those boundaries and per-need evidence assignments pass held-out tests.
+
+Across the new and affected compatibility areas, 130 direct tests pass: 6 request-contract tests, 8 question-log tests, 20 rating tests, 35 assistant/completion tests, 20 completion-resolver tests, and 41 interpretation tests. No paid model calls occurred.
+
+## Next bounded implementation slice
+
+Carry safe conversation context into each dependent need, assign evidence per need, and calculate supported/missing/conflicting status in shadow mode. The slice should stop before resident rendering or release. Model choice, vector storage, and fine-tuning remain deferred until a failure is shown to belong to one of those components.
+
+Only after this passes should the answer router consume the contract. Model choice, vector storage, and fine-tuning remain deferred until a failure is shown to belong to one of those components.
