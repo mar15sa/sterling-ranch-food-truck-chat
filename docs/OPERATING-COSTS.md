@@ -1,6 +1,14 @@
 # Operating-cost snapshot
 
-Last reviewed: August 21, 2026. Values are owner-facing planning estimates, not accounting records.
+Last reviewed: September 15, 2026 UTC / September 14 Denver. Values are owner-facing planning estimates and dashboard observations, not accounting records.
+
+## September verified project usage
+
+The signed-in Railway Usage dashboard identifies natural-acceptance / sterling-ranch-food-truck-chat as this project. Completed August 12–September 12 project resource usage is **$2.64**. September 12–October 12 usage so far is **$0.3162** (the service row displays $0.3163 because displayed totals round differently). These are project/service aggregates; this view does not separate production from staging. The shared workspace is still Hobby. Do not add its full $5 minimum separately to every project, or attribute unrelated project charges to this product.
+
+This observation supersedes the earlier approximately $1/month project-usage estimate below. It does not establish application AI charges or the cost of an unselected new architecture. See [September cost and decision comparison](COMMUNITY-SEPTEMBER-COST-AND-DECISION.md), including raw-call-verified stage costs, monthly scenarios and remaining unknowns. Dashboard observation: artifacts/quality-eval/cost-consolidation-20260915/hosting-observation.json. [Railway Usage](https://railway.com/workspace/usage).
+
+The following sections preserve the August 21 historical snapshot; “current” and “today” within them refer to that date.
 
 ## Current recurring cost
 
