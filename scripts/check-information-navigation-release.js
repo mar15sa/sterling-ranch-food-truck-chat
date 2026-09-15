@@ -39,7 +39,15 @@ async function main() {
     const problems = [];
     if (!r.ok) problems.push('Request failed');
     if (item.trash && body.answerMode !== 'community-approved-information-resource') problems.push('Expected approved trash resource');
-    if ((item.trash || item.complete) && body.completion?.outcome !== 'complete') problems.push('Expected complete answer');
+    if ((item.navigation || item.complete) && body.completion?.outcome !== 'complete') problems.push('Expected complete answer');
+    if (item.navigation && body.answerMode !== 'community-approved-information-resource') problems.push('Expected an approved topic resource');
+    if (item.navigation && /Drinking Water Quality Report|Chase Drain/.test(body.answer || '')) problems.push('Unrelated information source');
+    const expectedTopic = /internet/i.test(item.question) ? /Internet-Service/
+      : /landscaping/i.test(item.question) ? /Common-Area-Maintenance|Landscap/
+      : /reservations/i.test(item.question) ? /Pickleball|Rental|Reserv/
+      : /utility/i.test(item.question) ? /Water-Billing|Water-Bill|Monthly-Fee/
+      : /recreation center/i.test(item.question) ? /Sterling-Center|Recreation|Overlook/ : null;
+    if (item.navigation && expectedTopic && !(body.sources || []).some(source => expectedTopic.test(source.sourceUrl))) problems.push('Requested topic destination missing');
     if (item.navigation && body.routingPlan?.requestedDetails?.some(detail => detail !== 'action')) problems.push('Invented navigation facet');
     if (item.notNavigation && body.answerMode === 'community-approved-information-resource') problems.push('Factual request reduced to navigation');
     if (item.methods && !body.routingPlan?.requestedDetails?.includes('methods')) problems.push('Explicit methods dropped');

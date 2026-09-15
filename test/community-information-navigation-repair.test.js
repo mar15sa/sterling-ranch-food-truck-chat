@@ -38,6 +38,49 @@ test('captured live planner mistake and its siblings return the approved resourc
   }
 });
 
+test('navigation remains correct with legacy routing and unavailable or disabled AI', async () => {
+  for (const interpretationMode of ['legacy', 'structured']) {
+    for (const planCommunitySearch of [false, async () => null]) {
+      for (const question of navigationQuestions.slice(0, 4)) {
+        const answer = await answerCommunityQuestion(question, { index, communityProfile: profile, communityId: profile.id,
+          now, interpretationMode, synthesizeCommunityAnswer: false, planCommunitySearch });
+        assert.equal(answer.answerMode, 'community-approved-information-resource', question + interpretationMode);
+        assert.equal(answer.completion.outcome, 'complete', question);
+        assert.ok(answer.actions.some(action => /\/247\/Trash-Recycling/.test(action.url)), question);
+        assert.doesNotMatch(answer.answer, /reviewed|reconfirmed|Drinking Water/);
+      }
+    }
+  }
+});
+
+test('adjacent navigation topics use relevant approved facts or action-only destinations, never generic report matches', async () => {
+  for (const [question, destination] of [
+    ['Where can I find utility information?', /Water-Billing|Water-Bill|Monthly-Fee/],
+    ['Where can I find information about reservations?', /Pickleball|Rental|Reserv/],
+    ['Where can we find internet information?', /Internet-Service/],
+    ['Where can I find landscaping information?', /Common-Area-Maintenance|Landscap/],
+    ['Where is the recreation center website?', /Sterling-Center|Recreation|Overlook/],
+  ]) {
+    for (const planCommunitySearch of [false, async () => plan(['action', 'methods'], question)]) {
+      const answer = await answerCommunityQuestion(question, { index, communityProfile: profile, communityId: profile.id,
+        now, interpretationMode: 'legacy', synthesizeCommunityAnswer: false, planCommunitySearch });
+      assert.equal(answer.answerMode, 'community-approved-information-resource', question);
+      assert.equal(answer.completion.outcome, 'complete', question);
+      assert.ok(answer.actions.some(action => destination.test(action.url)), question);
+      assert.doesNotMatch(answer.answer, /Drinking Water Quality Report|reconfirmed|reviewed/);
+    }
+  }
+});
+
+test('unknown navigation subjects cannot fall through to unrelated extractive answers', async () => {
+  const answer = await answerCommunityQuestion('Where can I find zeppelin information?', { index,
+    communityProfile: profile, communityId: profile.id, now, interpretationMode: 'legacy',
+    planCommunitySearch: false, synthesizeCommunityAnswer: false });
+  assert.notEqual(answer.answerStatus, 'verified');
+  assert.equal(answer.sources.length, 0);
+  assert.equal(answer.claims.length, 0);
+});
+
 test('navigation repair preserves actual methods, rules, schedules and compound requests', () => {
   for (const question of ['Where can I find recycling information and what methods can I use?',
     'Where can I find information about payment methods?', 'Where can I find trash fees?',
@@ -69,6 +112,42 @@ test('a second community uses its own reviewed resource without shared-code fact
   assert.doesNotMatch(JSON.stringify(answer), /sterlingranchcab\.com|Sterling Ranch/);
 });
 
+test('recurring collection wording reaches approved guidance rather than an unavailable-date hold', async () => {
+  for (const question of ['What day is trash collected?', 'Which day is garbage collected?',
+    'What day is trash picked up?', 'When are trash and recycling collected?']) {
+    const schedule = { ...plan(['date'], question), goal: 'schedule', goals: ['schedule'] };
+    const answer = await answerCommunityQuestion(question, { index, communityId: 'sterling-ranch', communityProfile: profile,
+      now, interpretationMode: 'structured', synthesizeCommunityAnswer: false, planCommunitySearch: async () => schedule });
+    assert.notEqual(answer.answerMode, 'community-freshness-withheld', question);
+    assert.match(answer.answer, /Monday|Tuesday|Thursday/, question);
+    assert.ok(answer.sources.some(source => source.id === 'approved-trash-recurring-service'), question);
+  }
+});
+
+test('a specified collection date cannot be answered by the recurring-days projection', async () => {
+  for (const question of ['What day is trash collected on September 15?', 'What day is garbage collected on 2026-09-15?',
+    'What day is trash collected on 9/15?', 'What day is trash collected tomorrow?']) {
+    const answer = await answerCommunityQuestion(question, { index, communityId: 'sterling-ranch', communityProfile: profile,
+      now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => ({ ...plan(['date'], question), goal: 'schedule', goals: ['schedule'] }),
+      getWasteSchedule: async () => { throw new Error('Live source unavailable'); } });
+    assert.notEqual(answer.answerStatus, 'verified', question);
+    assert.doesNotMatch(answer.answer, /Monday in Providence|Tuesday in Ascent|Thursday in Prospect/, question);
+  }
+});
+
+test('collection guidance cannot erase a separately requested fee, contact or method', async () => {
+  for (const [question, detail] of [['What day is trash collected and what does it cost?', 'price'],
+    ['What day is garbage collected and who do I call about it?', 'contact'],
+    ['What day is trash collected and what payment methods can I use?', 'methods']]) {
+    const answer = await answerCommunityQuestion(question, { index, communityId: 'sterling-ranch', communityProfile: profile,
+      now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => ({ ...plan(['date', detail], question), goal: 'schedule', goals: ['schedule'] }) });
+    assert.ok(answer.completion.requestedDetails.includes(detail), question);
+    assert.ok(answer.completion.requestedDetails.includes('date'), question);
+  }
+});
+
 test('expired and unapproved resources stay withheld despite corrected navigation intent', async () => {
   for (const unavailable of [new Date('2099-01-01'), now]) {
     const evidence = structuredClone(index);
@@ -96,6 +175,7 @@ test('structured incomplete outcomes cannot receive Good or Resolved from a rele
       actions: [{ label: 'Open information', url: 'https://example.org/information' }],
     });
     assert.ok(assessment.score < 4, outcome);
+    assert.equal(assessment.contentScore, 4, 'An honest limitation retains its separate content assessment');
     assert.notEqual(assessment.residentEffort.rating, 'Resolved', outcome);
   }
   const legacy = scoreCommunityAnswer('Where can I find information?', {
@@ -103,4 +183,18 @@ test('structured incomplete outcomes cannot receive Good or Resolved from a rele
     sources: [{ title: 'Information' }], actions: [{ label: 'Open information', url: 'https://example.org/information' }],
   });
   assert.notEqual(legacy.residentEffort.rating, 'Resolved');
+});
+
+test('separate content assessment never excuses wrong sources or a required answer miss', () => {
+  const answer = { answer: 'Open the swimming page.', directAnswer: 'Open the swimming page.',
+    answerMode: 'community-freshness-withheld', confidence: { canAnswer: false },
+    completion: { outcome: 'missing-evidence' }, sources: [{ title: 'Swimming', sourceUrl: 'https://example.org/swimming' }], claims: [] };
+  const wrongSource = scoreCommunityAnswer('Where can I find recycling information?', answer);
+  assert.ok(wrongSource.contentScore < 4);
+  const requiredAnswer = scoreCommunityAnswer('Where can I find swimming information?', answer,
+    { expectation: { expectedAnswerMode: 'community-approved-information-resource' } });
+  assert.ok(requiredAnswer.contentScore < 4);
+  const requiredCompletion = scoreCommunityAnswer('Where can I find swimming information?', answer,
+    { expectation: { expectedCompletion: 'complete' } });
+  assert.ok(requiredCompletion.contentScore < 4);
 });
