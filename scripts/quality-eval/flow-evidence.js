@@ -26,8 +26,9 @@ function assertBinding({profile,communityIndex,rulesIndex,communityId}){
 }
 function makeRetriever(context){
   assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now(),ruleSearch=rules.searchRulesIndex,
-    communityMode='keyword',stagingFormApproval=null,liveRetrieve=null}=context;
-  if(!['keyword','complete-catalog'].includes(communityMode)||stagingFormApproval&&communityMode!=='complete-catalog')throw new Error('Invalid experimental catalog mode');
+    communityMode='keyword',communitySearch=null,stagingFormApproval=null,liveRetrieve=null}=context;
+  if(communityMode==='semantic'&&typeof communitySearch!=='function')throw new Error('Semantic community mode requires an explicit ranker');
+  if(!['keyword','complete-catalog','semantic'].includes(communityMode)||stagingFormApproval&&communityMode!=='complete-catalog')throw new Error('Invalid experimental catalog mode');
   const docs=eligibleCorpus(rulesIndex,communityId,now),index={...rulesIndex,documents:docs};
   const hosts=new Set(profile.allowedHosts||[]);hosts.add(new URL(profile.website).hostname);
   const catalog=communityMode==='complete-catalog'?[...communityProjectionCorpus(communityIndex,{communityId,now}),
@@ -71,13 +72,21 @@ function makeRetriever(context){
       }
       const rr=communityMode==='complete-catalog'&&need.evidenceKind==='official-action'?[]:(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
       const cr=communityMode==='keyword'?searchCommunityIndex(query,{index:communityIndex,communityId,now,limit:4,includeActionOnlyProjections:true,allowPartialRequestedDetails:true,...needSearchOptions(need)}).sources.filter(s=>!isDynamicSource(s)):[];
+      if(communityMode==='semantic'){
+        const queryNow=(context.clock||(()=>now))();
+        const selected=await communitySearch(communityIndex,query,4,{now:queryNow,...needSearchOptions(need)});
+        if(!Array.isArray(selected)||selected.length>4||new Set(selected.map(s=>s.id)).size!==selected.length)throw new Error('Invalid bounded community selection');
+        const approved=new Map(communityProjectionCorpus(communityIndex,{communityId,now:(context.clock||(()=>now))()}).map(s=>[s.id,s]));
+        const identity=s=>hash([s.id,s.communityId,s.sourceUrl,s.contentHash,s.title,s.text,s.facts,s.actions]);
+        for(const s of selected){const original=approved.get(s.id);if(!original||identity(s)!==identity(original))throw new Error('Community selection changed approved evidence');cr.push(original);}
+      }
       for(let rank=0;rank<Math.max(rr.length,cr.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',cr[rank],need.id,rank,query);}
     }
     const ruleUnits=budgetEvidenceText([...all.values()].sort((a,b)=>a.rank-b.rank),{maxSources:12,maxChars:30000,project:s=>s.text});
     const existing=new Set(all.keys());for(const source of catalog)add('community',source,null,0,'');
     const catalogUnits=budgetEvidenceText([...all.entries()].filter(([key])=>!existing.has(key)).map(([,s])=>s),{maxSources:50,maxChars:10000,project:s=>s.text});
     const units=[...ruleUnits,...catalogUnits];
-    const sources=units.filter(u=>u.text).map(u=>{const {source:internal,...s}=u.source;return {...s,text:u.text,contextCoverage:u.contextCoverage};});
+    const sources=units.filter(u=>u.text).map(u=>{const {source:internal,...s}=u.source;return {...s,text:u.text,actions:s.actions.map(a=>({id:a.id,label:a.label,url:a.url,actionType:a.actionType})),contextCoverage:u.contextCoverage};});
     const actions=sources.flatMap(s=>s.actions.map((a,i)=>({id:`${s.id}-a${i}`,label:a.label,url:a.url,actionType:a.actionType,sourceId:s.id,communityId,version:s.version,stagingOnly:s.stagingOnly})));
     return {communityId,communityMode,stagingNavigationEnabled:Boolean(stagingFormApproval),sources,actions,diagnostics,snapshotHash:hash([communityId,communityIndex,rulesIndex,stagingFormApproval]),
       omissions:units.filter(u=>!u.text).map(u=>({id:u.source.id,reason:u.contextCoverage}))};
