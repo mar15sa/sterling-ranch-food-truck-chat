@@ -153,3 +153,36 @@ Implementation revision: local commit `80d775c` on `codex/community-quality-sept
 ## Next bounded slice after rule proof
 
 Build a production-shaped offline candidate that runs the need-first coordinator once, shares raw retrieval and connector evidence across needs, and does not run the old combined answer as a baseline inside the same request. Replay a frozen unseen benchmark and report useful-complete, useful-partial, wrong-topic/unsupported answers, follow-up behavior, source-failure behavior, p95 latency, every model and connector call, and current-versus-candidate monthly cost. Test a model, semantic retrieval, reranker, or vector store only for a remaining measured failure that the simpler flow cannot solve.
+
+## Production-shaped offline candidate completed locally
+
+The test-only candidate now runs one need-first coordinator and returns that composed answer directly. It does not run the old combined answer first. Each sibling need receives a minimal routing request with only the subject context it requires, so a pool-hours lookup cannot inherit “open right now” and a menu lookup cannot lose the named truck. Identical connector work is memoized within the request.
+
+The final validation now checks the exact resident-visible answer after composition. Only claims actually shown can prove completion. Helpful extra facts that remain visible keep their own source IDs, while omitted facts cannot silently count. Ordinary permission language such as “Could I…” and “Is this okay?” is preserved as a permission need. A typed `source-scope-boundary` can prove the narrow statement that the inspected controlling source does not publish an exact clock time, and that proof is rejected if the source contains a clock time.
+
+The offline gate contains 12 authored production-shape fixtures and the repository's 7 pre-existing frozen rules holdouts. It passes **19 of 19**:
+
+| Result | Cases |
+| --- | ---: |
+| Complete, with every requested need proved | 13 |
+| Correctly withheld or asked for clarification | 3 |
+| Correct safety or out-of-scope boundary | 3 |
+| Claim-to-source proof failures | 0 |
+
+Execution totals are 19 coordinator runs, 0 old baseline runs, 21 per-need runs, and 2 early safety-boundary runs. Connector reuse reduced four food-truck requests across the suite to two actual fixture calls plus two cache hits. The final recorded p95 local elapsed time was **1.952 seconds**; this is a development-machine fixture measurement, not a production service-level claim.
+
+The wider regression set passes **207 of 207** checks across assistant behavior, source ingestion and safety, retrieval, contacts, facilities, rules families, public examples, need routing, claim evidence, synthesis guards, and section context. Syntax and whitespace checks also pass.
+
+No resident questions, network requests, paid model calls, source approvals, vector database, subscription, deployment, or configuration changes occurred. The candidate made **0 model calls** and added **$0 in model/API cost**. For comparison, the preserved historical diagnostic estimate for the current mixed-model flow is about **$1.01 per 1,000 questions** and **$10.09 per 10,000 questions**. That comparison covers model/API charges only; hosting and production connector costs still require measurement after integration.
+
+This is a stronger architecture checkpoint, not final acceptance and not a live release. The current September 15 pool-hours source is stale, so the current-date path correctly keeps live pool status and withholds regular hours. A September 14 historical fixture proves the routing and composition behavior while the source was within its approved freshness window; it is not proof that today's hours are current.
+
+Implementation revision: local commit `28590e5` on `codex/community-quality-september30`.
+
+## Remaining work before resident release
+
+1. Refresh or review source gaps, beginning with current pool hours and the CAB water-report source, without approving facts automatically.
+2. Run a broader frozen, human-rated acceptance set sampled across real resident wording. The 19-case gate is deliberately small and cannot establish “consistently impressive” by itself.
+3. Calibrate the automatic rating against owner judgments for proactiveness, specificity, directness, complete need coverage, and human-first usefulness.
+4. Integrate the need-first candidate behind a release gate, measure real latency and connector work, and compare full current-versus-candidate operating cost before enabling it for residents.
+5. Test a small model, semantic reranker, or vector store only if the broader set isolates an interpretation or retrieval-recall failure that the deterministic flow cannot solve. No such component has earned adoption in this checkpoint.
