@@ -20,6 +20,27 @@ test("rules evidence claims reject changed permission and numeric details", () =
   }), []);
 });
 
+test("a scoped source-absence statement keeps typed proof to the inspected source", () => {
+  const claims = buildRulesEvidenceClaims({
+    directAnswer: "The selected controlling source does not give a specific curb-placement or removal time.",
+    answer: "The selected controlling source does not give a specific curb-placement or removal time.",
+    residentQuestion: "Does CAB set an exact hour for taking bins back from the curb?",
+    sources: [{ id: "trash-rule", title: "Trash containers", text: "Containers must be stored in the garage." }],
+  });
+  assert.deepEqual(claims, [{
+    text: "The selected controlling source does not give a specific curb-placement or removal time.",
+    evidenceSourceIds: ["trash-rule"],
+    verified: true,
+    kind: "source-scope-boundary",
+  }]);
+  assert.deepEqual(buildRulesEvidenceClaims({
+    directAnswer: "The selected controlling source does not give a specific curb-placement or removal time.",
+    answer: "The selected controlling source does not give a specific curb-placement or removal time.",
+    residentQuestion: "Does CAB set an exact hour for taking bins back from the curb?",
+    sources: [{ id: "timed-trash-rule", title: "Trash containers", text: "Containers must return by 7:00 p.m." }],
+  }), []);
+});
+
 test("the deterministic shed answer maps rendered limits and official form links", async () => {
   const result = await answerRulesQuestion("Which application form do I use for a backyard shed?", {
     searchMode: "legacy",

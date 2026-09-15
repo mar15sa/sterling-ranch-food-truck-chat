@@ -54,6 +54,22 @@ test("keeps a one-part question as one need", () => {
   assert.equal(contract.needs[0].goal, "payment");
 });
 
+test("treats a clear imperative community request as complete", () => {
+  const contract = buildResidentRequestContract("Open the design review application.");
+  assert.equal(contract.complete, true);
+  assert.equal(contract.needCount, 1);
+  assert.deepEqual(contract.needs[0].requestedDetails, ["action"]);
+});
+
+test("recognizes ordinary yes-or-no permission wording", () => {
+  const hosting = buildResidentRequestContract("Could I host travelers in my house for a 3-night Airbnb stay?");
+  const watering = buildResidentRequestContract("Is regular lawn irrigation okay at 2 p.m. in June?");
+  assert.deepEqual(hosting.needs[0].requestedDetails, ["permission"]);
+  assert.deepEqual(watering.needs[0].requestedDetails, ["permission"]);
+  assert.equal(hosting.needs[0].evidenceKind, "governing-rule");
+  assert.equal(watering.needs[0].evidenceKind, "governing-rule");
+});
+
 test("does not split ordinary conjunctions inside one request", () => {
   assert.deepEqual(splitResidentNeeds("What are the rules for sheds and fences?"), ["What are the rules for sheds and fences"]);
 });
