@@ -51,8 +51,27 @@ The shadow representation is an improvement, not an accepted answer router. Shor
 
 Across the new and affected compatibility areas, 130 direct tests pass: 6 request-contract tests, 8 question-log tests, 20 rating tests, 35 assistant/completion tests, 20 completion-resolver tests, and 41 interpretation tests. No paid model calls occurred.
 
+## Second shadow slice completed locally
+
+The contract now carries safe resident-authored context into dependent follow-ups without using the previous assistant answer. Each need has the same canonical `request`, `task`, and `evidenceKind` shape already used by the experimental per-need retrieval flow. Returned sources are assigned as candidates per need, while verified claims must separately prove semantic relevance, cover the requested detail, map to an eligible source, and appear in the rendered answer. The shadow result labels each need `supported`, `missing-evidence`, `conflict`, `ambiguous`, or `unassessed`.
+
+`unassessed` is deliberate. Several legacy rule answers do not record claim-to-source mappings, so the new check refuses to infer support merely because a plausible source was retrieved. Candidate retrieval and answer support are separate facts.
+
+The no-model replay of the same 12 captured cases produced:
+
+| Shadow outcome | Cases | What it means |
+| --- | ---: | --- |
+| Complete | 2 | Water payment and Great Hall booking have rendered verified claims supporting the requested need. |
+| Missing evidence | 5 | Food truck/menu, pool status/hours, yoga follow-up, CAB water-quality report, and nanny access have at least one need without relevant rendered proof. |
+| Unassessed | 4 | Recycling/storage, shed/form, lighting follow-up, and the out-of-scope coffee case cannot receive a supported quality claim from the available legacy evidence map. |
+| Ambiguous | 1 | “How much does it cost?” lacks the subject required to retrieve or judge the answer. |
+
+The replay catches the known serious failures. It supports the food-truck identification but flags the missing menu; rejects the water-billing contact as proof for the CAB water-quality report; preserves pool status and regular hours as separate missing needs; and retains the resident-authored lighting and yoga subject in dependent follow-ups. It also routes bin placement to governing-rule evidence and an application-form need to official-action evidence rather than treating both as a generic route success.
+
+Two hundred direct compatibility checks pass across the new contract, the assistant, completion, conversation resolution, interpretation, question logging, and assessment diagnostics. The normal multi-file launcher still cannot create child processes in this sandbox (`spawn EPERM`), so the affected files were invoked directly. Syntax and whitespace checks pass. No paid model call, resident question, source approval, vector database, subscription, configuration change, release, or live behavior change occurred. This slice adds no model or database charge and makes no new recurring cost commitment.
+
 ## Next bounded implementation slice
 
-Carry safe conversation context into each dependent need, assign evidence per need, and calculate supported/missing/conflicting status in shadow mode. The slice should stop before resident rendering or release. Model choice, vector storage, and fine-tuning remain deferred until a failure is shown to belong to one of those components.
+Make the answer router retrieve and preserve evidence by need behind a test-only or shadow gate, beginning with the four compound/follow-up failures in this capture. A partial answer should keep every supported need, state the unresolved need plainly, and offer only a relevant next step. Then replay the frozen capture and add negative controls for sibling-need leakage, wrong-subject official pages, unavailable live connectors, and claim paraphrases.
 
-Only after this passes should the answer router consume the contract. Model choice, vector storage, and fine-tuning remain deferred until a failure is shown to belong to one of those components.
+Do not enable resident rendering or resume broad model comparisons yet. Model choice, vector storage, and fine-tuning remain deferred until the need-first flow isolates a failure that one of those components can solve and a bounded comparison demonstrates a meaningful quality gain with complete operating cost.

@@ -4618,6 +4618,11 @@ async function handleRulesAsk(req, res, url) {
     index: getCommunityIndex(),
     communityProfile: getCommunityProfile(),
     communityId: "sterling-ranch",
+    requestContext: {
+      originalQuestion: conversation.question,
+      resolvedQuestion: conversation.resolvedQuestion,
+      usedPriorContext: conversation.usedPriorContext,
+    },
     }
   );
   const llmAfter = getCommunityLlmMetrics();
