@@ -58,6 +58,15 @@ function briefRequest(row, plan, packet, model, options) {
 function exactKeys(value, keys) {
   return value && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).length === keys.length && keys.every(k => Object.hasOwn(value, k));
 }
+function sourceSpan(sourceText, quote) {
+  const exact = sourceText.indexOf(quote);
+  if (exact >= 0) return { text: quote, start: exact, end: exact + quote.length, whitespaceNormalized: false };
+  // PDF line wrapping may differ; restore the actual continuous source span.
+  // Never normalize punctuation, digits, case, negation or comparison wording.
+  const pattern = quote.trim().split(/\s+/u).map(token => token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+');
+  const match = new RegExp(pattern, 'u').exec(sourceText);
+  return match ? { text: match[0], start: match.index, end: match.index + match[0].length, whitespaceNormalized: true } : null;
+}
 function validateBrief(raw, row, plan, packet, options) {
   let payload;
   try { payload = inputPayload(row, plan, packet, options); } catch (e) { return { issues: [e.message], brief: null }; }
@@ -75,18 +84,23 @@ function validateBrief(raw, row, plan, packet, options) {
     for (const q of n.quotes) {
       const source = packet.sources.find(s => s.id === q?.sourceId), presented = payload.evidence.find(s => s.id === q?.sourceId);
       if (!exactKeys(q, ['sourceId', 'text', 'purpose']) || !source || !purposes.includes(q.purpose) ||
-          typeof q.text !== 'string' || !q.text.trim() || q.text.length > 2400 || !presented.text.includes(q.text)) {
+          typeof q.text !== 'string' || !q.text.trim() || q.text.length > 2400) {
         issues.push('invalid-brief-quote'); continue;
       }
-      if (source.role === 'official-action' && q.purpose !== 'process-step') issues.push('action-cannot-prove-brief-fact');
-      quotes.push({ ...q, version: source.version, role: source.role });
+      const span = sourceSpan(presented.text, q.text);
+      if (!span) { issues.push('invalid-brief-quote'); continue; }
+      const navigationAnswer = need.evidenceKind === 'official-action' && q.purpose === 'direct-answer';
+      if (source.role === 'official-action' && q.purpose !== 'process-step' && !navigationAnswer) issues.push('action-cannot-prove-brief-fact');
+      quotes.push({ ...q, ...span, spanBasis: 'presented-evidence-text', version: source.version, role: source.role });
     }
     const direct = quotes.filter(q => q.purpose === 'direct-answer');
     if (['complete', 'verified-partial'].includes(n.proposedOutcome)) {
       if (need.evidenceKind === 'official-action') {
         if (!n.actionIds.length && !quotes.length) issues.push('brief-missing-action-support');
       } else if (!direct.length) issues.push('brief-missing-direct-support');
-      if (['governing-rule', 'live-operation'].includes(need.evidenceKind) && !direct.some(q => q.role === need.evidenceKind)) issues.push('brief-wrong-authority');
+      // A controlling qualification can supply the rule support; purpose labels
+      // are model proposals. Match the existing flow's source-role requirement.
+      if (['governing-rule', 'live-operation'].includes(need.evidenceKind) && !quotes.some(q => q.role === need.evidenceKind)) issues.push('brief-wrong-authority');
     }
     if (n.proposedOutcome === 'conflict' && new Set(quotes.filter(q => q.purpose === 'conflict').map(q => q.sourceId)).size < 2) issues.push('brief-missing-conflict-support');
     hydrated.push({ ...n, quotes });
@@ -109,4 +123,4 @@ function attachBrief(request, brief, row, plan, packet, options, checking = fals
   result.system += '\n' + (checking ? CHECK_INSTRUCTIONS : WRITER_INSTRUCTIONS);
   return result;
 }
-module.exports = { SYSTEM, WRITER_INSTRUCTIONS, CHECK_INSTRUCTIONS, schema, identity, briefRequest, validateBrief, attachBrief };
+module.exports = { SYSTEM, WRITER_INSTRUCTIONS, CHECK_INSTRUCTIONS, schema, identity, sourceSpan, briefRequest, validateBrief, attachBrief };

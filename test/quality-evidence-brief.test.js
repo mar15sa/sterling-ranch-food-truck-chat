@@ -1,5 +1,5 @@
 const test = require('node:test'), assert = require('node:assert/strict');
-const { briefRequest, validateBrief, attachBrief } = require('../scripts/quality-eval/evidence-brief');
+const { briefRequest, validateBrief, attachBrief, sourceSpan } = require('../scripts/quality-eval/evidence-brief');
 const { runCandidate, modelEvidence, modelActions } = require('../scripts/quality-eval/full-flow-candidate');
 const { stageFor } = require('../scripts/quality-eval/observe-fetch');
 const now = Date.parse('2026-09-15T00:00:00Z');
@@ -63,6 +63,31 @@ test('a navigation source cannot prove a rule and adapter metadata cannot become
   assert.ok(validateBrief(f.raw, f.row, f.plan, f.packet, f.options).issues.includes('invalid-brief-quote'));
   f.raw.needs[0].quotes = [{ sourceId: 'live', text: 'closed', purpose: 'direct-answer' }];
   assert.ok(validateBrief(f.raw, f.row, f.plan, f.packet, f.options).issues.includes('brief-wrong-authority'));
+});
+test('whitespace-only copying restores the exact continuous source span without changing conditions', () => {
+  const original = 'Prefix. At a slope of\n3:9 a taller design may be reviewed.\nNo exception on restricted lots.';
+  const quote = 'At a slope of 3:9 a taller design may be reviewed.';
+  const span = sourceSpan(original, quote);
+  assert.equal(span.text, 'At a slope of\n3:9 a taller design may be reviewed.');
+  assert.equal(original.slice(span.start, span.end), span.text); assert.equal(span.whitespaceNormalized, true);
+  for (const changed of ['At a slope of at least 3:9 a taller design may be reviewed.', 'At a slope of 3:8 a taller design may be reviewed.',
+    'At a slope of 3:9 a taller design may be reviewed. Exception on restricted lots.', 'At a slope of 3:9; a taller design may be reviewed.']) assert.equal(sourceSpan(original, changed), null);
+  assert.equal(sourceSpan('Price: $15.00 (if approved).', '$15.00 (if approved).').text, '$15.00 (if approved).');
+});
+test('official navigation can directly answer a location need while rule evidence still cannot be replaced', () => {
+  const f = fixture(); f.raw.needs[1] = { needId: 'need-2', proposedOutcome: 'complete', missingDetail: '', actionIds: ['forms-a'],
+    quotes: [{ sourceId: 'forms', text: 'Forms directory.', purpose: 'direct-answer' }] };
+  assert.deepEqual(validateBrief(f.raw, f.row, f.plan, f.packet, f.options).issues, []);
+  // This is structural permission to cite navigation, not proof of exact-form applicability.
+  f.raw.needs[0].quotes = f.raw.needs[1].quotes;
+  assert.ok(validateBrief(f.raw, f.row, f.plan, f.packet, f.options).issues.includes('brief-wrong-authority'));
+});
+test('governing qualifications retain their authority regardless of model-assigned quote purpose', () => {
+  const f = fixture(); f.packet.sources.push({ ...f.packet.sources[0], id: 'info', role: 'official-process', text: 'A design can be reviewed.' });
+  f.raw.needs[0].quotes = [{ sourceId: 'info', text: 'A design can be reviewed.', purpose: 'direct-answer' },
+    { sourceId: 'rule', text: f.packet.sources[0].text, purpose: 'qualification' }];
+  assert.deepEqual(validateBrief(f.raw, f.row, f.plan, f.packet, f.options).issues, []);
+  f.raw.needs[0].quotes.pop(); assert.ok(validateBrief(f.raw, f.row, f.plan, f.packet, f.options).issues.includes('brief-wrong-authority'));
 });
 test('conflict proposals retain two sources and cannot claim complete coverage with a gap', () => {
   const f = fixture(); f.packet.sources.push({ ...f.packet.sources[0], id: 'amendment', version: 'v2', text: 'No taller design may be approved.' });
@@ -134,6 +159,13 @@ test('comparison freezes all eight cases and rejects a changed historical input 
   for (const input of inputs) fs.writeFileSync(path.join(directory, input.caseId + '-input.json'), JSON.stringify(input));
   const design = prepare(directory); assert.equal(design.jobs.length, 32); assert.ok(design.plannedUpperUsd <= 5);
   for (const caseId of cases) for (const model of ['claude-haiku-4-5', 'claude-sonnet-5']) assert.equal(design.jobs.filter(j => j.caseId === caseId && j.model === model).length, 2);
+  const rejected = path.join(directory, 'rejected'); fs.mkdirSync(rejected);
+  const stopped = { status: 'stopped-error-or-unknown-usage', mode: 'evidence-brief-model-comparison', runs: [{}], capUsd: 5,
+    priorCapture: directory, reservedUpperUsd: .03735, costs: { unknownCostCalls: 1, estimatedTotalUsd: null } };
+  fs.writeFileSync(path.join(rejected, 'manifest.json'), JSON.stringify(stopped));
+  const resumed = prepare(directory, rejected); assert.equal(resumed.capUsd, 4.96265); assert.equal(resumed.priorAttempt.costs.estimatedTotalUsd, null);
+  stopped.reservedUpperUsd = 5; fs.writeFileSync(path.join(rejected, 'manifest.json'), JSON.stringify(stopped));
+  assert.throws(() => prepare(directory, rejected), /accounting/);
   inputs[0].packet.sources[0].text += 'Changed'; fs.writeFileSync(path.join(directory, inputs[0].caseId + '-input.json'), JSON.stringify(inputs[0]));
   assert.throws(() => prepare(directory), /identity mismatch/);
 });
