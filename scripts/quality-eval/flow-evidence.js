@@ -8,6 +8,10 @@ const {isDynamicSource}=require('../../lib/community-source-identity');
 const {communityProjectionCorpus,stagingFormNavigation}=require('./community-projection-corpus');
 const {eligibleCorpus,eligibleForQuestion}=require('./semantic-corpus');
 const hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
+function budgetPacketSources(sources,options){
+  const selected=budgetEvidenceText(sources,options);
+  return [...selected,...sources.slice(options.maxSources).map(source=>({source,text:'',contextCoverage:'omitted-source-limit'}))];
+}
 function needSearchOptions(need){
   const detail={permission:'permission',specification:'specification',cost:'price',contact:'contact',form:'action',payment:'action',booking:'action',registration:'action','account-access':'action'}[need.task];
   const intent=['permission','specification'].includes(need.task)?'rules':need.task==='form'?'forms':'services';
@@ -82,14 +86,15 @@ function makeRetriever(context){
       }
       for(let rank=0;rank<Math.max(rr.length,cr.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',cr[rank],need.id,rank,query);}
     }
-    const ruleUnits=budgetEvidenceText([...all.values()].sort((a,b)=>a.rank-b.rank),{maxSources:12,maxChars:30000,project:s=>s.text});
+    const ruleUnits=budgetPacketSources([...all.values()].sort((a,b)=>a.rank-b.rank),{maxSources:12,maxChars:30000,project:s=>s.text});
     const existing=new Set(all.keys());for(const source of catalog)add('community',source,null,0,'');
-    const catalogUnits=budgetEvidenceText([...all.entries()].filter(([key])=>!existing.has(key)).map(([,s])=>s),{maxSources:50,maxChars:10000,project:s=>s.text});
+    const catalogUnits=budgetPacketSources([...all.entries()].filter(([key])=>!existing.has(key)).map(([,s])=>s),{maxSources:50,maxChars:10000,project:s=>s.text});
     const units=[...ruleUnits,...catalogUnits];
     const sources=units.filter(u=>u.text).map(u=>{const {source:internal,...s}=u.source;return {...s,text:u.text,actions:s.actions.map(a=>({id:a.id,label:a.label,url:a.url,actionType:a.actionType})),contextCoverage:u.contextCoverage};});
     const actions=sources.flatMap(s=>s.actions.map((a,i)=>({id:`${s.id}-a${i}`,label:a.label,url:a.url,actionType:a.actionType,sourceId:s.id,communityId,version:s.version,stagingOnly:s.stagingOnly})));
     return {communityId,communityMode,stagingNavigationEnabled:Boolean(stagingFormApproval),sources,actions,diagnostics,snapshotHash:hash([communityId,communityIndex,rulesIndex,stagingFormApproval]),
-      omissions:units.filter(u=>!u.text).map(u=>({id:u.source.id,reason:u.contextCoverage}))};
+      retrievalCoverage:{candidateUnits:units.length,providedUnits:sources.length},
+      omissions:units.filter(u=>!u.text).map(u=>({id:u.source.id,sourceId:u.source.sourceId,needIds:u.source.retrievedForNeedIds,reason:u.contextCoverage}))};
   };
 }
-module.exports={assertBinding,makeRetriever,hash,needSearchOptions};
+module.exports={assertBinding,makeRetriever,hash,needSearchOptions,budgetPacketSources};

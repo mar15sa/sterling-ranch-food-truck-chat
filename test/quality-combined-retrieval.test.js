@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict');
-const {makeRetriever}=require('../scripts/quality-eval/flow-evidence');
+const {makeRetriever,budgetPacketSources}=require('../scripts/quality-eval/flow-evidence');
 const {communityProjectionCorpus}=require('../scripts/quality-eval/community-projection-corpus');
 const now=Date.parse('2026-09-15T00:00:00Z');
 const plan={needs:[{id:'need-1',subject:'project',task:'form',request:'Application form',evidenceKind:'official-action'}]};
@@ -40,4 +40,12 @@ test('live needs retain their adapter route and never invoke document search',as
  const ctx=fixture();let live=0;
  const packet=await makeRetriever({...ctx,communitySearch:()=>{throw Error('Unexpected community search');},ruleSearch:()=>{throw Error('Unexpected rules search');},liveRetrieve:async()=>{live++;return {sources:[],diagnostics:[{reason:'fixture-live-unavailable'}]};}})({needs:[{...plan.needs[0],evidenceKind:'live-operation'}]});
  assert.equal(live,1);assert.equal(packet.sources.length,0);assert.equal(packet.diagnostics[0].reason,'fixture-live-unavailable');
+});
+
+test('packet accounting exposes every excluded source without changing selected evidence',()=>{
+ const inputs=[{id:'a',text:'AAA'},{id:'b',text:'BBBB'},{id:'c',text:'C'}];
+ const units=budgetPacketSources(inputs,{maxSources:2,maxChars:3});
+ assert.equal(units.length,3);assert.equal(units[0].text,'AAA');
+ assert.deepEqual(units.slice(1).map(u=>[u.source.id,u.text,u.contextCoverage]),[['b','','omitted-budget'],['c','','omitted-source-limit']]);
+ assert.deepEqual(inputs.map(s=>s.text),['AAA','BBBB','C']);
 });
