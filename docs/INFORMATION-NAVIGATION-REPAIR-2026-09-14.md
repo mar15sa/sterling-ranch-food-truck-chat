@@ -16,6 +16,8 @@ Replay the captured live planner mistake, multiple alternative model-added facet
 
 ## Status
 
+The expanded evaluation also caught a non-AI fallback defect: absent a structured plan, imperative “Open” regained an hours obligation, while generic navigation words could rank an unrelated report above the requested service. A fact-free fallback now preserves navigation semantics; subject-only synonym retrieval and a resource-title relevance check keep generic “page/information” matches out. The four correctly spelled waste-navigation variants pass across legacy/structured routing with planning disabled or unavailable (16 replays), in addition to the model-driven typo and invented-facet cases. This does not claim generic typo correction when AI is unavailable.
+
 Implementation is on the repair branch in [PR #146](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/146). Exact final checks and deployment evidence belong in that review record and the dated owner-guide sections; a local implementation is not a live claim.
 
 The first 20-question staging matrix found the reported navigation issue repaired, but also exposed "What day is trash collected?" missing the existing recurring-schedule route. That family now recognizes collected/picked-up wording, while explicit dates and separately requested fees, contacts, methods or other facets cannot be reduced to recurring guidance. The facts still come exclusively from approved evidence.

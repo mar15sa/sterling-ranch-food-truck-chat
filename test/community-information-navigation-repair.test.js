@@ -38,6 +38,21 @@ test('captured live planner mistake and its siblings return the approved resourc
   }
 });
 
+test('navigation remains correct with legacy routing and unavailable or disabled AI', async () => {
+  for (const interpretationMode of ['legacy', 'structured']) {
+    for (const planCommunitySearch of [false, async () => null]) {
+      for (const question of navigationQuestions.slice(0, 4)) {
+        const answer = await answerCommunityQuestion(question, { index, communityProfile: profile, communityId: profile.id,
+          now, interpretationMode, synthesizeCommunityAnswer: false, planCommunitySearch });
+        assert.equal(answer.answerMode, 'community-approved-information-resource', question + interpretationMode);
+        assert.equal(answer.completion.outcome, 'complete', question);
+        assert.ok(answer.actions.some(action => /\/247\/Trash-Recycling/.test(action.url)), question);
+        assert.doesNotMatch(answer.answer, /reviewed|reconfirmed|Drinking Water/);
+      }
+    }
+  }
+});
+
 test('navigation repair preserves actual methods, rules, schedules and compound requests', () => {
   for (const question of ['Where can I find recycling information and what methods can I use?',
     'Where can I find information about payment methods?', 'Where can I find trash fees?',
