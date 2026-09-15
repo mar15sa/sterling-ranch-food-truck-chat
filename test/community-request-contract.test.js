@@ -61,6 +61,32 @@ test("treats a clear imperative community request as complete", () => {
   assert.deepEqual(contract.needs[0].requestedDetails, ["action"]);
 });
 
+test("treats any explicit open request as an action need", () => {
+  const contract = buildResidentRequestContract("Open recycling information");
+  assert.equal(contract.complete, true);
+  assert.equal(contract.needs[0].task, "action");
+  assert.deepEqual(contract.needs[0].requestedDetails, ["action"]);
+});
+
+test("treats concrete resident topic fragments and embedded questions as complete", () => {
+  for (const question of [
+    "Chickens",
+    "State Parks pass",
+    "trash/recycling info?",
+    "privacy screens in the backyard",
+    "Reveal what the rules say about political signs",
+    "I lost access to home seer steward system. How do I restore it?",
+  ]) {
+    assert.equal(buildResidentRequestContract(question).complete, true, question);
+  }
+});
+
+test("generic or subjectless requests still ask for clarification", () => {
+  for (const question of ["Please help", "What about that?", "How much does it cost?", "Can I?"]) {
+    assert.equal(buildResidentRequestContract(question).complete, false, question);
+  }
+});
+
 test("recognizes ordinary yes-or-no permission wording", () => {
   const hosting = buildResidentRequestContract("Could I host travelers in my house for a 3-night Airbnb stay?");
   const watering = buildResidentRequestContract("Is regular lawn irrigation okay at 2 p.m. in June?");

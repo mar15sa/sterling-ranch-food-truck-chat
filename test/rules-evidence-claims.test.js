@@ -63,3 +63,19 @@ test("the deterministic lighting answer resolves permanent installation versus s
   assert.ok(result.claims.some((claim) => /stay installed year-round/i.test(claim.text)));
   assert.ok(result.claims.every((claim) => claim.verified === true));
 });
+
+test("deterministic direct answers keep proof across headings, wrappers, dates, and fee schedules", async () => {
+  const checks = [
+    ["Do I need approval for solar panels?", /DRC approval is required/i],
+    ["Do I need approval for a greenhouse?", /Greenhouses: DRC approval is required/i],
+    ["What is the holiday lighting season?", /June 18 to July 7.*October 1 through January 31/i],
+    ["What are trash fees?", /Residential trash charge is \$14\.17/i],
+  ];
+  for (const [question, expectedClaim] of checks) {
+    const result = await answerRulesQuestion(question, {
+      searchMode: "legacy", llmMode: "off", needFirstEvidenceContract: true,
+    });
+    assert.ok(result.claims.some((claim) => expectedClaim.test(claim.text)), question);
+    assert.ok(result.claims.every((claim) => claim.verified === true && claim.evidenceSourceIds.length), question);
+  }
+});

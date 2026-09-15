@@ -186,3 +186,43 @@ Implementation revision: local commit `28590e5` on `codex/community-quality-sept
 3. Calibrate the automatic rating against owner judgments for proactiveness, specificity, directness, complete need coverage, and human-first usefulness.
 4. Integrate the need-first candidate behind a release gate, measure real latency and connector work, and compare full current-versus-candidate operating cost before enabling it for residents.
 5. Test a small model, semantic reranker, or vector store only if the broader set isolates an interpretation or retrieval-recall failure that the deterministic flow cannot solve. No such component has earned adoption in this checkpoint.
+
+
+## Broad diagnostic coverage checkpoint
+
+The production-shaped need-first candidate was exercised against the repository's full existing authored coverage collection: 140 rule phrasings plus 11 community-information phrasings. This is a broad development diagnostic, not an unseen or human-rated acceptance set.
+
+The first run exposed 55 failures in 151 phrasings. This slice addressed shared causes rather than topic-by-topic exceptions:
+
+- concrete resident fragments such as "Chickens" and "State Parks pass" now count as searchable requests, while generic prompts such as "Please help" and "How much does it cost?" still ask for clarification;
+- direct rule sentences retain proof across section headings, source formatting, safe presentation wrappers, seasonal dates, and fee-schedule headings;
+- useful verified qualifications can remain in the answer without allowing a neighboring claim from a broad document to prove the wrong need;
+- action-only requests are represented as actions;
+- a relevant one-sheet or application can appear as a proactive next step while staying tied to its own official source; and
+- permission language such as "you can," access instructions, and numeric setback statements can satisfy their actual need when rendered.
+
+Repeated diagnostic runs produced a range rather than one stable score:
+
+| Result | Count |
+| --- | ---: |
+| Authored phrasings | 151 |
+| Passed the saved expectation | 116–120 |
+| Completed with rendered proof | 110–113 |
+| Safely withheld | 38–41 |
+| Claim-to-source proof failures | 0 |
+| Paid model calls | 0 |
+| Added model/API cost | $0 |
+
+This improves the same diagnostic from **96/151 to at least 116/151**, with a best observed run of **120/151**. The focused production-shaped gate remains **19/19**, including all seven frozen rule checks, with zero proof failures.
+
+The result moving between 116 and 120 under four-way local concurrency exposes another measurement problem: shared process caches and request ordering make this broad diagnostic non-deterministic. Single-case checks correctly complete the HomeSeer support and State Parks pass processes, while some concurrent runs lose those completions. The harness needs isolated per-case state before its exact percentage can be treated as a release metric. Across the runs, 31–35 saved expectations still fail. Most answers complete with proof but differ from the old expected wording, breadth, or source order. They require human review rather than automatic relaxation: several are useful but narrower than expected, while others expose real presentation problems such as long rule excerpts, clipped text, or missing proactive context. Persistent incomplete cases include an unreviewed clubhouse source version and current Labor Day pool hours that are not separately published; the trash timing/location case also contains an expectation mismatch.
+
+Recorded p95 elapsed time ranged from roughly **2.5 seconds to 10.647 seconds**. This is not a stable production latency claim. It is a reason to isolate test state and profile index startup, cache behavior, and per-need source work before release.
+
+The architectural conclusion remains unchanged: a more expensive model is not the current bottleneck. The candidate used deterministic interpretation, current local retrieval, official connectors, and evidence checks for **$0 added model cost**. The preserved historical mixed-model diagnostic estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000 questions**. A model, reranker, embedding service, or vector database should be tested only against a privacy-reviewed, human-rated failure group that specifically shows an interpretation, retrieval-recall, or writing gap.
+
+Before resident release, the next work is to make the broad harness deterministic, review the completed mismatches for human usefulness, remove clipped and overly legalistic presentation, revalidate the persistent withheld-source/expectation cases, profile latency, and run a privacy-reviewed human-rated acceptance set from the real question log. The automatic rating must stay uncalibrated until its rubric agrees with owner judgments on that held-out set.
+
+Regression verification: all 45 focused need/router/evidence checks pass. The full repository suite passes 1,307 of 1,308 checks. The sole failure is the pre-existing label mismatch for a conflicted internet-contact case (`community-freshness-withheld` versus `community-contact-boundary`); the old phone number remains withheld. The three regressions initially introduced by this slice were fixed before the checkpoint.
+
+This checkpoint is implemented and verified locally only. It is not deployed or verified live. The Notion owner-guide update remains pending because the earlier external write was rejected; this local record is the precise text to synchronize once Notion write access is available.

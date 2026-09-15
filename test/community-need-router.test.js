@@ -104,6 +104,20 @@ test("a relevant official action can help with an unresolved need without preten
   assert.equal(result.completion.needs[1].status, "missing-evidence");
 });
 
+test("a verified written instruction completes an action need without requiring a separate button", async () => {
+  const contract = buildResidentRequestContract("How do I get my state parks pass?", {
+    goal: "information", subject: "state parks pass",
+  });
+  const result = await runNeedFirstShadow(contract, async () => supportedAnswer({
+    id: "parks-pass",
+    title: "Official parks pass process",
+    claim: "Bring the voucher to the information center and exchange it for an annual pass.",
+  }));
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /Bring the voucher/i);
+  assert.deepEqual(result.actions, []);
+});
+
 test("a per-need failure cannot erase a separately supported answer", async () => {
   const contract = buildResidentRequestContract("Is the pool open right now, and what are the regular hours?", {
     goals: ["status", "hours"], subject: "pool",

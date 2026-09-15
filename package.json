@@ -29,6 +29,7 @@
     "community:safety": "node --check lib/community-truth.js && node --check lib/community-source-review.js && node --check lib/community-source-answerability.js && node --check public/community-sources.js",
     "community:eval": "node scripts/eval-community-assistant.js --enforce",
     "community:need-first:offline": "node scripts/eval-community-need-first-offline.js",
+    "community:need-first:coverage": "node scripts/eval-community-need-first-coverage.js",
     "community:routing:live": "node scripts/eval-community-routing-live.js --enforce",
     "community:answers:live": "node scripts/eval-community-answers-live.js --enforce --write",
     "community:candidate": "node scripts/validate-community-candidate.js",
