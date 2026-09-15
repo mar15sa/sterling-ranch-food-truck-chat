@@ -7,14 +7,14 @@ const { ensureAllowedModel } = require('./usage');
 const outcomes = ['complete', 'verified-partial', 'missing-evidence', 'conflict'];
 const purposes = ['direct-answer', 'qualification', 'process-step', 'conflict'];
 const schema = { type: 'object', additionalProperties: false, required: ['needs'], properties: {
-  needs: { type: 'array', maxItems: 8, items: { type: 'object', additionalProperties: false,
+  needs: { type: 'array', description: 'Exactly one entry per supplied need, at most eight.', items: { type: 'object', additionalProperties: false,
     required: ['needId', 'proposedOutcome', 'quotes', 'actionIds', 'missingDetail'], properties: {
       needId: { type: 'string' }, proposedOutcome: { type: 'string', enum: outcomes },
-      quotes: { type: 'array', maxItems: 12, items: { type: 'object', additionalProperties: false,
+      quotes: { type: 'array', description: 'At most twelve short exact quotes.', items: { type: 'object', additionalProperties: false,
         required: ['sourceId', 'text', 'purpose'], properties: {
           sourceId: { type: 'string' }, text: { type: 'string' }, purpose: { type: 'string', enum: purposes }
         } } },
-      actionIds: { type: 'array', items: { type: 'string' }, maxItems: 3 }, missingDetail: { type: 'string' }
+      actionIds: { type: 'array', items: { type: 'string' }, description: 'At most three supplied action IDs.' }, missingDetail: { type: 'string' }
     } } }
 } };
 const SYSTEM = [

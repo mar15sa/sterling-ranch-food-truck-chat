@@ -7,7 +7,7 @@ const { summarize } = require('./usage');
 const { createObservedFetch } = require('./observe-fetch');
 const models = ['claude-haiku-4-5', 'claude-sonnet-5'];
 const cases = ['food-menu', 'pool-hours', 'recycling-storage', 'shed-form', 'lighting-process', 'application', 'forms-multi', 'compound'];
-function prepare(directory) {
+function prepare(directory, priorAttemptDirectory = null) {
   const read = name => JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8'));
   const original = read('manifest.json');
   if (original.status !== 'captured' || original.mode !== 'controlled-writer-presentation' || original.runs.length !== 96 || hash(original.cases) !== hash(cases)) throw Error('Require completed eight-family writer comparison');
@@ -19,14 +19,22 @@ function prepare(directory) {
   const jobs = inputs.flatMap(input => models.flatMap(model => [1, 2].map(repetition => ({ input, model, repetition, caseId: input.caseId,
     body: briefRequest(input.row, input.plan, input.packet, model, { communityId: input.communityId, timezone: input.timezone, now: input.now }) }))));
   const plannedUpperUsd = jobs.reduce((sum, j) => sum + upperCost(j.body), 0);
-  if (plannedUpperUsd > 5) throw Error('Whole brief comparison exceeds five-dollar cap');
-  return { inputs, jobs, plannedUpperUsd };
+  let priorAttempt = null, capUsd = 5;
+  if (priorAttemptDirectory) {
+    const m = JSON.parse(fs.readFileSync(path.join(priorAttemptDirectory, 'manifest.json'), 'utf8'));
+    if (m.status !== 'stopped-error-or-unknown-usage' || m.mode !== 'evidence-brief-model-comparison' || m.runs.length !== 1 || m.capUsd !== 5 ||
+        path.resolve(m.priorCapture) !== path.resolve(directory) || !Number.isFinite(m.reservedUpperUsd) || m.reservedUpperUsd <= 0 || m.reservedUpperUsd >= 5) throw Error('Invalid rejected-attempt accounting');
+    priorAttempt = { directory: path.resolve(priorAttemptDirectory), reservedUpperUsd: m.reservedUpperUsd, costs: m.costs };
+    capUsd -= m.reservedUpperUsd;
+  }
+  if (plannedUpperUsd > capUsd) throw Error('Whole brief comparison exceeds remaining five-dollar cap');
+  return { inputs, jobs, plannedUpperUsd, capUsd, priorAttempt };
 }
 async function main() {
-  const [priorArg, outArg, flag] = process.argv.slice(2);
-  if (!priorArg || !outArg || flag && flag !== '--prepare-only') throw Error('Require prior capture, new output and optional --prepare-only');
-  const prior = path.resolve(priorArg), out = path.resolve(outArg), prepared = prepare(prior);
-  if (flag) { console.log(JSON.stringify({ calls: prepared.jobs.length, plannedUpperUsd: prepared.plannedUpperUsd, capUsd: 5 })); return; }
+  const [priorArg, outArg, flag, priorAttemptArg] = process.argv.slice(2);
+  if (!priorArg || !outArg || flag && !['--prepare-only', '--run'].includes(flag)) throw Error('Require prior capture, new output, optional --prepare-only/--run and prior rejected attempt');
+  const prior = path.resolve(priorArg), out = path.resolve(outArg), prepared = prepare(prior, priorAttemptArg);
+  if (flag === '--prepare-only') { console.log(JSON.stringify({ calls: prepared.jobs.length, plannedUpperUsd: prepared.plannedUpperUsd, capUsd: prepared.capUsd, priorAttempt: prepared.priorAttempt })); return; }
   if (!process.env.ANTHROPIC_API_KEY || fs.existsSync(out)) throw Error('Require existing credential and fresh output directory');
   fs.mkdirSync(out, { recursive: true }); fs.mkdirSync(path.join(out, 'code'));
   for (const file of ['evidence-brief.js', 'compare-evidence-brief.js', 'writer-presentation.js', 'full-flow-candidate.js', 'observe-fetch.js', 'usage.js']) fs.copyFileSync(path.join(__dirname, file), path.join(out, 'code', file));
@@ -34,14 +42,14 @@ async function main() {
   const runs = [], calls = []; let active = {};
   const manifest = { status: 'running', isTest: true, mode: 'evidence-brief-model-comparison', startedAt: new Date().toISOString(),
     codeRevision: cp.execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), priorCapture: prior,
-    capUsd: 5, plannedUpperUsd: prepared.plannedUpperUsd, models, cases, repetitions: 2, runs,
+    capUsd: prepared.capUsd, phaseCapUsd: 5, priorAttempt: prepared.priorAttempt, plannedUpperUsd: prepared.plannedUpperUsd, models, cases, repetitions: 2, runs,
     inputHashes: Object.fromEntries(prepared.inputs.map(i => [i.caseId, hash(i)])),
     design: jobs.map(j => ({ caseId: j.caseId, model: j.model, repetition: j.repetition, requestHash: hash(j.body) })),
     limitations: ['Historical evidence and clocks, never current-live answers.', 'Known development cases; not blind human calibration or unseen acceptance.',
       'Preparation only; no answer-quality or full-flow latency/cost result.', 'Exact quotation and structure do not prove completeness, relevance or correctness.'],
     priorPhase: { name: 'writer-presentation-comparison', closed: true, costUsd: 1.898477, reservedUsd: 4.926744 } };
   for (const input of prepared.inputs) fs.writeFileSync(path.join(out, input.caseId + '-input.json'), JSON.stringify(input, null, 2) + '\n');
-  const observed = createObservedFetch(fetch, { calls, capUsd: 5, captureRequests: true, onCall: c => {
+  const observed = createObservedFetch(fetch, { calls, capUsd: prepared.capUsd, captureRequests: true, onCall: c => {
     Object.assign(c, active); fs.appendFileSync(path.join(out, 'calls.jsonl'), JSON.stringify(c) + '\n');
   } });
   const save = () => { manifest.costs = summarize(calls); manifest.reservedUpperUsd = observed.reservedUsd();

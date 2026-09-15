@@ -29,6 +29,7 @@ test('two-community preparation retains complete sources, qualifications, diagno
     const request = briefRequest(f.row, f.plan, f.packet, 'claude-haiku-4-5', f.options);
     const p = JSON.parse(request.messages[0].content);
     assert.equal(request.tools[0].strict, true); assert.equal(stageFor(request), 'evidence-preparation');
+    assert.ok(!JSON.stringify(request.tools[0].input_schema).includes('maxItems'));
     assert.equal(p.evidence.length, 3); assert.equal(p.evidence[0].text, f.packet.sources[0].text);
     assert.equal(JSON.parse(p.evidence[2].text).scopeLimit, undefined); assert.ok(p.assistantEvidenceContext[0].scopeLimit);
     assert.deepEqual(p.evidenceGaps, f.packet.diagnostics);
@@ -49,6 +50,7 @@ test('changed qualifiers, invented quotes, missing or duplicate needs and action
     f => f.raw.needs[0].quotes[0].version = 'forged',
     f => f.raw.needs.pop(), f => f.raw.needs[1].needId = 'need-1',
     f => f.raw.needs[1].actionIds = ['invented'], f => f.raw.needs[1].actionIds = ['forms-a', 'forms-a'],
+    f => f.raw.needs[0].quotes = Array(13).fill(f.raw.needs[0].quotes[0]),
     f => f.raw.needs[1].missingDetail = '', f => f.raw.needs[0].missingDetail = 'Unresolved',
     f => f.raw.needs[0].quotes = [], f => f.raw.needs[0].proposedOutcome = 'verified'
   ]) { const f = fixture(); mutate(f); const result = validateBrief(f.raw, f.row, f.plan, f.packet, f.options); assert.ok(result.issues.length); assert.equal(result.brief, null); }
