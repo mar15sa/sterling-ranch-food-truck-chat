@@ -244,7 +244,10 @@ test("the current-local backend runs the existing source paths once per standalo
       };
     },
   });
-  assert.equal(connectorCalls, 3);
+  assert.equal(connectorCalls, 1);
+  assert.deepEqual(result._requestContract.shadowRoute.connectorReuse["food-truck"], {
+    requests: 3, actualCalls: 1, cacheHits: 2,
+  });
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
   assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "supported"]);
   assert.match(result._requestContract.shadowRoute.answer, /Example Eats/);
@@ -278,7 +281,10 @@ test("the current-local backend preserves live pool status when regular hours re
       };
     },
   });
-  assert.equal(statusCalls, 3);
+  assert.equal(statusCalls, 1);
+  assert.deepEqual(result._requestContract.shadowRoute.connectorReuse["pool-status"], {
+    requests: 3, actualCalls: 1, cacheHits: 2,
+  });
   assert.equal(result._requestContract.needs[1].evidenceKind, "official-information");
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "verified-partial");
   assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "missing-evidence"]);
@@ -299,7 +305,7 @@ test("the current-local backend uses approved community navigation for water pay
   assert.ok(result._requestContract.shadowRoute.sources.length > 0);
 });
 
-test("the current-local rules path exposes its missing claim map instead of guessing support", async () => {
+test("the current-local rules path answers the seasonal-lighting follow-up from mapped governing claims", async () => {
   const originalQuestion = "Can those stay up all year?";
   const resolvedQuestion = "Regarding permanent seasonal lights approved for holiday use: Can those stay up all year?";
   const result = await answerCommunityQuestion(resolvedQuestion, {
@@ -311,8 +317,67 @@ test("the current-local rules path exposes its missing claim map instead of gues
     now: new Date("2026-09-15T18:00:00Z"),
   });
   assert.equal(result._requestContract.needs[0].evidenceKind, "governing-rule");
-  assert.equal(result._requestContract.shadowRoute.completion.outcome, "unassessed");
-  assert.equal(result._requestContract.shadowRoute.completion.needs[0].reason, "answer-has-no-claim-evidence-map");
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
+  assert.equal(result._requestContract.shadowRoute.completion.needs[0].status, "supported");
+  assert.match(result._requestContract.shadowRoute.answer, /stay installed year-round/i);
+  assert.match(result._requestContract.shadowRoute.answer, /non-holiday settings/i);
+});
+
+test("the current-local rules path answers shed height and the official form as separate needs", async () => {
+  const result = await answerCommunityQuestion(
+    "What are the height rules for a backyard shed, and which application form do I use?",
+    {
+      isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
+      planCommunitySearch: false, synthesizeCommunityAnswer: false, interpretationMode: "structured",
+      answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+      now: new Date("2026-09-15T18:00:00Z"),
+    }
+  );
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
+  assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "supported"]);
+  assert.match(result._requestContract.shadowRoute.answer, /eight feet, six inches/i);
+  assert.match(result._requestContract.shadowRoute.answer, /Backyard Utility Sheds One-Sheet/i);
+  assert.doesNotMatch(result._requestContract.shadowRoute.answer, /screened with landscape plantings/i);
+});
+
+test("the current-local event path keeps the yoga subject in a dependent tomorrow follow-up", async () => {
+  let eventCalls = 0;
+  const checkedAt = "2026-09-14T18:00:00.000Z";
+  const evidenceId = "sterling-ranch:civicplus-calendar:calendar";
+  const resolvedQuestion = "Regarding “When is the next yoga class?”: What about tomorrow?";
+  const result = await answerCommunityQuestion(resolvedQuestion, {
+    isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
+    requestContext: {
+      originalQuestion: "What about tomorrow?", resolvedQuestion, usedPriorContext: true,
+    },
+    planCommunitySearch: false, synthesizeCommunityAnswer: false, interpretationMode: "structured",
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+    getCommunityEvents: async (request) => {
+      eventCalls += 1;
+      return {
+        events: [{ id: "19", title: "Yoga w/Laura", date: "2026-09-15", time: "07:30", location: "Great Hall", url: "https://sterlingranchcab.com/event/19", startDate: "2026-09-15T07:30:00" }],
+        range: request.dateRange,
+        sourceUrl: "https://sterlingranchcab.com/calendar",
+        checkedAt,
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "yoga" }] },
+        evidenceEnvelope: {
+          communityId: "sterling-ranch", connectorFamily: "civicplus-calendar", degradation: { state: "healthy" },
+          coverage: { requested: ["event-date", "date"], covered: ["event-date", "date"] },
+          evidence: [{ evidenceId, communityId: "sterling-ranch", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+          claims: [{ id: "event-19", facet: "event-date", text: "Yoga w/Laura: 2026-09-15T07:30:00", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+        },
+      };
+    },
+  });
+  assert.equal(eventCalls, 1);
+  assert.deepEqual(result._requestContract.shadowRoute.connectorReuse["community-events"], {
+    requests: 2, actualCalls: 1, cacheHits: 1,
+  });
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
+  assert.match(result._requestContract.shadowRoute.answer, /Yoga w\/Laura is tomorrow at 7:30 a\.m\. in Great Hall/i);
 });
 
 test("the current-local backend independently proves a live recycling date and the storage rule", async () => {
