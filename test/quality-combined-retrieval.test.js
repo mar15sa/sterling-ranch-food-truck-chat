@@ -62,6 +62,9 @@ test('purpose routing preserves approved governing sources in either library and
   const rulePlan={needs:[{...plan.needs[0],task:'permission',evidenceKind:'governing-rule'}]};
   const rules=await retrieve()(rulePlan);assert.equal(rules.sources.length,1);assert.equal(rules.actions.length,0);assert.equal(rules.diagnostics[0].reason,'source-role-does-not-match-need');
   ctx.communityIndex.sources[0].authorityClass='adopted-document';
+  const linkOnly=await retrieve()(rulePlan);assert.equal(linkOnly.sources.length,1);
+  ctx.communityIndex.sources[0].facts=[{id:'policy',type:'information',value:'The adopted policy requires review.',context:'The adopted policy requires review.',approvalClaim:'policy',reviewStatus:'approved',reviewDecisionId:'owner',reviewedBy:'owner',sourceVersion:'a'.repeat(64)}];
+  ctx.communityIndex.canonicalSourceLedger.records[0].approvals[0].approvedClaims.push('policy');
   const both=await retrieve()(rulePlan);assert.equal(both.sources.length,2);assert.ok(both.sources.every(s=>s.role==='governing-rule'));
   const process=await retrieve()({needs:[{...plan.needs[0],task:'process',evidenceKind:'official-process'}]});assert.equal(process.sources.length,2);
   await assert.rejects(retrieve()({needs:[{...plan.needs[0],evidenceKind:'invented'}]}),/Unknown evidence/);

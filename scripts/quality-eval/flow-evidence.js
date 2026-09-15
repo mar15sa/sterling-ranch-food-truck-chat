@@ -88,7 +88,7 @@ function makeRetriever(context){
         for(const s of selected){const original=approved.get(s.id);if(!original||identity(s)!==identity(original))throw new Error('Community selection changed approved evidence');cr.push(original);}
       }
       const routed=sourceRouting==='per-need'?cr.filter(s=>{
-        const keep=need.evidenceKind==='governing-rule'?['municode','adopted-document'].includes(s.authorityClass):need.evidenceKind==='official-action'?Boolean(s.actions?.length):true;
+        const keep=need.evidenceKind==='governing-rule'?!s.canonicalActionOnlyProjection&&['municode','adopted-document'].includes(s.authorityClass):need.evidenceKind==='official-action'?Boolean(s.actions?.length):true;
         if(!keep)diagnostics.push({needId:need.id,sourceId:s.id,reason:'source-role-does-not-match-need'});return keep;
       }):cr;
       for(let rank=0;rank<Math.max(rr.length,routed.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',routed[rank],need.id,rank,query);}
