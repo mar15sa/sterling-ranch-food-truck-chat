@@ -9,3 +9,5 @@ Precise proposed update:
 > This is integration readiness, not an answer-quality win: Haiku's saved yoga/food binding failures and the saved lighting meaning changes remain defects, even when JSON is valid. Human calibration, representative current-source full-answer comparisons, full costs and release verification remain incomplete. No update to the live architecture diagram is implied by an experimental option.
 
 Sources: docs/COMMUNITY-PLANNER-REPLAY.md, scripts/quality-eval/full-flow-candidate.js, test/quality-compact-full-flow.test.js. Add the completed boundary-replay result after verification; do not label the planned replay complete prematurely.
+
+Verified follow-up to include: boundary replay completed at local revision 703e64fda75d0ab2715b26090c30d140165fc157. All 24 original request hashes, normalized plans, bindings, diagnostics and writer need/context inputs match. Four original rejected bindings remain explicit gaps. Zero source fetches, paid calls or generated answers. Evidence: artifacts/quality-eval/compact-flow-integration-20260915/comparison.json and replay.js. This verifies experiment wiring, not finished-answer quality or live readiness.
