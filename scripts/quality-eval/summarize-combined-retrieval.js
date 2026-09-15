@@ -3,12 +3,13 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const {hash}=require('./flow-evidence'),{times}=require('./summarize-presentation');
 function readCapture(directory){
  const read=f=>JSON.parse(fs.readFileSync(path.join(directory,f+'.json'),'utf8')),m=read('manifest'),cases=read('cases');
- assert.equal(m.status,'captured');assert.equal(m.completed.length,20);assert.equal(m.design.length,20);assert.equal(hash(cases),m.casesHash);
+ const methods=m.methods||['keyword','semantic'];assert.ok(methods.length===2||methods.length===4);assert.equal(new Set(methods).size,methods.length);assert.ok(methods.every(x=>['keyword','semantic','combined-hybrid','combined-semantic'].includes(x)));
+ assert.equal(m.status,'captured');assert.equal(m.completed.length,cases.length*methods.length*2);assert.equal(m.design.length,m.completed.length);assert.equal(hash(cases),m.casesHash);
  assert.equal(hash(read('communityIndex')),m.sourceSnapshotHash);assert.equal(hash(read('rulesIndex')),m.rulesSnapshotHash);
  const seen=new Set(),rows=m.completed.map(j=>read(j.id));
  for(const [i,r] of rows.entries()){
   const job=m.design[i],c=cases.find(c=>c.id===r.caseId),key=[r.caseId,r.method,r.repetition].join(':');
-  assert.ok(c&&!seen.has(key));seen.add(key);assert.ok(r.isTest);assert.ok([1,2].includes(r.repetition));assert.ok(['keyword','semantic'].includes(r.method));
+  assert.ok(c&&!seen.has(key));seen.add(key);assert.ok(r.isTest);assert.ok([1,2].includes(r.repetition));assert.ok(methods.includes(r.method));
   assert.equal(r.caseId,job.caseId);assert.equal(r.method,job.method);assert.equal(r.repetition,job.repetition);assert.equal(r.order,job.order);assert.equal(r.question,c.question);assert.equal(hash(r.plan),hash(c.plan));
  }
  return {manifest:m,cases,rows};
