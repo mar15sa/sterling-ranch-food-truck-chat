@@ -1,6 +1,14 @@
 {
-  "generatedAt": "2026-09-13T14:05:18.053Z",
+  "generatedAt": "2026-09-15T14:04:34.290Z",
   "leads": [
+    {
+      "id": "dougco-social-lone-tree-police-and-municipal-court-move-to-the-new-justice-center-monday",
+      "headline": "Lone Tree Police and Municipal Court Move to the New Justice Center Monday",
+      "url": "https://dougcosocial.com/news/lone-tree-justice-center-opens",
+      "observedDate": "2026-09-13",
+      "sourceId": "dougco-social",
+      "sourceName": "DougCo Social openings and local updates"
+    },
     {
       "id": "dougco-social-five-new-sculptures-just-landed-around-castle-rock",
       "headline": "Five New Sculptures Just Landed Around Castle Rock",

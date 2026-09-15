@@ -529,6 +529,15 @@
       "url": "https://thebrickyardcr.com/",
       "cadence": "daily",
       "notes": "The developer's official project site publishes construction milestones and named restaurant, retail, coffee, and service tenants."
+    },
+    {
+      "id": "gque-locations",
+      "name": "GQue BBQ locations",
+      "community": "Parker",
+      "kind": "business",
+      "url": "https://gquebbq.com/locations/",
+      "cadence": "daily",
+      "notes": "The restaurant's official location directory will confirm when the announced Parker restaurant joins its operating locations."
     }
   ]
 }

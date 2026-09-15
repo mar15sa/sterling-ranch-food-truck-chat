@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-13T08:05:00-06:00",
+  "updatedAt": "2026-09-15T08:10:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -280,14 +280,18 @@
       "community": "Parker",
       "area": "Crown Point Center",
       "address": "18424 Cottonwood Drive, Parker, CO",
-      "status": "confirmed",
-      "openingWindow": "Opening date not announced",
-      "summary": "The Colorado barbecue restaurant is taking over the former Freddy’s space in Crown Point Center.",
-      "verifiedAt": "2026-08-02",
-      "confidence": "reported",
+      "status": "under-construction",
+      "openingWindow": "Opening late 2026",
+      "summary": "GQue broke ground August 3 on its Parker restaurant in the former Freddy’s space; the company says the full-bar and pickup-drive-through location is planned for late 2026.",
+      "verifiedAt": "2026-09-15",
+      "confidence": "business-confirmed",
       "sources": [
         {
-          "label": "DougCo Social",
+          "label": "GQue Parker groundbreaking and opening announcement",
+          "url": "https://www.prnewswire.com/news-releases/g-que-bbq-is-firing-up-a-new-location-in-parker-colorado-302846101.html"
+        },
+        {
+          "label": "DougCo Social Parker construction report",
           "url": "https://dougcosocial.com/news/gque-bbq-parker"
         }
       ],
@@ -1141,9 +1145,9 @@
       "area": "The Juniper on Mainstreet",
       "address": "19865 Mainstreet, Unit 150, Parker, CO",
       "status": "under-construction",
-      "openingWindow": "Likely late 2026; no firm date announced",
+      "openingWindow": "Expected by the end of 2026; no firm date announced",
       "summary": "The 5,000-square-foot seasonal restaurant from the owner of Wolf Peach remains under construction; the kitchen hood is installed, but the buildout is continuing.",
-      "verifiedAt": "2026-08-25",
+      "verifiedAt": "2026-09-15",
       "confidence": "permits",
       "sources": [
         {
@@ -3584,6 +3588,35 @@
         "lng": -104.866766,
         "precision": "address",
         "geocodedFrom": "401 Prairie Hawk Drive, Castle Rock, CO 80109"
+      }
+    },
+    {
+      "id": "stumpys-pizza-castle-rock",
+      "name": "Stumpy's Pizza",
+      "category": "Restaurant",
+      "community": "Castle Rock",
+      "area": "Downtown Castle Rock",
+      "address": "138 South Wilcox Street, Castle Rock, CO 80104",
+      "status": "closed",
+      "openingWindow": "Closed August 26, 2026; seeking a new location",
+      "summary": "The longtime Castle Rock pizzeria closed its Wilcox Street location after the building was sold. The owners say they intend to reopen, but no new address has been announced.",
+      "verifiedAt": "2026-09-15",
+      "confidence": "reported",
+      "sources": [
+        {
+          "label": "DougCo Social Stumpy's closing report",
+          "url": "https://dougcosocial.com/news/stumpys-pizza-castle-rock"
+        },
+        {
+          "label": "Discover DougCo September openings follow-up",
+          "url": "https://discoverdougco.com/news/new-in-douglas-county-tracker-september-14-2026"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.366925,
+        "lng": -104.859214,
+        "precision": "address",
+        "geocodedFrom": "138 South Wilcox Street, Castle Rock, CO 80104"
       }
     }
   ]
