@@ -1,0 +1,21 @@
+"use strict";
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {hash}=require('./flow-evidence'),{times}=require('./summarize-presentation');
+function summarize(directory){
+ const read=f=>JSON.parse(fs.readFileSync(path.join(directory,f+'.json'),'utf8')),m=read('manifest'),cases=read('cases'),rows=m.completed.map(j=>read(j.id));
+ assert.equal(m.status,'captured');assert.equal(rows.length,68);assert.equal(m.design.length,68);assert.equal(hash(cases),m.casesHash);assert.equal(hash(read('communityIndex')),m.sourceHash);assert.equal(hash(read('rulesIndex')),m.rulesHash);assert.equal(hash(read('live-results')),m.liveResultsHash);
+ const seen=new Set();for(const [i,r] of rows.entries()){const job=m.design[i];for(const k of ['caseId','scenario','method','repetition','order'])assert.equal(r[k],job[k]);const key=[r.caseId,r.scenario,r.method,r.repetition].join(':');assert.ok(!seen.has(key));seen.add(key);assert.equal(r.isTest,true);assert.equal(r.question,cases.find(c=>c.id===r.caseId).question);if(r.response.status!=='packet-only-unreviewed')assert.equal(r.retrievalCalls,0);if(r.scenario==='injected-live-failure'){assert.equal(r.liveCalls,1);assert.equal(r.response.packet.sources.filter(s=>s.role==='live-operation').length,0);assert.ok(r.response.packet.diagnostics.some(d=>d.reason==='injected-live-evidence-unavailable'));}}
+ const report={status:'complete-development-replay-not-answer-quality',codeRevision:m.codeRevision,records:rows.length,cases:[],timing:{},resources:{paidApiCalls:m.paidApiCalls,newSubscriptions:m.newSubscriptions,sourceFetches:m.sourceFetches.length,initializationMs:m.initializationMs,peakRssBytes:m.peakRssBytes,productionHostingCostUsd:null},limitations:m.limitations};
+ for(const c of cases){const groups=[];for(const scenario of [...new Set(rows.filter(r=>r.caseId===c.id).map(r=>r.scenario))])for(const method of ['all-static','per-need']){
+  const pair=rows.filter(r=>r.caseId===c.id&&r.method===method&&r.scenario===scenario);assert.equal(pair.length,2);const p=pair[0].response.packet,stable=hash(pair[0].response)===hash(pair[1].response);
+  groups.push({scenario,method,status:pair[0].response.status,issues:pair[0].response.issues,repeatStable:stable,timing:times(pair.map(r=>r.elapsedMs)),sources:p?.sources.map(s=>({id:s.sourceId,title:s.title,role:s.role,needs:s.retrievedForNeedIds,characters:s.text.length})),actions:p?.actions.map(a=>({label:a.label,url:a.url,sourceId:a.sourceId})),targetGroupsPresent:c.targets?.map(group=>group.some(id=>p?.sources.some(s=>s.sourceId===id))),characters:p?.sources.reduce((n,s)=>n+s.text.length,0),omissions:p?.omissions,diagnostics:p?.diagnostics});
+ }
+ const liveFailureComparisons=[];for(const method of ['all-static','per-need']){const observed=rows.find(r=>r.caseId===c.id&&r.method===method&&r.scenario==='observed'),failure=rows.find(r=>r.caseId===c.id&&r.method===method&&r.scenario==='injected-live-failure');if(!failure)continue;const a=observed.response.packet.sources.filter(s=>s.role!=='live-operation'),b=failure.response.packet.sources.filter(s=>s.role!=='live-operation');liveFailureComparisons.push({method,staticEvidenceIdentical:hash(a)===hash(b),observedLiveSources:observed.response.packet.sources.filter(s=>s.role==='live-operation').length});}
+ report.cases.push({id:c.id,question:c.question,origin:c.origin,needs:c.plan.needs,expected:c.expected,groups,liveFailureComparisons});
+ }
+ for(const method of ['all-static','per-need'])report.timing[method]=times(rows.filter(r=>r.method===method&&r.response.status==='packet-only-unreviewed').map(r=>r.elapsedMs));
+ report.allRepeatsStable=report.cases.every(c=>c.groups.every(g=>g.repeatStable));report.staticEvidencePreservedOnLiveFailure=report.cases.every(c=>c.liveFailureComparisons.every(x=>x.staticEvidenceIdentical));
+ fs.writeFileSync(path.join(directory,'comparison.json'),JSON.stringify(report,null,2)+'\n');return report;
+}
+if(require.main===module){const r=summarize(path.resolve(process.argv[2]));console.log(JSON.stringify({...r,cases:r.cases.map(c=>({id:c.id,groups:c.groups.map(g=>({...g,sources:g.sources?.map(s=>s.title),actions:g.actions?.map(a=>a.label),omissions:undefined,diagnostics:g.diagnostics?.map(d=>d.reason)})),liveFailureComparisons:c.liveFailureComparisons}))}));}
+module.exports={summarize};
