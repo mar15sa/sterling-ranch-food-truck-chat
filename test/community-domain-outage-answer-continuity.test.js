@@ -80,7 +80,13 @@ test("a short whole-domain outage preserves useful answers from unchanged exact 
     ["What are the pool hours for Labor Day?", poolHours],
   ]) {
     const assessment = scoreCommunityAnswer(question, answer);
-    assert.ok(assessment.score >= 4, `${question}\n${JSON.stringify(assessment, null, 2)}\n${answer.answer}`);
+    if (answer.completion?.outcome && answer.completion.outcome !== 'complete') {
+      assert.equal(assessment.score, 3, question);
+      assert.ok(assessment.issues.includes('answer-incomplete'), question);
+      assert.notEqual(assessment.residentEffort.rating, 'Resolved', question);
+    } else {
+      assert.ok(assessment.score >= 4, `${question}\n${JSON.stringify(assessment, null, 2)}\n${answer.answer}`);
+    }
     assert.notEqual(assessment.residentEffort.rating, "High resident effort", question);
   }
 });

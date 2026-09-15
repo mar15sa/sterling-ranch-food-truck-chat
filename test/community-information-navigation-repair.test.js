@@ -69,6 +69,18 @@ test('a second community uses its own reviewed resource without shared-code fact
   assert.doesNotMatch(JSON.stringify(answer), /sterlingranchcab\.com|Sterling Ranch/);
 });
 
+test('recurring collection wording reaches approved guidance rather than an unavailable-date hold', async () => {
+  for (const question of ['What day is trash collected?', 'Which day is garbage collected?',
+    'What day is trash picked up?', 'When are trash and recycling collected?']) {
+    const schedule = { ...plan(['date'], question), goal: 'schedule', goals: ['schedule'] };
+    const answer = await answerCommunityQuestion(question, { index, communityId: 'sterling-ranch', communityProfile: profile,
+      now, interpretationMode: 'structured', synthesizeCommunityAnswer: false, planCommunitySearch: async () => schedule });
+    assert.notEqual(answer.answerMode, 'community-freshness-withheld', question);
+    assert.match(answer.answer, /Monday|Tuesday|Thursday/, question);
+    assert.ok(answer.sources.some(source => source.id === 'approved-trash-recurring-service'), question);
+  }
+});
+
 test('expired and unapproved resources stay withheld despite corrected navigation intent', async () => {
   for (const unavailable of [new Date('2099-01-01'), now]) {
     const evidence = structuredClone(index);
