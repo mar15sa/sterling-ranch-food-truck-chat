@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict');
-const {frozenCorpus,eligibleDocuments,rankDense,fuse,bindKeyword}=require('../scripts/quality-eval/community-semantic');
+const {retrievalDocument,answerProjection,frozenCorpus,eligibleDocuments,rankDense,fuse,bindKeyword}=require('../scripts/quality-eval/community-semantic');
 const {coverage}=require('../scripts/quality-eval/summarize-community-semantic');
 const now=Date.parse('2026-09-15T00:00:00Z');
 function fixture(communityId='alpha'){
@@ -36,4 +36,23 @@ test('source recall requires every declared group in the first four and never sc
  assert.deepEqual(coverage(results,[['a','e'],['d']]),{requiredGroups:2,foundGroups:2,allFound:true});
  assert.deepEqual(coverage(results,[['a'],['e']]),{requiredGroups:2,foundGroups:1,allFound:false});
  assert.equal(coverage(results,[]).allFound,null);
+});
+test('reviewed navigation context stays out of answer facts and rejects mismatched proof across tenants',()=>{
+ for(const tenant of ['alpha','beta']){
+  const index=fixture(tenant),source=index.sources[0],action=source.actions[0];
+  Object.assign(action,{reviewStatus:'approved',reviewDecisionId:'owner-application',reviewedBy:'owner',sourceVersion:source.contentHash,evidence:{url:action.url,sourceUrl:source.sourceUrl,context:'Project navigation terms; EXCLUDED MAILING ADDRESS'}});
+  const corpus=frozenCorpus(index,tenant,now),doc=corpus.documents[0],retrieval=retrievalDocument(doc,'action-proof');
+  assert.equal(retrievalDocument(doc),doc);assert.match(retrieval.text,/Project navigation terms/);assert.doesNotMatch(retrieval.text,/UNAPPROVED FEE/);
+  assert.equal(doc.text,'Open application');assert.doesNotMatch(JSON.stringify(answerProjection(doc)),/EXCLUDED|evidence|reviewedBy/);
+  for(const mutate of [a=>a.reviewStatus='pending',a=>a.sourceVersion='changed',a=>a.reviewDecisionId='',a=>a.approvalClaim='',a=>a.reviewedBy='',a=>a.evidence.url='https://wrong.example',a=>a.evidence.sourceUrl='https://wrong.example',a=>a.evidence.context='']){
+   const changed=structuredClone(doc);mutate(changed.actions[0]);assert.equal(retrievalDocument(changed,'action-proof').text,doc.text);
+  }
+  const units=[{documentId:doc.id,start:doc.text.length+1,end:retrieval.text.length,input:retrieval.text}],args={corpus,currentIndex:index,now,units,vectors:new Float32Array([1,0,0]),queryVector:[1,0,0],dimensions:3,representation:'action-proof'};
+  assert.throws(()=>rankDense({...args,representation:'approved-text'}),/Invalid/);
+  const found=rankDense(args);assert.equal(found.length,1);assert.doesNotMatch(JSON.stringify(found[0].window),/EXCLUDED|input/);assert.equal(found[0].document.text,doc.text);assert.doesNotMatch(JSON.stringify(answerProjection(found[0].document)),/EXCLUDED/);
+  assert.equal(rankDense({...args,now:Date.parse('2026-09-17')}).length,0);
+  const changed=structuredClone(index);changed.sources[0].actions[0].evidence.context='Different proof';assert.equal(rankDense({...args,currentIndex:changed}).length,0);
+  changed.canonicalSourceLedger.records[0].approvals=[];assert.equal(rankDense({...args,currentIndex:changed}).length,0);
+ }
+ assert.throws(()=>retrievalDocument({},'invented'),/Unknown/);
 });
