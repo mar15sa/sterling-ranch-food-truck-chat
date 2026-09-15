@@ -81,6 +81,18 @@ test('recurring collection wording reaches approved guidance rather than an unav
   }
 });
 
+test('a specified collection date cannot be answered by the recurring-days projection', async () => {
+  for (const question of ['What day is trash collected on September 15?', 'What day is garbage collected on 2026-09-15?',
+    'What day is trash collected on 9/15?', 'What day is trash collected tomorrow?']) {
+    const answer = await answerCommunityQuestion(question, { index, communityId: 'sterling-ranch', communityProfile: profile,
+      now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => ({ ...plan(['date'], question), goal: 'schedule', goals: ['schedule'] }),
+      getWasteSchedule: async () => { throw new Error('Live source unavailable'); } });
+    assert.notEqual(answer.answerStatus, 'verified', question);
+    assert.doesNotMatch(answer.answer, /Monday in Providence|Tuesday in Ascent|Thursday in Prospect/, question);
+  }
+});
+
 test('expired and unapproved resources stay withheld despite corrected navigation intent', async () => {
   for (const unavailable of [new Date('2099-01-01'), now]) {
     const evidence = structuredClone(index);
