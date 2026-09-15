@@ -12,6 +12,10 @@ const PAYMENT_QUESTIONS = new Set([
 const POOL_HOURS_QUESTIONS = new Set([
   "What are the pool hours for Labor Day?",
 ]);
+const INFORMATION_NAVIGATION_QUESTIONS = new Set([
+  'Where can I find trash and recycling information?', 'Where is the garbage info page?',
+  'Open recycling information', 'trash/recycling info?', 'Where can I find recyling info?',
+]);
 
 function isGeneralDrcSubmissionQuestion(question) {
   return /\b(?:drc|design review)\b/i.test(String(question))
@@ -24,11 +28,17 @@ function isCalendarAccessQuestion(question) {
 
 function hasAiEvalFixture(question) {
   const normalized = String(question).trim();
-  return PAYMENT_QUESTIONS.has(normalized) || POOL_HOURS_QUESTIONS.has(normalized)
+  return PAYMENT_QUESTIONS.has(normalized) || POOL_HOURS_QUESTIONS.has(normalized) || INFORMATION_NAVIGATION_QUESTIONS.has(normalized)
     || isGeneralDrcSubmissionQuestion(normalized) || isCalendarAccessQuestion(normalized);
 }
 
 async function planCommunitySearchFixture(question) {
+  // Replay the actual erroneous live plan, not an ideal navigation plan.
+  if (INFORMATION_NAVIGATION_QUESTIONS.has(String(question).trim())) return {
+    intent: 'services', goal: 'information', goals: ['information'], subject: 'trash and recycling',
+    requestedDetails: ['action', 'methods'], searchQueries: ['trash recycling information', 'waste disposal guidelines', 'trash and recycling services'],
+    scope: 'community', needsClarification: false,
+  };
   if (isGeneralDrcSubmissionQuestion(question)) return {
     intent: "forms",
     goal: "application",
