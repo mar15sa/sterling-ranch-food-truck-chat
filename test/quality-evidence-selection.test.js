@@ -86,4 +86,6 @@ test('writer replay changes only evidence, derived actions and their selectable 
   const bad=structuredClone(selected);mutate(bad);assert.throws(()=>writerRequest(input,bad));
  }
  assert.deepEqual(original,input.originalCompositionRequest);
+ const haiku=writerRequest(input,selected,'claude-haiku-4-5');assert.equal(haiku.temperature,0);delete haiku.temperature;haiku.model='claude-sonnet-5';assert.deepEqual(haiku,body);
+ assert.throws(()=>writerRequest(input,selected,'claude-fable-5'));
 });
