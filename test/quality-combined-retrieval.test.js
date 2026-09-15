@@ -41,6 +41,10 @@ test('live needs retain their adapter route and never invoke document search',as
  const packet=await makeRetriever({...ctx,communitySearch:()=>{throw Error('Unexpected community search');},ruleSearch:()=>{throw Error('Unexpected rules search');},liveRetrieve:async()=>{live++;return {sources:[],diagnostics:[{reason:'fixture-live-unavailable'}]};}})({needs:[{...plan.needs[0],evidenceKind:'live-operation'}]});
  assert.equal(live,1);assert.equal(packet.sources.length,0);assert.equal(packet.diagnostics[0].reason,'fixture-live-unavailable');
 });
+test('candidate observation cannot alter evidence or selected source ordering',async()=>{
+ const ctx=fixture(),retrieve=makeRetriever({...ctx,communitySearch:async()=>communityProjectionCorpus(ctx.communityIndex,{communityId:ctx.communityId,now}),observeCandidates:async value=>{value.candidates[0].text='observer injection';value.candidates.reverse();}});
+ const packet=await retrieve(plan);assert.doesNotMatch(JSON.stringify(packet),/observer injection/);assert.ok(packet.sources.some(s=>s.text==='Open application'));
+});
 
 test('packet accounting exposes every excluded source without changing selected evidence',()=>{
  const inputs=[{id:'a',text:'AAA'},{id:'b',text:'BBBB'},{id:'c',text:'C'}];

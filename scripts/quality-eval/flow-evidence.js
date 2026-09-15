@@ -86,7 +86,9 @@ function makeRetriever(context){
       }
       for(let rank=0;rank<Math.max(rr.length,cr.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',cr[rank],need.id,rank,query);}
     }
-    const ruleUnits=budgetPacketSources([...all.values()].sort((a,b)=>a.rank-b.rank),{maxSources:12,maxChars:30000,project:s=>s.text});
+    const candidates=[...all.values()].sort((a,b)=>a.rank-b.rank);
+    if(context.observeCandidates)await context.observeCandidates(structuredClone({plan,candidates}));
+    const ruleUnits=budgetPacketSources(candidates,{maxSources:12,maxChars:30000,project:s=>s.text});
     const existing=new Set(all.keys());for(const source of catalog)add('community',source,null,0,'');
     const catalogUnits=budgetPacketSources([...all.entries()].filter(([key])=>!existing.has(key)).map(([,s])=>s),{maxSources:50,maxChars:10000,project:s=>s.text});
     const units=[...ruleUnits,...catalogUnits];
