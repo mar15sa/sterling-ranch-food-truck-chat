@@ -1,0 +1,13 @@
+# Pending owner-guide update: checker reasoning and changed baseline
+
+Target: [Decisions and their reasons](https://www.notion.so/3dabf909186d8139ac52ebdbf77d8bea), September answer-quality evaluation decision. Also note the provider blocker in [Documentation audit and follow-ups](https://www.notion.so/3dabf909186d81a2a090c2cb90183e96).
+
+Status: local experimental implementation and partial measurement; no adoption or deployment. Synchronization remains pending because the previous automatic approval review rejected publishing internal experiment/status details. No external write was retried. Fetch each target page before an authorized edit and preserve owner changes. No resident question text belongs in the update.
+
+Exact intended text:
+
+> September 15 UTC / September 14 Denver: a controlled Sonnet 5 comparison held the saved answer, evidence, checker instructions, medium effort and output allowance constant, changing only disabled versus adaptive thinking. The experiment stopped after seven completed checks when the eighth attempt was rejected for insufficient Anthropic API credit. Known priced usage is $0.189478 plus one rejected attempt with unknown usage. Thirty-two planned calls were not attempted. No purchase, retry, subscription or deployment was made. Adaptive mode received only three supported examples and reported zero thinking tokens on all three, so there is no evidence yet that it catches defects better. The stage remains unselected.
+>
+> The live site's read-only health endpoint responded normally at 2026-09-15 01:28:11 UTC and identified revision d04fb2db699a73c61ee2d7a047d7ef90fd5aea1f. Health does not establish provider credit or successful AI answering. This revision contains newer reviewed source and retrieval changes, including scoped architectural and landscape form records absent from the historical evaluation packets. The quality candidate must be reconciled with this current baseline before another matched answer/cost comparison. Historical packet results remain historical. No statement of demo readiness or improved resident quality has been verified by this experiment.
+
+Evidence: local `docs/COMMUNITY-CHECKER-REASONING.md`; capture and ledger `artifacts/quality-eval/checker-reasoning-20260915`; implementation revision `9d0a473`; 19 focused tests passing; [observed production commit](https://github.com/mar15sa/sterling-ranch-food-truck-chat/commit/d04fb2db699a73c61ee2d7a047d7ef90fd5aea1f). Source approvals: that revision's `data/community-source-approvals-v8.json`; the exact source data is not approval to expose withheld claims. Diagram unchanged: no runtime answer-flow change in this experiment.
