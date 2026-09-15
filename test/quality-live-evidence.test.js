@@ -19,6 +19,8 @@ test('actual calendar parsers feed scoped live sources and actions into two-comm
   assert.deepEqual(packetIssues(packet,profile.communityId,now),[]);assert.equal(packet.sources.length,1);assert.equal(packet.sources[0].role,'live-operation');
   assert.equal(packet.sources[0].communityId,profile.communityId);assert.match(packet.sources[0].text,/Yoga class/);assert.match(packet.sources[0].text,/Town Hall/);
   assert.deepEqual(packet.sources[0].retrievedForNeedIds,['need-1']);assert.equal(packet.actions.length,1);assert.equal(packet.actions[0].sourceId,packet.sources[0].id);
+  const shown=require('../scripts/quality-eval/writer-presentation').presentPayload({evidence:require('../scripts/quality-eval/full-flow-candidate').modelEvidence(packet.sources)},packet,{timezone:profile.timezone,now});
+  assert.equal(JSON.parse(shown.evidence[0].text).scopeLimit,undefined);assert.match(shown.evidence[0].text,/Yoga class/);assert.match(shown.assistantEvidenceContext[0].scopeLimit,/requested dates/);
  }
 });
 test('healthy empty calendar is range-limited while malformed/degraded data stays an explicit gap',async()=>{
@@ -43,6 +45,9 @@ test('actual status parser contributes current status but rejects unsupported re
  const fetchImpl=async()=>new Response('<a class="widgetGraphicLinksLink" href="/187/Pool"><img alt="Green Light"></a>');
  const result=await createLiveEvidenceRetriever({profile,requests:{'need-1':req},clock,fetchImpl})(statusNeed);
  assert.equal(result.sources.length,1);assert.equal(JSON.parse(result.sources[0].text).headline,'Open');assert.match(result.sources[0].text,/does not establish regular hours/);
+ const statusPacket={sources:result.sources.map(s=>({...s,role:'live-operation'}))};
+ const shown=require('../scripts/quality-eval/writer-presentation').presentPayload({evidence:require('../scripts/quality-eval/full-flow-candidate').modelEvidence(statusPacket.sources)},statusPacket,{timezone:profile.timezone,now});
+ assert.equal(JSON.parse(shown.evidence[0].text).headline,'Open');assert.equal(JSON.parse(shown.evidence[0].text).scopeLimit,undefined);assert.match(shown.assistantEvidenceContext[0].scopeLimit,/regular hours/);
  const invalid=await createLiveEvidenceRetriever({profile,requests:{'need-1':{...req,kind:'calendar'}},clock,fetchImpl})(statusNeed);assert.equal(invalid.sources.length,0);
 });
 test('unresolved live binding never calls a source and mixed static evidence survives live failure',async()=>{

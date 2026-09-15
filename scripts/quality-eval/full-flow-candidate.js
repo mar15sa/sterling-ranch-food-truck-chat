@@ -65,7 +65,7 @@ function coverageIssues(check,plan,packet,actions=[]){
   }
   return [...new Set(issues)];
 }
-async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline',clock=Date.now,profile=null}={}){
+async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline',clock=Date.now,profile=null,writerPresentation=null}={}){
   Object.values(models).forEach(ensureAllowedModel);if(!communityId||!apiKey||![0,1].includes(maxRepairs)||!['inline','offline-review'].includes(assessmentMode))throw new Error('Invalid bounded candidate configuration');
   const trace=[],start=Date.now();
   async function invoke(body,tool){
@@ -101,9 +101,12 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
   const snapshot=hash(packet),priorResidentQuestions=(row.context||[]).map(r=>r.question);let previous=null;
   for(let attempt=0;attempt<=maxRepairs;attempt++){
     try{
-      const body={model:models.compose,max_tokens:650,thinking:{type:'disabled'},...(/haiku/.test(models.compose)?{temperature:0}:{}),system:COMPOSE,
+      let body={model:models.compose,max_tokens:650,thinking:{type:'disabled'},...(/haiku/.test(models.compose)?{temperature:0}:{}),system:COMPOSE,
         tools:[{name:'compose_requested_answer',description:'Write the supported answer and select supplied action IDs.',input_schema:compositionSchema(packet),strict:true}],tool_choice:{type:'tool',name:'compose_requested_answer'},
         messages:[{role:'user',content:JSON.stringify({question:row.question,priorResidentQuestions,requiredNeeds:plan.needs,constraints:plan.constraints,evidence:modelEvidence(packet.sources),evidenceGaps:packet.diagnostics||[],actions:modelActions(packet.actions),previousAttempt:previous})}]};
+      const presentationOptions=writerPresentation?{...writerPresentation,timezone:profile?.timezone||writerPresentation.timezone,now:clock()}:null;
+      if(writerPresentation?.timezone&&profile?.timezone&&writerPresentation.timezone!==profile.timezone)throw Error('Writer timezone does not match community');
+      if(presentationOptions)body=require('./writer-presentation').presentWriterRequest(body,packet,presentationOptions);
       const draft=await invoke(body,'compose_requested_answer'),issues=draftIssues(draft,packet);trace.push({stage:attempt?'repair':'composition',draft,issues});
       if(issues.length){previous={draft,issues};continue;}
       const actions=packet.actions.filter(a=>draft.actionIds.includes(a.id)),response={answer:draft.answer,actions,sources:packet.sources};
@@ -111,6 +114,10 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
       if(packetIssues(packet,communityId,clock()).length)return unresolved('evidence-expired-during-answer',{plan});
       if(assessmentMode==='offline-review')return unreviewed(response,plan,{evidenceSnapshotHash:snapshot});
       const request=flowAcceptanceRequest({question:row.question,priorResidentQuestions,response:{...response,sources:modelEvidence(packet.sources),actions:modelActions(actions)}},plan,models.check);
+      if(presentationOptions?.separateContext){
+        const payload=JSON.parse(request.messages[0].content),presented=require('./writer-presentation').presentPayload(payload,packet,presentationOptions);
+        request.messages[0].content=JSON.stringify(presented);request.system+='\n'+require('./writer-presentation').PRESENTATION_INSTRUCTIONS;
+      }
       const check=await invoke(request,'check_planned_answer_acceptance'),checkIssues=coverageIssues(check,plan,packet,actions);trace.push({stage:'acceptance',check,issues:checkIssues});
       if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
       if(packetIssues(packet,communityId,clock()).length)return unresolved('evidence-expired-during-answer',{plan});

@@ -72,6 +72,10 @@ for(const profile of profiles)test(`${profile.communityId}: actual food and wast
   if(key==='food'){assert.deepEqual(data.trucks,[{name:'Sample Kitchen'}]);assert.match(data.scopeLimit,/No menu, price/);}
   else {assert.equal(data.service,'recycling');assert.deepEqual(data.serviceAreas,[{label:request.serviceArea,date:request.dateRange.start}]);assert.match(data.scopeLimit,/holiday delay/);}
   assert.ok(s.actions.length);assert.ok(s.actions.every(a=>new URL(a.url).protocol==='https:'));
+  const packet={sources:[{...s,role:'live-operation'}]};
+  const shown=require('../scripts/quality-eval/writer-presentation').presentPayload({evidence:require('../scripts/quality-eval/full-flow-candidate').modelEvidence(packet.sources)},packet,{timezone:profile.timezone,now:clock()});
+  const presented=JSON.parse(shown.evidence[0].text);assert.equal(presented.scopeLimit,undefined);assert.equal(shown.assistantEvidenceContext[0].scopeLimit,data.scopeLimit);
+  if(key==='food')assert.deepEqual(presented.trucks,data.trucks);else assert.deepEqual(presented.serviceAreas,data.serviceAreas);
  }
 });
 test('healthy food absence differs from failed parsing; unavailable areas and providers cannot create dates',async()=>{
