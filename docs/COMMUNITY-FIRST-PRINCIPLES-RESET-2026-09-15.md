@@ -130,3 +130,26 @@ The shadow comparison currently runs the existing combined answer once plus once
 ## Next bounded implementation slice after current-path connection
 
 Add structured claim-to-source mappings to the legacy rules boundary, beginning with the lighting and shed families, without allowing a model to approve or strengthen a rule. Then make capability routing reuse connector results so pool hours do not cause another live-status request. Re-run the same real-path fixtures plus wrong-subject controls. Only after those pass should the candidate replace the baseline in an offline end-to-end comparison with total calls, latency, useful-complete rate, useful-partial rate, and the current-versus-candidate monthly cost scenarios.
+
+## Rule proof and connector reuse completed locally
+
+The deterministic rules boundary now emits conservative claim-to-source proof for sentences it can match to the governing source. A claim must keep the source's subject, permission language, dates, and numbers; an official link is credited only to its own source. Negative controls reject a changed permission, a changed measurement, and a fence statement mapped to an unrelated source.
+
+This closes two concrete answer gaps in the test-only need route:
+
+- A hardwired permanent seasonal-lighting system may stay installed year-round, but outside the approved seasonal periods it must use the non-holiday settings. Temporary seasonal lights still need removal. The previous route confused permanent fixtures with the rule for temporary decorations.
+- A shed height question now returns the eight-foot-six-inch limit without copying unrelated screening details, while the separate form need returns the official Backyard Utility Sheds One-Sheet.
+
+The dependent yoga follow-up also completes from the current event path. “What about tomorrow?” retains the prior yoga subject and returns the matching event, time, and location. Its claim maps to that event's displayed source rather than to the generic calendar, and the verifier checks the exact date and time even when the answer says “tomorrow.”
+
+Repeated checks inside one shadow request now share identical live connector results. The food-truck and pool fixtures each make three internal requests but only one actual connector call, with two cache hits. The yoga fixture makes two internal requests but only one actual calendar call, with one cache hit. This removes duplicate external work inside the test harness; it does not yet remove the baseline-plus-per-need coordinator duplication.
+
+The focused regression set passes **200 of 200 checks** across assistant behavior, request contracts, need routing, rule families, public examples, rule synthesis, section context, and the new evidence controls. No paid model call, resident question, external source request, source approval, vector database, subscription, configuration change, deployment, or live behavior change occurred. Added model/API cost remains **$0**. The historical current-flow estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000 questions** for the recorded diagnostic mix; the new local path has not created a recurring cost commitment.
+
+This is implemented and verified locally only. It is not released or verified live. The current shadow design still executes the old combined coordinator plus one coordinator pass per need, so its local fixture time is not a valid production latency measurement.
+
+Implementation revision: local commit `80d775c` on `codex/community-quality-september30`.
+
+## Next bounded slice after rule proof
+
+Build a production-shaped offline candidate that runs the need-first coordinator once, shares raw retrieval and connector evidence across needs, and does not run the old combined answer as a baseline inside the same request. Replay a frozen unseen benchmark and report useful-complete, useful-partial, wrong-topic/unsupported answers, follow-up behavior, source-failure behavior, p95 latency, every model and connector call, and current-versus-candidate monthly cost. Test a model, semantic retrieval, reranker, or vector store only for a remaining measured failure that the simpler flow cannot solve.
