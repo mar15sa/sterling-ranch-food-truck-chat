@@ -93,6 +93,18 @@ test('a specified collection date cannot be answered by the recurring-days proje
   }
 });
 
+test('collection guidance cannot erase a separately requested fee, contact or method', async () => {
+  for (const [question, detail] of [['What day is trash collected and what does it cost?', 'price'],
+    ['What day is garbage collected and who do I call about it?', 'contact'],
+    ['What day is trash collected and what payment methods can I use?', 'methods']]) {
+    const answer = await answerCommunityQuestion(question, { index, communityId: 'sterling-ranch', communityProfile: profile,
+      now, interpretationMode: 'structured', synthesizeCommunityAnswer: false,
+      planCommunitySearch: async () => ({ ...plan(['date', detail], question), goal: 'schedule', goals: ['schedule'] }) });
+    assert.ok(answer.completion.requestedDetails.includes(detail), question);
+    assert.ok(answer.completion.requestedDetails.includes('date'), question);
+  }
+});
+
 test('expired and unapproved resources stay withheld despite corrected navigation intent', async () => {
   for (const unavailable of [new Date('2099-01-01'), now]) {
     const evidence = structuredClone(index);

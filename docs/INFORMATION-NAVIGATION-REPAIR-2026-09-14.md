@@ -16,4 +16,12 @@ Replay the captured live planner mistake, multiple alternative model-added facet
 
 ## Status
 
-Implementation and verification in progress. Documentation impact: interpretation boundary and quality assessment in How the project works and Owner operations. No new source decisions or resident-record edits are authorized by this repair. Notion synchronization and release evidence pending.
+Implementation is on the repair branch in [PR #146](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/146). Exact final checks and deployment evidence belong in that review record and the dated owner-guide sections; a local implementation is not a live claim.
+
+The first 20-question staging matrix found the reported navigation issue repaired, but also exposed "What day is trash collected?" missing the existing recurring-schedule route. That family now recognizes collected/picked-up wording, while explicit dates and separately requested fees, contacts, methods or other facets cannot be reduced to recurring guidance. The facts still come exclusively from approved evidence.
+
+Scoring separates content safety/usefulness from task completion. The visible rating is capped at Mixed for ordinary incomplete answers, and effort cannot be Resolved. The release evaluator retains all content safeguards and reports unresolved requests separately; the five affected navigation variants have explicit complete-outcome requirements, replaying the actual erroneous planner response. A passing content gate does not mean every source or resident request is complete. Known limitations remain visible rather than receiving cosmetic Good scores, and no new expected source approvals are inferred.
+
+The last-seven-day production audit read all six resident Needs review records: two source-review-required holds, only one pure-navigation hold (the owner's reported question). Only aggregate results were emitted, with no saved question, owner mark or credential changed.
+
+Documentation impact: interpretation boundary, flow diagram and accessible text, and incomplete-score explanation. How the project works, the hub and Owner operations were fetched, updated and fetched again; new diagrams preserve dated historical images. Their status remains implemented/verification-pending until the exact live release is checked. No new source decisions or resident-record edits are authorized by this repair.
