@@ -18,7 +18,26 @@ Provider documentation verified September 15 UTC: [thinking](https://platform.cl
 
 Documentation impact: experimental decision record only. Exact pending Notion update will be saved locally under the unresolved external-write review rejection. No changes to the live diagram, resident rating or implementation status are implied.
 
-## Stopped result and decision
+## Completed continuation — September 15 UTC
+
+This section supersedes the stopped status below. After billing credit was restored, capture `checker-reasoning-resumed-20260915` completed at code revision f1e48526d20ea178cc88db1ff102efa47c769177. All 40 planned assessments are present: seven original successes were retained and 33 calls were made after restoration. Original inputs, request hashes and randomized order were preserved. The original credit-rejected attempt remains separately recorded, making 41 actual attempts. No purchase, new subscription or release occurred.
+
+**Reject both tested configurations as answer release gates.** Each arm reviewed the same five supported and five flawed historical answers twice. Both accepted all ten supported trials. Disabled thinking detected two of ten flawed trials (one of five distinct defects); adaptive medium detected zero of ten. Both disabled detections identify the unsupported combined-application claim. The second explanation also discusses the supported Friday deadline unclearly; it is not evidence of a fully reliable claim audit. The roof-pitch alteration, missing lighting preparation, unsupported calendar-content assertion and unsupported exact-form claim were missed by both settings.
+
+| Checker setting | Supported accepted | Flawed detected | Input / output tokens | Measured cost / 1,000 checks | Median / sample p95 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Sonnet 5, thinking disabled, medium effort | 10/10 | 2/10 | 250,002 / 7,631 | $28.82 | 7.95 / 21.04 seconds |
+| Sonnet 5, adaptive thinking, medium effort | 10/10 | 0/10 | 250,002 / 7,177 | $28.59 | 6.78 / 22.96 seconds |
+
+All forty responses explicitly report zero thinking tokens; no missing breakdowns were converted to zero. This establishes performance of these settings, not that deeper reasoning is ineffective. Adaptive mode may skip reasoning, and omitted display does not mean unbilled reasoning. [Anthropic thinking documentation](https://platform.claude.com/docs/en/build-with-claude/thinking). Do not generalize from this small, known, time-separated development sample to all Sonnet configurations or resident traffic. All twenty within-arm repeat pairs have matching dispositions; in this case repeated acceptance is usually repeated failure on the negatives. Source gaps in these frozen packets are not a diagnosis of the newer approved production library.
+
+The forty successful calls total 500,004 input and 14,808 output tokens, priced at **$1.148088**. New continuation calls account for **$0.958610**; the earlier successful subtotal was $0.189478. The original failed attempt still has unknown usage and cost, so full experiment cost is $1.148088 plus one unknown, not a fully known total. Combined conservative reservation is **$4.374320 of the original $5 ceiling**; no ceiling reset or fresh account-balance allowance was used.
+
+Current private heuristic grading adds no separate model call. At 10,000 grades/month, these rejected alternatives would add approximately $288.16 or $285.89 in checking calls alone; at 50,000, $1,440.79 or $1,429.44. They exclude writing, retrieval, repairs, hosting and any other stage. Their p95 alone exceeds the full-answer ten-second target. Neither has earned adoption or recurring spending.
+
+Evidence: resumed manifest, usage ledger, comparison.json and reason-review.json. Eight focused offline tests passed for capture, source/request identity, replay, tamper rejection and cross-run budget accounting. The separately integrated production baseline passed its full local check, including 1,257 unit tests; that is compatibility evidence, not proof of answer quality. Human calibration, current-source full-flow improvement and final release acceptance remain unresolved.
+
+## Historical stopped result and decision
 
 Capture `artifacts/quality-eval/checker-reasoning-20260915`, code revision `9d0a473`. The 40-call design was frozen before execution. Process 33881 exited 0 after the eighth attempted call; manifest status independently records `stopped-error-or-unknown-usage`. Seven calls returned structured assessments. Call 008 returned HTTP 400 `invalid_request_error`: the Anthropic API credit balance was too low. It supplied no usage. No retry, purchase or account change was made. This is a stopped experiment, not a running wait or a completed comparison.
 
