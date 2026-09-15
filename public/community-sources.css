@@ -117,6 +117,9 @@
 .decision-actions .secondary { background: #fff; color: #294d40; border: 1px solid #b9c3bd; }
 .decision-actions .warning { background: #8a4a35; }
 .decision-status { color: #56625c; font-weight: 700; }
+.review-work .filters { grid-template-columns: minmax(280px, 2fr) repeat(2, minmax(100px, 1fr)) auto auto; }
+@media (max-width: 820px) { .review-work .filters { grid-template-columns: 1fr 1fr; } .review-work .filters > label:first-child { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .review-work .filters { grid-template-columns: 1fr; } }
 @media (max-width: 820px) { .readiness-hero { grid-template-columns: 1fr; } .category-list, .check-grid, .held-work-list { grid-template-columns: 1fr; } .inventory-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 720px) { .comparison { grid-template-columns: 1fr; } .source-card header { flex-direction: column; } .section-heading { align-items: start; flex-direction: column; gap: 7px; } .review-work .summary { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .category-documents > li, .category-pages > li { grid-template-columns: 1fr; } .document-controls { align-items: flex-start; } }

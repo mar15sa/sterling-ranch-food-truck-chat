@@ -7,7 +7,7 @@
     <title>Community Answer Readiness</title>
     <link rel="icon" href="/favicon.svg?v=20260912-editorial" type="image/svg+xml" />
     <link rel="stylesheet" href="/community-questions.css?v=20260914-reviewed1" />
-    <link rel="stylesheet" href="/community-sources.css?v=20260914-reviewed1" />
+    <link rel="stylesheet" href="/community-sources.css?v=20260914-queue2" />
   </head>
   <body>
     <main class="owner-shell">
@@ -103,17 +103,21 @@
             <div><h3 id="pageWorkTitle">Primary sources still needing claim review or retry</h3><p id="pageWorkSummary">Checking the complete audited source list…</p></div>
             <strong id="pageWorkCount">0</strong>
           </section>
-          <div class="queue-divider"><span>New source-change queue</span><p>Only pages or facts whose official source changed appear below. An empty queue does not clear the scoped held documents above.</p></div>
+          <div class="queue-divider"><span>Source changes and review history</span><p>Start with changes in your four categories. Saved history and outside-scope sources stay available in their own views. These are review entries, not a count of new documents.</p></div>
+          <p class="queue-note" id="queueBuckets" aria-live="polite">Loading the saved review inventory…</p>
           <section class="summary" aria-label="Source review queue summary">
-            <div><span>Pending reviews</span><strong id="pendingCount">0</strong></div>
-            <div><span>Sensitive pending</span><strong id="sensitiveCount">0</strong></div>
-            <div class="review-summary"><span>Pending conflicts</span><strong id="conflictCount">0</strong></div>
+            <div><span>Needs review in this view</span><strong id="pendingCount">Unknown</strong></div>
+            <div><span>Sensitive in this view</span><strong id="sensitiveCount">Unknown</strong></div>
+            <div class="review-summary"><span>Conflicts in this view</span><strong id="conflictCount">Unknown</strong></div>
             <div><span>Retirement pending</span><strong id="retirementCount">0</strong></div>
           </section>
           <p class="queue-note" id="reviewAvailability"></p>
+          <p class="queue-note" id="reviewObservation"></p>
+          <p class="queue-note" id="reviewSync" role="status"></p>
         <section class="filters" aria-label="Source filters">
+          <label>View<select id="queueFilter"><option value="attention">Needs attention in your categories</option><option value="current">Current changes</option><option value="comparison">Needs current-source comparison</option><option value="discovery">New sources to sort</option><option value="history">Review history</option><option value="outside">Outside your categories</option><option value="all">All saved entries</option></select></label>
           <label>Risk<select id="riskFilter"><option value="">All risks</option><option value="high">Sensitive</option><option value="medium">Standard</option></select></label>
-          <label>Status<select id="statusFilter"><option value="pending">Pending</option><option value="">All statuses</option><option value="approved">Approved</option><option value="kept-current">Kept current</option><option value="escalated">Escalated</option></select></label>
+          <label>Status<select id="statusFilter"><option value="">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="kept-current">Kept current</option><option value="escalated">Escalated</option></select></label>
           <label class="test-toggle"><input id="conflictFilter" type="checkbox" /><span>Conflicts only</span></label>
           <button type="button" class="refresh-button" id="refreshButton">Refresh</button>
         </section>
@@ -124,10 +128,10 @@
           <button type="button" class="secondary" id="nextPage" disabled>Next</button>
         </nav>
         <section class="source-list" id="sourceList" aria-label="Source review cards"></section>
-        <div class="empty-state" id="emptyState" hidden><h2>No new source changes waiting</h2><p>No newly detected source changes match this filter. The scoped documents still withheld are listed above.</p></div>
+        <div class="empty-state" id="emptyState" hidden><h2>No entries in this view</h2><p>Choose another view to see saved history or sources awaiting scope review.</p></div>
         </section>
       </section>
     </main>
-    <script src="/community-sources.js?v=20260914-reviewed1"></script>
+    <script src="/community-sources.js?v=20260914-queue2"></script>
   </body>
 </html>

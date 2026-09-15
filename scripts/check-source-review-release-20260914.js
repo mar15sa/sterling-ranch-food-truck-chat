@@ -14,7 +14,8 @@ function candidateState() {
 const before = candidateState();
 if (!before.runtimeInputsClean) throw new Error('Commit the runtime candidate before the exact-revision release check.');
 
-const output = path.resolve(__dirname, '../artifacts/source-review-2026-09-14/local-release-check.log');
+const output = path.resolve(root, process.argv[2] || 'artifacts/source-review-2026-09-14/local-release-check.log');
+fs.mkdirSync(path.dirname(output), { recursive: true });
 const log = fs.createWriteStream(output);
 const command = process.platform === 'win32' ? 'cmd.exe' : 'npm';
 const args = process.platform === 'win32' ? ['/d', '/s', '/c', 'npm run check'] : ['run', 'check'];
