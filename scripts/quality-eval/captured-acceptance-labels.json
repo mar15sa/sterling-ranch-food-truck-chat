@@ -1,0 +1,19 @@
+{
+  "status": "assistant-source-reviewed-development-labels-not-human-calibration",
+  "cases": [
+    {"trial":"presentation-009","expected":"accept","reason":"Current closed status plus seasonal hours; both selected links concern the pool. No invented closure cause."},
+    {"trial":"presentation-061","expected":"accept","reason":"Current closed status and regular seasonal hours, with relevant status action."},
+    {"trial":"presentation-016","expected":"accept","reason":"Generic application location is answered by the approved directory; submission email and deadline are supported."},
+    {"trial":"presentation-074","expected":"accept","reason":"Generic application location, supported submission route and deadline; exact project-specific form was not requested."},
+    {"trial":"presentation-071","expected":"accept","reason":"Short generic application location answer with approved directory action; optional submission details are not required."},
+    {"trial":"presentation-018","expected":"accept","reason":"Lighting process includes cut sheets, elevations/termination points, supported submission route and qualified seasonal use."},
+    {"trial":"presentation-027","expected":"accept","reason":"Captured pickup date and local timestamp plus governing storage/setout qualifications; relevant calendar/app actions."},
+    {"trial":"presentation-060","expected":"reject","reason":"Attributes assistant scope limitations to the official calendar and claims the CAB calendar does not publish menus.","target":"unsupported claim about official source contents"},
+    {"trial":"presentation-048","expected":"reject","reason":"Changes exact 4:12 roof-pitch exception to at least 4:12; also fails to disclose exact-form applicability gap.","target":"broadened numeric qualification"},
+    {"trial":"presentation-069","expected":"reject","reason":"Height exception omits no-variance restriction for high-visibility/icon/enhanced lots; requested exact form remains unidentified without explicit gap.","target":"omitted binding qualification or requested form gap"},
+    {"trial":"presentation-021","expected":"reject","reason":"Changes exact 4:12 pitch to at least 4:12 and claims a shed submission form is available without an approved exact-form source.","target":"broadened numeric qualification or unsupported exact-form claim"},
+    {"trial":"presentation-058","expected":"reject","reason":"Requested permanent-lighting approval process omits required cut sheets and elevations/termination points for discussed under-eave systems.","target":"missing required preparation step"},
+    {"trial":"presentation-055","expected":"reject","reason":"Adds that applications can typically be combined into one package without that process rule in the packet.","target":"unsupported combined-application process claim"},
+    {"trial":"presentation-092","expected":"reject","reason":"Calls the directory destination the place to access the pergola application form without identifying an approved applicable form.","target":"unsupported exact-form applicability"}
+  ]
+}
