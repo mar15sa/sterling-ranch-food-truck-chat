@@ -2,10 +2,10 @@
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import corpusTools from './semantic-corpus.js';
-import rules from '../../lib/rules-assistant.js';
+import rules from '../../lib/rules-assistant.js';import preparation from './eligible-keyword-index.js';
 const root=fileURLToPath(new URL('../../',import.meta.url));
 const hash=x=>crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
-export async function createSemanticRanker({directory,documents,communityId}){
+export async function createSemanticRanker({directory,documents,communityId,reuseKeywordPreparation=false}){
   const read=f=>JSON.parse(fs.readFileSync(path.join(directory,f),'utf8'));
   const manifest=read('manifest.json'),corpus=read('corpus.json');
   const readiness=JSON.parse(fs.readFileSync(path.join(root,'artifacts/quality-eval/semantic-runtime/ready.json'),'utf8'));
@@ -28,7 +28,8 @@ export async function createSemanticRanker({directory,documents,communityId}){
   if(hash(expectedUnits.map(({input,...unit})=>unit))!==hash(corpus.units)){
     await extractor.dispose();throw new Error('Cached vector windows do not match exact document segmentation');
   }
-  return {communityId,corpusHash:hash(documents),model:manifest.model,modelRevision:manifest.modelRevision,
+  const keywordPreparation=preparation.createEligibleKeywordIndex(documents,communityId);
+  return {preparationStats:()=>keywordPreparation.stats(),communityId,corpusHash:hash(documents),model:manifest.model,modelRevision:manifest.modelRevision,
     async search(index,query,limit=4,{now=Date.now(),eligibilityQuestion=query,method='hybrid'}={}){
       if(!['hybrid','semantic'].includes(method))throw new Error('Unknown semantic rules ranking method');
       if(hash(index.documents)!==manifest.eligibleCorpusSha256)throw new Error('Retrieval index changed after semantic cache binding');
@@ -46,8 +47,9 @@ export async function createSemanticRanker({directory,documents,communityId}){
       }
       const dense=[...best.values()].sort((a,b)=>b.score-a.score).slice(0,30);
       if(method==='semantic')return dense.slice(0,limit).map(r=>({...r.document,retrievalMethod:'local-semantic',similarity:r.score}));
-      const keyword=rules.searchRulesIndex({...index,documents:eligible},query,30).map(document=>({document,score:document.score}));
+      const keywordIndex=reuseKeywordPreparation?keywordPreparation.get(index,eligible):{...index,documents:eligible};
+      const keyword=rules.searchRulesIndex(keywordIndex,query,30).map(document=>({document,score:document.score}));
       for(const r of keyword)if(byId.get(r.document.id)?.text!==r.document.text)throw new Error('Keyword evidence identity changed');
       return corpusTools.fuse(keyword,dense,limit).map(r=>({...r.document,retrievalMethod:'local-semantic-plus-keyword',fusionScore:r.fusionScore,retrievalRanks:r.ranks}));
-    },dispose:()=>extractor.dispose()};
+    },dispose:()=>{keywordPreparation.clear();return extractor.dispose();}};
 }
