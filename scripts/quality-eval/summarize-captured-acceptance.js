@@ -25,6 +25,7 @@ function analyze(directory){
  }
  const report={status:m.status==='captured'?'complete-development-checker-comparison':'partial-stopped-checker-comparison',isTest:true,mode:m.mode,groupKey,codeRevision:m.codeRevision,plannedCalls,completedCalls:rows.length,
   costs:summarize(calls),reservedUpperUsd:m.reservedUpperUsd,groups:{},repeatComparisons:[],limitations:[...m.limitations,'A rejected output counts as detection only if the assessment is structurally consistent. Defect-specific reason review is separate.']};
+ if(m.resumedFrom){report.resumedFrom=m.resumedFrom;report.entireExperimentCosts=summarize([...calls,...m.priorFailedCalls]);report.excludedProviderFailureAttempts=m.priorFailedCalls.length;}
  for(const model of groups){
   const group=rows.filter(r=>r[groupKey]===model),ledger=calls.filter(c=>c[groupKey]===model),cost=summarize(ledger),positive=group.filter(r=>r.expected==='accept'),negative=group.filter(r=>r.expected==='reject');
   if(m.status==='captured'&&(group.length!==plannedCalls/2||positive.length!==plannedCalls/4||negative.length!==plannedCalls/4))throw Error('Unbalanced completed comparison');

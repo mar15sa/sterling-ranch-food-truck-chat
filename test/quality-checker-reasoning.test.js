@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
-const {reasoningRequest,prepare,capture}=require('../scripts/quality-eval/compare-checker-reasoning');
+const {reasoningRequest,prepare,prepareResume,capture}=require('../scripts/quality-eval/compare-checker-reasoning');
 const {hash}=require('../scripts/quality-eval/flow-evidence');
 const {analyze}=require('../scripts/quality-eval/summarize-captured-acceptance');
 function fixture(t){
@@ -48,4 +48,16 @@ for(const kind of ['unknown-usage','truncated'])test('stops once without retries
  const report=analyze(out);assert.equal(report.completedCalls,1);assert.equal(report.plannedCalls,40);
  if(kind==='unknown-usage'){assert.equal(report.costs.estimatedTotalUsd,null);assert.equal(report.costs.unknownCostCalls,1);}
  else assert.equal(Object.values(report.groups).reduce((s,g)=>s+g.positive.unassessed+g.negative.unassessed,0),1);
+});
+test('credit recovery preserves original order, successful trials, failed charge reservation and total ceiling',async t=>{
+ const {prior,out}=fixture(t);let first=0;
+ const original=await capture({prior,out,apiKey:'FAKE_TEST_ONLY',revision:'offline-test',log:()=>{},fetchImpl:async(url,init)=>++first===8?new Response(JSON.stringify({error:{type:'invalid_request_error',message:'Your credit balance is too low'}}),{status:400}):reply(JSON.parse(init.body))});
+ const originalBytes=fs.readFileSync(path.join(out,'manifest.json'),'utf8'),prepared=prepare(prior),res=prepareResume(out,prepared);
+ assert.equal(res.rows.length,7);assert.equal(res.jobs.length,33);assert.ok(res.priorReservedUsd+res.remainingUpperUsd<=5);
+ const resumedOut=path.join(path.dirname(out),'resumed');let count=0;
+ const resumed=await capture({prior,out:resumedOut,resumeFrom:out,apiKey:'FAKE_TEST_ONLY',revision:'offline-resume',log:()=>{},fetchImpl:async(url,init)=>{assert.equal(hash(JSON.parse(init.body)),original.design[7+count++].requestHash);return reply(JSON.parse(init.body));}});
+ assert.equal(count,33);assert.equal(resumed.status,'captured');assert.deepEqual(resumed.design,original.design);assert.equal(resumed.entireExperimentCosts.calls,41);assert.equal(resumed.entireExperimentCosts.unknownCostCalls,1);
+ assert.ok(Math.abs(resumed.reservedUpperUsd-res.priorReservedUsd-res.remainingUpperUsd)<1e-9);assert.equal(fs.readFileSync(path.join(out,'manifest.json'),'utf8'),originalBytes);
+ const report=analyze(resumedOut);assert.equal(report.completedCalls,40);assert.equal(report.entireExperimentCosts.calls,41);assert.equal(report.entireExperimentCosts.estimatedTotalUsd,null);
+ const changed=JSON.parse(originalBytes);changed.reservedUpperUsd=0;fs.writeFileSync(path.join(out,'manifest.json'),JSON.stringify(changed));assert.throws(()=>prepareResume(out,prepared),/reservation/);
 });

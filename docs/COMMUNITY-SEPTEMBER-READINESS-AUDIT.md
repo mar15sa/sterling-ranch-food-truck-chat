@@ -32,7 +32,13 @@ The four existing communication-review examples still have zero saved human judg
 | Maintain Notion with truthful status and verified dates | Documentation-maintenance rule and precise pending updates | External synchronization remains pending the earlier automatic approval review rejection. Local proposed/implemented/verified distinctions and intended changes are saved. No retry or claim of synchronization. |
 | September 16 diagnosis, September 22 implementation, September 26 validation, September 27–29 rehearsal | Original schedule and this current audit | These dates remain the plan, not completed milestones. Paid comparisons and human calibration are prerequisites to selecting a winner; do not postpone identifying these dependencies until release week. |
 
-## Why work needs an external change now
+## Prerequisite history and restored access
+
+Update September 15 UTC: signed-in billing now shows $19.97 remaining with auto-reload off. The agent made no purchase. This supersedes the earlier negative-balance observation below; credit is no longer a blocker. A read-only staging variable check confirms an existing Anthropic key, with OpenAI and Gemini keys absent. The account balance is not a new experiment allowance. The four human judgments remain pending.
+
+The integrated production revision passed the complete local `npm run check`, exit zero, using the validated temporary source snapshot and disabled paid models. The captured integration revision is 731e4f3748b6aa3b165e86a4f7bf9e1429be366b; its unit suite passed 1,257 tests. This verifies compatibility, not September answer-quality targets. Evidence: readiness-audit-20260915/integration-check.json and integration-check.log. The running-process descriptions below are historical checkpoints.
+
+The interrupted checker reasoning comparison can resume under its original $5 ceiling: seven successful trials retained, one credit-rejected trial retried, 32 previously unattempted trials. Existing attempted reservations total $0.824012; the 33 remaining calls reserve at most $3.550308, for $4.374320 combined. The failed original attempt stays in full experiment accounting as an unknown charge. Frozen input/request hashes, original order and matched settings are enforced; eight focused offline tests pass. This is a known development-answer diagnostic, not a human-calibrated or unseen release benchmark.
 
 The same inability to run paid comparisons was documented through the broader replay, capability-contract and cost-consolidation turns. Useful independent work continued during those turns. This audit now confirms the credit blocker directly and identifies the remaining human judgments. No local score adjustment, prompt variation or saved-packet replay can prove the next required model-quality decision without fresh inference and human reference judgments.
 
