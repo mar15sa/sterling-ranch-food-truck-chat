@@ -2,6 +2,8 @@
 
 There is no new spending commitment yet. We have useful cost measurements, but no candidate has demonstrated the required answer quality and speed. Buying a bigger model or adding a paid vector database is not justified by the results so far.
 
+Latest matched full-flow diagnostic: on twelve current-source questions twice per arm, current local answering cost **$1.84 per 1,000 attempts** versus **$27.19** for compact Sonnet understanding/writing with community semantic and hybrid rule search. At 10,000 questions/month that is **$18.42 versus $271.88 in answering AI**, before hosting or later grading. Candidate p95 was **14.04 seconds**, versus **4.06 seconds** for the control. The candidate helps with caregiver access and pool information but retains material rule/meaning errors and three missing answers, so it is **not selected**. The complete experiment cost $0.696725, with no unknown charges or subscription. These are local development measurements, not exact deployed billing or human-reviewed quality rates. [Full matched results and stage costs](COMMUNITY-SEPTEMBER-PAIRED-FLOW.md).
+
 The cost audit recomputed 442 recorded calls across six experiments and twenty configurations. Every subtotal and stage token count matches its saved report. Two timed-out calls have unknown charges and remain unknown. These are development samples, not the production invoice, and the different experiments must not be blended into one measured flow. See the [full cost evidence and stage tables](COMMUNITY-COST-EVIDENCE-2026-09-15.md).
 
 ## Current cost we can substantiate
