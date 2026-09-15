@@ -50,7 +50,8 @@ async function main() {
     if (item.navigation && expectedTopic && !(body.sources || []).some(source => expectedTopic.test(source.sourceUrl))) problems.push('Requested topic destination missing');
     if (item.navigation && body.routingPlan?.requestedDetails?.some(detail => detail !== 'action')) problems.push('Invented navigation facet');
     if (item.notNavigation && body.answerMode === 'community-approved-information-resource') problems.push('Factual request reduced to navigation');
-    if (item.methods && !body.routingPlan?.requestedDetails?.includes('methods')) problems.push('Explicit methods dropped');
+    if (item.methods && (!body.completion?.requestedDetails?.includes('methods')
+      || !body.completion?.resolvedDetails?.includes('methods'))) problems.push('Explicit methods dropped or unresolved');
     if (item.unavailable && body.answerStatus === 'verified') problems.push('Unavailable live fact verified');
     const quality = scoreCommunityAnswer(item.question, body);
     if (body.completion?.outcome && body.completion.outcome !== 'complete' && quality.residentEffort.rating === 'Resolved') problems.push('Incomplete answer labeled resolved');
