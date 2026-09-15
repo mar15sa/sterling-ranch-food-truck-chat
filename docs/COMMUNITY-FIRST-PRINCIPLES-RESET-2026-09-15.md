@@ -75,3 +75,34 @@ Two hundred direct compatibility checks pass across the new contract, the assist
 Make the answer router retrieve and preserve evidence by need behind a test-only or shadow gate, beginning with the four compound/follow-up failures in this capture. A partial answer should keep every supported need, state the unresolved need plainly, and offer only a relevant next step. Then replay the frozen capture and add negative controls for sibling-need leakage, wrong-subject official pages, unavailable live connectors, and claim paraphrases.
 
 Do not enable resident rendering or resume broad model comparisons yet. Model choice, vector storage, and fine-tuning remain deferred until the need-first flow isolates a failure that one of those components can solve and a bounded comparison demonstrates a meaningful quality gain with complete operating cost.
+
+## Test-only need router completed locally
+
+The assistant now has an explicit `shadow-route` mode that is rejected unless the request is marked as a test and supplies a per-need answer function. It runs no more than four needs, executes each need independently, applies the same evidence assessment to each result, contains an individual failure, and assembles a shadow candidate while returning the existing resident answer unchanged. This mode is not configured on the server or available to residents.
+
+The candidate keeps every supported direct answer, identifies each unresolved part, and selects next-step actions from unresolved needs before already-supported ones. It drops actions whose subject does not match the need. Candidate sources carry the need IDs for which they were retrieved. An ambiguous standalone request stops before retrieval.
+
+Ten focused router checks cover:
+
+- full truck plus menu support with separate sources;
+- a verified truck with a missing menu;
+- a useful official menu link that does not pretend the menu was answered;
+- a live pool-status result surviving an hours-connector failure;
+- separate live recycling and governing bin-storage evidence;
+- safe resident context plus governing evidence for a lighting follow-up;
+- rejection of wrong-subject official evidence and actions;
+- rejection of a verified claim that was not rendered;
+- no retrieval for a subjectless price question; and
+- the test-only and four-need execution boundaries.
+
+The saved 12-case legacy replay now produces 2 complete, 1 verified partial, 4 missing-evidence, 4 unassessed, and 1 ambiguous shadow result. The food-truck case changes from the old global `verified` label to a useful partial answer: it keeps the verified truck and names the missing menu. The CAB-report billing action remains excluded. The pool answer keeps its relevant official hours page while still identifying both unsupported needs.
+
+That replay deliberately presents the same saved legacy response to each need. It proves isolation, evidence rejection, partial composition, and action selection; it does not measure new retrieval or new answer quality. Independent per-need execution is proven with synthetic, source-bound fixtures. The next slice must connect the real existing source adapters to the per-need callback in a local test harness before any resident-facing claim.
+
+The complete affected set is now 210 passing direct checks. No paid model call, resident question, source approval, deployment, configuration change, hosted vector database, subscription, or recurring cost was added.
+
+## Next bounded implementation slice after the router
+
+Connect the current local rules, community-source, and live-connector paths to the per-need callback under test mode. Start with truck/menu, recycling/storage, pool status/hours, shed/form, yoga, and lighting. Capture which need each adapter receives, which eligible sources return, whether the rendered claims pass the evidence contract, and the exact partial candidate.
+
+Use deterministic routing and existing approved sources first. If a remaining failure is interpretation, retrieval recall, evidence applicability, or writing, test only the component responsible. A different model or vector database should enter only a bounded comparison for that isolated failure, with current versus proposed per-answer and monthly cost.
