@@ -1,10 +1,18 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {checkerRequest,prepare}=require('../scripts/quality-eval/compare-captured-acceptance');
 const {hash}=require('../scripts/quality-eval/flow-evidence');
+const {disposition}=require('../scripts/quality-eval/summarize-captured-acceptance');
 function fixture(){const now=Date.parse('2026-09-15T00:00:00Z');
  const source={id:'rule',communityId:'alpha',version:'v1',role:'governing-rule',title:'Policy',sourceUrl:'https://alpha.example/policy',text:'Approval is required.',actions:[]};
  return {communityId:'alpha',timezone:'America/Denver',now,row:{question:'Is approval required?',context:[{question:'For my structure.'}]},plan:{needs:[{id:'need-1',request:'approval',evidenceKind:'governing-rule'}]},packet:{communityId:'alpha',sources:[source],actions:[],diagnostics:[]}};
 }
+test('invalid or incomplete checks never earn credit for detecting an answer defect',()=>{
+ const good={issues:[],error:null,check:{hardFailures:[],outcome:'complete'}};
+ assert.equal(disposition(good),'accept');
+ assert.equal(disposition({...good,check:{hardFailures:['unsupported-material-claim'],outcome:'partial'}}),'reject');
+ assert.equal(disposition({...good,issues:['action-review-coverage'],check:{hardFailures:['unsupported-material-claim']}}),'unassessed');
+ assert.equal(disposition({...good,error:'output-limit'}),'unassessed');assert.equal(disposition({...good,check:null}),'unassessed');
+});
 test('checker replay sends unchanged answer/full sources and no labels or writer metadata',()=>{
  const input=fixture(),draft={answer:'Approval is required.',actionIds:[]};
  input.expected='SECRET_LABEL';input.originatingModel='SECRET_WRITER';input.rationale='SECRET_REASON';
