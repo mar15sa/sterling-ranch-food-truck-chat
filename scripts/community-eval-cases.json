@@ -11,5 +11,40 @@
     "expectedCompletion": "complete",
     "answerIncludesAll": ["Trash & Recycling"],
     "mustExclude": ["until this source version is reviewed", "being reconfirmed"]
+  },
+  {
+    "question": "Where can we find internet information?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Internet Service"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
+  },
+  {
+    "question": "Where can I find utility information?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Water Billing"],
+    "mustExclude": ["Drinking Water Quality Report", "being reconfirmed"]
+  },
+  {
+    "question": "Where can I find information about reservations?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Pickleball Courts"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
+  },
+  {
+    "question": "Where can I find landscaping information?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Common Area Maintenance"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
+  },
+  {
+    "question": "Where is the recreation center website?",
+    "expectedAnswerMode": "community-approved-information-resource",
+    "expectedCompletion": "complete",
+    "answerIncludesAll": ["Sterling Center"],
+    "mustExclude": ["Drinking Water", "being reconfirmed"]
   }
 ]

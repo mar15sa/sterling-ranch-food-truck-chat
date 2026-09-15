@@ -53,6 +53,34 @@ test('navigation remains correct with legacy routing and unavailable or disabled
   }
 });
 
+test('adjacent navigation topics use relevant approved facts or action-only destinations, never generic report matches', async () => {
+  for (const [question, destination] of [
+    ['Where can I find utility information?', /Water-Billing|Water-Bill|Monthly-Fee/],
+    ['Where can I find information about reservations?', /Pickleball|Rental|Reserv/],
+    ['Where can we find internet information?', /Internet-Service/],
+    ['Where can I find landscaping information?', /Common-Area-Maintenance|Landscap/],
+    ['Where is the recreation center website?', /Sterling-Center|Recreation|Overlook/],
+  ]) {
+    for (const planCommunitySearch of [false, async () => plan(['action', 'methods'], question)]) {
+      const answer = await answerCommunityQuestion(question, { index, communityProfile: profile, communityId: profile.id,
+        now, interpretationMode: 'legacy', synthesizeCommunityAnswer: false, planCommunitySearch });
+      assert.equal(answer.answerMode, 'community-approved-information-resource', question);
+      assert.equal(answer.completion.outcome, 'complete', question);
+      assert.ok(answer.actions.some(action => destination.test(action.url)), question);
+      assert.doesNotMatch(answer.answer, /Drinking Water Quality Report|reconfirmed|reviewed/);
+    }
+  }
+});
+
+test('unknown navigation subjects cannot fall through to unrelated extractive answers', async () => {
+  const answer = await answerCommunityQuestion('Where can I find zeppelin information?', { index,
+    communityProfile: profile, communityId: profile.id, now, interpretationMode: 'legacy',
+    planCommunitySearch: false, synthesizeCommunityAnswer: false });
+  assert.notEqual(answer.answerStatus, 'verified');
+  assert.equal(answer.sources.length, 0);
+  assert.equal(answer.claims.length, 0);
+});
+
 test('navigation repair preserves actual methods, rules, schedules and compound requests', () => {
   for (const question of ['Where can I find recycling information and what methods can I use?',
     'Where can I find information about payment methods?', 'Where can I find trash fees?',
