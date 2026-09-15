@@ -38,46 +38,183 @@ test('all filters apply before pagination; malformed and obsolete pages remain u
   assert.equal(paginateReviews([], new URLSearchParams('page=2')).pagination.page, 1);
 });
 
-test('actual authenticated handler pages resolved statuses without changing source records', async () => {
+function authenticatedHandler(options = {}) {
   const fs = require('node:fs');
   const vm = require('node:vm');
-  const { latestReviewDecision } = require('../lib/community-review-queue');
+  const { classifyReviewRecords } = require('../lib/community-review-classification');
   const { buildCommunitySourceReadiness } = require('../lib/community-source-readiness');
-  const { createSessionToken, sessionCookie, isAuthorizedRequest } = require('../lib/community-question-admin');
+  const { createSessionToken, sessionCookie, isAuthorizedRequest, isSameOriginRequest } = require('../lib/community-question-admin');
   const server = fs.readFileSync(require.resolve('../server'), 'utf8');
-  const records = fixture.map(item => ({ ...item, recordType: 'review-item', sourceVersion: 'v1' }));
-  records.push({ id: 'decision', recordType: 'decision', reviewId: fixture[0].id, sourceVersion: 'v1', decision: 'approve-proposed', status: 'approved', createdAt: '2026-09-01T00:00:00Z' });
-  let reads = 0;
-  const before = JSON.stringify(records);
+  const checkedAt = new Date(Date.now() - 1000).toISOString();
+  const records = options.records || fixture.map(item => ({ ...item, recordType: 'review-item', sourceVersion: 'v1',
+    kind: 'source-change', communityId: 'example', sourceId: `source-${item.id}`,
+    proposedSourceUrl: `https://example.test/source/${item.id}`, currentValue: 'Previous content',
+    proposedValue: 'Candidate content', supportingText: 'Candidate content',
+    lastObservedAt: checkedAt, candidateFingerprint: 'candidate-fixture', releaseFingerprint: 'released-fixture' }));
+  const sourceItems = records.filter(record => record.recordType === 'review-item');
+  const observation = {
+    initialized: true, checkedAt, refreshing: false, error: '',
+    candidateSources: sourceItems.map(item => ({ id: item.sourceId, sourceUrl: item.proposedSourceUrl,
+      contentHash: item.sourceVersion, checkedAt, communityId: 'example' })),
+    candidatePages: [], items: sourceItems.map(item => ({ ...item })),
+    sync: { lastAttemptAt: checkedAt, lastSucceededAt: checkedAt, error: '' },
+    ...options.observation,
+  };
+  const counters = { snapshots: 0, freshReads: 0, writes: 0, bodyReads: 0 };
+  const decisions = [];
+  const storage = { records, loaded: true, loading: false, stale: false,
+    checkedAt, lastAttemptAt: checkedAt, error: null, ...options.storage };
   const context = vm.createContext({
-    console, latestReviewDecision, paginateReviews, buildCommunitySourceReadiness,
-    questionAdminConfig: () => ({ sessionSecret: 'fixture-only' }), isAuthorizedRequest,
+    console, URLSearchParams, classifyReviewRecords, paginateReviews, buildCommunitySourceReadiness,
+    reviewAudit: { communityId: 'example', records: sourceItems.map(item => ({ sourceUrl: item.proposedSourceUrl,
+      scopeStatus: 'in-scope', categoryIds: ['services'], disposition: 'answer-evidence' })) },
+    reviewBundledIndex: { communityId: 'example', sources: [], pages: [] }, reviewCanonicalLedger: { records: [] },
+    getSourceReviewSnapshot: () => observation,
+    questionAdminConfig: () => ({ sessionSecret: 'fixture-only' }), isAuthorizedRequest, isSameOriginRequest,
     sourceReviewStatus: () => ({ configured: true }), communitySourceStatus: () => ({ retirementPendingPageCount: 4 }),
-    listReviewRecords: async () => { reads++; return records; },
+    getReviewRecordsSnapshot: refresh => { counters.snapshots++; options.onSnapshot?.(refresh); return storage; },
+    listReviewRecords: async () => { counters.freshReads++; return options.freshRecords || records; },
+    readJsonBody: async req => { counters.bodyReads++; return req.body; },
+    saveReviewDecision: async decision => { counters.writes++; decisions.push(decision); return decision; },
     sendJson: (res, status, body) => Object.assign(res, { status, body }),
   });
   for (const name of ['requireQuestionAdmin', 'communityReviewRecords', 'handleCommunitySourceReview']) {
     const start = server.search(new RegExp(`(?:async )?function ${name}\\(`));
+    assert.ok(start >= 0, `actual server function ${name} must exist`);
     vm.runInContext(server.slice(start, server.indexOf('\n}', start) + 2), context);
   }
-  const unauthorized = {};
-  await context.handleCommunitySourceReview({ method: 'GET', headers: {} }, unauthorized, new URL('https://example.test/?page=2'));
-  assert.equal(unauthorized.status, 401);
-  assert.equal(reads, 0);
-  const owner = { method: 'GET', headers: { cookie: sessionCookie(createSessionToken('fixture-only')) } };
-  const approved = {};
-  await context.handleCommunitySourceReview(owner, approved, new URL('https://example.test/?status=approved'));
-  assert.equal(approved.status, 200);
-  assert.equal(approved.body.items.length, 1);
-  assert.equal(approved.body.items[0].id, fixture[0].id);
-  const pending = {};
-  await context.handleCommunitySourceReview(owner, pending, new URL('https://example.test/?status=pending&page=79'));
+  const owner = { method: 'GET', headers: { cookie: sessionCookie(createSessionToken('fixture-only')),
+    origin: 'https://example.test', host: 'example.test', 'x-forwarded-proto': 'https' } };
+  async function request({ method = 'GET', query = '', id = '', authorized = true, body = {}, headers = {} } = {}) {
+    const res = {};
+    const req = { ...owner, method, body, headers: { ...(authorized ? owner.headers : {}), ...headers } };
+    await context.handleCommunitySourceReview(req, res, new URL(`https://example.test/?${query}`), id);
+    return res;
+  }
+  return { request, records, storage, observation, counters, decisions };
+}
+
+function exactDecision(item) {
+  return { id: 'decision', recordType: 'decision', reviewId: item.id, sourceVersion: item.sourceVersion,
+    sourceUrl: item.proposedSourceUrl, factId: item.factId || '', decision: 'approve-proposed', status: 'approved',
+    decidedAt: new Date(Date.now() - 500).toISOString() };
+}
+
+test('actual authenticated handler pages classified history separately without changing saved records', async () => {
+  const handler = authenticatedHandler();
+  handler.records.push(exactDecision(handler.records[0]));
+  const before = JSON.stringify(handler.records);
+  const history = await handler.request({ query: 'queue=history' });
+  assert.equal(history.status, 200);
+  assert.equal(history.body.items.length, 1);
+  assert.equal(history.body.items[0].id, fixture[0].id);
+  assert.equal(history.body.items[0].queueBucket, 'history');
+  assert.equal(history.body.items[0].canDecide, false);
+  const pending = await handler.request({ query: 'status=pending&page=79' });
   assert.equal(pending.body.pagination.total, 1968);
   assert.equal(pending.body.items.length, 18);
   assert.equal(pending.body.counts.retirementPendingPageCount, 4);
   assert.equal(pending.body.readiness.totals.audited, 1631);
-  const detail = {};
-  await context.handleCommunitySourceReview(owner, detail, new URL('https://example.test/'), fixture[0].id);
-  assert.equal(detail.body.item.status, 'approved');
-  assert.equal(JSON.stringify(records), before);
+  const detail = await handler.request({ id: fixture[0].id });
+  assert.equal(detail.body.item.latestDecision.decision, 'approve-proposed');
+  assert.equal(detail.body.item.canDecide, false);
+  assert.equal(JSON.stringify(handler.records), before);
+  assert.equal(handler.counters.freshReads, 0, 'GET must only use the nonblocking snapshot');
+  assert.equal(handler.counters.writes, 0);
+});
+
+test('actual handler rejects unauthenticated and cross-origin operations before storage access', async () => {
+  const handler = authenticatedHandler();
+  for (const method of ['GET', 'POST']) {
+    const result = await handler.request({ method, authorized: false, id: fixture[0].id });
+    assert.equal(result.status, 401);
+  }
+  const crossOrigin = await handler.request({ method: 'POST', id: fixture[0].id, headers: { origin: 'https://other.test' } });
+  assert.equal(crossOrigin.status, 403);
+  assert.deepEqual(handler.counters, { snapshots: 0, freshReads: 0, writes: 0, bodyReads: 0 });
+});
+
+test('actual cold GET returns readiness immediately with unknown storage rather than waiting for the inventory', async () => {
+  let refreshRequested;
+  const handler = authenticatedHandler({ storage: { records: [], loaded: false, loading: true, stale: true,
+    checkedAt: '', lastAttemptAt: new Date().toISOString() }, onSnapshot: options => { refreshRequested = options.refresh; } });
+  const result = await handler.request({ query: 'refresh=true' });
+  assert.equal(result.status, 200);
+  assert.equal(result.body.reviewAvailable, true);
+  assert.equal(result.body.queue.storage.loaded, false, 'false is the explicit Unknown signal, not a complete empty inventory');
+  assert.equal(result.body.queue.storage.loading, true);
+  assert.equal(result.body.queue.storage.stale, true);
+  assert.equal(result.body.queue.storage.checkedAt, '');
+  assert.equal(result.body.readiness.totals.audited, 1631);
+  assert.equal(refreshRequested, true);
+  assert.equal(handler.counters.freshReads, 0);
+  const detail = await handler.request({ id: fixture[0].id });
+  assert.equal(detail.status, 503);
+  assert.match(detail.body.error, /still loading/);
+});
+
+test('actual stale or refreshing snapshots are read-only and expose failed refresh metadata', async () => {
+  for (const state of [{ stale: true, error: 'Storage offline' }, { stale: true, loading: true }, { loading: true }]) {
+    const handler = authenticatedHandler({ storage: state });
+    const result = await handler.request();
+    assert.equal(result.status, 200);
+    assert.equal(result.body.queue.storage.loaded, true);
+    assert.equal(result.body.items.length, 25);
+    assert.ok(result.body.items.every(item => item.canDecide === false));
+    assert.equal(result.body.reviewError, state.error || '');
+    assert.equal(handler.counters.freshReads, 0);
+  }
+});
+
+test('actual POST bypasses cached eligibility and rejects a newly resolved history entry', async () => {
+  const base = authenticatedHandler();
+  const records = base.records.slice(0, 1);
+  const handler = authenticatedHandler({ records, freshRecords: [...records, exactDecision(records[0])] });
+  const displayed = await handler.request();
+  assert.equal(displayed.body.items[0].canDecide, true);
+  const result = await handler.request({ method: 'POST', id: records[0].id, body: { decision: 'approve-proposed', note: 'Fixture test' } });
+  assert.equal(result.status, 409);
+  assert.equal(handler.counters.freshReads, 1);
+  assert.equal(handler.counters.writes, 0);
+  assert.equal(handler.counters.bodyReads, 0);
+});
+
+test('actual POST rejects history, ambiguous payloads and absent or changed regenerated proposals', async () => {
+  const base = authenticatedHandler();
+  const item = base.records[0];
+  const scenarios = [
+    { records: [item, exactDecision(item)] },
+    { records: [item, { ...item, notionPageId: 'disagreeing-copy', proposedValue: 'Different saved content' }] },
+    { records: [item], observation: { items: [] } },
+    { records: [item], observation: { items: [{ ...item, proposedValue: 'Different regenerated content' }] } },
+  ];
+  for (const scenario of scenarios) {
+    const handler = authenticatedHandler(scenario);
+    const result = await handler.request({ method: 'POST', id: item.id,
+      body: { decision: 'approve-proposed', note: 'Fixture test' } });
+    assert.equal(result.status, 409, JSON.stringify(scenario.observation || scenario.records));
+    assert.equal(handler.counters.freshReads, 1);
+    assert.equal(handler.counters.snapshots, 0);
+    assert.equal(handler.counters.writes, 0);
+  }
+});
+
+test('actual POST saves only the fresh exact proposal identity, never client supplied identity fields', async () => {
+  const base = authenticatedHandler();
+  const item = base.records[0];
+  const handler = authenticatedHandler({ records: [item], storage: { records: [], loaded: false, stale: true } });
+  const result = await handler.request({ method: 'POST', id: item.id, body: {
+    decision: 'keep-current', note: 'Fixture only', reviewId: 'spoof-review', sourceId: 'spoof-source',
+    sourceUrl: 'https://other.test/', sourceVersion: 'spoof-version', reviewer: 'spoof-reviewer', candidateFingerprint: 'spoof-fingerprint',
+  } });
+  assert.equal(result.status, 201);
+  assert.equal(handler.counters.freshReads, 1);
+  assert.equal(handler.counters.snapshots, 0);
+  assert.equal(handler.counters.writes, 1);
+  assert.equal(handler.decisions[0].reviewId, item.id);
+  assert.equal(handler.decisions[0].sourceId, item.sourceId);
+  assert.equal(handler.decisions[0].sourceUrl, item.proposedSourceUrl);
+  assert.equal(handler.decisions[0].sourceVersion, item.sourceVersion);
+  assert.equal(handler.decisions[0].candidateFingerprint, item.candidateFingerprint);
+  assert.equal(handler.decisions[0].reviewer, 'owner');
 });

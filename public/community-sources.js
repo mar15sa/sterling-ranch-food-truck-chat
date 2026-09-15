@@ -8,6 +8,13 @@ let items = [];
 let currentPage = 1;
 let pageCount = 1;
 let loadVersion = 0;
+let queuePollTimer = null;
+let queuePollCount = 0;
+
+function stopQueuePoll() {
+  if (queuePollTimer !== null && typeof clearTimeout === 'function') clearTimeout(queuePollTimer);
+  queuePollTimer = null;
+}
 
 function textElement(tag, value, className = "") {
   const node = document.createElement(tag);
@@ -17,6 +24,7 @@ function textElement(tag, value, className = "") {
 }
 
 function showLogin(message = "") {
+  stopQueuePoll();
   loadVersion++;
   sourceList.replaceChildren();
   items = [];
@@ -200,7 +208,23 @@ function renderReadiness(data = {}) {
   $("#indexedCount").textContent = String(inventory.audited || 0);
   $("#inventoryExcludedCount").textContent = String(inventory.technicalExclusions || 0);
   $("#inventoryBacklogCount").textContent = String(inventory.pending || 0);
-  $("#reviewAvailability").textContent = data.reviewError || "The private review queue is connected.";
+}
+
+function renderQueueConnection(data) {
+  const storage = data.queue?.storage;
+  $("#reviewAvailability").textContent = data.reviewError || (storage
+    ? !storage.loaded ? 'Connection configured. Saved reviews are loading in the background; the content audit above is available now.'
+      : `Saved reviews loaded ${readableDate(storage.checkedAt)}.${storage.loading ? ' Checking for updates…' : storage.stale ? ' This is an older snapshot; refresh before making decisions.' : ' This snapshot is current.'}`
+    : 'The private review queue is connected.');
+  const observation = data.queue?.observation;
+  $("#reviewObservation").textContent = observation
+    ? `${observation.initialized ? `Official sources last checked ${readableDate(observation.checkedAt)}.` : 'Official-source checks have not completed since this restart.'}${observation.refreshing ? ' A source check is running.' : ''}${observation.error ? ` Latest check failed: ${observation.error}` : ''}` : '';
+  const sync = data.queue?.sync;
+  $("#reviewSync").textContent = sync
+    ? `${sync.status === 'succeeded' ? `Latest sync succeeded ${readableDate(sync.lastSuccessAt)}. ${sync.createdCount || 0} new review entries saved.`
+      : sync.status === 'syncing' ? `Saving source changes to the private queue (started ${readableDate(sync.lastAttemptAt)}).`
+        : sync.status === 'failed' ? `Latest sync failed: ${sync.lastError || 'The private database could not be updated.'}`
+          : sync.status === 'unconfigured' ? 'Source-change sync is not configured.' : 'Source-change sync has not run since this restart.'}${sync.status !== 'succeeded' && sync.lastSuccessAt ? ` Last successful sync: ${readableDate(sync.lastSuccessAt)}.` : ''} Saving a review entry does not approve or publish it.` : '';
 }
 
 async function decide(item, decision, note, status) {
@@ -229,9 +253,12 @@ function reviewCard(item) {
   badges.append(textElement("span", item.risk === "high" ? "Sensitive" : "Standard", `badge ${item.risk}`));
   if (item.conflict) badges.append(textElement("span", "Conflict", "badge conflict"));
   badges.append(textElement("span", item.status || "pending", "badge"));
+  if (item.queueBucket) badges.append(textElement('span', ({ current: 'Current change', comparison: 'Needs comparison', discovery: 'Needs scope review', history: 'History', outside: 'Outside scope' })[item.queueBucket] || item.queueBucket, 'badge'));
   header.append(heading, badges); card.append(header);
 
   card.append(textElement('p', 'This is the saved comparison from when the review was created. Its decision status does not confirm production deployment.', 'intro'));
+  if (item.queueReason) card.append(textElement('p', item.queueReason, 'queue-note'));
+  if (item.duplicateCount > 1) card.append(textElement('p', `${item.duplicateCount} identical saved copies are grouped here. The originals are retained.`, 'queue-note'));
 
   const comparison = document.createElement("div"); comparison.className = "comparison";
   const previousValue = item.currentValue === 'Not currently approved'
@@ -271,7 +298,7 @@ function reviewCard(item) {
   [sourceLink(item.currentSourceUrl, "Open current source"), sourceLink(item.proposedSourceUrl, "Open proposed source")].filter(Boolean).forEach((link) => links.append(link));
   evidence.append(links); card.append(evidence);
 
-  if (item.status === "pending") {
+  if ((item.status === "pending" || item.status === 'escalated') && item.canDecide === true) {
     const form = document.createElement("form"); form.className = "decision-form";
     const note = document.createElement("textarea"); note.placeholder = "Reviewer note (required when approving or marking superseded)"; note.setAttribute("aria-label", "Reviewer note");
     const actions = document.createElement("div"); actions.className = "decision-actions";
@@ -298,11 +325,12 @@ function reviewCard(item) {
   return card;
 }
 
-function render(data = {}) {
-  renderReadiness(data);
+function render(data = {}, polling = false) {
+  if (!polling) renderReadiness(data);
+  renderQueueConnection(data);
   items = data.items || [];
   sourceList.replaceChildren(...items.map(reviewCard)); emptyState.hidden = items.length > 0;
-  $("#emptyState p").textContent = items.length ? "" : "No newly detected source changes match this filter. The scoped documents still withheld are listed above.";
+  $("#emptyState p").textContent = items.length ? "" : "No saved entries match this view and its filters. Other views retain history, outside-scope material, and sources still needing comparison.";
   currentPage = data.pagination?.page || 1;
   pageCount = data.pagination?.pageCount || 1;
   const total = data.pagination?.total ?? items.length;
@@ -314,26 +342,41 @@ function render(data = {}) {
   $("#sensitiveCount").textContent = String(data.summary?.sensitive ?? items.filter(item => item.risk === "high").length);
   $("#conflictCount").textContent = String(data.summary?.conflicts ?? items.filter(item => item.conflict).length);
   $("#retirementCount").textContent = String(data.counts?.retirementPendingPageCount || 0);
-  if (data.reviewError) {
+  const queue = data.queue;
+  const storage = queue?.storage;
+  $("#queueBuckets").textContent = queue && storage?.loaded
+    ? `${queue.current || 0} current changes · ${queue.comparison || 0} need comparison · ${queue.discovery || 0} new sources to sort · ${queue.history || 0} history · ${queue.outside || 0} outside scope${storage.stale ? ' · Older snapshot' : ''}`
+    : queue ? `Review counts are not known yet.${data.reviewError ? ' The saved inventory could not be loaded.' : ' The saved inventory is loading.'}` : '';
+  if (data.reviewError || (storage && (!storage.loaded || storage.stale))) {
     for (const selector of ['#pendingCount', '#sensitiveCount', '#conflictCount']) $(selector).textContent = 'Unknown';
-    $("#emptyState h2").textContent = 'Source-change queue unavailable';
-    $("#emptyState p").textContent = `${data.reviewError} The completed content audit above is available, but this is not confirmation that no new changes need review.`;
+    $("#emptyState h2").textContent = data.reviewError ? 'Source-change queue unavailable' : storage.loaded ? 'Showing an older review snapshot' : 'Loading saved reviews';
+    $("#emptyState p").textContent = `${data.reviewError || 'Current review counts are not available yet.'} The completed content audit above is available. This does not confirm that no changes need review.`;
+    if (!storage?.loaded) $("#pageStatus").textContent = data.reviewError ? 'Reviews unavailable. Use Refresh to retry.' : 'Loading saved reviews in the background…';
   } else {
-    $("#emptyState h2").textContent = 'No new source changes waiting';
+    $("#emptyState h2").textContent = 'No entries in this view';
   }
 }
 
-async function loadReviews(page = currentPage) {
+async function loadReviews(page = currentPage, refresh = false, polling = false) {
+  stopQueuePoll();
+  if (!polling) queuePollCount = 0;
+  const editingNote = () => typeof document.querySelectorAll === 'function'
+    && [...document.querySelectorAll('.decision-form textarea')].some(note => note.value || note === document.activeElement);
+  if (polling && editingNote()) {
+    listError.textContent = 'Automatic updates paused while you edit a note. Use Refresh when finished.';
+    return;
+  }
   const version = ++loadVersion;
   listError.textContent = "";
   $("#pageStatus").textContent = "Loading reviews...";
   $("#previousPage").disabled = true;
   $("#nextPage").disabled = true;
   sourceList.setAttribute("aria-busy", "true");
-  sourceList.replaceChildren();
-  emptyState.hidden = true;
+  if (!polling) { sourceList.replaceChildren(); emptyState.hidden = true; }
   const params = new URLSearchParams();
   params.set("page", String(page));
+  params.set('queue', $('#queueFilter').value || 'attention');
+  if (refresh) params.set('refresh', 'true');
   if ($("#riskFilter").value) params.set("risk", $("#riskFilter").value);
   if ($("#statusFilter").value) params.set("status", $("#statusFilter").value);
   if ($("#conflictFilter").checked) params.set("conflict", "true");
@@ -343,7 +386,16 @@ async function loadReviews(page = currentPage) {
     if (version !== loadVersion) return;
     if (response.status === 401) return showLogin("Your private session expired. Please sign in again.");
     if (!response.ok) throw new Error(data.error || "Reviews could not be loaded.");
-    showDashboard(); render(data);
+    if (polling && editingNote()) {
+      renderQueueConnection(data);
+      listError.textContent = 'Automatic updates paused while you edit a note. Use Refresh when finished.';
+      return;
+    }
+    showDashboard(); render(data, polling);
+    if ((data.queue?.storage?.loading || data.queue?.observation?.refreshing || data.queue?.sync?.status === 'syncing') && queuePollCount < 90 && typeof setTimeout === 'function') {
+      queuePollCount++;
+      queuePollTimer = setTimeout(() => { queuePollTimer = null; loadReviews(currentPage, false, true).catch(error => { listError.textContent = error.message; }); }, 2000);
+    }
   } catch (error) {
     if (version !== loadVersion) return;
     $("#pageStatus").textContent = "Reviews could not be loaded. Use Refresh to try again.";
@@ -358,8 +410,8 @@ $("#loginForm").addEventListener("submit", async (event) => {
   try { const response = await fetch("/api/community-questions/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ password: $("#ownerPassword").value }) }); const data = await response.json(); if (!response.ok) throw new Error(data.error); $("#ownerPassword").value = ""; await loadReviews(1); } catch (error) { $("#loginMessage").textContent = error.message || "Could not sign in."; }
 });
 $("#logoutButton").addEventListener("click", async () => { showLogin("You have been signed out."); await fetch("/api/community-questions/logout", { method: "POST" }).catch(() => {}); });
-[$("#riskFilter"), $("#statusFilter"), $("#conflictFilter")].forEach((control) => control.addEventListener("change", () => { currentPage = 1; return loadReviews(1).catch((error) => { listError.textContent = error.message; }); }));
-$("#refreshButton").addEventListener("click", () => loadReviews().catch((error) => { listError.textContent = error.message; }));
+[$("#queueFilter"), $("#riskFilter"), $("#statusFilter"), $("#conflictFilter")].forEach((control) => control.addEventListener("change", () => { currentPage = 1; return loadReviews(1).catch((error) => { listError.textContent = error.message; }); }));
+$("#refreshButton").addEventListener("click", () => loadReviews(currentPage, true).catch((error) => { listError.textContent = error.message; }));
 loadReviews().catch((error) => { listError.textContent = error.message; });
 
 $("#previousPage").addEventListener("click", () => loadReviews(currentPage - 1).catch(error => { listError.textContent = error.message; }));

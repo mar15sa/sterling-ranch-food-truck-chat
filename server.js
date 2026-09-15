@@ -59,10 +59,13 @@ const { getSterlingRanchWasteSchedule } = require("./lib/community-waste-schedul
 const { getCommunitySearchMetrics, normalizedRoutingPlan } = require("./lib/community-search");
 const { INPUT_CLASSIFICATIONS, classifyRulesInput } = require("./lib/rules-input");
 const { rulebookDestination } = require("./lib/community-rulebook");
-const { communitySourceStatus, getCommunityIndex, getCommunityProfile, scheduleCommunityRefresh } = require("./lib/community-source-manager");
-const { listReviewRecords, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
+const { communitySourceStatus, getCommunityIndex, getCommunityProfile, getSourceReviewSnapshot, scheduleCommunityRefresh } = require("./lib/community-source-manager");
+const { listReviewRecords, getReviewRecordsSnapshot, saveReviewDecision, sourceReviewStatus } = require("./lib/community-source-review");
 const { buildCommunitySourceReadiness } = require("./lib/community-source-readiness");
-const { latestReviewDecision } = require("./lib/community-review-queue");
+const { classifyReviewRecords } = require('./lib/community-review-classification');
+const reviewAudit = require('./data/community-full-url-audit.json');
+const reviewBundledIndex = require('./data/community-index.json');
+const reviewCanonicalLedger = require('./data/canonical-source-ledger.json');
 const { paginateReviews } = require("./lib/community-review-pagination");
 const { operationsSnapshot, recordRequest } = require("./lib/operations");
 const {
@@ -4983,14 +4986,9 @@ async function handleCommunityQuestionReview(req, res) {
   }
 }
 
-async function communityReviewRecords() {
-  const records = await listReviewRecords();
-  const decisions = records.filter((record) => record.recordType === "decision");
-  return records.filter((record) => record.recordType === "review-item").map((item) => {
-    const matching = latestReviewDecision(decisions
-      .filter((decision) => decision.reviewId === item.id && decision.sourceVersion === item.sourceVersion));
-    return matching ? { ...item, status: matching.status, latestDecision: matching } : { ...item, status: "pending" };
-  });
+function communityReviewRecords(records) {
+  return classifyReviewRecords(records, { audit: reviewAudit, bundledIndex: reviewBundledIndex,
+    canonicalLedger: reviewCanonicalLedger, snapshot: getSourceReviewSnapshot() });
 }
 
 async function handleCommunitySourceReview(req, res, url, reviewId = "") {
@@ -4998,41 +4996,62 @@ async function handleCommunitySourceReview(req, res, url, reviewId = "") {
   const reviewAvailable = sourceReviewStatus().configured;
   try {
     if (req.method === "GET") {
-      let items = [];
+      let classified = { items: [], summary: {} };
+      let storage = { loaded: false, loading: false, stale: true, checkedAt: null, lastAttemptAt: null, error: '' };
       let reviewError = "";
       if (reviewAvailable) {
-        try { items = await communityReviewRecords(); }
+        try {
+          const snapshot = getReviewRecordsSnapshot({ refresh: url.searchParams.get('refresh') === 'true' });
+          const { records, ...metadata } = snapshot;
+          storage = metadata;
+          classified = communityReviewRecords(records);
+          reviewError = storage.error || '';
+        }
         catch (error) { reviewError = error.message || "The private review queue could not be reached."; }
       } else {
         reviewError = "The private review queue is not configured.";
       }
+      const items = classified.items.map(item => ({ ...item,
+        canDecide: item.canDecide === true && storage.loaded && !storage.stale && !storage.loading && !reviewError }));
       if (reviewId) {
         if (reviewError) return sendJson(res, 503, { error: reviewError });
+        if (!storage.loaded) return sendJson(res, 503, { error: 'Saved reviews are still loading. Try again shortly.' });
         const item = items.find((record) => record.id === reviewId);
         if (!item) return sendJson(res, 404, { error: "That review item was not found." });
         return sendJson(res, 200, { item });
       }
-      const page = paginateReviews(items, url.searchParams);
+      const params = new URLSearchParams(url.searchParams);
+      if (!params.has('queue')) params.set('queue', 'attention');
+      const page = paginateReviews(items, params);
+      const outstanding = items.filter(item => ['pending', 'escalated'].includes(item.status)
+        && !['history', 'outside'].includes(item.queueBucket));
       const allReviewSummary = {
-        pending: items.filter(item => item.status === "pending").length,
-        sensitive: items.filter(item => item.status === "pending" && item.risk === "high").length,
-        conflicts: items.filter(item => item.status === "pending" && item.conflict).length,
+        pending: outstanding.length,
+        sensitive: outstanding.filter(item => item.risk === "high").length,
+        conflicts: outstanding.filter(item => item.conflict).length,
       };
       const counts = communitySourceStatus(undefined, Date.now(), { includeApprovedEvidenceCheckTime: true });
+      const observed = getSourceReviewSnapshot();
       return sendJson(res, 200, {
         ...page,
         counts,
         readiness: buildCommunitySourceReadiness(counts, allReviewSummary),
         reviewAvailable,
         reviewError,
+        queue: { ...classified.summary, selected: params.get('queue'), storage,
+          observation: { initialized: observed.initialized, checkedAt: observed.checkedAt,
+            refreshing: observed.refreshing, error: observed.error }, sync: observed.sync },
       });
     }
     if (!reviewAvailable) return sendJson(res, 503, { error: "The private source-review database is not configured yet." });
     if (req.method !== "POST" || !reviewId) return sendJson(res, 405, { error: "Use GET, or POST on a specific review item." });
     if (!isSameOriginRequest(req)) return sendJson(res, 403, { error: "Source-review decisions must come from the private owner dashboard." });
-    const items = await communityReviewRecords();
+    // A cached display never authorizes a write. Reload decisions and recheck
+    // exact-version/current-scope eligibility immediately before saving.
+    const { items } = communityReviewRecords(await listReviewRecords());
     const item = items.find((record) => record.id === reviewId);
     if (!item) return sendJson(res, 404, { error: "That review item was not found." });
+    if (item.canDecide !== true) return sendJson(res, 409, { error: 'This saved comparison is not confirmed as a current actionable version. Refresh or complete its source comparison before deciding.' });
     const body = await readJsonBody(req);
     const decision = await saveReviewDecision({
       ...body,
