@@ -30,7 +30,8 @@ function assertBinding({profile,communityIndex,rulesIndex,communityId}){
 }
 function makeRetriever(context){
   assertBinding(context);const {profile,communityIndex,rulesIndex,communityId,now=Date.now(),ruleSearch=rules.searchRulesIndex,
-    communityMode='keyword',communitySearch=null,stagingFormApproval=null,liveRetrieve=null}=context;
+    sourceRouting='all-static',communityMode='keyword',communitySearch=null,stagingFormApproval=null,liveRetrieve=null}=context;
+  if(!['all-static','per-need'].includes(sourceRouting)||sourceRouting==='per-need'&&communityMode==='complete-catalog')throw new Error('Invalid source routing');
   if(communityMode==='semantic'&&typeof communitySearch!=='function')throw new Error('Semantic community mode requires an explicit ranker');
   if(!['keyword','complete-catalog','semantic'].includes(communityMode)||stagingFormApproval&&communityMode!=='complete-catalog')throw new Error('Invalid experimental catalog mode');
   const docs=eligibleCorpus(rulesIndex,communityId,now),index={...rulesIndex,documents:docs};
@@ -68,13 +69,15 @@ function makeRetriever(context){
     }
     for(const need of plan.needs){
       const query=`${need.subject} ${need.request}`;
+      if(sourceRouting==='per-need'&&!['governing-rule','official-action','official-process','official-information','live-operation'].includes(need.evidenceKind))throw new Error('Unknown evidence kind for routing');
       if(need.evidenceKind==='live-operation'){
         if(!liveRetrieve){diagnostics.push({needId:need.id,reason:'live-adapter-not-integrated'});continue;}
         const result=await liveRetrieve(need,plan);diagnostics.push(...(result.diagnostics||[]));
         for(const source of result.sources||[])add('live',source,need.id,0,query);
         continue;
       }
-      const rr=communityMode==='complete-catalog'&&need.evidenceKind==='official-action'?[]:(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
+      const skipRules=communityMode==='complete-catalog'&&need.evidenceKind==='official-action'||sourceRouting==='per-need'&&['official-action','official-information'].includes(need.evidenceKind);
+      const rr=skipRules?[]:(await ruleSearch(index,query,4)).filter(d=>eligibleForQuestion(d,query));
       const cr=communityMode==='keyword'?searchCommunityIndex(query,{index:communityIndex,communityId,now,limit:4,includeActionOnlyProjections:true,allowPartialRequestedDetails:true,...needSearchOptions(need)}).sources.filter(s=>!isDynamicSource(s)):[];
       if(communityMode==='semantic'){
         const queryNow=(context.clock||(()=>now))();
@@ -84,7 +87,11 @@ function makeRetriever(context){
         const identity=s=>hash([s.id,s.communityId,s.sourceUrl,s.contentHash,s.title,s.text,s.facts,s.actions]);
         for(const s of selected){const original=approved.get(s.id);if(!original||identity(s)!==identity(original))throw new Error('Community selection changed approved evidence');cr.push(original);}
       }
-      for(let rank=0;rank<Math.max(rr.length,cr.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',cr[rank],need.id,rank,query);}
+      const routed=sourceRouting==='per-need'?cr.filter(s=>{
+        const keep=need.evidenceKind==='governing-rule'?['municode','adopted-document'].includes(s.authorityClass):need.evidenceKind==='official-action'?Boolean(s.actions?.length):true;
+        if(!keep)diagnostics.push({needId:need.id,sourceId:s.id,reason:'source-role-does-not-match-need'});return keep;
+      }):cr;
+      for(let rank=0;rank<Math.max(rr.length,routed.length);rank++){add('rules',rr[rank],need.id,rank,query);add('community',routed[rank],need.id,rank,query);}
     }
     const candidates=[...all.values()].sort((a,b)=>a.rank-b.rank);
     if(context.observeCandidates)await context.observeCandidates(structuredClone({plan,candidates}));
@@ -94,7 +101,7 @@ function makeRetriever(context){
     const units=[...ruleUnits,...catalogUnits];
     const sources=units.filter(u=>u.text).map(u=>{const {source:internal,...s}=u.source;return {...s,text:u.text,actions:s.actions.map(a=>({id:a.id,label:a.label,url:a.url,actionType:a.actionType})),contextCoverage:u.contextCoverage};});
     const actions=sources.flatMap(s=>s.actions.map((a,i)=>({id:`${s.id}-a${i}`,label:a.label,url:a.url,actionType:a.actionType,sourceId:s.id,communityId,version:s.version,stagingOnly:s.stagingOnly})));
-    return {communityId,communityMode,stagingNavigationEnabled:Boolean(stagingFormApproval),sources,actions,diagnostics,snapshotHash:hash([communityId,communityIndex,rulesIndex,stagingFormApproval]),
+    return {communityId,communityMode,sourceRouting,stagingNavigationEnabled:Boolean(stagingFormApproval),sources,actions,diagnostics,snapshotHash:hash([communityId,communityIndex,rulesIndex,stagingFormApproval]),
       retrievalCoverage:{candidateUnits:units.length,providedUnits:sources.length},
       omissions:units.filter(u=>!u.text).map(u=>({id:u.source.id,sourceId:u.source.sourceId,needIds:u.source.retrievedForNeedIds,reason:u.contextCoverage}))};
   };

@@ -53,3 +53,17 @@ test('packet accounting exposes every excluded source without changing selected 
  assert.deepEqual(units.slice(1).map(u=>[u.source.id,u.text,u.contextCoverage]),[['b','','omitted-budget'],['c','','omitted-source-limit']]);
  assert.deepEqual(inputs.map(s=>s.text),['AAA','BBBB','C']);
 });
+test('purpose routing preserves approved governing sources in either library and avoids rules for link requests',async()=>{
+ for(const tenant of ['alpha','beta']){
+  const ctx=fixture(tenant);ctx.sourceRouting='per-need';let ruleCalls=0;
+  const communitySearch=async()=>communityProjectionCorpus(ctx.communityIndex,{communityId:tenant,now});
+  const retrieve=()=>makeRetriever({...ctx,ruleSearch:index=>{ruleCalls++;return index.documents;},communitySearch});
+  const form=await retrieve()(plan);assert.equal(ruleCalls,0);assert.equal(form.sources.length,1);assert.equal(form.actions.length,1);
+  const rulePlan={needs:[{...plan.needs[0],task:'permission',evidenceKind:'governing-rule'}]};
+  const rules=await retrieve()(rulePlan);assert.equal(rules.sources.length,1);assert.equal(rules.actions.length,0);assert.equal(rules.diagnostics[0].reason,'source-role-does-not-match-need');
+  ctx.communityIndex.sources[0].authorityClass='adopted-document';
+  const both=await retrieve()(rulePlan);assert.equal(both.sources.length,2);assert.ok(both.sources.every(s=>s.role==='governing-rule'));
+  const process=await retrieve()({needs:[{...plan.needs[0],task:'process',evidenceKind:'official-process'}]});assert.equal(process.sources.length,2);
+  await assert.rejects(retrieve()({needs:[{...plan.needs[0],evidenceKind:'invented'}]}),/Unknown evidence/);
+ }
+});

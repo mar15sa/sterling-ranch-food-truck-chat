@@ -2,7 +2,7 @@ import fs from 'node:fs';import path from 'node:path';import crypto from 'node:c
 import {createCommunitySemanticRanker} from './community-semantic-ranker.mjs';
 import {createSemanticRanker} from './semantic-ranker.mjs';import corpusTools from './semantic-corpus.js';
 import flow from './flow-evidence.js';import snapshot from './flow-snapshot.js';import rules from '../../lib/rules-assistant.js';
-const [inputArg,cacheArg,outArg,rulesCacheArg]=process.argv.slice(2);if(!inputArg||!cacheArg||!outArg)throw Error('Require prior integration directory, community vector cache and new output directory');
+const [inputArg,cacheArg,outArg,rulesCacheArg,experiment]=process.argv.slice(2);if(!inputArg||!cacheArg||!outArg)throw Error('Require prior integration directory, community vector cache and new output directory');
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8')),input=path.resolve(inputArg),cache=path.resolve(cacheArg),out=path.resolve(outArg);
 if(fs.existsSync(out))throw Error('Preserve prior capture; use a new directory');
 const communityIndex=read(path.join(input,'community-index.json')),attestation=read(path.join(input,'attestation.json'));
@@ -10,7 +10,8 @@ snapshot.validateSnapshot(communityIndex,attestation,read('data/community-index.
 const profile=read('data/communities/'+communityIndex.communityId+'.json'),rulesIndex=await rules.loadRulesIndex();
 const saved=read(path.join(input,'current-keyword-loaded-packets.json')),cases=saved.rows.map(r=>({id:r.trial,question:r.question,plan:r.plan}));
 if(cases.length!==5||new Set(cases.map(c=>c.id)).size!==5||cases.some(c=>!c.plan.needs?.length))throw Error('Require five preserved development plans');
-const methodNames=rulesCacheArg?['keyword','semantic','combined-hybrid','combined-semantic']:['keyword','semantic'];
+if(experiment&&experiment!=='source-routing'||experiment&&!rulesCacheArg)throw Error('Invalid routing experiment configuration');
+const methodNames=experiment?['combined-semantic','purpose-routed']:rulesCacheArg?['keyword','semantic','combined-hybrid','combined-semantic']:['keyword','semantic'];
 const jobs=cases.flatMap(c=>[1,2].flatMap(repetition=>methodNames.map(method=>({caseId:c.id,repetition,method,order:crypto.randomBytes(8).toString('hex')})))).sort((a,b)=>a.order.localeCompare(b.order));
 fs.mkdirSync(out,{recursive:true});fs.mkdirSync(path.join(out,'code'));
 for(const file of ['flow-evidence.js','community-semantic.js','community-semantic-ranker.mjs','compare-combined-retrieval.mjs','semantic-ranker.mjs','semantic-corpus.js'])fs.copyFileSync('scripts/quality-eval/'+file,path.join(out,'code',file));
@@ -28,6 +29,7 @@ try{
   manifest.rulesInitializationMs=Date.now()-rulesStarted;manifest.rulesRanker={directory:path.resolve(rulesCacheArg),model:ruleRanker.model,modelRevision:ruleRanker.modelRevision,corpusHash:ruleRanker.corpusHash};
   for(const method of ['hybrid','semantic'])methods['combined-'+method]=flow.makeRetriever({...context,communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method})});
  }
+ if(experiment)methods['purpose-routed']=flow.makeRetriever({...context,sourceRouting:'per-need',communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method:'semantic'})});
  manifest.status='querying';save();
  for(const [i,job] of jobs.entries()){
   const c=cases.find(c=>c.id===job.caseId),start=Date.now(),packet=await methods[job.method](c.plan),elapsedMs=Date.now()-start;
