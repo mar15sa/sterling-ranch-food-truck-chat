@@ -30,7 +30,7 @@ export async function createSemanticRanker({directory,documents,communityId,reus
   }
   const keywordPreparation=preparation.createEligibleKeywordIndex(documents,communityId);
   return {preparationStats:()=>keywordPreparation.stats(),communityId,corpusHash:hash(documents),model:manifest.model,modelRevision:manifest.modelRevision,
-    async search(index,query,limit=4,{now=Date.now(),eligibilityQuestion=query,method='hybrid'}={}){
+    async search(index,query,limit=4,{now=Date.now(),eligibilityQuestion=query,method='hybrid',reusePreparation=reuseKeywordPreparation}={}){
       if(!['hybrid','semantic'].includes(method))throw new Error('Unknown semantic rules ranking method');
       if(hash(index.documents)!==manifest.eligibleCorpusSha256)throw new Error('Retrieval index changed after semantic cache binding');
       const eligible=documents.filter(d=>rules.sourceLifecycleStatus(d,now)==='current'&&corpusTools.eligibleForQuestion(d,eligibilityQuestion));
@@ -47,7 +47,7 @@ export async function createSemanticRanker({directory,documents,communityId,reus
       }
       const dense=[...best.values()].sort((a,b)=>b.score-a.score).slice(0,30);
       if(method==='semantic')return dense.slice(0,limit).map(r=>({...r.document,retrievalMethod:'local-semantic',similarity:r.score}));
-      const keywordIndex=reuseKeywordPreparation?keywordPreparation.get(index,eligible):{...index,documents:eligible};
+      const keywordIndex=reusePreparation?keywordPreparation.get(index,eligible):{...index,documents:eligible};
       const keyword=rules.searchRulesIndex(keywordIndex,query,30).map(document=>({document,score:document.score}));
       for(const r of keyword)if(byId.get(r.document.id)?.text!==r.document.text)throw new Error('Keyword evidence identity changed');
       return corpusTools.fuse(keyword,dense,limit).map(r=>({...r.document,retrievalMethod:'local-semantic-plus-keyword',fusionScore:r.fusionScore,retrievalRanks:r.ranks}));

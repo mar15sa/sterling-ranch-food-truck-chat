@@ -10,11 +10,11 @@ snapshot.validateSnapshot(communityIndex,attestation,read('data/community-index.
 const profile=read('data/communities/'+communityIndex.communityId+'.json'),rulesIndex=await rules.loadRulesIndex();
 const saved=read(path.join(input,'current-keyword-loaded-packets.json')),cases=saved.rows.map(r=>({id:r.trial,question:r.question,plan:r.plan}));
 if(cases.length!==5||new Set(cases.map(c=>c.id)).size!==5||cases.some(c=>!c.plan.needs?.length))throw Error('Require five preserved development plans');
-if(experiment&&!['source-routing','source-routing-hybrid'].includes(experiment)||experiment&&!rulesCacheArg)throw Error('Invalid routing experiment configuration');
-const methodNames=experiment==='source-routing-hybrid'?['purpose-routed','purpose-routed-hybrid']:experiment?['combined-semantic','purpose-routed']:rulesCacheArg?['keyword','semantic','combined-hybrid','combined-semantic']:['keyword','semantic'];
+if(experiment&&!['source-routing','source-routing-hybrid','keyword-preparation'].includes(experiment)||experiment&&!rulesCacheArg)throw Error('Invalid routing experiment configuration');
+const methodNames=experiment==='keyword-preparation'?['purpose-routed-hybrid','prepared-hybrid']:experiment==='source-routing-hybrid'?['purpose-routed','purpose-routed-hybrid']:experiment?['combined-semantic','purpose-routed']:rulesCacheArg?['keyword','semantic','combined-hybrid','combined-semantic']:['keyword','semantic'];
 const jobs=cases.flatMap(c=>[1,2].flatMap(repetition=>methodNames.map(method=>({caseId:c.id,repetition,method,order:crypto.randomBytes(8).toString('hex')})))).sort((a,b)=>a.order.localeCompare(b.order));
 fs.mkdirSync(out,{recursive:true});fs.mkdirSync(path.join(out,'code'));
-for(const file of ['flow-evidence.js','community-semantic.js','community-semantic-ranker.mjs','compare-combined-retrieval.mjs','semantic-ranker.mjs','semantic-corpus.js'])fs.copyFileSync('scripts/quality-eval/'+file,path.join(out,'code',file));
+for(const file of ['flow-evidence.js','community-semantic.js','community-semantic-ranker.mjs','compare-combined-retrieval.mjs','semantic-ranker.mjs','semantic-corpus.js','eligible-keyword-index.js'])fs.copyFileSync('scripts/quality-eval/'+file,path.join(out,'code',file));
 for(const [key,value] of Object.entries({cases,communityIndex,attestation,rulesIndex,profile}))fs.writeFileSync(path.join(out,key+'.json'),JSON.stringify(value,null,2)+'\n');
 const manifest={status:'initializing',isTest:true,startedAt:new Date().toISOString(),codeRevision:cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
  sourceSnapshotHash:flow.hash(communityIndex),rulesSnapshotHash:flow.hash(rulesIndex),casesHash:flow.hash(cases),communityId:communityIndex.communityId,methods:methodNames,design:jobs,completed:[],paidApiCalls:0,newSubscriptions:0,
@@ -30,12 +30,13 @@ try{
   for(const method of ['hybrid','semantic'])methods['combined-'+method]=flow.makeRetriever({...context,communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method})});
  }
  if(experiment)methods['purpose-routed']=flow.makeRetriever({...context,sourceRouting:'per-need',communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method:'semantic'})});
- if(experiment==='source-routing-hybrid')methods['purpose-routed-hybrid']=flow.makeRetriever({...context,sourceRouting:'per-need',communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method:'hybrid'})});
+ if(['source-routing-hybrid','keyword-preparation'].includes(experiment))methods['purpose-routed-hybrid']=flow.makeRetriever({...context,sourceRouting:'per-need',communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method:'hybrid'})});
+ if(experiment==='keyword-preparation')methods['prepared-hybrid']=flow.makeRetriever({...context,sourceRouting:'per-need',communityMode:'semantic',communitySearch:(...args)=>ranker.search(...args),ruleSearch:(index,query,limit)=>ruleRanker.search(index,query,limit,{now:Date.now(),eligibilityQuestion:query,method:'hybrid',reusePreparation:true})});
  manifest.status='querying';save();
  for(const [i,job] of jobs.entries()){
   const c=cases.find(c=>c.id===job.caseId),start=Date.now(),packet=await methods[job.method](c.plan),elapsedMs=Date.now()-start;
   const record={id:'packet-'+String(i+1).padStart(3,'0'),isTest:true,...job,question:c.question,plan:c.plan,elapsedMs,packet};
   fs.writeFileSync(path.join(out,record.id+'.json'),JSON.stringify(record,null,2)+'\n');manifest.completed.push({id:record.id,...job});save();console.log(JSON.stringify({completed:i+1,total:jobs.length,caseId:job.caseId,method:job.method}));
  }
- manifest.status='captured';
+ manifest.status='captured';if(ruleRanker)manifest.keywordPreparation=ruleRanker.preparationStats();
 }catch(e){manifest.status='failed';manifest.error=e.message;process.exitCode=1;}finally{if(ruleRanker)await ruleRanker.dispose();if(ranker)await ranker.dispose();manifest.finishedAt=new Date().toISOString();manifest.peakRssBytes=process.resourceUsage().maxRSS*1024;save();console.log(JSON.stringify({status:manifest.status,completed:manifest.completed.length,error:manifest.error}));}
