@@ -7,6 +7,15 @@ const check={actionReviews:[],failureDetails:[],outcome:'complete',hardFailures:
 const draft={answer:'Sheds require approval.',actionIds:[]};
 function provider(outputs){let i=0;const requests=[];return {requests,fetch:async(_url,init)=>{const body=JSON.parse(init.body);requests.push(body);const output=outputs[i++];if(output instanceof Error)throw output;return new Response(JSON.stringify({stop_reason:'tool_use',content:[{type:'tool_use',name:body.tools[0].name,input:output}],usage:{input_tokens:1,output_tokens:1}}));}};}
 const opts={communityId:'alpha',apiKey:'test-only-key',retrieve:async()=>structuredClone(packet)};
+
+test('opt-in multi-role contract reaches initial writer, repair and both checks without dropping evidence',async()=>{
+ const current={...structuredClone(packet),sourceRouting:'all-static'};current.sources[0].retrievedForNeedIds=['need-1'];
+ const bad={...check,outcome:'partial',hardFailures:['missing-core-answer']};
+ const p=provider([plan,draft,bad,draft,check]),result=await runCandidate({question:'May I build a shed?'},{...opts,retrieve:async()=>current,fetchImpl:p.fetch,evidenceContract:true});
+ assert.equal(result.status,'checked-candidate');assert.equal(p.requests.length,5);
+ for(const request of p.requests.slice(1)){const payload=JSON.parse(request.messages[0].content);assert.equal(payload.evidenceContract.needs[0].semanticCoverage,'not-assessed');assert.deepEqual(payload.evidence.map(s=>s.id),['rule']);assert.match(request.system,/navigation-only/);}
+ const ordinary=provider([plan,draft,check]);await runCandidate({question:'May I build a shed?'},{...opts,fetchImpl:ordinary.fetch});assert.ok(ordinary.requests.every(r=>!JSON.parse(r.messages[0].content).evidenceContract));
+});
 test('flow snapshots bind each rules URL to its community, including shared hosts',()=>{
   for(const communityId of ['alpha','beta']){const url=`https://rules.example/${communityId}`;const context={communityId,profile:{communityId,connectors:[{type:'municode',baseUrl:url}]},communityIndex:{communityId},rulesIndex:{source:{sourceUrl:url},documents:[]}};
     assert.doesNotThrow(()=>assertBinding(context));

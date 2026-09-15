@@ -65,7 +65,7 @@ function coverageIssues(check,plan,packet,actions=[]){
   }
   return [...new Set(issues)];
 }
-async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline',clock=Date.now,profile=null,writerPresentation=null,evidenceBriefModel=null}={}){
+async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=process.env.ANTHROPIC_API_KEY,models={interpret:'claude-haiku-4-5',compose:'claude-haiku-4-5',check:'claude-sonnet-5'},now='2026-09-14',maxRepairs=1,assessmentMode='inline',clock=Date.now,profile=null,writerPresentation=null,evidenceBriefModel=null,evidenceContract=false}={}){
   Object.values(models).forEach(ensureAllowedModel);if(!communityId||!apiKey||![0,1].includes(maxRepairs)||!['inline','offline-review'].includes(assessmentMode))throw new Error('Invalid bounded candidate configuration');
   const trace=[],start=Date.now();
   async function invoke(body,tool){
@@ -121,6 +121,7 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
       if(writerPresentation?.timezone&&profile?.timezone&&writerPresentation.timezone!==profile.timezone)throw Error('Writer timezone does not match community');
       if(presentationOptions)body=require('./writer-presentation').presentWriterRequest(body,packet,presentationOptions);
       if(evidenceBrief)body=require('./evidence-brief').attachBrief(body,evidenceBrief,row,plan,packet,briefOptions());
+      if(evidenceContract)body=require('./need-evidence-contract').attachEvidenceContract(body,plan,packet,clock());
       const draft=await invoke(body,'compose_requested_answer'),issues=draftIssues(draft,packet);trace.push({stage:attempt?'repair':'composition',draft,issues});
       if(issues.length){previous={draft,issues};continue;}
       const actions=packet.actions.filter(a=>draft.actionIds.includes(a.id)),response={answer:draft.answer,actions,sources:packet.sources};
@@ -133,6 +134,7 @@ async function runCandidate(row,{communityId,retrieve,fetchImpl=fetch,apiKey=pro
         request.messages[0].content=JSON.stringify(presented);request.system+='\n'+require('./writer-presentation').PRESENTATION_INSTRUCTIONS;
       }
       if(evidenceBrief)request=require('./evidence-brief').attachBrief(request,evidenceBrief,row,plan,packet,briefOptions(),true);
+      if(evidenceContract)request=require('./need-evidence-contract').attachEvidenceContract(request,plan,packet,clock());
       const check=await invoke(request,'check_planned_answer_acceptance'),checkIssues=coverageIssues(check,plan,packet,actions);trace.push({stage:'acceptance',check,issues:checkIssues});
       if(hash(packet)!==snapshot)return unresolved('evidence-changed-during-answer',{plan});
       if(packetIssues(packet,communityId,clock()).length)return unresolved('evidence-expired-during-answer',{plan});
