@@ -422,7 +422,9 @@ test("AI phrasing does not erase a mature rule engine decision for the named pro
 });
 
 test("conflicted official contact versions do not expose the prior internet number", async () => {
-  const answer = await answerCommunityQuestion("Who do I contact about internet service?", {
+  for (const question of ["Who do I contact about internet service?", "What is the internet billing phone number?",
+    "Who do I contact about internet billing?"]) {
+  const answer = await answerCommunityQuestion(question, {
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
@@ -431,11 +433,16 @@ test("conflicted official contact versions do not expose the prior internet numb
     synthesizeCommunityAnswer: false,
   });
   assert.equal(answer.confidence.canAnswer, false);
-  assert.equal(answer.answerMode, "community-freshness-withheld");
-  assert.equal(answer.answerStatus, "source-unavailable");
+  assert.equal(answer.answerMode, "community-contact-boundary");
+  assert.equal(answer.answerStatus, "could-not-verify");
   assert.doesNotMatch(answer.answer, /833-926-1289/);
-  assert.match(answer.sources[0].title, /Important Contact Information/);
-  assert.match(answer.actions[0].url, /\/324\/Important-Contact-Information/);
+  assert.doesNotMatch(answer.answer, /303[)\s-]*248[\s-]*9931/);
+  assert.doesNotMatch(answer.answer, /833[)\s-]*772[\s-]*2240|ClientCare@AmCoBi/i);
+  // The current review preserves the dedicated provider support source;
+  // unrelated CAB directory contacts must not substitute for that service.
+  assert.match(answer.sources[0].title, /Internet Service/);
+  assert.match(answer.actions[0].url, /\/242\/Internet-Service/);
+  }
 });
 
 test("the approved recurring schedule stays useful when the live calendar is temporarily unavailable", async () => {

@@ -1,0 +1,834 @@
+{
+  "isTest": true,
+  "observedAt": "2026-09-14T22:07:10.857Z",
+  "stagingRevision": "856c722107346bbeb75c905f1887bf0f737045e1",
+  "rows": [
+    {
+      "id": "water-billing-contact",
+      "question": "Who can help with my water bill?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "contact",
+        "goals": [
+          "contact"
+        ],
+        "subject": "water bill help",
+        "requestedDetails": [
+          "contact"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "water bill contact",
+          "water bill help",
+          "water utility support"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "landscape-inspection-process",
+      "question": "How do I schedule a landscape inspection?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "landscape inspection",
+        "requestedDetails": [
+          "action"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "schedule landscape inspection",
+          "landscape inspection booking",
+          "how to request landscape inspection"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "outdoor-water-method",
+      "question": "What plant size should I use to calculate outdoor water usage?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "plant size outdoor water usage calculation",
+        "requestedDetails": [
+          "specification",
+          "methods"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "plant size outdoor water usage",
+          "landscape water calculation",
+          "plant water requirements"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "water-account-access",
+      "question": "How do I see my water usage online?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "account-access",
+        "goals": [
+          "account-access"
+        ],
+        "subject": "water usage monitoring account access",
+        "requestedDetails": [
+          "action"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "water usage monitoring",
+          "water usage account access"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "dated-water-report",
+      "question": "What did the 2026 water quality report find?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "water quality report 2026",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "2026 water quality report",
+          "water quality findings 2026",
+          "annual water quality report"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "dominion-report-identity",
+      "question": "What did the Dominion water quality report say about its 2026 inspection violations?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "Dominion water quality report 2026 inspection violations",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "water quality",
+          "facility": "Dominion",
+          "location": ""
+        },
+        "searchQueries": [
+          "Dominion water quality report 2026",
+          "Dominion inspection violations 2026",
+          "water quality inspection findings"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "castle-rock-report-identity",
+      "question": "What monitoring violations did Castle Rock report for 2025?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "Castle Rock monitoring violations",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "Castle Rock",
+          "location": ""
+        },
+        "searchQueries": [
+          "Castle Rock monitoring violations 2025",
+          "Castle Rock violations report 2025"
+        ],
+        "scope": "ambiguous",
+        "needsClarification": true,
+        "clarificationQuestion": "Are you asking about violations reported by Castle Rock government, or violations at a Castle Rock facility within your community?"
+      }
+    },
+    {
+      "id": "compound-report-systems",
+      "question": "What did the CAB, Dominion and Castle Rock water quality report say about violations?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "water quality report violations",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "water quality",
+          "facility": "CAB, Dominion, Castle Rock",
+          "location": ""
+        },
+        "searchQueries": [
+          "water quality report violations CAB Dominion Castle Rock",
+          "water quality violations",
+          "water quality report"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "cab-report-year-boundary",
+      "question": "What did the CAB water quality report say about coliform in 2024?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "CAB water quality report coliform 2024",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "water quality",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "CAB water quality report coliform",
+          "water quality coliform 2024",
+          "CAB water report"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "dominion-report-year-boundary",
+      "question": "What did the Dominion water quality report say about inspection violations in 2025?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "Dominion water quality report inspection violations",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "water quality",
+          "facility": "Dominion",
+          "location": ""
+        },
+        "searchQueries": [
+          "Dominion water quality report 2025",
+          "water inspection violations 2025",
+          "Dominion water quality inspection"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "compound-report-year-boundary",
+      "question": "What did the CAB and Dominion water quality report say about violations in 2025?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "water quality report violations",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "CAB Dominion water quality report 2025",
+          "water quality violations 2025",
+          "water quality report violations"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "swapped-report-year-boundary",
+      "question": "What did the CAB water quality report find in 2026 and Dominion find in 2025?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "water quality report findings",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "water quality",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "CAB water quality report 2026",
+          "Dominion water quality 2025",
+          "water quality findings"
+        ],
+        "scope": "community",
+        "needsClarification": true,
+        "clarificationQuestion": "Are you asking about water quality test results from specific water providers or testing organizations?"
+      }
+    },
+    {
+      "id": "distinct-report-years",
+      "question": "What did the CAB water quality report find in 2025 and Dominion find in 2026?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "water quality report findings",
+        "requestedDetails": [],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "water quality",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "CAB water quality report 2025",
+          "Dominion water quality 2026",
+          "water quality findings"
+        ],
+        "scope": "ambiguous",
+        "needsClarification": true,
+        "clarificationQuestion": "Are CAB and Dominion specific organizations or facilities you're asking about, or are you looking for general water quality reports?"
+      }
+    },
+    {
+      "id": "current-water-safety-boundary",
+      "question": "Does the 2026 water report prove my drinking water is safe right now?",
+      "routingPlan": {
+        "intent": "status",
+        "goal": "status",
+        "goals": [
+          "status"
+        ],
+        "subject": "drinking water safety",
+        "requestedDetails": [
+          "status"
+        ],
+        "dateRange": {
+          "kind": "current",
+          "start": "2026-09-14",
+          "end": "2026-09-14",
+          "label": "today"
+        },
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "drinking water safety status",
+          "water report safety",
+          "current water quality"
+        ],
+        "scope": "community",
+        "needsClarification": true,
+        "clarificationQuestion": "Are you asking whether the annual water report confirms your water is currently safe to drink, or whether the report itself is available?"
+      }
+    },
+    {
+      "id": "internet-contact-boundary",
+      "question": "What is the internet billing phone number?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "contact",
+        "goals": [
+          "contact"
+        ],
+        "subject": "internet billing phone number",
+        "requestedDetails": [
+          "contact"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "internet billing phone number",
+          "internet service contact",
+          "billing phone"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "internet-support-boundary",
+      "question": "Who do I contact about internet service?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "contact",
+        "goals": [
+          "contact"
+        ],
+        "subject": "internet service",
+        "requestedDetails": [
+          "contact"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "internet service contact",
+          "who to contact for internet"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "adopted-rule-and-process",
+      "question": "Can I build a shed and where do I apply?",
+      "routingPlan": {
+        "intent": "rules",
+        "goal": "permission",
+        "goals": [
+          "permission",
+          "application"
+        ],
+        "subject": "shed construction",
+        "requestedDetails": [
+          "permission",
+          "action"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "shed construction permission",
+          "shed building permit application",
+          "where to apply for shed"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "facility-booking",
+      "question": "How do I reserve the Great Hall?",
+      "routingPlan": {
+        "intent": "facilities",
+        "goal": "booking",
+        "goals": [
+          "booking"
+        ],
+        "subject": "Great Hall reservation",
+        "requestedDetails": [
+          "action"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "Great Hall",
+          "location": ""
+        },
+        "searchQueries": [
+          "reserve Great Hall",
+          "Great Hall booking",
+          "how to book Great Hall"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "great-hall-price-scope",
+      "question": "How much does the Great Hall cost?",
+      "routingPlan": {
+        "intent": "facilities",
+        "goal": "cost",
+        "goals": [
+          "cost"
+        ],
+        "subject": "Great Hall rental cost",
+        "requestedDetails": [
+          "price"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "Great Hall",
+          "location": ""
+        },
+        "searchQueries": [
+          "Great Hall cost",
+          "Great Hall rental price",
+          "Great Hall fee"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "pavilion-price-scope",
+      "question": "How much does the North Pavilion cost?",
+      "routingPlan": {
+        "intent": "facilities",
+        "goal": "cost",
+        "goals": [
+          "cost"
+        ],
+        "subject": "North Pavilion",
+        "requestedDetails": [
+          "price"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "North Pavilion",
+          "location": ""
+        },
+        "searchQueries": [
+          "North Pavilion cost",
+          "North Pavilion rental fee",
+          "North Pavilion price"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "nonresident-membership-scope",
+      "question": "How much is nonresident clubhouse membership?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "account-access",
+        "goals": [
+          "account-access"
+        ],
+        "subject": "nonresident clubhouse membership",
+        "requestedDetails": [
+          "action",
+          "price"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "clubhouse",
+          "location": ""
+        },
+        "searchQueries": [
+          "nonresident clubhouse membership cost",
+          "clubhouse membership fee nonresident",
+          "nonresident membership price"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "non-resident-membership-variant",
+      "question": "How much is non-resident membership?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "cost",
+        "goals": [
+          "cost"
+        ],
+        "subject": "non-resident membership",
+        "requestedDetails": [
+          "price"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "non-resident membership cost",
+          "non-resident membership fee",
+          "non-resident membership price"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "caregiver-pass-scope",
+      "question": "What does the annual caregiver pass cost and who is eligible?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "cost",
+        "goals": [
+          "cost"
+        ],
+        "subject": "annual caregiver pass",
+        "requestedDetails": [
+          "price",
+          "eligibility"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "annual caregiver pass cost",
+          "caregiver pass eligibility",
+          "caregiver pass price"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "guest-quantity-boundary",
+      "question": "How many guest passes come with membership?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "membership guest passes",
+        "requestedDetails": [
+          "quantity"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "guest passes membership",
+          "membership benefits guest passes",
+          "how many guest passes"
+        ],
+        "scope": "community",
+        "needsClarification": true,
+        "clarificationQuestion": "Which membership program are you asking about?"
+      }
+    },
+    {
+      "id": "equipment-check-instructions",
+      "question": "How can I check whether my Rachio watering schedule is running?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "Rachio watering schedule",
+        "requestedDetails": [
+          "action"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "Rachio watering schedule status",
+          "check Rachio irrigation running"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "equipment-live-status-boundary",
+      "question": "Is my sprinkler running right now?",
+      "routingPlan": {
+        "intent": "status",
+        "goal": "status",
+        "goals": [
+          "status"
+        ],
+        "subject": "sprinkler system",
+        "requestedDetails": [
+          "status"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "sprinkler running now",
+          "sprinkler system status",
+          "is sprinkler on"
+        ],
+        "scope": "ambiguous",
+        "needsClarification": true,
+        "clarificationQuestion": "Are you asking about a community sprinkler system or your residential sprinkler system?"
+      }
+    },
+    {
+      "id": "home-control-access-support",
+      "question": "I lost access to home seer steward system. How do I restore it?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "account-access",
+        "goals": [
+          "account-access"
+        ],
+        "subject": "home seer steward system access",
+        "requestedDetails": [
+          "action"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "home seer steward system access restore",
+          "account access recovery home seer steward"
+        ],
+        "scope": "community",
+        "needsClarification": false,
+        "clarificationQuestion": ""
+      }
+    },
+    {
+      "id": "mature-plant-method",
+      "question": "How do I calculate the watering area for mature plants?",
+      "routingPlan": {
+        "intent": "services",
+        "goal": "information",
+        "goals": [
+          "information"
+        ],
+        "subject": "watering area for mature plants",
+        "requestedDetails": [
+          "methods"
+        ],
+        "dateRange": null,
+        "filters": {
+          "audience": "",
+          "category": "",
+          "facility": "",
+          "location": ""
+        },
+        "searchQueries": [
+          "watering area mature plants calculation",
+          "plant watering zone guidelines",
+          "how to calculate watering area"
+        ],
+        "scope": "ambiguous",
+        "needsClarification": true,
+        "clarificationQuestion": "Are you asking about community landscaping guidelines, or is this a general gardening question outside community services?"
+      }
+    }
+  ]
+}

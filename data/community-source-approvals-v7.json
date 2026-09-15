@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-13T20:07:18.687Z",
+  "purpose": "Owner-approved completion of the Pickleball Courts claim review. The decision is limited to the exact current normalized page-text hash and the listed operating claims. It does not approve live availability, booking outcomes, historical launch dates, account setup instructions, or private-court construction rules.",
+  "decisions": [
+    {
+      "decisionId": "pickleball-current-operating-claims",
+      "scopeKind": "scoped-claims",
+      "scope": "Current public Pickleball Courts operations: hours, play windows, prices, advance-booking and daily limits, location and parking, equipment and conduct rules, weather and snow cautions, child supervision, rotation etiquette, contact number, and the CourtReserve handoff. The exact current page version must be revalidated before release and after any change.",
+      "approvedClaims": [
+        "pickleball-general-hours",
+        "pickleball-location-parking-pets",
+        "pickleball-play-modes-daily-limit",
+        "pickleball-advance-booking-limits",
+        "pickleball-current-prices",
+        "pickleball-open-play-hours",
+        "pickleball-reservation-hours",
+        "pickleball-program-precedence",
+        "pickleball-equipment-guidance",
+        "pickleball-court-use-restrictions",
+        "pickleball-weather-snow-guidance",
+        "pickleball-child-supervision",
+        "pickleball-rotation-etiquette",
+        "pickleball-contact-number",
+        "pickleball-courtreserve-route"
+      ],
+      "withheldClaims": [
+        "live-court-availability",
+        "booking-outcomes",
+        "opening-date",
+        "nonresident-program-launch-date",
+        "courtreserve-account-setup-instructions",
+        "private-court-construction-rules"
+      ],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "Court Reserve",
+            "url": "https://sterlingranchcab.com/420/Court-Reserve",
+            "context": "Court Reserve"
+          },
+          "display": {
+            "label": "Open CourtReserve",
+            "actionType": "booking"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
+          "contentHash": "39b0904479e937d8d57bcfe869b04d91a8377b0fbf271117ca83527c4534e682",
+          "hashScheme": "page-text-v1"
+        }
+      ]
+    }
+  ]
+}
