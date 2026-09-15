@@ -118,6 +118,19 @@ test("a verified written instruction completes an action need without requiring 
   assert.deepEqual(result.actions, []);
 });
 
+test("a clipped source excerpt cannot become a finished resident answer", async () => {
+  const contract = buildResidentRequestContract("What are the electrical panel rules?", {
+    goal: "information", subject: "electrical panels",
+  });
+  const result = await runNeedFirstShadow(contract, async () => supportedAnswer({
+    id: "utility-rule",
+    title: "Official utility equipment rule",
+    claim: "Exterior equipment requires approval. This subsection does not apply to equipment installed...",
+  }));
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.doesNotMatch(result.answer, /\.\.\.|…/);
+});
+
 test("a per-need failure cannot erase a separately supported answer", async () => {
   const contract = buildResidentRequestContract("Is the pool open right now, and what are the regular hours?", {
     goals: ["status", "hours"], subject: "pool",

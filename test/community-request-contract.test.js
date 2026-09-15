@@ -191,6 +191,20 @@ test("a matching verified payment claim supports the water-bill need", () => {
   assert.equal(assessment.outcome, "complete");
 });
 
+test("plain-language prohibition verbs satisfy a verified permission need", () => {
+  const contract = buildResidentRequestContract("Can I ignore the street-parking rule?", {
+    goal: "permission", subject: "street parking",
+  });
+  const id = "parking-rule";
+  const claim = "The rulebook bars recreational vehicles and trailers from street parking.";
+  const assessment = assessResidentNeeds(contract, {
+    answerStatus: "verified", directAnswer: claim, keyDetails: [],
+    sources: [source(id, "Official street-parking rule", claim)],
+    claims: [verifiedClaim(claim, [id])], actions: [], conflicts: [],
+  });
+  assert.equal(assessment.outcome, "complete");
+});
+
 test("legacy answers without claim-to-source evidence stay unassessed", () => {
   const contract = buildResidentRequestContract("Can those lights stay up all year?", { goal: "permission", subject: "permanent exterior lights" });
   const assessment = assessResidentNeeds(contract, {

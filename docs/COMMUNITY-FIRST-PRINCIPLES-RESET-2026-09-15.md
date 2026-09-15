@@ -201,28 +201,28 @@ The first run exposed 55 failures in 151 phrasings. This slice addressed shared 
 - a relevant one-sheet or application can appear as a proactive next step while staying tied to its own official source; and
 - permission language such as "you can," access instructions, and numeric setback statements can satisfy their actual need when rendered.
 
-Repeated diagnostic runs produced a range rather than one stable score:
+The earlier shared-process diagnostic produced a 116–120 range. The harness now gives every question a separate worker isolate, preventing one question's module caches or mutable process state from affecting another. The benchmark also treats a visibly clipped source excerpt as a presentation failure. The candidate now discards those fragments and safely withholds that part when no complete claim is available. Two complete isolated runs after that guard produced the same answer/result fingerprint: `62202de281ec2a787e527359e72b8c658a17c25887215defb209b925f1fd1b25`.
 
 | Result | Count |
 | --- | ---: |
 | Authored phrasings | 151 |
-| Passed the saved expectation | 116–120 |
-| Completed with rendered proof | 110–113 |
-| Safely withheld | 38–41 |
+| Passed the saved expectation | 119 |
+| Completed with rendered proof | 113 |
+| Safely withheld | 38 |
 | Claim-to-source proof failures | 0 |
 | Paid model calls | 0 |
 | Added model/API cost | $0 |
 
-This improves the same diagnostic from **96/151 to at least 116/151**, with a best observed run of **120/151**. The focused production-shaped gate remains **19/19**, including all seven frozen rule checks, with zero proof failures.
+This establishes a repeatable improvement from **96/151 to 119/151**. The focused production-shaped gate remains **19/19**, including all seven frozen rule checks, with zero proof failures.
 
-The result moving between 116 and 120 under four-way local concurrency exposes another measurement problem: shared process caches and request ordering make this broad diagnostic non-deterministic. Single-case checks correctly complete the HomeSeer support and State Parks pass processes, while some concurrent runs lose those completions. The harness needs isolated per-case state before its exact percentage can be treated as a release metric. Across the runs, 31–35 saved expectations still fail. Most answers complete with proof but differ from the old expected wording, breadth, or source order. They require human review rather than automatic relaxation: several are useful but narrower than expected, while others expose real presentation problems such as long rule excerpts, clipped text, or missing proactive context. Persistent incomplete cases include an unreviewed clubhouse source version and current Labor Day pool hours that are not separately published; the trash timing/location case also contains an expectation mismatch.
+Thirty-two saved expectations still fail. Twenty-nine answers complete with proof but differ from the old expected wording, breadth, or source order. They require human review rather than automatic relaxation. The main groups are incomplete overviews, overly legalistic wording, missing proactive next steps, and saved checks that demand details the resident did not ask for. Clipped excerpts are no longer allowed into a completed candidate answer. Three are safe nonanswers or expectation mismatches: the clubhouse source version is awaiting review, current Labor Day pool hours are not separately published, and the trash timing/location case asks for timing while its saved expectation requires storage location.
 
-Recorded p95 elapsed time ranged from roughly **2.5 seconds to 10.647 seconds**. This is not a stable production latency claim. It is a reason to isolate test state and profile index startup, cache behavior, and per-need source work before release.
+The two isolated runs after the presentation guard recorded p95 elapsed times of **1.148 seconds** and **1.146 seconds**. This includes a fresh worker for each question but remains a local diagnostic, not a production latency claim.
 
 The architectural conclusion remains unchanged: a more expensive model is not the current bottleneck. The candidate used deterministic interpretation, current local retrieval, official connectors, and evidence checks for **$0 added model cost**. The preserved historical mixed-model diagnostic estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000 questions**. A model, reranker, embedding service, or vector database should be tested only against a privacy-reviewed, human-rated failure group that specifically shows an interpretation, retrieval-recall, or writing gap.
 
-Before resident release, the next work is to make the broad harness deterministic, review the completed mismatches for human usefulness, remove clipped and overly legalistic presentation, revalidate the persistent withheld-source/expectation cases, profile latency, and run a privacy-reviewed human-rated acceptance set from the real question log. The automatic rating must stay uncalibrated until its rubric agrees with owner judgments on that held-out set.
+Before resident release, the next work is to review the 29 completed mismatches for human usefulness, replace overly legalistic presentation with direct resident guidance, improve missing overview details and proactive next steps, revalidate the three safe nonanswer/expectation cases, profile production-shaped latency, and run a privacy-reviewed human-rated acceptance set from the real question log. The automatic rating must stay uncalibrated until its rubric agrees with owner judgments on that held-out set.
 
-Regression verification: all 45 focused need/router/evidence checks pass. The full repository suite passes 1,307 of 1,308 checks. The sole failure is the pre-existing label mismatch for a conflicted internet-contact case (`community-freshness-withheld` versus `community-contact-boundary`); the old phone number remains withheld. The three regressions initially introduced by this slice were fixed before the checkpoint.
+Regression verification: all 47 focused need/router/evidence checks pass, and the 19-case production-shaped gate passes. The latest full repository suite passes 1,307 of 1,308 checks. The sole failure is the pre-existing label mismatch for a conflicted internet-contact case (`community-freshness-withheld` versus `community-contact-boundary`); the old phone number remains withheld. The three regressions initially introduced by this slice were fixed before the checkpoint.
 
 This checkpoint is implemented and verified locally only. It is not deployed or verified live. The Notion owner-guide update remains pending because the earlier external write was rejected; this local record is the precise text to synchronize once Notion write access is available.
