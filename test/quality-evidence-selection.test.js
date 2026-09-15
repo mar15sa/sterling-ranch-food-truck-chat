@@ -3,6 +3,7 @@ const {selectionRequest,applySelection}=require('../scripts/quality-eval/evidenc
 const {capturedInput}=require('../scripts/quality-eval/compare-evidence-selection');
 const {modelEvidence,modelActions}=require('../scripts/quality-eval/full-flow-candidate');
 const {stageFor}=require('../scripts/quality-eval/observe-fetch');
+const {writerRequest}=require('../scripts/quality-eval/replay-selected-writing');
 const now=Date.parse('2026-09-14T12:00:00Z');
 function fixture(communityId='alpha'){
  const source=(id,role,text)=>({id,communityId,version:'v1',sourceUrl:`https://${communityId}.example/${id}`,title:id,role,text,actions:[]});
@@ -70,4 +71,19 @@ test('historical replay binds original question, complete source inventory and a
   t=>t.response.sources[2].actions[0].url='https://alpha.example/wrong',t=>t.calls[0].startedAt=new Date(now+2000).toISOString(),t=>t.calls.push(t.calls[0])]){
   const bad=structuredClone(original);mutate(bad);assert.throws(()=>capturedInput(bad));
  }
+});
+test('writer replay changes only evidence, derived actions and their selectable ID schema',()=>{
+ const {packet,row,plan}=fixture();const payload={question:row.question,priorResidentQuestions:row.context.map(c=>c.question),requiredNeeds:plan.needs,
+  constraints:[],evidence:modelEvidence(packet.sources),actions:modelActions(packet.actions),evidenceGaps:packet.diagnostics,previousAttempt:null};
+ const original={model:'claude-sonnet-5',max_tokens:650,thinking:{type:'disabled'},system:'Unchanged writing instructions',
+  tools:[{name:'compose_requested_answer',strict:true,input_schema:{original:true}}],tool_choice:{type:'tool',name:'compose_requested_answer'},messages:[{role:'user',content:JSON.stringify(payload)}]};
+ const input={packet,now,originalCompositionRequest:original},selected=applySelection({sourceIds:['rule','form']},packet,'alpha',now).packet;
+ const body=writerRequest(input,selected),changed=JSON.parse(body.messages[0].content);
+ const restored=structuredClone(body);restored.messages[0].content=original.messages[0].content;restored.tools[0].input_schema=original.tools[0].input_schema;
+ assert.deepEqual(restored,original);assert.deepEqual(changed.evidence,modelEvidence(selected.sources));assert.deepEqual(changed.actions,modelActions(selected.actions));
+ delete changed.evidence;delete changed.actions;const unchanged={...payload};delete unchanged.evidence;delete unchanged.actions;assert.deepEqual(changed,unchanged);
+ for(const mutate of [p=>p.sources[0].text='Rewritten fact',p=>p.sources[0].role='official-process',p=>p.sources[0].version='v2',p=>p.actions[0].label='Invented action label']){
+  const bad=structuredClone(selected);mutate(bad);assert.throws(()=>writerRequest(input,bad));
+ }
+ assert.deepEqual(original,input.originalCompositionRequest);
 });
