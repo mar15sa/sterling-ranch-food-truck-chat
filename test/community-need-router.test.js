@@ -3,6 +3,9 @@ const assert = require("node:assert/strict");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { runNeedFirstShadow } = require("../lib/community-need-router");
 const { buildResidentRequestContract } = require("../lib/community-request-contract");
+const { answerRulesQuestion } = require("../lib/rules-assistant");
+const communityIndex = require("../data/community-index.json");
+const sterlingRanchProfile = require("../data/communities/sterling-ranch.json");
 
 function supportedAnswer({ id, title, claim, action }) {
   return {
@@ -14,6 +17,33 @@ function supportedAnswer({ id, title, claim, action }) {
     claims: [{ text: claim, evidenceSourceIds: [id], verified: true }],
     actions: action ? [{ ...action }] : [],
     conflicts: [],
+  };
+}
+
+function foodTruckProfile() {
+  const profile = structuredClone(sterlingRanchProfile);
+  const connector = profile.connectors.find((item) => item.type === "food-truck-schedule");
+  connector.adapter.sourceHosts.push("www.facebook.com");
+  connector.adapter.foodTruck.vendorSources = [{
+    id: "example-eats", aliases: ["Example Eats"], menuUrls: ["https://www.facebook.com/example-eats/menu"],
+  }];
+  profile.allowedHosts.push("www.facebook.com");
+  return profile;
+}
+
+function liveWasteEvidence(checkedAt) {
+  return {
+    degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
+    claims: [{ facet: "date", text: "2026-09-15", controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" }],
+    evidence: [{
+      evidenceId: "sterling-ranch:waste-schedule:live-calendar",
+      sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+      checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational",
+    }],
+    actions: [{
+      type: "information", label: "Check an address in the official pickup calendar",
+      url: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
+    }],
   };
 }
 
@@ -156,9 +186,11 @@ test("assistant integration is test-only and leaves the current answer untouched
   const question = "Which food truck is here today, and what is on its menu?";
   const baseOptions = {
     planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
     index: { communityId: "alpha", sources: [] },
     communityId: "alpha",
     communityProfile: { communityId: "alpha", name: "Alpha", website: "https://alpha.gov/", connectors: [] },
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
     answerRulesQuestion: async () => ({
       answer: "I could not verify that yet.", directAnswer: "I could not verify that yet.",
       answerStatus: "could-not-verify", answerVerdict: "unverified", answerMode: "source-evidence-boundary",
@@ -180,4 +212,138 @@ test("assistant integration is test-only and leaves the current answer untouched
   assert.equal(result.answerStatus, baseline.answerStatus);
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
   assert.match(result._requestContract.shadowRoute.answer, /menu lists tacos/i);
+});
+
+test("the current-local backend runs the existing source paths once per standalone need with model stages off", async () => {
+  let connectorCalls = 0;
+  const result = await answerCommunityQuestion("Which food truck is here today, and what is on its menu?", {
+    isTest: true,
+    requestContractMode: "shadow-route",
+    needRouterBackend: "current-local",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile: foodTruckProfile(),
+    now: new Date("2026-09-14T18:00:00Z"),
+    getFoodTruckAnswer: async () => {
+      connectorCalls += 1;
+      return {
+        date: "2026-09-14",
+        friendlyDate: "Monday, September 14, 2026",
+        truck: "Example Eats",
+        trucks: [{ name: "Example Eats", location: "Prospect Park" }],
+        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
+        checkedAt: "2026-09-14T18:00:00.000Z",
+        menu: {
+          links: [{ title: "Example Eats official menu", url: "https://www.facebook.com/example-eats/menu" }],
+          items: [{ name: "Tacos", price: "$12.00", url: "https://www.facebook.com/example-eats/menu" }],
+        },
+      };
+    },
+  });
+  assert.equal(connectorCalls, 3);
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
+  assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "supported"]);
+  assert.match(result._requestContract.shadowRoute.answer, /Example Eats/);
+  assert.match(result._requestContract.shadowRoute.answer, /Tacos.*\$12/);
+});
+
+test("the current-local backend preserves live pool status when regular hours remain unresolved", async () => {
+  let statusCalls = 0;
+  const now = new Date("2026-09-15T18:00:00Z");
+  const evidenceEnvelope = {
+    communityId: "sterling-ranch",
+    connectorFamily: "live-status",
+    degradation: { state: "healthy" },
+    coverage: { covered: ["status"] },
+    evidence: [{
+      evidenceId: "sterling-ranch:pool-status:current", communityId: "sterling-ranch",
+      sourceUrl: "https://sterlingranchcab.com/pool", checkedAt: now.toISOString(), staleAfter: "2099-01-01T00:00:00.000Z",
+    }],
+    claims: [{ facet: "status", text: "Green", controllingEvidenceId: "sterling-ranch:pool-status:current" }],
+  };
+  const result = await answerCommunityQuestion("Is the pool open right now, and what are the regular hours?", {
+    isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
+    planCommunitySearch: false, synthesizeCommunityAnswer: false, interpretationMode: "structured",
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile, now,
+    getPoolStatus: async () => {
+      statusCalls += 1;
+      return {
+        headline: "Green", summary: "The pool is currently open.", residentAction: "Normal entry rules apply.",
+        sourceUrl: "https://sterlingranchcab.com/pool", checkedAt: now.toISOString(), evidenceEnvelope,
+      };
+    },
+  });
+  assert.equal(statusCalls, 3);
+  assert.equal(result._requestContract.needs[1].evidenceKind, "official-information");
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "verified-partial");
+  assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "missing-evidence"]);
+  assert.match(result._requestContract.shadowRoute.answer, /currently open/i);
+  assert.match(result._requestContract.shadowRoute.answer, /regular hours/i);
+});
+
+test("the current-local backend uses approved community navigation for water payment", async () => {
+  const result = await answerCommunityQuestion("How do I pay my water bill online?", {
+    isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
+    planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-14T18:00:00Z"),
+  });
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
+  assert.match(result._requestContract.shadowRoute.answer, /Pay Online|Utility Hawk/i);
+  assert.ok(result._requestContract.shadowRoute.sources.length > 0);
+});
+
+test("the current-local rules path exposes its missing claim map instead of guessing support", async () => {
+  const originalQuestion = "Can those stay up all year?";
+  const resolvedQuestion = "Regarding permanent seasonal lights approved for holiday use: Can those stay up all year?";
+  const result = await answerCommunityQuestion(resolvedQuestion, {
+    isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
+    requestContext: { originalQuestion, resolvedQuestion, usedPriorContext: true },
+    planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-15T18:00:00Z"),
+  });
+  assert.equal(result._requestContract.needs[0].evidenceKind, "governing-rule");
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "unassessed");
+  assert.equal(result._requestContract.shadowRoute.completion.needs[0].reason, "answer-has-no-claim-evidence-map");
+});
+
+test("the current-local backend independently proves a live recycling date and the storage rule", async () => {
+  const checkedAt = "2026-09-14T18:00:00.000Z";
+  const result = await answerCommunityQuestion("What's the next recycling pickup for Ascent Village, and where can I keep my bins?", {
+    isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
+    planCommunitySearch: false, synthesizeCommunityAnswer: false, interpretationMode: "structured",
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+    getWasteSchedule: async () => ({
+      service: "recycling", date: "2026-09-15", timing: "tomorrow", anchorDate: "2026-09-15",
+      serviceAreas: [{ label: "Ascent Village", date: "2026-09-15" }], checkedAt,
+      evidence: liveWasteEvidence(checkedAt),
+    }),
+  });
+  assert.equal(result._requestContract.needs[0].task, "schedule");
+  assert.equal(result._requestContract.needs[0].evidenceKind, "live-operation");
+  assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
+  assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "supported"]);
+  assert.match(result._requestContract.shadowRoute.answer, /Tuesday, September 15, 2026/i);
+  assert.match(result._requestContract.shadowRoute.answer, /return them to a screened location/i);
+  assert.doesNotMatch(result._requestContract.shadowRoute.answer, /New Year’s Day/i);
+});
+
+test("shadow routing refuses enabled model stages", async () => {
+  await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {
+    isTest: true,
+    requestContractMode: "shadow-route",
+    needRouterBackend: "current-local",
+    planCommunitySearch: async () => ({}),
+    synthesizeCommunityAnswer: false,
+  }), /model stages.*disabled/i);
 });

@@ -20,6 +20,9 @@ test("preserves truck and menu as two resident needs", () => {
   assert.equal(contract.needCount, 2);
   assert.match(contract.needs[0].text, /food truck/i);
   assert.match(contract.needs[1].text, /menu/i);
+  assert.match(contract.needs[1].request, /food truck/i);
+  assert.match(contract.needs[1].request, /menu/i);
+  assert.equal(contract.needs[1].evidenceFocus, "what is on its menu");
   assert.equal(contract.needs[0].goal, "schedule");
   assert.equal(contract.needs[1].goal, "information");
 });

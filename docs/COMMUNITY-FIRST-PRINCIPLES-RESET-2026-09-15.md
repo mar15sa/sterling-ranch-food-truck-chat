@@ -106,3 +106,27 @@ The complete affected set is now 210 passing direct checks. No paid model call, 
 Connect the current local rules, community-source, and live-connector paths to the per-need callback under test mode. Start with truck/menu, recycling/storage, pool status/hours, shed/form, yoga, and lighting. Capture which need each adapter receives, which eligible sources return, whether the rendered claims pass the evidence contract, and the exact partial candidate.
 
 Use deterministic routing and existing approved sources first. If a remaining failure is interpretation, retrieval recall, evidence applicability, or writing, test only the component responsible. A different model or vector database should enter only a bounded comparison for that isolated failure, with current versus proposed per-answer and monthly cost.
+
+## Current local source paths connected under test mode
+
+The shadow router can now call the assistant's existing local community index, rules engine, and live connector adapters separately for each need. This path requires `isTest: true`, rejects enabled planning or writing model stages, caps the request at four needs, and is not configured on the server. The existing resident answer still returns unchanged beside the shadow candidate.
+
+Five real-path fixtures now establish:
+
+- food truck plus menu completes using the existing schedule and vendor-menu adapter, with the truck and menu proved independently;
+- recycling pickup plus bin storage completes using the live calendar for the date and the approved community projection for the screened-storage instruction;
+- pool status remains a useful verified partial when regular hours are missing;
+- water payment completes from the approved community navigation source; and
+- a lighting follow-up remains unassessed because the legacy rules route does not expose a claim-to-source map. The new verifier does not guess around that gap.
+
+The work also fixes shared defects found by those paths. Multi-part clauses retain enough resident context to stand alone while evidence is judged against only the requested clause. Schedule wording such as “next pickup” can no longer inherit a generic goal from the combined question. Live waste answers now retain claim-to-source proof instead of dropping it. ISO dates and the same dates written in resident-friendly form compare as the same fact. The composer selects the sentence that answers a specific need instead of repeating an entire multi-topic source passage. Sources returned for one need carry that route identity, but a generic information claim still needs subject overlap so a wrong official page cannot pass.
+
+Twenty-eight focused request-contract and need-router checks pass. Broader direct checks add 70 assistant, 34 completion, and 41 interpretation passes. One unrelated completion test expects an older contact-boundary mode but receives the newer freshness-withheld mode; this slice did not alter that contact path. Syntax and whitespace checks pass.
+
+No model call, resident question, external source request, vector database, subscription, deployment, or setting change occurred. This slice adds **$0 in model API charges**. The preserved historical benchmark prices the current mixed model flow at about **$1.01 per 1,000 questions** for that 16-question diagnostic mix, or about **$10.09 at 10,000 questions**; it is not an invoice or current production measurement. The local need-first candidate deliberately disables every model stage, so it does not add model spend in the tested configuration.
+
+The shadow comparison currently runs the existing combined answer once plus once per need: a two-part question made three connector-path attempts in the food and pool fixtures. A production candidate should replace the combined pass rather than add to it, route only the capability each need requires, and reuse identical connector results. Until that deduplication and a production-shaped benchmark exist, server work, connector latency, and total monthly operating cost remain unmeasured. No higher-cost model or hosted vector service has earned adoption.
+
+## Next bounded implementation slice after current-path connection
+
+Add structured claim-to-source mappings to the legacy rules boundary, beginning with the lighting and shed families, without allowing a model to approve or strengthen a rule. Then make capability routing reuse connector results so pool hours do not cause another live-status request. Re-run the same real-path fixtures plus wrong-subject controls. Only after those pass should the candidate replace the baseline in an offline end-to-end comparison with total calls, latency, useful-complete rate, useful-partial rate, and the current-versus-candidate monthly cost scenarios.
