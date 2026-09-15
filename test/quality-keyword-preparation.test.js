@@ -14,3 +14,16 @@ test('preparation is reused only for exact current source membership and order a
   assert.equal(cache.stats().retainedEntries,1);cache.clear();assert.equal(cache.stats().retainedEntries,0);
  }
 });
+test('clock-based expiry removes a cached document without modifying the frozen corpus',()=>{
+ const {sourceLifecycleStatus}=require('../lib/rules-source-lifecycle');
+ const docs=[{id:'policy',communityId:'alpha',text:'Approved policy',expiresAt:'2026-09-15T02:00:00Z'}],index={documents:docs},cache=createEligibleKeywordIndex(docs,'alpha');
+ const before=Date.parse('2026-09-15T01:59:00Z'),after=Date.parse('2026-09-15T02:01:00Z');
+ const first=cache.get(index,docs.filter(d=>sourceLifecycleStatus(d,before)==='current'));assert.equal(first.documents.length,1);
+ const current=cache.get(index,docs.filter(d=>sourceLifecycleStatus(d,after)==='current'));assert.equal(current.documents.length,0);assert.notEqual(current,first);
+});
+test('question-specific withholding changes preparation membership without changing approval text',()=>{
+ const {eligibleForQuestion}=require('../scripts/quality-eval/semantic-corpus');
+ const docs=[{id:'scoped',communityId:'alpha',text:'Approved process',ownerReview:{withheldQuestionPatterns:['fee']}}],index={documents:docs},cache=createEligibleKeywordIndex(docs,'alpha');
+ const process=cache.get(index,docs.filter(d=>eligibleForQuestion(d,'How do I submit?')));assert.equal(process.documents.length,1);
+ const fee=cache.get(index,docs.filter(d=>eligibleForQuestion(d,'What is the fee?')));assert.equal(fee.documents.length,0);assert.notEqual(fee,process);
+});
