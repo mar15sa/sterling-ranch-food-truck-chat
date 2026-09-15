@@ -1,0 +1,26 @@
+{
+  "status": "predeclared-development-review-not-human-calibrated",
+  "scope": "Required evidence retention for four known captured packets; not answer accuracy or unseen acceptance. Source IDs never reach the selector as labels.",
+  "cases": {
+    "food-menu": {
+      "required": ["e-3cb6f8bbc738d0df351f"],
+      "optional": ["e-350dc5a023083cf448d0"],
+      "reason": "Keep the bound schedule. No official menu evidence exists in this packet; the generic contact directory is at most a fallback, not menu support. Other catalog topics and vehicle/food-consumption rules do not answer the menu question. Live retention is automatic and is not credited to model selection."
+    },
+    "pool-hours": {
+      "required": ["e-48303c09036e6a19d64e", "e-930d63190d42411ca030"],
+      "optional": ["e-63c45abec65408cbd908"],
+      "reason": "Keep bound live status and the full approved regular-hours projection, including seasonal bounds and maintenance. General pool rules may add closure qualifications but do not establish today's status. Private pool construction and water-tap rules are distractors."
+    },
+    "shed-form": {
+      "required": ["e-7b2c9be32a0ab2e2a28c", "e-6a23f6823f5d31eaea8e"],
+      "optional": ["e-86e2d01518ff4362a9f5", "e-7e607ebcc1090254a5aa", "e-c6a2faecb1778e5a5355"],
+      "reason": "Keep the full shed rule including height exception and restricted-lot qualification, and the generic Design Review directory as a bounded next step while the exact applicable application remains unverified. Related accessory-building rule, overlapping chunk and submission guidance are acceptable supporting material. Doghouse policy does not establish shed height."
+    },
+    "lighting-process": {
+      "required": ["e-e78384f5b9789b5b35db", "e-c6a2faecb1778e5a5355", "e-6a23f6823f5d31eaea8e"],
+      "optional": [],
+      "reason": "Keep the complete adopted lighting policy, including approval, product information, permanent versus temporary operation, and supplier qualification; retain the approved submission instructions and official directory as the actionable route. Rules about gates, pergolas and non-lighting holiday displays cannot replace this policy."
+    }
+  }
+}
