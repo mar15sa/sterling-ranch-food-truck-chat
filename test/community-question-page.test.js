@@ -116,7 +116,10 @@ test("source review dashboard is private, version-bound, and has no analytics", 
   assert.match(html, /System-wide conflicts kept out/);
   assert.match(html, /CAB website coverage/);
   assert.match(html, /Previously selected documents still withheld/);
-  assert.match(html, /New source-change queue/);
+  assert.match(html, /Source changes and review history/);
+  assert.match(html, /id="queueFilter"/);
+  assert.match(html, /id="reviewSync"/);
+  assert.match(html, /community-sources\.js\?v=20260914-queue2/);
   assert.match(html, /complete CAB URL reconciliation/);
   assert.match(script, /renderReadiness/);
   assert.match(script, /Available to answers/);
