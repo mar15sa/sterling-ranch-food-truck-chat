@@ -41,3 +41,16 @@ test('keyword control never loads the semantic runtime', async () => {
   assert.equal(searches, 1);
   await session.dispose();
 });
+
+test('combined session keeps community search bound and disposes both models on failure or closure',async()=>{
+ for(const foreign of [false,true]){
+  const ctx=context();let ruleDisposals=0,communityDisposals=0,communitySearches=0;
+  const options={semanticDirectory:'rules',communitySemanticDirectory:'community',reuseKeywordPreparation:true,
+   loadRanker:async o=>{assert.equal(o.reuseKeywordPreparation,true);return {communityId:'alpha',search:async index=>index.documents,dispose:async()=>{ruleDisposals++;}};},
+   loadCommunityRanker:async o=>{assert.equal(o.communityId,'alpha');assert.deepEqual(o.index,ctx.communityIndex);return {communityId:foreign?'beta':'alpha',metadata:{model:'test-community',corpusHash:'test-corpus'},search:async()=>{communitySearches++;return [];},dispose:async()=>{communityDisposals++;}};}};
+  if(foreign)await assert.rejects(createRetrievalSession(ctx,options),/community semantic session binding/);
+  else{const s=await createRetrievalSession(ctx,options);assert.equal(s.metadata.community.corpusHash,'test-corpus');assert.equal((await s.retrieve(plan)).sources.length,1);assert.equal(communitySearches,1);await s.dispose();await s.dispose();assert.throws(()=>s.retrieve(plan),/closed/);}
+  assert.equal(ruleDisposals,1);assert.equal(communityDisposals,1);
+ }
+ await assert.rejects(createRetrievalSession(context(),{communitySemanticDirectory:'community'}),/requires rules cache/);
+});
