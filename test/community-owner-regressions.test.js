@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { proactiveCommunityAnswer } = require("../lib/community-proactive");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
+const { answerCommunityQuestion } = require("../lib/community-assistant");
 const index = require("../data/community-index.json");
 const { normalizeInterpretation } = require("../lib/community-interpretation");
 
@@ -26,18 +27,63 @@ test("invented open-ended dates cannot narrow a general process or recurring sch
   }
 });
 
-test("raw FAQ prose cannot create a plant-establishment billing shortcut", () => {
+test("owner-approved establishment billing evidence answers only the narrow treatment", async () => {
   for (const question of [
     "Can i get a discount on my water while trying to establish plants",
     "Are water charges reduced for new sod?",
     "Is there a water budget exemption when establishing my lawn?",
   ]) {
-    const answer = proactiveCommunityAnswer(question, {
-      index, now: new Date("2026-09-06T20:00:00Z"),
-      routingPlan: { goal: "payment", subject: "water bill" },
+    const answer = await answerCommunityQuestion(question, {
+      index,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      isTest: true,
+      requestContractMode: "need-first-candidate",
+      needRouterBackend: "current-local",
     });
-    assert.equal(answer, null);
+    assert.equal(answer.completion.outcome, "complete");
+    assert.match(answer.answer, /45 days.*first tier fee rate.*not count against the water budget/is);
+    assert.doesNotMatch(answer.answer, /\bfree\b|\$\s*\d/);
   }
+});
+
+test("park-pass reimbursement uses the approved form without inventing policy", async () => {
+  for (const question of ["Reimburse for parks pass", "How do I get reimbursed for a state park pass?"]) {
+    const answer = await answerCommunityQuestion(question, {
+      index,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      isTest: true,
+      requestContractMode: "need-first-candidate",
+      needRouterBackend: "current-local",
+    });
+    assert.equal(answer.completion.outcome, "complete");
+    assert.match(answer.answer, /^Use the official Park Pass Car Registration Reimbursement Form below\./i);
+    assert.match(answer.answer, /vehicle registration receipt/i);
+    assert.equal(answer.actions[0].url, "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62");
+    assert.doesNotMatch(answer.answer, /\$\s*\d|eligible|guarantee/i);
+  }
+});
+
+test("an exact establishment rate request keeps the known treatment and withholds unrelated fees", async () => {
+  const answer = await answerCommunityQuestion("What is the exact rate for water while establishing new sod?", {
+    index,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    isTest: true,
+    requestContractMode: "need-first-candidate",
+    needRouterBackend: "current-local",
+  });
+  assert.equal(answer.completion.outcome, "verified-partial");
+  assert.match(answer.answer, /45 days.*first tier fee rate.*not count against the water budget/is);
+  assert.match(answer.answer, /couldn.t verify.*price/i);
+  assert.doesNotMatch(answer.answer, /2\.95%|processing fee/i);
 });
 
 test("establishment billing is not invented from missing or expired evidence", () => {

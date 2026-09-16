@@ -72,7 +72,7 @@ test("A/B/C/D reconciliation preserves packet work and exact approvals remain ve
   const ledger = buildLedger();
   assert.deepEqual(ledger.reconciliation.historicalSnapshots.map(snapshot => snapshot.count), [222, 917]);
   const addedVersions = require('../data/community-source-approvals-v8.json').decisions.flatMap(item => item.versions);
-  assert.equal(ledger.summary.uniqueVersions, 96); // Four v8 versions already existed; do not double-count them.
+  assert.equal(ledger.summary.uniqueVersions, 98); // Four v8 versions already existed; v9 adds two new exact versions.
   for (const version of addedVersions) assert.ok(ledger.records.some(record => record.key === versionKey(version)));
   assert.equal(ledger.summary.approvedEvidence, 5);
   assert.equal(ledger.unmatchedLegacyDecisions.length, 0);
@@ -95,8 +95,11 @@ test("Decision Swipe approvals are exact-version, community-scoped claim boundar
     "approved-landscapers-directory-link", "recycling-tips-visual-link", "providence-elements-fence-specifications",
     "solar-panel-appearance-specifications", "chase-drain-adopted-policy", "pickleball-current-operating-claims",
     ...require('../data/community-source-approvals-v8.json').decisions.map(item => item.decisionId),
+    ...require('../data/community-source-approvals-v9.json').decisions.map(item => item.decisionId),
   ]));
-  assert.equal(ledger.decisionApplications.length, 33 + require('../data/community-source-approvals-v8.json').decisions.length);
+  assert.equal(ledger.decisionApplications.length, 33
+    + require('../data/community-source-approvals-v8.json').decisions.length
+    + require('../data/community-source-approvals-v9.json').decisions.length);
   const paymentPage = ledger.records.find(record => record.canonicalUrl.endsWith("/334/Water-Billing-Payment-Options"));
   assert.equal(paymentPage.disposition, "pending-review");
   assert.equal(approvalForCommunity(paymentPage, "sterling-ranch", "water-payment-primary-page").scopeKind, "scoped-claims");

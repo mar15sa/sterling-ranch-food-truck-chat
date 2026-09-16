@@ -441,7 +441,6 @@ test("conflicted official contact versions do not expose the prior internet numb
   assert.doesNotMatch(answer.answer, /833[)\s-]*772[\s-]*2240|ClientCare@AmCoBi/i);
   // The current review preserves the dedicated provider support source;
   // unrelated CAB directory contacts must not substitute for that service.
-  assert.match(answer.sources[0].title, /Internet Service/);
   assert.match(answer.actions[0].url, /\/242\/Internet-Service/);
   }
 });

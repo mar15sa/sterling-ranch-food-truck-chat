@@ -119,6 +119,24 @@ test("a reimbursement request cannot be satisfied by general pass eligibility", 
   assert.equal(contract.needs[0].task, "reimbursement");
   assert.deepEqual(contract.needs[0].requestedDetails, ["reimbursement"]);
   assert.equal(contract.needs[0].evidenceKind, "governing-rule");
+  assert.equal(contract.needs[0].routeRequest, "How do I use the park pass reimbursement form?");
+});
+
+test("landscape establishment billing is an information need, not permission or schedule", () => {
+  for (const question of [
+    "Can I get a discount on my water while trying to establish plants?",
+    "Are water charges reduced for new sod?",
+    "Is there a water budget exemption when establishing my lawn?",
+  ]) {
+    const contract = buildResidentRequestContract(question);
+    assert.equal(contract.needs[0].task, "information");
+    assert.equal(contract.needs[0].goal, "information");
+    assert.deepEqual(contract.needs[0].requestedDetails, ["information"]);
+    assert.match(contract.needs[0].routeRequest, /landscape establishment water billing treatment/i);
+  }
+  const amount = buildResidentRequestContract("What is the exact rate for water while establishing new sod?");
+  assert.equal(amount.needs[0].task, "price");
+  assert.deepEqual(amount.needs[0].requestedDetails, ["information", "price"]);
 });
 
 test("broad Halloween decorating keeps the unresolved decoration scope separate from the lighting date", () => {

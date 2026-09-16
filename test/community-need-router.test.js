@@ -504,7 +504,7 @@ test("the current-local backend runs the existing source paths once per standalo
 
 test("the current-local backend preserves live pool status when current regular hours are withheld", async () => {
   let statusCalls = 0;
-  const now = new Date("2026-09-15T18:00:00Z");
+  const now = new Date("2026-09-18T18:00:00Z");
   const evidenceEnvelope = {
     communityId: "sterling-ranch",
     connectorFamily: "live-status",
