@@ -275,7 +275,7 @@ test("a named class question without punctuation reaches the live calendar", asy
       receivedRequest = request;
       return {
         events: [{ id: "19", title: "Yoga w/Laura", date: "2026-09-19", time: "07:30", location: "Great Hall", url: "https://alpha.gov/event/19", startDate: "2026-09-19T07:30:00" }],
-        range: { kind: "next-seven-days", start: "2026-09-13", end: "2026-09-20", label: "the next seven days" },
+        range: request.dateRange,
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-13T18:00:00Z",
         diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "yoga" }] },
@@ -283,7 +283,13 @@ test("a named class question without punctuation reaches the live calendar", asy
     },
   });
   assert.equal(plannerCalls, 0);
-  assert.equal(receivedRequest, question);
+  assert.equal(receivedRequest.filters.category, "yoga");
+  assert.deepEqual(receivedRequest.dateRange, {
+    kind: "next-31-days",
+    start: "2026-09-13",
+    end: "2026-10-13",
+    label: "the next 31 days",
+  });
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.directAnswer, /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
   assert.deepEqual(answer.keyDetails, []);
@@ -300,14 +306,20 @@ test("a named activity without an event noun reaches the live calendar", async (
       receivedRequest = request;
       return {
         events: [{ id: "20", title: "Bingo Night", date: "2026-09-17", time: "18:30", location: "Sterling Center", url: "https://alpha.gov/event/20", startDate: "2026-09-17T18:30:00" }],
-        range: { kind: "next-seven-days", start: "2026-09-14", end: "2026-09-21", label: "the next seven days" },
+        range: request.dateRange,
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-14T18:00:00Z",
         diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "bingo" }] },
       };
     },
   });
-  assert.equal(receivedRequest, question);
+  assert.equal(receivedRequest.filters.category, "bingo");
+  assert.deepEqual(receivedRequest.dateRange, {
+    kind: "next-31-days",
+    start: "2026-09-14",
+    end: "2026-10-14",
+    label: "the next 31 days",
+  });
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.directAnswer, /Bingo Night is Thursday, September 17 at 6:30 p\.m\. in Sterling Center/i);
   assert.deepEqual(answer.keyDetails, []);
@@ -793,7 +805,7 @@ test("AI clarification cannot suppress a complete verified answer about resident
   assert.ok(answer.sources?.length > 0);
 });
 
-test("an explicit event filter miss offers the real unfiltered events", async () => {
+test("an explicit event filter miss gives the exact official-calendar boundary without unrelated events", async () => {
   const plan = interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "" } });
   const answer = await answerCommunityQuestion("Are there youth events tomorrow?", {
     interpretationMode: "structured",
@@ -806,11 +818,19 @@ test("an explicit event filter miss offers the real unfiltered events", async ()
       sourceUrl: "https://alpha.gov/calendar",
       checkedAt: "2026-09-01T18:00:00Z",
       diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 1, afterFilterCount: 0, appliedFilters: [{ field: "audience", value: "youth kids" }] },
+      evidenceEnvelope: {
+        connectorFamily: "civicplus-events",
+        evidence: [{ evidenceId: "calendar-2026-09-02", communityId: "alpha", controllingSourceRole: "official-calendar" }],
+        claims: [],
+        coverage: { covered: [], missing: ["date"] },
+        degradation: { state: "healthy" },
+      },
     }),
   });
-  assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.directAnswer, /1 other event/);
-  assert.match(answer.keyDetails.join(" "), /Trivia Night/);
+  assert.notEqual(answer.answerStatus, "verified");
+  assert.match(answer.directAnswer, /couldn’t find an event matching “youth kids” on the official calendar for tomorrow/i);
+  assert.doesNotMatch(`${answer.answer} ${answer.keyDetails.join(" ")}`, /Trivia Night/i);
+  assert.deepEqual(answer.actions.map((action) => action.url), ["https://alpha.gov/calendar"]);
 });
 
 test("shadow mode records the AI comparison without changing the legacy answer", async () => {

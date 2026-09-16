@@ -606,6 +606,44 @@ test("the current-local event path keeps the yoga subject in a dependent tomorro
   assert.match(result._requestContract.shadowRoute.answer, /Yoga w\/Laura is tomorrow at 7:30 a\.m\. in Great Hall/i);
 });
 
+test("the need-first candidate keeps an exact named-event calendar boundary and drops unrelated alternatives", async () => {
+  let receivedRequest;
+  const checkedAt = "2026-09-16T18:00:00.000Z";
+  const evidenceId = "sterling-ranch:civicplus-calendar:calendar";
+  const result = await answerCommunityQuestion("When is the next bingo?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    planCommunitySearch: false, synthesizeCommunityAnswer: false, interpretationMode: "structured",
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+    getCommunityEvents: async (request) => {
+      receivedRequest = request;
+      return {
+        events: [],
+        alternatives: [{ id: "1", title: "Trivia Night", date: "2026-09-17", time: "19:00", location: "Great Hall", url: "https://sterlingranchcab.com/event/1", startDate: "2026-09-17T19:00:00" }],
+        range: request.dateRange,
+        sourceUrl: "https://sterlingranchcab.com/calendar",
+        checkedAt,
+        diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 0, appliedFilters: [{ field: "category", value: "bingo" }] },
+        evidenceEnvelope: {
+          communityId: "sterling-ranch", connectorFamily: "civicplus-calendar", degradation: { state: "healthy" },
+          coverage: { requested: ["event-date", "date"], covered: ["event-date", "date"] },
+          evidence: [{ evidenceId, communityId: "sterling-ranch", sourceUrl: "https://sterlingranchcab.com/calendar", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+          claims: [{ id: "event-1", facet: "event-date", text: "Trivia Night: 2026-09-17T19:00:00", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+        },
+      };
+    },
+  });
+  assert.equal(receivedRequest.filters.category, "bingo");
+  assert.equal(receivedRequest.dateRange.label, "the next 31 days");
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.match(result.answer, /couldn’t find an event matching “bingo” on the official calendar for the next 31 days/i);
+  assert.doesNotMatch(result.answer, /Trivia Night/i);
+  assert.equal(result.claims[0].verified, true);
+  assert.deepEqual(result.sources.map((source) => source.id), [evidenceId]);
+  assert.deepEqual(result.actions.map((action) => action.url), ["https://sterlingranchcab.com/calendar"]);
+});
+
 test("the current-local backend independently proves a live recycling date and the storage rule", async () => {
   const checkedAt = "2026-09-14T18:00:00.000Z";
   const result = await answerCommunityQuestion("What's the next recycling pickup for Ascent Village, and where can I keep my bins?", {

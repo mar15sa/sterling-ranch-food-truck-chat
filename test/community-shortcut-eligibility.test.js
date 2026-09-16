@@ -401,6 +401,7 @@ test("a dated recurring schedule does not leak beyond its source-defined season"
   assert.equal(answer.answerStatus, "verified-incomplete");
   assert.match(answer.directAnswer, /outside that published recurring season/i);
   assert.doesNotMatch(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
+  assert.deepEqual(answer.claims.map((claim) => claim.text), [answer.directAnswer]);
   assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["hours"]);
 });
 
@@ -539,7 +540,7 @@ test("dated facility hours retain the conflict boundary and prefer an exact week
   assert.notEqual(answer.answerStatus, "verified");
 });
 
-test("a confident rental fallback cannot replace pool hours after live status is rejected", async () => {
+test("dated pool hours stop before an unrelated rental fallback can run", async () => {
   let poolCalls = 0;
   let rulesCalls = 0;
   const routingPlan = plan({
@@ -581,18 +582,14 @@ test("a confident rental fallback cannot replace pool hours after live status is
     },
   });
   assert.equal(poolCalls, 0);
-  assert.equal(rulesCalls, 1);
+  assert.equal(rulesCalls, 0);
   assert.notEqual(answer.answerMode, "source-derived-structured");
   assert.doesNotMatch(answer.answer, /reserve an Overlook space|security deposit/i);
   assert.equal(answer.answerStatus, "verified-incomplete");
   assert.equal(answer.answerMode, "community-dated-facility-hours-holiday-boundary");
   assert.match(answer.answer, /does not publish separate Labor Day hours/i);
   assert.match(answer.answer, /5:00 am|9:00 am|8:45 pm/i);
-  assert.ok(answer._connectorDiagnostics.shortcutRejections.some((item) =>
-    item.connector === "grounded-fallback"
-      && item.reasons.includes("requested-hours-missing")
-      && item.reasons.includes("date-range-not-covered")
-  ));
+  assert.equal(answer.authorityDecision, "current-facility-operations");
 });
 
 test("a current pool-status question with today's date uses the fresh live status connector", async () => {

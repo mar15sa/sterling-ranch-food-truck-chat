@@ -489,7 +489,7 @@ test("approved pool hours provide regular context without claiming an unproven h
     assert.match(answer.answer, /Memorial Day weekend through Labor Day/i, question);
     assert.match(answer.answer, /Monday-Friday: 5:00 am - 9:00 am/i, question);
     assert.match(answer.answer, /does not publish separate Labor Day hours/i, question);
-    assert.deepEqual(answer.completion.resolvedDetails, ["date"], question);
+    assert.deepEqual(answer.completion.resolvedDetails, /^Is the pool open/i.test(question) ? ["date", "status"] : ["date"], question);
     assert.deepEqual(answer.completion.missingDetails.map((detail) => detail.key), ["hours"], question);
     assert.doesNotMatch(answer.answer, /depends on your village|current hours cannot be verified/i, question);
     assert.deepEqual(answer.sources.map((source) => source.id), ["approved-pool-hours-current-page"], question);

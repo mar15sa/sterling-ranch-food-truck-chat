@@ -619,6 +619,28 @@ test("Sterling Ranch uses only its published community reference for village rec
   assert.equal(scheduleTimingLabel("2026-09-07", "2026-08-30"), "the week of September 7, 2026");
 });
 
+test("Sterling Ranch uses the same published community reference for village garbage dates", async () => {
+  const requested = [];
+  const fetchImpl = async (url) => {
+    requested.push(String(url));
+    if (String(url).includes("address-suggest")) {
+      return { ok: true, json: async () => [{ place_id: "A90FA28A-EC50-11EA-802F-3A572DF7DDFE", name: "7853 Piney River Ave, Littleton" }] };
+    }
+    return { ok: true, json: async () => ({ events: [{ day: "2026-09-14", flags: [{ name: "Garbage" }] }] }) };
+  };
+  const schedule = await getWasteSchedule({ profile: communityProfile, fetchImpl, now: new Date("2026-09-12T18:00:00Z"), question: "Is garbage pickup delayed this week?" });
+  assert.equal(schedule.service, "garbage");
+  assert.equal(schedule.date, "2026-09-14");
+  assert.deepEqual(schedule.serviceAreas, [
+    { label: "Providence Village", date: "2026-09-14" },
+    { label: "Ascent Village", date: "2026-09-15" },
+    { label: "Prospect Village", date: "2026-09-17" },
+  ]);
+  assert.equal(requested.length, 2);
+  assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
+  assert.equal(schedule.evidence.degradation.state, "healthy");
+});
+
 test("Waste Connections uses one total deadline across its sequential requests", async () => {
   const profileWithPublishedReference = structuredClone(communityProfile);
   profileWithPublishedReference.connectors.find((connector) => connector.id === "waste-schedule").adapter.wasteSchedule.serviceAreas[0].officialReferenceLocation = {
