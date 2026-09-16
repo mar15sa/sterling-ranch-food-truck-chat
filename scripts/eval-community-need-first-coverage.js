@@ -70,7 +70,7 @@ function evaluate(testCase, result, elapsedMs) {
   }
   const excluded = testCase.answerExcludesAny || testCase.mustExclude || [];
   if (excluded.length && includesAny(answer, excluded)) issues.push(`answer included excluded text: ${excluded.join(" | ")}`);
-  if (/(?:\.\.\.|…)(?:\s|$)/.test(answer)) issues.push("presentation contains a clipped source excerpt");
+  if (/(?:\.\.\.|…)/.test(answer)) issues.push("presentation contains a clipped source excerpt");
   const failedProof = proofFailures(result);
   if (failedProof.length) issues.push(`${failedProof.length} claim proof failure(s)`);
   return {
@@ -137,8 +137,12 @@ function runIsolatedCase(testCase, caseIndex) {
     worker.once("message", (row) => {
       settled = true;
       resolve(row);
+      void worker.terminate().catch(() => {});
     });
-    worker.once("error", reject);
+    worker.once("error", (error) => {
+      settled = true;
+      reject(error);
+    });
     worker.once("exit", (code) => {
       if (!settled && code !== 0) reject(new Error(`Isolated case ${testCase.id} failed (${code}).`));
       else if (!settled) reject(new Error(`Isolated case ${testCase.id} returned no result.`));
@@ -222,7 +226,10 @@ async function main() {
     })),
     failures,
   };
-  console.log(JSON.stringify(process.argv.includes("--full") ? { ...report, cases: rows } : report, null, 2));
+  const output = process.argv.includes("--totals-only")
+    ? { ...report, failures: undefined }
+    : process.argv.includes("--full") ? { ...report, cases: rows } : report;
+  console.log(JSON.stringify(output, null, 2));
   if (failures.length) process.exitCode = 1;
 }
 

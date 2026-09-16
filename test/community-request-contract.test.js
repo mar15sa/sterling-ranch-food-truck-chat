@@ -96,6 +96,17 @@ test("recognizes ordinary yes-or-no permission wording", () => {
   assert.equal(watering.needs[0].evidenceKind, "governing-rule");
 });
 
+test("recognizes conversational permission wording without treating information requests as permission", () => {
+  for (const question of [
+    "Do I have to replace a dead tree in the tree lawn?",
+    "Must I get approval before changing the fence?",
+    "Can you cover your car with a tarp in the street?",
+  ]) {
+    assert.equal(buildResidentRequestContract(question).needs[0].task, "permission", question);
+  }
+  assert.notEqual(buildResidentRequestContract("Can you find the DRC email address?").needs[0].task, "permission");
+});
+
 test("does not split ordinary conjunctions inside one request", () => {
   assert.deepEqual(splitResidentNeeds("What are the rules for sheds and fences?"), ["What are the rules for sheds and fences"]);
 });

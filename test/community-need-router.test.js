@@ -125,10 +125,43 @@ test("a clipped source excerpt cannot become a finished resident answer", async 
   const result = await runNeedFirstShadow(contract, async () => supportedAnswer({
     id: "utility-rule",
     title: "Official utility equipment rule",
-    claim: "Exterior equipment requires approval. This subsection does not apply to equipment installed...",
+    claim: "Exterior equipment requires approval. This subsection does not apply to equipment installed...behind the meter.",
   }));
   assert.equal(result.completion.outcome, "missing-evidence");
   assert.doesNotMatch(result.answer, /\.\.\.|…/);
+});
+
+test("a verified plain-language permission answer is preserved instead of rebuilding legal excerpts", async () => {
+  const contract = buildResidentRequestContract("Do I need permission to replace a dead tree?", {
+    goal: "permission", subject: "dead tree replacement",
+  });
+  const claim = "Dead trees must be replaced, and replacement trees require DRC approval.";
+  const result = await runNeedFirstShadow(contract, async () => ({
+    ...supportedAnswer({ id: "tree-rule", title: "Official tree rule", claim }),
+    directAnswer: "Yes. Dead trees must be replaced, and you need DRC approval if the replacement changes the approved design.",
+    keyDetails: ["Sec. 21-22. (b)(104) - Tree lawn: ...dying materials with like materials."],
+    claims: [
+      { text: claim, evidenceSourceIds: ["tree-rule"], verified: true },
+      { text: "Tree lawn: ...dying materials with like materials.", evidenceSourceIds: ["tree-rule"], verified: true },
+    ],
+  }));
+  assert.equal(result.completion.outcome, "complete");
+  assert.equal(result.answer, "Yes. Dead trees must be replaced, and you need DRC approval if the replacement changes the approved design.");
+  assert.doesNotMatch(result.answer, /Sec\.|\.\.\./);
+});
+
+test("a verified source-boundary answer leads instead of a raw rulebook heading", async () => {
+  const contract = buildResidentRequestContract("Where must an electrical panel be placed?", {
+    goal: "information", subject: "electrical panel placement",
+  });
+  const claim = "Exterior utility equipment requires DRC approval and may need screening.";
+  const result = await runNeedFirstShadow(contract, async () => ({
+    ...supportedAnswer({ id: "utility-rule", title: "Official utility equipment rule", claim }),
+    directAnswer: "The rulebook does not specify an inside-versus-outside location for an electrical panel.",
+    confidence: { canAnswer: true },
+  }));
+  assert.equal(result.completion.outcome, "complete");
+  assert.equal(result.answer, "The rulebook does not specify an inside-versus-outside location for an electrical panel.");
 });
 
 test("a per-need failure cannot erase a separately supported answer", async () => {

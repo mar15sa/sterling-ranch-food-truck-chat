@@ -263,7 +263,13 @@ const developmentCases = [
 ];
 
 function literalPattern(value) {
-  return new RegExp(String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+  const tokens = String(value).trim().split(/\s+/).filter(Boolean).map((token) => {
+    const plural = /[a-z]s$/i.test(token);
+    const stem = plural ? token.slice(0, -1) : token;
+    const escaped = stem.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return `${escaped}${plural ? "s?" : ""}`;
+  });
+  return new RegExp(tokens.join("[\\s-]+"), "i");
 }
 
 const existingRulesHoldout = require("./rules-unseen-eval-cases.json").map((item) => ({

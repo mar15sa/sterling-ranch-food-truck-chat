@@ -201,28 +201,40 @@ The first run exposed 55 failures in 151 phrasings. This slice addressed shared 
 - a relevant one-sheet or application can appear as a proactive next step while staying tied to its own official source; and
 - permission language such as "you can," access instructions, and numeric setback statements can satisfy their actual need when rendered.
 
-The earlier shared-process diagnostic produced a 116–120 range. The harness now gives every question a separate worker isolate, preventing one question's module caches or mutable process state from affecting another. The benchmark also treats a visibly clipped source excerpt as a presentation failure. The candidate now discards those fragments and safely withholds that part when no complete claim is available. Two complete isolated runs after that guard produced the same answer/result fingerprint: `62202de281ec2a787e527359e72b8c658a17c25887215defb209b925f1fd1b25`.
+The earlier shared-process diagnostic produced a 116–120 range. The harness now gives every question a separate worker isolate, preventing one question's module caches or mutable process state from affecting another. The benchmark also treats any visible ellipsis inside a source claim as a clipped presentation failure. The candidate discards those fragments and safely withholds that part when no complete claim is available. Two complete isolated runs of the prior checkpoint produced the same 119/151 fingerprint, `62202de281ec2a787e527359e72b8c658a17c25887215defb209b925f1fd1b25`.
+
+The next checkpoint found that the deterministic rules answer already contained good plain-language guidance, but the need-first composer was throwing it away and rebuilding an answer from raw legal fragments. The composer now preserves a verified direct answer when a permission result otherwise contains clipped source claims or when the answer accurately explains that the governing source does not specify the requested detail. Conversational permission wording such as “Do I have to…” and “Can you cover…” is also recognized without misclassifying requests such as “Can you find…”.
+
+For example, “Can you cover your car with a tarp in the street?” changed from this legal fragment:
+
+> (b)(18) - Car covers: (18) Car covers. DRC approval is required. Garages are intended to house vehicles...
+
+to this verified resident answer:
+
+> A general tarp does not meet the rulebook's car-cover standard. Car covers require DRC approval and, in general, must be neutral-colored, well maintained, and specifically manufactured for the vehicle. Covering a vehicle does not override the separate street-parking rules.
 
 | Result | Count |
 | --- | ---: |
 | Authored phrasings | 151 |
-| Passed the saved expectation | 119 |
+| Passed the saved expectation | 122 |
 | Completed with rendered proof | 113 |
 | Safely withheld | 38 |
 | Claim-to-source proof failures | 0 |
 | Paid model calls | 0 |
 | Added model/API cost | $0 |
 
-This establishes a repeatable improvement from **96/151 to 119/151**. The focused production-shaped gate remains **19/19**, including all seven frozen rule checks, with zero proof failures.
+The isolated diagnostic has now improved from **96/151 to 122/151**. The focused production-shaped gate remains **19/19**, including all seven frozen rule checks, with zero proof failures. The new 122/151 result has one completed isolated run with fingerprint `ac7ae3f621bbf60ebff6ee82e43204d61ffce9a628ea7516466647c354c599a2`; it was not repeated because the local machine was contended and the work was deliberately capped.
 
-Thirty-two saved expectations still fail. Twenty-nine answers complete with proof but differ from the old expected wording, breadth, or source order. They require human review rather than automatic relaxation. The main groups are incomplete overviews, overly legalistic wording, missing proactive next steps, and saved checks that demand details the resident did not ask for. Clipped excerpts are no longer allowed into a completed candidate answer. Three are safe nonanswers or expectation mismatches: the clubhouse source version is awaiting review, current Labor Day pool hours are not separately published, and the trash timing/location case asks for timing while its saved expectation requires storage location.
+Twenty-nine saved expectations still fail. Twenty-six answers complete with proof but differ from the old expected wording, breadth, or source order. They require human review rather than automatic relaxation. The main groups are incomplete overviews, missing proactive next steps, and saved checks that demand details the resident did not ask for. Clipped excerpts are no longer allowed into a completed candidate answer. Three are safe nonanswers or expectation mismatches: the clubhouse source version is awaiting review, current Labor Day pool hours are not separately published, and the trash timing/location case asks for timing while its saved expectation requires storage location.
 
-The two isolated runs after the presentation guard recorded p95 elapsed times of **1.148 seconds** and **1.146 seconds**. This includes a fresh worker for each question but remains a local diagnostic, not a production latency claim.
+The earlier stable isolated runs recorded p95 elapsed times of **1.148 seconds** and **1.146 seconds**. The later 122/151 run recorded **11.097 seconds** while the local machine was heavily contended; focused checks were also several times slower. This is a development-machine diagnostic and is not evidence of production latency. The harness now explicitly terminates each worker after receiving its result.
+
+The rating harness also exposed a real false negative: it rejected the correct phrase “72-hour limit” because a frozen check required the exact string “72 hours.” Frozen literal checks now tolerate harmless hyphen and singular/plural differences while preserving the same factual requirement. This restored the production-shaped gate to 19/19 without changing the resident answer.
 
 The architectural conclusion remains unchanged: a more expensive model is not the current bottleneck. The candidate used deterministic interpretation, current local retrieval, official connectors, and evidence checks for **$0 added model cost**. The preserved historical mixed-model diagnostic estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000 questions**. A model, reranker, embedding service, or vector database should be tested only against a privacy-reviewed, human-rated failure group that specifically shows an interpretation, retrieval-recall, or writing gap.
 
 Before resident release, the next work is to review the 29 completed mismatches for human usefulness, replace overly legalistic presentation with direct resident guidance, improve missing overview details and proactive next steps, revalidate the three safe nonanswer/expectation cases, profile production-shaped latency, and run a privacy-reviewed human-rated acceptance set from the real question log. The automatic rating must stay uncalibrated until its rubric agrees with owner judgments on that held-out set.
 
-Regression verification: all 47 focused need/router/evidence checks pass, and the 19-case production-shaped gate passes. The latest full repository suite passes 1,307 of 1,308 checks. The sole failure is the pre-existing label mismatch for a conflicted internet-contact case (`community-freshness-withheld` versus `community-contact-boundary`); the old phone number remains withheld. The three regressions initially introduced by this slice were fixed before the checkpoint.
+Regression verification: all 50 focused need/router/evidence checks pass, and the 19-case production-shaped gate passes. The latest full repository suite passes 1,307 of 1,308 checks. The sole failure is the pre-existing label mismatch for a conflicted internet-contact case (`community-freshness-withheld` versus `community-contact-boundary`); the old phone number remains withheld. The three regressions initially introduced by the earlier slice were fixed before its checkpoint.
 
 This checkpoint is implemented and verified locally only. It is not deployed or verified live. The Notion owner-guide update remains pending because the earlier external write was rejected; this local record is the precise text to synchronize once Notion write access is available.
