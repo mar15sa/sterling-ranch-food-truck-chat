@@ -86,6 +86,24 @@ test("an exact establishment rate request keeps the known treatment and withhold
   assert.doesNotMatch(answer.answer, /2\.95%|processing fee/i);
 });
 
+test("an exact park-pass amount request leads with the missing amount and keeps the useful form", async () => {
+  const answer = await answerCommunityQuestion("What is the exact dollar amount of the park-pass reimbursement?", {
+    index,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    isTest: true,
+    requestContractMode: "need-first-candidate",
+    needRouterBackend: "current-local",
+  });
+  assert.equal(answer.completion.outcome, "verified-partial");
+  assert.match(answer.directAnswer, /^I couldn’t verify a reimbursement amount/i);
+  assert.match(answer.answer, /Park Pass Car Registration Reimbursement Form/i);
+  assert.match(answer.answer, /vehicle registration receipt/i);
+  assert.doesNotMatch(answer.answer, /\$\s*\d|eligible|guarantee/i);
+});
+
 test("establishment billing is not invented from missing or expired evidence", () => {
   const question = "Water discount for new turf?";
   assert.equal(proactiveCommunityAnswer(question, { index: { sources: [] } }), null);

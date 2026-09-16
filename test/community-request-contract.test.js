@@ -137,6 +137,22 @@ test("landscape establishment billing is an information need, not permission or 
   const amount = buildResidentRequestContract("What is the exact rate for water while establishing new sod?");
   assert.equal(amount.needs[0].task, "price");
   assert.deepEqual(amount.needs[0].requestedDetails, ["information", "price"]);
+
+  const billed = buildResidentRequestContract("How is water billed during the 45-day establishment period for new turf?");
+  assert.equal(billed.needs[0].task, "information");
+  assert.match(billed.needs[0].routeRequest, /landscape establishment water billing treatment/i);
+});
+
+test("a park-pass form and its receipt stay one need while an amount remains unresolved", () => {
+  const compound = buildResidentRequestContract("Which official form should I use for a park-pass reimbursement, and what receipt should I include?");
+  assert.equal(compound.needCount, 1);
+  assert.equal(compound.needs[0].task, "reimbursement");
+  assert.deepEqual(compound.needs[0].requestedDetails, ["reimbursement"]);
+  assert.equal(compound.needs[0].routeRequest, "How do I use the park pass reimbursement form?");
+
+  const amount = buildResidentRequestContract("What is the exact dollar amount of the park-pass reimbursement?");
+  assert.equal(amount.needs[0].task, "reimbursement");
+  assert.deepEqual(amount.needs[0].requestedDetails, ["reimbursement", "price"]);
 });
 
 test("broad Halloween decorating keeps the unresolved decoration scope separate from the lighting date", () => {

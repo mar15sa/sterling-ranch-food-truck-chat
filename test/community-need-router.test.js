@@ -646,6 +646,19 @@ test("the resident candidate keeps the holiday-hours boundary partial across bot
   assert.ok(result.completion.needs.every((need) => need.missingDetails.includes("hours")));
 });
 
+test("past-tense holiday hours use the most recent holiday date", async () => {
+  const result = await answerCommunityQuestion("What were the pool hours on Labor Day?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-16T18:00:00Z"),
+  });
+  assert.equal(result.completion.outcome, "verified-partial");
+  assert.match(result.answer, /Monday, September 7, 2026/i);
+  assert.doesNotMatch(result.answer, /2027/);
+});
+
 test("the current-local backend uses approved community navigation for water payment", async () => {
   const result = await answerCommunityQuestion("How do I pay my water bill online?", {
     isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",

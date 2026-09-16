@@ -50,6 +50,7 @@ test("detail extraction distinguishes current open status and service delays fro
   assert.deepEqual(deterministicRequestedDetails("Is the pool open, and what are the hours?"), ["hours", "status"]);
   assert.deepEqual(deterministicRequestedDetails("Was garbage pickup delayed this week?"), ["date", "status"]);
   assert.deepEqual(deterministicRequestedDetails("Was trash pickup delayed for Labor Day?"), ["date", "status"]);
+  assert.deepEqual(deterministicRequestedDetails("Does a holiday change this week’s trash pickup schedule?"), ["date", "status"]);
 });
 
 test("relative week ranges are deterministic and bounded", () => {
