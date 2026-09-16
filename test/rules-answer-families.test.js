@@ -345,6 +345,17 @@ test("recognizable topic fragments receive source-grounded answers", async () =>
   }
 });
 
+test("permanent holiday lights use permanent-system rules unless the resident asks for dates", async () => {
+  const permission = await answer("Are permanent holiday lights allowed?");
+  assert.match(permission.answer, /Gemstone.*Jellyfish|Jellyfish.*Gemstone/i);
+  assert.match(permission.answer, /DRC approval/i);
+  assert.match(permission.answer, /10:00 p\.m\./i);
+
+  const timing = await answer("When can permanent holiday lights be turned on?");
+  assert.match(timing.answer, /June 18 to July 7/i);
+  assert.match(timing.answer, /October 1 through January 31/i);
+});
+
 test("special-source rule families receive useful clause-composed answers without static profiles", async () => {
   const cases = [
     ["Can I hang stuff in my fence?", /household items.*may not be hung/i, "source-derived-extractive"],

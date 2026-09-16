@@ -128,3 +128,13 @@ test("deterministic direct answers keep proof across headings, wrappers, dates, 
     assert.ok(result.claims.every((claim) => claim.verified === true && claim.evidenceSourceIds.length), question);
   }
 });
+
+test("a multi-source resident fee overview keeps each sentence tied to its own schedule", async () => {
+  const result = await answerRulesQuestion("What fees do residents pay?", {
+    searchMode: "legacy", llmMode: "off", needFirstEvidenceContract: true,
+  });
+  assert.ok(result.claims.some((claim) => /water \$50\.20.*sewer \$44\.95.*stormwater \$18\.80/i.test(claim.text)));
+  assert.ok(result.claims.some((claim) => /streetlight \$9\.90.*trash \$14\.17/i.test(claim.text)));
+  assert.ok(result.claims.every((claim) => claim.verified === true && claim.evidenceSourceIds.length));
+  assert.doesNotMatch(result.answer, /charges is\b/i);
+});

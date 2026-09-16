@@ -67,4 +67,10 @@ No model, reranker, embedding service, vector database, subscription, deployment
 
 Implementation evidence for this addendum: local commit `5f95048` on `codex/community-quality-september30`.
 
+Pending September 15 intent-priority and multi-source-proof addendum: label this **implemented and verified locally; not released or verified live**. Permanent holiday-light permission questions now route to the permanent under-eave policy, while explicit timing and year-round-installation questions retain their appropriate seasonal answer. Descriptive fee questions no longer require a payment action, and multi-value fee summaries preserve separate proof to the water/sewer/stormwater schedule and CAB service-fee schedule.
+
+The capped isolated authored diagnostic reached 130/151 from 125/151 and the original 96/151: 112 complete, 39 safe nonanswers, zero claim-proof failures, zero model calls, and $0 added model/API cost. Fingerprint: `aac9ebbd6853dc32e06ab0b6ce647f05a323c1584821c2a4b23c1adc8a3d83d1`. Focused checks passed 55/55 need/router/evidence, 41/41 interpretation, 37/37 rule-family, and 19/19 production-shaped cases.
+
+Release plan to record: target staging by September 17 after privacy-reviewed held-out question-log scoring; target production by September 19 only if the candidate materially improves human-rated directness, specificity, useful proactiveness, complete need coverage, and presentation, while exact-revision staging smoke checks and live source health pass and the operating-cost comparison is recorded. Do not label this staged, deployed, or live until those exact states are verified. No external write or deployment occurred in this checkpoint.
+
 Verification addendum: 45/45 focused need/router/evidence checks pass. The full repository suite passes 1,307/1,308 checks. The only failure is the previously known diagnostic-label mismatch for conflicted internet-contact evidence; the old number remains withheld. Three regressions first exposed during this slice were repaired before the checkpoint.

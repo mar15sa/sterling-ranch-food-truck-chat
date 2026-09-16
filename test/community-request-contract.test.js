@@ -96,6 +96,14 @@ test("recognizes ordinary yes-or-no permission wording", () => {
   assert.equal(watering.needs[0].evidenceKind, "governing-rule");
 });
 
+test("descriptive fee questions do not require a payment action", () => {
+  const overview = buildResidentRequestContract("What fees do residents pay?", { goal: "cost" });
+  assert.deepEqual(overview.needs[0].requestedDetails, ["price"]);
+
+  const instructions = buildResidentRequestContract("How do I pay my water bill online?", { goal: "payment" });
+  assert.ok(instructions.needs[0].requestedDetails.includes("action"));
+});
+
 test("recognizes conversational permission wording without treating information requests as permission", () => {
   for (const question of [
     "Do I have to replace a dead tree in the tree lawn?",
