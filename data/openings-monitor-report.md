@@ -1,10 +1,10 @@
 # Douglas County openings radar
 
-Scan completed: 2026-09-15T14:04:34.290Z
-Sources tracked: 58
-Automatically checked: 42
+Scan completed: 2026-09-16T14:05:03.347Z
+Sources tracked: 59
+Automatically checked: 43
 Manual research lookups: 16
-Changed: 3
+Changed: 2
 Errors: 0
 New structured leads: 0
 
@@ -17,12 +17,6 @@ The page changed, but the text filter did not isolate a new business signal. Rev
 ## Changed: Aspen Grove tenant directory
 
 https://aspengrovecenter.com/shop/
-
-The page changed, but the text filter did not isolate a new business signal. Review the page manually.
-
-## Changed: Lone Tree Timberlines business openings
-
-https://cityoflonetree.com/communications/timberlines/
 
 The page changed, but the text filter did not isolate a new business signal. Review the page manually.
 
