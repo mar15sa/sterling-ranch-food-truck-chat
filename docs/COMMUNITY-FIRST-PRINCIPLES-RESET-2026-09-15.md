@@ -303,3 +303,31 @@ The broad 1,324-test run completed before the final repairs with 1,318 passes an
 Release status remains local only. Target staging is September 17 after the private aggregate is completed and the exact revision passes test-mode smoke checks. Target production is September 19 only if the held-out review shows a material improvement in directness, specificity, useful proactiveness, complete need coverage, and human-first presentation, with live source health clean. Production retains the legacy flow until that decision.
 
 Implementation revision: local commit `a059c3e` on `codex/community-quality-september30`.
+
+## September 16 proof-based rating and complete owner-log replay
+
+The automatic-rating replacement now starts from the same resident needs and claim-to-source evidence used to build the answer. It scores five explicit dimensions from 0 to 2: directness, complete need coverage, specificity, useful proactiveness, and human-first presentation. A response cannot receive an Excellent diagnostic unless it earns 10/10. A polished partial answer cannot rank above Mixed, and a completed answer with an unresolved need, missing answer, or unverified visible claim receives a hard failure. The separate resident-effort result stays unresolved whenever the resident must keep searching or ask again.
+
+This rubric remains an unpublished diagnostic. It reports `calibrated: false` and `publishable: false`, so the owner log continues to show `Not rated` rather than publishing an unproven replacement score. On the existing 19 production-shaped and frozen fixtures, it produced 10 Excellent, 7 Good, and 2 Weak diagnostics with zero false-positive or false-negative completion judgments. Those fixtures verify structural behavior; they do not establish agreement with owner ratings.
+
+The privacy-safe shadow runner now replays each private question at its original question date when that date is available. This matters for questions about tomorrow, a holiday, or whether something is open. It can also emit aggregate rubric and resident-effort counts while keeping question and answer text out of files.
+
+The complete replay of all 28 owner-marked Needs work questions produced:
+
+| Result | Count | Meaning |
+| --- | ---: | --- |
+| Complete | 17 | Every preserved need had rendered, relevant proof. |
+| Missing evidence | 11 | The candidate refused to fill a gap with unrelated or unapproved material. |
+| Excellent diagnostic | 5 | Complete and 10/10 on the five structural dimensions. |
+| Good diagnostic | 12 | Complete and useful, with at least one presentation or action-path deduction. |
+| Weak diagnostic | 11 | The resident's requested outcome remained unresolved. |
+| Proof failures | 0 | No completed response lacked claim-to-source evidence. |
+| Model calls | 0 | No paid planning, writing, grading, or reranking call was made. |
+
+This is **17/28 useful, or 60.7%**, and is not demo-ready against the working targets of 95% useful and 85% Excellent. Seven of the eleven unresolved cases ask for current event, food-truck, pool, or holiday-service information. The offline runner intentionally does not pretend it has exercised the deployed live connectors; those seven require test-mode staging checks on the exact release revision. The other four expose static evidence gaps: Halloween decorating language, the approved scope of the 45-day landscape-establishment water treatment, and the official park-pass reimbursement path.
+
+The source review found two exact official paths, but they are not promoted into resident evidence without owner approval. The current CAB water FAQ says that water used during the 45 days after turf and plant installation is billed at the first-tier fee rate and does not count against the water budget. The current official page is `https://sterlingranchcab.com/m/faq?cat=16`. This does not establish free water, a cash discount, a general exemption, a longer period, or current rate amounts. The official reimbursement action is the `Park Pass Car Registration Reimbursement Form` at `https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62`. Approving that route would establish the action and link only; it would not establish eligibility, amount, approval, deadline, or other policy.
+
+These failures confirm the first-principles boundary. A different model or vector database cannot authorize an unapproved fact and should not be used to guess around a missing live connector. The historical mixed-model answer-flow estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000**. The deterministic need-first candidate and rubric add **$0 in model/API charges**. For comparison, the existing model-grader harness would cost about **$3.88 per 1,000 targeted answers with Haiku** or **$9.86 per 1,000 with Sonnet**, before establishing better agreement with the owner. No model grader has earned adoption.
+
+Release status remains local only. The September 17 staging target is conditional on the exact revision passing the seven live/date-specific questions in test mode, approved source decisions being incorporated or explicitly deferred, fast and focused checks remaining green, and cost being unchanged. Production remains no earlier than September 19 and still requires a materially improved held-out result, clean live source health, and smoke checks on the exact staging revision. Production continues to use the legacy flow until those gates pass.
