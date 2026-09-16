@@ -274,3 +274,30 @@ One capped isolated broad run reached **130/151**, up from 125/151 and the origi
 Release plan: prepare the staging candidate by September 17 after a privacy-reviewed held-out sample from the real question log is scored for directness, specificity, useful proactiveness, complete need coverage, and human-first presentation. Target production by September 19 only if that sample shows a material improvement over the current site, live source health is clean, the exact staging revision passes smoke checks, and full current-versus-candidate operating cost is recorded. This leaves more than a week for demo hardening before month-end. No deployment occurred in this checkpoint.
 
 Implementation revision: local commit `9b57816` on `codex/community-quality-september30`.
+
+## September 16 held-out log and release-gate checkpoint
+
+The private owner log now contains 129 non-test questions since September 1, including 28 owner-marked Needs work examples. Eighteen of the first 27 reviewed failures still carried a historical automatic Good or Excellent rating. This confirms that the old rating was measuring route completion and answer form more reliably than resident usefulness. The current code already prevents that failure for new records: an answer remains `Not rated` unless a versioned grader has been explicitly calibrated against human judgments. The old score remains available only as a development diagnostic.
+
+A privacy-safe shadow runner now accepts private rows in memory, retains nothing on disk, and can emit aggregate results without resident question or answer text. The latest targeted replay covers the question-log failures changed in this slice. It confirms direct, source-proven answers for landscape requirements, landscape application steps, permanent under-eave lighting approval, State Parks pass instructions, porch belongings, and yard completion deadlines. A parks-pass reimbursement request now stays unresolved unless the source actually discusses reimbursement; annual-pass eligibility can no longer stand in for that policy. Live event, pool, holiday-waste, and similar questions still depend on current connectors and are not treated as solved by rulebook text.
+
+The final all-28 aggregate replay is still pending because the Notion connection reached its Query Data Source quota while the in-memory handoff was being prepared. No private row was written to a file. This quota interruption is a release-gate limitation, not evidence of an answer failure, and the query should be resumed after the connector allowance resets rather than repeatedly retried.
+
+The server now has an explicit `COMMUNITY_ANSWER_FLOW` switch. It defaults to `legacy`. Setting it to `need-first-candidate` runs the already-tested local need-first coordinator with planning and writing model stages disabled. The flag is server-owned and cannot be supplied by a resident request. This creates a reversible staging release without changing production behavior or adding a model, vector database, subscription, or API charge.
+
+Verification after this slice:
+
+- 21/21 request-contract checks;
+- 28/28 need-router checks;
+- 39/39 rule-family checks;
+- 8/8 claim-to-source checks;
+- 41/41 interpretation checks;
+- 8/8 question-log and rating-publication checks;
+- 32/32 fast release checks; and
+- 19/19 production-shaped offline cases, including all 7 frozen rule holdouts, with 0 proof failures, 0 model calls, and $0 added model/API cost.
+
+The final September 16 offline gate recorded a 2.374-second p95 on the local machine. It is not a production service-level measurement. The preserved current mixed-model diagnostic estimate remains about $1.01 per 1,000 questions and $10.09 per 10,000. The proposed staging configuration adds $0 in model/API charges; hosting and connector work stay within the existing service footprint.
+
+The broad 1,324-test run completed before the final repairs with 1,318 passes and six failures. Five were affected edge cases exposed by the run: online payment intent, two operational payment-routing checks, landscape overview completeness, and landscape presentation length. All five now pass their direct suites. The remaining failure is the already-known internal label expectation for safely withheld conflicted internet-contact evidence. The full 1,324-test process was deliberately not repeated after those focused repairs, so this checkpoint does not present a synthetic full-suite pass total.
+
+Release status remains local only. Target staging is September 17 after the private aggregate is completed and the exact revision passes test-mode smoke checks. Target production is September 19 only if the held-out review shows a material improvement in directness, specificity, useful proactiveness, complete need coverage, and human-first presentation, with live source health clean. Production retains the legacy flow until that decision.

@@ -226,8 +226,9 @@ test("everyday wording for movable outdoor belongings routes to the household-it
   ]) {
     const result = await answer(question);
     assert.match(result.sources?.[0]?.title || "", /^Sec\. 1-38\. - Household items/i, question);
-    assert.match(result.answer, /Owner's Lot/i, question);
-    assert.match(result.answer, /roadway,? (?:or )?walkway/i, question);
+    assert.match(result.answer, /own lot|Owner's Lot/i, question);
+    assert.match(result.answer, /roadway,? (?:or )?walkway|roadway, walkway/i, question);
+    assert.doesNotMatch(result.answer, /DRC application|architectural improvement/i, question);
     assert.doesNotMatch(result.answer, /could not verify|could not find/i, question);
   }
 });
@@ -354,6 +355,32 @@ test("permanent holiday lights use permanent-system rules unless the resident as
   const timing = await answer("When can permanent holiday lights be turned on?");
   assert.match(timing.answer, /June 18 to July 7/i);
   assert.match(timing.answer, /October 1 through January 31/i);
+
+  const holidayOnly = await answer("So do I have to submit the application for under eave lights for holiday purposes only??");
+  assert.match(holidayOnly.answer, /^Yes(?:[.—]|$)/i);
+  assert.match(holidayOnly.answer, /DRC approval is required to add permanent under-eave lighting/i);
+  assert.equal(holidayOnly.answerVerdict, "conditional");
+  assert.ok(holidayOnly.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
+});
+
+test("landscape overview replaces rulebook placeholders with resident-ready details and actions", async () => {
+  const result = await answer("What are the landscaping and yard rules?");
+  assert.match(result.answer, /one deciduous tree.*one evergreen tree.*80% live coverage/is);
+  assert.match(result.answer, /Backyard.*two trees.*30% live plant material/is);
+  assert.match(result.answer, /automatic, underground irrigation system/i);
+  assert.doesNotMatch(result.answer, /as specified below\.(?:\s|$)/i);
+  assert.ok(result.actions.some((action) => /Landscape Submittal Packet/i.test(action.label)));
+  assert.ok(result.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
+});
+
+test("a terse landscape application request opens the current packet and submission route", async () => {
+  const result = await answer("Landscaping application", { needFirstEvidenceContract: true });
+  assert.equal(result.answerMode, "official-resource-navigation");
+  assert.match(result.answer, /Landscape Submittal Packet 2026/i);
+  assert.match(result.answer, /Submit a DRC Application/i);
+  assert.ok(result.actions.some((action) => /Landscape Submittal Packet/i.test(action.label)));
+  assert.ok(result.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
+  assert.equal(result.claims.length, 2);
 });
 
 test("special-source rule families receive useful clause-composed answers without static profiles", async () => {
@@ -530,6 +557,7 @@ test("yard completion deadlines use the controlling installation-date rule", asy
     assert.match(result.answer, /November 1.*April 30|winter deferral/is, question);
     assert.match(result.sources?.[0]?.title || "", /^Sec\. 9-145\. - Completion\/installation dates/i, question);
     assert.doesNotMatch(result.answer, /rules (?:do not|don't) set a deadline/i, question);
+    assert.doesNotMatch(result.answer, /does not say whether that placement is allowed/i, question);
   }
 
   const front = await answer("How long does the builder have to finish the front yard after the certificate of occupancy?");

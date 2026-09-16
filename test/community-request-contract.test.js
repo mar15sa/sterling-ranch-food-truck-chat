@@ -104,6 +104,13 @@ test("descriptive fee questions do not require a payment action", () => {
   assert.ok(instructions.needs[0].requestedDetails.includes("action"));
 });
 
+test("a reimbursement request cannot be satisfied by general pass eligibility", () => {
+  const contract = buildResidentRequestContract("Reimburse for parks pass");
+  assert.equal(contract.needs[0].task, "reimbursement");
+  assert.deepEqual(contract.needs[0].requestedDetails, ["reimbursement"]);
+  assert.equal(contract.needs[0].evidenceKind, "governing-rule");
+});
+
 test("recognizes conversational permission wording without treating information requests as permission", () => {
   for (const question of [
     "Do I have to replace a dead tree in the tree lawn?",
@@ -112,6 +119,12 @@ test("recognizes conversational permission wording without treating information 
   ]) {
     assert.equal(buildResidentRequestContract(question).needs[0].task, "permission", question);
   }
+  const holidayOnlyApplication = buildResidentRequestContract(
+    "So do I have to submit the application for under eave lights for holiday purposes only?"
+  );
+  assert.equal(holidayOnlyApplication.needs[0].task, "permission");
+  assert.deepEqual(holidayOnlyApplication.needs[0].requestedDetails, ["action", "permission"]);
+  assert.equal(holidayOnlyApplication.needs[0].evidenceKind, "governing-rule");
   assert.notEqual(buildResidentRequestContract("Can you find the DRC email address?").needs[0].task, "permission");
 });
 

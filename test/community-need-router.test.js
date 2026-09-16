@@ -118,6 +118,18 @@ test("a verified written instruction completes an action need without requiring 
   assert.deepEqual(result.actions, []);
 });
 
+test("annual-pass eligibility cannot stand in for a reimbursement policy", async () => {
+  const contract = buildResidentRequestContract("Reimburse for parks pass");
+  const result = await runNeedFirstShadow(contract, async () => supportedAnswer({
+    id: "parks-pass",
+    title: "Official parks pass program",
+    claim: "Each qualified residence is allowed one annual pass per year.",
+  }));
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.match(result.answer, /couldn’t verify.*Reimburse for parks pass/i);
+  assert.deepEqual(result.completion.needs[0].missingDetails, ["reimbursement"]);
+});
+
 test("a clipped source excerpt cannot become a finished resident answer", async () => {
   const contract = buildResidentRequestContract("What are the electrical panel rules?", {
     goal: "information", subject: "electrical panels",
@@ -265,7 +277,7 @@ test("the router enforces a bounded number of needs", async () => {
   await assert.rejects(() => runNeedFirstShadow(contract, async () => ({})), /need limit exceeded/i);
 });
 
-test("assistant integration is test-only and leaves the current answer untouched", async () => {
+test("test-scoped shadow integration leaves the current answer untouched", async () => {
   const question = "Which food truck is here today, and what is on its menu?";
   const baseOptions = {
     planCommunitySearch: false,
@@ -286,7 +298,7 @@ test("assistant integration is test-only and leaves the current answer untouched
     : supportedAnswer({ id: "menu", title: "Ecos de Mexico menu", claim: "The menu lists tacos." });
   await assert.rejects(() => answerCommunityQuestion(question, {
     ...baseOptions, requestContractMode: "shadow-route", answerResidentNeed,
-  }), /test-only/i);
+  }), /test mode or the server-owned resident release flag/i);
   const baseline = await answerCommunityQuestion(question, baseOptions);
   const result = await answerCommunityQuestion(question, {
     ...baseOptions, isTest: true, requestContractMode: "shadow-route", answerResidentNeed,
@@ -599,14 +611,14 @@ test("the current-local backend independently proves a live recycling date and t
   assert.doesNotMatch(result._requestContract.shadowRoute.answer, /New Year’s Day/i);
 });
 
-test("need-first routing remains test-only and refuses enabled model stages", async () => {
+test("need-first routing requires a server release flag outside tests and refuses enabled model stages", async () => {
   for (const requestContractMode of ["shadow-route", "need-first-candidate"]) {
     await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {
       requestContractMode,
       needRouterBackend: "current-local",
       planCommunitySearch: false,
       synthesizeCommunityAnswer: false,
-    }), /test-only/i);
+    }), /test mode or the server-owned resident release flag/i);
     await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {
       isTest: true,
       requestContractMode,
@@ -615,4 +627,18 @@ test("need-first routing remains test-only and refuses enabled model stages", as
       synthesizeCommunityAnswer: false,
     }), /model stages.*disabled/i);
   }
+
+  const released = await answerCommunityQuestion("Can I build a shed?", {
+    needFirstResidentRelease: true,
+    requestContractMode: "need-first-candidate",
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerResidentNeed: async () => supportedAnswer({
+      id: "shed-rule",
+      title: "Official shed rule",
+      claim: "Yes, a shed requires DRC approval before installation.",
+    }),
+  });
+  assert.equal(released.answerMode, "need-first-candidate");
+  assert.ok(["complete", "missing-evidence"].includes(released.completion.outcome));
 });
