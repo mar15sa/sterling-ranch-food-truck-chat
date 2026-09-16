@@ -74,8 +74,10 @@ test("multiple proved details become readable paragraphs instead of one dense li
   });
   const claims = [
     "Landscape installation must follow the approved design and keep all required drainage paths clear while the work is underway.",
-    "Landscape materials must also stay within the approved lot boundaries and any changes to the approved design require DRC review.",
-    "Residents should keep the final approved landscape plan with their property records after the installation is complete.",
+    "Landscape installation materials must stay within the approved lot boundaries.",
+    "Landscape installation changes to the approved design require DRC review.",
+    "Landscape installation work must preserve the approved drainage pattern.",
+    "Landscape installation records should include the final approved landscape plan.",
   ];
   const result = await runNeedFirstShadow(contract, async () => ({
     answerStatus: "verified",
@@ -87,7 +89,7 @@ test("multiple proved details become readable paragraphs instead of one dense li
     actions: [], conflicts: [],
   }));
   assert.equal(result.completion.outcome, "complete");
-  assert.match(result.answer, /\n\n/);
+  assert.match(result.answer, /Key details:\n-/);
   assert.ok(result.answer.split("\n").every((line) => line.length <= 240));
 });
 
