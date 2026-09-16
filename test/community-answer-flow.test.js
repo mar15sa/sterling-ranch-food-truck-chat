@@ -1,0 +1,30 @@
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const { resolveCommunityAnswerFlow } = require("../lib/community-answer-flow");
+
+test("Railway staging defaults to the need-first candidate", () => {
+  assert.equal(resolveCommunityAnswerFlow({ RAILWAY_ENVIRONMENT_NAME: "staging" }), "need-first-candidate");
+});
+
+test("production and local environments keep the legacy resident flow by default", () => {
+  assert.equal(resolveCommunityAnswerFlow({ RAILWAY_ENVIRONMENT_NAME: "production" }), "legacy");
+  assert.equal(resolveCommunityAnswerFlow({}), "legacy");
+});
+
+test("an explicit valid setting overrides the environment default", () => {
+  assert.equal(resolveCommunityAnswerFlow({
+    RAILWAY_ENVIRONMENT_NAME: "staging",
+    COMMUNITY_ANSWER_FLOW: "legacy",
+  }), "legacy");
+  assert.equal(resolveCommunityAnswerFlow({
+    RAILWAY_ENVIRONMENT_NAME: "production",
+    COMMUNITY_ANSWER_FLOW: "need-first-candidate",
+  }), "need-first-candidate");
+});
+
+test("an invalid explicit setting fails closed", () => {
+  assert.throws(
+    () => resolveCommunityAnswerFlow({ COMMUNITY_ANSWER_FLOW: "experimental" }),
+    /must be legacy or need-first-candidate/,
+  );
+});

@@ -48,6 +48,7 @@ const {
 const { getRulesLlmMetrics } = require("./lib/rules-llm");
 const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
+const { resolveCommunityAnswerFlow } = require("./lib/community-answer-flow");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { calendarConfiguration, upcomingCommunityEvents } = require("./lib/community-calendar-view");
@@ -103,10 +104,7 @@ const RULES_ASK_RATE_WINDOW_MS =
 const RULES_ASK_RATE_MAX = Number(process.env.RULES_ASK_RATE_MAX) || 30;
 const RULES_QUESTION_MAX_CHARS =
   Number(process.env.RULES_QUESTION_MAX_CHARS) || 500;
-const COMMUNITY_ANSWER_FLOW = String(process.env.COMMUNITY_ANSWER_FLOW || "legacy").trim().toLowerCase();
-if (!["legacy", "need-first-candidate"].includes(COMMUNITY_ANSWER_FLOW)) {
-  throw new Error("COMMUNITY_ANSWER_FLOW must be legacy or need-first-candidate.");
-}
+const COMMUNITY_ANSWER_FLOW = resolveCommunityAnswerFlow();
 const COMMUNITY_PREVIEW_RATE_MAX =
   Number(process.env.COMMUNITY_PREVIEW_RATE_MAX) || 5;
 const questionAdminLoginLimiter = createLoginLimiter();
@@ -4696,6 +4694,7 @@ async function handleHealth(req, res) {
     uptimeSeconds: Math.round(process.uptime()),
     deploymentReady: healthy,
     deploymentRevision: process.env.RAILWAY_GIT_COMMIT_SHA || process.env.APP_REVISION || null,
+    communityAnswerFlow: COMMUNITY_ANSWER_FLOW,
     liveMonitoring: liveMonitor.status(),
     configurationFingerprint: require('./lib/community-soak-evidence').configurationFingerprint(),
     rules: {
