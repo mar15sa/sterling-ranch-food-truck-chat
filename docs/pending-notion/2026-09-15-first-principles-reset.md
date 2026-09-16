@@ -73,4 +73,6 @@ The capped isolated authored diagnostic reached 130/151 from 125/151 and the ori
 
 Release plan to record: target staging by September 17 after privacy-reviewed held-out question-log scoring; target production by September 19 only if the candidate materially improves human-rated directness, specificity, useful proactiveness, complete need coverage, and presentation, while exact-revision staging smoke checks and live source health pass and the operating-cost comparison is recorded. Do not label this staged, deployed, or live until those exact states are verified. No external write or deployment occurred in this checkpoint.
 
+Implementation evidence for this addendum: local commit `9b57816` on `codex/community-quality-september30`.
+
 Verification addendum: 45/45 focused need/router/evidence checks pass. The full repository suite passes 1,307/1,308 checks. The only failure is the previously known diagnostic-label mismatch for conflicted internet-contact evidence; the old number remains withheld. Three regressions first exposed during this slice were repaired before the checkpoint.
