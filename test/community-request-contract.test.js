@@ -47,6 +47,16 @@ test("preserves pool status and hours as independently checkable needs", () => {
   assert.ok(contract.needs[1].requestedDetails.includes("hours"));
 });
 
+test("a follow-up hours clause keeps the named holiday from the first clause", () => {
+  const contract = buildResidentRequestContract("Is the pool open on Labor Day, and what are the hours?");
+  assert.equal(contract.needCount, 2);
+  assert.match(contract.needs[0].routeRequest, /pool/i);
+  assert.match(contract.needs[0].routeRequest, /Labor Day/i);
+  assert.match(contract.needs[0].routeRequest, /hours/i);
+  assert.match(contract.needs[1].routeRequest, /pool/i);
+  assert.match(contract.needs[1].routeRequest, /Labor Day/i);
+});
+
 test("keeps a one-part question as one need", () => {
   assert.deepEqual(splitResidentNeeds("How do I pay my water bill?"), ["How do I pay my water bill"]);
   const contract = buildResidentRequestContract("How do I pay my water bill?", { goal: "payment", goals: ["payment"], subject: "water bill" });
@@ -202,6 +212,29 @@ test("food-truck date evidence does not hide a missing menu answer", () => {
   assert.equal(assessment.needs[0].status, "supported");
   assert.equal(assessment.needs[1].status, "missing-evidence");
   assert.equal(assessment.outcome, "missing-evidence");
+});
+
+test("need assessment cannot promote a facet the answer completion contract leaves unresolved", () => {
+  const contract = buildResidentRequestContract("What are the pool hours for Labor Day?");
+  const id = "pool-hours";
+  const claim = "The pool is open Memorial Day weekend through Labor Day. Monday-Friday hours are 5:00 a.m. to 8:45 p.m.";
+  const assessment = assessResidentNeeds(contract, {
+    answerStatus: "verified-incomplete",
+    directAnswer: `${claim} The source does not publish separate Labor Day hours.`,
+    keyDetails: [],
+    sources: [source(id, "Pool hours", claim)],
+    claims: [verifiedClaim(claim, [id])],
+    actions: [], conflicts: [],
+    completion: {
+      outcome: "verified-partial",
+      requestedDetails: ["date", "hours"],
+      resolvedDetails: ["date"],
+      missingDetails: [{ key: "hours", reason: "missing-evidence" }],
+    },
+  });
+  assert.deepEqual(assessment.needs[0].supportedDetails, ["date"]);
+  assert.deepEqual(assessment.needs[0].missingDetails, ["hours"]);
+  assert.equal(assessment.needs[0].status, "missing-evidence");
 });
 
 test("an official water billing contact cannot support a CAB water-quality report request", () => {

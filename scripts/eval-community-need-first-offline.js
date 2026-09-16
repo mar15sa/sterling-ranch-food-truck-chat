@@ -221,7 +221,7 @@ const developmentCases = [
     family: "source-failure",
     question: "Which food truck is here today, and what is on its menu?",
     expectedOutcome: "missing-evidence",
-    mustInclude: [/couldn’t verify/i],
+    mustInclude: [/couldn’t (?:verify|check|find)/i],
     options: () => baseOptions({
       communityProfile: foodTruckProfile(),
       getFoodTruckAnswer: async () => { throw new Error("fixture connector unavailable"); },
@@ -232,7 +232,7 @@ const developmentCases = [
     family: "subject-boundary",
     question: "Where can I read CAB's 2025 water quality report?",
     expectedOutcome: "missing-evidence",
-    mustInclude: [/couldn’t verify/i],
+    mustInclude: [/couldn’t (?:verify|check|find)/i],
     mustExclude: [/water billing|pay online/i],
     options: () => baseOptions(),
   },

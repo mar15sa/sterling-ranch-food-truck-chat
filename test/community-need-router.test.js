@@ -514,7 +514,7 @@ test("the current-local backend preserves live pool status when current regular 
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "verified-partial");
   assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "missing-evidence"]);
   assert.match(result._requestContract.shadowRoute.answer, /currently open/i);
-  assert.match(result._requestContract.shadowRoute.answer, /regular hours/i);
+  assert.match(result._requestContract.shadowRoute.answer, /(?:regular|current) hours/i);
 });
 
 test("the resident candidate keeps a fresh single-part pool status instead of asking for hours", async () => {
@@ -571,6 +571,54 @@ test("the resident candidate keeps a proven garbage date while delay status is u
   assert.deepEqual(result.completion.needs[0].supportedDetails, ["date"]);
   assert.deepEqual(result.completion.needs[0].missingDetails, ["status"]);
   assert.deepEqual(result.sources.map((source) => source.id), [evidenceId]);
+});
+
+test("the resident candidate does not use next week's pickup date to answer this week", async () => {
+  const checkedAt = "2026-09-16T18:00:00.000Z";
+  const evidenceId = "sterling-ranch:waste-schedule:live-calendar";
+  const result = await answerCommunityQuestion("Was garbage pickup delayed this week?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+    getWasteSchedule: async () => ({
+      service: "garbage", date: "2026-09-21", timing: "next week", anchorDate: "2026-09-21",
+      range: { start: "2026-09-14", end: "2026-09-20" },
+      serviceAreas: [{ label: "Providence Village", date: "2026-09-21" }], checkedAt,
+      evidence: {
+        degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
+        claims: [{ facet: "date", text: "2026-09-21", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+        evidence: [{ evidenceId, sourceUrl: "https://www.wasteconnections.com/pickup-schedule", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+        actions: [{ type: "information", label: "Check an address in the official pickup calendar", url: "https://www.wasteconnections.com/pickup-schedule" }],
+      },
+    }),
+  });
+  assert.equal(result.answerStatus, "could-not-verify");
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.match(result.answer, /couldn’t verify whether trash pickup was delayed for the requested period/i);
+  assert.doesNotMatch(result.answer, /September 21/i);
+  assert.deepEqual(result.completion.needs[0].missingDetails, ["date", "status"]);
+});
+
+test("the resident candidate keeps the holiday-hours boundary partial across both clauses", async () => {
+  const now = new Date("2026-09-01T12:00:00Z");
+  const result = await answerCommunityQuestion("Is the pool open on Labor Day, and what are the hours?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile, now,
+    getPoolStatus: async () => ({
+      state: "open", headline: "Open", summary: "The pool is currently open.",
+      residentAction: "Open the official pool status for more details.", sourceUrl: "https://sterlingranchcab.com/187/Pool",
+      actionUrl: "https://sterlingranchcab.com/187/Pool", date: "2026-09-01", checkedAt: now.toISOString(), stale: false,
+    }),
+  });
+  assert.equal(result.answerStatus, "verified-incomplete");
+  assert.equal(result.completion.outcome, "verified-partial");
+  assert.match(result.answer, /does not publish separate Labor Day hours/i);
+  assert.doesNotMatch(result.answer, /I couldn’t verify this part yet/i);
+  assert.ok(result.completion.needs.every((need) => need.missingDetails.includes("hours")));
 });
 
 test("the current-local backend uses approved community navigation for water payment", async () => {

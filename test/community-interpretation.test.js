@@ -52,6 +52,18 @@ test("detail extraction distinguishes current open status and service delays fro
   assert.deepEqual(deterministicRequestedDetails("Was trash pickup delayed for Labor Day?"), ["date", "status"]);
 });
 
+test("relative week ranges are deterministic and bounded", () => {
+  assert.deepEqual(highConfidenceDateRange("Was garbage pickup delayed this week?", new Date("2026-09-16T18:00:00Z")), {
+    kind: "week", start: "2026-09-14", end: "2026-09-20", label: "this week",
+  });
+  assert.deepEqual(highConfidenceDateRange("What is next week’s recycling date?", new Date("2026-09-16T18:00:00Z")), {
+    kind: "week", start: "2026-09-21", end: "2026-09-27", label: "next week",
+  });
+  assert.deepEqual(highConfidenceDateRange("Was trash late last week?", new Date("2026-09-16T18:00:00Z")), {
+    kind: "week", start: "2026-09-07", end: "2026-09-13", label: "last week",
+  });
+});
+
 test("water-usage access detection preserves generic online utility portal actions", () => {
   assert.deepEqual(deterministicRequestedDetails("How can I monitor my water usage online?"), ["action"]);
   assert.deepEqual(deterministicRequestedDetails("Online access for my utility bill"), ["action"]);

@@ -306,10 +306,10 @@ test("legacy production routing still sends pickup delays to the live waste boun
     answerRulesQuestion,
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
   });
-  assert.equal(datedAnswer.answerMode, "community-live-waste-status-unavailable");
-  assert.equal(datedAnswer.answerStatus, "verified-incomplete");
-  assert.match(datedAnswer.answer, /September 14/i);
-  assert.deepEqual(datedAnswer.completion.missingDetails.map(({ key }) => key), ["status"]);
+  assert.equal(datedAnswer.answerMode, "community-live-waste-unavailable");
+  assert.equal(datedAnswer.answerStatus, "source-unavailable");
+  assert.doesNotMatch(datedAnswer.answer, /September 14/i);
+  assert.deepEqual(datedAnswer.completion.missingDetails.map(({ key }) => key), ["date", "status"]);
   assert.doesNotMatch(datedAnswer.answer, /screened|garage|storage|Pickleball/i);
 });
 
