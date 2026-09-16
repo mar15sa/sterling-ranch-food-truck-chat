@@ -56,6 +56,7 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
     getCommunitySearchMetrics: () => ({}), getCommunityLlmMetrics: () => ({}), communityAnswerMetrics: () => ({}),
     communitySourceStatus: (_, now, options) => { statusReads++; return communitySourceStatus(index, now, options); },
     liveMonitor: { status: () => ({}) }, buildCommunitySourceReadiness,
+    COMMUNITY_ANSWER_FLOW: "legacy",
   });
   vm.runInContext(["requireQuestionAdmin", "handleCommunitySourceHealth", "handleHealth"].map(name => functionSource(server, name)).join("\n"), context);
   for (const cookie of ["", sessionCookie(`${createSessionToken("local-test-only")}tampered`)]) {

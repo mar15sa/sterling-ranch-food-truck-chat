@@ -425,6 +425,7 @@ test("conflicted official contact versions do not expose the prior internet numb
   for (const question of ["Who do I contact about internet service?", "What is the internet billing phone number?",
     "Who do I contact about internet billing?"]) {
   const answer = await answerCommunityQuestion(question, {
+    now: new Date("2026-09-13T18:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
