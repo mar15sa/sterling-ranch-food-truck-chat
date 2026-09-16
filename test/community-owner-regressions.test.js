@@ -105,6 +105,23 @@ test("an exact park-pass amount request leads with the missing amount and keeps 
   assert.doesNotMatch(answer.answer, /\$\s*\d|eligible|guarantee/i);
 });
 
+test("a normal weekday closing question leads with the closing time instead of the whole schedule", async () => {
+  const answer = await answerCommunityQuestion("What time does the pool normally close on Wednesday?", {
+    index,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    isTest: true,
+    requestContractMode: "need-first-candidate",
+    needRouterBackend: "current-local",
+  });
+  assert.equal(answer.completion.outcome, "complete");
+  assert.match(answer.directAnswer, /^The pool’s published Wednesday schedule runs until 8:45 p\.m\./i);
+  assert.match(answer.answer, /Memorial Day weekend through Labor Day/i);
+  assert.doesNotMatch(answer.answer, /Tuesday\s*&\s*Thursday/i);
+});
+
 test("establishment billing is not invented from missing or expired evidence", () => {
   const question = "Water discount for new turf?";
   assert.equal(proactiveCommunityAnswer(question, { index: { sources: [] } }), null);
