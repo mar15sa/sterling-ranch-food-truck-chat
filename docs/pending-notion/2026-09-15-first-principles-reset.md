@@ -118,3 +118,11 @@ Verification to record: full repository suite **1,358/1,358**, production-shaped
 Cost remains unchanged: the historical mixed-model estimate is about $1.01 per 1,000 and $10.09 per 10,000 questions, while this candidate adds $0 in model/API charges. No model, reranker, embedding service, vector database, subscription, or recurring spend is selected. Synchronization remains pending; fetch both destination pages before editing and after editing, preserve unrelated owner content, and keep the status below verified-live until the exact deployed revision is checked.
 
 Implementation evidence for this addendum: commit `dab9f9e` on `codex/community-quality-september30`.
+
+Pending September 16 current-status and partial-disclosure addendum: label this **implemented and verified locally; ready for exact-revision staging verification; not production released**. Staging smoke checks on revision `eb8d8c9` answered named Bingo, yoga, and food-truck questions correctly with zero model calls, but exposed two shared request/evidence defects. A current pool-open question was incorrectly made dependent on regular hours, and a pickup-delay question did not preserve the verified pickup date or clearly disclose that delay status was absent.
+
+The repair separates current yes/no open status from future or holiday hours. It also requests both date and status for pickup-delay questions, retains a source-proven date, and adds a visible statement when the official calendar does not say whether pickup was delayed. Partial proof remains `verified-partial` and cannot be rated complete.
+
+Verification to record: 42/42 interpretation, 37/37 shortcut-boundary, 32/32 need-router, 22/22 proactive-answer, and full repository **1,361/1,361** checks pass. The confirmation made zero paid model calls and added $0 in model/API cost. No model, vector database, reranker, subscription, source approval, or resident factual claim was added.
+
+Next state: push the exact revision to staging, confirm `/api/health` reports that revision and `need-first-candidate`, then ask only the three bounded questions in Test mode. Do not label it production-ready unless the broader human-rated release gate materially improves; the latest full owner-marked aggregate remains 17/28 useful before these live repairs. Release timing is based on evidence, not the dates in the earlier plan.

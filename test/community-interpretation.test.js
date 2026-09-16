@@ -43,6 +43,15 @@ test("specification detection distinguishes requested paint details from the act
   assert.deepEqual(deterministicRequestedDetails("What color can I paint my garage door?"), ["specification"]);
 });
 
+test("detail extraction distinguishes current open status and service delays from hours", () => {
+  assert.deepEqual(deterministicRequestedDetails("Is the pool open right now?"), ["status"]);
+  assert.deepEqual(deterministicRequestedDetails("Is the pool open on Labor Day?"), ["date", "hours"]);
+  assert.deepEqual(deterministicRequestedDetails("What time does the pool open?"), ["hours"]);
+  assert.deepEqual(deterministicRequestedDetails("Is the pool open, and what are the hours?"), ["hours", "status"]);
+  assert.deepEqual(deterministicRequestedDetails("Was garbage pickup delayed this week?"), ["date", "status"]);
+  assert.deepEqual(deterministicRequestedDetails("Was trash pickup delayed for Labor Day?"), ["date", "status"]);
+});
+
 test("water-usage access detection preserves generic online utility portal actions", () => {
   assert.deepEqual(deterministicRequestedDetails("How can I monitor my water usage online?"), ["action"]);
   assert.deepEqual(deterministicRequestedDetails("Online access for my utility bill"), ["action"]);

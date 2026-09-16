@@ -517,6 +517,62 @@ test("the current-local backend preserves live pool status when current regular 
   assert.match(result._requestContract.shadowRoute.answer, /regular hours/i);
 });
 
+test("the resident candidate keeps a fresh single-part pool status instead of asking for hours", async () => {
+  const now = new Date("2026-09-16T19:44:06.175Z");
+  const evidenceId = "sterling-ranch:pool-status:current-status";
+  const result = await answerCommunityQuestion("Is the pool open right now?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile, now,
+    getPoolStatus: async () => ({
+      state: "closed", headline: "Closed", summary: "The pool is closed with no access for homeowners or guests.",
+      residentAction: "Open the official pool status for more details.", sourceUrl: "https://sterlingranchcab.com/187/Pool",
+      actionUrl: "https://sterlingranchcab.com/187/Pool", date: "2026-09-16", checkedAt: now.toISOString(), stale: false,
+      evidenceEnvelope: {
+        communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" },
+        coverage: { covered: ["status"] },
+        evidence: [{ evidenceId, communityId: "sterling-ranch", sourceUrl: "https://sterlingranchcab.com/187/Pool", checkedAt: now.toISOString(), staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+        claims: [{ facet: "status", text: "Closed", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+      },
+    }),
+  });
+  assert.equal(result.answerStatus, "verified");
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.directAnswer, /pool is closed with no access/i);
+  assert.deepEqual(result._requestContract.needs[0].requestedDetails, ["status"]);
+  assert.deepEqual(result.sources.map((source) => source.id), [evidenceId]);
+});
+
+test("the resident candidate keeps a proven garbage date while delay status is unavailable", async () => {
+  const checkedAt = "2026-09-16T18:00:00.000Z";
+  const evidenceId = "sterling-ranch:waste-schedule:live-calendar";
+  const result = await answerCommunityQuestion("Was garbage pickup delayed this week?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+    getWasteSchedule: async () => ({
+      service: "garbage", date: "2026-09-17", timing: "starting tomorrow", anchorDate: "2026-09-17",
+      serviceAreas: [{ label: "Providence Village", date: "2026-09-17" }], checkedAt,
+      evidence: {
+        degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
+        claims: [{ facet: "date", text: "2026-09-17", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+        evidence: [{ evidenceId, sourceUrl: "https://www.wasteconnections.com/pickup-schedule", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+        actions: [{ type: "information", label: "Check an address in the official pickup calendar", url: "https://www.wasteconnections.com/pickup-schedule" }],
+      },
+    }),
+  });
+  assert.equal(result.answerStatus, "verified-incomplete");
+  assert.equal(result.completion.outcome, "verified-partial");
+  assert.match(result.answer, /Thursday, September 17, 2026/i);
+  assert.match(result.answer, /live pickup calendar confirms the date, but it does not say whether the pickup was delayed/i);
+  assert.deepEqual(result.completion.needs[0].supportedDetails, ["date"]);
+  assert.deepEqual(result.completion.needs[0].missingDetails, ["status"]);
+  assert.deepEqual(result.sources.map((source) => source.id), [evidenceId]);
+});
+
 test("the current-local backend uses approved community navigation for water payment", async () => {
   const result = await answerCommunityQuestion("How do I pay my water bill online?", {
     isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",

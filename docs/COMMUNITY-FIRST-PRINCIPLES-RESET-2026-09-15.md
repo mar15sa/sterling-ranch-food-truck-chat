@@ -359,3 +359,13 @@ Release timing is readiness-based. This exact tested revision is ready for stagi
 The historical mixed-model estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000 questions**. The proposed candidate remains **$0 in added model/API charges**. A different model, reranker, embedding service, or vector database remains deferred until an isolated human-rated failure shows that component can materially improve the answer.
 
 Implementation evidence for this checkpoint: commit `dab9f9e` on `codex/community-quality-september30`.
+
+## September 16 current-status and partial-disclosure repair
+
+Test-mode smoke checks on staged revision `eb8d8c9` confirmed that named events and the next food truck were direct, current, and source-backed. The seven-question check made zero model calls and added $0 in model/API cost. It also exposed two shared contract defects rather than missing model capability. “Is the pool open right now?” incorrectly requested both status and hours, so a fresh live closed status was rejected when regular hours were unavailable. “Was garbage pickup delayed this week?” did not preserve the date facet or visibly explain that the official pickup calendar did not state whether a delay occurred.
+
+The repair now treats an undated yes/no open question as a current-status request. Future and holiday questions remain on the date-specific hours path, so current status cannot answer a Labor Day question. For waste-delay questions, the request contract asks for both date and status. If the live calendar proves only the date, the answer retains that date and explicitly says the calendar does not say whether pickup was delayed. The evidence result remains `verified-partial`; it cannot receive a complete or Excellent diagnostic.
+
+Local validation passes all 42 interpretation checks, 37 shortcut-boundary checks, 32 need-router checks, 22 proactive-answer checks, and the full repository suite: **1,361/1,361**. The full suite was repeated once with terse output only because the first completed run's final summary was truncated; the confirmation run made no paid model calls. No model, vector database, reranker, new subscription, or resident-facing fact was added.
+
+This repair is implemented and verified locally, but it is not yet verified on staging. Production remains unchanged. Staging is ready for the exact-revision health check and three bounded test-mode questions: current pool status, this-week pickup delay, and the dated Labor Day pool-hours boundary. Production release still requires materially better human-rated usefulness across the representative held-out set, clean live source health, acceptable latency, and zero unexpected model use. Release timing is readiness-based rather than calendar-based.
