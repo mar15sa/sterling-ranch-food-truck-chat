@@ -228,6 +228,13 @@ async function main() {
   };
   const output = process.argv.includes("--totals-only")
     ? { ...report, failures: undefined }
+    : process.argv.includes("--failure-summary")
+      ? {
+          ...report,
+          failures: failures.map(({ id, primaryQuestion, question, issues, outcome, answer }) => ({
+            id, primaryQuestion, question, issues, outcome, answer,
+          })),
+        }
     : process.argv.includes("--full") ? { ...report, cases: rows } : report;
   console.log(JSON.stringify(output, null, 2));
   if (failures.length) process.exitCode = 1;

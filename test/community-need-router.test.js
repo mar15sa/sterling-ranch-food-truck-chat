@@ -164,6 +164,28 @@ test("a verified source-boundary answer leads instead of a raw rulebook heading"
   assert.equal(result.answer, "The rulebook does not specify an inside-versus-outside location for an electrical panel.");
 });
 
+test("a specification answer keeps the concrete measurement instead of only the generic lead", async () => {
+  const contract = buildResidentRequestContract("Is every backyard fence allowed to be the same height?", {
+    goal: "information", subject: "fence height",
+  });
+  const result = await runNeedFirstShadow(contract, async () => ({
+    answerStatus: "verified",
+    answer: "Fence height depends on the fence type and lot. Height: 54 inches. DRC approval is required.",
+    directAnswer: "Fence height depends on the fence type and lot. Height: 54 inches.",
+    keyDetails: ["DRC approval is required."],
+    sources: [{ id: "fence-rule", title: "Official fence height rule", text: "Height: 54 inches. DRC approval is required." }],
+    claims: [
+      { text: "Fence height depends on the fence type and lot.", evidenceSourceIds: ["fence-rule"], verified: true },
+      { text: "Height: 54 inches.", evidenceSourceIds: ["fence-rule"], verified: true },
+      { text: "DRC approval is required.", evidenceSourceIds: ["fence-rule"], verified: true },
+    ],
+    actions: [], conflicts: [], confidence: { canAnswer: true },
+  }));
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /54 inches/i);
+  assert.match(result.answer, /DRC approval/i);
+});
+
 test("a per-need failure cannot erase a separately supported answer", async () => {
   const contract = buildResidentRequestContract("Is the pool open right now, and what are the regular hours?", {
     goals: ["status", "hours"], subject: "pool",

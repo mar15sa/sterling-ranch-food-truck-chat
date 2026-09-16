@@ -41,6 +41,55 @@ test("a scoped source-absence statement keeps typed proof to the inspected sourc
   }), []);
 });
 
+test("plain-language dimensions and exclusion wording keep proof", () => {
+  const source = {
+    id: "screen-rule",
+    title: "Landscape screens",
+    text: [
+      "Landscape screens. DRC approval is required.",
+      "Five-foot maximum overall height for exposed landscape screen from grade.",
+      "Landscape screens are only allowed in rear or side yards and are not allowed in easements.",
+      "A maximum of three screens are allowed if lot square footage permits.",
+    ].join(" "),
+  };
+  const expected = [
+    "You'll need DRC approval for landscape screens.",
+    "The maximum height is 5 feet, measured from ground level.",
+    "Landscape screens must be in rear or side yards and outside easements.",
+    "Up to 3 screens are allowed if the lot has enough room.",
+  ];
+  const claims = buildRulesEvidenceClaims({
+    directAnswer: expected[0],
+    keyDetails: expected.slice(1),
+    answer: expected.join(" "),
+    residentQuestion: "What are the backyard privacy-screen rules?",
+    sources: [source],
+  });
+  assert.deepEqual(claims.map((claim) => claim.text), expected);
+});
+
+test("a numbered rule item keeps the obligation from its parent heading", () => {
+  const claim = "Vegetable garden boxes must be located a minimum of five feet from all property lines.";
+  const claims = buildRulesEvidenceClaims({
+    directAnswer: claim,
+    answer: claim,
+    residentQuestion: "Can I install garden boxes behind my house?",
+    sources: [{
+      id: "garden-rule",
+      title: "Vegetable gardens",
+      text: [
+        "Vegetable garden boxes shall:",
+        "1. Complement the architectural style of the house;",
+        "2. Be screened from view of adjacent homes and public areas;",
+        "3. Not cover more than 50 percent of the rear or side yard;",
+        "4. Be maintained in good condition; and",
+        "5. Be located a minimum of five feet from all property lines.",
+      ].join(" "),
+    }],
+  });
+  assert.deepEqual(claims.map((item) => item.text), [claim]);
+});
+
 test("the deterministic shed answer maps rendered limits and official form links", async () => {
   const result = await answerRulesQuestion("Which application form do I use for a backyard shed?", {
     searchMode: "legacy",
