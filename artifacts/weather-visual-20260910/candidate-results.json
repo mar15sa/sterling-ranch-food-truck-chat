@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "passed": true
+    }
+  ],
+  "conditionCases": 8,
+  "unavailableCases": 8
+}

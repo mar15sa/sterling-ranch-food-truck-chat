@@ -1,0 +1,35 @@
+{
+  "questions": 0,
+  "results": [
+    {
+      "width": 1122,
+      "passed": true,
+      "cards": 9,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 390,
+      "passed": true,
+      "cards": 9,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 320,
+      "passed": true,
+      "cards": 9,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 768,
+      "passed": true,
+      "cards": 9,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 1448,
+      "passed": true,
+      "cards": 9,
+      "accessibilityViolations": 0
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "questions": 0,
+  "results": [
+    {
+      "width": 320,
+      "before": {
+        "y": 0,
+        "overflow": "visible",
+        "height": 2273,
+        "viewport": 844
+      },
+      "touchY": 543,
+      "wheelY": 550,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "before": {
+        "y": 0,
+        "overflow": "visible",
+        "height": 2000,
+        "viewport": 844
+      },
+      "touchY": 526,
+      "wheelY": 529,
+      "passed": true
+    },
+    {
+      "width": 430,
+      "before": {
+        "y": 0,
+        "overflow": "visible",
+        "height": 1893,
+        "viewport": 844
+      },
+      "touchY": 519,
+      "wheelY": 521,
+      "passed": true
+    },
+    {
+      "width": 680,
+      "before": {
+        "y": 0,
+        "overflow": "visible",
+        "height": 1662,
+        "viewport": 844
+      },
+      "touchY": 542,
+      "wheelY": 551,
+      "passed": true
+    },
+    {
+      "width": 681,
+      "before": {
+        "y": 0,
+        "overflow": "visible",
+        "height": 1651,
+        "viewport": 844
+      },
+      "touchY": 513,
+      "wheelY": 516,
+      "passed": true
+    },
+    {
+      "width": 1448,
+      "before": {
+        "y": 0,
+        "overflow": "visible",
+        "height": 1533,
+        "viewport": 844
+      },
+      "touchY": null,
+      "wheelY": 600,
+      "passed": true
+    }
+  ]
+}

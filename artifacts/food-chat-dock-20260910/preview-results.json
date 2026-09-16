@@ -1,0 +1,22 @@
+[
+  {
+    "width": 1448,
+    "passed": true,
+    "accessibilityViolations": 0
+  },
+  {
+    "width": 390,
+    "passed": true,
+    "accessibilityViolations": 0
+  },
+  {
+    "width": 320,
+    "passed": true,
+    "accessibilityViolations": 0
+  },
+  {
+    "width": 768,
+    "passed": true,
+    "accessibilityViolations": 0
+  }
+]

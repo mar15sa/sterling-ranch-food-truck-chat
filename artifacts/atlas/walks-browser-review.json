@@ -1,0 +1,26 @@
+{
+  "reviewedAt": "2026-09-13",
+  "stagingRevision": "4b2ac57d1dde197f984023b544a7ab320b3723b7",
+  "localReview": {
+    "desktop": "Passed all three walk choices, highlighted paths, nearby-place navigation, playground search and nested amenity disclosures.",
+    "phoneViewport": [390, 844],
+    "phoneHorizontalOverflow": false,
+    "phoneLayout": "Walk choices use readable single-column rows after review correction.",
+    "deepHierarchy": "Sterling Center > Ranch Social expands its seven nested listings, including Atlas Coffee.",
+    "correctedDuringReview": ["Hidden third-level listings", "Trail-map panning bounds", "Stale browser assets", "Required trail display-field validation"]
+  },
+  "deployedReview": {
+    "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas",
+    "directoryDestinations": 33,
+    "selectedWalk": "Providence’s west greenway",
+    "displayedMiles": 1.04,
+    "highlightedPathVisible": true,
+    "nearbyPlaceOpened": "McCormick Park",
+    "nestedPlaygroundExpanded": true,
+    "nestedShelterVisible": true,
+    "consoleWarningsOrErrors": [],
+    "stagingBannerVisible": true
+  },
+  "scope": "Browser interaction review, not GPS field verification. Real touch dragging and broader device/accessibility coverage were not claimed.",
+  "residentQuestionsSubmitted": 0
+}

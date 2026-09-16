@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>The Sterling Ranch Atlas | Staging preview</title>
+  <meta name="description" content="Explore Sterling Ranch’s parks, gathering places, neighborhood businesses, and plans for the future.">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/atlas/atlas.css?v=20260913-map-6">
+  <link rel="stylesheet" href="/atlas/atlas-trails.css?v=20260913-map-6">
+  <link rel="stylesheet" href="/atlas/atlas-experience.css?v=20260913-map-6">
+  <script src="/environment.js"></script>
+  <script src="/atlas/atlas-core.js?v=20260913-map-6" defer></script>
+  <script src="/atlas/atlas.js?v=20260913-map-6" defer></script>
+  <script src="/atlas/atlas-experience.js?v=20260913-map-6" defer></script>
+  <script src="/atlas/atlas-trails.js?v=20260913-map-6" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#directory">Skip to place directory</a>
+  <header class="masthead">
+    <a class="brand" href="/"><img src="/favicon.svg" width="36" height="36" alt=""><span>Sterling Ranch Society<small>DOUGLAS COUNTY, COLORADO</small></span></a>
+    <a class="back-link" href="/">Back to the Daily Briefing <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <div class="atlas-heading"><div><p class="eyebrow">YOUR NEIGHBORHOOD, LAYER BY LAYER</p><h1>The Sterling Ranch Atlas<span>.</span></h1></div><p class="edition">FIELD NOTES / 01<br><strong>Staging prototype</strong></p></div>
+    <div class="preview-note"><span class="preview-label">STAGING ONLY</span><span id="inventory-summary">The expanded collection includes places, individual amenities and future phases. Exact locations and access are still being reviewed.</span></div>
+    <nav class="atlas-tabs" aria-label="Atlas explorer"><button type="button" id="show-places" aria-pressed="true">Places <small>See what’s inside</small></button><button type="button" id="show-trails" aria-pressed="false">Trails <small>Find your next walk</small></button></nav>
+    <section class="explorer" id="places-explorer" aria-label="Explore Sterling Ranch">
+      <aside class="directory-panel" id="directory" tabindex="-1">
+        <div class="search"><label class="sr-only" for="search">Search places and amenities</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Coffee, a park, pickleball…" autocomplete="off"><button type="button" id="clear-search" aria-label="Clear search" hidden>×</button></div>
+        <div class="filters" aria-label="Filter places">
+          <button type="button" data-category="all" aria-pressed="true">Everything</button>
+          <button type="button" data-category="parks" aria-pressed="false"><i class="swatch parks"></i>Parks & trails</button>
+          <button type="button" data-category="amenities" aria-pressed="false"><i class="swatch amenities"></i>Pools & gathering</button>
+          <button type="button" data-category="businesses" aria-pressed="false"><i class="swatch businesses"></i>Local businesses</button>
+          <button type="button" data-category="services" aria-pressed="false"><i class="swatch services"></i>Schools & services</button>
+          <button type="button" data-category="makers" aria-pressed="false"><i class="swatch makers"></i>Neighborhood makers</button>
+          <button type="button" data-category="future" aria-pressed="false"><i class="swatch future"></i>What’s coming</button>
+        </div>
+        <div class="quick-finds" aria-label="Popular things to find"><button type="button" data-find="pickleball">Pickleball courts</button><button type="button" data-find="playground">Playgrounds</button><button type="button" data-find="school">Schools</button></div>
+        <div class="list-heading"><h2>Places to know</h2><span id="result-count" role="status" aria-live="polite">Loading…</span></div>
+        <div id="place-list" class="place-list"><p class="empty">Opening the atlas…</p></div>
+        <div class="directory-footer"><span>Know a place we should include?</span><a id="suggest-link" href="mailto:hello@ideakitchen.ai?subject=Sterling%20Ranch%20Atlas%20suggestion&amp;body=Place%20or%20business%20name%3A%0A%0APublic%20website%20or%20social%20page%3A%0A%0AVillage%3A%0A%0AWhat%20should%20neighbors%20know%3F%0A%0AIf%20this%20is%20your%20home%20business%2C%20what%20location%20information%20would%20you%20like%20shown%3F%0A">Suggest a place by email ↗</a></div>
+      </aside>
+      <div class="map-column">
+        <div class="map-toolbar"><div class="view-switch" role="group" aria-label="Map view"><button type="button" data-view="model" aria-pressed="true">Atlas view</button><button type="button" data-view="flat" aria-pressed="false">From above</button></div><button type="button" id="explode" aria-pressed="false"><span aria-hidden="true">▱</span> Separate layers</button></div>
+        <div class="map-stage" id="map-stage" aria-busy="true">
+          <div class="map-caption"><span class="eyebrow">STERLING RANCH</span><span>Parks, places & possibilities</span></div>
+          <div class="map-message" id="map-message" role="status">Drawing the neighborhood…</div>
+          <svg id="atlas-map" viewBox="0 0 1200 940" role="group" aria-label="Interactive Sterling Ranch map. Select a numbered place, or use the directory." tabindex="0"><title>Sterling Ranch atlas</title><defs><pattern id="future-hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 9L9 0" stroke="#7d7195" stroke-width="1" opacity=".35"/></pattern></defs><g id="map-camera"><g id="geography"></g><g id="map-labels"></g><g id="map-pins"></g></g></svg>
+          <div class="compass" aria-label="North is toward the top of the map"><span>N</span><span aria-hidden="true">↑</span></div>
+          <div class="zoom-controls" aria-label="Map controls"><button type="button" id="zoom-in" aria-label="Zoom in">+</button><button type="button" id="zoom-out" aria-label="Zoom out">−</button><button type="button" id="reset-map" aria-label="Reset map view">↺</button></div>
+          <div class="map-instruction" id="map-instruction">Select a place to look closer</div>
+        </div>
+        <div class="map-footer"><span><i class="legend-path"></i>Neighborhood paths & sidewalks <span class="footer-separator">/</span> Choose Trails for walking guides</span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a></div>
+      </div>
+      <section id="place-detail" class="place-detail" aria-labelledby="detail-title" hidden></section>
+    </section>
+    <section id="trail-guide" class="trail-guide" aria-label="Walking trail guide" hidden>
+      <aside class="walk-picker"><p class="eyebrow">ON FOOT</p><h2>Pick a walk.</h2><p class="walk-intro">A quick lap, a longer greenway, or the trail beside the Overlook.</p><div id="walk-list" aria-label="Choose a walk"></div><button type="button" id="trail-network">Explore the full trail map ↗</button></aside>
+      <div class="trail-main"><div class="trail-toolbar"><span id="trail-map-title">Sterling Ranch trails</span><div><button type="button" id="trail-zoom-out" aria-label="Zoom trail map out">−</button><button type="button" id="trail-zoom-in" aria-label="Zoom trail map in">+</button><button type="button" id="trail-reset">Fit route</button></div></div><div class="trail-map-stage"><svg id="trail-map" role="group" tabindex="0" aria-label="Illustrated trail map. Choose a walk to highlight its path; use plus and minus to zoom."><title>Sterling Ranch trail guide</title></svg><p id="trail-map-status" role="status"></p></div><div class="trail-map-caption"><span>Illustrated route guide · distances from CAB</span><a href="https://sterlingranchcab.com/DocumentCenter/View/2352" target="_blank" rel="noopener noreferrer">Official trail map ↗</a></div><div id="walk-detail" class="walk-detail" aria-live="polite"></div></div>
+    </section>
+    <section class="atlas-notes" id="about-atlas"><div><p class="eyebrow">A GROWING LOCAL COLLECTION</p><h2>There’s more around the corner.</h2></div><p>This collection includes individual playgrounds, courts and gathering spaces alongside their parent places. Home businesses will appear with the owner’s permission. Future plans can change; each place links to its source.</p><details><summary>What’s included in this preview?</summary><p id="coverage-note">Loading inventory coverage…</p><a href="https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf" target="_blank" rel="noopener noreferrer">Official full community plan, June 2026 ↗</a><p><a href="https://sterlingranch.com/town-life/parks-rec/" target="_blank" rel="noopener noreferrer">Official parks directory ↗</a></p></details></section>
+    <details class="research-coverage"><summary id="research-summary">Places still being checked</summary><p id="research-intro"></p><ul id="research-list"></ul></details>
+  </main>
+  <noscript><p class="no-script">This interactive map needs JavaScript. <a href="https://sterlingranch.com/town-life/parks-rec/">Browse the official parks directory</a> or <a href="https://sterlingranch.com/wp-content/uploads/2026/06/Sterling-Ranch-Community-Map-June2026.pdf">open the official community map</a>.</p></noscript>
+</body>
+</html>

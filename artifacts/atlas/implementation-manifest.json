@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-13T16:30:02.983Z",
+  "baseRevision": "f6358a0861efb854b075d912c61eb3f3f45425e0",
+  "files": {
+    "server.js": "32f9955f31413426a7d3d087f4f15895f2d5553f5627eccfb66d10d0a61567a2",
+    "lib/atlas-preview.js": "b799ebcc55db0b7fe27bfc91f15dea3c8deec20efd7dde87ab5ec1fc23eb56e2",
+    "public/atlas/index.html": "5790ba33d00c31e3439f3efcc64df6d464a95fc8ca73496bfd061f64d4f75b34",
+    "public/atlas/atlas.css": "8c9e59f8391afdeefe29ada0f009afa8ca30516e1f89f22802da2492000ef3fd",
+    "public/atlas/atlas.js": "be39cc4ab2f5dcca90585db7ac15cbb2f358472aa14cbf9e88b3219cea4af418",
+    "public/atlas/atlas-core.js": "fdc11c568d58bacd523c521ddac763a82893a0e7c8c13dbe0bb5045120a66a35",
+    "public/atlas/places.json": "bcc6596e6c4474ccd7cb00c492f3bff61f6a4ca3211830ff806e58475f5fd977",
+    "public/atlas/geography.json": "d5e045eff73e79bd207160bf2dd2b3d955972496986f91406d6005d537617c1d",
+    "test/atlas-preview.test.js": "e0b7bb0339b7260d0e462e366a0d7e712532514a4f2db6b5140f51c34ba10c2f"
+  }
+}

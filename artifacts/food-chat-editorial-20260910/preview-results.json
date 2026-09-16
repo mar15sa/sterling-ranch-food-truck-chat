@@ -1,0 +1,29 @@
+{
+  "communityQuestions": 0,
+  "results": [
+    {
+      "width": 1448,
+      "liveMenuItems": 4,
+      "passed": true,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 390,
+      "liveMenuItems": 4,
+      "passed": true,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 320,
+      "liveMenuItems": 4,
+      "passed": true,
+      "accessibilityViolations": 0
+    },
+    {
+      "width": 768,
+      "liveMenuItems": 4,
+      "passed": true,
+      "accessibilityViolations": 0
+    }
+  ]
+}

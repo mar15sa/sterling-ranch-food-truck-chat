@@ -28,7 +28,7 @@ The quality scorer treats source-meta wording, sentence fragments, rulebook meas
 
 Add a box between **Source-grounded answer composition** and **Resident answer contract**:
 
-**Plain-language voice gate**  
+**Plain-language voice gate**
 Source-independent wording and formatting; preserves claims, citations, and authority.
 
 Show both the accepted AI rewrite and the deterministic source-derived fallback entering this gate. Show a failed voice check sending the AI path back to the deterministic fallback. Keep grounding, coverage, and action-link validation after the voice gate and before the answer is shown to the resident.

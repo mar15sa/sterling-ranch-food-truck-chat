@@ -1,0 +1,65 @@
+{
+  "questions": 0,
+  "results": [
+    {
+      "url": "/",
+      "width": 1448,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 1448,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 1448,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 1448,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 1448,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 1448,
+      "passed": true
+    },
+    {
+      "url": "/",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "url": "/community-assistant",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "url": "/food-truck",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "url": "/calendar",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "url": "/pool",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "url": "/openings",
+      "width": 390,
+      "passed": true
+    }
+  ]
+}

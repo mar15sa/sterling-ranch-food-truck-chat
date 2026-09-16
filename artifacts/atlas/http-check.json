@@ -1,0 +1,172 @@
+[
+  {
+    "environment": "staging",
+    "results": [
+      {
+        "path": "/atlas",
+        "status": 200
+      },
+      {
+        "path": "/atlas/",
+        "status": 200
+      },
+      {
+        "path": "/atlas/index.html",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-core.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas.css",
+        "status": 200
+      },
+      {
+        "path": "/atlas/places.json",
+        "status": 200
+      },
+      {
+        "path": "/atlas/geography.json",
+        "status": 200
+      },
+      {
+        "path": "/atlas/trails.json",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-trails.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-trails.css",
+        "status": 200
+      },
+      {
+        "path": "/atlas/cab-trail-map.png",
+        "status": 200
+      },
+      {
+        "path": "/atlas/experience.json",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-art.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-experience.js",
+        "status": 200
+      },
+      {
+        "path": "/atlas/atlas-experience.css",
+        "status": 200
+      },
+      {
+        "path": "/atlas./places.json",
+        "status": 404
+      },
+      {
+        "path": "/ATLAS/places.json",
+        "status": 200
+      },
+      {
+        "path": "/%61tlas/places.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas%20/places.json",
+        "status": 404
+      }
+    ]
+  },
+  {
+    "environment": "production",
+    "results": [
+      {
+        "path": "/atlas",
+        "status": 404
+      },
+      {
+        "path": "/atlas/",
+        "status": 404
+      },
+      {
+        "path": "/atlas/index.html",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-core.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas.css",
+        "status": 404
+      },
+      {
+        "path": "/atlas/places.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/geography.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/trails.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-trails.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-trails.css",
+        "status": 404
+      },
+      {
+        "path": "/atlas/cab-trail-map.png",
+        "status": 404
+      },
+      {
+        "path": "/atlas/experience.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-art.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-experience.js",
+        "status": 404
+      },
+      {
+        "path": "/atlas/atlas-experience.css",
+        "status": 404
+      },
+      {
+        "path": "/atlas./places.json",
+        "status": 404
+      },
+      {
+        "path": "/ATLAS/places.json",
+        "status": 404
+      },
+      {
+        "path": "/%61tlas/places.json",
+        "status": 404
+      },
+      {
+        "path": "/atlas%20/places.json",
+        "status": 404
+      }
+    ]
+  }
+]
