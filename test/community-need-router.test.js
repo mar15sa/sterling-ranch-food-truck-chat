@@ -68,6 +68,29 @@ test("need-first shadow routing answers and proves each part independently", asy
   assert.match(result.answer, /tacos and quesadillas/);
 });
 
+test("multiple proved details become readable paragraphs instead of one dense line", async () => {
+  const contract = buildResidentRequestContract("What should I know about landscape installation requirements?", {
+    goal: "information", subject: "landscape installation requirements",
+  });
+  const claims = [
+    "Landscape installation must follow the approved design and keep all required drainage paths clear while the work is underway.",
+    "Landscape materials must also stay within the approved lot boundaries and any changes to the approved design require DRC review.",
+    "Residents should keep the final approved landscape plan with their property records after the installation is complete.",
+  ];
+  const result = await runNeedFirstShadow(contract, async () => ({
+    answerStatus: "verified",
+    answer: claims.join(" "),
+    directAnswer: claims[0],
+    keyDetails: claims.slice(1),
+    sources: [{ id: "landscape-rule", title: "Official landscape rule", text: claims.join(" ") }],
+    claims: claims.map((text) => ({ text, evidenceSourceIds: ["landscape-rule"], verified: true })),
+    actions: [], conflicts: [],
+  }));
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /\n\n/);
+  assert.ok(result.answer.split("\n").every((line) => line.length <= 240));
+});
+
 test("a supported part survives while wrong-subject evidence and its action are rejected", async () => {
   const contract = buildResidentRequestContract("Which food truck is here today, and what is on its menu?", {
     goals: ["schedule", "information"], subject: "food truck and menu",
