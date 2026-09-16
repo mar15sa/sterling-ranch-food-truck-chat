@@ -403,3 +403,29 @@ The official pages were rechecked on September 16 before requesting owner approv
 Verification for the presentation change: focused need-router, unpublished-rubric, and proactive suites pass 66/66; the production-shaped gate passes 19/19 with zero proof failures and zero model calls; and the fast release gate passes 32/32. The full repository run passed 1,366 of 1,367 checks. The sole failure was a Windows sandbox `EPERM` when one test attempted to start the Atlas catalog checker as a child process; running that exact catalog check directly passed with 125 records accounted for. Added model/API cost remains $0. The historical mixed-model comparison remains about $1.01 per 1,000 questions and $10.09 per 10,000.
 
 This checkpoint is implemented, verified locally, and verified on staging revision `f7cc1a4`. The exact staging revision was healthy with current evidence, zero source failures, and `need-first-candidate` active. The test-labeled privacy-screen question returned a complete verified answer with a direct opening and compact Key details list, zero server errors, zero model or rewrite calls, and zero tokens. Production is unchanged. The two exact source decisions must be approved or deferred before their corresponding private failures can be counted as addressed. The affected Notion owner-guide and decision pages were fetched, updated, and re-fetched successfully on September 16, 2026.
+
+## September 16 approved-source and final staging acceptance checkpoint
+
+The owner approved both pending exact-source decisions. The 45-day landscape-establishment water statement and the official Park Pass Car Registration Reimbursement Form are now exact-version, community-scoped evidence. Their boundaries remain explicit: the water source does not establish free water or a numeric rate, and the park form does not establish a reimbursement amount, eligibility, approval, or deadline. A request for an unknown exact amount is therefore useful partial rather than complete.
+
+The same staging cycle repaired four shared interpretation and presentation defects exposed by resident-like wording. “Billed” and “free” now reach the narrow establishment-water treatment without inventing a price. A park form plus its required receipt stays one resident need. Past-tense Labor Day wording resolves the 2026 holiday instead of the next one. “Normally close on Wednesday” is treated as a recurring schedule rather than the next Wednesday, and the answer leads with the requested closing time instead of the full weekly schedule.
+
+Exact staging revision `4171a7d20343c89e6c26b7fbc66be33c3e400edf` is verified healthy with current evidence and zero source failures. Thirteen synthetic, explicitly test-labeled questions all returned useful answers: **10 complete, 3 verified partial, 0 missing-evidence, and 0 unsupported claims**. The partial answers are deliberate boundaries for the unpublished park reimbursement amount, holiday pickup-delay status, and separate Labor Day pool hours. Representative results include:
+
+> Is establishment water free?
+>
+> Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget.
+
+> What time does the pool normally close on Wednesday?
+>
+> The pool’s published Wednesday schedule runs until 8:45 p.m. The pool is open Memorial Day weekend through Labor Day.
+
+Local verification passes the 19/19 production-shaped gate with zero proof failures, zero model calls, $0 added model/API cost, and a 1.950-second development-machine p95. Fast checks pass 32/32. The full repository run passes 1,373/1,374 checks; the sole failure is the known Windows sandbox `EPERM` when the Atlas test launches a child process, and the exact Atlas check passes directly with all 125 records accounted for.
+
+The cost decision is unchanged. The historical mixed-model diagnostic remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000**. The staged candidate adds **$0 in model/API charges** and selects no new model, reranker, embedding service, vector database, subscription, or recurring spend.
+
+Production remains unchanged. This staging set is strong evidence that the shared flow is moving in the right direction, but it is not yet the frozen, unseen, human-rated release gate required to claim 95% useful and 85% Excellent. The automatic rubric remains unpublished until it is calibrated against owner judgments. The next release decision requires a bounded visual review of representative staging answers, followed by the privacy-safe held-out score; it must not turn into another open-ended model experiment.
+
+Implementation revisions: `09aad33`, `d5496c8`, `e6efa21`, and `4171a7d` on `codex/community-quality-september30`.
+
+Documentation synchronization completed September 16, 2026. **How the project works** and **Decisions and their reasons** were fetched before editing, updated with the staging-verified flow, exact source decisions, cost record, and production hold, then fetched again to verify both new headings and the exact revision.
