@@ -65,4 +65,6 @@ The single capped isolated broad run reached 125/151 from the prior 122/151: 111
 
 No model, reranker, embedding service, vector database, subscription, deployment, or resident setting was added. The historical mixed-model diagnostic remains about $1.01 per 1,000 questions, while this tested path added $0 in model/API charges. This is local engineering evidence, not human-rated acceptance or demo readiness. External synchronization remains pending the earlier automatic approval-review rejection; fetch each page before a later authorized edit, preserve unrelated content, and fetch afterward.
 
+Implementation evidence for this addendum: local commit `5f95048` on `codex/community-quality-september30`.
+
 Verification addendum: 45/45 focused need/router/evidence checks pass. The full repository suite passes 1,307/1,308 checks. The only failure is the previously known diagnostic-label mismatch for conflicted internet-contact evidence; the old number remains withheld. Three regressions first exposed during this slice were repaired before the checkpoint.
