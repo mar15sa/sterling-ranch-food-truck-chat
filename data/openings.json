@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-15T08:10:00-06:00",
+  "updatedAt": "2026-09-16T08:15:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -3464,19 +3464,15 @@
       "community": "Littleton",
       "area": "Aspen Grove",
       "address": "7301 South Santa Fe Drive, Suite 445, Littleton, CO 80120",
-      "status": "opening-soon",
-      "openingWindow": "Opening soon for the 2026 Halloween season",
-      "summary": "Spirit Halloween is preparing a seasonal Aspen Grove store in the former lululemon space; the official store page has published the location but still labels it opening soon.",
-      "verifiedAt": "2026-09-11",
+      "status": "open",
+      "openingWindow": "Open for the 2026 Halloween season",
+      "summary": "The seasonal Spirit Halloween store is open in Aspen Grove's former lululemon space; the official location page now posts daily store hours.",
+      "verifiedAt": "2026-09-16",
       "confidence": "business-confirmed",
       "sources": [
         {
           "label": "Spirit Halloween official Aspen Grove store page",
           "url": "https://stores.spirithalloween.com/co/littleton/animatronics-60984.html"
-        },
-        {
-          "label": "Aspen Grove tenant announcement",
-          "url": "https://aspengrovecenter.com/retailers_categories/clothing/"
         }
       ],
       "coordinates": {
@@ -3617,6 +3613,35 @@
         "lng": -104.859214,
         "precision": "address",
         "geocodedFrom": "138 South Wilcox Street, Castle Rock, CO 80104"
+      }
+    },
+    {
+      "id": "spray-castle-rock",
+      "name": "Spray Castle Rock",
+      "category": "Fitness & wellness",
+      "community": "Castle Rock",
+      "area": "The Meadows",
+      "address": "3855 Ambrosia Street, Suite 103, Castle Rock, CO 80109",
+      "status": "closed",
+      "openingWindow": "Closed September 15, 2026",
+      "summary": "The spray-tanning, ear-piercing, and permanent-jewelry studio closed after three years. The owner said she was closing the studio to focus on family.",
+      "verifiedAt": "2026-09-16",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Spray Castle Rock owner announcement",
+          "url": "https://www.instagram.com/reel/DCVWs-Msuyb/"
+        },
+        {
+          "label": "DougCo Social closing report",
+          "url": "https://dougcosocial.com/news/spray-castle-rock-closing"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.40181,
+        "lng": -104.886346,
+        "precision": "address",
+        "geocodedFrom": "3855 Ambrosia Street, Suite 103, Castle Rock, CO 80109"
       }
     }
   ]

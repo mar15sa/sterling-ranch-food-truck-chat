@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "lastRunAt": "2026-09-15T14:04:34.290Z",
+  "lastRunAt": "2026-09-16T14:05:03.347Z",
   "sources": {
     "castle-rock-development": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.688Z",
-      "changedAt": "2026-09-15T14:00:58.784Z",
-      "fingerprint": "9e7ab600ced94be14caf4127862915ea39f67a2da99324b445e0a2616e2d8439",
+      "checkedAt": "2026-09-16T14:04:57.310Z",
+      "changedAt": "2026-09-16T14:01:13.848Z",
+      "fingerprint": "4fc84442bdf555a9e3197b6978a6ef6fd92992489a2877e8b02d91a3cfc08cf2",
       "finalUrl": "https://www.crgov.com/1907/Development-Activity",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -17,9 +17,9 @@
     },
     "castle-rock-agendas": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.739Z",
-      "changedAt": "2026-09-11T14:02:09.908Z",
-      "fingerprint": "862f41b0b5d18edfb1be9736635e5a95daa4f0199497e84166a1955377166917",
+      "checkedAt": "2026-09-16T14:04:57.357Z",
+      "changedAt": "2026-09-16T14:01:13.919Z",
+      "fingerprint": "01b95ba5ed4b519fe4fba3e8a6ded649635e47d603597c8eabf79fee17ffb484",
       "finalUrl": "https://castlerock-co.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -30,9 +30,9 @@
     },
     "parker-planning": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.740Z",
-      "changedAt": "2026-09-04T14:37:29.410Z",
-      "fingerprint": "d326dd7b6498d8fdb31e220c0015f6d36ffdfd3976b7e80c8235315f2ffa02b0",
+      "checkedAt": "2026-09-16T14:04:57.358Z",
+      "changedAt": "2026-09-16T14:01:13.921Z",
+      "fingerprint": "10d4c583e47927c9a5df8396f5f81347206a503e7eae054013a2d13229acd8b1",
       "finalUrl": "https://www.parkerco.gov/Planning",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -44,7 +44,7 @@
     },
     "parker-economic-development": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.742Z",
+      "checkedAt": "2026-09-16T14:04:57.359Z",
       "changedAt": "2026-09-11T14:02:09.910Z",
       "fingerprint": "1c50ce0dd0993640c1227c7577fed28740836f1bda9c9c76f9a84c84726b013f",
       "finalUrl": "https://www.parkered.com/",
@@ -58,9 +58,9 @@
     },
     "lone-tree-projects": {
       "status": "changed",
-      "checkedAt": "2026-09-15T14:04:26.743Z",
-      "changedAt": "2026-09-15T14:04:26.743Z",
-      "fingerprint": "023da7a09efc1c5f7e336dfe101304e8c7ef9f79642b1e6c247713287d7b9f30",
+      "checkedAt": "2026-09-16T14:04:57.360Z",
+      "changedAt": "2026-09-16T14:04:57.360Z",
+      "fingerprint": "ff475304bfe00c52571c72872adab192008a92acdde92763eab904ff4b56d4cc",
       "finalUrl": "https://cityoflonetree.com/projects/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -71,7 +71,7 @@
     },
     "castle-pines-development": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.745Z",
+      "checkedAt": "2026-09-16T14:04:57.361Z",
       "changedAt": null,
       "fingerprint": "a2ef8780cf5f50a2ef09987fdecc72a5737b3d0a5856994514b81b9239a3709b",
       "finalUrl": "https://www.castlepinesco.gov/city-services/city-departments/community-development/",
@@ -89,7 +89,7 @@
     },
     "castle-pines-rumors": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.746Z",
+      "checkedAt": "2026-09-16T14:04:57.362Z",
       "changedAt": "2026-09-06T14:09:59.322Z",
       "fingerprint": "802192e656a92f993e51bd2d29503fbd9574b89c7615915d67e691d479f6598a",
       "finalUrl": "https://www.castlepinesco.gov/rumor-has-it/",
@@ -138,9 +138,9 @@
     },
     "douglas-county-recent-projects": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.746Z",
-      "changedAt": "2026-09-15T14:00:58.840Z",
-      "fingerprint": "a5e737ff52697d13225f312d2d6afc70f0940abf063c17eeebe4f08227dc1a00",
+      "checkedAt": "2026-09-16T14:04:57.363Z",
+      "changedAt": "2026-09-16T14:01:13.926Z",
+      "fingerprint": "2f71e608f034bbdaf6618059fd3a54101c5ac3a43deae3689f9ae13896b2d7b8",
       "finalUrl": "https://apps.douglas.co.us/planning/projects/Default.aspx?PossePresentation=RecentlyOpenedProjectsSearch",
       "contentType": "text/html; charset=utf-8",
       "signals": [],
@@ -158,9 +158,9 @@
     },
     "douglas-county-agendas": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.747Z",
-      "changedAt": "2026-09-11T14:02:09.915Z",
-      "fingerprint": "6a202d264d4e7240df89557bfa97306453ae0a94f7d8c9ed09221d3e334bceaa",
+      "checkedAt": "2026-09-16T14:04:57.363Z",
+      "changedAt": "2026-09-16T14:01:13.927Z",
+      "fingerprint": "54bc3fe9413230b7623e963d69e6e0c58048bff889a6cfda842a325d406e7a6b",
       "finalUrl": "https://douglascounty.legistar.com/Calendar.aspx",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -171,7 +171,7 @@
     },
     "douglas-county-public-notices": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.748Z",
+      "checkedAt": "2026-09-16T14:04:57.364Z",
       "changedAt": null,
       "fingerprint": "b814563587d359d118400b18eb032647c4b82db5d0cc4727fdffe71ec46fd5ee",
       "finalUrl": "https://publicnotices.douglasco.gov/",
@@ -225,7 +225,7 @@
     },
     "highlands-ranch-news-projects": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.749Z",
+      "checkedAt": "2026-09-16T14:04:57.365Z",
       "changedAt": "2026-09-10T14:01:28.977Z",
       "fingerprint": "24f52816f50376e6a7d744bd229df2761dfb608d2e93e77463dc81678fad0ffc",
       "finalUrl": "https://www.highlandsranch.org/news-events",
@@ -253,9 +253,9 @@
     },
     "sterling-ranch-cab-news": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.750Z",
-      "changedAt": "2026-09-09T14:37:23.375Z",
-      "fingerprint": "03e710e9bf1af94adcbd2b809fb82b21144b27b09d1b15a445f18aab1266a0db",
+      "checkedAt": "2026-09-16T14:04:57.366Z",
+      "changedAt": "2026-09-16T14:01:13.929Z",
+      "fingerprint": "530bc8e4cb3de10428d7b7163670a07cb15d03abc34d41e556913ec3845f5c88",
       "finalUrl": "https://www.sterlingranchcab.com/416/Past-CAB-Newsletters",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -288,9 +288,9 @@
     },
     "sterling-ranch-cab-agendas": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.750Z",
-      "changedAt": "2026-09-15T14:00:58.844Z",
-      "fingerprint": "d94bfe7df48c4bfaae6ef8092476387ed168fd21546899472ea822b63d85786c",
+      "checkedAt": "2026-09-16T14:04:57.366Z",
+      "changedAt": "2026-09-16T14:01:13.930Z",
+      "fingerprint": "d37c33462950a9c936aefba8ffa831948eecf88525e1330f734bb517de678535",
       "finalUrl": "https://sterlingranchcab.com/AgendaCenter",
       "contentType": "text/html; charset=utf-8",
       "signals": [],
@@ -299,7 +299,7 @@
     },
     "sterling-ranch-developer-news": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.751Z",
+      "checkedAt": "2026-09-16T14:04:57.367Z",
       "changedAt": "2026-09-13T14:01:34.219Z",
       "fingerprint": "9e1593b5dc1bc14c6e37c3a9fc57f5d33c3f8ce53c5f9fce6cc1f0021583a822",
       "finalUrl": "https://sterlingranch.com/happenings/",
@@ -316,7 +316,7 @@
     },
     "roxborough-marketplace-leasing": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.751Z",
+      "checkedAt": "2026-09-16T14:04:57.368Z",
       "changedAt": null,
       "fingerprint": "ea5773c2d9b88c37b4f9c4e50ba15c0b4a47e55bf16afd7753985227f8eb2e87",
       "finalUrl": "https://www.phillipsedison.com/property/colorado/denver-co/littleton/roxborough-marketplace",
@@ -343,9 +343,9 @@
     },
     "dougco-social": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.752Z",
-      "changedAt": "2026-09-15T14:00:58.846Z",
-      "fingerprint": "0952850409d7d53155bc50ddb6c045e8c45e17b8dab9ac131d4a146e4a5ab837",
+      "checkedAt": "2026-09-16T14:04:57.368Z",
+      "changedAt": "2026-09-16T14:01:13.931Z",
+      "fingerprint": "df9c499dee006e2bbd6ad5a0f888865449566211ab4816bcefe794431d7b4b16",
       "finalUrl": "https://dougcosocial.com/news",
       "contentType": "text/html; charset=utf-8",
       "signals": [
@@ -392,10 +392,10 @@
       ],
       "structuredLeads": [
         {
-          "id": "dougco-social-lone-tree-police-and-municipal-court-move-to-the-new-justice-center-monday",
-          "headline": "Lone Tree Police and Municipal Court Move to the New Justice Center Monday",
+          "id": "dougco-social-lone-tree-police-and-municipal-court-have-moved-to-the-new-justice-center",
+          "headline": "Lone Tree Police and Municipal Court Have Moved to the New Justice Center",
           "url": "https://dougcosocial.com/news/lone-tree-justice-center-opens",
-          "observedDate": "2026-09-13",
+          "observedDate": "2026-09-15",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
         },
@@ -510,21 +510,13 @@
           "observedDate": "2026-07-28",
           "sourceId": "dougco-social",
           "sourceName": "DougCo Social openings and local updates"
-        },
-        {
-          "id": "dougco-social-pick-n-tap-indoor-pickleball-golf-and-a-restaurant-are-coming-to-parker",
-          "headline": "Pick N Tap: Indoor Pickleball, Golf, and a Restaurant Are Coming to Parker",
-          "url": "https://dougcosocial.com/news/pick-n-tap-parker",
-          "observedDate": "2026-07-09",
-          "sourceId": "dougco-social",
-          "sourceName": "DougCo Social openings and local updates"
         }
       ],
       "newSignals": []
     },
     "discover-dougco": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.753Z",
+      "checkedAt": "2026-09-16T14:04:57.369Z",
       "changedAt": "2026-09-15T14:00:58.847Z",
       "fingerprint": "9a55e764ebc27bb661d9ce98d57f0dd86bfed13598f4ec8285b9fb196d450821",
       "finalUrl": "https://discoverdougco.com/news",
@@ -613,7 +605,7 @@
     },
     "littleton-business-development-news": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.754Z",
+      "checkedAt": "2026-09-16T14:04:57.370Z",
       "changedAt": "2026-09-12T14:50:14.125Z",
       "fingerprint": "ee368ab30dd24bd1c5009110bdec87b218c8d6178a60f58c7e2966263ddab827",
       "finalUrl": "https://www.littletonco.gov/Government/City-News",
@@ -632,7 +624,7 @@
     },
     "littleton-public-meetings": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.754Z",
+      "checkedAt": "2026-09-16T14:04:57.371Z",
       "changedAt": "2026-09-11T14:02:09.923Z",
       "fingerprint": "cae8caaa8440ecfdf59435b9210871e8090a9b7fb552b6b01de09555ac44649a",
       "finalUrl": "https://littletongov.legistar.com/Calendar.aspx",
@@ -643,7 +635,7 @@
     },
     "riverpark-developer": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.755Z",
+      "checkedAt": "2026-09-16T14:04:57.371Z",
       "changedAt": null,
       "fingerprint": "876f3a41362172bb347970f369ec5f368984aec08a2fe0e56edacf769d5ef917",
       "finalUrl": "https://evgre.com/properties/mineral-santa-fe-littleton-co",
@@ -667,7 +659,7 @@
     },
     "naked-denver-mineral-place": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.755Z",
+      "checkedAt": "2026-09-16T14:04:57.371Z",
       "changedAt": "2026-09-15T14:00:58.849Z",
       "fingerprint": "94fcd024056ce899d50f303d0e8799b0f4abfbba57218bfa08098362030f634e",
       "finalUrl": "https://www.nakeddenver.com/projects/mineral-place",
@@ -684,7 +676,7 @@
     },
     "galloway-mineral-place": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.756Z",
+      "checkedAt": "2026-09-16T14:04:57.372Z",
       "changedAt": "2026-09-09T14:37:23.385Z",
       "fingerprint": "2a81d2115f6cac96a873cea660a5abcfbb972ec125dd35820f9d3dca56ab6165",
       "finalUrl": "https://gallowayus.com/project/mineral-place-development/",
@@ -709,7 +701,7 @@
     },
     "visit-littleton-new-businesses": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.756Z",
+      "checkedAt": "2026-09-16T14:04:57.373Z",
       "changedAt": null,
       "fingerprint": "ab281f767ddec67ade7c3321641929c0f982fd73a06b5827d335b4785fbff9fc",
       "finalUrl": "https://visitlittleton.org/whats-new-in-littleton-2026/",
@@ -749,9 +741,9 @@
     },
     "aspen-grove-directory": {
       "status": "changed",
-      "checkedAt": "2026-09-15T14:04:26.757Z",
-      "changedAt": "2026-09-15T14:04:26.757Z",
-      "fingerprint": "f08866f4d6956a29573e97c691be9912ab297e18aff9ea8fbc12d8813cbcd83f",
+      "checkedAt": "2026-09-16T14:04:57.373Z",
+      "changedAt": "2026-09-16T14:04:57.373Z",
+      "fingerprint": "37cb9963fea6b118e28c7ecbeb59cbcfd442a239a4e4ffe628d39459b9e63e4f",
       "finalUrl": "https://aspengrovecenter.com/shop/",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -767,7 +759,7 @@
     },
     "aspen-grove-leasing": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.757Z",
+      "checkedAt": "2026-09-16T14:04:57.374Z",
       "changedAt": null,
       "fingerprint": "d3d7b163cd55bcbac1e63c2e8824dc59733e9d44ef1c6024900a913115f63afd",
       "finalUrl": "https://www.gerrity.co/properties/aspen-grove",
@@ -807,7 +799,7 @@
     },
     "park-meadows-directory": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.758Z",
+      "checkedAt": "2026-09-16T14:04:57.374Z",
       "changedAt": null,
       "fingerprint": "1da31ca027ce5991d906392b39ce6865c23f3d107f65fc5bf2170dd2097f3576",
       "finalUrl": "https://www.parkmeadows.com/en/directory/",
@@ -820,7 +812,7 @@
     },
     "hogback-post": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.758Z",
+      "checkedAt": "2026-09-16T14:04:57.374Z",
       "changedAt": "2026-09-12T14:50:14.131Z",
       "fingerprint": "055ab93ad815a76fab44192b22fe710439053a092d3f01a2d85ee6773f6a9e8e",
       "finalUrl": "https://www.hogbackpost.com/",
@@ -836,7 +828,7 @@
     },
     "hogback-development-tracker": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.759Z",
+      "checkedAt": "2026-09-16T14:04:57.375Z",
       "changedAt": "2026-09-11T14:02:09.928Z",
       "fingerprint": "4efc9f76cd063bc8d1123d7c1c829519cbd1571874d45c054d4c0df96645b699",
       "finalUrl": "https://www.hogbackpost.com/whats-going-in-there",
@@ -859,7 +851,7 @@
     },
     "hogback-new-restaurants": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.759Z",
+      "checkedAt": "2026-09-16T14:04:57.375Z",
       "changedAt": "2026-09-11T14:02:09.928Z",
       "fingerprint": "213a385dfbbe155e2700bb699170f65ce91ef11a1214d27db4a714ffa5dda8cf",
       "finalUrl": "https://www.hogbackpost.com/new-restaurants-littleton-80127",
@@ -890,8 +882,8 @@
       "newSignals": []
     },
     "lone-tree-timberlines": {
-      "status": "changed",
-      "checkedAt": "2026-09-15T14:04:26.760Z",
+      "status": "ok",
+      "checkedAt": "2026-09-16T14:04:57.376Z",
       "changedAt": "2026-09-15T14:04:26.760Z",
       "fingerprint": "cfa81707bc88e318fb726103cde37555dad864fcbddede5e6ffe0886f32514d7",
       "finalUrl": "https://cityoflonetree.com/communications/timberlines/",
@@ -904,9 +896,9 @@
     },
     "colorado-liquor-license-lists": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.760Z",
-      "changedAt": "2026-09-09T14:37:23.393Z",
-      "fingerprint": "909436297800a57ff6b7b47962d63e066da782fb58d1cbbc1e8ef8cf2d9fa145",
+      "checkedAt": "2026-09-16T14:04:57.376Z",
+      "changedAt": "2026-09-16T14:01:13.940Z",
+      "fingerprint": "187b0c9013a236b04942d8fce12d35af04f933504e4a30704786e0f38e3f0682",
       "finalUrl": "https://sbg.colorado.gov/liquor-license-lists",
       "contentType": "text/html; charset=UTF-8",
       "signals": [
@@ -927,7 +919,7 @@
     },
     "westword-openings-closings": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.761Z",
+      "checkedAt": "2026-09-16T14:04:57.377Z",
       "changedAt": "2026-09-15T14:00:58.855Z",
       "fingerprint": "76410b39523666a1488a9aaeb7eb8332eff1534f20b7b6a9b92a2d2d52d9b470",
       "finalUrl": "https://www.westword.com/tag/openings-closings/",
@@ -964,7 +956,7 @@
     },
     "castle-rock-outlets-directory": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.761Z",
+      "checkedAt": "2026-09-16T14:04:57.377Z",
       "changedAt": "2026-09-15T14:00:58.856Z",
       "fingerprint": "e74300b42cfa83541da1af928fe9815b41267a4f28aff3f67dd5cf1417c597d3",
       "finalUrl": "https://www.outletsatcastlerock.com/",
@@ -997,7 +989,7 @@
     },
     "parker-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.762Z",
+      "checkedAt": "2026-09-16T14:04:57.378Z",
       "changedAt": "2026-09-03T14:01:39.557Z",
       "fingerprint": "d859bde3eafa5b70fba544b9cdf4f60d27618c7bc5f9e8b82e8cea4cc17e5695",
       "finalUrl": "https://business.parkerchamber.com/events/calendarcatgid/6",
@@ -1010,7 +1002,7 @@
     },
     "castle-rock-chamber-ribbon-cuttings": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.762Z",
+      "checkedAt": "2026-09-16T14:04:57.378Z",
       "changedAt": "2026-09-10T14:01:28.991Z",
       "fingerprint": "de030e8bd35d1ef21579271636d71dd75fcef24401b00599ff8526bb3a75edf7",
       "finalUrl": "https://business.castlerock.org/events/calendar",
@@ -1025,7 +1017,7 @@
     },
     "ziggis-ken-caryl": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.763Z",
+      "checkedAt": "2026-09-16T14:04:57.379Z",
       "changedAt": "2026-09-03T14:01:39.559Z",
       "fingerprint": "65e2a47eb1bd04c532be52d9b4a55c263139d7e83f04e603473722441fbd8b56",
       "finalUrl": "https://ziggiscoffee.com/locations/8020-sangre-de-cristo-rd-littleton-co/",
@@ -1047,7 +1039,7 @@
     },
     "bodybar-colorado-studios": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.764Z",
+      "checkedAt": "2026-09-16T14:04:57.380Z",
       "changedAt": "2026-09-03T14:01:39.560Z",
       "fingerprint": "09855cf283298545830b8c07a0ea68360cca80c94525eed6055f5add91d06c17",
       "finalUrl": "https://bodybarpilates.com/studios/colorado/",
@@ -1078,7 +1070,7 @@
     },
     "denver-central-market-vendors": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.765Z",
+      "checkedAt": "2026-09-16T14:04:57.381Z",
       "changedAt": "2026-09-08T14:06:47.237Z",
       "fingerprint": "249d3f6b3d754276b0e2e5787ced7bc3dccb6a351868e8d61bd05d1e0e8ead2b",
       "finalUrl": "https://www.denvercentralmarket.com/vendors",
@@ -1101,7 +1093,7 @@
     },
     "industrious-denver-locations": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.765Z",
+      "checkedAt": "2026-09-16T14:04:57.382Z",
       "changedAt": "2026-09-15T14:00:58.860Z",
       "fingerprint": "9acd312086b1f6d94e6c4afec26d4a8be870a8ece81406c42ad203eaedc06427",
       "finalUrl": "https://www.industriousoffice.com/m/denver",
@@ -1141,7 +1133,7 @@
     },
     "collective-parker-station": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.766Z",
+      "checkedAt": "2026-09-16T14:04:57.382Z",
       "changedAt": null,
       "fingerprint": "cb299fe4b70c06b415ccded8903a45944832f2dbc7484cd8d9c742756157e272",
       "finalUrl": "https://www.thecollectiveatparkerstation.com/",
@@ -1174,7 +1166,7 @@
     },
     "brickyard-castle-rock": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.766Z",
+      "checkedAt": "2026-09-16T14:04:57.383Z",
       "changedAt": null,
       "fingerprint": "71772e3fe9b75d9f914e7bd4ca2dbe8c39f32203a576efb53df4c2fb2ab64297",
       "finalUrl": "https://thebrickyardcr.com/",
@@ -1194,7 +1186,7 @@
     },
     "gque-locations": {
       "status": "ok",
-      "checkedAt": "2026-09-15T14:04:26.767Z",
+      "checkedAt": "2026-09-16T14:04:57.383Z",
       "changedAt": null,
       "fingerprint": "6bc3ff58e1906ef245c14effec3b3ef235576c13d015bea3f0c8d5afccfc0845",
       "finalUrl": "https://gquebbq.com/locations/",
@@ -1204,6 +1196,32 @@
         "The technical storage or access that is used exclusively for anonymous statistical purposes. Without a subpoena, voluntary compliance on the part of your Internet Service Provider, or additional records from a third party, information stored or retrieved for this purpose alone cannot usually be used to identify you.",
         "Marketing",
         "The technical storage or access is required to create user profiles to send advertising, or to track the user on a website or across several websites for similar marketing purposes."
+      ],
+      "structuredLeads": [],
+      "newSignals": []
+    },
+    "spirit-halloween-aspen-grove": {
+      "status": "ok",
+      "checkedAt": "2026-09-16T14:04:57.384Z",
+      "changedAt": null,
+      "fingerprint": "bcb060f6ceb8b19a0fe5f6da5613d0ce904a962c786d969e480d5397d8b82a2f",
+      "finalUrl": "https://stores.spirithalloween.com/co/littleton/animatronics-60984.html",
+      "contentType": "text/html;charset=UTF-8",
+      "signals": [
+        "Store Display Props",
+        "Killer Klowns from Outer Space",
+        "Space Jam Costumes",
+        "Find Stores",
+        "Select a Store",
+        "Your Store",
+        "Search for Stores",
+        "Checking Store Availability",
+        "Store Locator",
+        "Opening Soon",
+        "For the best selection of high-quality Halloween Animatronics in Littleton, visit your local Spirit Halloween! With over 1,500 stores across the United States, Spirit Halloween is the largest Halloween retailer in North America. Whether you're decorating a front yard or building a full-scale Halloween display, guests can find animatronics in a wide range of sizes, themes, and scare levels.",
+        "Fans of Spirit Halloween excitedly anticipate new animatronic releases each year. From towering aliens to terrifying clowns, Spirit Halloween has something thrilling for everyone. At Spirit Halloween of Aspen Grove CO, guests can expect an immersive in-store experience complete with animatronics, chilling sound effects, and captivating Halloween lighting.",
+        "Transparency in Coverage",
+        "Copyright © 2026 Spirit Halloween Superstores, LLC"
       ],
       "structuredLeads": [],
       "newSignals": []
