@@ -32,6 +32,7 @@ test("owner-approved establishment billing evidence answers only the narrow trea
     "Can i get a discount on my water while trying to establish plants",
     "Are water charges reduced for new sod?",
     "Is there a water budget exemption when establishing my lawn?",
+    "Is establishment water free?",
   ]) {
     const answer = await answerCommunityQuestion(question, {
       index,

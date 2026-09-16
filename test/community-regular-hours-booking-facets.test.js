@@ -10,7 +10,8 @@ const plan = (goal, details, extra = {}) => ({ intent: 'facilities', goal, goals
 test('undated recurring-hours questions do not acquire a calendar-date obligation', () => {
   for (const question of ['What are the pickleball court hours?', 'What are the library operating hours?',
     'What are the regular office hours?', 'What time does the recreation center open?',
-    'What are the normal opening and closing hours?', 'What are the weekday court hours?']) {
+    'What are the normal opening and closing hours?', 'What are the weekday court hours?',
+    'What time does the pool normally close on Wednesday?']) {
     const input = plan('schedule', ['date', 'hours']);
     const interpreted = normalizeInterpretation(input, question, { now });
     assert.deepEqual(interpreted.requestedDetails, ['hours'], question);

@@ -97,6 +97,21 @@ test("date interpretation deterministically validates relative and named days in
   assert.equal(plan.dateRange.start, "2026-09-02");
 });
 
+test("recurring weekday hours are not changed into the next calendar occurrence", () => {
+  const normalized = normalizeInterpretation(interpretation({
+    intent: "facilities",
+    goal: "schedule",
+    goals: ["schedule"],
+    subject: "pool hours",
+    requestedDetails: ["hours", "date"],
+    dateRange: { kind: "named-day", start: "2026-09-23", end: "2026-09-23", label: "wednesday" },
+    filters: { audience: "", category: "", facility: "pool", location: "" },
+    searchQueries: ["pool Wednesday hours"],
+  }), "What time does the pool normally close on Wednesday?", { now: new Date("2026-09-16T18:00:00Z") });
+  assert.deepEqual(normalized.requestedDetails, ["hours"]);
+  assert.equal(normalized.dateRange, null);
+});
+
 test("interpretation schema removes unsupported fields and validates clarification", () => {
   const plan = normalizeInterpretation(interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "", url: "https://evil.example" }, inventedFact: "$1" }), "Are there kids events tomorrow?", { now: NOW });
   assert.deepEqual(plan.filters, { audience: "youth kids", category: "", facility: "", location: "" });
