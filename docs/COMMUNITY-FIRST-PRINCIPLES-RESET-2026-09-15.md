@@ -331,3 +331,17 @@ The source review found two exact official paths, but they are not promoted into
 These failures confirm the first-principles boundary. A different model or vector database cannot authorize an unapproved fact and should not be used to guess around a missing live connector. The historical mixed-model answer-flow estimate remains about **$1.01 per 1,000 questions** and **$10.09 per 10,000**. The deterministic need-first candidate and rubric add **$0 in model/API charges**. For comparison, the existing model-grader harness would cost about **$3.88 per 1,000 targeted answers with Haiku** or **$9.86 per 1,000 with Sonnet**, before establishing better agreement with the owner. No model grader has earned adoption.
 
 Release status remains local only. The September 17 staging target is conditional on the exact revision passing the seven live/date-specific questions in test mode, approved source decisions being incorporated or explicitly deferred, fast and focused checks remaining green, and cost being unchanged. Production remains no earlier than September 19 and still requires a materially improved held-out result, clean live source health, and smoke checks on the exact staging revision. Production continues to use the legacy flow until those gates pass.
+
+## Partial-detail preservation and Halloween scope checkpoint
+
+The complete owner-log replay exposed a smaller version of the original root cause. A single preserved need can itself contain more than one required detail. The router previously kept a useful partial answer only when the details appeared as separate needs; if one need had a supported detail and an unresolved detail, it discarded the supported claim. The router now preserves any rendered, source-proven detail, marks the outcome `verified-partial`, and states the unresolved scope without allowing the partial answer to receive a complete or Excellent diagnostic.
+
+The owner-marked Halloween question demonstrated the boundary. Ordinary “decorate for Halloween” wording now reaches the approved seasonal-lighting policy, but the assistant does not pretend that a lighting rule governs every kind of decoration. The candidate says:
+
+> For Halloween lights, the approved seasonal period starts October 1 and runs through January 31.
+>
+> This rule sets the dates for seasonal lighting; it does not set a separate start date for every kind of Halloween decoration.
+
+The result is a source-proven `verified-partial` and an unpublished Mixed diagnostic with some resident work remaining. The more precise “When can I put up Halloween lights?” is complete and receives an unpublished Excellent diagnostic. This fixes the useful-answer loss and the false-completion risk together; it does not invent a broader decoration rule.
+
+Verification for this checkpoint is 22/22 request-contract checks, 29/29 need-router checks, 40/40 rule-family checks, and 9/9 rubric guardrails. The complete 28-question private aggregate was not rerun after this targeted correction, so the earlier 17 complete and 11 missing-evidence result remains the last full aggregate rather than being silently adjusted. No model call, new source approval, database, subscription, deployment, or resident question was added.

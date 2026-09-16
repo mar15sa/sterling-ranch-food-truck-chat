@@ -87,6 +87,25 @@ test("a supported part survives while wrong-subject evidence and its action are 
   assert.deepEqual(result.sources.map((source) => source.id), ["schedule"]);
 });
 
+test("a supported detail survives when another detail in the same need is unresolved", async () => {
+  const contract = buildResidentRequestContract("When can I decorate for Halloween?");
+  const result = await runNeedFirstShadow(contract, async () => ({
+    ...supportedAnswer({
+      id: "seasonal-lighting",
+      title: "Official seasonal-lighting policy",
+      claim: "For Halloween lights, the approved seasonal period starts October 1 and runs through January 31.",
+    }),
+    confidence: { canAnswer: true },
+    nextStep: "This rule sets the dates for seasonal lighting; it does not set a separate start date for every kind of Halloween decoration.",
+  }));
+  assert.equal(result.completion.outcome, "verified-partial");
+  assert.deepEqual(result.completion.needs[0].supportedDetails, ["date"]);
+  assert.deepEqual(result.completion.needs[0].missingDetails, ["specification"]);
+  assert.match(result.answer, /Halloween lights.*October 1.*January 31/is);
+  assert.match(result.answer, /does not set a separate start date.*every kind of Halloween decoration/is);
+  assert.equal(result.claims.length, 1);
+});
+
 test("a relevant official action can help with an unresolved need without pretending to answer it", async () => {
   const contract = buildResidentRequestContract("Which food truck is here today, and what is on its menu?", {
     goals: ["schedule", "information"], subject: "food truck and menu",

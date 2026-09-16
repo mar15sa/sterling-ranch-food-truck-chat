@@ -363,6 +363,18 @@ test("permanent holiday lights use permanent-system rules unless the resident as
   assert.ok(holidayOnly.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
 });
 
+test("Halloween wording reaches the approved seasonal-lighting rule without broadening it to all decorations", async () => {
+  const lights = await answer("When can I put up Halloween lights?");
+  assert.match(lights.answer, /Halloween lights.*October 1.*January 31/is);
+  assert.match(lights.answer, /10:00 p\.m\./i);
+  assert.equal(lights.qualityChecks?.requestedFacetCoverage, true);
+
+  const broad = await answer("When can I decorate for Halloween?");
+  assert.match(broad.answer, /Halloween lights.*October 1.*January 31/is);
+  assert.match(broad.answer, /seasonal lighting.*does not set a separate start date.*every kind of Halloween decoration/is);
+  assert.doesNotMatch(broad.answer, /all Halloween decorations (?:are|may be)/i);
+});
+
 test("landscape overview replaces rulebook placeholders with resident-ready details and actions", async () => {
   const result = await answer("What are the landscaping and yard rules?");
   assert.match(result.answer, /one deciduous tree.*one evergreen tree.*80% live coverage/is);

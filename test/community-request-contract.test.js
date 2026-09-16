@@ -111,6 +111,15 @@ test("a reimbursement request cannot be satisfied by general pass eligibility", 
   assert.equal(contract.needs[0].evidenceKind, "governing-rule");
 });
 
+test("broad Halloween decorating keeps the unresolved decoration scope separate from the lighting date", () => {
+  const broad = buildResidentRequestContract("When can I decorate for Halloween?");
+  assert.deepEqual(broad.needs[0].requestedDetails, ["date", "specification"]);
+  assert.equal(broad.needs[0].evidenceKind, "governing-rule");
+
+  const lights = buildResidentRequestContract("When can I put up Halloween lights?");
+  assert.deepEqual(lights.needs[0].requestedDetails, ["date"]);
+});
+
 test("recognizes conversational permission wording without treating information requests as permission", () => {
   for (const question of [
     "Do I have to replace a dead tree in the tree lawn?",
