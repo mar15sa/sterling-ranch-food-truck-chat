@@ -608,10 +608,16 @@ test("the resident candidate keeps a proven garbage date and approved holiday gu
     now: new Date(checkedAt),
     getWasteSchedule: async () => ({
       service: "garbage", date: "2026-09-17", timing: "starting tomorrow", anchorDate: "2026-09-17",
-      serviceAreas: [{ label: "Providence Village", date: "2026-09-17" }], checkedAt,
+      serviceAreas: [
+        { label: "Providence Village", date: "2026-09-17" },
+        { label: "Ascent Village", date: "2026-09-18" },
+        { label: "Prospect Village", date: "2026-09-20" },
+      ], checkedAt,
       evidence: {
         degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
-        claims: [{ facet: "date", text: "2026-09-17", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+        claims: ["2026-09-17", "2026-09-18", "2026-09-20"].map((text) => ({
+          facet: "date", text, controllingEvidenceId: evidenceId, controllingSourceRole: "operational",
+        })),
         evidence: [{ evidenceId, sourceUrl: "https://www.wasteconnections.com/pickup-schedule", checkedAt, staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
         actions: [{ type: "information", label: "Check an address in the official pickup calendar", url: "https://www.wasteconnections.com/pickup-schedule" }],
       },
@@ -621,6 +627,7 @@ test("the resident candidate keeps a proven garbage date and approved holiday gu
   assert.equal(result.completion.outcome, "verified-partial");
   assert.match(result.answer, /^Holiday pickup changes apply only after/i);
   assert.match(result.answer, /Thursday, September 17, 2026/i);
+  assert.match(result.answer, /Prospect Village: Sunday, September 20, 2026/i);
   assert.match(result.answer, /live pickup calendar confirms the date, but it does not say whether the pickup was delayed/i);
   assert.match(result.answer, /New Year’s Day.*Memorial Day.*Labor Day.*Thanksgiving.*Christmas.*one day/i);
   assert.match(result.answer, /Next step: .*pickup calendar/i);
