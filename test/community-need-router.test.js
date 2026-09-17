@@ -165,6 +165,25 @@ test("a supported part survives while wrong-subject evidence and its action are 
   assert.deepEqual(result.sources.map((source) => source.id), ["schedule"]);
 });
 
+test("an unverified boundary cannot display a verified claim about the wrong subject", async () => {
+  const contract = buildResidentRequestContract("Which food truck is coming, and what do they sell?");
+  const claim = "The annual drinking-water report lists monitoring results and corrective actions.";
+  const result = await runNeedFirstShadow(contract, async (need) => need.id === "need-1"
+    ? supportedAnswer({ id: "schedule", title: "Official food-truck calendar", claim: "Example Eats is coming Tuesday." })
+    : ({
+    answerStatus: "could-not-verify",
+    answer: claim,
+    directAnswer: claim,
+    keyDetails: [],
+    sources: [{ id: "water-report", title: "Annual Drinking Water Quality Report", text: claim }],
+    claims: [{ text: claim, evidenceSourceIds: ["water-report"], verified: true }],
+    actions: [], conflicts: [],
+  }));
+  assert.equal(result.completion.outcome, "verified-partial");
+  assert.match(result.answer, /Example Eats/);
+  assert.doesNotMatch(result.answer, /drinking-water|monitoring results/i);
+});
+
 test("a routed but off-topic collection policy cannot answer cart storage", async () => {
   const contract = buildResidentRequestContract("Where should recycling carts be stored after collection?");
   const claim = "The delinquent account collection process adds a late fee after seven calendar days.";
@@ -174,12 +193,56 @@ test("a routed but off-topic collection policy cannot answer cart storage", asyn
     answer: claim,
     directAnswer: claim,
     keyDetails: [],
-    sources: [{ id: "billing-collection", title: "Delinquent fee collection process", text: claim }],
-    claims: [{ text: claim, evidenceSourceIds: ["billing-collection"], verified: true }],
+    sources: [{ id: "billing-collection", title: "Delinquent fee collection process", text: claim, retrievedForNeedIds: ["need-1"] }],
+    claims: [{ text: claim, evidenceSourceIds: ["billing-collection"], verified: true, supportedForNeedIds: ["need-1"] }],
     actions: [], conflicts: [],
   }));
   assert.equal(result.completion.outcome, "missing-evidence");
   assert.doesNotMatch(result.answer, /late fee|delinquent/i);
+});
+
+test("a generic limit cannot make a pickleball source answer a motorhome question", async () => {
+  const contract = buildResidentRequestContract("What's the limit if we keep our motorhome at home for several days?");
+  const claim = "Court reservations are limited to two hours per day through CourtReserve.";
+  const result = await runNeedFirstShadow(contract, async () => ({
+    answerStatus: "verified",
+    confidence: { canAnswer: true },
+    answer: claim,
+    directAnswer: claim,
+    keyDetails: [],
+    sources: [{ id: "pickleball", title: "Pickleball Courts", text: claim, retrievedForNeedIds: ["need-1"] }],
+    claims: [{ text: claim, evidenceSourceIds: ["pickleball"], verified: true, supportedForNeedIds: ["need-1"] }],
+    actions: [], conflicts: [],
+  }));
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.doesNotMatch(result.answer, /CourtReserve|two hours/i);
+});
+
+test("hand watering does not answer a question about automatic irrigation", async () => {
+  const contract = buildResidentRequestContract("Are we allowed to irrigate the lawn in the middle of a summer afternoon?");
+  const claim = "Hand watering of landscape materials is allowed at any time.";
+  const result = await runNeedFirstShadow(contract, async () => ({
+    answerStatus: "verified",
+    confidence: { canAnswer: true },
+    answer: claim,
+    directAnswer: claim,
+    keyDetails: [],
+    sources: [{ id: "water-rule", title: "Water conservation measures", text: claim, retrievedForNeedIds: ["need-1"] }],
+    claims: [{ text: claim, evidenceSourceIds: ["water-rule"], verified: true, supportedForNeedIds: ["need-1"] }],
+    actions: [], conflicts: [],
+  }));
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.doesNotMatch(result.answer, /Hand watering/i);
+});
+
+test("a recreational-vehicle rule still supports ordinary motorhome wording", async () => {
+  const contract = buildResidentRequestContract("What's the limit if we keep our motorhome at home for several days?");
+  const claim = "Recreational vehicles may be parked in a driveway for a maximum of 72 consecutive hours.";
+  const result = await runNeedFirstShadow(contract, async () => supportedAnswer({
+    id: "rv-rule", title: "Vehicles and parking", claim,
+  }));
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /72 consecutive hours/i);
 });
 
 test("a supported detail survives when another detail in the same need is unresolved", async () => {

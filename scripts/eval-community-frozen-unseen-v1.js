@@ -24,8 +24,11 @@ async function main() {
   const actualHash = casesHash(fixture.cases);
   if (fixture.casesSha256 !== actualHash) throw new Error(`Frozen case hash mismatch: expected ${fixture.casesSha256}, received ${actualHash}.`);
   const sourceById = new Map(sourceCases.map((item) => [item.id, item]));
+  const requestedIds = new Set((process.argv.find((arg) => arg.startsWith("--ids="))?.slice(6) || "").split(",").filter(Boolean));
+  const selectedCases = requestedIds.size ? fixture.cases.filter((item) => requestedIds.has(item.id)) : fixture.cases;
+  if (!selectedCases.length || (requestedIds.size && selectedCases.length !== requestedIds.size)) throw new Error("Every requested case ID must exist.");
   const rows = [];
-  for (const item of fixture.cases) {
+  for (const item of selectedCases) {
     const source = sourceById.get(item.sourceCaseId);
     if (!source) throw new Error(`Unknown source case ${item.sourceCaseId}.`);
     const started = process.hrtime.bigint();
@@ -44,6 +47,8 @@ async function main() {
       actualOutcome: result.completion?.outcome || null, missing, missingAny, forbidden,
       proofFailureCount: proofFailures.length, elapsedMs, rating: quality.rating || "Not rated",
       dimensionTotal: quality.dimensionTotal ?? null, answer,
+      sources: (result.sources || []).map((source) => ({ id: source.id || source.nodeId, title: source.title, retrievedForNeedIds: source.retrievedForNeedIds })),
+      claims: (result.claims || []).map((claim) => ({ text: claim.text, evidenceSourceIds: claim.evidenceSourceIds, supportedForNeedIds: claim.supportedForNeedIds })),
     });
   }
   const familyRows = [...new Set(rows.map((row) => row.family))].map((family) => {
@@ -61,6 +66,7 @@ async function main() {
     firstRunCandidateRevision: fixture.candidateRevision,
     firstExecutionReportFailed: true,
     reportAttempt: 2,
+    evaluationPhase: "post-reveal-development-replay",
     isTest: true,
     status: useful === rows.length ? "passed" : "failed",
     scope: fixture.scope,
@@ -76,6 +82,7 @@ async function main() {
     cases: process.argv.includes("--full") ? rows : undefined,
     limitations: [
       "The phrasings are frozen and unused for tuning before this first run, but they are author-created rather than independent owner labels.",
+      "This report is a development replay after the first inspectable blind result; it cannot be presented as a new unseen score.",
       "Deterministic source fixtures isolate request understanding, evidence routing, composition, and rating behavior; they do not recheck live source availability.",
       "Excellent is an unpublished diagnostic rating until calibrated against owner judgments.",
     ],
