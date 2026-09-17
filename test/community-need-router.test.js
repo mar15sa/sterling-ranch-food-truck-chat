@@ -597,10 +597,10 @@ test("the resident candidate keeps a fresh single-part pool status instead of as
   assert.deepEqual(result.sources.map((source) => source.id), [evidenceId]);
 });
 
-test("the resident candidate keeps a proven garbage date while delay status is unavailable", async () => {
+test("the resident candidate keeps a proven garbage date and approved holiday guidance while delay status is unavailable", async () => {
   const checkedAt = "2026-09-16T18:00:00.000Z";
   const evidenceId = "sterling-ranch:waste-schedule:live-calendar";
-  const result = await answerCommunityQuestion("Was garbage pickup delayed this week?", {
+  const result = await answerCommunityQuestion("Does a holiday change this week's trash pickup schedule?", {
     isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
     needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
     answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
