@@ -164,3 +164,15 @@ Cache usage and requested thinking modes are recorded in the companion JSON. Mis
 - Unknown charges remain unknown; failed attempts stay in denominators. All costs are token-priced estimates, not invoice totals.
 - No frozen unseen or human-calibrated winner, current production cost measurement, or current project hosting bill is supplied.
 - Output tokens are billed once. Missing explicit reasoning-token detail is not a measured zero.
+
+## September 16 need-first AI development comparison
+
+Three bounded diagnostic captures cost **$0.237426 total**. They used four authored unfamiliar phrasings and are development evidence rather than a production benchmark or invoice.
+
+| Planning option | Measured planner cost in final four-question capture | Small-sample projection per 1,000 |
+| --- | ---: | ---: |
+| Haiku for every question | $0.013640 / 4 | $3.41 |
+| Sonnet for every question | $0.032294 / 4 | $8.07 |
+| Haiku, then Sonnet only when Haiku was rejected | $0.022548 / 4 | $5.64 |
+
+The preserved historical current-flow estimate is about **$1.01 per 1,000 questions**. Neither writer earned adoption in the final capture: all guarded writer drafts were rejected or the deterministic composer was retained. The heavier writer therefore adds measured cost and latency without a demonstrated final-answer gain. No vector database, reranker, embedding subscription, or other recurring service was added.

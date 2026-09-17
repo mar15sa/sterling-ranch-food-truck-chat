@@ -68,6 +68,27 @@ test("need-first shadow routing answers and proves each part independently", asy
   assert.match(result.answer, /tacos and quesadillas/);
 });
 
+test("the combined answer does not repeat a fact returned for two needs", async () => {
+  const contract = buildResidentRequestContract("Which food truck is here today, and what is on its menu?", {
+    goals: ["schedule", "information"], subject: "food truck and menu",
+  });
+  const schedule = "On Monday, the food truck is Ecos de Mexico.";
+  const menu = "The menu lists tacos and quesadillas.";
+  const result = await runNeedFirstShadow(contract, async (need) => need.id === "need-1"
+    ? supportedAnswer({ id: "schedule", title: "Official calendar", claim: schedule })
+    : {
+      answerStatus: "verified",
+      answer: `${schedule} ${menu}`,
+      directAnswer: schedule,
+      keyDetails: [menu],
+      sources: [{ id: "menu", title: "Official menu", text: `${schedule} ${menu}` }],
+      claims: [schedule, menu].map((text) => ({ text, evidenceSourceIds: ["menu"], verified: true })),
+      actions: [], conflicts: [],
+    });
+  assert.equal((result.answer.match(/On Monday, the food truck is Ecos de Mexico\./g) || []).length, 1);
+  assert.match(result.answer, /tacos and quesadillas/);
+});
+
 test("multiple proved details become readable paragraphs instead of one dense line", async () => {
   const contract = buildResidentRequestContract("What should I know about landscape installation requirements?", {
     goal: "information", subject: "landscape installation requirements",
@@ -110,6 +131,23 @@ test("a supported part survives while wrong-subject evidence and its action are 
   assert.doesNotMatch(result.answer, /water bill/i);
   assert.deepEqual(result.actions, []);
   assert.deepEqual(result.sources.map((source) => source.id), ["schedule"]);
+});
+
+test("a routed but off-topic collection policy cannot answer cart storage", async () => {
+  const contract = buildResidentRequestContract("Where should recycling carts be stored after collection?");
+  const claim = "The delinquent account collection process adds a late fee after seven calendar days.";
+  const result = await runNeedFirstShadow(contract, async () => ({
+    answerStatus: "verified",
+    confidence: { canAnswer: true },
+    answer: claim,
+    directAnswer: claim,
+    keyDetails: [],
+    sources: [{ id: "billing-collection", title: "Delinquent fee collection process", text: claim }],
+    claims: [{ text: claim, evidenceSourceIds: ["billing-collection"], verified: true }],
+    actions: [], conflicts: [],
+  }));
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.doesNotMatch(result.answer, /late fee|delinquent/i);
 });
 
 test("a supported detail survives when another detail in the same need is unresolved", async () => {

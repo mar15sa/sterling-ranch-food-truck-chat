@@ -29,6 +29,7 @@ const CASES = [
     id: "novel-specific-report-not-nearby-contact",
     baseId: "wrong-subject-contact",
     question: "I need the CAB's actual 2025 water-quality findings—not a billing contact. Can you open the report itself?",
+    expectedOutcome: "complete",
   },
 ];
 
@@ -151,12 +152,24 @@ async function main() {
         answer: result.answer,
         answerMode: result.answerMode,
         outcome: result.completion?.outcome,
-        expectedOutcome: base.expectedOutcome,
-        outcomeMatch: result.completion?.outcome === base.expectedOutcome,
+        expectedOutcome: benchmarkCase.expectedOutcome || base.expectedOutcome,
+        outcomeMatch: result.completion?.outcome === (benchmarkCase.expectedOutcome || base.expectedOutcome),
         proofFailureCount: proofFailures(result).length,
         plannerAccepted: result._requestContract?.candidate?.planningMethod === "ai",
         writerAccepted: result._requestContract?.candidate?.writerAccepted === true,
         needCount: result._requestContract?.needCount,
+        needs: (result._requestContract?.needs || []).map((need) => ({
+          request: need.request,
+          routeRequest: need.routeRequest,
+          goal: need.goal,
+          requestedDetails: need.requestedDetails,
+          capabilityId: need.capabilityId || "",
+        })),
+        sources: (result.sources || []).map((source) => ({
+          id: source.id || source.nodeId || source.sourceUrl || "",
+          title: source.title || source.sourceTitle || "",
+          url: source.url || source.sourceUrl || "",
+        })),
         elapsedMs,
         diagnostics,
       });

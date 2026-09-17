@@ -1,8 +1,10 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const {
+  capabilityCatalog,
   normalizePlannedContract,
   planResidentNeedContract,
+  plannerRequestBody,
   rewriteNeedFirstCandidate,
 } = require("../lib/community-need-llm");
 const { assessResidentNeeds, buildResidentRequestContract } = require("../lib/community-request-contract");
@@ -70,6 +72,103 @@ test("AI need planning is rejected when it drops a clearly separate requested pa
     filters: { audience: "", category: "", facility: "", location: "" },
   }] };
   assert.equal(normalizePlannedContract(question, {}, parsed, fallback, "test-model"), null);
+});
+
+test("organization capability vocabulary turns unfamiliar language into a connector-safe route", () => {
+  const question = "Who's parked here tomorrow, and what could we order?";
+  const fallback = buildResidentRequestContract(question);
+  const catalog = capabilityCatalog({ connectors: [{
+    id: "food-truck-schedule",
+    type: "food-truck-schedule",
+    adapter: {
+      facets: ["date", "menu", "price"],
+      vocabulary: { "food-truck": ["food truck", "mobile food"] },
+    },
+  }] });
+  const parsed = { needs: [{
+    quotedText: question,
+    request: "Which vendor is serving tomorrow?",
+    routeRequest: "vendor serving tomorrow",
+    goal: "schedule",
+    requestedDetails: ["date"],
+    subject: "dinner vendor",
+    capabilityId: "food-truck-schedule",
+    dateRange: { kind: "tomorrow", start: "2026-09-17", end: "2026-09-17", label: "tomorrow" },
+    filters: { audience: "", category: "", facility: "", location: "" },
+  }, {
+    quotedText: question,
+    request: "What can residents order from that vendor?",
+    routeRequest: "items residents can order",
+    goal: "information",
+    requestedDetails: ["menu"],
+    subject: "dinner vendor menu",
+    capabilityId: "food-truck-schedule",
+    dateRange: { kind: "tomorrow", start: "2026-09-17", end: "2026-09-17", label: "tomorrow" },
+    filters: { audience: "", category: "", facility: "", location: "" },
+  }] };
+  const contract = normalizePlannedContract(question, {}, parsed, fallback, "test-model", catalog);
+  assert.match(contract.needs[0].routeRequest, /^food truck:/i);
+  assert.match(contract.needs[1].routeRequest, /^menu: food truck:/i);
+  assert.equal(contract.needs[1].capabilityId, "food-truck-schedule");
+});
+
+test("Sonnet planner request uses the provider-compatible temperature shape", () => {
+  const common = {
+    maxTokens: 1000,
+    system: "system",
+    tool: { name: "plan_resident_needs" },
+    currentMessage: "question",
+    resolvedQuestion: "question",
+    now: new Date("2026-09-16T18:00:00Z"),
+  };
+  assert.equal(plannerRequestBody({ ...common, model: "claude-haiku-4-5" }).temperature, 0);
+  assert.equal("temperature" in plannerRequestBody({ ...common, model: "claude-sonnet-5" }), false);
+});
+
+test("planner-only extra requirements cannot make a report request look incomplete", () => {
+  const question = "Open the CAB's 2025 water-quality findings report.";
+  const fallback = buildResidentRequestContract(question);
+  const parsed = { needs: [{
+    quotedText: question,
+    request: "Locate the CAB's 2025 water-quality findings report.",
+    routeRequest: "CAB 2025 water-quality findings report",
+    goal: "information",
+    requestedDetails: ["information", "specification"],
+    subject: "CAB 2025 water-quality findings report",
+    capabilityId: "static-information",
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "", location: "" },
+  }] };
+  const contract = normalizePlannedContract(question, {}, parsed, fallback, "test-model");
+  assert.deepEqual(contract.needs[0].requestedDetails, ["information"]);
+});
+
+test("a governing specification uses the organization's declared rules capability", () => {
+  const question = "Where are recycling carts supposed to live after pickup?";
+  const fallback = buildResidentRequestContract(question);
+  const catalog = capabilityCatalog({ connectors: [{
+    id: "official-rules",
+    type: "municode",
+    adapter: {
+      capabilities: ["rules"], facets: ["permission", "specification"],
+      controllingSourceRoles: ["governing"], vocabulary: { rule: ["regulation", "standard"] },
+    },
+  }] });
+  const parsed = { needs: [{
+    quotedText: question,
+    request: "Find where recycling carts must be stored after pickup.",
+    routeRequest: "cart storage placement after collection",
+    goal: "information",
+    requestedDetails: ["specification", "information"],
+    subject: "recycling cart storage rule",
+    capabilityId: "static-information",
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "", location: "" },
+  }] };
+  const contract = normalizePlannedContract(question, {}, parsed, fallback, "test-model", catalog);
+  assert.equal(contract.needs[0].capabilityId, "official-rules");
+  assert.match(contract.needs[0].routeRequest, /^rule:/i);
+  assert.match(contract.needs[0].routeRequest, /recycling cart storage/i);
 });
 
 test("an AI writer is accepted only when it preserves the evidence coverage", async () => {
