@@ -7,6 +7,7 @@ function stageFor(body) {
   if ((body.tools||[]).some(t=>["check_answer_acceptance","check_planned_answer_acceptance"].includes(t.name)))return "answer-acceptance";
   if ((body.tools||[]).some(t=>t.name==="assess_resident_answer"))return "answer-assessment";
   if ((body.tools||[]).some(t=>t.name==="route_community_question"))return "understanding";
+  if ((body.tools||[]).some(t=>t.name==="plan_resident_needs"))return "understanding";
   const system=typeof body.system==="string"?body.system:JSON.stringify(body.system||"");
   if(system.startsWith("You interpret resident questions for a search system"))return "rules-search-planning";
   if(system.startsWith("You rerank passages"))return "reranking";

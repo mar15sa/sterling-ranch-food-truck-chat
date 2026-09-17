@@ -27,6 +27,20 @@ test("preserves truck and menu as two resident needs", () => {
   assert.equal(contract.needs[1].goal, "information");
 });
 
+test("ordinary food-truck follow-ups route both the schedule and menu explicitly", () => {
+  for (const question of [
+    "What's today's truck and what can I order from it?",
+    "I'm trying to plan dinner. Which truck is coming today and what's on the menu?",
+  ]) {
+    const contract = buildResidentRequestContract(question);
+    assert.equal(contract.needCount, 2, question);
+    assert.match(contract.needs[0].routeRequest, /food truck schedule/i, question);
+    assert.deepEqual(contract.needs[0].requestedDetails, ["date"], question);
+    assert.match(contract.needs[1].routeRequest, /food truck menu/i, question);
+    assert.deepEqual(contract.needs[1].requestedDetails, ["menu"], question);
+  }
+});
+
 test("preserves recycling date and bin storage as separate needs", () => {
   const contract = buildResidentRequestContract(
     "What's the next recycling pickup for Ascent Village, and where can I keep my bins?",
@@ -302,6 +316,46 @@ test("a matching verified payment claim supports the water-bill need", () => {
     claims: [verifiedClaim(claim, [id])], actions: [{ label: "Pay water bill online", context: "Water billing payment" }], conflicts: [],
   });
   assert.equal(assessment.needs[0].status, "supported");
+  assert.equal(assessment.outcome, "complete");
+});
+
+test("a source-bound official action can complete an action need without a prose claim", () => {
+  const contract = buildResidentRequestContract("Can you get me to the website for paying the water bill?");
+  const id = "water-payment";
+  const assessment = assessResidentNeeds(contract, {
+    answerStatus: "verified",
+    directAnswer: "Use the official payment page below.",
+    keyDetails: [],
+    sources: [{ ...source(id, "Water Billing & Payment Options"), isOfficialResource: true,
+      sourceUrl: "https://example.test/pay", retrievedForNeedIds: ["need-1"] }],
+    claims: [],
+    actions: [{ label: "Water Billing & Payment Options", url: "https://example.test/pay", sourceId: id }],
+    conflicts: [],
+  });
+  assert.equal(assessment.outcome, "complete");
+  assert.deepEqual(assessment.needs[0].supportedDetails, ["action"]);
+});
+
+test("an unbound action cannot complete an action need", () => {
+  const contract = buildResidentRequestContract("Can you get me to the website for paying the water bill?");
+  const assessment = assessResidentNeeds(contract, {
+    answerStatus: "verified", directAnswer: "Use the link below.", keyDetails: [],
+    sources: [source("unrelated", "Swimming pool page")], claims: [],
+    actions: [{ label: "Pay water bill", url: "https://untrusted.test/pay" }], conflicts: [],
+  });
+  assert.equal(assessment.outcome, "missing-evidence");
+});
+
+test("a verified duration answers an exact-limit specification", () => {
+  const contract = buildResidentRequestContract("What's the limit for keeping a motorhome at home?");
+  contract.needs[0].requestedDetails = ["specification"];
+  const id = "rv-rule";
+  const claim = "A motorhome may be temporarily parked for a maximum of 72 consecutive hours.";
+  const assessment = assessResidentNeeds(contract, {
+    answerStatus: "verified", directAnswer: claim, keyDetails: [],
+    sources: [{ ...source(id, "Vehicles; parking", claim), retrievedForNeedIds: ["need-1"] }],
+    claims: [verifiedClaim(claim, [id])], actions: [], conflicts: [],
+  });
   assert.equal(assessment.outcome, "complete");
 });
 

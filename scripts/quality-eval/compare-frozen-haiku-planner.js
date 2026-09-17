@@ -11,7 +11,16 @@ const { ensureAllowedModel, summarize } = require("./usage");
 const { createObservedFetch } = require("./observe-fetch");
 
 const MODEL = "claude-haiku-4-5";
-const CAP_USD = 0.2;
+
+function option(name, fallback = "") {
+  const prefix = `--${name}=`;
+  return process.argv.find((arg) => arg.startsWith(prefix))?.slice(prefix.length) || fallback;
+}
+
+const CAP_USD = Number(option("cap", "0.2"));
+const MAX_TOKENS = Number(option("max-tokens", "1000"));
+const OUTPUT_LABEL = option("output-label", "frozen-haiku-planner-20260916").replace(/[^a-z0-9-]/gi, "-");
+const REQUESTED_IDS = new Set(option("ids").split(",").map((value) => value.trim()).filter(Boolean));
 
 function phrasePattern(value) {
   const escaped = String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -30,13 +39,17 @@ function passedCase(item, result) {
 async function main() {
   ensureAllowedModel(MODEL);
   if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY is required.");
-  const outDir = path.resolve("artifacts/quality-eval/frozen-haiku-planner-20260916");
+  if (!Number.isFinite(CAP_USD) || CAP_USD <= 0 || CAP_USD > 0.2) throw new Error("This comparison cap must be between $0 and $0.20.");
+  if (!Number.isInteger(MAX_TOKENS) || MAX_TOKENS < 300 || MAX_TOKENS > 1000) throw new Error("Planner max tokens must be between 300 and 1,000.");
+  const selectedCases = REQUESTED_IDS.size ? fixture.cases.filter((item) => REQUESTED_IDS.has(item.id)) : fixture.cases;
+  if (!selectedCases.length || (REQUESTED_IDS.size && selectedCases.length !== REQUESTED_IDS.size)) throw new Error("Every requested case ID must exist.");
+  const outDir = path.resolve(`artifacts/quality-eval/${OUTPUT_LABEL}`);
   fs.mkdirSync(outDir, { recursive: true });
   const sourceById = new Map(sourceCases.map((item) => [item.id, item]));
   const calls = [];
   const observedFetch = createObservedFetch(global.fetch, { calls, capUsd: CAP_USD });
   const rows = [];
-  for (const item of fixture.cases) {
+  for (const item of selectedCases) {
     const source = sourceById.get(item.sourceCaseId);
     if (!source) throw new Error(`Unknown source case ${item.sourceCaseId}.`);
     const diagnostics = [];
@@ -45,6 +58,7 @@ async function main() {
       ...plannerOptions,
       model: MODEL,
       cache: false,
+      maxTokens: MAX_TOKENS,
       fetchImpl: observedFetch,
       onDiagnostic: (value) => diagnostics.push(value),
     });
@@ -73,6 +87,7 @@ async function main() {
     model: MODEL,
     stage: "request-understanding-only",
     writerModelCalls: 0,
+    budget: { capUsd: CAP_USD, maxTokens: MAX_TOKENS, selectedCaseIds: selectedCases.map((item) => item.id), reservedUsd: observedFetch.reservedUsd() },
     totals: { cases: rows.length, useful, usefulRate: useful / rows.length,
       plannerAccepted: rows.filter((row) => row.plannerAccepted).length,
       diagnosticExcellent: rows.filter((row) => row.passed && row.rating === "Excellent").length },

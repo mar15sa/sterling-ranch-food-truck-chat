@@ -5,6 +5,7 @@ const { answerRulesQuestion } = require("../lib/rules-assistant");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const index = require("../data/community-index.json");
 const { normalizeInterpretation } = require("../lib/community-interpretation");
+const SNAPSHOT_NOW = new Date("2026-09-14T18:00:00.000Z");
 
 test("non-payment consequences cannot gain a payment-action detail", () => {
   const base = {intent:"rules",goal:"information",goals:["information"],subject:"water bill non-payment",searchQueries:["late bill consequences"],requestedDetails:["action"]};
@@ -41,6 +42,7 @@ test("owner-approved establishment billing evidence answers only the narrow trea
       planCommunitySearch: false,
       synthesizeCommunityAnswer: false,
       isTest: true,
+      now: SNAPSHOT_NOW,
       requestContractMode: "need-first-candidate",
       needRouterBackend: "current-local",
     });
@@ -59,6 +61,7 @@ test("park-pass reimbursement uses the approved form without inventing policy", 
       planCommunitySearch: false,
       synthesizeCommunityAnswer: false,
       isTest: true,
+      now: SNAPSHOT_NOW,
       requestContractMode: "need-first-candidate",
       needRouterBackend: "current-local",
     });
@@ -78,6 +81,7 @@ test("an exact establishment rate request keeps the known treatment and withhold
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
     isTest: true,
+    now: SNAPSHOT_NOW,
     requestContractMode: "need-first-candidate",
     needRouterBackend: "current-local",
   });
@@ -95,6 +99,7 @@ test("an exact park-pass amount request leads with the missing amount and keeps 
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
     isTest: true,
+    now: SNAPSHOT_NOW,
     requestContractMode: "need-first-candidate",
     needRouterBackend: "current-local",
   });
@@ -113,6 +118,7 @@ test("a normal weekday closing question leads with the closing time instead of t
     planCommunitySearch: false,
     synthesizeCommunityAnswer: false,
     isTest: true,
+    now: SNAPSHOT_NOW,
     requestContractMode: "need-first-candidate",
     needRouterBackend: "current-local",
   });
@@ -147,4 +153,49 @@ test("unpaid water bills retain their collection-policy answer", async () => {
   const answer = await answerRulesQuestion("What happens if I do not pay my water bill?", { searchMode: "legacy", llmMode: "off" });
   assert.match(answer.answer, /past.due|unpaid|late.fee|disconnection/i);
   assert.doesNotMatch(answer.answer, /45.day establishment/i);
+});
+
+test("a final evidence downgrade removes an earlier wrong-topic boundary answer", async () => {
+  const question = "May residents host paying guests for just a few nights?";
+  const contract = {
+    version: "resident-needs-ai-v1",
+    originalQuestion: question,
+    resolvedQuestion: question,
+    usedPriorContext: false,
+    needCount: 1,
+    complete: true,
+    planning: { method: "ai-replay", model: "claude-haiku-4-5" },
+    needs: [{
+      id: "need-1",
+      text: question,
+      request: "Can residents host paying guests for short-term stays of a few nights?",
+      routeRequest: "rule: short-term guest hosting rules for residents; Short-term paying guest hosting policy",
+      evidenceFocus: question,
+      usedPriorContext: false,
+      task: "permission",
+      evidenceKind: "governing-rule",
+      goal: "permission",
+      requestedDetails: ["permission"],
+      subjectHint: "Short-term paying guest hosting policy",
+      dateRange: null,
+      filters: { audience: "", category: "", facility: "", location: "" },
+      capabilityId: "official-rules",
+    }],
+  };
+  const answer = await answerCommunityQuestion(question, {
+    index,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    isTest: true,
+    now: SNAPSHOT_NOW,
+    requestContractMode: "need-first-candidate",
+    needRouterBackend: "current-local",
+    planResidentNeeds: async () => contract,
+  });
+  assert.equal(answer.completion.outcome, "missing-evidence");
+  assert.match(answer.answer, /couldn.t (?:verify|confirm)/i);
+  assert.doesNotMatch(answer.answer, /Chase Drain|CAB inspection|temporary construction access/i);
+  assert.deepEqual(answer.sources, []);
 });

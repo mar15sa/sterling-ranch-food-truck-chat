@@ -2,6 +2,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const {
   capabilityCatalog,
+  canonicalRouteRequest,
   normalizePlannedContract,
   planResidentNeedContract,
   plannerRequestBody,
@@ -169,6 +170,37 @@ test("a governing specification uses the organization's declared rules capabilit
   assert.equal(contract.needs[0].capabilityId, "official-rules");
   assert.match(contract.needs[0].routeRequest, /^rule:/i);
   assert.match(contract.needs[0].routeRequest, /recycling cart storage/i);
+});
+
+test("official website routes remove unrelated catalog labels and preserve the resident's payment action", () => {
+  const route = canonicalRouteRequest(
+    "amenity: water payment online portal contact",
+    { id: "official-website", terms: ["amenity"] },
+    ["action"],
+    "account-access",
+    "water payment access"
+  );
+  assert.doesNotMatch(route, /amenity|contact/i);
+  assert.match(route, /^pay water bill online/i);
+});
+
+test("AI-added contact and methods facets are removed when the resident only asks for a payment link", () => {
+  const question = "I need to pay my monthly water charge online. What's the right place?";
+  const fallback = buildResidentRequestContract(question);
+  const parsed = { needs: [{
+    quotedText: question,
+    request: "Find the online payment method and location for monthly water charges",
+    routeRequest: "water charge payment online method contact",
+    goal: "payment",
+    requestedDetails: ["action", "contact", "methods"],
+    subject: "monthly water payment",
+    capabilityId: "static-information",
+    dateRange: null,
+    filters: { audience: "", category: "", facility: "", location: "" },
+  }] };
+  const contract = normalizePlannedContract(question, {}, parsed, fallback, "test-model");
+  assert.deepEqual(contract.needs[0].requestedDetails, ["action"]);
+  assert.match(contract.needs[0].routeRequest, /^pay water bill online/i);
 });
 
 test("an AI writer is accepted only when it preserves the evidence coverage", async () => {
