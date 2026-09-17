@@ -604,7 +604,7 @@ test("the resident candidate keeps a proven garbage date while delay status is u
     isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
     needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
     answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
-    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
     now: new Date(checkedAt),
     getWasteSchedule: async () => ({
       service: "garbage", date: "2026-09-17", timing: "starting tomorrow", anchorDate: "2026-09-17",
