@@ -68,6 +68,38 @@ test("need-first shadow routing answers and proves each part independently", asy
   assert.match(result.answer, /tacos and quesadillas/);
 });
 
+test("independent needs run together while the combined answer keeps request order", async () => {
+  const contract = buildResidentRequestContract("Which food truck is here today, and what is on its menu?", {
+    goals: ["schedule", "information"], subject: "food truck and menu",
+  });
+  const started = [];
+  const releases = new Map();
+  let releaseBoth;
+  const bothStarted = new Promise((resolve) => { releaseBoth = resolve; });
+  const run = runNeedFirstShadow(contract, async (need) => {
+    started.push(need.id);
+    const released = new Promise((resolve) => releases.set(need.id, resolve));
+    if (started.length === 2) releaseBoth();
+    await released;
+    return need.id === "need-1"
+      ? supportedAnswer({ id: "schedule", title: "Official calendar", claim: "On Monday, the food truck is Example Eats." })
+      : supportedAnswer({ id: "menu", title: "Official menu", claim: "The menu lists tacos." });
+  });
+
+  await Promise.race([
+    bothStarted,
+    new Promise((_, reject) => setTimeout(() => reject(new Error("Independent needs did not start together.")), 250)),
+  ]);
+  releases.get("need-2")();
+  releases.get("need-1")();
+  const result = await run;
+
+  assert.deepEqual(started, ["need-1", "need-2"]);
+  assert.deepEqual(result.sources.map((source) => source.id), ["schedule", "menu"]);
+  assert.ok(result.answer.indexOf("Example Eats") < result.answer.indexOf("tacos"));
+  assert.equal(result.completion.outcome, "complete");
+});
+
 test("the combined answer does not repeat a fact returned for two needs", async () => {
   const contract = buildResidentRequestContract("Which food truck is here today, and what is on its menu?", {
     goals: ["schedule", "information"], subject: "food truck and menu",

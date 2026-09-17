@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "name": "community-frozen-unseen-v1",
+  "frozenAt": "2026-09-16T00:00:00.000Z",
+  "casesSha256": "b1caa419ea1965f6152f2f5d56552ada9c112710cd935c634835880dc89b1891",
+  "scope": "Thirty new resident phrasings frozen before their first candidate run. They reuse deterministic source fixtures but were not used to tune the implementation.",
+  "cases": [
+    { "id": "food-01", "sourceCaseId": "food-truck-menu", "family": "food-trucks", "question": "Who is serving at the food truck stop today, and can you show me what they sell?", "expectedOutcome": "complete", "mustInclude": ["Example Eats", "Tacos", "$12"] },
+    { "id": "food-02", "sourceCaseId": "food-truck-menu", "family": "food-trucks", "question": "What's today's truck and what can I order from it?", "expectedOutcome": "complete", "mustInclude": ["Example Eats", "Tacos", "$12"] },
+    { "id": "food-03", "sourceCaseId": "food-truck-menu", "family": "food-trucks", "question": "I'm trying to plan dinner. Which truck is coming today and what's on the menu?", "expectedOutcome": "complete", "mustInclude": ["Example Eats", "Tacos", "$12"] },
+
+    { "id": "pool-01", "sourceCaseId": "pool-status-hours", "family": "pool", "question": "Can we swim right now, and when is the pool normally open?", "expectedOutcome": "complete", "mustInclude": ["currently open", "Monday-Friday", "Sunday"] },
+    { "id": "pool-02", "sourceCaseId": "pool-status-hours", "family": "pool", "question": "Is the pool open at the moment? Please include its regular weekly hours too.", "expectedOutcome": "complete", "mustInclude": ["currently open", "Monday-Friday", "Sunday"] },
+    { "id": "pool-03", "sourceCaseId": "pool-status-hours", "family": "pool", "question": "What's the live pool status and the usual schedule?", "expectedOutcome": "complete", "mustInclude": ["currently open", "Monday-Friday", "Sunday"] },
+
+    { "id": "pay-01", "sourceCaseId": "water-payment", "family": "utilities", "question": "Where do I go online to take care of my water payment?", "expectedOutcome": "complete", "mustIncludeAny": ["Pay Online", "Utility Hawk"] },
+    { "id": "pay-02", "sourceCaseId": "water-payment", "family": "utilities", "question": "Can you get me to the website for paying the water bill?", "expectedOutcome": "complete", "mustIncludeAny": ["Pay Online", "Utility Hawk"] },
+    { "id": "pay-03", "sourceCaseId": "water-payment", "family": "utilities", "question": "I need to pay my monthly water charge online. What's the right place?", "expectedOutcome": "complete", "mustIncludeAny": ["Pay Online", "Utility Hawk"] },
+
+    { "id": "shed-01", "sourceCaseId": "shed-height-form", "family": "design-process", "question": "How tall can a backyard storage shed be, and which paperwork do I need?", "expectedOutcome": "complete", "mustInclude": ["eight feet, six inches", "Backyard Utility Sheds One-Sheet"], "mustExclude": ["screened with landscape plantings"] },
+    { "id": "shed-02", "sourceCaseId": "shed-height-form", "family": "design-process", "question": "Before I buy a shed, what's the height limit and where is the correct application?", "expectedOutcome": "complete", "mustInclude": ["eight feet, six inches", "Backyard Utility Sheds One-Sheet"], "mustExclude": ["screened with landscape plantings"] },
+    { "id": "shed-03", "sourceCaseId": "shed-height-form", "family": "design-process", "question": "Need the max shed height plus the form to submit for approval.", "expectedOutcome": "complete", "mustInclude": ["eight feet, six inches", "Backyard Utility Sheds One-Sheet"], "mustExclude": ["screened with landscape plantings"] },
+
+    { "id": "recycle-01", "sourceCaseId": "recycling-storage", "family": "waste", "question": "For Ascent Village, when is recycling next collected and where should the carts be stored afterward?", "expectedOutcome": "complete", "mustInclude": ["Tuesday, September 15, 2026", "screened location"], "mustExclude": ["New Year's Day", "New Year’s Day"] },
+    { "id": "recycle-02", "sourceCaseId": "recycling-storage", "family": "waste", "question": "What's Ascent's next recycling day, and can the bins stay outside when pickup is over?", "expectedOutcome": "complete", "mustInclude": ["Tuesday, September 15, 2026", "screened location"], "mustExclude": ["New Year's Day", "New Year’s Day"] },
+    { "id": "recycle-03", "sourceCaseId": "recycling-storage", "family": "waste", "question": "Please tell me the upcoming Ascent Village recycling date and the rule for keeping the containers.", "expectedOutcome": "complete", "mustInclude": ["Tuesday, September 15, 2026", "screened location"], "mustExclude": ["New Year's Day", "New Year’s Day"] },
+
+    { "id": "rental-01", "sourceCaseId": "existing-holdout-short-term-home-rental", "family": "short-term-home-rental", "question": "Can I rent my home to vacationers for a long weekend?", "expectedOutcome": "complete", "mustInclude": ["No.", "short-term"], "mustExclude": ["facility rental", "security deposit"] },
+    { "id": "rental-02", "sourceCaseId": "existing-holdout-short-term-home-rental", "family": "short-term-home-rental", "question": "Are three-night VRBO bookings allowed at a house here?", "expectedOutcome": "complete", "mustInclude": ["No.", "short-term"], "mustExclude": ["facility rental", "security deposit"] },
+    { "id": "rental-03", "sourceCaseId": "existing-holdout-short-term-home-rental", "family": "short-term-home-rental", "question": "May residents host paying guests for just a few nights?", "expectedOutcome": "complete", "mustInclude": ["No.", "short-term"], "mustExclude": ["facility rental", "security deposit"] },
+
+    { "id": "rv-01", "sourceCaseId": "existing-holdout-rv-duration", "family": "rv-duration", "question": "Can my camper stay parked at my house for five straight days?", "expectedOutcome": "complete", "mustInclude": ["No.", "72 hours"] },
+    { "id": "rv-02", "sourceCaseId": "existing-holdout-rv-duration", "family": "rv-duration", "question": "Is it okay to leave an RV in the driveway from Monday until Friday?", "expectedOutcome": "complete", "mustInclude": ["No.", "72 hours"] },
+    { "id": "rv-03", "sourceCaseId": "existing-holdout-rv-duration", "family": "rv-duration", "question": "What's the limit if we keep our motorhome at home for several days?", "expectedOutcome": "complete", "mustInclude": ["72 hours"] },
+
+    { "id": "water-01", "sourceCaseId": "existing-holdout-watering-time", "family": "watering-time", "question": "Can the sprinklers run at two in the afternoon during June?", "expectedOutcome": "complete", "mustInclude": ["No.", "10:00 a.m.", "6:00 p.m."] },
+    { "id": "water-02", "sourceCaseId": "existing-holdout-watering-time", "family": "watering-time", "question": "Are we allowed to irrigate the lawn in the middle of a summer afternoon?", "expectedOutcome": "complete", "mustInclude": ["No.", "10:00 a.m.", "6:00 p.m."] },
+    { "id": "water-03", "sourceCaseId": "existing-holdout-watering-time", "family": "watering-time", "question": "I want to water at 2 p.m. in June. Does that fit the rules?", "expectedOutcome": "complete", "mustInclude": ["No.", "10:00 a.m.", "6:00 p.m."] },
+
+    { "id": "fence-01", "sourceCaseId": "existing-holdout-fence-height", "family": "fence-height", "question": "Do all fence styles have one standard height?", "expectedOutcome": "complete", "mustInclude": ["fence type", "54 inches", "DRC"] },
+    { "id": "fence-02", "sourceCaseId": "existing-holdout-fence-height", "family": "fence-height", "question": "Is there a single height limit for every backyard fence?", "expectedOutcome": "complete", "mustInclude": ["fence type", "54 inches", "DRC"] },
+    { "id": "fence-03", "sourceCaseId": "existing-holdout-fence-height", "family": "fence-height", "question": "How high may my fence be, or does that depend on which kind I install?", "expectedOutcome": "complete", "mustInclude": ["fence type", "54 inches", "DRC"] },
+
+    { "id": "trash-01", "sourceCaseId": "existing-holdout-trash-timing", "family": "trash-timing", "question": "What exact time do trash carts have to come back in after collection?", "expectedOutcome": "complete", "mustInclude": ["does not give a specific", "garage"], "mustExclude": ["4:00 a.m."] },
+    { "id": "trash-02", "sourceCaseId": "existing-holdout-trash-timing", "family": "trash-timing", "question": "Does the CAB require bins off the curb by a particular hour?", "expectedOutcome": "complete", "mustInclude": ["does not give a specific", "garage"], "mustExclude": ["4:00 a.m."] },
+    { "id": "trash-03", "sourceCaseId": "existing-holdout-trash-timing", "family": "trash-timing", "question": "After pickup, is there a stated deadline for putting the garbage containers away?", "expectedOutcome": "complete", "mustInclude": ["does not give a specific", "garage"], "mustExclude": ["4:00 a.m."] }
+  ]
+}
