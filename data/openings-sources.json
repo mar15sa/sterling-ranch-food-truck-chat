@@ -538,6 +538,15 @@
       "url": "https://gquebbq.com/locations/",
       "cadence": "daily",
       "notes": "The restaurant's official location directory will confirm when the announced Parker restaurant joins its operating locations."
+    },
+    {
+      "id": "spirit-halloween-aspen-grove",
+      "name": "Spirit Halloween Aspen Grove location",
+      "community": "Littleton",
+      "kind": "business",
+      "url": "https://stores.spirithalloween.com/co/littleton/animatronics-60984.html",
+      "cadence": "daily",
+      "notes": "The official seasonal-store page publishes the Aspen Grove address, current weekly hours, and eventual end-of-season status."
     }
   ]
 }
