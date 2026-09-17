@@ -381,6 +381,44 @@ test("the need-first candidate returns its answer directly without a baseline ru
   assert.ok(result._requestContract.candidate.elapsedMs >= 0);
 });
 
+test("the need-first candidate can use AI planning and writing without surrendering the evidence contract", async () => {
+  const question = "Is the splash pad still running, and when does it close each day?";
+  const fallback = buildResidentRequestContract(question);
+  const contract = {
+    ...fallback,
+    version: "resident-needs-ai-v1",
+    planning: { method: "ai", model: "planner-test" },
+    needCount: 2,
+    needs: [
+      { ...fallback.needs[0], id: "need-1", text: question, request: "Is the splash pad operating now?", routeRequest: "splash pad status", task: "status", goal: "status", requestedDetails: ["status"], subjectHint: "splash pad" },
+      { ...fallback.needs[0], id: "need-2", text: question, request: "What are the splash pad's daily closing hours?", routeRequest: "splash pad daily closing hours", task: "hours", goal: "information", requestedDetails: ["hours"], subjectHint: "splash pad" },
+    ],
+  };
+  let writerCalled = false;
+  const result = await answerCommunityQuestion(question, {
+    isTest: true,
+    requestContractMode: "need-first-candidate",
+    planResidentNeeds: async () => contract,
+    rewriteNeedFirstAnswer: async ({ candidate }) => {
+      writerCalled = true;
+      return { ...candidate, answerMode: "need-first-ai-candidate" };
+    },
+    answerResidentNeed: async (need) => need.task === "status"
+      ? supportedAnswer({ id: "status", title: "Splash pad status", claim: "The splash pad is open." })
+      : supportedAnswer({ id: "hours", title: "Splash pad hours", claim: "The splash pad closes at 8 p.m." }),
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+  });
+  assert.equal(writerCalled, true);
+  assert.equal(result.answerMode, "need-first-ai-candidate");
+  assert.equal(result.completion.outcome, "complete");
+  assert.equal(result._requestContract.candidate.planningMethod, "ai");
+  assert.equal(result._requestContract.candidate.planningModel, "planner-test");
+  assert.equal(result._requestContract.candidate.writerAccepted, true);
+  assert.match(result.answer, /splash pad is open/i);
+  assert.match(result.answer, /closes at 8 p\.m\./i);
+});
+
 test("the current-local need-first candidate removes the baseline food-truck connector pass", async () => {
   let connectorCalls = 0;
   const result = await answerCommunityQuestion("Which food truck is here today, and what is on its menu?", {
