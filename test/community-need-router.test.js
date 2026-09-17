@@ -619,6 +619,7 @@ test("the resident candidate keeps a proven garbage date and approved holiday gu
   });
   assert.equal(result.answerStatus, "verified-incomplete");
   assert.equal(result.completion.outcome, "verified-partial");
+  assert.match(result.answer, /^Holiday pickup changes apply only after/i);
   assert.match(result.answer, /Thursday, September 17, 2026/i);
   assert.match(result.answer, /live pickup calendar confirms the date, but it does not say whether the pickup was delayed/i);
   assert.match(result.answer, /New Year’s Day.*Memorial Day.*Labor Day.*Thanksgiving.*Christmas.*one day/i);
