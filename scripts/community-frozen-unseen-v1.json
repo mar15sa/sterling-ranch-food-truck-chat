@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "name": "community-frozen-unseen-v1",
   "frozenAt": "2026-09-16T00:00:00.000Z",
+  "candidateRevision": "8243a388c3f3971fb4b3becc92f38e61a880100e",
   "casesSha256": "b1caa419ea1965f6152f2f5d56552ada9c112710cd935c634835880dc89b1891",
   "scope": "Thirty new resident phrasings frozen before their first candidate run. They reuse deterministic source fixtures but were not used to tune the implementation.",
   "cases": [
