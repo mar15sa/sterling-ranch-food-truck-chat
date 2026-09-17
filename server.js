@@ -94,7 +94,7 @@ const CALENDAR_BASE = "https://sterlingranchcab.com/Calendar.aspx";
 const POOL_STATUS_URL = "https://sterlingranchcab.com/187/Pool";
 const USER_AGENT =
   "Mozilla/5.0 (compatible; SterlingRanchFoodTruckHelper/1.0; +local)";
-const MENU_CACHE_VERSION = "menus-v38";
+const MENU_CACHE_VERSION = "menus-v39";
 const FETCH_TIMEOUT_MS = 8000;
 const POOL_STATUS_CACHE_TTL_MS = 1000 * 60;
 const WARMUP_INTERVAL_MS = 1000 * 60 * 15;
@@ -1837,7 +1837,7 @@ const KNOWN_TRUCK_LINKS = {
   "lucky bird": {
     official: {
       title: "Lucky Bird",
-      url: "https://luckybirdco.com/food-truck",
+      url: "https://luckybirdco.com/",
     },
     menu: [
       {
