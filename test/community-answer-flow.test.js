@@ -2,8 +2,8 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { resolveCommunityAnswerFlow } = require("../lib/community-answer-flow");
 
-test("Railway staging defaults to the need-first candidate", () => {
-  assert.equal(resolveCommunityAnswerFlow({ RAILWAY_ENVIRONMENT_NAME: "staging" }), "need-first-candidate");
+test("Railway staging defaults to the proven resident flow", () => {
+  assert.equal(resolveCommunityAnswerFlow({ RAILWAY_ENVIRONMENT_NAME: "staging" }), "legacy");
 });
 
 test("production and local environments keep the legacy resident flow by default", () => {
