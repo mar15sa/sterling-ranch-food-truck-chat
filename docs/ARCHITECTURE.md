@@ -2,7 +2,7 @@
 
 This is a deliberately small, single-service application for the product’s current traffic. The same tested code runs in separate Railway staging and production environments.
 
-The diagram includes the September 18 need-first release candidate. That candidate is implemented and verified locally; it is not yet verified on staging or released to production.
+The diagram includes the September 18 need-first release candidate. Exact revision `ee4345c22953a453b6057fa33734a08835687900` is verified on staging; it is not released to production.
 
 ```mermaid
 flowchart LR
