@@ -216,6 +216,14 @@ test("a park-pass form and its receipt stay one need while an amount remains unr
   assert.deepEqual(amount.needs[0].requestedDetails, ["reimbursement", "price"]);
 });
 
+test("natural park-pass amount wording preserves the missing price facet beside the receipt", () => {
+  const contract = buildResidentRequestContract("I bought a park pass. What amount will CAB reimburse, and what receipt do I need?");
+  assert.equal(contract.needCount, 1);
+  assert.equal(contract.needs[0].task, "reimbursement");
+  assert.deepEqual(contract.needs[0].requestedDetails, ["reimbursement", "price"]);
+  assert.equal(contract.needs[0].routeRequest, "park pass reimbursement amount form vehicle registration receipt");
+});
+
 test("broad Halloween decorating keeps the unresolved decoration scope separate from the lighting date", () => {
   const broad = buildResidentRequestContract("When can I decorate for Halloween?");
   assert.deepEqual(broad.needs[0].requestedDetails, ["date", "specification"]);

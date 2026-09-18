@@ -110,6 +110,25 @@ test("an exact park-pass amount request leads with the missing amount and keeps 
   assert.doesNotMatch(answer.answer, /\$\s*\d|eligible|guarantee/i);
 });
 
+test("a natural park-pass amount and receipt question stays explicitly partial", async () => {
+  const answer = await answerCommunityQuestion("I bought a park pass. What amount will CAB reimburse, and what receipt do I need?", {
+    index,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    isTest: true,
+    now: SNAPSHOT_NOW,
+    requestContractMode: "need-first-candidate",
+    needRouterBackend: "current-local",
+  });
+  assert.equal(answer.completion.outcome, "verified-partial");
+  assert.match(answer.directAnswer, /^I couldn’t verify a reimbursement amount/i);
+  assert.match(answer.answer, /Park Pass Car Registration Reimbursement Form/i);
+  assert.match(answer.answer, /vehicle registration receipt/i);
+  assert.doesNotMatch(answer.answer, /\$\s*\d|eligible|guarantee/i);
+});
+
 test("a normal weekday closing question leads with the closing time instead of the whole schedule", async () => {
   const answer = await answerCommunityQuestion("What time does the pool normally close on Wednesday?", {
     index,
