@@ -78,6 +78,16 @@ test("keeps a one-part question as one need", () => {
   assert.equal(contract.needs[0].goal, "payment");
 });
 
+test("keeps a generic elaboration attached to its named topic", () => {
+  const question = "What days are trash and recycling picked up, and what else should I know?";
+  assert.deepEqual(splitResidentNeeds(question), [
+    "What days are trash and recycling picked up, and what else should I know",
+  ]);
+  const contract = buildResidentRequestContract(question);
+  assert.equal(contract.needCount, 1);
+  assert.match(contract.needs[0].routeRequest, /trash and recycling/i);
+});
+
 test("treats a clear imperative community request as complete", () => {
   const contract = buildResidentRequestContract("Open the design review application.");
   assert.equal(contract.complete, true);

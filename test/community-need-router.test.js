@@ -1039,6 +1039,33 @@ test("the current-local backend independently proves a live recycling date and t
   assert.doesNotMatch(result._requestContract.shadowRoute.answer, /New Year’s Day/i);
 });
 
+test("a generic elaboration stays on the named service topic", async () => {
+  const checkedAt = "2026-09-17T18:00:00.000Z";
+  const result = await answerCommunityQuestion("What days are trash and recycling picked up, and what else should I know?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+    getWasteSchedule: async () => ({
+      service: "recycling", date: "2026-09-28", timing: "the week of September 28, 2026",
+      anchorDate: "2026-09-28", checkedAt,
+      serviceAreas: [
+        { label: "Providence Village", date: "2026-09-28" },
+        { label: "Ascent Village", date: "2026-09-29" },
+        { label: "Prospect Village", date: "2026-10-01" },
+      ],
+      evidence: liveWasteEvidence(checkedAt),
+    }),
+  });
+  assert.equal(result._requestContract.needs.length, 1);
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /Providence|Ascent|Prospect|Parkvale/i);
+  assert.doesNotMatch(result.answer, /drinking water|coliform|water quality report/i);
+  assert.ok(result.sources.every((source) => !/water quality report/i.test(source.title || "")));
+});
+
 test("need-first routing requires a server release flag outside tests and refuses enabled model stages", async () => {
   for (const requestContractMode of ["shadow-route", "need-first-candidate"]) {
     await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {

@@ -341,13 +341,18 @@ test("trash-return questions retain the official storage limit when no removal t
 });
 
 test("generic DRC submission questions use only the approved submission route and directory", async () => {
-  const answer = await ask("I need to submit something to the DRC. How do I do that?");
-  assert.equal(answer.answerMode, "community-approved-operational-submission");
-  assert.match(answer.answer, /completed application by email/i);
-  assert.match(answer.answer, /emailed or dropped off during office hours/i);
-  assert.match(JSON.stringify(answer.actions), /201\/Design-Review-Documents/);
-  assert.ok(answer.sources.some((source) => /\/201\/Design-Review-Documents/.test(source.sourceUrl || "")));
-  assert.doesNotMatch(answer.answer, /site plan|dimensions|materials|colors|project-specific form|fee|review timeline|mailing address|written approval/i);
+  for (const question of [
+    "I need to submit something to the DRC. How do I do that?",
+    "What email should I use to submit a DRC application?",
+  ]) {
+    const answer = await ask(question);
+    assert.equal(answer.answerMode, "community-approved-operational-submission", question);
+    assert.match(answer.answer, /completed application by email/i, question);
+    assert.match(answer.answer, /emailed or dropped off during office hours/i, question);
+    assert.match(JSON.stringify(answer.actions), /201\/Design-Review-Documents/, question);
+    assert.ok(answer.sources.some((source) => /\/201\/Design-Review-Documents/.test(source.sourceUrl || "")), question);
+    assert.doesNotMatch(answer.answer, /site plan|dimensions|materials|colors|project-specific form|fee|review timeline|mailing address|written approval/i, question);
+  }
   assert.deepEqual(nextDrcReview(new Date("2026-08-31T18:00:00Z")), { meeting: "2026-09-17", deadline: "2026-09-11" });
 });
 
