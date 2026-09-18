@@ -88,6 +88,37 @@ test("keeps a generic elaboration attached to its named topic", () => {
   assert.match(contract.needs[0].routeRequest, /trash and recycling/i);
 });
 
+test("process durations and booking limits remain specifications", () => {
+  const caregiver = buildResidentRequestContract("Is there a caregiver pass, and how long should approval take?");
+  assert.deepEqual(caregiver.needs[1].requestedDetails, ["specification"]);
+  assert.match(caregiver.needs[1].routeRequest, /caregiver pass/i);
+
+  const pickleball = buildResidentRequestContract("Can a nonresident reserve a court, and how far ahead can they book?");
+  assert.equal(pickleball.needs[0].task, "eligibility");
+  assert.deepEqual(pickleball.needs[0].requestedDetails, ["eligibility"]);
+  assert.deepEqual(pickleball.needs[1].requestedDetails, ["specification"]);
+  assert.match(pickleball.needs[1].routeRequest, /nonresident reserve a court/i);
+
+  const response = buildResidentRequestContract("Is there a leak relief form, and when should I expect to hear back?");
+  assert.deepEqual(response.needs[1].requestedDetails, ["specification"]);
+  assert.match(response.needs[1].routeRequest, /leak relief form/i);
+});
+
+test("conditional closing time, utility setup, and first-contact wording keep their operational meaning", () => {
+  const pool = buildResidentRequestContract("Is the pool open right now, and if it is, how late can I stay?");
+  assert.deepEqual(pool.needs[0].requestedDetails.sort(), ["hours", "status"]);
+
+  const setup = buildResidentRequestContract("Do I need to separately set up water, sewer, trash, gas, electricity, and internet?");
+  assert.deepEqual(setup.needs[0].requestedDetails, ["information"]);
+
+  const setupComparison = buildResidentRequestContract("We close on our new home next week. Which services start automatically, and which ones do I need to set up myself?");
+  assert.equal(setupComparison.needCount, 1);
+  assert.deepEqual(setupComparison.needs[0].requestedDetails, ["information"]);
+
+  const mailbox = buildResidentRequestContract("We moved in without mailbox keys. Who should I try first?");
+  assert.deepEqual(mailbox.needs[0].requestedDetails, ["action"]);
+});
+
 test("treats a clear imperative community request as complete", () => {
   const contract = buildResidentRequestContract("Open the design review application.");
   assert.equal(contract.complete, true);

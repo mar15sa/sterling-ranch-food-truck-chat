@@ -1,0 +1,50 @@
+[
+  {
+    "id": "snow-private-walk-drive",
+    "question": "The storm is over. Am I expected to clear both my own driveway and the sidewalk in front of my home?",
+    "mustMatch": ["Homeowners? (?:are )?responsible", "sidewalks?", "driveways?"],
+    "mustNotMatch": ["couldn.t verify", "shared drives.*CAB"]
+  },
+  {
+    "id": "pickleball-gear-shoes",
+    "question": "What gear and shoes should I show up with for pickleball?",
+    "mustMatch": ["own paddles? and balls?", "tennis or court shoes"],
+    "mustNotMatch": ["couldn.t verify", "nonresident price"]
+  },
+  {
+    "id": "caregiver-same-visit",
+    "question": "We have two approved babysitters. Can they both use our caregiver pass on the same visit?",
+    "mustMatch": ["one caregiver can use the pass at (?:each|a) visit"],
+    "mustNotMatch": ["couldn.t verify", "guest passes"]
+  },
+  {
+    "id": "solar-ground-silver",
+    "question": "Could my solar array be ground-mounted and silver if it looks tidy?",
+    "mustMatch": ["roof mounted", "black"],
+    "mustNotMatch": ["couldn.t verify", "water"]
+  },
+  {
+    "id": "mailbox-after-builder",
+    "question": "The builder confirmed they don't have our mailbox keys. Who is the next stop?",
+    "mustMatch": ["Littleton Post Office"],
+    "mustNotMatch": ["couldn.t verify", "ask the builder.*first.*ask the builder"]
+  },
+  {
+    "id": "leak-relief-followup-contact",
+    "question": "I sent in the excessive-water-use relief form. When should CAB reach out, and which email handles questions?",
+    "mustMatch": ["two \\(2\\) business days|2 business days", "info@sterlingranchcab\\.com"],
+    "mustNotMatch": ["couldn.t verify", "ClientCare@AmCoBi"]
+  },
+  {
+    "id": "new-owner-water-start-arrears",
+    "question": "We just bought here. Does water and sewer turn on automatically, and are the monthly bills for prior usage?",
+    "mustMatch": ["automatically (?:set up|be set up)", "monthly", "in arrears"],
+    "mustNotMatch": ["couldn.t verify", "water quality"]
+  },
+  {
+    "id": "pickleball-location-parking",
+    "question": "What intersection are the pickleball courts at, and do I need to pay to park?",
+    "mustMatch": ["Sterling Ranch Avenue", "Middle Fork Street", "free street parking"],
+    "mustNotMatch": ["couldn.t verify", "\\$40"]
+  }
+]

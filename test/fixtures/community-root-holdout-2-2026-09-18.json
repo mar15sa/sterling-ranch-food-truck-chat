@@ -1,0 +1,51 @@
+[
+  {
+    "id": "pickleball-pets-parking",
+    "question": "Can I bring my dog to the pickleball courts, and is there anywhere nearby to park?",
+    "mustMatch": ["pets? (?:are )?not allowed inside the courts|no pets?", "free street parking"],
+    "mustNotMatch": ["couldn.t verify", "nonresident price"]
+  },
+  {
+    "id": "pickleball-full-court-rotation",
+    "question": "When every pickleball court is full, what score should games stop at and how do waiting players rotate in?",
+    "mustMatch": ["11 points", "paddle rack"],
+    "mustNotMatch": ["couldn.t verify", "seven days in advance"]
+  },
+  {
+    "id": "pickleball-equipment-restrictions",
+    "question": "Are a ball machine and glass water bottle allowed on the pickleball courts?",
+    "mustMatch": ["ball machines?", "glass (?:items?|water bottle)", "not allowed|prohibited"],
+    "mustNotMatch": ["couldn.t verify", "slippery"]
+  },
+  {
+    "id": "water-usage-alerts",
+    "question": "How can I watch my household water use and get warned before it gets too high?",
+    "mustMatch": ["UtilityHawk", "Daily/Weekly/Monthly|daily.*weekly.*monthly", "text.*e-?mail.*phone|text, e-?mail, or phone"],
+    "mustNotMatch": ["couldn.t verify", "water quality report"]
+  },
+  {
+    "id": "snow-shared-drive-townhome",
+    "question": "Who clears snow from shared drives, and who should a townhome resident contact about a snow service problem?",
+    "mustMatch": ["CAB.*(?:removes|clear).*snow.*shared drives|shared drives.*CAB", "HOA Management Company"],
+    "mustNotMatch": ["couldn.t verify", "water quality"]
+  },
+  {
+    "id": "water-bill-timing-admin",
+    "question": "After closing, how often will my water and sewer bill arrive, is it for past usage, and who manages it?",
+    "mustMatch": ["monthly", "in arrears", "AmCoBi|American Conservation and Billing Solutions"],
+    "mustNotMatch": ["couldn.t verify", "UtilityHawk.*alerts"]
+  },
+  {
+    "id": "trash-bin-curb-timing",
+    "question": "By what time should I put my trash bins out, and when do they need to be brought back in?",
+    "mustMatch": ["7\\s*a\\.?m\\.?", "end of pickup day"],
+    "mustNotMatch": ["couldn.t verify", "New Year"]
+  },
+  {
+    "id": "water-fixed-fee-purpose",
+    "question": "What does the fixed monthly water fee pay for, and is the usage charge fixed too?",
+    "expectedOutcome": "missing-evidence",
+    "mustMatch": ["couldn.t confirm the current fee or price from an approved CAB source"],
+    "mustNotMatch": ["fixed and operating costs", "usage charge.*(?:tiered|variable)|(?:tiered|variable).*usage charge", "45 days"]
+  }
+]

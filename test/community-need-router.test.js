@@ -1081,6 +1081,117 @@ test("the current-local coordinator preserves a requested DRC submission email",
   assert.deepEqual(result.completion.needs[0].supportedDetails.sort(), ["action", "contact"]);
 });
 
+test("fresh multi-part resident questions stay specific, complete, and human-first", async (t) => {
+  const options = {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-18T02:00:00Z"),
+  };
+  const cases = [
+    {
+      name: "solar appearance",
+      question: "I'm putting solar panels on my roof. Does Sterling Ranch care what color they are or how they're arranged?",
+      includes: [/roof mounted/i, /black/i, /uniform, gridded pattern/i],
+      excludes: [/couldn’t verify/i],
+    },
+    {
+      name: "caregiver pass",
+      question: "My mom watches my kids and wants to use the clubhouse with them. Is there a pass for her, what does it cost, and how long should approval take?",
+      includes: [/\$300 per calendar year/i, /48 hours/i],
+      excludes: [/general rental/i, /couldn’t verify/i],
+    },
+    {
+      name: "missed snowplow",
+      question: "The snowplow missed the road in front of my house. Is that the CAB's job, and where should I report it?",
+      includes: [/Douglas County handles the public roadways/i, /Report a county-road snow-removal issue/i],
+      excludes: [/water quality|coliform/i],
+    },
+    {
+      name: "missing mailbox keys",
+      question: "We just moved in. Who should I try first if the mailbox keys weren't handed over?",
+      includes: [/Ask the builder.*first/i, /Littleton Post Office/i],
+      excludes: [/couldn’t verify/i],
+    },
+    {
+      name: "nonresident pickleball booking",
+      question: "Can my friend who doesn't live here reserve a pickleball court, and how far ahead can they book?",
+      includes: [/^Yes\./i, /Nonresidents can reserve up to three days in advance/i],
+      excludes: [/Residents can reserve up to seven/i, /slippery/i, /couldn’t verify/i],
+    },
+    {
+      name: "pickleball location and parking cost",
+      question: "What intersection are the pickleball courts at, and do I need to pay to park?",
+      includes: [/Sterling Ranch Avenue/i, /Middle Fork Street/i, /free street parking/i],
+      excludes: [/\$40/i, /couldn’t verify/i],
+    },
+    {
+      name: "leak adjustment wait",
+      question: "I had a big leak and submitted the adjustment form. How long should I expect to wait?",
+      includes: [/within two \(2\) business days/i],
+      excludes: [/pool|water quality|coliform/i],
+    },
+    {
+      name: "new-home service setup",
+      question: "We close on our new home next week. Which services start automatically, and which ones do I need to set up myself?",
+      includes: [/automatically be set up for water, sewer, stormwater, and trash disposal/i, /personal accounts for gas, electricity, and internet/i],
+      excludes: [/water quality|coliform|couldn’t verify/i],
+    },
+  ];
+
+  for (const item of cases) {
+    await t.test(item.name, async () => {
+      const result = await answerCommunityQuestion(item.question, options);
+      assert.equal(result.completion.outcome, "complete");
+      for (const pattern of item.includes) assert.match(result.answer, pattern);
+      for (const pattern of item.excludes) assert.doesNotMatch(result.answer, pattern);
+    });
+  }
+});
+
+test("a live pool question answers both current status and how late the resident can stay", async () => {
+  const now = new Date("2026-09-18T18:00:00Z");
+  const evidenceId = "sterling-ranch:pool-status:current-status-and-hours";
+  const result = await answerCommunityQuestion("Is the pool open right now, and if it is, how late can I stay?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile, now,
+    getPoolStatus: async () => ({
+      state: "open", headline: "Open", summary: "The pool is currently open.",
+      residentAction: "Open the official pool status for more details.", sourceUrl: "https://sterlingranchcab.com/187/Pool",
+      actionUrl: "https://sterlingranchcab.com/187/Pool", date: "2026-09-18", checkedAt: now.toISOString(), stale: false,
+      evidenceEnvelope: {
+        communityId: "sterling-ranch", connectorFamily: "live-status", degradation: { state: "healthy" },
+        coverage: { covered: ["status"] },
+        evidence: [{ evidenceId, communityId: "sterling-ranch", sourceUrl: "https://sterlingranchcab.com/187/Pool", checkedAt: now.toISOString(), staleAfter: "2099-01-01T00:00:00.000Z", controllingSourceRole: "operational" }],
+        claims: [{ facet: "status", text: "Open", controllingEvidenceId: evidenceId, controllingSourceRole: "operational" }],
+      },
+    }),
+  });
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /currently open/i);
+  assert.match(result.answer, /8:45\s*p\.?m\.?/i);
+  assert.doesNotMatch(result.answer, /couldn’t verify/i);
+});
+
+test("an unapproved water-fee purpose cannot be replaced by nearby payment or billing facts", async () => {
+  const result = await answerCommunityQuestion("What does the fixed monthly water fee pay for, and is the usage charge fixed too?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-18T18:00:00Z"),
+  });
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.match(result.answer, /couldn.t confirm/i);
+  assert.doesNotMatch(result.answer, /2\.95%|Paymentus|billed in arrears|UtilityHawk/i);
+});
+
 test("need-first routing requires a server release flag outside tests and refuses enabled model stages", async () => {
   for (const requestContractMode of ["shadow-route", "need-first-candidate"]) {
     await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {

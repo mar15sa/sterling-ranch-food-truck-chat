@@ -1,0 +1,50 @@
+[
+  {
+    "id": "rv-long-weekend",
+    "question": "If relatives visit for a long weekend, can their camper stay in our driveway from Thursday night until Monday morning?",
+    "mustMatch": ["72\\s+consecutive\\s+hours|three\\s+consecutive\\s+days"],
+    "mustNotMatch": ["couldn.t verify", "pickleball", "water quality"]
+  },
+  {
+    "id": "new-sod-water-treatment",
+    "question": "We just laid sod. For how many days does the establishment water treatment last, and how is that water billed?",
+    "mustMatch": ["45\\s+days", "first\\s+tier", "not count against the water budget"],
+    "mustNotMatch": ["couldn.t verify", "coliform"]
+  },
+  {
+    "id": "drc-email-after-paperwork",
+    "question": "I finished my design review application. Which email address should I send it to?",
+    "mustMatch": ["ResidentSubmit@SterlingRanchCAB\\.com"],
+    "mustNotMatch": ["couldn.t verify", "info@sterlingranchcab"]
+  },
+  {
+    "id": "park-pass-receipt",
+    "question": "I paid for the Colorado state parks pass when registering my car. What should I upload to request reimbursement?",
+    "mustMatch": ["vehicle registration receipt", "reimbursement"],
+    "mustNotMatch": ["couldn.t verify", "annual pass eligibility"]
+  },
+  {
+    "id": "two-nonresident-open-play",
+    "question": "Two out-of-neighborhood friends want to join open pickleball. What would they pay, and what times are open play on Saturday?",
+    "mustMatch": ["\\$20", "8.{0,8}11\\s*a\\.?m\\.?", "5.{0,8}8\\s*p\\.?m\\.?"],
+    "mustNotMatch": ["couldn.t verify", "\\$40 per court for up to four"]
+  },
+  {
+    "id": "child-pickleball-supervision",
+    "question": "My 12-year-old wants to play pickleball without me. Is that okay?",
+    "mustMatch": ["under 13", "resident age 16 or older"],
+    "mustNotMatch": ["couldn.t verify", "slippery"]
+  },
+  {
+    "id": "resident-pickleball-price-limit",
+    "question": "Is there any charge for residents to play pickleball, and how long can one reservation be?",
+    "mustMatch": ["free for residents", "two hours per day"],
+    "mustNotMatch": ["couldn.t verify", "nonresident price"]
+  },
+  {
+    "id": "trash-holiday-shift",
+    "question": "Which holidays move trash pickup, and by how much?",
+    "mustMatch": ["New Year", "Memorial Day", "Labor Day", "Thanksgiving", "Christmas", "one day"],
+    "mustNotMatch": ["couldn.t verify", "water quality"]
+  }
+]
