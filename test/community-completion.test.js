@@ -448,8 +448,7 @@ test("conflicted official contact versions do not expose the prior internet numb
 test("the approved recurring schedule stays useful when the live calendar is temporarily unavailable", async () => {
   let liveCalls = 0;
   const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
-    // This positive fixture predates the stored approval's expiry.
-    now: new Date("2026-09-13T18:00:00Z"),
+    now: new Date("2026-09-18T02:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     answerRulesQuestion,
@@ -473,12 +472,12 @@ test("the approved recurring schedule stays useful when the live calendar is tem
   assert.equal(liveCalls, 0);
   assert.equal(answer.answerMode, "community-approved-operational");
   assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.answer, /Monday in Providence Village/i);
-  assert.match(answer.answer, /Tuesday in Ascent Village/i);
-  assert.match(answer.answer, /Thursday in Prospect Village/i);
+  assert.match(answer.answer, /Monday in Providence/i);
+  assert.match(answer.answer, /Tuesday in Ascent/i);
+  assert.match(answer.answer, /Thursday in Prospect and Parkvale/i);
   assert.match(answer.answer, /Recycling is picked up every other week/i);
   assert.match(answer.answer, /7 a\.m\./i);
-  assert.match(answer.answer, /New Year’s Day[\s\S]*Christmas move pickup back by one day/i);
+  assert.match(answer.answer, /New Year's Day[\s\S]*Christmas move pickup back by one day/i);
   assert.deepEqual(answer.sources.map((source) => source.id), ["approved-trash-recurring-service"]);
   assert.equal(answer.actions[0].label, "Open WasteConnect");
   assert.doesNotMatch(answer.answer, /303-288-2100|bulk item|missed pickup/i);
@@ -487,23 +486,23 @@ test("the approved recurring schedule stays useful when the live calendar is tem
 test("the homepage pickup answer adds the next recycling date for every village", async () => {
   const checkedAt = new Date().toISOString();
   const answer = await answerCommunityQuestion("When are trash and recycling picked up?", {
-    now: new Date("2026-09-13T18:00:00Z"),
+    now: new Date("2026-09-18T02:00:00Z"),
     index: communityIndex,
     communityId: "sterling-ranch",
     communityProfile,
     answerRulesQuestion,
     getWasteSchedule: async () => ({
       service: "recycling",
-      date: "2026-09-14",
+      date: "2026-09-21",
       timing: "next week",
-      anchorDate: "2026-09-14",
+      anchorDate: "2026-09-21",
       serviceAreas: [
-        { label: "Providence Village", date: "2026-09-14" },
-        { label: "Ascent Village", date: "2026-09-15" },
-        { label: "Prospect Village", date: "2026-09-17" },
+        { label: "Providence", date: "2026-09-21" },
+        { label: "Ascent", date: "2026-09-22" },
+        { label: "Prospect and Parkvale", date: "2026-09-24" },
       ],
       checkedAt,
-      evidence: liveWasteEvidence("2026-09-14", checkedAt, ["2026-09-14", "2026-09-15", "2026-09-17"]),
+      evidence: liveWasteEvidence("2026-09-21", checkedAt, ["2026-09-21", "2026-09-22", "2026-09-24"]),
     }),
     rulesOptions: { searchMode: "legacy", llmMode: "off" },
     planCommunitySearch: false,
@@ -514,9 +513,9 @@ test("the homepage pickup answer adds the next recycling date for every village"
     kind: "waste-schedule",
     nextPickupLabel: "Next recycling pickup",
     nextPickups: [
-      "Providence Village: Monday, September 14, 2026",
-      "Ascent Village: Tuesday, September 15, 2026",
-      "Prospect Village: Thursday, September 17, 2026",
+      "Providence: Monday, September 21, 2026",
+      "Ascent: Tuesday, September 22, 2026",
+      "Prospect and Parkvale: Thursday, September 24, 2026",
     ],
   });
   assert.doesNotMatch(answer.answer, /Open WasteConnect/i);
@@ -540,7 +539,7 @@ test("alternating recycling questions disclose the missing date anchor and link 
   const pageOnlyResult = unanchoredRecurringScheduleAnswer("When is recycling week?", {
     index: communityIndex,
     requestedDetails: ["date"],
-    sources: communityIndex.sources.filter((source) => /^sterling-ranch-trash-recycling-/.test(source.id)),
+    sources: communityIndex.sources.filter((source) => source.sourceUrl === "https://sterlingranchcab.com/247/Trash-Recycling"),
   });
   assert.deepEqual(pageOnlyResult.actions.slice(0, 2).map((action) => action.label), [
     "Open WasteConnect for Android",
@@ -689,6 +688,7 @@ test("waste storage rules are not replaced by pickup schedules or contacts", asy
   for (const question of [
     "When does trash need to be stored?",
     "Does CAB set an exact hour for taking bins back from the curb?",
+    "Where can I keep my bins?",
   ]) {
     const result = await answerCommunityQuestion(question, {
       index: communityIndex,

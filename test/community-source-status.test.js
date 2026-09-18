@@ -48,6 +48,7 @@ test("inventory backlog and expired approved evidence are separate release signa
   const status = communitySourceStatus(index, now);
   assert.equal(status.inventoryBacklog, 875);
   assert.equal(status.expiredApprovedSourceCount, 1);
+  assert.equal(status.staleOfficialPageCount, 1);
   assert.equal(status.expiredApprovedFactCount, 1);
   assert.equal(status.approvedEvidenceCurrent, false);
   assert.deepEqual(freshnessSummary(index, now), {
@@ -55,6 +56,23 @@ test("inventory backlog and expired approved evidence are separate release signa
     expiredApprovedSourceCount: 1,
     expiredApprovedFactCount: 1,
   });
+});
+
+test("stale diagnostics count official pages separately from approved records", () => {
+  const staleAfter = "2026-09-01T00:00:00.000Z";
+  const status = communitySourceStatus({
+    communityId: "alpha", failureCount: 0,
+    sources: [
+      { id: "page-chunk", sourceUrl: "https://alpha.gov/trash", staleAfter },
+      { id: "approved-schedule", sourceUrl: "https://alpha.gov/trash", staleAfter },
+      { id: "approved-link", sourceUrl: "https://alpha.gov/trash", staleAfter },
+    ],
+    factLedger: [],
+  }, Date.parse("2026-09-02T00:00:00.000Z"), { includeStaleSources: true });
+  assert.equal(status.staleSourceCount, 3);
+  assert.equal(status.staleOfficialPageCount, 1);
+  assert.equal(status.staleSourceGroups[0].recordCount, 3);
+  assert.deepEqual(status.staleSourceGroups[0].records.map((record) => record.id), ["page-chunk", "approved-schedule", "approved-link"]);
 });
 
 test("approved evidence is current only when evidence exists without crawl failures or expiry", () => {

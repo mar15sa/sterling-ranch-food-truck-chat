@@ -6310,6 +6310,165 @@
       "packetRefs": [
         "community-source-approvals-v9"
       ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+      "canonicalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "contentHash": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+      "hashScheme": "page-text-actions-v1",
+      "title": "Trash & Recycling",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-17T20:00:00.000Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v10",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "trash-recurring-service",
+          "scope": "Waste Connections as the listed provider; recurring collection days for Providence, Ascent, Prospect, and Parkvale; 7 a.m. bin placement; same-day screened storage; named-holiday one-day delay; CAB concern form; and WasteConnect app route only. A particular pickup date or delay still requires live schedule evidence.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "trash-recurring-service-guidance",
+            "trash-cab-concern-route",
+            "trash-wasteconnect-app-route"
+          ],
+          "withheldClaims": [
+            "date-specific-pickup",
+            "outages",
+            "missed-pickups",
+            "charges",
+            "contacts",
+            "bulk-item-terms",
+            "provider-promises"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Please submit this form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
+              },
+              "display": {
+                "label": "Open the CAB trash and recycling concern form",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Apple Store",
+                "url": "https://apps.apple.com/app/id1442351850",
+                "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+              },
+              "display": {
+                "label": "Open WasteConnect",
+                "actionType": "information"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-17T20:00:00.000Z"
+        },
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "recycling-tips-visual-link",
+          "scope": "Current official recycling-tips PDF destination only. The handout does not establish current accepted materials, service terms, schedules, contacts, or provider promises.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "recycling-tips-visual-route"
+          ],
+          "withheldClaims": [
+            "accepted-materials",
+            "service-terms",
+            "schedule",
+            "contacts",
+            "provider-promises"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Waste Connection Recycling Tips (PDF)",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+                "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+              },
+              "display": {
+                "label": "Open the recycling tips visual",
+                "actionType": "information"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-17T20:00:00.000Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v10"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/198/Architectural-Community-Standards#sha256:438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa",
+      "canonicalUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+      "contentHash": "438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa",
+      "hashScheme": "page-text-v1",
+      "title": "Architectural & Community Standards",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-17T20:00:00.000Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v10",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "complete-cab-review-20260914-dc4ed3f4a876",
+          "scope": "Current official Architectural & Community Standards page supports the team's role in helping residents navigate requirements. Requirements remain governed by the adopted Code, and design-review submissions use the separately approved Design Review source.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "complete-cab-review-20260914-dc4ed3f4a876-team-help"
+          ],
+          "withheldClaims": [
+            "The former generic info@sterlingranchcab.com contact is no longer present on this page and is not approved for design-review submissions.",
+            "The broad obligation to follow all governing documents is not an independent page-level binding-rule approval.",
+            "Physical address pending cross-page reconciliation."
+          ],
+          "controllingSources": [],
+          "approvedActions": [],
+          "decidedAt": "2026-09-17T20:00:00.000Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v10"
+      ]
     }
   ],
   "decisionApplications": [
@@ -6797,6 +6956,21 @@
       "decisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62#sha256:e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824"
+    },
+    {
+      "decisionId": "trash-recurring-service",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501"
+    },
+    {
+      "decisionId": "recycling-tips-visual-link",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501"
+    },
+    {
+      "decisionId": "complete-cab-review-20260914-dc4ed3f4a876",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/198/Architectural-Community-Standards#sha256:438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa"
     }
   ],
   "deferred": [
@@ -6824,17 +6998,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 98,
+    "uniqueVersions": 100,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 93,
+      "pending-review": 95,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 102,
-    "pendingReview": 93
+    "scopedApprovals": 105,
+    "pendingReview": 95
   }
 }

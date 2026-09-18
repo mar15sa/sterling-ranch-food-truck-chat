@@ -133,6 +133,39 @@ test("source comparisons include changed clauses beyond the short excerpt", () =
   assert.match(item.supportingText, /modification fee is \$150/);
 });
 
+test("a reviewed link projection is not reported missing when the live page still contains its exact link", () => {
+  const url = "https://alpha.gov/recycling";
+  const destination = "https://alpha.gov/recycling-tips.pdf";
+  const reviewed = {
+    ...source("reviewed"), id: "approved-recycling-link", sourceUrl: url, facts: [],
+    actions: [{
+      id: "open-recycling-tips", label: "Open recycling tips", url: destination,
+      reviewStatus: "approved", evidence: { label: "Recycling Tips (PDF)", url: destination },
+    }],
+  };
+  const crawled = {
+    ...source("current"), id: "alpha-recycling-1", sourceUrl: url,
+    actions: [{ label: "Recycling Tips (PDF)", url: destination }],
+  };
+  const items = buildReviewItems({ sources: [reviewed] }, { sources: [crawled] }, profile);
+  assert.equal(items.some((item) => item.kind === "source-removal" && item.sourceId === reviewed.id), false);
+  assert.ok(items.some((item) => item.kind === "source-addition" && item.sourceId === crawled.id));
+});
+
+test("a reviewed link projection still requires review when its label or destination disappears", () => {
+  const url = "https://alpha.gov/recycling";
+  const reviewed = {
+    ...source("reviewed"), id: "approved-recycling-link", sourceUrl: url, facts: [],
+    actions: [{
+      id: "open-recycling-tips", label: "Open recycling tips", url: "https://alpha.gov/recycling-tips.pdf",
+      reviewStatus: "approved", evidence: { label: "Recycling Tips (PDF)", url: "https://alpha.gov/recycling-tips.pdf" },
+    }],
+  };
+  const crawled = { ...source("current"), id: "alpha-recycling-1", sourceUrl: url, actions: [] };
+  const items = buildReviewItems({ sources: [reviewed] }, { sources: [crawled] }, profile);
+  assert.ok(items.some((item) => item.kind === "source-removal" && item.sourceId === reviewed.id));
+});
+
 test("every material source change requires a hash-bound decision", () => {
   const trusted = { communityId: "alpha", sources: [source("old")], factLedger: [] };
   const candidate = { communityId: "alpha", generatedAt: "2026-09-01T00:00:00Z", sources: [source("new", "$12")] };

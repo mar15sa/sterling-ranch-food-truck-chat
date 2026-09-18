@@ -1,75 +1,202 @@
 {
-  "checkedAt": "2026-09-16T22:05:15.775Z",
+  "checkedAt": "2026-09-18T01:32:55.536Z",
   "mode": "exact-url-and-content-hash-only",
   "checks": [
     {
-      "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+      "sourceUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
       "sources": [
         {
-          "id": "approved-owner-source-approval-20260916-fb12d4cd6a4c",
-          "contentHash": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
-          "actionCount": 1,
-          "actionIdentity": "[[\"Open the Park Pass Car Registration Reimbursement Form\",\"https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62\",\"form\",[]]]"
+          "id": "approved-complete-cab-review-20260914-dc4ed3f4a876",
+          "contentHash": "438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa",
+          "actionCount": 0,
+          "actionIdentity": ""
         }
       ],
       "outcome": "renewed",
       "observedHashes": [
-        "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824"
+        "438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa"
+      ],
+      "actionProof": {
+        "expected": [],
+        "observed": [],
+        "matches": true
+      },
+      "documentProof": null,
+      "checkedAt": "2026-09-18T01:32:54.743Z",
+      "staleAfter": "2026-09-19T01:32:54.743Z",
+      "renewedSourceCount": 1,
+      "renewedFactCount": 1
+    },
+    {
+      "sourceUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+      "sources": [
+        {
+          "id": "approved-trash-recurring-service",
+          "contentHash": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+          "actionCount": 2,
+          "actionIdentity": "[[\"Open the CAB trash and recycling concern form\",\"https://www.sterlingranchcab.com/298/Submit-Your-Feedback\",\"information\",[]],[\"Open WasteConnect\",\"https://apps.apple.com/app/id1442351850\",\"information\",[]]]"
+        },
+        {
+          "id": "approved-recycling-tips-visual-link",
+          "contentHash": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+          "actionCount": 1,
+          "actionIdentity": "[[\"Open the recycling tips visual\",\"https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF\",\"information\",[]]]"
+        }
+      ],
+      "outcome": "renewed",
+      "observedHashes": [
+        "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501"
       ],
       "actionProof": {
         "expected": [
           {
-            "sourceId": "approved-owner-source-approval-20260916-fb12d4cd6a4c",
+            "sourceId": "approved-trash-recurring-service",
             "action": {
-              "id": "owner-source-approval-20260916-fb12d4cd6a4c-action-1",
-              "label": "Open the Park Pass Car Registration Reimbursement Form",
-              "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-              "actionType": "form",
+              "id": "open-trash-concern-form",
+              "approvalClaim": "trash-cab-concern-route",
+              "label": "Open the CAB trash and recycling concern form",
+              "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+              "actionType": "information",
               "evidence": {
-                "label": "Park Pass Car Registration Reimbursement Form",
-                "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-                "context": "Park Pass Car Registration Reimbursement Form. Please upload a copy of your vehicle registration receipt to verify purchase of the park pass.",
-                "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-                "kind": "reviewed-official-page"
+                "label": "Please submit this form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
               },
-              "reviewDecisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
+              "reviewDecisionId": "trash-recurring-service",
               "reviewedBy": "owner-authorized-source-review",
-              "reviewedAt": "2026-09-16T21:38:45.496Z",
+              "reviewedAt": "2026-09-17T20:00:00.000Z",
               "reviewStatus": "approved",
-              "sourceVersion": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
-              "approvalClaim": "owner-source-approval-20260916-fb12d4cd6a4c-action-1",
-              "context": "Open the Park Pass Car Registration Reimbursement Form"
+              "sourceVersion": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+              "context": "Open the CAB trash and recycling concern form"
+            }
+          },
+          {
+            "sourceId": "approved-trash-recurring-service",
+            "action": {
+              "id": "open-wasteconnect-app",
+              "approvalClaim": "trash-wasteconnect-app-route",
+              "label": "Open WasteConnect",
+              "url": "https://apps.apple.com/app/id1442351850",
+              "actionType": "information",
+              "evidence": {
+                "label": "Apple Store",
+                "url": "https://apps.apple.com/app/id1442351850",
+                "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+              },
+              "reviewDecisionId": "trash-recurring-service",
+              "reviewedBy": "owner-authorized-source-review",
+              "reviewedAt": "2026-09-17T20:00:00.000Z",
+              "reviewStatus": "approved",
+              "sourceVersion": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+              "context": "Open WasteConnect"
+            }
+          },
+          {
+            "sourceId": "approved-recycling-tips-visual-link",
+            "action": {
+              "id": "open-recycling-tips-visual",
+              "approvalClaim": "recycling-tips-visual-route",
+              "label": "Open the recycling tips visual",
+              "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+              "actionType": "information",
+              "evidence": {
+                "label": "Waste Connection Recycling Tips (PDF)",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+                "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+              },
+              "reviewDecisionId": "recycling-tips-visual-link",
+              "reviewedBy": "owner-authorized-source-review",
+              "reviewedAt": "2026-09-17T20:00:00.000Z",
+              "reviewStatus": "approved",
+              "sourceVersion": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+              "context": "Open the recycling tips visual"
             }
           }
         ],
         "observed": [
           {
-            "sourceId": "approved-owner-source-approval-20260916-fb12d4cd6a4c",
+            "sourceId": "approved-trash-recurring-service",
             "action": {
-              "id": "owner-source-approval-20260916-fb12d4cd6a4c-action-1",
-              "label": "Open the Park Pass Car Registration Reimbursement Form",
-              "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-              "actionType": "form",
+              "id": "open-trash-concern-form",
+              "approvalClaim": "trash-cab-concern-route",
+              "label": "Open the CAB trash and recycling concern form",
+              "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+              "actionType": "information",
               "evidence": {
-                "label": "Park Pass Car Registration Reimbursement Form",
-                "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-                "context": "Park Pass Car Registration Reimbursement Form. Please upload a copy of your vehicle registration receipt to verify purchase of the park pass.",
-                "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-                "kind": "reviewed-official-page"
+                "label": "Please submit this form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
               },
-              "reviewDecisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
+              "reviewDecisionId": "trash-recurring-service",
               "reviewedBy": "owner-authorized-source-review",
-              "reviewedAt": "2026-09-16T21:38:45.496Z",
+              "reviewedAt": "2026-09-17T20:00:00.000Z",
               "reviewStatus": "approved",
-              "sourceVersion": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
-              "approvalClaim": "owner-source-approval-20260916-fb12d4cd6a4c-action-1",
-              "context": "Open the Park Pass Car Registration Reimbursement Form"
+              "sourceVersion": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+              "context": "Open the CAB trash and recycling concern form"
             },
             "matches": [
               {
-                "label": "Park Pass Car Registration Reimbursement Form",
-                "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-                "actionType": "form"
+                "label": "Please submit this form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "-family: Verdana,Geneva,sans-serif;\"> Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup. Topics include, but are not limited to, trash/recycling cart delivery after closing, missed trash and recycling pickup, etc. Contact Waste Connections: 303-288-2100</sp"
+              }
+            ],
+            "contextMatches": true
+          },
+          {
+            "sourceId": "approved-trash-recurring-service",
+            "action": {
+              "id": "open-wasteconnect-app",
+              "approvalClaim": "trash-wasteconnect-app-route",
+              "label": "Open WasteConnect",
+              "url": "https://apps.apple.com/app/id1442351850",
+              "actionType": "information",
+              "evidence": {
+                "label": "Apple Store",
+                "url": "https://apps.apple.com/app/id1442351850",
+                "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+              },
+              "reviewDecisionId": "trash-recurring-service",
+              "reviewedBy": "owner-authorized-source-review",
+              "reviewedAt": "2026-09-17T20:00:00.000Z",
+              "reviewStatus": "approved",
+              "sourceVersion": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+              "context": "Open WasteConnect"
+            },
+            "matches": [
+              {
+                "label": "Apple Store",
+                "url": "https://apps.apple.com/app/id1442351850",
+                "context": "app to view your pickup schedule, set up reminders, contact customer service, and more! Google Play | Apple Store Report a Concern <span style=\"font-family:"
+              }
+            ],
+            "contextMatches": true
+          },
+          {
+            "sourceId": "approved-recycling-tips-visual-link",
+            "action": {
+              "id": "open-recycling-tips-visual",
+              "approvalClaim": "recycling-tips-visual-route",
+              "label": "Open the recycling tips visual",
+              "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+              "actionType": "information",
+              "evidence": {
+                "label": "Waste Connection Recycling Tips (PDF)",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+                "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+              },
+              "reviewDecisionId": "recycling-tips-visual-link",
+              "reviewedBy": "owner-authorized-source-review",
+              "reviewedAt": "2026-09-17T20:00:00.000Z",
+              "reviewStatus": "approved",
+              "sourceVersion": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+              "context": "Open the recycling tips visual"
+            },
+            "matches": [
+              {
+                "label": "Waste Connection Recycling Tips (PDF)",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+                "context": "sSection selfClear\" data-documentids=\"168,520,\" data-folderids=\",\" data-sorteddocumentids=\"\"> Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
               }
             ],
             "contextMatches": true
@@ -78,86 +205,9 @@
         "matches": true
       },
       "documentProof": null,
-      "checkedAt": "2026-09-16T22:05:15.145Z",
-      "staleAfter": "2026-09-17T22:05:15.145Z",
-      "renewedSourceCount": 1,
-      "renewedFactCount": 2
-    },
-    {
-      "sourceUrl": "https://sterlingranchcab.com/m/faq?cat=16",
-      "sources": [
-        {
-          "id": "sterling-ranch-faqs-civicplus-cms-faq-1-979bf37fb8",
-          "contentHash": "28dae75d37e0b00752049057a9baad7cf97ffbd36822768cb98e285db8db9430",
-          "actionCount": 0,
-          "actionIdentity": ""
-        },
-        {
-          "id": "sterling-ranch-faqs-civicplus-cms-faq-2-979bf37fb8",
-          "contentHash": "c87a1ed9d5b99f80ec1cacd005b411c01b0664149665a46b078db58dae7d490d",
-          "actionCount": 0,
-          "actionIdentity": ""
-        },
-        {
-          "id": "sterling-ranch-faqs-civicplus-cms-faq-3-979bf37fb8",
-          "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514",
-          "actionCount": 0,
-          "actionIdentity": ""
-        },
-        {
-          "id": "approved-utilityhawk-water-monitoring-2026",
-          "contentHash": "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514",
-          "actionCount": 0,
-          "actionIdentity": ""
-        },
-        {
-          "id": "approved-owner-source-approval-20260916-979bf37fb8d2",
-          "contentHash": "9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49",
-          "actionCount": 0,
-          "actionIdentity": ""
-        }
-      ],
-      "outcome": "renewed",
-      "observedHashes": [
-        "28dae75d37e0b00752049057a9baad7cf97ffbd36822768cb98e285db8db9430",
-        "c87a1ed9d5b99f80ec1cacd005b411c01b0664149665a46b078db58dae7d490d",
-        "5778ae7799053e4aaf8bb7fa0935e6636149d7abe1230ad20681c7c99b3dd514",
-        "9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49"
-      ],
-      "actionProof": {
-        "ordinary": {
-          "expected": [
-            {
-              "id": "sterling-ranch-faqs-civicplus-cms-faq-1-979bf37fb8",
-              "digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-              "actions": []
-            },
-            {
-              "id": "sterling-ranch-faqs-civicplus-cms-faq-2-979bf37fb8",
-              "digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-              "actions": []
-            },
-            {
-              "id": "sterling-ranch-faqs-civicplus-cms-faq-3-979bf37fb8",
-              "digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-              "actions": []
-            }
-          ],
-          "observed": {
-            "digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-            "actions": []
-          }
-        },
-        "projections": {
-          "expected": [],
-          "observed": [],
-          "matches": true
-        }
-      },
-      "documentProof": null,
-      "checkedAt": "2026-09-16T22:05:15.145Z",
-      "staleAfter": "2026-09-17T22:05:15.145Z",
-      "renewedSourceCount": 5,
+      "checkedAt": "2026-09-18T01:32:54.743Z",
+      "staleAfter": "2026-09-19T01:32:54.743Z",
+      "renewedSourceCount": 2,
       "renewedFactCount": 3
     }
   ]

@@ -103,7 +103,7 @@ function formatDateTime(value) {
   }).format(date);
 }
 
-function renderStaleSources(sources) {
+function renderStaleSources(sources, groups) {
   staleSourceList.replaceChildren();
   if (!Array.isArray(sources) || !sources.length) {
     const message = document.createElement("p");
@@ -111,7 +111,16 @@ function renderStaleSources(sources) {
     staleSourceList.append(message);
     return;
   }
-  for (const source of sources) {
+  const display = Array.isArray(groups) && groups.length
+    ? groups.map((group) => ({
+      id: `${group.recordCount} approved record${group.recordCount === 1 ? "" : "s"}`,
+      sourceUrl: group.sourceUrl,
+      contentHash: group.records?.map((record) => record.contentHash).join(", ") || "",
+      checkedAt: group.records?.map((record) => record.checkedAt).filter(Boolean).sort().at(-1) || "",
+      staleAfter: group.records?.map((record) => record.staleAfter).filter(Boolean).sort().at(0) || "",
+    }))
+    : sources;
+  for (const source of display) {
     const record = document.createElement("dl");
     for (const [label, key] of [["Record ID", "id"], ["Official source URL", "sourceUrl"], ["Stored content hash", "contentHash"], ["Last checked (UTC)", "checkedAt"], ["Freshness deadline (UTC)", "staleAfter"]]) {
       const row = document.createElement("div");
@@ -178,7 +187,7 @@ function renderSourceHealth(sourceHealth = {}) {
   const rules = sourceHealth.rules || {};
   const community = sourceHealth.community || {};
   renderSourceReadiness(sourceHealth.readiness);
-  renderStaleSources(community.staleSources);
+  renderStaleSources(community.staleSources, community.staleSourceGroups);
   const pendingReview = community.pendingReview || null;
   const hasError = !rules.exists || Boolean(community.lastRefreshError) || Number(community.failureCount || 0) > 0;
   const isWorking = Boolean(rules.refreshing || community.refreshing);
@@ -216,7 +225,7 @@ function renderSourceHealth(sourceHealth = {}) {
   communityFreshness.textContent = community.refreshing
     ? "Refreshing now"
     : community.stale
-      ? `${community.staleSourceCount || 0} approved sources due for a freshness check`
+      ? `${community.staleOfficialPageCount ?? community.staleSourceCount ?? 0} official pages due for a freshness check (${community.staleSourceCount || 0} approved records)`
       : "Current";
   communityFailures.textContent = `${community.failureCount || 0} crawl failures · ${community.liveConnectorCount || 0} live connectors`;
   communityReview.textContent = pendingReview

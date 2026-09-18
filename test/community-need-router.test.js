@@ -719,7 +719,11 @@ test("the current-local backend preserves live pool status when current regular 
     isTest: true, requestContractMode: "shadow-route", needRouterBackend: "current-local",
     planCommunitySearch: false, synthesizeCommunityAnswer: false, interpretationMode: "structured",
     answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
-    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile, now,
+    index: {
+      ...communityIndex,
+      sources: communityIndex.sources.filter((source) => source.id !== "approved-pool-hours-current-page"),
+    },
+    communityId: "sterling-ranch", communityProfile: sterlingRanchProfile, now,
     getPoolStatus: async () => {
       statusCalls += 1;
       return {
@@ -1030,7 +1034,7 @@ test("the current-local backend independently proves a live recycling date and t
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
   assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "supported"]);
   assert.match(result._requestContract.shadowRoute.answer, /Tuesday, September 15, 2026/i);
-  assert.match(result._requestContract.shadowRoute.answer, /return them to a screened location/i);
+  assert.match(result._requestContract.shadowRoute.answer, /(?:garage|screened from view)/i);
   assert.doesNotMatch(result._requestContract.shadowRoute.answer, /\n\s*and return/i);
   assert.doesNotMatch(result._requestContract.shadowRoute.answer, /New Year’s Day/i);
 });

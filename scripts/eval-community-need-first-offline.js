@@ -212,7 +212,7 @@ const developmentCases = [
     family: "waste",
     question: "What's the next recycling pickup for Ascent Village, and where can I keep my bins?",
     expectedOutcome: "complete",
-    mustInclude: [/Tuesday, September 15, 2026/i, /return them to a screened location/i],
+    mustInclude: [/Tuesday, September 15, 2026/i, /(?:garage|screened from view)/i],
     mustExclude: [/New Year’s Day/i],
     options: () => baseOptions({ getWasteSchedule: async () => wasteResult() }),
   },
