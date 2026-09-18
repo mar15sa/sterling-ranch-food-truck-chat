@@ -75,12 +75,12 @@ The September 17 staging review made no model calls and added **$0**. It found a
 
 ## September 18 implementation cost decision
 
-The locally verified need-first implementation at `b4319ad` does not add a model stage, hosted vector database, paid embedding service, reranker, checker, subscription, or new recurring service. Its incremental model/API cost is **$0 per question**. It changes how the application preserves each requested need and selects already approved evidence; it does not change provider pricing or authorize a new provider.
+The locally verified need-first implementation at `b4319ad`, plus the staging-discovered completion repair at `06624d5`, does not add a model stage, hosted vector database, paid embedding service, reranker, checker, subscription, or new recurring service. Its incremental model/API cost is **$0 per question**. It changes how the application preserves each requested need and selects already approved evidence; it does not change provider pricing or authorize a new provider.
 
 | Configuration | Evidence from this project | AI cost per 1,000 questions | AI cost at 10,000 questions | Decision |
 | --- | --- | ---: | ---: | --- |
 | Preserved historical selective-AI flow | Earlier measured diagnostic mix | about $1.01 | about $10.09 | Existing historical comparison; not a current invoice |
-| September 18 need-first repair | 32/32 final holdout behaviors; 1,424/1,425 repository checks with only sandbox Atlas launch blocked | **$0 added** | **$0 added** | Selected for staging verification |
+| September 18 need-first repair | 32/32 final holdout behaviors; 1,426/1,427 repository checks with only sandbox Atlas launch blocked | **$0 added** | **$0 added** | Corrected after staging found one false-complete answer; selected for exact-revision recheck |
 | Haiku planner-only addition | 13/30 unchanged frozen strict expectations; $0.092486 experiment total | $3.08 | $30.83 | Rejected for now; no meaningful end-to-end gain |
 | Prior two-stage Haiku candidate | Known development questions; 14.40-second sample p95 | $11.92 | $119.25 | Rejected |
 | Prior Haiku plus Sonnet candidate | Known development questions; 14.05-second sample p95 | $28.17 | $281.66 | Rejected |
