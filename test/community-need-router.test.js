@@ -1066,6 +1066,21 @@ test("a generic elaboration stays on the named service topic", async () => {
   assert.ok(result.sources.every((source) => !/water quality report/i.test(source.title || "")));
 });
 
+test("the current-local coordinator preserves a requested DRC submission email", async () => {
+  const result = await answerCommunityQuestion("What email should I use to submit a DRC application?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-18T02:00:00Z"),
+  });
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /ResidentSubmit@SterlingRanchCAB\.com/i);
+  assert.match(JSON.stringify(result.actions), /201\/Design-Review-Documents/);
+  assert.deepEqual(result.completion.needs[0].supportedDetails.sort(), ["action", "contact"]);
+});
+
 test("need-first routing requires a server release flag outside tests and refuses enabled model stages", async () => {
   for (const requestContractMode of ["shadow-route", "need-first-candidate"]) {
     await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {
