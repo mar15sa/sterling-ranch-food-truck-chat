@@ -72,3 +72,19 @@ The model result did not earn a model change. Shared, no-cost request/evidence/c
 The suggested implementation currently adds **$0 in per-question model cost** because the repaired deterministic path remains the accepted fallback and the Haiku interpreter is not enabled by default. No vector database, paid embedding service, reranker, writer, checker, subscription, or recurring service was added. Haiku interpretation remains a candidate only if a fresh staging and owner review shows a meaningful gain over the repaired fallback. Automatic ratings remain unpublished as **Not rated** until enough owner labels exist to measure agreement and error rates.
 
 The September 17 staging review made no model calls and added **$0**. It found and repaired a deterministic payment-routing defect; the fixed staging answer now uses the approved Utility Hawk action rather than unrelated water rates. This does not change the cost recommendation. Staging remains held because five approved source records and five approved facts are expired pending exact-source review. Production remains unchanged.
+
+## September 18 implementation cost decision
+
+The locally verified need-first implementation at `b4319ad` does not add a model stage, hosted vector database, paid embedding service, reranker, checker, subscription, or new recurring service. Its incremental model/API cost is **$0 per question**. It changes how the application preserves each requested need and selects already approved evidence; it does not change provider pricing or authorize a new provider.
+
+| Configuration | Evidence from this project | AI cost per 1,000 questions | AI cost at 10,000 questions | Decision |
+| --- | --- | ---: | ---: | --- |
+| Preserved historical selective-AI flow | Earlier measured diagnostic mix | about $1.01 | about $10.09 | Existing historical comparison; not a current invoice |
+| September 18 need-first repair | 32/32 final holdout behaviors; 1,424/1,425 repository checks with only sandbox Atlas launch blocked | **$0 added** | **$0 added** | Selected for staging verification |
+| Haiku planner-only addition | 13/30 unchanged frozen strict expectations; $0.092486 experiment total | $3.08 | $30.83 | Rejected for now; no meaningful end-to-end gain |
+| Prior two-stage Haiku candidate | Known development questions; 14.40-second sample p95 | $11.92 | $119.25 | Rejected |
+| Prior Haiku plus Sonnet candidate | Known development questions; 14.05-second sample p95 | $28.17 | $281.66 | Rejected |
+
+“$0 added” means the repair adds no new model/API charge to the current configuration. It does not mean the existing application, Railway hosting, or every existing optional AI path costs zero. Hosting is unchanged by this local result and must be checked after an exact staging deployment before claiming a total monthly operating change.
+
+The recommendation is to stage the need-first repair without enabling another model. Keep AI available inside the architecture for unfamiliar-language interpretation and human wording, but require a bounded, human-rated improvement before turning on an added paid stage. The automatic rating remains unpublished as **Not rated** until it is calibrated against owner judgments.

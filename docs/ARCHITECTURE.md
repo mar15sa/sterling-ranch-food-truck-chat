@@ -2,18 +2,27 @@
 
 This is a deliberately small, single-service application for the product’s current traffic. The same tested code runs in separate Railway staging and production environments.
 
+The diagram includes the September 18 need-first release candidate. That candidate is implemented and verified locally; it is not yet verified on staging or released to production.
+
 ```mermaid
 flowchart LR
   Resident[Resident browser] --> Edge[Cloudflare and custom domain]
   Edge --> App[Railway Node application]
   App --> Static[Resident pages]
-  App --> Assistant[Community Assistant routing, retrieval, grounding, and verdict]
-  Assistant --> Food[Live food-truck calendar and menu lookup]
-  App --> Pool[Official CAB pool status]
+  App --> Assistant[Community Assistant]
+  Assistant --> Needs[Preserve each resident need and requested detail]
+  Needs --> Food[Live food-truck calendar and menu lookup]
+  Needs --> Pool[Official CAB pool status]
   App --> Openings[Verified openings catalog]
-  Assistant --> Rules[Existing rules engine and structured fact catalog]
-  Assistant --> Community[Approved community source index and live connectors]
-  Assistant --> Claude[Constrained search planner and grounded synthesis]
+  Needs --> Rules[Existing rules engine and structured fact catalog]
+  Needs --> Community[Approved community source index and live connectors]
+  Needs -. Optional interpretation or wording .-> Claude[Constrained AI stages]
+  Food --> Proof[Need-level evidence, authority, and completion checks]
+  Pool --> Proof
+  Rules --> Proof
+  Community --> Proof
+  Claude --> Proof
+  Proof --> Answer[Grounded resident answer or explicit missing-evidence boundary]
   App --> Alerts[Email, webhook, and existing analytics]
   GitHub[GitHub daily monitors] --> App
   GitHub --> Sources[Official source checks]
@@ -30,14 +39,15 @@ flowchart LR
 
 ## Failure boundaries
 
-- Anthropic converts each substantive resident question into a validated request containing intent, goals, subject, requested details, date range, and explicit filters. It may also rewrite a weak grounded draft, but it never supplies governing facts, links, prices, dates, or contacts. If it is disabled, unavailable, or fails validation, broad source retrieval continues without guessed filters.
+- The need-first candidate preserves each part of the resident's request before choosing a source path. Each need keeps its subject, requested outcome, conditions, date or location, and original wording. Success on one need cannot erase another.
+- AI may propose an interpretation or improve wording when that stage is enabled, but it never supplies governing facts, links, prices, dates, contacts, or completion status. The accepted September 18 candidate adds no new model call; the deterministic path remains available when AI is disabled, unavailable, or rejected.
 - Strong source-built answers bypass rewriting, reducing cost and avoiding unnecessary answer drift.
 - Prompt-injection screening runs before source search or Anthropic, including attempts to disclose prompts, credentials, tokens, environment variables, or webhook URLs.
 - Missing or conflicting current rule facts fail closed instead of being guessed.
 - The shared interpretation layer normalizes common wording and typo variants, keeps unrelated meanings separate, records every requested answer facet before retrieval, and applies a live-source filter only when the resident explicitly requested one.
 - A live connector may report an authoritative empty result only after the source and parser validate successfully. Filtered misses retain the unfiltered alternatives; partial or unavailable sources cannot produce a verified “none found” answer.
-- The model proposes the route, while a topic-neutral semantic contract enforces explicit question forms such as permission, payment, cost, schedule, status, contact, and account access. This corrects inconsistent model labels without hard-coding Sterling Ranch topics or answers.
-- The coverage gate rejects answers that cite a relevant-looking section but omit the resident's requested price, limit, process, link, definition, duration, or permission decision.
+- A topic-neutral contract enforces explicit question forms such as permission, payment, cost, schedule, status, contact, and account access. Source retrieval and approved-fact selection must also match the object being requested: a fee for play cannot answer a parking-price question merely because both contain “free” or a dollar value.
+- The coverage gate evaluates every preserved need and rejects answers that cite a relevant-looking section but omit the resident's requested price, limit, process, link, definition, duration, permission decision, or another requested part.
 - The complete pre-merge gate covers the current historical corpus, broader family variants, unseen questions, and comparative answer checks. Use revision-specific reports for counts. Any regression blocks release.
 - Official resident-resource links are cataloged separately from rules and checked daily, which prevents the assistant from treating a stale convenience link as a governing rule.
 - A failed pool-source request sends residents to the official CAB page.
@@ -46,7 +56,7 @@ flowchart LR
 
 ## Community Assistant boundaries
 
-The existing rules engine remains the first route for topics it already answers well. The Community Assistant adds tenant profiles, source ingestion and cleaning, hybrid retrieval, live events/status connectors, claim-level grounding, optional AI search planning and synthesis, source conflict detection, and direct action links. These responsibilities live in separate modules; `lib/community-assistant.js` coordinates them without weakening the mature rules path.
+The existing rules engine retains authority for binding rules. The need-first coordinator separates compound questions, sends each need to the appropriate rules, community-source, or live-connector path, and then recombines only rendered claims with eligible evidence. The Community Assistant also provides tenant profiles, source ingestion and cleaning, hybrid retrieval, claim-level grounding, optional AI interpretation and synthesis, source conflict detection, and direct action links. These responsibilities live in separate modules; `lib/community-assistant.js` coordinates them without weakening the mature rules path.
 
 The browser keeps at most three prior question-and-answer pairs in session storage. The server uses them only to turn a follow-up into a standalone search question, screens them for instruction attacks, and searches official evidence again. Prior answers are never treated as evidence. This temporary context is separate from the private logger, which saves individual sanitized question-and-answer records to configured Notion/webhook destinations. The owner's September 13 policy keeps saved question records indefinitely with no routine deletion or cleanup. See [question records and access](QUESTION-RECORDS.md) for the storage boundaries and unverified access details.
 
