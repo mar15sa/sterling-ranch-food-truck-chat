@@ -18,6 +18,10 @@ test("an explicit valid setting overrides the environment default", () => {
   }), "legacy");
   assert.equal(resolveCommunityAnswerFlow({
     RAILWAY_ENVIRONMENT_NAME: "production",
+    COMMUNITY_ANSWER_FLOW: "audited-legacy-candidate",
+  }), "audited-legacy-candidate");
+  assert.equal(resolveCommunityAnswerFlow({
+    RAILWAY_ENVIRONMENT_NAME: "production",
     COMMUNITY_ANSWER_FLOW: "need-first-candidate",
   }), "need-first-candidate");
   assert.equal(resolveCommunityAnswerFlow({
@@ -29,6 +33,6 @@ test("an explicit valid setting overrides the environment default", () => {
 test("an invalid explicit setting fails closed", () => {
   assert.throws(
     () => resolveCommunityAnswerFlow({ COMMUNITY_ANSWER_FLOW: "experimental" }),
-    /must be legacy, need-first-candidate, or need-first-ai-candidate/,
+    /must be legacy, audited-legacy-candidate, need-first-candidate, or need-first-ai-candidate/,
   );
 });

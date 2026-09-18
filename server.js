@@ -4602,7 +4602,8 @@ async function handleRulesAsk(req, res, url) {
   }
 
   const llmBefore = getCommunityLlmMetrics();
-  const needFirstRelease = ["need-first-candidate", "need-first-ai-candidate"].includes(COMMUNITY_ANSWER_FLOW);
+  const needFirstRelease = ["audited-legacy-candidate", "need-first-candidate", "need-first-ai-candidate"].includes(COMMUNITY_ANSWER_FLOW);
+  const auditedLegacyRelease = COMMUNITY_ANSWER_FLOW === "audited-legacy-candidate";
   const needFirstAiRelease = COMMUNITY_ANSWER_FLOW === "need-first-ai-candidate";
   const answer = await answerCommunityQuestion(
     conversation.unsafeContext
@@ -4630,7 +4631,7 @@ async function handleRulesAsk(req, res, url) {
       usedPriorContext: conversation.usedPriorContext,
     },
     ...(needFirstRelease ? {
-      requestContractMode: "need-first-candidate",
+      requestContractMode: auditedLegacyRelease ? "need-audited-candidate" : "need-first-candidate",
       needRouterBackend: "current-local",
       needFirstResidentRelease: true,
       planCommunitySearch: false,

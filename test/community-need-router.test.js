@@ -514,6 +514,35 @@ test("the need-first candidate returns its answer directly without a baseline ru
   assert.ok(result._requestContract.candidate.elapsedMs >= 0);
 });
 
+test("the audited candidate uses need-first only when the baseline has no verified support", async () => {
+  const result = await answerCommunityQuestion("Which food truck is here today, and what is on its menu?", {
+    isTest: true,
+    requestContractMode: "need-audited-candidate",
+    answerResidentNeed: async (need) => need.id === "need-1"
+      ? supportedAnswer({ id: "schedule", title: "Official food-truck calendar", claim: "On Monday, the food truck is Ecos de Mexico." })
+      : supportedAnswer({ id: "menu", title: "Ecos de Mexico menu", claim: "The menu lists tacos." }),
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    index: { communityId: "alpha", sources: [] },
+    communityId: "alpha",
+    communityProfile: { communityId: "alpha", name: "Alpha", website: "https://alpha.gov/", connectors: [] },
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    answerRulesQuestion: async () => ({
+      answer: "I could not verify that yet.", directAnswer: "I could not verify that yet.",
+      answerStatus: "could-not-verify", answerVerdict: "unverified", answerMode: "source-evidence-boundary",
+      confidence: { canAnswer: false, confidence: "low", reason: "no-exact-official-evidence" },
+      sources: [], actions: [], claims: [],
+    }),
+  });
+  assert.equal(result.answerMode, "need-first-candidate");
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /Ecos de Mexico/);
+  assert.match(result.answer, /menu lists tacos/i);
+  assert.equal(result._requestContract.candidate.baselineRuns, 1);
+  assert.equal(result._requestContract.candidate.baselinePreserved, false);
+  assert.equal(result._requestContract.candidate.reason, "baseline-had-no-verified-support-and-fallback-added-support");
+});
+
 test("the need-first candidate can use AI planning and writing without surrendering the evidence contract", async () => {
   const question = "Is the splash pad still running, and when does it close each day?";
   const fallback = buildResidentRequestContract(question);
@@ -1193,7 +1222,7 @@ test("an unapproved water-fee purpose cannot be replaced by nearby payment or bi
 });
 
 test("need-first routing requires a server release flag outside tests and refuses enabled model stages", async () => {
-  for (const requestContractMode of ["shadow-route", "need-first-candidate"]) {
+  for (const requestContractMode of ["shadow-route", "need-first-candidate", "need-audited-candidate"]) {
     await assert.rejects(() => answerCommunityQuestion("How do I pay my water bill?", {
       requestContractMode,
       needRouterBackend: "current-local",
