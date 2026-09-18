@@ -882,6 +882,22 @@ test("the current-local backend uses approved community navigation for water pay
   assert.ok(result._requestContract.shadowRoute.sources.length > 0);
 });
 
+test("missing payment navigation withholds water-rate facts instead of answering the wrong question", async () => {
+  const contract = buildResidentRequestContract("I need to pay the water bill online. Where should I go?");
+  const claim = "Residential indoor-water use is $12.50 per 1,000 gallons.";
+  const result = await runNeedFirstShadow(contract, async () => ({
+    answerStatus: "verified", answer: claim, directAnswer: claim, keyDetails: [],
+    sources: [{ id: "water-rates", title: "2026 water rates", text: claim }],
+    claims: [{ text: claim, evidenceSourceIds: ["water-rates"], verified: true }],
+    actions: [], conflicts: [],
+  }));
+  assert.equal(result.completion.outcome, "missing-evidence");
+  assert.match(result.answer, /couldn’t verify/i);
+  assert.doesNotMatch(result.answer, /\$12\.50|1,000 gallons/i);
+  assert.deepEqual(result.sources, []);
+  assert.deepEqual(result.claims, []);
+});
+
 test("the current-local rules path answers the seasonal-lighting follow-up from mapped governing claims", async () => {
   const originalQuestion = "Can those stay up all year?";
   const resolvedQuestion = "Regarding permanent seasonal lights approved for holiday use: Can those stay up all year?";

@@ -319,6 +319,28 @@ test("a matching verified payment claim supports the water-bill need", () => {
   assert.equal(assessment.outcome, "complete");
 });
 
+test("a first-person water payment task stays an action and uses the payment route", () => {
+  const contract = buildResidentRequestContract("I need to pay the water bill online. Where should I go?");
+  assert.equal(contract.needs[0].goal, "payment");
+  assert.equal(contract.needs[0].task, "action");
+  assert.equal(contract.needs[0].evidenceKind, "official-action");
+  assert.deepEqual(contract.needs[0].requestedDetails, ["action"]);
+  assert.equal(contract.needs[0].routeRequest, "pay water bill online");
+});
+
+test("water-use rate prose cannot masquerade as payment instructions", () => {
+  const contract = buildResidentRequestContract("I need to pay the water bill online. Where should I go?");
+  const id = "water-rates";
+  const claim = "Residential indoor-water use is $12.50 per 1,000 gallons.";
+  const assessment = assessResidentNeeds(contract, {
+    answerStatus: "verified", directAnswer: claim, keyDetails: [],
+    sources: [{ ...source(id, "2026 water rates", claim), retrievedForNeedIds: ["need-1"] }],
+    claims: [verifiedClaim(claim, [id])], actions: [], conflicts: [],
+  });
+  assert.equal(assessment.outcome, "missing-evidence");
+  assert.deepEqual(assessment.needs[0].supportedDetails, []);
+});
+
 test("a source-bound official action can complete an action need without a prose claim", () => {
   const contract = buildResidentRequestContract("Can you get me to the website for paying the water bill?");
   const id = "water-payment";
