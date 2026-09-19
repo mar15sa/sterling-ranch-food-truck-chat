@@ -2,6 +2,15 @@
   "version": 1,
   "sources": [
     {
+      "id": "good-girl-cafe-bookstore",
+      "name": "Good Girl Cafe & Bookstore",
+      "community": "Englewood",
+      "kind": "business",
+      "url": "https://broccoli-coyote-a6ph.squarespace.com/events-/2026/good-girl-cafe-bookstore-grand-opening",
+      "cadence": "daily",
+      "notes": "Official events page for storefront opening and operating updates."
+    },
+    {
       "id": "castle-rock-development",
       "name": "Castle Rock development activity",
       "community": "Castle Rock",
