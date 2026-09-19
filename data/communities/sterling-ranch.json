@@ -115,7 +115,8 @@
           "serviceAreas": [
             { "label": "Providence Village", "serviceWeekday": 1 },
             { "label": "Ascent Village", "serviceWeekday": 2 },
-            { "label": "Prospect Village", "serviceWeekday": 4 }
+            { "label": "Prospect Village", "serviceWeekday": 4 },
+            { "label": "Parkvale", "serviceWeekday": 4 }
           ],
           "communityCycleReference": {
             "privacy": "published-service-area-reference",
