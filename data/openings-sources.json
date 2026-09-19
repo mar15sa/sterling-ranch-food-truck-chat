@@ -11,6 +11,15 @@
       "notes": "Official events page for storefront opening and operating updates."
     },
     {
+      "id": "black-rock-new-locations",
+      "name": "Black Rock Coffee Bar new locations",
+      "community": "Douglas County and nearby",
+      "kind": "business",
+      "url": "https://www.br.coffee/new-locations",
+      "cadence": "daily",
+      "notes": "The official new-locations directory confirms announced Black Rock openings and when each location begins operating."
+    },
+    {
       "id": "castle-rock-development",
       "name": "Castle Rock development activity",
       "community": "Castle Rock",

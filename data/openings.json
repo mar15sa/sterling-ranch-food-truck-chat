@@ -82,6 +82,39 @@
       }
     },
     {
+      "id": "black-rock-coffee-university-highlands-ranch",
+      "name": "Black Rock Coffee Bar",
+      "category": "Coffee & bakery",
+      "community": "Highlands Ranch",
+      "area": "University Boulevard & Highlands Ranch Parkway",
+      "address": "9401 S University Blvd, Highlands Ranch, CO 80126",
+      "status": "open",
+      "openingWindow": "Opened September 14, 2026",
+      "summary": "Black Rock opened its second Highlands Ranch coffee bar at University Boulevard and Highlands Ranch Parkway.",
+      "verifiedAt": "2026-09-17",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Black Rock official Highlands Ranch opening page",
+          "url": "https://www.br.coffee/grand-openings/highlands-ranch-coming-soon"
+        },
+        {
+          "label": "Black Rock official new-locations directory",
+          "url": "https://www.br.coffee/new-locations"
+        },
+        {
+          "label": "DougCo Social opening report",
+          "url": "https://dougcosocial.com/news/black-rock-coffee-highlands-ranch-university"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.54599,
+        "lng": -104.946953,
+        "precision": "address",
+        "geocodedFrom": "9401 S University Blvd, Highlands Ranch, CO 80126"
+      }
+    },
+    {
       "id": "woof-gang-bakery-grooming-parker",
       "name": "Woof Gang Bakery & Grooming",
       "category": "Everyday services",
