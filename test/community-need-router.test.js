@@ -540,7 +540,29 @@ test("the audited candidate uses need-first only when the baseline has no verifi
   assert.match(result.answer, /menu lists tacos/i);
   assert.equal(result._requestContract.candidate.baselineRuns, 1);
   assert.equal(result._requestContract.candidate.baselinePreserved, false);
-  assert.equal(result._requestContract.candidate.reason, "baseline-had-no-verified-support-and-fallback-added-support");
+  assert.equal(result._requestContract.candidate.reason, "qualified-or-unanswered-request-uses-need-first");
+});
+
+test("the audited candidate does not let a verified nearby price replace a qualified request", async () => {
+  const result = await answerCommunityQuestion("Two out-of-neighborhood friends want to join open pickleball. What would they pay together?", {
+    isTest: true,
+    requestContractMode: "need-audited-candidate",
+    needRouterBackend: "current-local",
+    needFirstResidentRelease: true,
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    interpretationMode: "structured",
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-18T18:00:00Z"),
+  });
+  assert.match(result.answer, /\$20 for two nonresident players/i);
+  assert.doesNotMatch(result.answer, /\$40 per court for up to four/i);
+  assert.equal(result._requestContract.candidate.baselinePreserved, false);
+  assert.equal(result._requestContract.candidate.reason, "qualified-or-unanswered-request-uses-need-first");
 });
 
 test("the need-first candidate can use AI planning and writing without surrendering the evidence contract", async () => {

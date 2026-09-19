@@ -31,6 +31,7 @@
     "community:need-first:offline": "node scripts/eval-community-need-first-offline.js",
     "community:quality-rubric": "node scripts/quality-eval/eval-quality-rubric.js",
     "community:need-first:coverage": "node scripts/eval-community-need-first-coverage.js",
+    "community:audited-candidate": "node scripts/eval-community-audited-candidate.js",
     "community:routing:live": "node scripts/eval-community-routing-live.js --enforce",
     "community:answers:live": "node scripts/eval-community-answers-live.js --enforce --write",
     "community:candidate": "node scripts/validate-community-candidate.js",
