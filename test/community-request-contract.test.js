@@ -87,6 +87,15 @@ test("UtilityHawk notification channels are information, not a contact lookup", 
   assert.deepEqual(contract.needs.map((need) => need.task), ["information", "information"]);
 });
 
+test("operational deadlines do not become extra permission needs", () => {
+  const contract = buildResidentRequestContract(
+    "What time do trash bins need to be out, and when do I need to bring them back in?"
+  );
+  assert.equal(contract.needCount, 2);
+  assert.deepEqual(contract.needs.map((need) => need.requestedDetails), [["hours"], ["hours"]]);
+  assert.deepEqual(contract.needs.map((need) => need.task), ["hours", "hours"]);
+});
+
 test("keeps a generic elaboration attached to its named topic", () => {
   const question = "What days are trash and recycling picked up, and what else should I know?";
   assert.deepEqual(splitResidentNeeds(question), [
