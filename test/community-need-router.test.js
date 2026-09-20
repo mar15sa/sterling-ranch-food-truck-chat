@@ -31,10 +31,10 @@ function foodTruckProfile() {
   return profile;
 }
 
-function liveWasteEvidence(checkedAt) {
+function liveWasteEvidence(checkedAt, date = "2026-09-15") {
   return {
     degradation: { state: "healthy" }, coverage: { requested: ["date"], covered: ["date"] },
-    claims: [{ facet: "date", text: "2026-09-15", controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" }],
+    claims: [{ facet: "date", text: date, controllingEvidenceId: "sterling-ranch:waste-schedule:live-calendar", controllingSourceRole: "operational" }],
     evidence: [{
       evidenceId: "sterling-ranch:waste-schedule:live-calendar",
       sourceUrl: "https://www.wasteconnections.com/pickup-schedule-wasteconnect-calendar?areaName=WC-5311#",
@@ -1023,8 +1023,59 @@ test("the current-local rules path answers shed height and the official form as 
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
   assert.deepEqual(result._requestContract.shadowRoute.completion.needs.map((need) => need.status), ["supported", "supported"]);
   assert.match(result._requestContract.shadowRoute.answer, /eight feet, six inches/i);
-  assert.match(result._requestContract.shadowRoute.answer, /Backyard Utility Sheds One-Sheet/i);
+  assert.match(result._requestContract.shadowRoute.answer, /general architectural improvement application/i);
+  assert.ok(result._requestContract.shadowRoute.actions.some((action) => /DocumentCenter\/View\/1574/i.test(action.url)));
+  assert.doesNotMatch(result._requestContract.shadowRoute.answer, /water quality|coliform/i);
   assert.doesNotMatch(result._requestContract.shadowRoute.answer, /screened with landscape plantings/i);
+});
+
+test("the audited candidate fully answers the production compound smoke questions", async () => {
+  const checkedAt = "2026-09-20T18:00:00.000Z";
+  const common = {
+    isTest: true, requestContractMode: "need-audited-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date(checkedAt),
+  };
+
+  const recycling = await answerCommunityQuestion(
+    "When is recycling pickup in Providence Village, and when do I need to bring my recycling cans back in?",
+    {
+      ...common,
+      getWasteSchedule: async () => ({
+        service: "recycling", date: "2026-09-28", timing: "the week of September 28, 2026",
+        anchorDate: "2026-09-28", checkedAt,
+        serviceAreas: [{ label: "Providence Village", date: "2026-09-28" }],
+        evidence: liveWasteEvidence(checkedAt, "2026-09-28"),
+      }),
+    }
+  );
+  assert.equal(recycling.completion.outcome, "complete");
+  assert.match(recycling.answer, /Monday, September 28, 2026/i);
+  assert.match(recycling.answer, /returned.*by the end of the pickup day/i);
+
+  const leak = await answerCommunityQuestion(
+    "Is there a leak relief form, when should I expect to hear back, and what email can I contact?",
+    common
+  );
+  assert.equal(leak.completion.outcome, "complete");
+  assert.match(leak.answer, /within two business days/i);
+  assert.match(leak.answer, /info@sterlingranchcab\.com/i);
+  assert.ok(leak.actions.some((action) => /Leak Forgiveness Request Form/i.test(action.label)));
+
+  const shed = await answerCommunityQuestion(
+    "Can I build a shed, how tall can it be, and where do I apply?",
+    common
+  );
+  assert.equal(shed.completion.outcome, "complete");
+  assert.match(shed.answer, /DRC approval is required/i);
+  assert.match(shed.answer, /eight feet, six inches/i);
+  assert.ok(shed.actions.some((action) => /general architectural improvement application/i.test(action.label)
+    && /DocumentCenter\/View\/1574/i.test(action.url)));
+  assert.doesNotMatch(shed.answer, /couldn.t verify|water quality|coliform/i);
+  assert.ok(shed.sources.every((source) => !/water quality report/i.test(source.title || "")));
 });
 
 test("the current-local event path keeps the yoga subject in a dependent tomorrow follow-up", async () => {
