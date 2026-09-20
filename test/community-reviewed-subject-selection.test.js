@@ -127,6 +127,22 @@ test.describe('reviewed subject selection across related claims', () => {
     assert.ok((result.sources || []).every(source => !/water quality report/i.test(source.title || '')));
   });
 
+  test('definition questions require evidence for the thing being defined, not only a shared name', async () => {
+    const sourceIndex = require('../data/community-index.json');
+    const index = {
+      ...sourceIndex,
+      sources: sourceIndex.sources.map(source => ({ ...source, staleAfter: '2026-09-21T12:00:00Z' })),
+    };
+    index.factLedger = buildFactLedger(index);
+    for (const question of ['What is Atlas WiFi?', 'What is the Atlas coffee WiFi?']) {
+      const result = await ask(question, index);
+      assert.notEqual(result.answerStatus, 'verified', question);
+      assert.match(result.answer, /couldn['’]t find a current official answer/i, question);
+      assert.doesNotMatch(result.answer, /Ranch Social|Atlas Coffee|Living the Dream/i, question);
+      assert.ok((result.sources || []).every(source => !/Atlas Coffee/i.test(source.title || '')), question);
+    }
+  });
+
   test('inferred ledger subjects never become hard reviewed entity boundaries', () => {
     const index = fixture();
     const { sourceReviewState } = require('../lib/community-source-answerability');
