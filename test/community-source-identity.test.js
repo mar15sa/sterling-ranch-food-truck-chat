@@ -43,9 +43,11 @@ test('routing pointers never make a verified factual answer look stale', () => {
   const civicrec = { id: 'alpha-connector-facility-rentals', connectorType: 'civicrec', staleAfter: expired };
   const action = { id: 'alpha-action-booking', connectorType: 'official-action', staleAfter: expired };
   const page = { id: 'alpha-facility-page', connectorType: 'civicplus-pages', staleAfter: future };
+  const observation = { id: 'alpha-onsite-observation', connectorType: 'owner-observation', staleAfter: expired };
   assert.equal(isFreshnessTrackedSource(civicrec), false);
   assert.equal(isFreshnessTrackedSource(action), false);
   assert.equal(isFreshnessTrackedSource(page), true);
+  assert.equal(isFreshnessTrackedSource(observation), false);
   assert.equal(calculateConfidence({ sources: [civicrec, action, page] }).reason, 'official-source-supported');
   assert.equal(calculateConfidence({ sources: [civicrec, { ...page, staleAfter: expired }] }).reason, 'source-stale');
 });

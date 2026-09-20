@@ -37,6 +37,7 @@
     "community:portability:live": "node scripts/check-community-portability.js --write",
     "community:ledger:build": "node scripts/build-canonical-source-ledger.js --write",
     "community:ledger:check": "node scripts/build-canonical-source-ledger.js --check",
+    "community:observations:apply": "node scripts/apply-community-owner-observations.js",
     "supplements:audit": "node scripts/audit-rule-supplements.js --from 1 --to 2800",
     "supplements:monitor": "node scripts/audit-rule-supplements.js --from-baseline --lookahead 600 --fail-on-candidates",
     "supplements:build-sections": "node scripts/build-rule-supplement-sections.js",
