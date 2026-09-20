@@ -69,7 +69,8 @@ const residentFeeOverview = sourceDerivedAnswerParts(
 );
 assert.equal(residentFeeOverview.available, true);
 assert.match(residentFeeOverview.answer, /\$140\.00 each month/);
-assert.match(residentFeeOverview.answer, /Typical fixed monthly charges/);
+assert.match(residentFeeOverview.answer, /Typical utility fixed monthly charges/);
+assert.match(residentFeeOverview.answer, /Other typical fixed monthly charges/);
 assert.match(residentFeeOverview.answer, /Charges that depend on usage/);
 assert.match(residentFeeOverview.answer, /Charges that apply only to some homes/);
 assert.doesNotMatch(residentFeeOverview.answer, /Meter Capacity Ratio|EQR|Tier 4 Annual/i);

@@ -6211,6 +6211,17 @@
       ],
       "observations": [
         {
+          "observedAt": "2026-09-17T20:00:00.000Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v10",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        },
+        {
           "observedAt": "2026-09-19T18:50:25.348Z",
           "httpStatus": null,
           "finalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
@@ -6223,6 +6234,85 @@
         }
       ],
       "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "trash-recurring-service",
+          "scope": "Waste Connections as the listed provider; recurring collection days for Providence, Ascent, Prospect, and Parkvale; 7 a.m. bin placement; same-day screened storage; named-holiday one-day delay; CAB concern form; and WasteConnect app route only. A particular pickup date or delay still requires live schedule evidence.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "trash-recurring-service-guidance",
+            "trash-cab-concern-route",
+            "trash-wasteconnect-app-route"
+          ],
+          "withheldClaims": [
+            "date-specific-pickup",
+            "outages",
+            "missed-pickups",
+            "charges",
+            "contacts",
+            "bulk-item-terms",
+            "provider-promises"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Please submit this form",
+                "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+                "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
+              },
+              "display": {
+                "label": "Open the CAB trash and recycling concern form",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Apple Store",
+                "url": "https://apps.apple.com/app/id1442351850",
+                "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+              },
+              "display": {
+                "label": "Open WasteConnect",
+                "actionType": "information"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-17T20:00:00.000Z"
+        },
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "recycling-tips-visual-link",
+          "scope": "Current official recycling-tips PDF destination only. The handout does not establish current accepted materials, service terms, schedules, contacts, or provider promises.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "recycling-tips-visual-route"
+          ],
+          "withheldClaims": [
+            "accepted-materials",
+            "service-terms",
+            "schedule",
+            "contacts",
+            "provider-promises"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Waste Connection Recycling Tips (PDF)",
+                "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+                "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+              },
+              "display": {
+                "label": "Open the recycling tips visual",
+                "actionType": "information"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-17T20:00:00.000Z"
+        },
         {
           "status": "approved",
           "communityId": "sterling-ranch",
@@ -6297,7 +6387,8 @@
         }
       ],
       "packetRefs": [
-        "community-source-approvals-v9"
+        "community-source-approvals-v9",
+        "community-source-approvals-v10"
       ]
     },
     {
@@ -6314,6 +6405,17 @@
       ],
       "observations": [
         {
+          "observedAt": "2026-09-17T20:00:00.000Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v10",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        },
+        {
           "observedAt": "2026-09-19T18:50:25.348Z",
           "httpStatus": null,
           "finalUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
@@ -6326,6 +6428,24 @@
         }
       ],
       "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "complete-cab-review-20260914-dc4ed3f4a876",
+          "scope": "Current official Architectural & Community Standards page supports the team's role in helping residents navigate requirements. Requirements remain governed by the adopted Code, and design-review submissions use the separately approved Design Review source.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "complete-cab-review-20260914-dc4ed3f4a876-team-help"
+          ],
+          "withheldClaims": [
+            "The former generic info@sterlingranchcab.com contact is no longer present on this page and is not approved for design-review submissions.",
+            "The broad obligation to follow all governing documents is not an independent page-level binding-rule approval.",
+            "Physical address pending cross-page reconciliation."
+          ],
+          "controllingSources": [],
+          "approvedActions": [],
+          "decidedAt": "2026-09-17T20:00:00.000Z"
+        },
         {
           "status": "approved",
           "communityId": "sterling-ranch",
@@ -6346,7 +6466,122 @@
         }
       ],
       "packetRefs": [
-        "community-source-approvals-v9"
+        "community-source-approvals-v9",
+        "community-source-approvals-v10"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/m/faq?cat=16#sha256:9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49",
+      "canonicalUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+      "contentHash": "9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49",
+      "hashScheme": "page-text-v1",
+      "title": "Water FAQ — landscape establishment billing",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-16T21:38:45.496Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v11",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "owner-source-approval-20260916-979bf37fb8d2",
+          "scope": "Approve only the official CAB FAQ statement about the 45-day establishment-period billing treatment.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "owner-source-approval-20260916-979bf37fb8d2-water-establishment-billing"
+          ],
+          "withheldClaims": [
+            "Water is free during the establishment period.",
+            "A current rate amount or dollar discount.",
+            "A general water-budget exemption beyond the stated 45-day establishment period."
+          ],
+          "controllingSources": [],
+          "approvedActions": [],
+          "decidedAt": "2026-09-16T21:38:45.496Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v11"
+      ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62#sha256:e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
+      "canonicalUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+      "contentHash": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
+      "hashScheme": "page-text-v1",
+      "title": "Park Pass Car Registration Reimbursement Form",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-16T21:38:45.496Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v11",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
+          "scope": "Approve the official park-pass reimbursement form action and its vehicle-registration receipt instruction.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "owner-source-approval-20260916-fb12d4cd6a4c-reimbursement-form",
+            "owner-source-approval-20260916-fb12d4cd6a4c-receipt-instruction",
+            "owner-source-approval-20260916-fb12d4cd6a4c-action-1"
+          ],
+          "withheldClaims": [
+            "A reimbursement amount.",
+            "Eligibility, approval, processing time, or submission deadline.",
+            "A guarantee that submitting the form will result in reimbursement."
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "Park Pass Car Registration Reimbursement Form",
+                "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+                "context": "Park Pass Car Registration Reimbursement Form. Please upload a copy of your vehicle registration receipt to verify purchase of the park pass.",
+                "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+                "kind": "reviewed-official-page"
+              },
+              "display": {
+                "label": "Open the Park Pass Car Registration Reimbursement Form",
+                "actionType": "form"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-16T21:38:45.496Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v11"
       ]
     }
   ],
@@ -6827,6 +7062,21 @@
       "key": "https://sterlingranchcab.com/DocumentCenter/View/2502#sha256:3fe9b8e85b6a9d1b0e45d735beb1ba1bccb3a809dd33002ab6284d6a1c975d8c"
     },
     {
+      "decisionId": "trash-recurring-service",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501"
+    },
+    {
+      "decisionId": "recycling-tips-visual-link",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501"
+    },
+    {
+      "decisionId": "complete-cab-review-20260914-dc4ed3f4a876",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/198/Architectural-Community-Standards#sha256:438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa"
+    },
+    {
       "decisionId": "trash-recurring-service-20260919",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/247/Trash-Recycling#sha256:4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501"
@@ -6840,6 +7090,16 @@
       "decisionId": "architectural-community-standards-20260919",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/198/Architectural-Community-Standards#sha256:438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa"
+    },
+    {
+      "decisionId": "owner-source-approval-20260916-979bf37fb8d2",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/m/faq?cat=16#sha256:9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49"
+    },
+    {
+      "decisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62#sha256:e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824"
     }
   ],
   "deferred": [
@@ -6867,17 +7127,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 98,
+    "uniqueVersions": 100,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 93,
+      "pending-review": 95,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 103,
-    "pendingReview": 93
+    "scopedApprovals": 108,
+    "pendingReview": 95
   }
 }

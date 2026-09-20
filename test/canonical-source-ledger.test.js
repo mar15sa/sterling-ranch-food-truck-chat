@@ -71,11 +71,14 @@ test("one source version can serve multiple communities without sharing approval
 test("A/B/C/D reconciliation preserves packet work and exact approvals remain version-scoped", () => {
   const ledger = buildLedger();
   assert.deepEqual(ledger.reconciliation.historicalSnapshots.map(snapshot => snapshot.count), [222, 917]);
-  const addedVersions = require('../data/community-source-approvals-v8.json').decisions.flatMap(item => item.versions);
-  const refreshedVersions = require('../data/community-source-approvals-v9.json').decisions.flatMap(item => item.versions);
-  assert.equal(ledger.summary.uniqueVersions, 98); // The three v9 decisions add two current URL/version identities.
+  const addedVersions = [
+    ...require('../data/community-source-approvals-v8.json').decisions,
+    ...require('../data/community-source-approvals-v9.json').decisions,
+    ...require('../data/community-source-approvals-v10.json').decisions,
+    ...require('../data/community-source-approvals-v11.json').decisions,
+  ].flatMap(item => item.versions);
+  assert.equal(ledger.summary.uniqueVersions, 100); // The current page refresh reuses two exact versions; v11 preserves two separate approved pages.
   for (const version of addedVersions) assert.ok(ledger.records.some(record => record.key === versionKey(version)));
-  for (const version of refreshedVersions) assert.ok(ledger.records.some(record => record.key === versionKey(version)));
   assert.equal(ledger.summary.approvedEvidence, 5);
   assert.equal(ledger.unmatchedLegacyDecisions.length, 0);
   assert.equal(ledger.records.filter(record => record.packetRefs.some(ref => /batch-[bc]/.test(ref)) && !record.canonicalUrl.endsWith('/187/Pool'))
@@ -98,10 +101,14 @@ test("Decision Swipe approvals are exact-version, community-scoped claim boundar
     "solar-panel-appearance-specifications", "chase-drain-adopted-policy", "pickleball-current-operating-claims",
     ...require('../data/community-source-approvals-v8.json').decisions.map(item => item.decisionId),
     ...require('../data/community-source-approvals-v9.json').decisions.map(item => item.decisionId),
+    ...require('../data/community-source-approvals-v10.json').decisions.map(item => item.decisionId),
+    ...require('../data/community-source-approvals-v11.json').decisions.map(item => item.decisionId),
   ]));
   assert.equal(ledger.decisionApplications.length, 33
     + require('../data/community-source-approvals-v8.json').decisions.length
-    + require('../data/community-source-approvals-v9.json').decisions.length);
+    + require('../data/community-source-approvals-v9.json').decisions.length
+    + require('../data/community-source-approvals-v10.json').decisions.length
+    + require('../data/community-source-approvals-v11.json').decisions.length);
   const paymentPage = ledger.records.find(record => record.canonicalUrl.endsWith("/334/Water-Billing-Payment-Options"));
   assert.equal(paymentPage.disposition, "pending-review");
   assert.equal(approvalForCommunity(paymentPage, "sterling-ranch", "water-payment-primary-page").scopeKind, "scoped-claims");

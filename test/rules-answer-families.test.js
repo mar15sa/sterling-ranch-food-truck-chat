@@ -226,8 +226,9 @@ test("everyday wording for movable outdoor belongings routes to the household-it
   ]) {
     const result = await answer(question);
     assert.match(result.sources?.[0]?.title || "", /^Sec\. 1-38\. - Household items/i, question);
-    assert.match(result.answer, /Owner's Lot/i, question);
-    assert.match(result.answer, /roadway,? (?:or )?walkway/i, question);
+    assert.match(result.answer, /own lot|Owner's Lot/i, question);
+    assert.match(result.answer, /roadway,? (?:or )?walkway|roadway, walkway/i, question);
+    assert.doesNotMatch(result.answer, /DRC application|architectural improvement/i, question);
     assert.doesNotMatch(result.answer, /could not verify|could not find/i, question);
   }
 });

@@ -43,6 +43,45 @@ test("specification detection distinguishes requested paint details from the act
   assert.deepEqual(deterministicRequestedDetails("What color can I paint my garage door?"), ["specification"]);
 });
 
+test("second-person resident actions are permissions, while assistant navigation requests are not", () => {
+  for (const question of [
+    "Can you park an RV on the street?",
+    "Can you cover your car with a tarp in the street?",
+    "Can you have turf in the front yard?",
+  ]) {
+    assert.ok(deterministicRequestedDetails(question).includes("permission"), question);
+  }
+  for (const question of [
+    "Can you find section 5-219?",
+    "Can you open the recycling guide?",
+    "Can you tell me the pool hours?",
+  ]) {
+    assert.ok(!deterministicRequestedDetails(question).includes("permission"), question);
+  }
+});
+
+test("detail extraction distinguishes current open status and service delays from hours", () => {
+  assert.deepEqual(deterministicRequestedDetails("Is the pool open right now?"), ["status"]);
+  assert.deepEqual(deterministicRequestedDetails("Is the pool open on Labor Day?"), ["date", "hours"]);
+  assert.deepEqual(deterministicRequestedDetails("What time does the pool open?"), ["hours"]);
+  assert.deepEqual(deterministicRequestedDetails("Is the pool open, and what are the hours?"), ["hours", "status"]);
+  assert.deepEqual(deterministicRequestedDetails("Was garbage pickup delayed this week?"), ["date", "status"]);
+  assert.deepEqual(deterministicRequestedDetails("Was trash pickup delayed for Labor Day?"), ["date", "status"]);
+  assert.deepEqual(deterministicRequestedDetails("Does a holiday change this week’s trash pickup schedule?"), ["date", "status"]);
+});
+
+test("relative week ranges are deterministic and bounded", () => {
+  assert.deepEqual(highConfidenceDateRange("Was garbage pickup delayed this week?", new Date("2026-09-16T18:00:00Z")), {
+    kind: "week", start: "2026-09-14", end: "2026-09-20", label: "this week",
+  });
+  assert.deepEqual(highConfidenceDateRange("What is next week’s recycling date?", new Date("2026-09-16T18:00:00Z")), {
+    kind: "week", start: "2026-09-21", end: "2026-09-27", label: "next week",
+  });
+  assert.deepEqual(highConfidenceDateRange("Was trash late last week?", new Date("2026-09-16T18:00:00Z")), {
+    kind: "week", start: "2026-09-07", end: "2026-09-13", label: "last week",
+  });
+});
+
 test("water-usage access detection preserves generic online utility portal actions", () => {
   assert.deepEqual(deterministicRequestedDetails("How can I monitor my water usage online?"), ["action"]);
   assert.deepEqual(deterministicRequestedDetails("Online access for my utility bill"), ["action"]);
@@ -73,6 +112,21 @@ test("date interpretation deterministically validates relative and named days in
   assert.equal(highConfidenceDateRange("What is happening 9/13/2026?", NOW).start, "2026-09-13");
   const plan = normalizeInterpretation(interpretation({ dateRange: { kind: "model-error", start: "2026-09-09", end: "2026-09-09", label: "wrong" } }), "What events are tomorrow?", { now: NOW });
   assert.equal(plan.dateRange.start, "2026-09-02");
+});
+
+test("recurring weekday hours are not changed into the next calendar occurrence", () => {
+  const normalized = normalizeInterpretation(interpretation({
+    intent: "facilities",
+    goal: "schedule",
+    goals: ["schedule"],
+    subject: "pool hours",
+    requestedDetails: ["hours", "date"],
+    dateRange: { kind: "named-day", start: "2026-09-23", end: "2026-09-23", label: "wednesday" },
+    filters: { audience: "", category: "", facility: "pool", location: "" },
+    searchQueries: ["pool Wednesday hours"],
+  }), "What time does the pool normally close on Wednesday?", { now: new Date("2026-09-16T18:00:00Z") });
+  assert.deepEqual(normalized.requestedDetails, ["hours"]);
+  assert.equal(normalized.dateRange, null);
 });
 
 test("interpretation schema removes unsupported fields and validates clarification", () => {
@@ -275,7 +329,7 @@ test("a named class question without punctuation reaches the live calendar", asy
       receivedRequest = request;
       return {
         events: [{ id: "19", title: "Yoga w/Laura", date: "2026-09-19", time: "07:30", location: "Great Hall", url: "https://alpha.gov/event/19", startDate: "2026-09-19T07:30:00" }],
-        range: { kind: "next-seven-days", start: "2026-09-13", end: "2026-09-20", label: "the next seven days" },
+        range: request.dateRange,
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-13T18:00:00Z",
         diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "yoga" }] },
@@ -283,7 +337,13 @@ test("a named class question without punctuation reaches the live calendar", asy
     },
   });
   assert.equal(plannerCalls, 0);
-  assert.equal(receivedRequest, question);
+  assert.equal(receivedRequest.filters.category, "yoga");
+  assert.deepEqual(receivedRequest.dateRange, {
+    kind: "next-31-days",
+    start: "2026-09-13",
+    end: "2026-10-13",
+    label: "the next 31 days",
+  });
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.directAnswer, /Yoga w\/Laura is Saturday, September 19 at 7:30 a\.m\. in Great Hall/i);
   assert.deepEqual(answer.keyDetails, []);
@@ -300,14 +360,20 @@ test("a named activity without an event noun reaches the live calendar", async (
       receivedRequest = request;
       return {
         events: [{ id: "20", title: "Bingo Night", date: "2026-09-17", time: "18:30", location: "Sterling Center", url: "https://alpha.gov/event/20", startDate: "2026-09-17T18:30:00" }],
-        range: { kind: "next-seven-days", start: "2026-09-14", end: "2026-09-21", label: "the next seven days" },
+        range: request.dateRange,
         sourceUrl: "https://alpha.gov/calendar",
         checkedAt: "2026-09-14T18:00:00Z",
         diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 8, afterFilterCount: 1, appliedFilters: [{ field: "category", value: "bingo" }] },
       };
     },
   });
-  assert.equal(receivedRequest, question);
+  assert.equal(receivedRequest.filters.category, "bingo");
+  assert.deepEqual(receivedRequest.dateRange, {
+    kind: "next-31-days",
+    start: "2026-09-14",
+    end: "2026-10-14",
+    label: "the next 31 days",
+  });
   assert.equal(answer.answerMode, "community-live-events");
   assert.match(answer.directAnswer, /Bingo Night is Thursday, September 17 at 6:30 p\.m\. in Sterling Center/i);
   assert.deepEqual(answer.keyDetails, []);
@@ -468,6 +534,7 @@ test("structured validation keeps holiday lighting schedules out of live events"
 
 test("permission plus application questions consult the controlling rule before forms", async () => {
   const ask = (question, subject) => answerCommunityQuestion(question, {
+    now: NOW,
     interpretationMode: "structured", index: communityIndex, communityId: "sterling-ranch",
     answerRulesQuestion, rulesOptions: { searchMode: "legacy", llmMode: "off" },
     planCommunitySearch: async () => interpretation({
@@ -792,7 +859,7 @@ test("AI clarification cannot suppress a complete verified answer about resident
   assert.ok(answer.sources?.length > 0);
 });
 
-test("an explicit event filter miss offers the real unfiltered events", async () => {
+test("an explicit event filter miss gives the exact official-calendar boundary without unrelated events", async () => {
   const plan = interpretation({ filters: { audience: "youth kids", category: "", facility: "", location: "" } });
   const answer = await answerCommunityQuestion("Are there youth events tomorrow?", {
     interpretationMode: "structured",
@@ -805,11 +872,19 @@ test("an explicit event filter miss offers the real unfiltered events", async ()
       sourceUrl: "https://alpha.gov/calendar",
       checkedAt: "2026-09-01T18:00:00Z",
       diagnostics: { sourceOutcome: "ok", parserHealthy: true, beforeFilterCount: 1, afterFilterCount: 0, appliedFilters: [{ field: "audience", value: "youth kids" }] },
+      evidenceEnvelope: {
+        connectorFamily: "civicplus-events",
+        evidence: [{ evidenceId: "calendar-2026-09-02", communityId: "alpha", controllingSourceRole: "official-calendar" }],
+        claims: [],
+        coverage: { covered: [], missing: ["date"] },
+        degradation: { state: "healthy" },
+      },
     }),
   });
-  assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.directAnswer, /1 other event/);
-  assert.match(answer.keyDetails.join(" "), /Trivia Night/);
+  assert.notEqual(answer.answerStatus, "verified");
+  assert.match(answer.directAnswer, /couldn’t find an event matching “youth kids” on the official calendar for tomorrow/i);
+  assert.doesNotMatch(`${answer.answer} ${answer.keyDetails.join(" ")}`, /Trivia Night/i);
+  assert.deepEqual(answer.actions.map((action) => action.url), ["https://alpha.gov/calendar"]);
 });
 
 test("shadow mode records the AI comparison without changing the legacy answer", async () => {

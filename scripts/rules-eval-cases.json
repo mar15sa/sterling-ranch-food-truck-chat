@@ -55,7 +55,7 @@
     ],
     "expectedFirstAny": ["Sec. 21-23"],
     "expectedAny": ["Standard 3 Rail Fencing One-Sheet"],
-    "answerIncludesAny": ["DRC approval"]
+    "answerIncludesAny": ["DRC approval", "Approval must be obtained from the DRC"]
   },
   {
     "question": "Can I park an RV in my driveway?",
@@ -460,7 +460,7 @@
     ],
     "expectedFirstAny": ["Sec. 1-38"],
     "expectedClassification": "rules-question",
-    "expectedAnswerMode": "source-derived-extractive",
+    "expectedAnswerMode": "source-derived-structured",
     "answerIncludesAll": ["Owner's Lot", "roadway", "walkway"],
     "answerExcludesAny": ["could not verify", "could not find"]
   },

@@ -662,6 +662,22 @@ test("unrelated community-page actions are not attached to grounded rule answers
   }
 });
 
+test("an RV street-parking question cannot be answered by a park-pass form", async () => {
+  const question = "Can you park an RV on the street?";
+  const answer = await answerCommunityQuestion(question, {
+    index: communityIndex,
+    communityId: "sterling-ranch",
+    communityProfile,
+    answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    planCommunitySearch: require("../scripts/community-ai-eval-fixtures").planCommunitySearchFixture,
+    synthesizeCommunityAnswer: require("../scripts/community-ai-eval-fixtures").synthesizeCommunityAnswerFixture,
+  });
+  assert.match(answer.answer, /(?:recreational vehicle|\bRV\b)/i);
+  assert.match(answer.answer, /(?:street|roadway).{0,80}(?:not permitted|prohibited|may not|cannot)|(?:not permitted|prohibited|may not|cannot).{0,80}(?:street|roadway)/i);
+  assert.doesNotMatch(JSON.stringify(answer), /park.pass.{0,30}(?:reimburs|registration receipt)|(?:reimburs|registration receipt).{0,30}park.pass/i);
+});
+
 test("waste storage rules are not replaced by pickup schedules or contacts", async () => {
   for (const question of [
     "When does trash need to be stored?",
