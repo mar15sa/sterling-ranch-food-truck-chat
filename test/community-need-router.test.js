@@ -1117,6 +1117,24 @@ test("a generic elaboration stays on the named service topic", async () => {
   assert.ok(result.sources.every((source) => !/water quality report/i.test(source.title || "")));
 });
 
+test("a request for every village keeps the complete approved schedule", async () => {
+  const result = await answerCommunityQuestion("What days are trash and recycling picked up in each village?", {
+    isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
+    needFirstResidentRelease: true, planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    interpretationMode: "structured", answerRulesQuestion,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    index: communityIndex, communityId: "sterling-ranch", communityProfile: sterlingRanchProfile,
+    now: new Date("2026-09-18T02:00:00Z"),
+  });
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /Providence.*Monday/i);
+  assert.match(result.answer, /Ascent.*Tuesday/i);
+  assert.match(result.answer, /Prospect and Parkvale.*Thursday/i);
+  assert.match(result.answer, /recycling is picked up every other Monday/i);
+  assert.match(result.answer, /recycling is picked up every other Tuesday/i);
+  assert.match(result.answer, /recycling is picked up every other Thursday/i);
+});
+
 test("the current-local coordinator preserves a requested DRC submission email", async () => {
   const result = await answerCommunityQuestion("What email should I use to submit a DRC application?", {
     isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
