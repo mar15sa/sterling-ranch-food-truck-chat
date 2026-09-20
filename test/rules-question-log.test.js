@@ -13,6 +13,7 @@ const {
   resetQuestionLogCachesForTest,
   resolveNotionDataSourceId,
   setQuestionNeedsWork,
+  setQuestionOwnerVerdict,
 } = require("../lib/rules-question-log");
 
 test("question log redacts personal contact details in questions and answers", () => {
@@ -77,6 +78,35 @@ test("log entry stores the displayed answer and test marker", () => {
   assert.equal(properties["Quality rating"].select.name, entry.qualityRating);
   assert.equal(properties["Quality score"].number, entry.qualityScore);
   assert.equal(properties["Needs work"].checkbox, false);
+  assert.equal(properties["Owner verdict"].select, null);
+  assert.equal(properties["Rating candidate"].select.name, "Not rated");
+});
+
+test("new audited answers privately retain the unpublished rubric candidate", () => {
+  const needs = [{ id: "need-1", goal: "information", task: "specification", requestedDetails: ["specification"] }];
+  const entry = buildQuestionLogEntry("Can I keep a camper here for five days?", {
+    answerMode: "need-first-candidate",
+    answerStatus: "verified",
+    answer: "No. A camper can stay for up to 72 hours, so five straight days is not allowed.",
+    directAnswer: "No. A camper can stay for up to 72 hours, so five straight days is not allowed.",
+    confidence: { canAnswer: true },
+    completion: {
+      outcome: "complete",
+      needs: [{ needId: "need-1", status: "supported", supportedDetails: ["specification"], supportingSourceIds: ["rv-rule"], missingDetails: [] }],
+    },
+    claims: [{ text: "A camper can stay for up to 72 hours.", verified: true, evidenceSourceIds: ["rv-rule"] }],
+    actions: [],
+    _requestContract: { needs },
+  }, { isTest: true });
+  assert.equal(entry.qualityRating, "Not rated");
+  assert.equal(entry.ratingCandidate, "Excellent");
+  assert.equal(entry.ratingCandidateScore, 5);
+  const candidate = JSON.parse(entry.ratingCandidateDetails);
+  assert.equal(candidate.version, "resident-quality-rubric-v2-unpublished");
+  assert.equal(candidate.dimensions.completeCoverage, 2);
+  const properties = notionProperties(entry);
+  assert.equal(properties["Rating candidate"].select.name, "Excellent");
+  assert.equal(properties["Rating candidate score"].number, 5);
 });
 
 test("question log publishes only an explicitly calibrated assessment", () => {
@@ -96,6 +126,14 @@ test("question log publishes only an explicitly calibrated assessment", () => {
     },
   });
   assert.equal(uncalibrated.rating, "Not rated");
+  assert.deepEqual(uncalibrated.candidate, {
+    version: "owner-rubric-v1",
+    rating: "Excellent",
+    score: 5,
+    dimensionTotal: 0,
+    dimensions: {},
+    hardFailures: [],
+  });
 
   const calibrated = qualityAssessmentForLog("When is pickup and where do the bins go?", answer, {
     qualityAssessment: {
@@ -211,6 +249,10 @@ test("question query hides tests by default and maps the stored answer", async (
               "Resident effort": { select: { name: "Resolved" } },
               "Resident effort score": { number: 5 },
               "Needs work": { checkbox: true },
+              "Owner verdict": { select: null },
+              "Rating candidate": { select: { name: "Good" } },
+              "Rating candidate score": { number: 4 },
+              "Rating candidate details": { rich_text: [] },
             },
           },
         ],
@@ -227,6 +269,8 @@ test("question query hides tests by default and maps the stored answer", async (
     assert.equal(result.items[0].qualityRating, "Good");
     assert.equal(result.items[0].residentEffort, "Resolved");
     assert.equal(result.items[0].needsWork, true);
+    assert.equal(result.items[0].ownerVerdict, "Needs work");
+    assert.equal(result.items[0].ratingCandidate, "Good");
     const queryCall = calls.find((call) => call.url.endsWith("/query"));
     const body = JSON.parse(queryCall.options.body);
     assert.ok(
@@ -238,6 +282,15 @@ test("question query hides tests by default and maps the stored answer", async (
     assert.ok(body.filter.and.some((filter) => filter.or?.some((part) => part.property === "Quality rating" && part.select.equals === "Weak")));
     assert.ok(body.filter.and.some((filter) => filter.property === "Needs work" && filter.checkbox.equals === true));
     assert.ok(body.filter.and.some((filter) => filter.property === "Question" && filter.title.contains === "shed"));
+    await queryQuestionLogs(
+      { range: "today", ownerReview: "impressive", includeTests: true, now: new Date("2026-09-01T18:00:00Z") },
+      fetchImpl
+    );
+    const ownerVerdictQuery = [...calls].reverse().find((call) => call.url.endsWith("/query"));
+    const ownerVerdictBody = JSON.parse(ownerVerdictQuery.options.body);
+    assert.ok(ownerVerdictBody.filter.and.some(
+      (filter) => filter.property === "Owner verdict" && filter.select.equals === "Impressive"
+    ));
   } finally {
     if (previousToken === undefined) delete process.env.RULES_QUESTION_NOTION_TOKEN;
     else process.env.RULES_QUESTION_NOTION_TOKEN = previousToken;
@@ -265,6 +318,7 @@ test("owner can persist and undo a needs-work mark", async () => {
             Answer: {}, "Review status": {}, Testing: {}, "Confidence reason": {},
             "Answer verdict": {}, "Top source": {}, "Quality rating": {}, "Quality score": {},
             "Quality issues": {}, "Resident effort": {}, "Resident effort score": {}, "Needs work": {},
+            "Owner verdict": {}, "Rating candidate": {}, "Rating candidate score": {}, "Rating candidate details": {},
           },
         }),
       };
@@ -283,11 +337,20 @@ test("owner can persist and undo a needs-work mark", async () => {
     assert.deepEqual(await setQuestionNeedsWork(pageId, true, fetchImpl), {
       id: pageId,
       needsWork: true,
+      ownerVerdict: "Needs work",
     });
     const update = calls.find((call) => call.url.endsWith(`/pages/${pageId}`) && call.options.method === "PATCH");
     assert.equal(update.options.method, "PATCH");
     assert.deepEqual(JSON.parse(update.options.body), {
-      properties: { "Needs work": { checkbox: true } },
+      properties: {
+        "Needs work": { checkbox: true },
+        "Owner verdict": { select: { name: "Needs work" } },
+      },
+    });
+    assert.deepEqual(await setQuestionOwnerVerdict(pageId, "Impressive", fetchImpl), {
+      id: pageId,
+      needsWork: false,
+      ownerVerdict: "Impressive",
     });
     await assert.rejects(
       () => setQuestionNeedsWork("not-a-page", true, fetchImpl),
