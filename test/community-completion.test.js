@@ -2,7 +2,7 @@ const assert = require("node:assert/strict");
 const test = require("node:test");
 const { buildAnswerContract } = require("../lib/community-contracts");
 const { resolveConversationQuestion } = require("../lib/community-conversation");
-const { foodTruckAnswer, isFoodTruckQuestion } = require("../lib/community-food-trucks");
+const { foodTruckAnswer, isFoodTruckQuestion, normalizeFoodTruckQuestion } = require("../lib/community-food-trucks");
 const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion, cleanAnswerText, unanchoredRecurringScheduleAnswer } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
@@ -222,7 +222,14 @@ test("expected safety rejections do not create vague-question review work", asyn
 
 test("food-truck answers use the shared contract and cite schedule and menu evidence", () => {
   assert.equal(isFoodTruckQuestion("Who is the food truck tomorrow?"), true);
+  for (const question of ["Food 🛻", "Food 🚚", "Food truck", "Food truck tom", "food truck tmr", "food truck tmrw", "food truck tomorow"]) {
+    assert.equal(isFoodTruckQuestion(question), true, question);
+  }
+  assert.equal(normalizeFoodTruckQuestion("Food 🛻"), "Food truck today");
+  assert.equal(normalizeFoodTruckQuestion("Food truck tom"), "Food truck tomorrow");
   assert.equal(isFoodTruckQuestion("Can I run a food truck from my driveway?"), false);
+  assert.equal(isFoodTruckQuestion("Where should I park for the festival that has a food truck?"), false);
+  assert.equal(normalizeFoodTruckQuestion("Is Tom's food truck licensed?"), "Is Tom's food truck licensed?");
   const answer = foodTruckAnswer({
     date: "2026-08-29",
     friendlyDate: "Saturday, August 29",

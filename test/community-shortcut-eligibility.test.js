@@ -95,6 +95,37 @@ test("food-truck schedule, menu, and cost requests normalize status plans before
   }
 });
 
+test("short food-truck wording and common tomorrow shorthand use the dated live schedule", async () => {
+  const cases = [
+    ["Food 🛻", "Food truck today", "today", "2026-09-01"],
+    ["Food 🚚", "Food truck today", "today", "2026-09-01"],
+    ["Food truck", "Food truck today", "today", "2026-09-01"],
+    ["Food truck tom", "Food truck tomorrow", "tomorrow", "2026-09-02"],
+    ["food truck tmr", "food truck tomorrow", "tomorrow", "2026-09-02"],
+    ["food truck tmrw", "food truck tomorrow", "tomorrow", "2026-09-02"],
+    ["food truck tomorow", "food truck tomorrow", "tomorrow", "2026-09-02"],
+  ];
+  for (const [question, normalizedQuestion, dateKind, date] of cases) {
+    let connectorQuestion = "";
+    const answer = await answerCommunityQuestion(question, {
+      interpretationMode: "structured", now: NOW, index: communityIndex, communityProfile, communityId: "sterling-ranch",
+      planCommunitySearch: async (plannedQuestion) => {
+        assert.equal(plannedQuestion, normalizedQuestion, question);
+        return plan({ scope: "unrelated", intent: "status", goal: "schedule", goals: ["schedule"], subject: "food truck", requestedDetails: ["date"], dateRange: { kind: dateKind, start: date, end: date, label: dateKind }, searchQueries: [`food truck ${dateKind}`] });
+      },
+      synthesizeCommunityAnswer: false,
+      getFoodTruckAnswer: async (_routingPlan, receivedQuestion) => {
+        connectorQuestion = receivedQuestion;
+        return { date, friendlyDate: dateKind, truck: "Example Eats", sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150", menu: { links: [], items: [] } };
+      },
+      answerRulesQuestion: async () => ({ inputClassification: "unrelated", confidence: { canAnswer: false, reason: "known-unrelated-topic" } }),
+    });
+    assert.equal(connectorQuestion, normalizedQuestion, question);
+    assert.equal(answer.answerMode, "community-live-food-truck", question);
+    assert.match(answer.directAnswer, /Example Eats/, question);
+  }
+});
+
 test("the Community Assistant returns the official food-truck schedule when menu enrichment is degraded", async () => {
   const routingPlan = plan({
     scope: "community", intent: "events", goal: "schedule", goals: ["schedule"], subject: "food truck", requestedDetails: ["date"],
