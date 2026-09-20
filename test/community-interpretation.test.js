@@ -43,6 +43,23 @@ test("specification detection distinguishes requested paint details from the act
   assert.deepEqual(deterministicRequestedDetails("What color can I paint my garage door?"), ["specification"]);
 });
 
+test("second-person resident actions are permissions, while assistant navigation requests are not", () => {
+  for (const question of [
+    "Can you park an RV on the street?",
+    "Can you cover your car with a tarp in the street?",
+    "Can you have turf in the front yard?",
+  ]) {
+    assert.ok(deterministicRequestedDetails(question).includes("permission"), question);
+  }
+  for (const question of [
+    "Can you find section 5-219?",
+    "Can you open the recycling guide?",
+    "Can you tell me the pool hours?",
+  ]) {
+    assert.ok(!deterministicRequestedDetails(question).includes("permission"), question);
+  }
+});
+
 test("detail extraction distinguishes current open status and service delays from hours", () => {
   assert.deepEqual(deterministicRequestedDetails("Is the pool open right now?"), ["status"]);
   assert.deepEqual(deterministicRequestedDetails("Is the pool open on Labor Day?"), ["date", "hours"]);
