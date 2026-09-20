@@ -78,6 +78,15 @@ test("keeps a one-part question as one need", () => {
   assert.equal(contract.needs[0].goal, "payment");
 });
 
+test("UtilityHawk notification channels are information, not a contact lookup", () => {
+  const contract = buildResidentRequestContract(
+    "Can UtilityHawk alert me daily, weekly, or monthly, and can it use text, email, or phone?"
+  );
+  assert.equal(contract.needCount, 2);
+  assert.deepEqual(contract.needs.map((need) => need.requestedDetails), [["information"], ["information"]]);
+  assert.deepEqual(contract.needs.map((need) => need.task), ["information", "information"]);
+});
+
 test("keeps a generic elaboration attached to its named topic", () => {
   const question = "What days are trash and recycling picked up, and what else should I know?";
   assert.deepEqual(splitResidentNeeds(question), [
