@@ -2,7 +2,7 @@
 
 Targets: [How the project works](https://www.notion.so/3dabf909186d8166b507c2a4e1d1aced), including the Assistant diagram and accessible text; [Decisions and their reasons](https://www.notion.so/3dabf909186d8139ac52ebdbf77d8bea); and [Documentation audit and follow-ups](https://www.notion.so/3dabf909186d81a2a090c2cb90183e96).
 
-Status: implemented and staging-verified at revision `18d0024cb6549e0c2615a1ae951e08eceb8358b8`; production unchanged. The Notion connector is unavailable in this task. Fetch each target before editing, preserve unrelated content, then fetch again to verify the new heading, diagram/text, status, and revision link.
+Status: production-live and verified at merge revision `6f2e113ad36ca3e31be6385c9e91d25c3dce1c5e` with the `audited-legacy-candidate` flow active. The Notion connector is unavailable in this task. Fetch each target before editing, preserve unrelated content, then fetch again to verify the new heading, diagram/text, status, and revision link.
 
 ## September 20 audited-answer and rating-candidate update
 
@@ -65,3 +65,13 @@ These checks made zero paid model calls, used zero model tokens, and added $0 in
 The first pull-request quality run refreshed approved evidence successfully and passed 1,258 of 1,259 checks. Its one failure showed that action-evidence matching was too broad: a water-billing page could be mistaken for proof of water-usage account access. The matcher is now limited to application goals, while the shed application still resolves through its approved accessory-building evidence. The exact water-account safety check, all 64 need-router checks, and all 32 fast checks pass after the correction. A later local corpus rerun occurred after the checked-in source snapshot's freshness deadline and correctly withheld stale answers; the refreshed GitHub quality run remains the release authority.
 
 The next refreshed run exposed the other side of that boundary in an existing navigation check: the broad question “Where can I find utility information?” selected the specialized UtilityHawk monitoring page instead of a general utility hub. Broad category navigation now prefers a general water-billing or monthly-fee hub, while specific monitoring terms still control specific questions. Approved action evidence is available to navigation filtering but not to factual account-access proof. Reproduction against a locally renewed snapshot confirms that a billing-only source still withholds a water-usage account answer; the 14/14 information-navigation suite, 64/64 need-router suite, and 32/32 fast gate pass with the final boundary.
+
+## September 20 verified production release
+
+[Pull request 161](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/161) merged as revision `6f2e113ad36ca3e31be6385c9e91d25c3dce1c5e`. Both GitHub release gates passed, including the complete refreshed quality run. The deployment smoke gate confirmed that exact revision healthy before the answer flow was enabled. Production health then confirmed `audited-legacy-candidate` active, zero source failures, zero expired approved sources, and zero expired approved facts.
+
+The final production test-mode smoke passed 7/7. It covered RV street parking; recycling pickup plus the cart-return deadline; short-term paying guests; current pool status plus closing time; a camper parked for five days; shed approval, height, and application; and leak-relief response timing, contact email, and form. Every request included `isTest: true`. All seven answers were HTTP 200, verified, complete, direct, and supported by the approved evidence required for each part of the question.
+
+The production release added no vector database, embedding service, reranker, new model, subscription, or recurring model cost. The audited flow keeps AI available inside the product's guarded architecture, but its deterministic answer path passed these release checks without paid model calls. Automatic ratings remain unpublished as **Not rated** until owner-labeled calibration shows that the rubric reliably recognizes accuracy, completeness, proactiveness, specificity, and human readability without falsely praising weak answers.
+
+Code release status: implemented and verified live on September 20, 2026. Documentation status: this precise update is saved pending synchronization because the Notion connector is unavailable. Fetch each listed Notion page before editing, preserve unrelated content, then fetch again after the update to verify the final live revision and status.
