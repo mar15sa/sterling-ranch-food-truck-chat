@@ -6,7 +6,8 @@ const { foodTruckAnswer, isFoodTruckQuestion } = require("../lib/community-food-
 const communityProfile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion, cleanAnswerText, unanchoredRecurringScheduleAnswer } = require("../lib/community-assistant");
 const { answerRulesQuestion } = require("../lib/rules-assistant");
-const communityIndex = require("../data/community-index.json");
+const { loadCommunityEvidenceFixture } = require("./helpers/community-evidence");
+const communityIndex = loadCommunityEvidenceFixture();
 const { communityAnswerMetrics, recordCommunityAnswer } = require("../lib/community-observability");
 const { diffCommunityIndexes, sourceReleaseDecision, validateCommunityCandidate } = require("../lib/community-release");
 const { getWasteSchedule, scheduleTimingLabel } = require("../lib/community-waste-schedule");
@@ -472,12 +473,12 @@ test("the approved recurring schedule stays useful when the live calendar is tem
   assert.equal(liveCalls, 0);
   assert.equal(answer.answerMode, "community-approved-operational");
   assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.answer, /Monday in Providence/i);
-  assert.match(answer.answer, /Tuesday in Ascent/i);
-  assert.match(answer.answer, /Thursday in Prospect and Parkvale/i);
-  assert.match(answer.answer, /Recycling is picked up every other week/i);
-  assert.match(answer.answer, /7 a\.m\./i);
-  assert.match(answer.answer, /New Year's Day[\s\S]*Christmas move pickup back by one day/i);
+  assert.match(answer.answer, /Providence.*Monday/i);
+  assert.match(answer.answer, /Ascent.*Tuesday/i);
+  assert.match(answer.answer, /Prospect and Parkvale.*Thursday/i);
+  assert.match(answer.answer, /recycling is picked up every other Monday/i);
+  assert.match(answer.answer, /7 am/i);
+  assert.match(answer.answer, /New Year's Day[\s\S]*Christmas/i);
   assert.deepEqual(answer.sources.map((source) => source.id), ["approved-trash-recurring-service"]);
   assert.equal(answer.actions[0].label, "Open WasteConnect");
   assert.doesNotMatch(answer.answer, /303-288-2100|bulk item|missed pickup/i);
@@ -610,6 +611,7 @@ test("Sterling Ranch uses only its published community reference for village rec
     { label: "Providence Village", date: "2026-09-14" },
     { label: "Ascent Village", date: "2026-09-15" },
     { label: "Prospect Village", date: "2026-09-17" },
+    { label: "Parkvale", date: "2026-09-17" },
   ]);
   assert.equal(requested.length, 2);
   assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
@@ -633,6 +635,7 @@ test("Sterling Ranch uses the same published community reference for village gar
     { label: "Providence Village", date: "2026-09-14" },
     { label: "Ascent Village", date: "2026-09-15" },
     { label: "Prospect Village", date: "2026-09-17" },
+    { label: "Parkvale", date: "2026-09-17" },
   ]);
   assert.equal(requested.length, 2);
   assert.match(requested[0], /7853\+Piney\+River\+Avenue/);

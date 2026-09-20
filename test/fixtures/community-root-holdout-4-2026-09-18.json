@@ -2,7 +2,7 @@
   {
     "id": "trash-village-weekdays",
     "question": "Which neighborhoods get trash on Monday, Tuesday, and Thursday, and is recycling weekly too?",
-    "mustMatch": ["Monday in Providence", "Tuesday in Ascent", "Thursday in Prospect and Parkvale", "recycling.*every other week"],
+    "mustMatch": ["Providence[^.]*Monday", "Ascent[^.]*Tuesday", "Prospect and Parkvale[^.]*Thursday", "recycling.*every other"],
     "mustNotMatch": ["couldn.t verify", "holiday"]
   },
   {

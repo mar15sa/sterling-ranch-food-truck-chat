@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-16T21:38:45.496Z",
+  "decisionId": "owner-source-approval-20260916",
+  "authorization": "The owner approved both source decision cards on September 16, 2026. Approval is limited to the exact claims and actions below; all listed boundaries remain withheld.",
+  "decisions": [
+    {
+      "decisionId": "owner-source-approval-20260916-979bf37fb8d2",
+      "scopeKind": "scoped-claims",
+      "scope": "Approve only the official CAB FAQ statement about the 45-day establishment-period billing treatment.",
+      "approvedClaims": [
+        "owner-source-approval-20260916-979bf37fb8d2-water-establishment-billing"
+      ],
+      "withheldClaims": [
+        "Water is free during the establishment period.",
+        "A current rate amount or dollar discount.",
+        "A general water-budget exemption beyond the stated 45-day establishment period."
+      ],
+      "approvedActions": [],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+          "contentHash": "9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49",
+          "hashScheme": "page-text-v1"
+        }
+      ],
+      "title": "Water FAQ — landscape establishment billing",
+      "categoryId": "utilities-support",
+      "sourceType": "services",
+      "authorityClass": "official-page",
+      "checkedAt": "2026-09-16T21:38:45.496Z",
+      "documentFingerprint": "",
+      "facts": [
+        {
+          "id": "owner-source-approval-20260916-979bf37fb8d2-water-establishment-billing",
+          "text": "Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget.",
+          "facet": "fee",
+          "type": "information",
+          "scopeKey": "landscape-establishment-water-billing",
+          "subjectKey": "landscape establishment water billing",
+          "applicabilityTerms": [
+            "establish",
+            "establishment",
+            "landscape",
+            "turf",
+            "plant"
+          ],
+          "value": "Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget.",
+          "context": "Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget.",
+          "supportingQuote": "Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget."
+        }
+      ],
+      "actions": [],
+      "verification": {
+        "currentness": "The live official CAB FAQ was fetched and checked on September 16, 2026.",
+        "completeness": "The approval covers one exact sentence from the complete normalized FAQ page and no broader billing conclusion.",
+        "retrievedUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+        "replacementUrl": ""
+      }
+    },
+    {
+      "decisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
+      "scopeKind": "scoped-claims",
+      "scope": "Approve the official park-pass reimbursement form action and its vehicle-registration receipt instruction.",
+      "approvedClaims": [
+        "owner-source-approval-20260916-fb12d4cd6a4c-reimbursement-form",
+        "owner-source-approval-20260916-fb12d4cd6a4c-receipt-instruction",
+        "owner-source-approval-20260916-fb12d4cd6a4c-action-1"
+      ],
+      "withheldClaims": [
+        "A reimbursement amount.",
+        "Eligibility, approval, processing time, or submission deadline.",
+        "A guarantee that submitting the form will result in reimbursement."
+      ],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "Park Pass Car Registration Reimbursement Form",
+            "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+            "context": "Park Pass Car Registration Reimbursement Form. Please upload a copy of your vehicle registration receipt to verify purchase of the park pass.",
+            "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+            "kind": "reviewed-official-page"
+          },
+          "display": {
+            "label": "Open the Park Pass Car Registration Reimbursement Form",
+            "actionType": "form"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+          "contentHash": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
+          "hashScheme": "page-text-v1"
+        }
+      ],
+      "title": "Park Pass Car Registration Reimbursement Form",
+      "categoryId": "facilities-live-services",
+      "sourceType": "forms",
+      "authorityClass": "official-form",
+      "checkedAt": "2026-09-16T21:38:45.496Z",
+      "documentFingerprint": "",
+      "facts": [
+        {
+          "id": "owner-source-approval-20260916-fb12d4cd6a4c-reimbursement-form",
+          "text": "Park Pass Car Registration Reimbursement Form",
+          "facet": "information",
+          "type": "information",
+          "scopeKey": "park-pass-reimbursement-form",
+          "subjectKey": "park pass reimbursement",
+          "value": "Park Pass Car Registration Reimbursement Form",
+          "context": "Park Pass Car Registration Reimbursement Form",
+          "supportingQuote": "Park Pass Car Registration Reimbursement Form"
+        },
+        {
+          "id": "owner-source-approval-20260916-fb12d4cd6a4c-receipt-instruction",
+          "text": "Please upload a copy of your vehicle registration receipt to verify purchase of the park pass",
+          "facet": "submission",
+          "type": "information",
+          "scopeKey": "park-pass-reimbursement-receipt",
+          "subjectKey": "park pass reimbursement",
+          "value": "Please upload a copy of your vehicle registration receipt to verify purchase of the park pass",
+          "context": "Please upload a copy of your vehicle registration receipt to verify purchase of the park pass",
+          "supportingQuote": "Please upload a copy of your vehicle registration receipt to verify purchase of the park pass"
+        }
+      ],
+      "actions": [
+        {
+          "id": "owner-source-approval-20260916-fb12d4cd6a4c-action-1",
+          "label": "Open the Park Pass Car Registration Reimbursement Form",
+          "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+          "actionType": "form",
+          "evidence": {
+            "label": "Park Pass Car Registration Reimbursement Form",
+            "url": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+            "context": "Park Pass Car Registration Reimbursement Form. Please upload a copy of your vehicle registration receipt to verify purchase of the park pass.",
+            "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+            "kind": "reviewed-official-page"
+          }
+        }
+      ],
+      "verification": {
+        "currentness": "The live official CAB form was fetched and checked on September 16, 2026.",
+        "completeness": "The complete normalized form page was inspected. Approval covers the form identity, destination, and receipt instruction only.",
+        "retrievedUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+        "replacementUrl": ""
+      }
+    }
+  ]
+}

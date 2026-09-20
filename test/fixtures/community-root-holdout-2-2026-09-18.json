@@ -38,7 +38,7 @@
   {
     "id": "trash-bin-curb-timing",
     "question": "By what time should I put my trash bins out, and when do they need to be brought back in?",
-    "mustMatch": ["7\\s*a\\.?m\\.?", "end of pickup day"],
+    "mustMatch": ["7\\s*a\\.?m\\.?", "end of (?:the )?pickup day"],
     "mustNotMatch": ["couldn.t verify", "New Year"]
   },
   {

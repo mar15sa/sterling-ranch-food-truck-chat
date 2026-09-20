@@ -1,78 +1,68 @@
 #!/usr/bin/env node
-const fs = require("node:fs");
-const path = require("node:path");
-const { buildReviewedSources, sourceUrlIdentity } = require("../lib/community-reviewed-package");
-const { buildFactLedger } = require("../lib/community-truth");
-const { refreshTruthStatus } = require("./revalidate-approved-community");
-const { buildLedger } = require("./build-canonical-source-ledger");
 
-const root = path.join(__dirname, "..");
-const read = (file) => JSON.parse(fs.readFileSync(path.join(root, file), "utf8"));
-const write = (file, value) => fs.writeFileSync(path.join(root, file), `${JSON.stringify(value, null, 2)}\n`);
+const fs = require('node:fs');
+const path = require('node:path');
+const { actionIdentity } = require('../lib/community-approved-revalidation');
+const { scopedApprovalsForVersion } = require('../lib/canonical-source-ledger');
+const { buildReviewedSources, sourceUrlIdentity } = require('../lib/community-reviewed-package');
+const { buildFactLedger } = require('../lib/community-truth');
+const { refreshTruthStatus } = require('./revalidate-approved-community');
+const { buildLedger } = require('./build-canonical-source-ledger');
+const approvals = require('../data/community-source-approvals-v9.json');
 
-function reviewRecord(decision, decidedAt) {
-  const version = decision.versions[0];
-  return {
-    sourceUrl: version.canonicalUrl,
-    ...(decision.categoryId ? { categoryId: decision.categoryId } : {}),
-    title: decision.title,
-    disposition: "answer-evidence",
-    reason: decision.scope,
-    versionFingerprint: version.contentHash,
-    indexed: true,
-    approvedRole: "owner-approved-scoped-evidence",
-    reviewedAt: decidedAt,
-    reviewedContentHash: version.contentHash,
-    approvedClaimCount: decision.facts.length,
-    approvedActionCount: decision.actions.length,
-    approvedClaims: decision.facts.map((fact) => fact.text),
-    withheldClaims: decision.withheldClaims,
-    verification: decision.verification,
-  };
-}
+const SOURCE_IDS = {
+  'trash-recurring-service-20260919': 'approved-trash-recurring-service',
+  'recycling-tips-visual-link-20260919': 'approved-recycling-tips-visual-link',
+  'architectural-community-standards-20260919': 'approved-complete-cab-review-20260914-dc4ed3f4a876',
+};
 
-function updateDispositionFile(file, packageData) {
-  const value = read(file);
-  const replacements = new Map(packageData.decisions.map((decision) => {
-    const record = reviewRecord(decision, packageData.decidedAt);
-    return [sourceUrlIdentity(record.sourceUrl), record];
-  }));
-  value.records = (value.records || []).map((record) => {
-    const replacement = replacements.get(sourceUrlIdentity(record.sourceUrl));
-    return replacement ? { ...record, ...replacement } : record;
-  });
-  for (const replacement of replacements.values()) {
-    if (!value.records.some((record) => sourceUrlIdentity(record.sourceUrl) === sourceUrlIdentity(replacement.sourceUrl))) {
-      value.records.push(replacement);
+function applyCommunitySourceApprovalsV9(index) {
+  const ledger = buildLedger();
+  const additions = buildReviewedSources(approvals);
+  for (const source of additions) {
+    const decisionId = source.facts[0]?.reviewDecisionId || source.actions[0]?.reviewDecisionId;
+    source.id = SOURCE_IDS[decisionId] || source.id;
+    const canonical = scopedApprovalsForVersion(ledger, source, approvals.communityId);
+    for (const item of [...source.facts, ...source.actions]) {
+      const decision = canonical.find((candidate) => candidate.decisionId === item.reviewDecisionId
+        && (candidate.approvedClaims || []).includes(item.approvalClaim));
+      if (!decision) throw new Error(`${item.id} is outside its exact approved source decision.`);
+      if (item.url) {
+        const matches = (decision.approvedActions || []).some((candidate) =>
+          actionIdentity([{ ...candidate.display, url: candidate.evidence.url }]) === actionIdentity([item])
+          && JSON.stringify(candidate.evidence) === JSON.stringify(item.evidence));
+        if (!matches) throw new Error(`${item.id} does not match its reviewed action proof.`);
+      }
     }
   }
-  write(file, value);
-}
 
-function main() {
-  const packageData = read("data/community-source-approvals-v9.json");
-  write("data/canonical-source-ledger.json", buildLedger());
-
-  const index = read("data/community-index.json");
-  const additions = buildReviewedSources(packageData);
-  const replacementIds = new Set(additions.map((source) => source.id));
-  index.sources = index.sources.filter((source) => !replacementIds.has(source.id));
-  index.sources.push(...additions);
-  for (const page of index.pages || []) {
-    const identity = sourceUrlIdentity(page.sourceUrl || page.url);
-    const matchingIds = additions.filter((source) => sourceUrlIdentity(source.sourceUrl) === identity).map((source) => source.id);
-    if (!matchingIds.length) continue;
-    page.indexedSourceIds = [...new Set([...(page.indexedSourceIds || []).filter((id) => !replacementIds.has(id)), ...matchingIds])];
+  const replaceUrls = new Set(additions.map((source) => sourceUrlIdentity(source.sourceUrl)));
+  const next = structuredClone(index);
+  next.sources = next.sources.filter((source) => !replaceUrls.has(sourceUrlIdentity(source.sourceUrl)));
+  next.sources.push(...additions);
+  for (const page of next.pages || []) {
+    const url = page.sourceUrl || page.url;
+    if (url && replaceUrls.has(sourceUrlIdentity(url))) {
+      page.indexedSourceIds = additions
+        .filter((source) => sourceUrlIdentity(source.sourceUrl) === sourceUrlIdentity(url))
+        .map((source) => source.id);
+    }
   }
-  index.sourceCount = index.sources.length;
-  index.factLedger = buildFactLedger(index, { previousLedger: index.factLedger });
-  refreshTruthStatus(index, packageData.decidedAt);
-  write("data/community-index.json", index);
-
-  updateDispositionFile("data/community-page-dispositions.json", packageData);
-  updateDispositionFile("data/community-full-url-audit.json", packageData);
-  console.log(JSON.stringify({ approvedSources: additions.length, approvedFacts: additions.reduce((sum, source) => sum + source.facts.length, 0), approvedActions: additions.reduce((sum, source) => sum + source.actions.length, 0) }));
+  next.sourceCount = next.sources.length;
+  next.factLedger = buildFactLedger(next, { previousLedger: index.factLedger || [], observedAt: approvals.decidedAt });
+  refreshTruthStatus(next, approvals.decidedAt);
+  return { next, ledger };
 }
 
-if (require.main === module) main();
-module.exports = { main, reviewRecord, updateDispositionFile };
+if (require.main === module) {
+  const root = path.join(__dirname, '..');
+  const indexPath = path.join(root, 'data', 'community-index.json');
+  const ledgerPath = path.join(root, 'data', 'canonical-source-ledger.json');
+  const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+  const { next, ledger } = applyCommunitySourceApprovalsV9(index);
+  fs.writeFileSync(ledgerPath, `${JSON.stringify(ledger, null, 2)}\n`);
+  fs.writeFileSync(indexPath, `${JSON.stringify(next, null, 2)}\n`);
+  console.log(JSON.stringify({ sources: next.sources.length, approvedFingerprintInput: approvals.decisionId }));
+}
+
+module.exports = { applyCommunitySourceApprovalsV9 };
