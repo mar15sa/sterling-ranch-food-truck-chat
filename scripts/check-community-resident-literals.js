@@ -57,6 +57,8 @@ const GENERIC_COPY = new Set([
   "The latest refresh failed, so this may be an older status.",
   "The schedule may not be posted yet. Check the official calendar before making plans.",
   "The official facility page is awaiting a fresh source check.",
+  "The pool is closed for the season.",
+  "I can’t confirm next summer’s exact opening date from the current approved CAB information.",
   "I found a relevant official section, but I could not extract its current date, amount, or limit safely.",
   "I don't have enough rulebook evidence to answer that confidently.",
   "I don't have enough rulebook evidence to give a definite answer. These sections look like the closest starting points.",
@@ -100,6 +102,9 @@ const GENERIC_COPY = new Set([
   "These are the published hours for that weekday.",
   "The official source does not say whether that placement is allowed.",
   "The cited source does not confirm whether the requested plant is included.",
+  "This rule sets the dates for seasonal lighting; it does not set a separate start date for every kind of Halloween decoration.",
+  "If you are unsure where your lot ends, confirm the property line before placing anything past the porch.",
+  "Open the packet first so you can prepare the required landscaping forms before submitting.",
 ]);
 
 // These are the fixed portions of dynamic, source-independent answer frames.
@@ -108,10 +113,13 @@ const GENERIC_COPY = new Set([
 const GENERIC_DYNAMIC_COPY = new Set([
   "I couldn’t confirm the  from an approved CAB source.",
   "I couldn’t confirm a current  pickup date for .",
+  "I couldn’t verify whether  pickup was delayed for the requested period from the live pickup calendar.",
+  "Holiday pickup changes apply only after these named holidays:",
   "The published recurring schedule doesn’t show whether this pickup is this week or next: .",
   "I couldn’t find a current official phone number for .",
   "I couldn’t read the official calendar for  just now.",
   "I couldn’t find an event matching “” for . The official calendar has  other .",
+  "I couldn’t find an event matching “” on the official calendar for .",
   "The official calendar doesn’t list any events for .",
   "The official calendar has   .",
   "The selected official rules do not name  specifically.",
@@ -152,6 +160,13 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "deep",
   "long",
   "falls outside that published recurring season, so I can’t verify facility hours for that date.",
+  "published  schedule runs until",
+  "Yes,  can stay installed year-round. Outside the approved seasonal periods, it must be returned to .",
+  "Yes,  can stay installed year-round, but outside the approved seasonal periods it must be returned to .",
+  "For Halloween lights, the approved seasonal period starts  and runs through .",
+  "Yes—",
+  "Use  for a landscaping or irrigation application.",
+  "Open  when you are ready to start the review.",
 ]);
 
 function isTernaryControlLiteral(tokens, index) {
