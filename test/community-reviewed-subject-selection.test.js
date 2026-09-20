@@ -113,6 +113,20 @@ test.describe('reviewed subject selection across related claims', () => {
     assert.doesNotMatch(method.answer, /\$|currently running|is running right now/);
   });
 
+  test('existential service questions cannot match an unrelated source through conversational filler', async () => {
+    const sourceIndex = require('../data/community-index.json');
+    const index = {
+      ...sourceIndex,
+      sources: sourceIndex.sources.map(source => ({ ...source, staleAfter: '2026-09-21T12:00:00Z' })),
+    };
+    index.factLedger = buildFactLedger(index);
+    const result = await ask('Is there a massage therapist?', index);
+    assert.notEqual(result.answerStatus, 'verified');
+    assert.match(result.answer, /couldn['’]t find a current official answer/i);
+    assert.doesNotMatch(result.answer, /coliform|drinking water|hydrant|water quality report/i);
+    assert.ok((result.sources || []).every(source => !/water quality report/i.test(source.title || '')));
+  });
+
   test('inferred ledger subjects never become hard reviewed entity boundaries', () => {
     const index = fixture();
     const { sourceReviewState } = require('../lib/community-source-answerability');
