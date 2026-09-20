@@ -245,6 +245,41 @@ test("a recreational-vehicle rule still supports ordinary motorhome wording", as
   assert.match(result.answer, /72 consecutive hours/i);
 });
 
+test("verified rule text is rendered as a concise resident answer", async () => {
+  const rental = await runNeedFirstShadow(
+    buildResidentRequestContract("May residents host paying guests for just a few nights?"),
+    async () => supportedAnswer({
+      id: "rental-rule", title: "Short-term lodging rule",
+      claim: "Under no circumstance may Owners or their agents use Residential Units for short-term lodging, vacation rentals, hotel purposes (i.e., rental or leasing on a day-to-day or week-to-week basis) or any similar temporary lodging or living quarter arrangements.",
+    })
+  );
+  assert.equal(rental.completion.outcome, "complete");
+  assert.equal(rental.answer, "No. Homes in this community cannot be used for short-term lodging, vacation rentals, hotel-style stays rented by the day or week, or similar temporary stays.");
+  assert.doesNotMatch(rental.answer, /Under no circumstance|Exception:/i);
+
+  const camper = await runNeedFirstShadow(
+    buildResidentRequestContract("Can my camper stay parked at my house for five straight days?"),
+    async () => supportedAnswer({
+      id: "rv-rule", title: "Vehicles and parking",
+      claim: "The maximum amount of time a Recreational Vehicle is allowed in a driveway is three overnights (72 consecutive hours) during any seven-day period.",
+    })
+  );
+  assert.equal(camper.completion.outcome, "complete");
+  assert.equal(camper.answer, "No. Your camper is limited to 72 consecutive hours (three nights) in any seven-day period.");
+  assert.equal((camper.answer.match(/72 consecutive hours/gi) || []).length, 1);
+
+  const pool = await runNeedFirstShadow(
+    buildResidentRequestContract("Is the pool open right now, and if it is, how late can I stay?"),
+    async (need) => need.task === "status"
+      ? supportedAnswer({ id: "pool-live", title: "Live pool status", claim: "The pool is closed with no access for homeowners or guests." })
+      : supportedAnswer({ id: "pool-hours", title: "Pool hours", claim: "When open for the season, open swim runs from 9:00 am to 8:45 pm." })
+  );
+  assert.equal(pool.completion.outcome, "complete");
+  assert.match(pool.answer, /pool is closed/i);
+  assert.match(pool.answer, /pool closes at 8:45 p\.m\./i);
+  assert.doesNotMatch(pool.answer, /9:00 am|Key details/i);
+});
+
 test("a supported detail survives when another detail in the same need is unresolved", async () => {
   const contract = buildResidentRequestContract("When can I decorate for Halloween?");
   const result = await runNeedFirstShadow(contract, async () => ({
@@ -1201,7 +1236,7 @@ test("fresh multi-part resident questions stay specific, complete, and human-fir
     {
       name: "leak adjustment wait",
       question: "I had a big leak and submitted the adjustment form. How long should I expect to wait?",
-      includes: [/within two \(2\) business days/i],
+      includes: [/within two business days after you successfully submit the form/i],
       excludes: [/pool|water quality|coliform/i],
     },
     {

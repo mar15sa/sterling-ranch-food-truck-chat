@@ -32,7 +32,7 @@
   {
     "id": "leak-relief-followup-contact",
     "question": "I sent in the excessive-water-use relief form. When should CAB reach out, and which email handles questions?",
-    "mustMatch": ["two \\(2\\) business days|2 business days", "info@sterlingranchcab\\.com"],
+    "mustMatch": ["two business days", "info@sterlingranchcab\\.com"],
     "mustNotMatch": ["couldn.t verify", "ClientCare@AmCoBi"]
   },
   {
