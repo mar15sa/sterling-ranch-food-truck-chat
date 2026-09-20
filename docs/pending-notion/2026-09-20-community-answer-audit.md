@@ -2,7 +2,7 @@
 
 Targets: [How the project works](https://www.notion.so/3dabf909186d8166b507c2a4e1d1aced), including the Assistant diagram and accessible text; [Decisions and their reasons](https://www.notion.so/3dabf909186d8139ac52ebdbf77d8bea); and [Documentation audit and follow-ups](https://www.notion.so/3dabf909186d81a2a090c2cb90183e96).
 
-Status: implemented and locally verified at revision `ad838ef`; not yet deployed in this record; production unchanged. The Notion connector is unavailable in this task. Fetch each target before editing, preserve unrelated content, then fetch again to verify the new heading, diagram/text, status, and revision link.
+Status: implemented and staging-verified at revision `18d0024cb6549e0c2615a1ae951e08eceb8358b8`; production unchanged. The Notion connector is unavailable in this task. Fetch each target before editing, preserve unrelated content, then fetch again to verify the new heading, diagram/text, status, and revision link.
 
 ## September 20 audited-answer and rating-candidate update
 
@@ -20,5 +20,14 @@ The complete `npm run check` was stopped and must be recorded as incomplete afte
 
 All candidate comparisons in this update made zero model calls, used zero model tokens, and added $0 in model/API cost. No vector database, embedding service, reranker, subscription, or recurring spend was added. The broader product still supports AI inside the guarded contract, but this candidate did not select a new model because prior bounded comparisons did not produce a meaningful enough end-to-end gain. The next step is exact-revision staging deployment and test-mode answer review, followed by owner calibration of the unpublished rubric. Production remains held until the exact candidate is ready and review evidence supports release.
 
-After staging deployment, add the exact staging revision and health/source evidence. Keep proposed, implemented, staging-verified, and production-live states separate.
+The exact staging revision and health/source evidence are recorded below. Keep proposed, implemented, staging-verified, and production-live states separate.
 
+## September 20 staging verification and resident-friendly composition
+
+Exact revision `18d0024cb6549e0c2615a1ae951e08eceb8358b8` is verified ready on staging with `audited-legacy-candidate`. Health reported 322 sources, zero source failures, no stale source state, and zero expired approved sources or facts. Production remains unchanged.
+
+The final six-question test-mode gate passed 6/6. Every question returned HTTP 200, a verified complete outcome, and support for every requested need. The reviewed answers covered an exact recycling date plus cart storage, indirect short-term-rental wording, current pool status plus seasonal closing time, a camper duration above the allowed limit, shed height plus the actual DRC submission action, and leak-relief follow-up timing plus email. The shared composer now shortens redundant schedule context, converts verified legal and operational wording into concise resident language, extracts the requested closing time, and ranks the action the resident asked to take. These transformations derive their subject, verified value, and action from the answer contract; they are not stored full-question responses and contain no Sterling Ranch-specific answer key.
+
+The staging gate made zero planner, answer, or rewrite model requests and used zero input or output tokens. The updated 32-question audited gate passes 32/32, the targeted human-first staging families pass 13/13, request/rating checks pass 49/49, and the focused final schedule checks pass 3/3. The full repository run remains recorded as incomplete and was not rerun indefinitely.
+
+The answer candidate is staging-verified. The automatic rating remains unpublished and **Not rated** pending owner-label calibration. Production release still requires a clean isolated change against current main because the staging branch contains broader historical divergence. Keep this pending Notion entry unresolved until all three target pages are fetched, updated, and fetched again.
