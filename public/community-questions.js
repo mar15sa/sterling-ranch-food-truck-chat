@@ -239,9 +239,10 @@ function answerPreview(answer) {
 }
 
 function createQuestionEntry(item) {
+  const currentOwnerVerdict = item.ownerVerdict || (item.needsWork ? "Needs work" : "");
   const details = document.createElement("details");
   const cssStatus = statusClass(item.reviewStatus);
-  details.className = `question-entry ${cssStatus}${item.needsWork ? " owner-needs-work" : ""}`;
+  details.className = `question-entry ${cssStatus}${currentOwnerVerdict === "Needs work" ? " owner-needs-work" : ""}${currentOwnerVerdict === "Impressive" ? " owner-impressive" : ""}`;
   details.open = expandedQuestionIds.has(item.id);
   details.addEventListener("toggle", () => {
     if (details.open) expandedQuestionIds.add(item.id);
@@ -272,11 +273,12 @@ function createQuestionEntry(item) {
     test.textContent = "Test";
     labels.append(test);
   }
-  if (item.needsWork) {
-    const needsWork = document.createElement("span");
-    needsWork.className = "needs-work-label";
-    needsWork.textContent = "Needs work";
-    labels.append(needsWork);
+  if (currentOwnerVerdict) {
+    const ownerVerdict = currentOwnerVerdict;
+    const ownerLabel = document.createElement("span");
+    ownerLabel.className = `owner-verdict-label ${statusClass(ownerVerdict)}`;
+    ownerLabel.textContent = `You: ${ownerVerdict.toLowerCase()}`;
+    labels.append(ownerLabel);
   }
   const quality = document.createElement("span");
   const qualityClass = statusClass(item.qualityRating || "Not rated");
@@ -329,22 +331,20 @@ function createQuestionEntry(item) {
 
   const ownerReviewActions = document.createElement("div");
   ownerReviewActions.className = "owner-review-actions";
-  const needsWorkButton = document.createElement("button");
-  needsWorkButton.type = "button";
-  needsWorkButton.className = `needs-work-button${item.needsWork ? " marked" : ""}`;
-  needsWorkButton.setAttribute("aria-pressed", String(Boolean(item.needsWork)));
-  needsWorkButton.textContent = item.needsWork ? "Marked as needs work — undo" : "Mark as needs work";
+  const verdictButtons = document.createElement("div");
+  verdictButtons.className = "owner-verdict-buttons";
   const ownerReviewNote = document.createElement("p");
   ownerReviewNote.className = "owner-review-note";
-  ownerReviewNote.textContent = "Your mark is saved separately from the automatic score.";
-  needsWorkButton.addEventListener("click", async () => {
-    needsWorkButton.disabled = true;
+  ownerReviewNote.textContent = "Your judgment teaches the future rating system. Automatic grades stay hidden until they agree with you.";
+
+  async function saveOwnerVerdict(verdict, buttons) {
+    buttons.forEach((button) => { button.disabled = true; });
     listError.textContent = "";
     try {
       const response = await fetch("/api/community-questions/review", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ id: item.id, needsWork: !item.needsWork }),
+        body: JSON.stringify({ id: item.id, ownerVerdict: currentOwnerVerdict === verdict ? "" : verdict }),
       });
       const data = await response.json();
       if (response.status === 401) {
@@ -353,18 +353,40 @@ function createQuestionEntry(item) {
         return;
       }
       if (!response.ok) throw new Error(data.error || "Could not save your review.");
-      items = ownerReviewFilter.value === "needs-work" && !data.needsWork
+      const activeFilter = ownerReviewFilter.value;
+      const expectedVerdict = activeFilter === "needs-work"
+        ? "Needs work"
+        : activeFilter === "impressive"
+          ? "Impressive"
+          : activeFilter === "acceptable" ? "Acceptable" : "";
+      items = expectedVerdict && data.ownerVerdict !== expectedVerdict
         ? items.filter((current) => current.id !== item.id)
         : items.map((current) => current.id === item.id
-          ? { ...current, needsWork: data.needsWork }
+          ? { ...current, ownerVerdict: data.ownerVerdict, needsWork: data.needsWork }
           : current);
       renderItems();
     } catch (error) {
       listError.textContent = error.message || "Could not save your review.";
-      needsWorkButton.disabled = false;
+      buttons.forEach((button) => { button.disabled = false; });
     }
+  }
+
+  const verdictOptions = [
+    ["Impressive", "This impressed me"],
+    ["Acceptable", "Good enough"],
+    ["Needs work", "Needs work"],
+  ];
+  const buttons = verdictOptions.map(([verdict, label]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `owner-verdict-button ${statusClass(verdict)}${currentOwnerVerdict === verdict ? " marked" : ""}`;
+    button.setAttribute("aria-pressed", String(currentOwnerVerdict === verdict));
+    button.textContent = label;
+    button.addEventListener("click", () => saveOwnerVerdict(verdict, buttons));
+    return button;
   });
-  ownerReviewActions.append(needsWorkButton, ownerReviewNote);
+  verdictButtons.append(...buttons);
+  ownerReviewActions.append(verdictButtons, ownerReviewNote);
   body.append(ownerReviewActions);
   details.append(summary, body);
   return details;
