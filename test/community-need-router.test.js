@@ -278,6 +278,7 @@ test("verified rule text is rendered as a concise resident answer", async () => 
   assert.match(pool.answer, /pool is closed/i);
   assert.match(pool.answer, /pool closes at 8:45 p\.m\./i);
   assert.doesNotMatch(pool.answer, /9:00 am|Key details/i);
+  assert.doesNotMatch(pool.answer, /p\.m\.\./i);
 });
 
 test("a supported detail survives when another detail in the same need is unresolved", async () => {
