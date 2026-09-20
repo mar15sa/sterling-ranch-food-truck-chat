@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-17T20:00:00.000Z",
+  "decisionId": "owner-source-approval-20260917",
+  "authorization": "The owner approved both current-source proposals on September 17, 2026: update the trash schedule to include Parkvale while retaining the existing helpful details and recycling link, and retain the Architectural & Community Standards team-purpose statement while removing the former generic design-review email from that page's approved evidence.",
+  "decisions": [
+    {
+      "decisionId": "trash-recurring-service",
+      "scopeKind": "scoped-claims",
+      "scope": "Waste Connections as the listed provider; recurring collection days for Providence, Ascent, Prospect, and Parkvale; 7 a.m. bin placement; same-day screened storage; named-holiday one-day delay; CAB concern form; and WasteConnect app route only. A particular pickup date or delay still requires live schedule evidence.",
+      "approvedClaims": [
+        "trash-recurring-service-guidance",
+        "trash-cab-concern-route",
+        "trash-wasteconnect-app-route"
+      ],
+      "withheldClaims": [
+        "date-specific-pickup",
+        "outages",
+        "missed-pickups",
+        "charges",
+        "contacts",
+        "bulk-item-terms",
+        "provider-promises"
+      ],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "Please submit this form",
+            "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+            "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
+          },
+          "display": {
+            "label": "Open the CAB trash and recycling concern form",
+            "actionType": "information"
+          }
+        },
+        {
+          "evidence": {
+            "label": "Apple Store",
+            "url": "https://apps.apple.com/app/id1442351850",
+            "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+          },
+          "display": {
+            "label": "Open WasteConnect",
+            "actionType": "information"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentHash": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+          "hashScheme": "page-text-actions-v1"
+        }
+      ],
+      "title": "Trash & Recycling",
+      "sourceType": "services",
+      "authorityClass": "official-page",
+      "checkedAt": "2026-09-17T20:00:00.000Z",
+      "documentFingerprint": "",
+      "facts": [
+        {
+          "id": "trash-recurring-guidance",
+          "approvalClaim": "trash-recurring-service-guidance",
+          "text": "Trash is collected every week: Monday in Providence, Tuesday in Ascent, and Thursday in Prospect and Parkvale. Recycling is picked up every other week on the same community day.",
+          "facet": "schedule",
+          "type": "schedule",
+          "scopeKey": "trash-recurring-service-guidance",
+          "subjectKey": "trash and recycling collection schedule",
+          "value": "Trash is collected every week: Monday in Providence, Tuesday in Ascent, and Thursday in Prospect and Parkvale. Recycling is picked up every other week on the same community day.",
+          "context": "Trash is collected every week: Monday in Providence, Tuesday in Ascent, and Thursday in Prospect and Parkvale. Recycling is picked up every other week on the same community day.",
+          "supportingQuote": "For Providence, trash is picked up weekly on Monday, and recycling is picked up every other Monday. For Ascent, trash is picked up weekly on Tuesday, and recycling is picked up every other Tuesday. For Prospect and Parkvale, trash is picked up weekly on Thursday, and recycling is picked up every other Thursday."
+        },
+        {
+          "id": "trash-bin-timing",
+          "approvalClaim": "trash-recurring-service-guidance",
+          "text": "Put bins out by 7 a.m. and return them to a screened location by the end of pickup day.",
+          "facet": "specification",
+          "type": "information",
+          "scopeKey": "trash-bin-timing",
+          "subjectKey": "trash and recycling collection schedule",
+          "value": "Put bins out by 7 a.m. and return them to a screened location by the end of pickup day.",
+          "context": "Put bins out by 7 a.m. and return them to a screened location by the end of pickup day.",
+          "supportingQuote": "Make sure to place bins outside by 7 am for trash collection. Containers for pickup may be placed on the street or alleyway on the morning of pickup and must be returned to an appropriately screened location by the end of the pickup day."
+        },
+        {
+          "id": "trash-holiday-delay",
+          "approvalClaim": "trash-recurring-service-guidance",
+          "text": "New Year's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas move pickup back by one day.",
+          "facet": "schedule",
+          "type": "information",
+          "scopeKey": "trash-holiday-delay",
+          "subjectKey": "trash and recycling collection schedule",
+          "value": "New Year's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas move pickup back by one day.",
+          "context": "New Year's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas move pickup back by one day.",
+          "supportingQuote": "Trash pickup will be delayed by one day for the following holidays: New Year's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, Christmas."
+        }
+      ],
+      "actions": [
+        {
+          "id": "open-trash-concern-form",
+          "approvalClaim": "trash-cab-concern-route",
+          "label": "Open the CAB trash and recycling concern form",
+          "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+          "actionType": "information",
+          "evidence": {
+            "label": "Please submit this form",
+            "url": "https://www.sterlingranchcab.com/298/Submit-Your-Feedback",
+            "context": "Report a Concern Please submit this form with any questions or concerns regarding trash and recycling pickup."
+          }
+        },
+        {
+          "id": "open-wasteconnect-app",
+          "approvalClaim": "trash-wasteconnect-app-route",
+          "label": "Open WasteConnect",
+          "url": "https://apps.apple.com/app/id1442351850",
+          "actionType": "information",
+          "evidence": {
+            "label": "Apple Store",
+            "url": "https://apps.apple.com/app/id1442351850",
+            "context": "Download the WasteConnect app to view your pickup schedule, set up reminders, contact customer service, and more!"
+          }
+        }
+      ],
+      "verification": {
+        "currentness": "The complete live official CAB page was fetched and normalized on September 17, 2026.",
+        "completeness": "The approved schedule includes all four communities shown on the current page and retains the approved bin, holiday, concern-form, and app details.",
+        "retrievedUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+        "replacementUrl": ""
+      }
+    },
+    {
+      "decisionId": "recycling-tips-visual-link",
+      "scopeKind": "scoped-claims",
+      "scope": "Current official recycling-tips PDF destination only. The handout does not establish current accepted materials, service terms, schedules, contacts, or provider promises.",
+      "approvedClaims": [
+        "recycling-tips-visual-route"
+      ],
+      "withheldClaims": [
+        "accepted-materials",
+        "service-terms",
+        "schedule",
+        "contacts",
+        "provider-promises"
+      ],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "Waste Connection Recycling Tips (PDF)",
+            "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+            "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+          },
+          "display": {
+            "label": "Open the recycling tips visual",
+            "actionType": "information"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+          "contentHash": "4033257251caf437fc9740ece78070ff7f3d04c9808771cab6da2ecd6a908501",
+          "hashScheme": "page-text-actions-v1"
+        }
+      ],
+      "title": "Recycling tips visual",
+      "sourceType": "services",
+      "authorityClass": "official-page",
+      "checkedAt": "2026-09-17T20:00:00.000Z",
+      "documentFingerprint": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "open-recycling-tips-visual",
+          "approvalClaim": "recycling-tips-visual-route",
+          "label": "Open the recycling tips visual",
+          "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+          "actionType": "information",
+          "evidence": {
+            "label": "Waste Connection Recycling Tips (PDF)",
+            "url": "https://sterlingranchcab.com/DocumentCenter/View/168/Waste-Connection-Recycling-Tips-PDF",
+            "context": "Helpful Documents Waste Connection Recycling Tips (PDF) Waste Connections Recycling Right Presentation (PDF)"
+          }
+        }
+      ],
+      "verification": {
+        "currentness": "The live official CAB page was fetched on September 17, 2026 and still contains the exact recycling-tips PDF link.",
+        "completeness": "This remains a navigation-only approval; no recycling rules are inferred from the handout link.",
+        "retrievedUrl": "https://sterlingranchcab.com/247/Trash-Recycling",
+        "replacementUrl": ""
+      }
+    },
+    {
+      "decisionId": "complete-cab-review-20260914-dc4ed3f4a876",
+      "scopeKind": "scoped-claims",
+      "scope": "Current official Architectural & Community Standards page supports the team's role in helping residents navigate requirements. Requirements remain governed by the adopted Code, and design-review submissions use the separately approved Design Review source.",
+      "approvedClaims": [
+        "complete-cab-review-20260914-dc4ed3f4a876-team-help"
+      ],
+      "withheldClaims": [
+        "The former generic info@sterlingranchcab.com contact is no longer present on this page and is not approved for design-review submissions.",
+        "The broad obligation to follow all governing documents is not an independent page-level binding-rule approval.",
+        "Physical address pending cross-page reconciliation."
+      ],
+      "approvedActions": [],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+          "contentHash": "438b6ed592dd4b51d3ed6c58733d8356ad703d19f50ea77ca7adc960d1a672aa",
+          "hashScheme": "page-text-v1"
+        }
+      ],
+      "title": "Architectural & Community Standards",
+      "sourceType": "services",
+      "authorityClass": "official-page",
+      "checkedAt": "2026-09-17T20:00:00.000Z",
+      "documentFingerprint": "",
+      "facts": [
+        {
+          "id": "complete-cab-review-20260914-dc4ed3f4a876-team-help",
+          "text": "The Architectural & Community Standards team is here to help residents navigate the requirements.",
+          "facet": "information",
+          "type": "information",
+          "scopeKey": "property-design-review",
+          "subjectKey": "architectural and community standards",
+          "value": "The Architectural & Community Standards team is here to help residents navigate the requirements.",
+          "context": "The Architectural & Community Standards team is here to help residents navigate the requirements.",
+          "supportingQuote": "The Architectural & Community Standards team is here to help residents navigate the requirements."
+        }
+      ],
+      "actions": [],
+      "verification": {
+        "currentness": "The complete live official CAB page was fetched and normalized on September 17, 2026.",
+        "completeness": "The team-purpose sentence remains present. The generic email formerly approved from this page is absent and has been removed from this projection.",
+        "retrievedUrl": "https://sterlingranchcab.com/198/Architectural-Community-Standards",
+        "replacementUrl": "https://sterlingranchcab.com/175/Design-Review"
+      }
+    }
+  ]
+}

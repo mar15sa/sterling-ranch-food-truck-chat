@@ -1,0 +1,50 @@
+[
+  {
+    "id": "trash-village-weekdays",
+    "question": "Which neighborhoods get trash on Monday, Tuesday, and Thursday, and is recycling weekly too?",
+    "mustMatch": ["Providence[^.]*Monday", "Ascent[^.]*Tuesday", "Prospect and Parkvale[^.]*Thursday", "recycling.*every other"],
+    "mustNotMatch": ["couldn.t verify", "holiday"]
+  },
+  {
+    "id": "snow-mail-alley-thresholds",
+    "question": "How much snow triggers priority clearing at the mail kiosks versus the alleys?",
+    "mustMatch": ["Mail Kiosks?[^.]*2.?\\s*(?:inch|\")", "Alley Areas?[^.]*4.?\\s*(?:inch|\")"],
+    "mustNotMatch": ["couldn.t verify", "homeowners are responsible"]
+  },
+  {
+    "id": "caregiver-pay-at-pickup",
+    "question": "When do I pay for the caregiver pass, and can I use a check instead of a card?",
+    "mustMatch": ["Payment will be due at pickup", "credit/debit card, check, and cash"],
+    "mustNotMatch": ["couldn.t verify", "guest pass"]
+  },
+  {
+    "id": "chase-drain-routing",
+    "question": "For a chase drain, does a public-road driveway go through the county while a shared-drive home uses a CAB inspection request?",
+    "mustMatch": ["public road.*Douglas County", "shared drive.*Inspection Request Form"],
+    "mustNotMatch": ["couldn.t verify", "snow removal"]
+  },
+  {
+    "id": "water-payment-fees",
+    "question": "Is bank-account autopay free, and what fee applies if I pay my water bill by card?",
+    "mustMatch": ["ACH.*free of charge|automatic withdrawal.*free of charge", "2\\.95%"],
+    "mustNotMatch": ["couldn.t verify", "fixed and operating costs"]
+  },
+  {
+    "id": "snow-angels-help",
+    "question": "What do Snow Angels help with if someone physically can't shovel?",
+    "mustMatch": ["clear sidewalks and driveways", "unable to shovel"],
+    "mustNotMatch": ["couldn.t verify", "CAB removes snow in common areas"]
+  },
+  {
+    "id": "solar-exterior-approval",
+    "question": "Do I need application approval before adding solar panels to the outside of my house?",
+    "mustMatch": ["application approval.*required|approval is required"],
+    "mustNotMatch": ["couldn.t verify", "uniform.*gridded"]
+  },
+  {
+    "id": "pickleball-program-precedence",
+    "question": "If regular pickleball play conflicts with a CAB lesson or tournament, which one gets priority?",
+    "mustMatch": ["tournaments and lessons take precedence"],
+    "mustNotMatch": ["couldn.t verify", "nonresident"]
+  }
+]

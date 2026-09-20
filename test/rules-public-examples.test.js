@@ -133,6 +133,43 @@ for (const example of EXAMPLES) {
   });
 }
 
+test("the audited candidate preserves every richer public-example answer", async () => {
+  for (const example of EXAMPLES) {
+    const shared = {
+      index: communityIndex,
+      communityProfile,
+      communityId: "sterling-ranch",
+      answerRulesQuestion,
+      synthesizeCommunityAnswer: false,
+      getFoodTruckAnswer: example.foodTruck ? async () => ({
+        date: "2026-08-29",
+        friendlyDate: "tomorrow",
+        truck: "Example Eats",
+        trucks: [{ name: "Example Eats", location: "Prospect Park" }],
+        sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
+        checkedAt: "2026-08-28T00:00:00.000Z",
+        menu: { links: [], items: [] },
+      }) : undefined,
+    };
+    const baseline = await answerCommunityQuestion(example.question, shared);
+    const audited = await answerCommunityQuestion(example.question, {
+      ...shared,
+      isTest: true,
+      requestContractMode: "need-audited-candidate",
+      needRouterBackend: "current-local",
+      planCommunitySearch: false,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    });
+    assert.equal(audited.answer, baseline.answer, example.question);
+    assert.deepEqual(
+      (audited.actions || []).map(({ label, url }) => ({ label, url })),
+      (baseline.actions || []).map(({ label, url }) => ({ label, url })),
+      example.question,
+    );
+    assert.equal(audited._requestContract.candidate.baselinePreserved, true, example.question);
+  }
+});
+
 test("public example questions in the page are covered by the regression suite", async () => {
   const fs = require("node:fs/promises");
   const path = require("node:path");

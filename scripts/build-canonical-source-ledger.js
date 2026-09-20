@@ -22,6 +22,10 @@ const v8Path = path.join(root, 'data', 'community-source-approvals-v8.json');
 const v8Decisions = fs.existsSync(v8Path) ? JSON.parse(fs.readFileSync(v8Path, 'utf8')) : { decisions: [] };
 const v9Path = path.join(root, 'data', 'community-source-approvals-v9.json');
 const v9Decisions = fs.existsSync(v9Path) ? JSON.parse(fs.readFileSync(v9Path, 'utf8')) : { decisions: [] };
+const v10Path = path.join(root, 'data', 'community-source-approvals-v10.json');
+const v10Decisions = fs.existsSync(v10Path) ? JSON.parse(fs.readFileSync(v10Path, 'utf8')) : { decisions: [] };
+const v11Path = path.join(root, 'data', 'community-source-approvals-v11.json');
+const v11Decisions = fs.existsSync(v11Path) ? JSON.parse(fs.readFileSync(v11Path, 'utf8')) : { decisions: [] };
 const outputPath = path.join(root, "data", "canonical-source-ledger.json");
 
 function buildLedger() {
@@ -104,11 +108,29 @@ function buildLedger() {
     }
   }
 
-  ledger.decisionApplications = [];
-  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || []), ...(v7Decisions.decisions || []), ...(v8Decisions.decisions || []), ...(v9Decisions.decisions || [])]) {
+  for (const decision of v10Decisions.decisions || []) {
     for (const version of decision.versions || []) {
-      const packageData = (v9Decisions.decisions || []).includes(decision)
-        ? v9Decisions : (v8Decisions.decisions || []).includes(decision) ? v8Decisions
+      upsertObservation(ledger, { ...version, title: decision.title,
+        checkedAt: decision.checkedAt,
+      }, { origin: 'community-source-approvals-v10', communityId: v10Decisions.communityId });
+    }
+  }
+
+  for (const decision of v11Decisions.decisions || []) {
+    for (const version of decision.versions || []) {
+      upsertObservation(ledger, { ...version, title: decision.title,
+        checkedAt: decision.checkedAt,
+      }, { origin: 'community-source-approvals-v11', communityId: v11Decisions.communityId });
+    }
+  }
+
+  ledger.decisionApplications = [];
+  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || []), ...(v7Decisions.decisions || []), ...(v8Decisions.decisions || []), ...(v10Decisions.decisions || []), ...(v9Decisions.decisions || []), ...(v11Decisions.decisions || [])]) {
+    for (const version of decision.versions || []) {
+      const packageData = (v11Decisions.decisions || []).includes(decision)
+        ? v11Decisions : (v9Decisions.decisions || []).includes(decision) ? v9Decisions
+        : (v10Decisions.decisions || []).includes(decision) ? v10Decisions
+        : (v8Decisions.decisions || []).includes(decision) ? v8Decisions
         : (v7Decisions.decisions || []).includes(decision) ? v7Decisions
         : (v6Decisions.decisions || []).includes(decision) ? v6Decisions
         : (v5Decisions.decisions || []).includes(decision) ? v5Decisions : scopedDecisions;

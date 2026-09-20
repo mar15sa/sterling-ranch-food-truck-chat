@@ -23702,18 +23702,38 @@
     },
     {
       "sourceUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
-      "title": "Park Pass Reimbursement Form 62",
+      "title": "Park Pass Car Registration Reimbursement Form",
       "kind": "page",
       "scopeStatus": "in-scope",
       "categoryIds": [
         "facilities-live-services"
       ],
-      "disposition": "technical-exclusion",
-      "reason": "Crawler exclusion: technical-or-transaction-route.",
-      "versionFingerprint": "",
-      "indexed": false,
+      "disposition": "answer-evidence",
+      "reason": "Approve the official park-pass reimbursement form action and its vehicle-registration receipt instruction.",
+      "versionFingerprint": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
+      "indexed": true,
       "duplicateOf": "",
-      "approvedRole": ""
+      "approvedRole": "owner-approved-scoped-evidence",
+      "categoryId": "facilities-live-services",
+      "reviewedAt": "2026-09-16T21:38:45.496Z",
+      "reviewedContentHash": "e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824",
+      "approvedClaimCount": 2,
+      "approvedActionCount": 1,
+      "approvedClaims": [
+        "Park Pass Car Registration Reimbursement Form",
+        "Please upload a copy of your vehicle registration receipt to verify purchase of the park pass"
+      ],
+      "withheldClaims": [
+        "A reimbursement amount.",
+        "Eligibility, approval, processing time, or submission deadline.",
+        "A guarantee that submitting the form will result in reimbursement."
+      ],
+      "verification": {
+        "currentness": "The live official CAB form was fetched and checked on September 16, 2026.",
+        "completeness": "The complete normalized form page was inspected. Approval covers the form identity, destination, and receipt instruction only.",
+        "retrievedUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
+        "replacementUrl": ""
+      }
     },
     {
       "sourceUrl": "https://sterlingranchcab.com/FormCenter/Trash-8/Trash-and-Recycling-Notifications-63",
@@ -24114,18 +24134,37 @@
     },
     {
       "sourceUrl": "https://sterlingranchcab.com/m/faq?cat=16",
-      "title": "FAQs - CivicPlus.CMS.FAQ",
+      "title": "Water FAQ — landscape establishment billing",
       "kind": "page",
       "scopeStatus": "in-scope",
       "categoryIds": [
         "utilities-support"
       ],
       "disposition": "answer-evidence",
-      "reason": "Useful current service page with exact-version approvals for limited operational claims.",
-      "versionFingerprint": "31503c2ebd2284f1a51e93d66d3278707d55183a635750a19d9a66ceccef3440",
-      "indexed": false,
+      "reason": "Approve only the official CAB FAQ statement about the 45-day establishment-period billing treatment.",
+      "versionFingerprint": "9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49",
+      "indexed": true,
       "duplicateOf": "https://sterlingranchcab.com/Faq.aspx?QID=69",
-      "approvedRole": ""
+      "approvedRole": "owner-approved-scoped-evidence",
+      "categoryId": "utilities-support",
+      "reviewedAt": "2026-09-16T21:38:45.496Z",
+      "reviewedContentHash": "9ece96313c707393966ec292e8eb39390a7204a08a7a30190a6378c2cb40ec49",
+      "approvedClaimCount": 1,
+      "approvedActionCount": 0,
+      "approvedClaims": [
+        "Water used during the establishment period (45 days following the installation of turf and plant material) will be billed at the first tier fee rate, and will not count against the water budget."
+      ],
+      "withheldClaims": [
+        "Water is free during the establishment period.",
+        "A current rate amount or dollar discount.",
+        "A general water-budget exemption beyond the stated 45-day establishment period."
+      ],
+      "verification": {
+        "currentness": "The live official CAB FAQ was fetched and checked on September 16, 2026.",
+        "completeness": "The approval covers one exact sentence from the complete normalized FAQ page and no broader billing conclusion.",
+        "retrievedUrl": "https://sterlingranchcab.com/m/faq?cat=16",
+        "replacementUrl": ""
+      }
     },
     {
       "sourceUrl": "https://sterlingranchcab.com/m/faq?cat=18",
