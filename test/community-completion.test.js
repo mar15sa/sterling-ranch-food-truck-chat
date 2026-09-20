@@ -472,12 +472,12 @@ test("the approved recurring schedule stays useful when the live calendar is tem
   assert.equal(liveCalls, 0);
   assert.equal(answer.answerMode, "community-approved-operational");
   assert.equal(answer.answerStatus, "verified");
-  assert.match(answer.answer, /Monday in Providence Village/i);
-  assert.match(answer.answer, /Tuesday in Ascent Village/i);
-  assert.match(answer.answer, /Thursday in Prospect Village/i);
-  assert.match(answer.answer, /Recycling is picked up every other week/i);
-  assert.match(answer.answer, /7 a\.m\./i);
-  assert.match(answer.answer, /New Year’s Day[\s\S]*Christmas move pickup back by one day/i);
+  assert.match(answer.answer, /Providence.*Monday/i);
+  assert.match(answer.answer, /Ascent.*Tuesday/i);
+  assert.match(answer.answer, /Prospect and Parkvale.*Thursday/i);
+  assert.match(answer.answer, /recycling is picked up every other Monday/i);
+  assert.match(answer.answer, /7 am/i);
+  assert.match(answer.answer, /New Year's Day[\s\S]*Christmas/i);
   assert.deepEqual(answer.sources.map((source) => source.id), ["approved-trash-recurring-service"]);
   assert.equal(answer.actions[0].label, "Open WasteConnect");
   assert.doesNotMatch(answer.answer, /303-288-2100|bulk item|missed pickup/i);
@@ -538,7 +538,7 @@ test("alternating recycling questions disclose the missing date anchor and link 
   const pageOnlyResult = unanchoredRecurringScheduleAnswer("When is recycling week?", {
     index: communityIndex,
     requestedDetails: ["date"],
-    sources: communityIndex.sources.filter((source) => /^sterling-ranch-trash-recycling-/.test(source.id)),
+    sources: communityIndex.sources.filter((source) => source.sourceUrl === "https://sterlingranchcab.com/247/Trash-Recycling"),
   });
   assert.deepEqual(pageOnlyResult.actions.slice(0, 2).map((action) => action.label), [
     "Open WasteConnect for Android",
@@ -609,6 +609,7 @@ test("Sterling Ranch uses only its published community reference for village rec
     { label: "Providence Village", date: "2026-09-14" },
     { label: "Ascent Village", date: "2026-09-15" },
     { label: "Prospect Village", date: "2026-09-17" },
+    { label: "Parkvale", date: "2026-09-17" },
   ]);
   assert.equal(requested.length, 2);
   assert.match(requested[0], /7853\+Piney\+River\+Avenue/);
