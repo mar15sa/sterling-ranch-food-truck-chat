@@ -52,6 +52,27 @@ function isImplausibleTruckName(truckName = "") {
   return !/[a-z]/i.test(normalized);
 }
 
+function findRepeatedTruckNameItems(truckName = "", items = []) {
+  const normalizedTruck = normalizeTruckName(truckName).toLowerCase().replace(/\s*&\s*/g, " ");
+  if (!normalizedTruck) return [];
+
+  return items.filter((item) => {
+    const normalizedItem = normalizeTruckName(item?.name).toLowerCase().replace(/\s*&\s*/g, " ");
+    return normalizedItem.startsWith(`${normalizedTruck} `);
+  });
+}
+
+function assertMenuPresentationFixtures() {
+  const repeated = findRepeatedTruckNameItems("Uptown & Humboldt", [
+    { name: "Uptown & Humboldt - American Burger" },
+    { name: "Berlin Burger" },
+  ]);
+
+  if (repeated.length !== 1 || repeated[0].name !== "Uptown & Humboldt - American Burger") {
+    throw new Error("Menu presentation fixture failed to detect a repeated truck name.");
+  }
+}
+
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -260,6 +281,7 @@ async function assertLiveSiteReachable() {
 
 async function main() {
   assertMenuQualityFixtures();
+  assertMenuPresentationFixtures();
 
   if (process.argv.includes("--fixtures-only")) {
     console.log("Menu quality fixtures passed.");
@@ -300,14 +322,19 @@ async function main() {
 
     const data = await fetchJson(`/api/ask?date=${date}&q=health-check`);
     const featured = data.menu?.featuredLinks || {};
+    const items = data.menu?.items || [];
     const officialLinkIssues = await verifyListedLinks([featured.official]);
-    if (officialLinkIssues.length) {
+    const repeatedTruckNameItems = findRepeatedTruckNameItems(data.truck || truck, items);
+    if (officialLinkIssues.length || repeatedTruckNameItems.length) {
       failures.push({
         date,
         truck: data.truck || truck,
         hasFeaturedLink: Boolean(featured.official || featured.facebook || featured.instagram),
-        itemCount: data.menu?.items?.length || 0,
+        itemCount: items.length,
         linkValidationIssue: officialLinkIssues.join("; "),
+        menuPresentationIssue: repeatedTruckNameItems.length
+          ? `item name(s) repeat truck name: ${repeatedTruckNameItems.map((item) => item.name).join(", ")}`
+          : "",
       });
     }
   }
@@ -335,8 +362,9 @@ async function main() {
     const hasMenuItems = Boolean(items.length);
     const junkItems = items.filter(isJunkMenuItem);
     const menuQualityIssue = hasMenuItems ? describeMenuQuality(items) : "";
+    const repeatedTruckNameItems = findRepeatedTruckNameItems(data.truck, items);
 
-    if (!hasFeaturedLink || !hasMenuItems || junkItems.length || menuQualityIssue) {
+    if (!hasFeaturedLink || !hasMenuItems || junkItems.length || menuQualityIssue || repeatedTruckNameItems.length) {
       failures.push({
         date,
         truck: data.truck,
@@ -344,6 +372,9 @@ async function main() {
         itemCount: items.length,
         junkItems: junkItems.map((item) => item.name).join(", "),
         menuQualityIssue,
+        menuPresentationIssue: repeatedTruckNameItems.length
+          ? `item name(s) repeat truck name: ${repeatedTruckNameItems.map((item) => item.name).join(", ")}`
+          : "",
       });
     }
   }
@@ -358,6 +389,8 @@ async function main() {
           failure.junkItems ? `, junk items=${failure.junkItems}` : ""
         }${
           failure.menuQualityIssue ? `, menu quality=${failure.menuQualityIssue}` : ""
+        }${
+          failure.menuPresentationIssue ? `, menu presentation=${failure.menuPresentationIssue}` : ""
         }${
           failure.linkValidationIssue ? `, link validation=${failure.linkValidationIssue}` : ""
         }`

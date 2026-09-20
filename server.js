@@ -1083,25 +1083,25 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Uptown & Humboldt - American Burger",
+        name: "American Burger",
         description:
           "Brioche bun, cheddar cheese, tomato, microgreens, pickled onions, and G's Fry Sauce.",
         price: "$14.00",
       },
       {
-        name: "Uptown & Humboldt - Berlin Burger",
+        name: "Berlin Burger",
         description:
           "Pretzel bun with mozzarella, sauteed cabbage, microgreens, tomato, ground seed mustard, pickled onions, crushed kettle chips, and G's Fry Sauce.",
         price: "$10.00",
       },
       {
-        name: "Uptown & Humboldt - Falafel Gyro",
+        name: "Falafel Gyro",
         description:
           "Vegetarian gyro with lettuce, tomato, cucumber, feta, pickled onions, harissa, and tzatziki.",
         price: "$10.00",
       },
       {
-        name: "Uptown & Humboldt - Lamb Gyro",
+        name: "Lamb Gyro",
         description:
           "Lamb gyro with lettuce, tomato, cucumber, pickled onions, feta, and garlic cilantro aioli.",
         price: "$10.00",
