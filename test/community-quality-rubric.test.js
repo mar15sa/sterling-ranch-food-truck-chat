@@ -34,7 +34,8 @@ test("a complete, specific, human-first answer earns an unpublished excellent di
   const assessment = assessCommunityAnswerQuality(row.question, row.result);
   assert.equal(assessment.rating, "Excellent");
   assert.equal(assessment.score, 5);
-  assert.equal(assessment.dimensionTotal, 10);
+  assert.equal(assessment.dimensionTotal, 12);
+  assert.equal(assessment.dimensionMaximum, 12);
   assert.equal(assessment.residentEffort, "Resolved");
   assert.equal(assessment.calibrated, false);
   assert.equal(assessment.publishable, false);
@@ -127,6 +128,23 @@ test("legacy answers without the need-first evidence contract stay unassessed", 
   });
   assert.equal(assessment.status, "unassessed");
   assert.deepEqual(assessment.issues, ["need-first-evidence-contract-required"]);
+});
+
+test("an audited preserved answer is rated from the selected evidence assessment", () => {
+  const row = candidate();
+  row.result.answerMode = "community-approved-operational";
+  row.result._requestContract.assessment = row.result.completion;
+  row.result._requestContract.candidate = { comparedDrafts: 2, baselinePreserved: true };
+  const assessment = assessCommunityAnswerQuality(row.question, row.result);
+  assert.equal(assessment.status, "diagnostic");
+  assert.equal(assessment.rating, "Excellent");
+});
+
+test("a bloated answer loses the concision dimension", () => {
+  const row = candidate({ answer: `Recycling is Tuesday. Return the bins by the end of pickup day.\n\n${"Unrequested background. ".repeat(90)}` });
+  const assessment = assessCommunityAnswerQuality(row.question, row.result);
+  assert.equal(assessment.dimensions.appropriateConcision.value, 0);
+  assert.notEqual(assessment.rating, "Excellent");
 });
 
 test("the unpublished rubric cannot enter the owner log as a calibrated rating", () => {

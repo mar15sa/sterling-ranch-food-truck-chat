@@ -514,7 +514,7 @@ test("the need-first candidate returns its answer directly without a baseline ru
   assert.ok(result._requestContract.candidate.elapsedMs >= 0);
 });
 
-test("the audited candidate uses need-first only when the baseline has no verified support", async () => {
+test("the audited candidate runs the focused path first for a qualified request", async () => {
   const result = await answerCommunityQuestion("Which food truck is here today, and what is on its menu?", {
     isTest: true,
     requestContractMode: "need-audited-candidate",
@@ -538,9 +538,10 @@ test("the audited candidate uses need-first only when the baseline has no verifi
   assert.equal(result.completion.outcome, "complete");
   assert.match(result.answer, /Ecos de Mexico/);
   assert.match(result.answer, /menu lists tacos/i);
-  assert.equal(result._requestContract.candidate.baselineRuns, 1);
+  assert.equal(result._requestContract.candidate.baselineRuns, 0);
   assert.equal(result._requestContract.candidate.baselinePreserved, false);
-  assert.equal(result._requestContract.candidate.reason, "qualified-or-unanswered-request-uses-need-first");
+  assert.equal(result._requestContract.candidate.reason, "focused-draft-covers-qualified-request");
+  assert.equal(result._requestContract.candidate.comparedDrafts, 1);
 });
 
 test("the audited candidate does not let a verified nearby price replace a qualified request", async () => {
@@ -562,7 +563,8 @@ test("the audited candidate does not let a verified nearby price replace a quali
   assert.match(result.answer, /\$20 for two nonresident players/i);
   assert.doesNotMatch(result.answer, /\$40 per court for up to four/i);
   assert.equal(result._requestContract.candidate.baselinePreserved, false);
-  assert.equal(result._requestContract.candidate.reason, "qualified-or-unanswered-request-uses-need-first");
+  assert.equal(result._requestContract.candidate.reason, "focused-draft-covers-qualified-request");
+  assert.equal(result._requestContract.candidate.comparedDrafts, 1);
 });
 
 test("the need-first candidate can use AI planning and writing without surrendering the evidence contract", async () => {

@@ -41,8 +41,8 @@ function baseOptions(overrides = {}) {
 
 function foodTruckResult() {
   return {
-    date: "2026-09-15",
-    friendlyDate: "Tuesday, September 15, 2026",
+    date: "2026-09-14",
+    friendlyDate: "Monday, September 14, 2026",
     truck: "Example Eats",
     trucks: [{ name: "Example Eats", location: "Prospect Park" }],
     sourceUrl: "https://sterlingranchcab.com/Calendar.aspx?EID=6150",
@@ -231,8 +231,8 @@ const developmentCases = [
     id: "wrong-subject-contact",
     family: "subject-boundary",
     question: "Where can I read CAB's 2025 water quality report?",
-    expectedOutcome: "missing-evidence",
-    mustInclude: [/couldn’t (?:verify|check|find)/i],
+    expectedOutcome: "complete",
+    mustInclude: [/2026 water quality report \(2025 data\)/i],
     mustExclude: [/water billing|pay online/i],
     options: () => baseOptions(),
   },

@@ -124,7 +124,7 @@ test("process durations and booking limits remain specifications", () => {
 
 test("conditional closing time, utility setup, and first-contact wording keep their operational meaning", () => {
   const pool = buildResidentRequestContract("Is the pool open right now, and if it is, how late can I stay?");
-  assert.deepEqual(pool.needs[0].requestedDetails.sort(), ["hours", "status"]);
+  assert.deepEqual(pool.needs.map((need) => need.requestedDetails), [["status"], ["hours"]]);
 
   const setup = buildResidentRequestContract("Do I need to separately set up water, sewer, trash, gas, electricity, and internet?");
   assert.deepEqual(setup.needs[0].requestedDetails, ["information"]);

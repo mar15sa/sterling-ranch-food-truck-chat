@@ -26,13 +26,20 @@ async function main() {
   const sourceById = new Map(sourceCases.map((item) => [item.id, item]));
   const requestedIds = new Set((process.argv.find((arg) => arg.startsWith("--ids="))?.slice(6) || "").split(",").filter(Boolean));
   const selectedCases = requestedIds.size ? fixture.cases.filter((item) => requestedIds.has(item.id)) : fixture.cases;
+  const requestedMode = process.argv.find((arg) => arg.startsWith("--mode="))?.slice(7) || "need-audited-candidate";
+  if (!["need-first-candidate", "need-audited-candidate"].includes(requestedMode)) {
+    throw new Error("--mode must be need-first-candidate or need-audited-candidate.");
+  }
   if (!selectedCases.length || (requestedIds.size && selectedCases.length !== requestedIds.size)) throw new Error("Every requested case ID must exist.");
   const rows = [];
   for (const item of selectedCases) {
     const source = sourceById.get(item.sourceCaseId);
     if (!source) throw new Error(`Unknown source case ${item.sourceCaseId}.`);
     const started = process.hrtime.bigint();
-    const result = await answerCommunityQuestion(item.question, source.options());
+    const result = await answerCommunityQuestion(item.question, {
+      ...source.options(),
+      requestContractMode: requestedMode,
+    });
     const elapsedMs = Number(process.hrtime.bigint() - started) / 1e6;
     const answer = String(result.answer || "");
     const missing = (item.mustInclude || []).filter((value) => !phrasePattern(value).test(answer));
@@ -40,11 +47,12 @@ async function main() {
       ? item.mustIncludeAny : [];
     const forbidden = (item.mustExclude || []).filter((value) => phrasePattern(value).test(answer));
     const proofFailures = (result.claims || []).filter((claim) => claim.verified !== true || !(claim.evidenceSourceIds || []).length);
-    const passed = result.completion?.outcome === item.expectedOutcome && !missing.length && !missingAny.length && !forbidden.length && !proofFailures.length;
+    const actualOutcome = result._requestContract?.assessment?.outcome || result.completion?.outcome || null;
+    const passed = actualOutcome === item.expectedOutcome && !missing.length && !missingAny.length && !forbidden.length && !proofFailures.length;
     const quality = assessCommunityAnswerQuality(item.question, result);
     rows.push({
       id: item.id, family: item.family, passed, expectedOutcome: item.expectedOutcome,
-      actualOutcome: result.completion?.outcome || null, missing, missingAny, forbidden,
+      actualOutcome, missing, missingAny, forbidden,
       proofFailureCount: proofFailures.length, elapsedMs, rating: quality.rating || "Not rated",
       dimensionTotal: quality.dimensionTotal ?? null, answer,
       sources: (result.sources || []).map((source) => ({ id: source.id || source.nodeId, title: source.title, retrievedForNeedIds: source.retrievedForNeedIds })),
@@ -67,6 +75,7 @@ async function main() {
     firstExecutionReportFailed: true,
     reportAttempt: 2,
     evaluationPhase: "post-reveal-development-replay",
+    answerFlow: requestedMode,
     isTest: true,
     status: useful === rows.length ? "passed" : "failed",
     scope: fixture.scope,
