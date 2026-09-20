@@ -94,6 +94,12 @@ test("operational deadlines do not become extra permission needs", () => {
   assert.equal(contract.needCount, 2);
   assert.deepEqual(contract.needs.map((need) => need.requestedDetails), [["hours"], ["hours"]]);
   assert.deepEqual(contract.needs.map((need) => need.task), ["hours", "hours"]);
+
+  const namedService = buildResidentRequestContract(
+    "When is recycling pickup in Providence Village, and when do I need to bring my recycling cans back in?"
+  );
+  assert.deepEqual(namedService.needs.map((need) => need.requestedDetails), [["date"], ["hours"]]);
+  assert.deepEqual(namedService.needs.map((need) => need.task), ["schedule", "hours"]);
 });
 
 test("keeps a generic elaboration attached to its named topic", () => {
@@ -266,6 +272,19 @@ test("recognizes conversational permission wording without treating information 
   assert.deepEqual(holidayOnlyApplication.needs[0].requestedDetails, ["action", "permission"]);
   assert.equal(holidayOnlyApplication.needs[0].evidenceKind, "governing-rule");
   assert.notEqual(buildResidentRequestContract("Can you find the DRC email address?").needs[0].task, "permission");
+  const leakContact = buildResidentRequestContract(
+    "Is there a leak relief form, when should I expect to hear back, and what email can I contact?"
+  );
+  assert.deepEqual(leakContact.needs.map((need) => need.requestedDetails), [["specification"], ["contact"]]);
+  assert.match(leakContact.needs[1].routeRequest, /leak relief form/i);
+  assert.equal(leakContact.needs[1].task, "contact");
+});
+
+test("dependent application clauses retain the resident's named project", () => {
+  const contract = buildResidentRequestContract("Can I build a shed, how tall can it be, and where do I apply?");
+  assert.deepEqual(contract.needs.map((need) => need.requestedDetails), [["permission", "specification"], ["action"]]);
+  assert.match(contract.needs[1].routeRequest, /shed/i);
+  assert.match(contract.needs[1].routeRequest, /where do I apply/i);
 });
 
 test("does not split ordinary conjunctions inside one request", () => {
