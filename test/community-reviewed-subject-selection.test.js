@@ -131,7 +131,11 @@ test.describe('reviewed subject selection across related claims', () => {
     const sourceIndex = require('../data/community-index.json');
     const index = {
       ...sourceIndex,
-      sources: sourceIndex.sources.map(source => ({ ...source, staleAfter: '2026-09-21T12:00:00Z' })),
+      // Isolate the collision this test owns. The production bundle now has
+      // an exact owner-observed Atlas WiFi fact, which is covered separately.
+      sources: sourceIndex.sources
+        .filter(source => source.connectorType !== 'owner-observation')
+        .map(source => ({ ...source, staleAfter: '2026-09-21T12:00:00Z' })),
     };
     index.factLedger = buildFactLedger(index);
     for (const question of ['What is Atlas WiFi?', 'What is the Atlas coffee WiFi?']) {
