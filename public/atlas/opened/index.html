@@ -9,9 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=20260921-1">
+  <link rel="stylesheet" href="./style.css?v=20260921-4">
+  <link rel="stylesheet" href="./reality.css?v=20260921-4">
   <script src="../atlas-core.js" defer></script>
-  <script src="./app.js?v=20260921-1" defer></script>
+  <script src="./directory-core.js?v=20260921-4" defer></script>
+  <script src="./app.js?v=20260921-4" defer></script>
 </head>
 <body>
   <a class="skip" href="#details">Skip to place details</a>
@@ -35,27 +37,22 @@
       <section class="visual-column" aria-label="Interactive neighborhood">
         <div id="model-view">
           <div class="scene-heading"><span>Providence / Sterling Center</span><button type="button" id="scene-toggle">Bring together <span aria-hidden="true">↙</span></button></div>
-          <div class="scene" id="scene" aria-label="Illustrative model of Sterling Center. Use the labeled buttons to explore its places.">
-            <img class="neighborhood-plate" src="./assets/neighborhood.png" alt="Architectural model of Sterling Center and its surrounding neighborhood, with a gathering lawn in the foreground." fetchpriority="high" draggable="false">
-            <div class="roof-layer" aria-hidden="true"><img src="./assets/roof.png" alt="" draggable="false"></div>
-            <svg class="connectors" viewBox="0 0 1000 667" preserveAspectRatio="none" aria-hidden="true"><path id="wire-cafe"/><path id="wire-patio"/><path id="wire-play"/></svg>
-            <div class="piece piece-cafe" aria-hidden="true"><div class="sprite sprite-cafe"></div></div>
-            <div class="piece piece-patio" aria-hidden="true"><div class="sprite sprite-patio"></div></div>
-            <div class="piece piece-play" aria-hidden="true"><div class="sprite sprite-play"></div></div>
-            <button class="scene-pin pin-center" data-place="sterling-center" type="button"><span class="pin-dot">+</span><span>Sterling Center</span></button>
-            <button class="scene-pin pin-cafe" data-place="ranch-social" type="button"><span class="pin-dot">01</span><span>Ranch Social</span></button>
-            <button class="scene-pin pin-patio" data-place="ranch-patio" type="button"><span class="pin-dot">02</span><span>Patio & fire pit</span></button>
-            <button class="scene-pin pin-play" data-place="ranch-playground" type="button"><span class="pin-dot">03</span><span>Log playground</span></button>
-            <button class="lawn-label" data-place="providence-park" type="button">The Lawn<br>at Providence <span aria-hidden="true">↗</span></button>
-            <span class="model-caption">Illustrative architecture & placement</span>
+          <div class="scene reality-scene" id="scene" aria-label="Photo-informed exterior model of Sterling Center. Opening the directory reveals groups of real places, not indoor room positions.">
+            <span class="scene-kicker">A familiar place.<br>A little more to discover.</span>
+            <div class="building-shadow" aria-hidden="true"></div>
+            <img class="building-model" src="./assets/sterling-center.png" alt="Photo-informed model of Sterling Center: two-story brick and wood business wing beside a tall glass hall and silver diagonal-panel wall." fetchpriority="high" draggable="false">
+            <svg class="directory-connectors" viewBox="0 0 1000 667" aria-hidden="true"><path d="M500 350V440M166 440H834M166 440V480M500 440V480M834 440V480"/></svg>
+            <button class="scene-pin building-pin" data-place="sterling-center" type="button"><span class="pin-dot">+</span><span>Whole building directory</span></button>
+            <div class="center-cards" id="center-cards" aria-label="Places at Sterling Center"></div>
+            <span class="model-caption">Photo-informed exterior · directory layers, not floor plans</span>
           </div>
           <div class="opening-controls">
             <button type="button" id="assemble">Together</button>
-            <label class="slider-wrap"><span class="sr-only">Open Sterling Center</span><input id="opening" type="range" min="0" max="100" value="85" aria-valuetext="85 percent open"><span class="slider-end" aria-hidden="true"></span></label>
+            <label class="slider-wrap"><span class="sr-only">Open Sterling Center’s directory</span><input id="opening" type="range" min="0" max="100" value="85" aria-valuetext="85 percent open"><span class="slider-end" aria-hidden="true"></span></label>
             <button type="button" id="explode">Opened up</button>
             <button type="button" class="reset-scene" id="reset-scene" aria-label="Reset Sterling Center view">↺</button>
           </div>
-          <div class="scene-footnote"><span>Open a place. See what belongs together.</span><button type="button" id="show-location">See the geographic map <span aria-hidden="true">↗</span></button></div>
+          <div class="scene-footnote"><a href="https://sterlingranchcab.com/275/Sterling-Center" target="_blank" rel="noopener">See the real building ↗</a><button type="button" id="show-location">See the mapped site <span aria-hidden="true">↗</span></button></div>
         </div>
         <div id="location-view" class="alternate-view" hidden>
           <div class="scene-heading"><span id="location-heading">Around the neighborhood</span><button type="button" data-model-return>Back to the model <span aria-hidden="true">↗</span></button></div>
@@ -81,7 +78,7 @@
       <div id="discovery-links" class="discovery-links"></div>
     </section>
   </main>
-  <footer><p>A new Atlas in progress. Sterling Center is the first opening model. The full directory, walking guides and project records are available to explore.</p><div><span>Model art is illustrative, not navigation.</span><a href="/atlas" target="_blank" rel="noopener">Keep the current Atlas beside this preview ↗</a></div></footer>
+  <footer><p>A new Atlas in progress. Sterling Center’s exterior is modeled from CAB’s reference photo. Its directory was checked against community and operator pages on September 21, 2026. The full neighborhood directory, walks and project records are also available.</p><div><span>The model is a visual guide; room positions and entrances are not mapped.</span><a href="/atlas" target="_blank" rel="noopener">Keep the current Atlas beside this preview ↗</a></div></footer>
   <dialog id="directory-dialog" aria-labelledby="directory-title">
     <div class="dialog-heading"><h2 id="directory-title">Find your next stop.</h2><button id="close-directory" class="icon-button" type="button" aria-label="Close place finder">×</button></div>
     <label for="find-place" class="sr-only">Search all places and amenities</label><input id="find-place" type="search" placeholder="Try pickleball, coffee, playground…" autocomplete="off">

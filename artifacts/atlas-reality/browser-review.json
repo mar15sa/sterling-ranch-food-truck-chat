@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-09-21T18:54:25.554Z",
+  "environment": "local staging preview",
+  "viewports": [
+    "1440x1050",
+    "390x844"
+  ],
+  "passed": true,
+  "checks": [
+    "whole-building default",
+    "all 7 direct and 10 nested controls visible",
+    "health group and Suite 220",
+    "CAB contact and call-first",
+    "UCHealth urgent-care Suite 100 and operator link",
+    "101 listings in 33 destinations",
+    "pickle ball search",
+    "dialog Escape",
+    "together/open controls",
+    "mapped building footprint",
+    "walks",
+    "school unlocated state"
+  ],
+  "consoleErrors": 0,
+  "horizontalOverflow": false,
+  "residentQuestionsSubmitted": 0,
+  "limitations": [
+    "No physical touch testing",
+    "Reduced motion CSS preserved, not emulated",
+    "Photo-informed visual, not measured architecture or indoor layout"
+  ]
+}
