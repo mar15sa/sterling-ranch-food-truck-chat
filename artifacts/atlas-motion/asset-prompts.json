@@ -1,0 +1,13 @@
+{
+  "createdAt": "2026-09-21",
+  "reference": "public/atlas/opened/assets/sterling-center.png",
+  "outputs": [
+    "public/atlas/opened/assets/sterling-shell.png",
+    "public/atlas/opened/assets/sterling-roof.png"
+  ],
+  "prompts": [
+    "Use case: precise-object-edit. Edit target: the supplied transparent architectural model of Sterling Center. Produce a matching 1536x1024 RGBA layer for an exploded-view website animation. Preserve EXACT canvas, camera, building silhouette, scale, location, exterior walls/windows/materials, and ALL landscaping. Change ONLY the gray horizontal roof surfaces: remove the horizontal roof slabs and rooftop equipment so the upper top becomes a shallow, plain, uninterrupted warm cream recessed surface inside the existing parapets. Do not create any indoor rooms, floor-plan divisions, furniture or tenant placement. Exterior façades must stay identical to the reference. No text. Preserve genuine alpha background. The rooftop will be supplied by a separate overlaid asset. This must align as closely as possible with the original image when layered without resizing.",
+    "Use case: background-extraction. Edit target: supplied transparent Sterling Center architectural model. Extract ONLY the entire connected gray ROOF of both wings, with the rooftop equipment and thin roof edges, into one transparent RGBA image, exact same 1536x1024 canvas. Keep roof in its EXACT original location, shape, perspective, camera angle and scale (approximately x100 to1485,y285 to385). Delete every wall, window, brick, wood, silver wall panel, plant, walkway, shadow and all other pixels by making them transparent. Do NOT center the roof in the canvas; retain the original canvas placement with most of the canvas empty transparent. Do not add facades, underside columns, terrain, sky, text, or new shadows. This is a compositing sprite that must exactly align with the source roof at zero translation, then lift upwards through code. Genuinely transparent background, no black/white/gray fill."
+  ],
+  "notes": "Image-generation edits; matching camera/canvas, no claimed verified interior geometry. Originals retained in the Codex generated-images folder."
+}

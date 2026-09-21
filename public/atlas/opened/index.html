@@ -11,9 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css?v=20260921-4">
   <link rel="stylesheet" href="./reality.css?v=20260921-4">
+  <link rel="stylesheet" href="./motion.css?v=20260921-9">
   <script src="../atlas-core.js" defer></script>
   <script src="./directory-core.js?v=20260921-4" defer></script>
-  <script src="./app.js?v=20260921-4" defer></script>
+  <script src="./app.js?v=20260921-9" defer></script>
 </head>
 <body>
   <a class="skip" href="#details">Skip to place details</a>
@@ -27,7 +28,8 @@
       <button class="search-launch" id="search-launch" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span>Find a place or activity</span><kbd>/</kbd></button>
     </div>
     <nav class="view-nav" aria-label="Atlas views">
-      <button type="button" data-view="explore" aria-pressed="true">Explore</button>
+      <button type="button" data-view="location" aria-pressed="true">Neighborhood</button>
+      <button type="button" data-view="explore" aria-pressed="false">Sterling Center</button>
       <button type="button" data-view="walks" aria-pressed="false">Walks</button>
       <button type="button" data-view="future" aria-pressed="false">What’s coming</button>
       <button type="button" id="browse-all">All places <span aria-hidden="true">↗</span></button>
@@ -36,28 +38,40 @@
     <div id="workspace" class="workspace" hidden>
       <section class="visual-column" aria-label="Interactive neighborhood">
         <div id="model-view">
-          <div class="scene-heading"><span>Providence / Sterling Center</span><button type="button" id="scene-toggle">Bring together <span aria-hidden="true">↙</span></button></div>
-          <div class="scene reality-scene" id="scene" aria-label="Photo-informed exterior model of Sterling Center. Opening the directory reveals groups of real places, not indoor room positions.">
-            <span class="scene-kicker">A familiar place.<br>A little more to discover.</span>
+          <div class="scene-heading"><button type="button" data-view="location">← The neighborhood</button><button type="button" id="scene-toggle">Open Sterling Center <span aria-hidden="true">↗</span></button></div>
+          <div class="scene reality-scene motion-scene closed" id="scene" aria-label="Open Sterling Center to lift its roof and reveal selectable businesses, clinics and community services. Directory groups are not physical room positions.">
+            <span class="scene-kicker">Sterling Center.<br><span id="scene-step">A closer look starts here.</span></span>
             <div class="building-shadow" aria-hidden="true"></div>
-            <img class="building-model" src="./assets/sterling-center.png" alt="Photo-informed model of Sterling Center: two-story brick and wood business wing beside a tall glass hall and silver diagonal-panel wall." fetchpriority="high" draggable="false">
-            <svg class="directory-connectors" viewBox="0 0 1000 667" aria-hidden="true"><path d="M500 350V440M166 440H834M166 440V480M500 440V480M834 440V480"/></svg>
-            <button class="scene-pin building-pin" data-place="sterling-center" type="button"><span class="pin-dot">+</span><span>Whole building directory</span></button>
+            <div class="opening-building">
+              <img class="building-intact" src="./assets/sterling-center.png" alt="Sterling Center's two-story brick and wood wing beside its glass hall and silver wall." draggable="false">
+              <img class="building-shell" src="./assets/sterling-shell.png" alt="" aria-hidden="true" draggable="false">
+              <img class="building-roof" src="./assets/sterling-roof.png" alt="" aria-hidden="true" draggable="false">
+            </div>
+            <svg class="directory-connectors" viewBox="0 0 1000 800" aria-hidden="true"><path d="M470 390L180 570M500 405L500 590M530 395L820 570"/></svg>
+            <button class="scene-pin building-pin" id="open-building" type="button"><span class="pin-dot">+</span><span id="building-action">Open the building</span></button>
             <div class="center-cards" id="center-cards" aria-label="Places at Sterling Center"></div>
-            <span class="model-caption">Photo-informed exterior · directory layers, not floor plans</span>
+            <span class="model-caption">Photo-informed exterior · groups show what belongs together</span>
           </div>
           <div class="opening-controls">
             <button type="button" id="assemble">Together</button>
-            <label class="slider-wrap"><span class="sr-only">Open Sterling Center’s directory</span><input id="opening" type="range" min="0" max="100" value="85" aria-valuetext="85 percent open"><span class="slider-end" aria-hidden="true"></span></label>
+            <label class="slider-wrap"><span class="sr-only">Open Sterling Center’s directory</span><input id="opening" type="range" min="0" max="100" value="0" aria-valuetext="0 percent open"><span class="slider-end" aria-hidden="true"></span></label>
             <button type="button" id="explode">Opened up</button>
             <button type="button" class="reset-scene" id="reset-scene" aria-label="Reset Sterling Center view">↺</button>
           </div>
-          <div class="scene-footnote"><a href="https://sterlingranchcab.com/275/Sterling-Center" target="_blank" rel="noopener">See the real building ↗</a><button type="button" id="show-location">See the mapped site <span aria-hidden="true">↗</span></button></div>
+          <div class="scene-footnote"><a href="https://sterlingranchcab.com/275/Sterling-Center" target="_blank" rel="noopener">See the real building ↗</a><button type="button" id="show-location">Find it in the neighborhood <span aria-hidden="true">↗</span></button></div>
         </div>
         <div id="location-view" class="alternate-view" hidden>
-          <div class="scene-heading"><span id="location-heading">Around the neighborhood</span><button type="button" data-model-return>Back to the model <span aria-hidden="true">↗</span></button></div>
-          <div class="location-map" id="location-map"></div>
-          <div class="map-note" id="location-note"></div>
+          <div class="neighborhood-heading"><div><span class="eyebrow">Your neighborhood, in miniature</span><h2>See how it all fits.</h2></div><button type="button" data-model-return>Open Sterling Center ↗</button></div>
+          <div class="ranch-tools" aria-label="Neighborhood layers"><button type="button" data-ranch-filter="all" aria-pressed="true">Everything</button><button type="button" data-ranch-filter="outside" aria-pressed="false">Parks & outside</button><button type="button" data-ranch-filter="everyday" aria-pressed="false">Everyday places</button><button type="button" data-ranch-filter="future" aria-pressed="false">Coming next</button></div>
+          <div class="ranch-stage" id="ranch-stage">
+            <div class="ranch-canvas" id="ranch-canvas" aria-label="Rotatable model of Sterling Ranch. Drag to turn, or use the turn and zoom buttons." tabindex="0"></div>
+            <div class="ranch-labels" id="ranch-labels" aria-label="Mapped neighborhood places"></div>
+            <div class="ranch-hint" id="ranch-hint">Drag to turn · select a place to look closer</div>
+            <div class="ranch-camera" aria-label="Model controls"><button type="button" id="ranch-left" aria-label="Turn neighborhood left">↶</button><button type="button" id="ranch-right" aria-label="Turn neighborhood right">↷</button><button type="button" id="ranch-in" aria-label="Zoom neighborhood in">+</button><button type="button" id="ranch-out" aria-label="Zoom neighborhood out">−</button><button type="button" id="ranch-reset">Reset</button></div>
+            <p class="ranch-loading" id="ranch-loading" role="status">Building the neighborhood…</p>
+          </div>
+          <div class="ranch-reveal"><button type="button" id="ranch-unfold" aria-pressed="false"><span>Unfold the neighborhood</span><span aria-hidden="true">↗</span></button><p id="ranch-status" role="status">Choose a place to reveal its amenities.</p></div>
+          <div class="map-note" id="location-note">Mapped streets, paths and footprints. Heights are illustrative; this window is not the full development boundary. <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></div>
         </div>
         <div id="walks-view" class="alternate-view" hidden>
           <div class="section-intro"><span class="eyebrow">A little time outside</span><h2>Take the long way home.</h2><p>Choose a walk, see the path, and find a place to stop along the way.</p></div>

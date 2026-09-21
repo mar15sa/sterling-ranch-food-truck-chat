@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-21",
+  "environment": "local only",
+  "url": "http://127.0.0.1:4184/atlas/opened/index.html",
+  "viewports": [
+    "1440x1050",
+    "normal approx 935px",
+    "390x844"
+  ],
+  "passed": [
+    "Rotatable actual supplied map geometry and responsive slab fitting",
+    "18 located root markers; future filter exactly 3 existing reference-area markers",
+    "Future filter -> unfold -> Neighborhood nav resets chip/list/model state together",
+    "Burns selection focuses model and exposes pickleball child",
+    "Sterling Center roof lift and three independently selectable directory groups",
+    "UCHealth expands to all 3 clinics, phone carousel reveals active health group",
+    "Physical therapy official link preserved",
+    "101 listings / 33 destinations, pickle ball search",
+    "3 CAB walking guides preserved",
+    "No page horizontal overflow",
+    "All 3 building image layers loaded",
+    "No new console warnings/errors after obsolete shadow setting fixed",
+    "Local preview badge and standalone server verified"
+  ],
+  "notTested": [
+    "Physical touch hardware",
+    "Other GPU/browser combinations",
+    "Reduced-motion emulation",
+    "Assistant end-to-end suite"
+  ],
+  "limitations": [
+    "Heights and explosion spacing illustrative",
+    "No verified indoor/floorplan or topography data",
+    "Unlocated future projects remain in list"
+  ],
+  "stagingPush": false
+}
