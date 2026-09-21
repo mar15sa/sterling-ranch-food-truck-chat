@@ -104,7 +104,7 @@ test("new audited answers privately retain the unpublished rubric candidate", ()
   assert.equal(entry.ratingCandidate, "Excellent");
   assert.equal(entry.ratingCandidateScore, 5);
   const candidate = JSON.parse(entry.ratingCandidateDetails);
-  assert.equal(candidate.version, "resident-quality-rubric-v2-unpublished");
+  assert.equal(candidate.version, "resident-quality-rubric-v3-unpublished");
   assert.equal(candidate.dimensions.completeCoverage, 2);
   const properties = notionProperties(entry);
   assert.equal(properties["Rating candidate"].select.name, "Excellent");

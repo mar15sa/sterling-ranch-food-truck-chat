@@ -49,7 +49,7 @@ const {
 const { getRulesLlmMetrics } = require("./lib/rules-llm");
 const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
-const { resolveCommunityAnswerFlow } = require("./lib/community-answer-flow");
+const { resolveCommunityAnswerFlow, residentWriterConfiguration } = require("./lib/community-answer-flow");
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { calendarConfiguration, upcomingCommunityEvents } = require("./lib/community-calendar-view");
@@ -4636,14 +4636,19 @@ async function handleRulesAsk(req, res, url) {
       needFirstResidentRelease: true,
       planCommunitySearch: false,
       synthesizeCommunityAnswer: false,
+      // Retrieval drafts stay deterministic. Write the selected, audited answer
+      // once, after selection, under the deployment's existing AI setting.
       rulesOptions: { searchMode: "legacy", llmMode: "off" },
       ...(needFirstAiRelease ? {
         planResidentNeeds: (needQuestion, needOptions = {}) => planResidentNeedContract(needQuestion, {
           ...needOptions,
           model: process.env.COMMUNITY_NEED_INTERPRETER_MODEL,
         }),
+      } : {}),
+      ...(residentWriterConfiguration(COMMUNITY_ANSWER_FLOW).enabled ? {
         rewriteNeedFirstAnswer: (payload) => rewriteNeedFirstCandidate(payload, {
-          model: process.env.COMMUNITY_NEED_WRITER_MODEL,
+          model: residentWriterConfiguration(COMMUNITY_ANSWER_FLOW).model,
+          onDiagnostic: payload.onDiagnostic,
         }),
       } : {}),
     } : {}),
@@ -4731,6 +4736,7 @@ async function handleHealth(req, res) {
     requests: operationsSnapshot(),
     rulesSearch: getRulesSearchMetrics(),
     optionalLlmRewrite: getRulesLlmMetrics(),
+    residentWriter: residentWriterConfiguration(COMMUNITY_ANSWER_FLOW),
     communitySearch: getCommunitySearchMetrics(),
     communityLlm: getCommunityLlmMetrics(),
     communityAnswers: communityAnswerMetrics(),
