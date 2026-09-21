@@ -281,22 +281,20 @@ test("verified rule text is rendered as a concise resident answer", async () => 
   assert.doesNotMatch(pool.answer, /p\.m\.\./i);
 });
 
-test("a supported detail survives when another detail in the same need is unresolved", async () => {
+test("a holiday-display duration need completes from its governing claim", async () => {
   const contract = buildResidentRequestContract("When can I decorate for Halloween?");
   const result = await runNeedFirstShadow(contract, async () => ({
     ...supportedAnswer({
-      id: "seasonal-lighting",
-      title: "Official seasonal-lighting policy",
-      claim: "For Halloween lights, the approved seasonal period starts October 1 and runs through January 31.",
+      id: "holiday-displays",
+      title: "Official holiday-display rule",
+      claim: "Holiday displays are permitted 30 days before a holiday and must be removed within 30 days after it.",
     }),
     confidence: { canAnswer: true },
-    nextStep: "This rule sets the dates for seasonal lighting; it does not set a separate start date for every kind of Halloween decoration.",
   }));
-  assert.equal(result.completion.outcome, "verified-partial");
-  assert.deepEqual(result.completion.needs[0].supportedDetails, ["date"]);
-  assert.deepEqual(result.completion.needs[0].missingDetails, ["specification"]);
-  assert.match(result.answer, /Halloween lights.*October 1.*January 31/is);
-  assert.match(result.answer, /does not set a separate start date.*every kind of Halloween decoration/is);
+  assert.equal(result.completion.outcome, "complete");
+  assert.deepEqual(result.completion.needs[0].supportedDetails, ["specification"]);
+  assert.deepEqual(result.completion.needs[0].missingDetails, []);
+  assert.match(result.answer, /Holiday displays are permitted 30 days before a holiday/i);
   assert.equal(result.claims.length, 1);
 });
 
