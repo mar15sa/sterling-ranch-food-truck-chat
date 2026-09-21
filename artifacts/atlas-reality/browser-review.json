@@ -27,5 +27,17 @@
     "No physical touch testing",
     "Reduced motion CSS preserved, not emulated",
     "Photo-informed visual, not measured architecture or indoor layout"
-  ]
+  ],
+  "deployed": {
+    "revision": "cb1cd844f9d6ddf239d3ef439e38a643d6744634",
+    "checkedAt": "2026-09-21T19:02:07.187Z",
+    "checks": [
+      "photo-informed model visually inspected",
+      "whole building default",
+      "health group",
+      "physical therapy Suite 100 and official source",
+      "zero console errors"
+    ],
+    "viewportReset": true
+  }
 }

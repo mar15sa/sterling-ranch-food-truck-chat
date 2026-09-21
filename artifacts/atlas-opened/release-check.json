@@ -1,13 +1,13 @@
 {
-  "checkedAt": "2026-09-21T18:18:39.073Z",
-  "revision": "b7ea41ba7379a55f2b5793db79211e4f7aa1e204",
+  "checkedAt": "2026-09-21T18:59:56.390Z",
+  "revision": "cb1cd844f9d6ddf239d3ef439e38a643d6744634",
   "baseline": "3f5c5673551c6ef2901bccf3cf36b9265c834b32",
   "staging": "https://sterling-ranch-food-truck-chat-staging.up.railway.app",
   "production": "https://sterlingranchsociety.com",
   "residentQuestionsSubmitted": 0,
   "health": {
     "status": 200,
-    "deploymentRevision": "b7ea41ba7379a55f2b5793db79211e4f7aa1e204",
+    "deploymentRevision": "cb1cd844f9d6ddf239d3ef439e38a643d6744634",
     "deploymentReady": true
   },
   "openedFiles": [
@@ -17,7 +17,7 @@
       "stagingStatus": 200,
       "stagingNoindex": true,
       "productionStatus": 404,
-      "sha256": "3a063a1fd1fd892f71d76c6d8966af617061d00dedbe14a93c5ff565e360ce26"
+      "sha256": "55d315b08c7f939df349c1269eec18fc3a014806f924da1f0b1f2ec94bacf15f"
     },
     {
       "route": "/atlas/opened/assets/neighborhood.png",
@@ -44,12 +44,44 @@
       "sha256": "27b73159951e5e443988d23d55f123eef6f6c3c11677153bd839f15ad044674b"
     },
     {
+      "route": "/atlas/opened/assets/sterling-center.png",
+      "file": "public/atlas/opened/assets/sterling-center.png",
+      "stagingStatus": 200,
+      "stagingNoindex": true,
+      "productionStatus": 404,
+      "sha256": "9b6295ee2f79a113f9a4a4b80a1c542f0c4c466d59577c0e75956d0310b2db18"
+    },
+    {
+      "route": "/atlas/opened/directory-core.js",
+      "file": "public/atlas/opened/directory-core.js",
+      "stagingStatus": 200,
+      "stagingNoindex": true,
+      "productionStatus": 404,
+      "sha256": "e6f605278676808b6760c5ef67f7062f59c4d044b0f3b1dbd31efce82ad8b12f"
+    },
+    {
       "route": "/atlas/opened/index.html",
       "file": "public/atlas/opened/index.html",
       "stagingStatus": 200,
       "stagingNoindex": true,
       "productionStatus": 404,
-      "sha256": "ac33b2e60f091a50adbae4813dab44c4544a92f5390e48a60cf68b5096102edc"
+      "sha256": "d0d1a42e39323ead85508e4ca5f737bd04df3de0542e42d5d3b90e9d21afcde8"
+    },
+    {
+      "route": "/atlas/opened/reality.css",
+      "file": "public/atlas/opened/reality.css",
+      "stagingStatus": 200,
+      "stagingNoindex": true,
+      "productionStatus": 404,
+      "sha256": "02dc859a82fc16b09b0f2d6a1b0458147da2121de6779a035d8eea15ca55e69f"
+    },
+    {
+      "route": "/atlas/opened/sterling-center-directory.json",
+      "file": "public/atlas/opened/sterling-center-directory.json",
+      "stagingStatus": 200,
+      "stagingNoindex": true,
+      "productionStatus": 404,
+      "sha256": "4401c4a11bc907e3cb96fcb166475c54e0732016fa16741cba49c8bfd93090d0"
     },
     {
       "route": "/atlas/opened/style.css",
