@@ -6,6 +6,7 @@ const observations = require("../data/community-owner-observations.json");
 const index = require("../data/community-index.json");
 const profile = require("../data/communities/sterling-ranch.json");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { buildOwnerObservationSources } = require("../lib/community-owner-observations");
 const { communitySourceStatus } = require("../lib/community-source-manager");
 const { freshnessSummary } = require("../scripts/check-community-sources");
@@ -32,6 +33,9 @@ test("owner-provided onsite facts retain provenance, exact approval, and a finit
 test("Atlas WiFi paraphrases answer from the same reviewed observation", async () => {
   for (const question of [
     "What is Atlas WiFi?",
+    "What is atlas wifi",
+    "What is atlas coffee wifi?",
+    "What is the Atlas coffee WiFi?",
     "What is the WiFi password at Atlas Coffee?",
     "How do I connect to the guest network at Atlas?",
   ]) {
@@ -50,6 +54,10 @@ test("Atlas WiFi paraphrases answer from the same reviewed observation", async (
     assert.equal(result.sources[0].isOfficialResource, false, question);
     assert.match(result.answer, /Atlas Guest/, question);
     assert.match(result.answer, /GuestWiFi!/, question);
+    const assessment = scoreCommunityAnswer(question, result, {
+      expectation: { answerIncludesAll: ["Atlas Guest", "GuestWiFi!"] },
+    });
+    assert.ok(assessment.contentScore >= 4, `${question}: ${assessment.issues.join(", ")}`);
   }
 });
 

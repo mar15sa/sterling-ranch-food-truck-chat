@@ -420,11 +420,7 @@
   {
     "question": "What is Atlas WiFi?",
     "variants": ["What is atlas coffee wifi?", "What is the Atlas coffee WiFi?"],
-    "expectedClassification": "rules-question",
-    "shouldRefuse": true,
-    "expectedAnswerMode": "source-evidence-boundary",
-    "expectedNoSources": true,
-    "expectedReason": "no-single-source-support"
+    "answerIncludesAll": ["Atlas Guest", "GuestWiFi!"]
   },
   {
     "question": "Tell me a joke",
