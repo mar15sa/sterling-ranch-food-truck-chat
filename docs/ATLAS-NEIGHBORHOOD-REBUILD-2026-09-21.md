@@ -39,6 +39,6 @@ Outside shows the three existing CAB walking guides, route shapes, published dis
 
 ## Documentation impact
 
-The design and experience reference needs a dated local-preview entry with the final implementation revision: https://www.notion.so/3dabf909186d81b99d91ddd39861536b. Synchronization will be recorded after the implementation commit and readback. The Assistant flow, source-authority diagram and operating permissions are unaffected.
+The [design and experience reference](https://www.notion.so/3dabf909186d81b99d91ddd39861536b) was updated and fetched again on September 21, 2026. Its dated local-preview entry links implementation revision `4e6c83f7b32143b340398d142a4f1573da700bdb`, the browser review and local HTTP evidence. Readback confirmed the new entry and preserved previous design history. It explicitly distinguishes local verification from staging deployment or launch approval. The Assistant flow, source-authority diagram and operating permissions are unaffected.
 
 Broader source verification, whole-development geometry, additional verified walks and owner visual approval remain prerequisites to proposing a public launch.
