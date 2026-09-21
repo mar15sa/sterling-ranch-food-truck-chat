@@ -53,6 +53,7 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
     rulesRefreshPromise: null, poolStatusCache: null,
     getOpeningsSourceStatus: () => ({}), operationsSnapshot: () => ({}),
     getRulesSearchMetrics: () => ({}), getRulesLlmMetrics: () => ({}),
+    residentWriterConfiguration: () => ({ enabled: false, configured: false, mode: "off", stage: "after-evidence-audit" }),
     getCommunitySearchMetrics: () => ({}), getCommunityLlmMetrics: () => ({}), communityAnswerMetrics: () => ({}),
     communitySourceStatus: (_, now, options) => { statusReads++; return communitySourceStatus(index, now, options); },
     liveMonitor: { status: () => ({}) }, buildCommunitySourceReadiness,
