@@ -259,7 +259,7 @@ test("holiday displays use their governing rule while nearby decoration families
     const result = await answer(question);
     assert.equal(result.confidence?.canAnswer, true, question);
     assert.match(result.confidence?.reason || "", /holiday-displays|holiday-display-rule/i, question);
-    assert.match(result.answer, /30 days prior to a holiday/i, question);
+    assert.match(result.answer, /30 days before a holiday/i, question);
     assert.match(result.answer, /removed within 30 days after the holiday/i, question);
     assert.match(result.answer, /10:00 p\.m\..*8:00 a\.m\./is, question);
     assert.match(result.sources?.[0]?.sourceUrl || "", /library\.municode\.com/i, question);
@@ -308,7 +308,7 @@ test("watering answers apply method, time, and season instead of leading with an
   ]) {
     const result = await answer(question);
     assert.equal(result.answerVerdict, "prohibited", question);
-    assert.match(result.answer, /prohibited between the hours of 10:00 a\.m\. and 6:00 p\.m\./i, question);
+    assert.match(result.answer, /prohibited between 10:00 a\.m\. and 6:00 p\.m\./i, question);
     assert.match(result.answer, /May 1 (?:to|through) September 30/i, question);
     assert.ok(result.sources.some((source) => /library\.municode\.com/i.test(source.sourceUrl || "")), question);
   }
@@ -514,7 +514,7 @@ test("named-project authority guard preserves supported objects, synonyms, and c
 
   const compoundFence = await answer("Can I build a fence and what color does it need to be?");
   assert.equal(compoundFence.confidence.reason, "fencing-standards");
-  assert.match(compoundFence.answer, /approval must be obtained from the DRC prior to any construction/i);
+  assert.match(compoundFence.answer, /approval must be obtained from the DRC before any construction/i);
   assert.match(compoundFence.answer, /Sherwin Williams #3002.*Belvedere Tan/i);
   assert.match(compoundFence.answer, /Solomon #338.*Earthen/i);
 

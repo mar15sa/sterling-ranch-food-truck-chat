@@ -121,6 +121,17 @@ test("raw source presentation blocks an excellent result", () => {
   assert.notEqual(assessment.rating, "Excellent");
 });
 
+test("rulebook fragments and unnecessary source handoffs cannot earn a good rating", () => {
+  const row = candidate({ answer: "Permitted 30 days prior to a holiday.\n\nHoliday and seasonally appropriate." });
+  row.result.nextStep = "Open the official source for the complete wording.";
+  const assessment = assessCommunityAnswerQuality(row.question, row.result);
+  assert.ok(assessment.score <= 2);
+  assert.ok(assessment.issues.includes("sentence-fragment"));
+  assert.ok(assessment.issues.includes("unnecessary-source-handoff"));
+  assert.equal(assessment.dimensions.usefulProactivity.value, 1);
+  assert.equal(assessment.publishable, false);
+});
+
 test("legacy answers without the need-first evidence contract stay unassessed", () => {
   const assessment = assessCommunityAnswerQuality("When is pickup?", {
     answerMode: "source-derived-extractive",
