@@ -2,6 +2,7 @@ const http = require("node:http");
 const getHomepageWeather = require("./lib/briefing-weather").createWeatherService(require("./config/homepage-weather.json"));
 const fs = require("node:fs");
 const path = require("node:path");
+const { atlasPreviewEnabled, isAtlasPath } = require("./lib/atlas-preview");
 const { spawn } = require("node:child_process");
 const { URL } = require("node:url");
 const { isJunkMenuItem } = require("./lib/menu-quality");
@@ -5108,6 +5109,14 @@ async function handleCommunitySourceReview(req, res, url, reviewId = "") {
 }
 
 function serveStatic(req, res, url) {
+  if (isAtlasPath(url.pathname)) {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    if (!atlasPreviewEnabled()) {
+      res.setHeader('Cache-Control', 'no-store');
+      sendText(res, 404, 'Not found');
+      return;
+    }
+  }
   if (url.pathname === "/" && url.searchParams.has("date")) {
     res.writeHead(302, {
       ...SECURITY_HEADERS,

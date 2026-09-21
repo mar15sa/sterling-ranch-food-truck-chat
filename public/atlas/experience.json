@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "featured": [
+    {
+      "id": "mccormick",
+      "art": "playground"
+    },
+    {
+      "id": "burns",
+      "art": "courts"
+    },
+    {
+      "id": "sterling-center",
+      "art": "center"
+    }
+  ],
+  "futureHighlights": [
+    "school51",
+    "burns-next",
+    "library"
+  ]
+}

@@ -1,0 +1,363 @@
+{
+  "version": 1,
+  "checkedAt": "2026-09-13",
+  "reviewState": "staging-review",
+  "coordinateSpace": "source-image-pixels",
+  "image": "/atlas/cab-trail-map.png",
+  "imageSize": [
+    1242,
+    2000
+  ],
+  "source": {
+    "label": "CAB parks and trails map",
+    "url": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+    "mapDate": "2025-10-13",
+    "listingUrl": "https://www.sterlingranchcab.com/273/Trails"
+  },
+  "overview": [
+    26,
+    510,
+    1190,
+    980
+  ],
+  "distanceNote": "Distances are approximate mileages printed on CAB’s map. Walking times assume 2–3 mph, before stops.",
+  "mapNote": "Illustrated trail guide, not GPS navigation. CAB links this October 2025 map as its existing-trail map. Route names below are descriptive guide labels; current closures are not tracked here. School and Prospect Park labels are updated from the current operator sources below.",
+  "routes": [
+    {
+      "id": "prospect-loop",
+      "name": "A lap around Prospect",
+      "area": "Prospect",
+      "type": "Loop",
+      "miles": 0.38,
+      "distanceParts": [
+        0.38
+      ],
+      "color": "#9b5d44",
+      "description": "A short park loop to pair with the playground or a little time on the lawn.",
+      "start": "The loop inside Prospect Park, off Monte Vista Circle",
+      "finish": "Return to your starting point in the park",
+      "steps": [
+        "Find the loop around the central park lawn, marked 0.38 mi on the trail map.",
+        "Follow the same loop back to where you started. The paths leaving the park are separate routes."
+      ],
+      "nearbyPlaceIds": [
+        "prospect-park"
+      ],
+      "viewBox": [
+        60,
+        1325,
+        185,
+        135
+      ],
+      "paths": [
+        [
+          [
+            125,
+            1378
+          ],
+          [
+            140,
+            1379
+          ],
+          [
+            145,
+            1390
+          ],
+          [
+            151,
+            1402
+          ],
+          [
+            147,
+            1417
+          ],
+          [
+            141,
+            1426
+          ],
+          [
+            128,
+            1431
+          ],
+          [
+            114,
+            1428
+          ],
+          [
+            105,
+            1419
+          ],
+          [
+            104,
+            1404
+          ],
+          [
+            109,
+            1390
+          ],
+          [
+            117,
+            1380
+          ],
+          [
+            125,
+            1378
+          ]
+        ]
+      ],
+      "startPoint": [
+        125,
+        1378
+      ],
+      "endPoint": [
+        125,
+        1378
+      ],
+      "sourceScope": "The existing-trail loop and its 0.38-mi label come from the CAB map. Its old park-construction label is superseded by CAB’s current Prospect Park facility listing; it is not used as current park status.",
+      "geometryMethod": "Manual visual trace of the labelled inner loop in the official map image; schematic display only."
+    },
+    {
+      "id": "providence-west",
+      "name": "Providence’s west greenway",
+      "area": "Providence",
+      "type": "One way",
+      "miles": 1.04,
+      "distanceParts": [
+        0.69,
+        0.35
+      ],
+      "color": "#397565",
+      "description": "Follow the greenway around the western edge of Providence, from Titan Road down to the Xcel corridor.",
+      "start": "Titan Road’s trail junction on the western edge of Providence",
+      "finish": "The Xcel electrical-easement trail junction",
+      "steps": [
+        "Start where the dashed trail leaves Titan Road and heads south along the western edge of Providence.",
+        "Follow the 0.69-mi section around the neighborhood’s west side to the greenway bend.",
+        "Continue on the adjoining 0.35-mi section to the Xcel corridor junction. Turn back for an approximately 2.08-mi out-and-back."
+      ],
+      "nearbyPlaceIds": [
+        "sterling-center",
+        "pioneer",
+        "mccormick"
+      ],
+      "viewBox": [
+        630,
+        480,
+        390,
+        455
+      ],
+      "paths": [
+        [
+          [
+            864,
+            542
+          ],
+          [
+            862,
+            568
+          ],
+          [
+            863,
+            598
+          ],
+          [
+            861,
+            623
+          ],
+          [
+            851,
+            651
+          ],
+          [
+            843,
+            683
+          ],
+          [
+            826,
+            707
+          ],
+          [
+            802,
+            724
+          ],
+          [
+            773,
+            737
+          ],
+          [
+            747,
+            744
+          ],
+          [
+            714,
+            741
+          ]
+        ],
+        [
+          [
+            714,
+            741
+          ],
+          [
+            709,
+            760
+          ],
+          [
+            709,
+            781
+          ],
+          [
+            714,
+            801
+          ],
+          [
+            714,
+            822
+          ],
+          [
+            707,
+            839
+          ],
+          [
+            710,
+            852
+          ],
+          [
+            720,
+            864
+          ],
+          [
+            715,
+            876
+          ],
+          [
+            720,
+            884
+          ]
+        ]
+      ],
+      "startPoint": [
+        864,
+        542
+      ],
+      "endPoint": [
+        720,
+        884
+      ],
+      "sourceScope": "Two adjoining Existing Trail sections labelled 0.69 mi and 0.35 mi on CAB’s map. Total is their sum. Nearby parks are separate destinations, not promised entrances on this walk.",
+      "geometryMethod": "Manual visual trace of two labelled adjoining alignments in the official map image; schematic display only."
+    },
+    {
+      "id": "overlook-link",
+      "name": "Titan Road to the Overlook",
+      "area": "Providence",
+      "type": "One way",
+      "miles": 0.37,
+      "distanceParts": [
+        0.37
+      ],
+      "color": "#4f7391",
+      "description": "The eastern Providence trail link beside the open space, ending at the Overlook trail junction.",
+      "start": "Titan Road’s eastern Providence trail junction",
+      "finish": "The trail junction beside the Overlook Clubhouse",
+      "steps": [
+        "Find the trail turning south from Titan Road beside the eastern open space.",
+        "Follow the curved section marked 0.37 mi to the junction beside the Overlook. The clubhouse and pool have their own access rules.",
+        "Retrace the same section for an approximately 0.74-mi out-and-back."
+      ],
+      "nearbyPlaceIds": [
+        "overlook"
+      ],
+      "viewBox": [
+        960,
+        495,
+        230,
+        250
+      ],
+      "paths": [
+        [
+          [
+            1068,
+            543
+          ],
+          [
+            1063,
+            561
+          ],
+          [
+            1062,
+            578
+          ],
+          [
+            1068,
+            595
+          ],
+          [
+            1070,
+            610
+          ],
+          [
+            1064,
+            628
+          ],
+          [
+            1058,
+            648
+          ],
+          [
+            1058,
+            663
+          ],
+          [
+            1063,
+            675
+          ],
+          [
+            1057,
+            688
+          ]
+        ]
+      ],
+      "startPoint": [
+        1068,
+        543
+      ],
+      "endPoint": [
+        1057,
+        688
+      ],
+      "sourceScope": "The eastern curved Existing Trail section is labelled 0.37 mi on CAB’s map. Its endpoint is the trail junction, not a verified clubhouse entrance.",
+      "geometryMethod": "Manual visual trace of the labelled eastern alignment in the official map image; schematic display only."
+    }
+  ],
+  "annotationUpdates": [
+    {
+      "box": [
+        648,
+        581,
+        127,
+        31
+      ],
+      "lines": [
+        "ELEMENTARY SCHOOL 51",
+        "TARGET AUGUST 2027"
+      ],
+      "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch",
+      "placeId": "school51"
+    },
+    {
+      "box": [
+        295,
+        1355,
+        128,
+        29
+      ],
+      "lines": [
+        "PROSPECT PARK",
+        "Listed by CAB"
+      ],
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+      "placeId": "prospect-park"
+    }
+  ]
+}

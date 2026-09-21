@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Map studies | Sterling Ranch Atlas</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/atlas/concepts.css?v=20260921-3">
+  <script src="/atlas/atlas-core.js" defer></script>
+  <script src="/atlas/concepts.js?v=20260921-3" defer></script>
+</head>
+<body>
+  <header class="mast"><a class="wordmark" href="/atlas" target="_blank" rel="noopener">STERLING RANCH <span>ATLAS</span></a><span class="study-tag">DESIGN STUDIES / 01–03</span><a class="current-link" href="/atlas" target="_blank" rel="noopener">Current map <span aria-hidden="true">↗</span></a></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">A DIFFERENT WAY TO KNOW YOUR NEIGHBORHOOD</p><h1>See the Ranch differently.</h1></div><p>Three ways to explore the same places.<br>Try the layers, select a place, and compare.<small>Separate staging mockups. Your current Atlas is unchanged.</small></p></section>
+    <nav class="concept-picker" aria-label="Choose a map concept">
+      <button type="button" class="concept-choice active" data-mode="layers" aria-pressed="true"><span class="mini mini-layers" aria-hidden="true"></span><span class="choice-copy"><small>01 / EXPLODED ATLAS</small><strong>A place, in layers.</strong><span>Pull the neighborhood apart.</span></span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+      <button type="button" class="concept-choice" data-mode="guide" aria-pressed="false"><span class="mini mini-guide" aria-hidden="true"></span><span class="choice-copy"><small>02 / NEIGHBORHOOD GUIDE</small><strong>The whole picture.</strong><span>A map made for discovering.</span></span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+      <button type="button" class="concept-choice" data-mode="lens" aria-pressed="false"><span class="mini mini-lens" aria-hidden="true"></span><span class="choice-copy"><small>03 / FOCUS LENS</small><strong>Look a little closer.</strong><span>Detail, without losing your place.</span></span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+    </nav>
+    <section id="study" class="study mode-layers" aria-label="Interactive map concept">
+      <div class="scene-column">
+        <div class="scene-heading"><div><p class="eyebrow" id="scene-eyebrow">01 / EXPLODED ATLAS</p><h2 id="scene-title">The neighborhood, opened up.</h2></div><span class="live-dot">INTERACTIVE STUDY</span></div>
+        <div id="scene" class="scene"><p id="loading" role="status">Opening the map studies…</p></div>
+        <div class="scene-dock">
+          <div id="explode-control" class="explode-control"><div><label for="separation">Layer separation</label><output id="separation-value" for="separation">80%</output></div><input type="range" id="separation" min="0" max="100" value="80" aria-label="Layer separation"><div class="range-ends"><span>Assembled</span><button type="button" id="assemble">Bring together</button><span>Exploded</span></div></div>
+          <div id="flat-control" class="flat-control" hidden><span id="flat-hint">Select a place to see what belongs there.</span><button type="button" id="reset-selection">Reset focus ↗</button></div>
+        </div>
+        <div class="scene-foot"><span id="scene-caption">Aligned map layers · vertical spacing is for exploration</span><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Map data © OpenStreetMap</a></div>
+      </div>
+      <aside class="inspector" aria-label="Map controls and place details">
+        <div class="view-intent"><p class="eyebrow">WHAT THIS VIEW HELPS YOU DO</p><p id="view-intent">See how parks, everyday places and future additions fit together. Separate a layer to focus on it.</p></div>
+        <div class="layer-list" aria-label="Focus a layer"><button type="button" data-layer="all" aria-pressed="true"><span class="layer-key all"></span><span>Everything together</span><small>ALL</small></button><button type="button" data-layer="parks" aria-pressed="false"><span class="layer-key parks"></span><span>Parks & outdoors</span><small>01</small></button><button type="button" data-layer="everyday" aria-pressed="false"><span class="layer-key everyday"></span><span>Everyday places</span><small>02</small></button><button type="button" data-layer="future" aria-pressed="false"><span class="layer-key future"></span><span>What’s coming</span><small>03</small></button></div>
+        <label class="place-picker-label" for="place-picker">LOOK CLOSER AT</label><select id="place-picker" aria-label="Select a place"><option>Loading places…</option></select>
+        <div id="place-card" class="place-card" aria-live="polite"></div>
+        <div id="unlocated" class="unlocated" hidden><p class="eyebrow">PROJECTS WITHOUT A CONFIRMED MAP PIN</p><div id="unlocated-items"></div></div>
+      </aside>
+    </section>
+    <footer class="review-foot"><p><strong>Design exploration, not a new launch.</strong> These views share the existing September 13 inventory and map snapshot. Locations are approximate where marked; this map window is not the full development boundary. Paths include sidewalks and are not navigation routes.</p><p><a href="https://github.com/ashemag/human-atlas" target="_blank" rel="noopener">Exploded-view inspiration: Human Atlas ↗</a><br>Geographic positions stay aligned across the concepts. No invented park buildings or future-site boundaries.</p></footer>
+  </main>
+</body>
+</html>

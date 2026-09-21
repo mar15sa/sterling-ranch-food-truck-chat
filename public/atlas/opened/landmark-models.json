@@ -1,0 +1,190 @@
+{
+  "checkedAt": "2026-09-21",
+  "models": [
+    {
+      "id": "overlook",
+      "title": "The Overlook",
+      "subtitle": "A swim. A workout. A place to gather.",
+      "image": "./assets/overlook-model.png",
+      "alt": "Miniature of the Overlook’s white gables, stone piers, balcony, pavilions and pool.",
+      "basis": "Photo-informed miniature. Interior rooms and entrances are not mapped.",
+      "source": {
+        "label": "See CAB’s clubhouse photos",
+        "url": "https://sterlingranchcab.com/258/The-Overlook-Clubhouse"
+      },
+      "features": [
+        "overlook-pool",
+        "overlook-fitness",
+        "overlook-great-hall",
+        "overlook-north-pavilion",
+        "overlook-south-pavilion",
+        "overlook-splash"
+      ],
+      "focus": {
+        "overlook-pool": [
+          52,
+          67,
+          1.16
+        ],
+        "overlook-great-hall": [
+          62,
+          35,
+          1.1
+        ],
+        "overlook-fitness": [
+          62,
+          35,
+          1.1
+        ]
+      }
+    },
+    {
+      "id": "burns",
+      "title": "Pickleball at Burns",
+      "subtitle": "Eight courts. Bring your game.",
+      "image": "./assets/burns-model.png",
+      "alt": "Architectural miniature of eight blue pickleball courts with green surrounds, fencing and shaded seating.",
+      "basis": "Based on CAB’s court concept. Finishes and planting are illustrative.",
+      "source": {
+        "label": "View the published court concept",
+        "url": "https://sterlingranchcab.com/ImageRepository/Document?documentId=2359"
+      },
+      "features": [
+        "burns-courts"
+      ],
+      "focus": {
+        "burns-courts": [
+          50,
+          50,
+          1.12
+        ]
+      }
+    },
+    {
+      "id": "prospect-park",
+      "title": "Play at Prospect",
+      "subtitle": "Room for everyone to join in.",
+      "image": "./assets/prospect-model.png",
+      "alt": "Photo-informed miniature of Prospect’s inclusive playground with lime shade sails, green railings, ramps and accessible glider.",
+      "basis": "Photo-informed playground study, not a model of the whole park.",
+      "source": {
+        "label": "See the playground & park story",
+        "url": "https://sterlingranch.com/happenings/news/all-abilities-park/"
+      },
+      "features": [
+        "prospect-playground",
+        "prospect-shell",
+        "prospect-lawn",
+        "prospect-basketball",
+        "prospect-volleyball",
+        "prospect-soccer",
+        "prospect-walking",
+        "prospect-pavilion"
+      ],
+      "focus": {
+        "prospect-playground": [
+          50,
+          50,
+          1.1
+        ]
+      }
+    }
+  ],
+  "notes": {
+    "overlook": {
+      "summary": "The neighborhood’s pool, fitness and gathering place at 7853 Piney River Avenue.",
+      "highlights": [
+        "Explore the pool, fitness room, Great Hall and two pavilions below.",
+        "Pool availability is seasonal. Check CAB’s pool page before heading over.",
+        "Facility access and room rentals have their own rules; follow the CAB links for your visit."
+      ],
+      "actions": [
+        {
+          "label": "Pool hours & access",
+          "url": "https://sterlingranchcab.com/187/Pool"
+        },
+        {
+          "label": "Clubhouse & room rentals",
+          "url": "https://sterlingranchcab.com/258/The-Overlook-Clubhouse"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Overlook Clubhouse",
+          "url": "https://sterlingranchcab.com/258/The-Overlook-Clubhouse"
+        },
+        {
+          "label": "CAB Pool",
+          "url": "https://sterlingranchcab.com/187/Pool"
+        }
+      ]
+    },
+    "overlook-pool": {
+      "summary": "The outdoor pool at the Overlook. Check the current season, schedule and access rules before packing your swim bag.",
+      "highlights": [
+        "CAB publishes pool hours, closures, entry rules and guest information.",
+        "The model shows the facility, not whether the pool is open today."
+      ],
+      "actions": [
+        {
+          "label": "Check today’s pool information",
+          "url": "https://sterlingranchcab.com/187/Pool"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Pool",
+          "url": "https://sterlingranchcab.com/187/Pool"
+        }
+      ]
+    },
+    "burns": {
+      "summary": "Start with the eight outdoor pickleball courts. The wider regional park is being developed in phases.",
+      "highlights": [
+        "Use CAB’s court page for CourtReserve bookings and drop-in play.",
+        "Bring paddles and balls, and wear court shoes.",
+        "The larger park’s future amenities are listed separately below."
+      ],
+      "actions": [
+        {
+          "label": "Bookings & open play",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        },
+        {
+          "label": "Park progress",
+          "url": "https://sterlingranchcab.com/417/Parks-Updates"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Pickleball Courts",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        },
+        {
+          "label": "CAB Parks Updates",
+          "url": "https://sterlingranchcab.com/417/Parks-Updates"
+        }
+      ]
+    },
+    "burns-courts": {
+      "summary": "Eight outdoor pickleball courts at Middle Fork Street and Sterling Ranch Avenue, with reservations and drop-in play.",
+      "highlights": [
+        "Bring your own paddles and balls.",
+        "Check CAB’s current schedule and CourtReserve link before you go.",
+        "Wear court shoes."
+      ],
+      "actions": [
+        {
+          "label": "Book a court or check open play",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Pickleball Courts",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        }
+      ]
+    }
+  }
+}

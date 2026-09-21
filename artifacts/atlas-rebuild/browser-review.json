@@ -1,0 +1,31 @@
+{
+  "reviewedAt": "2026-09-21T23:49:11Z",
+  "url": "http://127.0.0.1:4185/atlas/opened/index.html",
+  "method": "Interactive Codex browser review; DOM assertions and visual inspection",
+  "desktop": {
+    "mapRenders": true,
+    "explodedLayersAndGuide": true,
+    "sterlingCenterPeekRetainsMap": true,
+    "sterlingCenterDirectoryOpensFully": true,
+    "sterlingCenterOpeningValue": "100 percent open",
+    "mccormickPlaygroundAndShelter": true,
+    "mccormickFullVisitDetails": true,
+    "outsideGuideCount": 3,
+    "providenceRouteTitle": "Providence’s west greenway",
+    "futureGroupCount": 11,
+    "pickleBallSearchFindsCourts": true,
+    "finalPreviewConsoleErrors": []
+  },
+  "phone": {
+    "viewport": [390, 844],
+    "documentScrollWidth": 375,
+    "horizontalPageOverflow": false,
+    "prospectPeekAmenityCount": 8,
+    "prospectDetailedModelOpens": true,
+    "layerGuideChangesWalkingCards": true,
+    "smallMapCaptionsHiddenInFavorOfLayerCards": true,
+    "temporaryViewportReset": true
+  },
+  "residentQuestionsSubmitted": 0,
+  "notClaimed": ["real touch-device gestures", "full accessibility audit", "reduced-motion browser emulation", "production launch readiness", "complete development geography", "fresh fact audit"]
+}

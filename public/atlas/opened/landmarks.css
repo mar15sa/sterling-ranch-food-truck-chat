@@ -1,0 +1,32 @@
+/* Matching, reference-informed destination studies alongside the mapped miniature. */
+.ranch-stage{background:#fbf8ef;border-color:#e5e5d8;box-shadow:inset 0 0 75px #fff8ee}
+.ranch-compass{position:absolute;right:19px;top:19px;z-index:4;width:36px;height:49px;text-align:center;pointer-events:none;color:#60735c}
+.ranch-compass-north{display:block;font:10px var(--sans);letter-spacing:.12em}
+.ranch-compass-needle{display:block;margin:7px auto 0;width:12px;height:24px;clip-path:polygon(50% 0,100% 100%,50% 76%,0 100%);background:linear-gradient(90deg,#466b52 50%,#b2bfaa 50%);transform-origin:50% 50%}
+.ranch-label--model{display:flex;flex-direction:column;gap:0;padding:0 3px 4px;width:112px;max-width:112px;border:0;background:transparent;box-shadow:none;min-height:0;z-index:4}
+.ranch-label--model img{width:85px;height:57px;object-fit:contain;display:block;filter:drop-shadow(0 5px 4px #2d3f302c);pointer-events:none}
+.ranch-label--model .ranch-label-name{padding:6px 8px;background:#fffdf1f5;border:1px solid #fefdf9;box-shadow:0 3px 9px #3a4c3024;border-radius:3px;font:10px var(--sans);white-space:nowrap}
+.ranch-label--model[aria-pressed=true]{background:transparent;box-shadow:none}.ranch-label--model:hover .ranch-label-name,.ranch-label--model[aria-pressed=true] .ranch-label-name{background:#355840;color:white}
+.ranch-label-connector{position:absolute;left:50%;top:100%;height:1px;width:var(--connector-length,0px);background:#6b8063;transform:rotate(var(--connector-angle,0deg));transform-origin:0 50%;pointer-events:none;z-index:-1}
+@media(max-width:480px){.ranch-label--model{width:86px;max-width:86px;padding:0 1px 3px}.ranch-label--model img{width:55px;height:37px}.ranch-label--model .ranch-label-name{font-size:8px;padding:5px}}
+.model-chooser{display:flex;gap:7px;flex-wrap:wrap;padding:0 0 17px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.model-chooser button{font:11px var(--sans);padding:10px 13px;border:1px solid #d9ddd0;border-radius:22px}
+.model-chooser button[aria-pressed=true]{background:#355840;color:#fff;border-color:#355840}
+.model-shelf{margin-top:25px}.model-shelf-heading{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}.model-shelf-heading h3{font:29px var(--serif);margin:0}.model-shelf-heading>span{font-size:10px;color:var(--muted)}
+.model-thumbnails{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.model-thumbnail{min-width:0;text-align:left;padding:9px 9px 12px;background:#f1f1e8;border:1px solid #e0e3d6;border-radius:5px;transition:background 220ms,transform 220ms}
+.model-thumbnail:hover{background:#e8eddf;transform:translateY(-3px)}.model-thumbnail img{display:block;width:100%;aspect-ratio:1.5;object-fit:contain;filter:drop-shadow(0 7px 5px #49563d14)}
+.model-thumbnail strong{display:block;font:18px var(--serif);padding-top:8px}.model-thumbnail small{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.landmark-top{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:0 0 14px}.landmark-top>button{font-size:11px}.landmark-top .eyebrow{margin:0;font-size:9px}
+.landmark-stage{background:radial-gradient(ellipse at 50% 42%,#f8f8ef 30%,#eff1e6 100%);border:1px solid #e0e4d5;border-radius:5px;position:relative;overflow:hidden;min-width:0}
+.landmark-title{position:relative;z-index:2;padding:26px 28px 0;pointer-events:none}.landmark-title h2{font:clamp(34px,4vw,53px)/1 var(--serif);letter-spacing:-.03em;margin:0 0 8px}.landmark-title p{font-size:12px;color:#64705b;margin:0}
+.landmark-image-wrap{position:relative;aspect-ratio:1.5;overflow:hidden;margin-top:0}.landmark-image-wrap img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 15px #3d4b321c);transform:scale(var(--model-zoom,1));transform-origin:var(--focus-x,50%) var(--focus-y,50%);transition:transform 800ms cubic-bezier(.16,.75,.15,1);pointer-events:none}
+.landmark-image-wrap.is-missing:after{content:'The miniature could not load. All place details are available below.';position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;font:23px var(--serif)}
+.landmark-caption{font-size:9px;color:#65725c;text-align:center;margin:0;padding:0 20px 19px;line-height:1.5}
+.landmark-amenities{padding:21px 0 12px}.landmark-amenities h3{font:25px var(--serif);margin:0 0 4px}.landmark-amenities>p{font-size:11px;color:var(--muted);margin:0 0 14px}
+.amenity-chips{display:flex;flex-wrap:wrap;gap:7px}.amenity-chips button{padding:10px 12px;border:1px solid #cfd6c5;border-radius:4px;font-size:11px;min-height:40px;text-align:left}.amenity-chips button:hover{background:#e7eddd}.amenity-chips button[aria-pressed=true]{background:#355840;color:white;border-color:#355840}
+.landmark-future{margin-top:15px;display:flex;flex-wrap:wrap;gap:8px}.landmark-future button{font-size:10px;padding:9px 0;color:#715c78;border-bottom:1px dashed #cbbfd0}
+.landmark-footnote{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 0;border-top:1px solid var(--line);font-size:10px;line-height:1.5}.landmark-footnote button{text-align:right}
+@media(max-width:1100px){.model-thumbnails{grid-template-columns:repeat(2,minmax(0,1fr))}.model-thumbnail strong{font-size:20px}.landmark-title{padding:22px 22px 0}.model-chooser{gap:6px}.model-chooser button{padding:9px 11px}}
+@media(max-width:480px){.model-chooser{display:grid;grid-template-columns:1fr 1fr}.model-chooser button{font-size:11px;text-align:center}.landmark-top .eyebrow{font-size:8px}.landmark-title{padding:22px 20px 0}.landmark-title h2{font-size:38px}.landmark-title p{font-size:11px}.landmark-image-wrap{margin:12px -8px 0}.landmark-caption{font-size:8px;padding:0 18px 16px}.landmark-amenities{padding-top:18px}.amenity-chips button{font-size:11px;min-height:42px}.model-shelf-heading h3{font-size:27px}.model-shelf-heading>span{font-size:9px}.ranch-compass{right:11px;top:45px}.landmark-footnote{align-items:start}.landmark-footnote>*{max-width:49%}}
+@media(prefers-reduced-motion:reduce){.landmark-image-wrap img,.model-thumbnail{transition:none}.model-thumbnail:hover{transform:none}}

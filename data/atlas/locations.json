@@ -1,0 +1,330 @@
+{
+  "atlas-coffee": {
+    "coordinates": [
+      -105.037492,
+      39.506824
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "sterling-center",
+    "groupName": "Sterling Center",
+    "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+  },
+  "salta": {
+    "coordinates": [
+      -105.037492,
+      39.506824
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "sterling-center",
+    "groupName": "Sterling Center",
+    "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+  },
+  "agora": {
+    "coordinates": [
+      -105.037492,
+      39.506824
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "sterling-center",
+    "groupName": "Sterling Center",
+    "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+  },
+  "uchealth": {
+    "coordinates": [
+      -105.037492,
+      39.506824
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "sterling-center",
+    "groupName": "Sterling Center",
+    "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+  },
+  "lake-family-dental": {
+    "coordinates": [
+      -105.037492,
+      39.506824
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "sterling-center",
+    "groupName": "Sterling Center",
+    "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+  },
+  "overlook": {
+    "coordinates": [
+      -105.0318231,
+      39.5026661
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "overlook",
+    "groupName": "The Overlook",
+    "address": "7853 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://www.openstreetmap.org/way/1285399278"
+  },
+  "overlook-pool": {
+    "coordinates": [
+      -105.0318231,
+      39.5026661
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "overlook",
+    "groupName": "The Overlook",
+    "address": "7853 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://www.openstreetmap.org/way/1285399278"
+  },
+  "pat-gallagher": {
+    "coordinates": [
+      -105.0363191,
+      39.50316795
+    ],
+    "locationPrecision": "park-center",
+    "locationSource": "https://www.openstreetmap.org/way/914862735",
+    "locationGroup": "pat-gallagher",
+    "groupName": "Pat Gallagher Park"
+  },
+  "burns-courts": {
+    "coordinates": [
+      -105.044373872245,
+      39.493107823419
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "burns",
+    "groupName": "Burns Park · pickleball",
+    "address": "9020 Middle Fork Street, Sterling Ranch, CO 80125",
+    "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+  },
+  "burns-next": {
+    "coordinates": [
+      -105.044373872245,
+      39.493107823419
+    ],
+    "locationPrecision": "area-reference",
+    "locationGroup": "burns",
+    "groupName": "Burns Park · pickleball",
+    "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+  },
+  "ascent-pavilion": {
+    "coordinates": [
+      -105.031151419984,
+      39.4898776474823
+    ],
+    "locationPrecision": "facility",
+    "address": "7180 Watercress Drive, Sterling Ranch, CO 80125",
+    "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10",
+    "locationGroup": "ascent-pavilion",
+    "groupName": "Gathering Green"
+  },
+  "prospect-park": {
+    "coordinates": [
+      -105.069455963122,
+      39.4801306675546
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "prospect",
+    "groupName": "Prospect Park",
+    "address": "8158 Monte Vista Circle, Littleton, CO 80125",
+    "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+  },
+  "prospect-next": {
+    "coordinates": [
+      -105.069455963122,
+      39.4801306675546
+    ],
+    "locationPrecision": "area-reference",
+    "locationGroup": "prospect",
+    "groupName": "Prospect Park",
+    "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+  },
+  "sterling-center": {
+    "coordinates": [
+      -105.037492,
+      39.506824
+    ],
+    "locationPrecision": "facility",
+    "locationGroup": "sterling-center",
+    "groupName": "Sterling Center",
+    "address": "8155 Piney River Avenue, Sterling Ranch, CO 80125",
+    "locationSource": "https://sterlingranch.com/town-life/sterling-center/"
+  },
+  "burns": {
+    "coordinates": [
+      -105.044373872245,
+      39.493107823419
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "burns",
+    "groupName": "Burns Park · pickleball",
+    "locationSource": "https://www.sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+  },
+  "providence-park": {
+    "coordinates": [
+      -105.036559926825,
+      39.5063500569683
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "providence-park",
+    "groupName": "Providence Park",
+    "locationSource": "https://sterlingranchcab.com/Facilities/Facility/Details/Providence-Park-4"
+  },
+  "horsebrush": {
+    "coordinates": [
+      -105.03283784999999,
+      39.4970732
+    ],
+    "locationPrecision": "street-area",
+    "locationGroup": "horsebrush",
+    "groupName": "Horsebrush Park",
+    "locationSource": "https://www.openstreetmap.org/way/786452672",
+    "locationContextSource": "https://sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "General area of shared nodes of CAB-named streets; not a park entrance.",
+    "geometrySourceWays": [
+      786452672,
+      786452673,
+      1259111240
+    ]
+  },
+  "zippity": {
+    "coordinates": [
+      -105.03962945,
+      39.492291
+    ],
+    "locationPrecision": "street-area",
+    "locationGroup": "zippity",
+    "groupName": "Zippity Park",
+    "locationSource": "https://www.openstreetmap.org/way/885007532",
+    "locationContextSource": "https://sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "General area of shared nodes of CAB-named streets; not a park entrance.",
+    "geometrySourceWays": [
+      885007532,
+      920870238,
+      921767983
+    ]
+  },
+  "high-top": {
+    "coordinates": [
+      -105.039497,
+      39.4853366
+    ],
+    "locationPrecision": "street-area",
+    "locationGroup": "high-top",
+    "groupName": "High Top Court",
+    "locationSource": "https://www.openstreetmap.org/way/1111188736",
+    "locationContextSource": "https://sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "General area of shared nodes of CAB-named streets; not a park entrance.",
+    "geometrySourceWays": [
+      1111188736,
+      1178733900
+    ]
+  },
+  "willow-creek": {
+    "coordinates": [
+      -105.0684385,
+      39.4843023
+    ],
+    "locationPrecision": "street-area",
+    "locationGroup": "willow-creek",
+    "groupName": "Willow Creek Trailhead",
+    "locationSource": "https://www.openstreetmap.org/way/1272871637",
+    "locationContextSource": "https://sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "General area of shared nodes of CAB-named streets; not a park entrance.",
+    "geometrySourceWays": [
+      1272871637,
+      1076764644
+    ]
+  },
+  "broadstone": {
+    "coordinates": [
+      -105.07230747799973,
+      39.48329654419095
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "broadstone",
+    "groupName": "Broadstone Sterling Ranch",
+    "address": "8425 Old Ski Run Circle, Littleton, CO 80125",
+    "locationSource": "https://broadstonesr.com/amenities/",
+    "locationMethod": "Operator JSON-LD property coordinates.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "prose": {
+    "coordinates": [
+      -105.0497721,
+      39.4819045
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "prose",
+    "groupName": "Prose at Parkvale",
+    "address": "8749 Waterton Road, Littleton, CO 80125",
+    "locationSource": "https://proseparkvale.com/neighborhood/",
+    "locationMethod": "Operator embedded map: marker titled Prose at Parkvale, consistent across five neighborhood maps.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "primrose": {
+    "coordinates": [
+      -105.037713,
+      39.506356
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "primrose",
+    "groupName": "Primrose School",
+    "address": "8159 Piney River Avenue, Littleton, CO 80125",
+    "locationSource": "https://www.primroseschools.com/schools/sterling-ranch",
+    "locationMethod": "Operator JSON-LD school coordinates.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "john-adams": {
+    "coordinates": [
+      -105.037912,
+      39.4855297
+    ],
+    "locationPrecision": "operator-area",
+    "locationGroup": "john-adams",
+    "groupName": "John Adams Academy",
+    "address": "7979 Butte Creek Street, Roxborough, CO 80125",
+    "locationSource": "https://www.jaadougco.org/",
+    "locationMethod": "Operator school calendar location coordinates repeated for on-campus August 2026 events at the published campus address.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "mccormick": {
+    "coordinates": [
+      -105.039998883475,
+      39.500392285463
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "mccormick",
+    "groupName": "McCormick Park",
+    "locationSource": "https://www.openstreetmap.org/way/1194153472",
+    "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "pioneer": {
+    "coordinates": [
+      -105.038305088783,
+      39.50319059039
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "pioneer",
+    "groupName": "Pioneer Park",
+    "locationSource": "https://www.openstreetmap.org/way/914862901",
+    "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+    "locationCheckedAt": "2026-09-13"
+  },
+  "yard-27": {
+    "coordinates": [
+      -105.040810232574,
+      39.490916529897
+    ],
+    "locationPrecision": "park-center",
+    "locationGroup": "yard-27",
+    "groupName": "Yard 27",
+    "locationSource": "https://www.openstreetmap.org/way/1198829062",
+    "locationContextSource": "https://www.sterlingranchcab.com/335/Community-Parks",
+    "locationMethod": "Park polygon area centroid matched to CAB street description and official plan. Not an entrance or an individual amenity position.",
+    "locationCheckedAt": "2026-09-13"
+  }
+}

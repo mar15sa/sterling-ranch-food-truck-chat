@@ -1,0 +1,320 @@
+/* Separate staging preview. Shared catalog and the current Atlas are read-only. */
+(() => {
+  'use strict';
+  const C = window.AtlasCore;
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const state = {places:[],byId:new Map(),notes:{},centerGroups:[],models:[],modelId:null,guide:null,mapLayer:'all',area:'All areas',geo:null,trails:null,mode:'location',selected:'sterling-center',route:'prospect-loop',category:'all',query:'',opening:0,ranch:null,ranchPromise:null,ranchFilter:'all',unfolded:false};
+  const dialog = $('#directory-dialog');
+  if(['127.0.0.1','localhost','[::1]'].includes(location.hostname)){$('.preview-dot').textContent='Local preview';document.title=document.title.replace('Staging preview','Local preview');$('#previous-neighborhood').hidden=false;}
+  document.querySelectorAll('.view-nav button, #search-launch').forEach(b=>{b.disabled=true;});
+  const aliases = {'living-dream':'Living the Dream','ranch-patio':'Patio & fire pit','ranch-playground':'Log playground','food-trucks':'Food trucks','uchealth':'UCHealth Medical Center','info-center':'Info Center','cab-office':'CAB Offices'};
+  const sublabels = {'atlas-coffee':'Coffee','salta':'Wine & cocktails','living-dream':'Sterling Ranch taproom','agora':'Grab & go','ranch-patio':'Outside Ranch Social','ranch-playground':'Outside Ranch Social','food-trucks':'See the daily lineup'};
+  const amenityNames={'overlook-pool':'Pool','overlook-fitness':'Fitness room','overlook-great-hall':'Great Hall','overlook-north-pavilion':'North pavilion','overlook-south-pavilion':'South pavilion','overlook-splash':'Splash area','burns-courts':'Courts & reservations','prospect-playground':'Inclusive playground','prospect-shell':'Band shell','prospect-lawn':'Great lawn','prospect-basketball':'Basketball','prospect-volleyball':'Volleyball','prospect-soccer':'Soccer','prospect-walking':'Walking paths','prospect-pavilion':'Pavilion'};
+  const iconPaths = {
+    coffee:'M4 5h14v9a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z M18 7h2a3 3 0 0 1 0 6h-2 M3 22h18 M4 9h14',
+    wine:'M8 3h8l2 7a6 6 0 0 1-12 0z M6 9h12 M12 16v8 M8 24h8',
+    beer:'M6 4q6-3 12 0l2 16q-8 5-16 0z M6 4q6 4 12 0 M5 9q7 3 14 0 M4 19q8 3 16 0 M9 7l-1 14 M15 7l1 14',
+    bag:'M5 8h14l2 16H3z M8 10V6a4 4 0 0 1 8 0v4',
+    fire:'M13 2c2 5-2 6 1 10 1-2 3-3 4-5 8 10 0 18-6 17-8 0-11-8-6-14 0 4 2 5 3 6-1-7 4-9 4-14z',
+    play:'M3 24V10l7-6 7 6v14 M1 10h18 M7 24V12h6v12 M17 12h4v7l4 5 M17 17h4 M10 4V1',
+    tree:'M12 2 4 12h4l-6 7h8v6h4v-6h8l-6-7h4z',
+    building:'M4 25V8l8-5 8 5v17 M2 25h20 M8 10h1 M15 10h1 M8 15h1 M15 15h1 M10 25v-6h4v6',
+    pool:'M2 18q3-3 6 0t6 0t6 0 M2 23q3-3 6 0t6 0t6 0 M7 15V4a2 2 0 0 1 4 0 M15 15V4a2 2 0 0 1 4 0 M7 8h8 M7 12h8',
+    court:'M2 3h22v22H2z M2 14h22 M13 3v22 M6 3v22 M20 3v22',
+    walk:'M14 4a2 2 0 1 0 0-.1 M8 12l4-5 4 5 5 2 M12 7l-2 9-5 8 M10 16l6 2 2 7',
+    truck:'M2 8h14v13H2z M16 12h5l4 5v4h-9 M5 24a2 2 0 1 0 0-4 2 2 0 0 0 0 4 M21 24a2 2 0 1 0 0-4 2 2 0 0 0 0 4 M16 17h9'
+  };
+  function icon(kind) {return `<svg class="tenant-icon" viewBox="0 0 28 28" aria-hidden="true"><path d="${iconPaths[kind] || iconPaths.building}"/></svg>`;}
+  function kind(p) {if(!p)return 'building'; if(p.id==='atlas-coffee')return 'coffee';if(p.id==='salta')return 'wine';if(p.id==='living-dream')return 'beer';if(p.id==='agora')return 'bag';if(p.id==='ranch-patio')return 'fire';if(/playground|play-/.test(p.id))return 'play';if(/pickleball|court/.test(p.id))return 'court';if(/pool|overlook/.test(p.id))return 'pool';if(p.id==='food-trucks')return 'truck';if(p.category==='parks')return 'tree';return 'building';}
+  function name(p) {return aliases[p.id] || p.name;}
+  function rootOf(p) {const seen=new Set();while(p?.parentId && state.byId.has(p.parentId) && !seen.has(p.id)){seen.add(p.id);p=state.byId.get(p.parentId);}return p;}
+  function ancestors(p) {const list=[],seen=new Set();while(p?.parentId && state.byId.has(p.parentId) && !seen.has(p.id)){seen.add(p.id);p=state.byId.get(p.parentId);list.unshift(p);}return list;}
+  function children(id) {return state.places.filter(p=>p.parentId===id);}
+  function link(a,cls='') {const url=C.safeLink(a.url);return url ? `<a class="${cls}" href="${esc(url)}"${url.startsWith('https:')?' target="_blank" rel="noopener"':''}>${esc(a.label)} <span aria-hidden="true">↗</span></a>`:'';}
+  function row(p,subtitle) {return `<button class="tenant-row${p.id===state.selected?' selected':''}" type="button" data-place="${esc(p.id)}">${icon(kind(p))}<span class="tenant-text"><span class="tenant-name">${esc(name(p))}</span><span class="tenant-type">${esc(subtitle || sublabels[p.id] || (p.future ? C.statuses[p.status] : p.tags.slice(0,2).join(' · ') || C.categories[p.category].label))}</span></span><span class="arrow" aria-hidden="true">→</span></button>`;}
+  function sources(p) {
+    const note=state.notes[p.id], list=note?.sources || p.sources, checked=note?.checkedAt || (note ? state.notesDate : p.checkedAt);
+    return `<details class="source-details"><summary>Sources & visit notes · checked ${esc(checked)}</summary><p>${note?'These visitor details were checked against the linked operator pages.':'This listing is from the September 13 staging catalog.'} Open the source for current hours, availability and updates.</p><ul>${list.map(s=>`<li>${link(s)}</li>`).join('')}</ul>${p.locationPrecision==='parent-area'?'<p>The point locates the parent destination. It is not a verified entrance or an exact feature location.</p>':''}${note?.note?`<p>${esc(note.note)}</p>`:''}${(p.unknowns||[]).length?`<p>Still to confirm: ${esc(p.unknowns.join(' ').replace(/\?/g,'.'))}</p>`:''}</details>`;
+  }
+  function bread(p) {return `<div class="breadcrumb">${ancestors(p).map(a=>`<button type="button" data-place="${esc(a.id)}">${esc(name(a))}</button><span>/</span>`).join('')}<span>${esc(name(p))}</span></div>`;}
+  function actions(p) {
+    let list=state.notes[p.id]?.actions || (p.action?[p.action]:[]);
+    if(!list.length)list=p.sources.slice(0,1).map(a=>({label:'View official details',url:a.url}));
+    if(p.id==='food-trucks')list=[{label:'See today’s food truck',url:'/food-truck'},...list.slice(0,1)];
+    if(p.id==='ranch-social')list=[{label:'Today’s food truck',url:'/food-truck'},{label:'Events at Ranch Social',url:'https://sterlingranch.com/happenings/events/'}];
+    const center=rootOf(p).id==='sterling-center', directions=C.directionsUrl(center?state.byId.get('sterling-center'):p);
+    if(directions && list.length<3)list=[...list,{label:center?'Directions to Sterling Center':'Directions to the destination',url:directions}];
+    return `<div class="detail-actions">${list.map(a=>link(a)).join('')}</div>`;
+  }
+  function centerRows(group) {
+    return group.placeIds.map(id=>{
+      const p=state.byId.get(id), suite=state.notes[id]?.suite;
+      const subtitle=suite?'Suite '+suite:subtitles[id] || 'View visit details';
+      return row(p,subtitle)+(children(id).length?`<div class="nested-places">${children(id).map(child=>`<button type="button" data-place="${esc(child.id)}">${esc(name(child))}<span aria-hidden="true">↗</span></button>`).join('')}</div>`:'');
+    }).join('');
+  }
+  const subtitles={'ranch-social':'Coffee, drinks, market & outdoor gathering','cab-office':'Community Authority Board contact'};
+  function centerDetail(groupId) {
+    const p=state.byId.get('sterling-center'), group=state.centerGroups.find(g=>g.id===groupId);
+    const groups=group?[group]:state.centerGroups;
+    return `${group?'<button class="back-detail" type="button" data-place="sterling-center">← Whole building directory</button>':''}<h2 class="detail-title" tabindex="-1">${esc(group?.label || 'Sterling Center')}</h2><p class="center-address">8155 Piney River Avenue</p><p class="detail-description">${esc(group?'Choose a place for visit details and official links.':state.notes[p.id]?.summary || 'Food, health services and community help, together in one building.')}</p>${groups.map(g=>`<section class="center-group"><h3 class="detail-subtitle">${esc(g.label)}</h3><div class="tenant-list">${centerRows(g)}</div></section>`).join('')}<p class="detail-note">Each business sets its own hours. Suite numbers are shown where the operator publishes them.</p>${actions(p)}${sources(p)}<div class="nearby-building"><span class="eyebrow">Nearby, in a separate building</span><button type="button" data-place="primrose">Primrose School <span>8159 Piney River Avenue ↗</span></button></div>`;
+  }
+  function renderCenterCards(groupId) {
+    const selected=state.byId.get(state.selected), family=ancestors(selected).map(p=>p.id);
+    const focused=groupId || (state.selected!=='sterling-center'?state.centerGroups.find(g=>g.placeIds.some(id=>id===state.selected||family.includes(id)))?.id:null);
+    $('#center-cards').dataset.focus=focused||'';
+    const modelRow=p=>`<button type="button" class="model-place${p.id===state.selected?' active':''}" data-place="${esc(p.id)}">${icon(kind(p))}<span>${esc(name(p))}</span><span aria-hidden="true">↗</span></button>`;
+    $('#center-cards').innerHTML=state.centerGroups.map((g,i)=>{
+      const members=g.placeIds.flatMap(id=>id==='ranch-social'?children(id):[state.byId.get(id)]);
+      return `<article class="center-card${focused===g.id?' is-focused':''}" data-plane="${esc(g.id)}"><button class="plane-title" data-center-group="${esc(g.id)}" type="button" aria-pressed="${focused===g.id}"><span class="card-number">0${i+1}<span aria-hidden="true">↗</span></span><strong>${esc(g.label)}</strong></button>${g.id==='food-gathering'?'<button type="button" class="plane-parent" data-place="ranch-social">Inside & around Ranch Social ↗</button>':''}<div class="model-members">${members.map(p=>modelRow(p)+(p.id==='uchealth'&&(state.selected===p.id||family.includes(p.id))?`<div class="model-subplaces">${children(p.id).map(modelRow).join('')}</div>`:'')).join('')}</div></article>`;
+    }).join('');
+    if(focused && innerWidth<=480){const card=$('#center-cards .is-focused');if(card)$('#center-cards').scrollTo({left:card.offsetLeft-24,behavior:'instant'});}
+  }
+  function renderDetail(id,focus=false,groupId=null) {
+    const p=state.byId.get(id);if(!p)return;
+    state.selected=id;
+    const note=state.notes[id];
+    const childList=children(id);
+    let html=bread(p);
+    if(id==='sterling-center'){
+      html+=centerDetail(groupId);
+    } else if(id==='ranch-social'){
+      html+='<h2 class="detail-title" tabindex="-1">One place.<br>More to discover.</h2><div class="tenant-list">';
+      html+=['atlas-coffee','salta','living-dream','agora'].map(x=>row(state.byId.get(x))).join('');
+      html+='</div><h3 class="detail-subtitle">Outside</h3><div class="tenant-list">';
+      html+=['ranch-patio','ranch-playground'].map(x=>row(state.byId.get(x))).join('');
+      const shown=new Set(['atlas-coffee','salta','living-dream','agora','ranch-patio','ranch-playground']);
+      html+=childList.filter(x=>!shown.has(x.id)).map(x=>row(x)).join('');
+      html+='</div>'+actions(p)+sources(p)+'<button type="button" class="coming-link" data-view="future"><span>What’s coming</span>School & library projects →</button>';
+    } else {
+      html+=`<h2 class="detail-title" tabindex="-1">${esc(name(p))}</h2>`;
+      if(p.future)html+=`<span class="status-tag">${esc(C.statuses[p.status])}</span>`;
+      html+=`<p class="detail-description">${esc(note?.summary || p.description)}</p>`;
+      if(p.access && !/^Confirm facility-specific access/.test(p.access))html+=`<p class="detail-access"><strong>Access</strong>${esc(p.access)}</p>`;
+      const highlights=note?.highlights || (p.visitNotes?.length?p.visitNotes:p.facts?.map(f=>f.text).filter(t=>t!==p.description)) || [];
+      if(highlights.length)html+=`<ul class="detail-highlights">${highlights.slice(0,4).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+      if(childList.length)html+=`<h3 class="detail-subtitle">${p.future?'In the plans':'At this place'}</h3><div class="tenant-list">${childList.map(x=>row(x)).join('')}</div>`;
+      if(p.address)html+=`<p class="address"><span>${p.future?'Project address':'Find it'}</span>${esc(p.address)}</p>`;
+      if(p.future && !p.coordinates)html+='<p class="detail-note">This project’s position is not yet verified in the Atlas. It has no map marker.</p>';
+      html+=actions(p)+sources(p);
+      if(p.parentId)html+=`<button class="back-detail" data-place="${esc(p.parentId)}" type="button">← Back to ${esc(name(state.byId.get(p.parentId)))}</button>`;
+    }
+    $('#details').innerHTML=html;
+    renderCenterCards(groupId);
+    document.querySelectorAll('[data-center-group]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.centerGroup===groupId || (id!=='sterling-center' && state.centerGroups.find(g=>g.placeIds.some(pid=>pid===id || ancestors(p).some(a=>a.id===pid)))?.id===b.dataset.centerGroup))));
+    document.querySelectorAll('.scene [data-place]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.place===id || (b.dataset.place==='ranch-social' && p.parentId==='ranch-social' && !['ranch-patio','ranch-playground'].includes(id)))));
+    $('#announcement').textContent=p.name+' details selected';
+    if(focus) {$('#details h2').focus({preventScroll:true});if(innerWidth<=800)$('#details').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});}
+  }
+  function setMode(mode) {
+    state.mode=mode;document.body.dataset.atlasView=mode;$('.skip').href=mode==='location'?'#neighborhood-guide':'#details';$('.skip').textContent=mode==='location'?'Skip to place guide':'Skip to place details';
+    $('#workspace').classList.toggle('location-layout',mode==='location');$('#details').hidden=mode==='location';
+    $('#model-view').hidden=mode!=='explore';$('#walks-view').hidden=mode!=='walks';$('#future-view').hidden=mode!=='future';$('#location-view').hidden=mode!=='location';
+    $('#landmark-view').hidden=mode!=='landmark';$('#model-chooser').hidden=!['explore','landmark'].includes(mode);
+    document.querySelectorAll('.view-nav [data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===(mode==='landmark'?'explore':mode))));
+    renderModelChooser(mode==='landmark'?state.modelId:'sterling-center');
+    if(mode==='location')ensureNeighborhood().then(r=>r?.resize());
+  }
+  function modelOptions(){
+    return [{id:'sterling-center',title:'Sterling Center',image:'./assets/sterling-center.png',subtitle:'Food, services & gathering'},...state.models];
+  }
+  function renderModelChooser(id){
+    $('#model-chooser').innerHTML=modelOptions().map(m=>'<button type="button" data-place="'+esc(m.id)+'" aria-pressed="'+(m.id===id)+'">'+esc(m.title)+'</button>').join('');
+  }
+  function renderModelShelf(){
+    $('#model-thumbnails').innerHTML=modelOptions().map(m=>'<button class="model-thumbnail" type="button" data-place="'+esc(m.id)+'"><img src="'+esc(m.image)+'" alt="" loading="lazy"><strong>'+esc(m.title)+'</strong><small>Look closer ↗</small></button>').join('');
+  }
+  function renderLandmark(rootId,id=rootId){
+    const model=state.models.find(m=>m.id===rootId);if(!model)return;
+    state.modelId=rootId;
+    const same=$('#landmark-view').dataset.model===rootId;
+    if(!same){
+      const features=model.features.map(pid=>state.byId.get(pid));
+      // New catalog amenities remain reachable even before this study has artwork for them.
+      features.push(...children(rootId).filter(p=>!p.future&&!model.features.includes(p.id)));
+      const future=children(rootId).filter(p=>p.future);
+      $('#landmark-view').dataset.model=rootId;
+      $('#landmark-view').innerHTML='<div class="landmark-top"><button type="button" data-model-location="'+esc(rootId)+'">← The neighborhood</button><span class="eyebrow">A closer look</span></div><div class="landmark-stage"><div class="landmark-title"><h2>'+esc(model.title)+'</h2><p>'+esc(model.subtitle)+'</p></div><div class="landmark-image-wrap"><img src="'+esc(model.image)+'" alt="'+esc(model.alt)+'" draggable="false"></div><p class="landmark-caption">'+esc(model.basis)+'</p></div><section class="landmark-amenities"><h3>Explore what’s here.</h3><p>'+(rootId==='prospect-park'?'The playground is shown above. Choose any park amenity for its details.':'Choose an amenity for access, visit details and official links.')+'</p><div class="amenity-chips"><button type="button" data-model-feature="'+esc(rootId)+'">Overview</button>'+features.map(p=>'<button type="button" data-model-feature="'+esc(p.id)+'">'+esc(amenityNames[p.id]||name(p))+'</button>').join('')+'</div>'+(future.length?'<div class="landmark-future">'+future.map(p=>'<button type="button" data-place="'+esc(p.id)+'">Coming later: '+esc(name(p))+' ↗</button>').join('')+'</div>':'')+'</section><div class="landmark-footnote">'+link(model.source)+'<button type="button" data-model-location="'+esc(rootId)+'">Find it in the neighborhood ↗</button></div>';
+      const img=$('#landmark-view img');img.addEventListener('error',()=>img.parentElement.classList.add('is-missing'));if(img.complete&&!img.naturalWidth)img.parentElement.classList.add('is-missing');
+    }
+    const point=model.focus[id]||[50,50,1],image=$('#landmark-view img');
+    image.style.setProperty('--focus-x',point[0]+'%');image.style.setProperty('--focus-y',point[1]+'%');image.style.setProperty('--model-zoom',point[2]);
+    document.querySelectorAll('[data-model-feature]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.modelFeature===id)));
+  }
+  function openPlace(id,focus=false) {
+    const p=state.byId.get(id);if(!p)return;
+    if(p.future){setMode('future');renderFuture();}
+    else if(rootOf(p).id==='sterling-center'){setMode('explore');setOpening(id==='sterling-center'?0:100);}
+    else if(state.models.some(m=>m.id===rootOf(p).id)){renderLandmark(rootOf(p).id,id);setMode('landmark');}
+    else {setMode('location');selectNeighborhoodPlace(id);return;}
+    const modelOverview=!p.parentId && ['explore','landmark'].includes(state.mode);
+    renderDetail(id,focus&&!modelOverview);
+    if(focus&&modelOverview){$('#model-chooser [aria-pressed="true"]')?.focus({preventScroll:true});if(innerWidth<=800)$('#model-chooser').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});}
+    if(state.mode==='future')document.querySelectorAll('.future-card').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.place===id || b.dataset.place===p.parentId)));
+  }
+  function setOpening(value) {
+    const n=Math.max(0,Math.min(100,Number(value)||0));state.opening=n;
+    const scene=$('#scene');scene.style.setProperty('--open',n/100);scene.style.setProperty('--move',1-n/100);scene.classList.toggle('closed',n<16);
+    scene.style.setProperty('--peel',Math.min(1,n/80));scene.style.setProperty('--reveal',Math.max(0,(n-25)/75));scene.style.setProperty('--shell',Math.min(1,n/20));
+    $('#opening').value=n;$('#opening').setAttribute('aria-valuetext',n+' percent open');
+    $('#scene-toggle').innerHTML=n>50?'Bring together <span aria-hidden="true">↙</span>':'Open Sterling Center <span aria-hidden="true">↗</span>';
+    $('#center-cards').inert=n<45;
+    $('#building-action').textContent=n>50?'Bring it together':'Open the building';
+    $('#scene-step').textContent=n>50?'Pick a place. Find what you need.':'A closer look starts here.';
+  }
+  function renderFuture() {
+    // Keep planned children of existing destinations as well as wholly future roots.
+    const groups=C.directoryGroups(state.places,'future','');
+    const ranked=['school51','library','prospect-park','burns'];
+    groups.sort((a,b)=>(ranked.includes(a.place.id)?ranked.indexOf(a.place.id):99)-(ranked.includes(b.place.id)?ranked.indexOf(b.place.id):99));
+    $('#future-list').innerHTML=groups.map(g=>{const p=g.place.future?g.place:g.matches[0];return `<button class="future-card" type="button" data-place="${esc(p.id)}" aria-pressed="${p.id===state.selected}">${icon(kind(p))}<span><strong>${esc(p.name)}</strong><small>${esc(C.statuses[p.status])}${g.place.id!==p.id?' · '+esc(g.place.name):''}</small></span><span class="arrow" aria-hidden="true">↗</span></button>`;}).join('');
+  }
+  function walkTime(route) {return Math.ceil(route.miles/3*60)+'–'+Math.ceil(route.miles/2*60)+' min';}
+  function renderWalk(id=state.route) {
+    const route=state.trails.routes.find(r=>r.id===id)||state.trails.routes[0];state.route=route.id;
+    $('#walk-choices').innerHTML=state.trails.routes.map(r=>`<button class="walk-choice" data-route="${esc(r.id)}" type="button" aria-pressed="${r.id===route.id}"><strong>${esc(r.name)}</strong><span>${r.miles} mi · ${esc(walkTime(r))}<br>${esc(r.type)}</span></button>`).join('');
+    const paths=route.paths.map(p=>p.map((v,i)=>(i?'L':'M')+v.join(' ')).join(' '));
+    const vb=route.viewBox,pad=10;
+    const first=route.startPoint,last=route.endPoint;
+    const annotations=(state.trails.annotationUpdates||[]).map(a=>`<g><rect x="${a.box[0]}" y="${a.box[1]}" width="${a.box[2]}" height="${a.box[3]}" rx="4" fill="#093348"/>${a.lines.map((line,i)=>`<text x="${a.box[0]+a.box[2]/2}" y="${a.box[1]+11+i*11}" fill="white" font-family="Arial,sans-serif" font-size="8" text-anchor="middle">${esc(line)}</text>`).join('')}</g>`).join('');
+    $('#trail-canvas').innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb[0]-pad} ${vb[1]-pad} ${vb[2]+pad*2} ${vb[3]+pad*2}" role="img" aria-label="${esc(route.name)} highlighted on the official CAB trail map"><image href="${esc(C.safeLink(state.trails.image))}" width="${state.trails.imageSize[0]}" height="${state.trails.imageSize[1]}"/>${paths.map(d=>`<path d="${d}" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${route.color}" stroke-width="2.5" stroke-linejoin="round"/>`).join('')}<circle cx="${first[0]}" cy="${first[1]}" r="4" fill="${route.color}" stroke="#fff" stroke-width="1.5"/>${route.type==='One way'?`<rect x="${last[0]-3}" y="${last[1]-3}" width="6" height="6" fill="${route.color}" stroke="#fff"/>`:''}</svg>`;
+    $('#trail-caption').innerHTML=`<span>Highlighted on CAB’s October 2025 trail map. Route guide, not GPS navigation.</span>${link({label:'Full official trail map',url:state.trails.source.url})}`;
+    // Keep the source map's geometry; apply the same dated annotation corrections as the existing Atlas.
+    $('#trail-canvas svg image').insertAdjacentHTML('afterend',annotations);
+    $('#details').innerHTML=`<div class="breadcrumb"><span>Walking guide / ${esc(route.area)}</span></div><h2 class="detail-title" tabindex="-1">${esc(route.name)}</h2><p class="trail-stat">${route.miles} mi <small>${esc(walkTime(route))} · ${esc(route.type.toLowerCase())}</small></p><p class="detail-description">${esc(route.description)}</p>${route.type==='One way'?`<p class="detail-note">Walking back the same way makes this ${(route.miles*2).toFixed(2)} miles total.</p>`:''}<div class="trail-endpoints"><p><strong>Start</strong><br>${esc(route.start)}</p><p><strong>Finish</strong><br>${esc(route.finish)}</p></div><h3 class="detail-subtitle">Along the way</h3><ol class="trail-steps">${route.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><h3 class="detail-subtitle">Places nearby</h3><div class="tenant-list">${route.nearbyPlaceIds.map(id=>state.byId.get(id)).filter(Boolean).map(p=>row(p)).join('')}</div><details class="source-details"><summary>Distance, access & source</summary><p>${esc(state.trails.distanceNote)}</p><p>${esc(route.sourceScope)}</p><p>${esc(route.geometryMethod)}</p><p>Check CAB for trail access and closures before you set out. The background map may contain older project labels.</p>${link({label:'CAB trails & updates',url:state.trails.source.listingUrl})}</details>`;
+    $('#announcement').textContent=route.name+' walking guide selected';
+  }
+  async function ensureNeighborhood() {
+    if(state.ranch)return state.ranch;
+    if(state.ranchPromise)return state.ranchPromise;
+    state.ranchPromise=import('./neighborhood-atlas.js?v=20260921-11').then(async module=>{
+      const ranch=await module.createNeighborhood({host:$('#ranch-canvas'),labelLayer:$('#ranch-labels'),places:state.places,geo:state.geo,onSelect:id=>selectNeighborhoodPlace(id),onStatus:text=>{$('#ranch-status').textContent=text;}});
+      state.ranch=ranch;$('#ranch-loading').hidden=true;ranch.setLayer(state.mapLayer);ranch.setExploded(state.unfolded);ranch.resize();return ranch;
+    }).catch(error=>{
+      $('#ranch-loading').hidden=true;$('#ranch-canvas').innerHTML='<div class="ranch-fallback"><h3>The place guide is still here.</h3><p>This device could not open the 3D model.</p><button type="button" data-open-directory>Browse every place ↗</button></div>';
+      $('#ranch-status').textContent='Use the directory, walks and project views to explore.';console.error(error);return null;
+    });
+    return state.ranchPromise;
+  }
+  function setRanchFilter(filter) {
+    state.ranchFilter=filter;document.querySelectorAll('[data-ranch-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.ranchFilter===filter)));
+    ensureNeighborhood().then(r=>r?.setFilter(filter));renderNeighborhoodIntro(filter);
+  }
+  function resetNeighborhood(){
+    state.unfolded=false;state.mapLayer='all';state.area='All areas';state.ranchFilter='all';$('#map-inspector').hidden=true;$('#details').hidden=true;
+    updateLayerControls();renderNeighborhoodIntro();ensureNeighborhood().then(r=>r?.reset());
+  }
+  function focusNeighborhood(place) {
+    state.ranchFilter='all';document.querySelectorAll('[data-ranch-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.ranchFilter==='all')));
+    ensureNeighborhood().then(r=>{if(r){r.setFilter('all');if(place.coordinates)r.focusPlace(rootOf(place).id);}});
+  }
+  function updateLayerControls(){
+    document.querySelectorAll('[data-map-layer]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mapLayer===state.mapLayer)));
+    $('#ranch-unfold').setAttribute('aria-pressed',String(state.unfolded));$('#ranch-unfold span').textContent=state.unfolded?'Bring it together':'Open the layers';
+    $('#ranch-stage').dataset.layer=state.mapLayer;$('#ranch-stage').classList.toggle('is-unfolded',state.unfolded);
+    const copy={all:['Reading the atlas',state.unfolded?'One place. Three layers.':'Start with a landmark.',state.unfolded?'Parks and paths, places within places, and what’s coming next.':'Choose one landmark to find its businesses and amenities.'],places:['Places & amenities','A closer look starts here.','Choose a landmark, then explore the places within it.'],outdoors:['Parks, paths & walks','Make time for outside.','Three sourced walking guides below, with nearby places to explore.'],future:['Future references','The next chapter.','Only located reference areas appear here. All projects are listed below.']}[state.mapLayer];
+    $('#layer-reading').innerHTML='<span class="eyebrow">'+copy[0]+'</span><strong>'+copy[1]+'</strong><p>'+copy[2]+'</p>';
+    const ledger=$('#layer-ledger');ledger.hidden=!state.unfolded;
+    if(state.guide)ledger.innerHTML=[['future','03','What’s next',state.guide.future.length+' projects to follow','School 51, the library and future park phases.'],['places','02','Places within places',state.guide.roots.length+' destinations','Find the businesses, services and amenities at each stop.'],['outdoors','01','A little time outside',state.guide.walks.length+' walking guides','Distances, directions and places nearby.']].map(([id,n,title,count,description])=>'<button type="button" data-map-layer="'+id+'" aria-pressed="'+(state.mapLayer===id)+'"><span class="ledger-number">'+n+'</span><span><small>'+count+'</small><strong>'+title+'</strong><em>'+description+'</em></span><span class="ledger-arrow">↗</span></button>').join('');
+  }
+  function selectMapLayer(layer){
+    if(!['all','places','outdoors','future'].includes(layer))return;
+    state.mapLayer=layer;state.area='All areas';state.unfolded=layer!=='all';$('#map-inspector').hidden=true;$('#details').hidden=true;
+    updateLayerControls();renderNeighborhoodIntro();ensureNeighborhood().then(r=>{r?.setExploded(state.unfolded);r?.setLayer(layer);});
+  }
+  function selectNeighborhoodPlace(id){
+    const p=state.byId.get(id);if(!p)return;
+    state.selected=id;const root=rootOf(p),current=children(p.id).filter(x=>!x.future),families=current.length?current:children(root.id).filter(x=>!x.future&&x.id!==id);
+    const modeled=state.models.some(m=>m.id===root.id)||root.id==='sterling-center';
+    const action=p.future?'View project details':modeled?'Explore up close':'Full visit details';
+    const attr=p.future||modeled?'data-place':'data-map-details';
+    $('#map-inspector').innerHTML='<button class="peek-close" type="button" data-close-peek aria-label="Close selected place">×</button><div><span class="eyebrow">'+esc(p.future?C.statuses[p.status]:p.village||'Sterling Ranch')+'</span><h3>'+esc(name(p))+'</h3><button class="peek-action" type="button" '+attr+'="'+esc(p.id)+'">'+action+' ↗</button></div><div><p>'+esc(state.notes[id]?.summary||p.description)+'</p><p class="guide-note">'+(p.coordinates?'Place or parent-area marker.':'Position not mapped. Details are still available.')+'</p></div><div><span class="peek-label">'+(p.parentId?'Also at '+esc(name(root)):'Within this place')+'</span><div class="peek-amenities">'+families.slice(0,8).map(c=>'<button type="button" data-place="'+esc(c.id)+'">'+esc(amenityNames[c.id]||name(c))+'</button>').join('')+(families.length>8?'<button type="button" data-map-details="'+esc(p.id)+'">All '+families.length+' listings ↗</button>':'')+(!families.length?'<button type="button" data-map-details="'+esc(p.id)+'">Access & official sources ↗</button>':'')+'</div></div>';
+    $('#map-inspector').hidden=false;$('#details').hidden=true;
+    ensureNeighborhood().then(r=>{if(p.coordinates)r?.focusPlace(p.future?p.id:root.id);});
+    $('#announcement').textContent=p.name+' selected. Explore its amenities below the map.';
+    if(innerWidth<=800)$('#map-inspector').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'});
+  }
+  function walkArt(route){
+    const [x,y,w,h]=route.viewBox;const paths=route.paths.map(points=>points.map((p,i)=>(i?'L':'M')+p.join(' ')).join(' '));
+    return '<svg viewBox="'+[x-12,y-12,w+24,h+24].join(' ')+'" aria-label="'+esc(route.name)+' route shape from CAB’s map" role="img"><rect x="'+(x-12)+'" y="'+(y-12)+'" width="'+(w+24)+'" height="'+(h+24)+'" fill="#e3ebd7"/>'+paths.map(d=>'<path d="'+d+'" fill="none" stroke="#fffef3" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="'+d+'" fill="none" stroke="#648353" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>').join('')+'<circle cx="'+route.startPoint[0]+'" cy="'+route.startPoint[1]+'" r="5" fill="#b87c50" stroke="#fff" stroke-width="2"/></svg>';
+  }
+  function renderNeighborhoodIntro(){
+    if(!state.guide)return;
+    const guide=state.guide,layer=state.mapLayer;
+    let html='';
+    if(layer==='outdoors'){
+      html='<div class="guide-heading"><div><h3>A walk, with something along the way.</h3><p>Published CAB distances, a clear route guide, and nearby places to explore. Times estimate walking only, before stops.</p></div><button type="button" data-view="walks">Full walking guide ↗</button></div><div class="walk-story-grid">'+guide.walks.map(r=>'<article class="walk-story"><div class="walk-art">'+walkArt(r)+'</div><div class="walk-story-body"><p class="walk-mileage">'+r.miles+' mi <span>'+r.minutes.join('–')+' min · '+esc(r.type)+'</span></p><h4>'+esc(r.name)+'</h4><p>'+esc(r.description)+'</p><button type="button" class="walk-open" data-route="'+esc(r.id)+'">See the route & directions <span>↗</span></button><div class="walk-nearby"><span class="peek-label">Nearby</span>'+r.nearby.map(p=>'<button type="button" data-map-place="'+esc(p.id)+'">'+esc(name(p))+' ↗</button>').join('')+'</div></div></article>').join('')+'</div><p class="guide-note">Route shapes come from CAB’s dated trail map. Nearby places are not verified trail entrances or guaranteed stops. Background paths include sidewalks; the highlighted guides carry their own source and access notes.</p>';
+    } else if(layer==='future'){
+      html='<div class="guide-heading"><div><h3>What’s taking shape.</h3><p>Three projects have reference areas on the map. Every project stays discoverable here, including those without a verified position.</p></div></div><div class="neighborhood-cards guide-future">'+guide.future.map(g=>{const p=g.parent.future?g.parent:g.projects[0];return '<button class="neighborhood-card" type="button" data-place="'+esc(p.id)+'"><span class="card-overline">'+esc(C.statuses[p.status])+'</span><strong>'+esc(name(p))+'</strong><p>'+esc(p.village)+'</p><small>'+(!p.coordinates?'Position not mapped':'Parent-area reference only')+'</small><span class="card-arrow">↗</span></button>';}).join('')+'</div><p class="guide-note">Project records retain their September 13 checked dates. Read the linked project source for the latest status; a mapped reference is not a future boundary or an opening announcement.</p>';
+    } else {
+      const ranked=['sterling-center','overlook','burns','prospect-park','mccormick','providence-park','high-top','zippity'];
+      let places=(state.area==='All areas'?guide.roots:guide.areas.find(a=>a.name===state.area)?.roots||[]).slice();
+      places.sort((a,b)=>(ranked.includes(a.id)?ranked.indexOf(a.id):99)-(ranked.includes(b.id)?ranked.indexOf(b.id):99));
+      const lead=state.area==='All areas'?places.slice(0,8):places,rest=state.area==='All areas'?places.slice(8):[];
+      const cards=list=>list.map(p=>{const descendants=guide.descendants(p.id).filter(c=>!c.future),labels=children(p.id).filter(c=>!c.future).slice(0,3).map(c=>amenityNames[c.id]||name(c));return '<button class="neighborhood-card" type="button" data-map-place="'+esc(p.id)+'"><span class="card-overline">'+esc(p.village)+'</span><strong>'+esc(name(p))+'</strong><p>'+esc(labels.join(' · ')||p.tags.slice(0,3).join(' · '))+'</p><small>'+(!p.coordinates?'Details available · not mapped':descendants.length?descendants.length+(descendants.length===1?' amenity':' places & amenities'):'View the place')+'</small><span class="card-arrow">↗</span></button>';}).join('');
+      html='<div class="guide-heading"><div><h3>Find your part of the Ranch.</h3><p>Start with a destination. Its playgrounds, businesses and gathering spaces stay together.</p></div><button type="button" data-open-directory>Search all '+state.places.length+' listings ↗</button></div><div class="area-nav" aria-label="Browse places by area">'+['All areas',...guide.areas.map(a=>a.name)].map(a=>'<button type="button" data-area="'+esc(a)+'" aria-pressed="'+(state.area===a)+'">'+esc(a)+'</button>').join('')+'</div><div class="neighborhood-cards">'+cards(lead)+'</div>'+(rest.length?'<details class="more-neighborhood"><summary>'+rest.length+' more destinations</summary><div class="neighborhood-cards">'+cards(rest)+'</div></details>':'')+'<p class="guide-note">Area names organize the directory; they do not define surveyed village boundaries. Places without map positions remain in the list.</p>';
+    }
+    $('#neighborhood-guide').innerHTML=html;$('#announcement').textContent=(layer==='future'?'Future projects':layer==='outdoors'?'Walking guides':'Neighborhood places')+' selected';
+  }
+  function renderDirectory() {
+    const groups=C.directoryGroups(state.places,state.category,state.query.replace(/pickle\s+ball/gi,'pickleball'));
+    const count=groups.reduce((a,g)=>a+g.matches.length,0);
+    $('#result-count').textContent=`${count} matching ${count===1?'listing':'listings'} in ${groups.length} ${groups.length===1?'destination':'destinations'}`;
+    $('#category-choices').innerHTML=[['all','Everything'],...Object.entries(C.categories).map(([k,v])=>[k,v.label])].map(([id,label])=>`<button type="button" data-category="${id}" aria-pressed="${state.category===id}">${esc(label)}</button>`).join('');
+    $('#directory-results').innerHTML=groups.length?groups.map(g=>{const isSearching=state.query.trim()||state.category!=='all',matches=isSearching?g.matches.filter(p=>p.id!==g.place.id):[];return `<section class="result-group"><button class="result-parent" type="button" data-place="${esc(g.place.id)}"><span>${esc(g.place.name)}</span><small>${esc(g.place.village||C.categories[g.place.category].label)}</small></button>${matches.map(p=>`<button class="result-child" data-place="${esc(p.id)}" type="button"><span>${esc(p.name)}</span><small>${esc(p.future?'Planned':'View details')} →</small></button>`).join('')}${!isSearching && g.children.length?`<button class="result-child" data-place="${esc(g.place.id)}" type="button"><span>${g.children.length} places & features inside</span><span>→</span></button>`:''}</section>`;}).join(''):'<p class="empty-results">No places matched that search.</p><p class="detail-note">Try a shorter name or choose Everything.</p>';
+  }
+  function openDirectory(query='') {state.query=query;state.category='all';$('#find-place').value=query;renderDirectory();dialog.showModal();$('#find-place').focus();}
+  function renderDiscovery() {
+    const picks=[['burns','court','Pickleball & more'],['mccormick','play','Playground & gathering'],['overlook','pool','Pool & recreation'],['prospect-park','tree','A walk around the park']];
+    $('#discovery-links').innerHTML=picks.filter(([id])=>state.byId.has(id)).map(([id,k,sub])=>`<button type="button" data-place="${id}">${icon(k)}<strong>${esc(state.byId.get(id).name)}</strong><small>${esc(sub)}</small><span aria-hidden="true">↗</span></button>`).join('');
+  }
+  document.addEventListener('click',e=>{
+    if(e.target.closest('[data-open-directory]')){openDirectory();return;}
+    if(e.target.closest('[data-close-peek]')){$('#map-inspector').hidden=true;return;}
+    const layer=e.target.closest('[data-map-layer]');if(layer){selectMapLayer(layer.dataset.mapLayer);return;}
+    const area=e.target.closest('[data-area]');if(area){state.area=area.dataset.area;renderNeighborhoodIntro();document.querySelector('[data-area="'+state.area+'"]')?.focus({preventScroll:true});return;}
+    const mapPlace=e.target.closest('[data-map-place]');if(mapPlace){setMode('location');selectNeighborhoodPlace(mapPlace.dataset.mapPlace);return;}
+    const mapDetails=e.target.closest('[data-map-details]');if(mapDetails){$('#details').hidden=false;renderDetail(mapDetails.dataset.mapDetails,true);$('#details').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});return;}
+    const modelLocation=e.target.closest('[data-model-location]');if(modelLocation){setMode('location');selectNeighborhoodPlace(modelLocation.dataset.modelLocation);return;}
+    const modelFeature=e.target.closest('[data-model-feature]');if(modelFeature){openPlace(modelFeature.dataset.modelFeature,true);return;}
+    const filter=e.target.closest('[data-ranch-filter]');if(filter){setRanchFilter(filter.dataset.ranchFilter);return;}
+    const centerGroup=e.target.closest('[data-center-group]');if(centerGroup){setMode('explore');setOpening(100);renderDetail('sterling-center',true,centerGroup.dataset.centerGroup);return;}
+    const place=e.target.closest('[data-place]');if(place){const wasDialog=dialog.open;if(wasDialog)dialog.close();openPlace(place.dataset.place,true);return;}
+    const view=e.target.closest('[data-view]');if(view){const mode=view.dataset.view;setMode(mode);if(mode==='explore'){renderDetail('sterling-center');setOpening(0);}if(mode==='location')resetNeighborhood();if(mode==='walks')renderWalk();if(mode==='future'){renderFuture();renderDetail('school51');renderFuture();}return;}
+    const route=e.target.closest('[data-route]');if(route){setMode('walks');renderWalk(route.dataset.route);return;}
+    const category=e.target.closest('[data-category]');if(category){state.category=category.dataset.category;renderDirectory();document.querySelector(`[data-category="${state.category}"]`)?.focus();return;}
+    if(e.target.closest('[data-model-return]')){setMode('explore');setOpening(0);renderDetail('sterling-center');}
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='/'&&!dialog.open && !/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)){e.preventDefault();openDirectory();}
+    if((e.key==='Enter'||e.key===' ')&&e.target.matches('.map-pin')){e.preventDefault();openPlace(e.target.dataset.place,true);}
+  });
+  $('#search-launch').addEventListener('click',()=>openDirectory());$('#browse-all').addEventListener('click',()=>openDirectory());$('#close-directory').addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();dialog.close();}});
+  $('#find-place').addEventListener('input',e=>{state.query=e.target.value;renderDirectory();});
+  $('#opening').addEventListener('input',e=>setOpening(e.target.value));$('#assemble').addEventListener('click',()=>setOpening(0));$('#explode').addEventListener('click',()=>setOpening(100));$('#scene-toggle').addEventListener('click',()=>setOpening(state.opening>50?0:100));
+  $('#reset-scene').addEventListener('click',()=>{setOpening(0);renderDetail('sterling-center');});
+  $('#open-building').addEventListener('click',()=>setOpening(state.opening>50?0:100));
+  $('#show-location').addEventListener('click',()=>{setMode('location');selectNeighborhoodPlace('sterling-center');});
+  $('#ranch-unfold').addEventListener('click',()=>{state.unfolded=!state.unfolded;if(!state.unfolded)state.mapLayer='all';updateLayerControls();renderNeighborhoodIntro();ensureNeighborhood().then(r=>{r?.setExploded(state.unfolded);r?.setLayer(state.mapLayer);});});
+  $('#ranch-left').addEventListener('click',()=>state.ranch?.orbit(-Math.PI/12));$('#ranch-right').addEventListener('click',()=>state.ranch?.orbit(Math.PI/12));
+  $('#ranch-in').addEventListener('click',()=>state.ranch?.zoom(.2));$('#ranch-out').addEventListener('click',()=>state.ranch?.zoom(-.2));
+  $('#ranch-reset').addEventListener('click',resetNeighborhood);
+  function imageFailed(){document.body.classList.add('image-failed');$('.model-caption').textContent='Model art could not load. Place details and the neighborhood are still available.';}
+  document.querySelectorAll('.scene img').forEach(img=>{img.addEventListener('error',imageFailed);if(img.complete && !img.naturalWidth)imageFailed();});
+  async function json(url){const r=await fetch(url);if(!r.ok)throw Error('Could not load '+url);return r.json();}
+  async function start(){
+    try{
+      const [catalog,geo,trails,notes,directory,landmarks]=await Promise.all([json('../places.json'),json('../geography.json'),json('../trails.json'),json('./visitor-notes.json'),json('./sterling-center-directory.json?v=20260921-3'),json('./landmark-models.json?v=20260921-10')]);
+      C.validateTrails(trails);const merged=window.OpenedDirectory.merge(catalog,directory,notes);state.places=merged.places;state.byId=new Map(state.places.map(p=>[p.id,p]));state.geo=geo;state.trails=trails;state.notes=merged.notes;state.notesDate=notes.checkedAt;state.centerGroups=merged.groups;
+      window.OpenedLandmarks.validate(landmarks,state.places);state.models=landmarks.models;
+      for(const [id,note] of Object.entries(landmarks.notes))state.notes[id]={...note,checkedAt:landmarks.checkedAt};
+      state.guide=window.NeighborhoodGuide.build(state.places,state.trails);updateLayerControls();
+      renderModelShelf();renderCenterCards();renderNeighborhoodIntro();renderDiscovery();setOpening(0);$('#loading').hidden=true;$('#workspace').hidden=false;setMode('location');
+      document.querySelectorAll('.view-nav button, #search-launch').forEach(b=>{b.disabled=false;});
+      const id=new URLSearchParams(location.search).get('place');if(id && state.byId.has(id))openPlace(id);
+    }catch(error){$('#loading').classList.add('error');$('#loading').innerHTML='The preview could not load its place information. Please reload the page. <a href="/atlas">Open the current Atlas</a>';console.error(error);}
+  }
+  start();
+})();
