@@ -23,7 +23,7 @@ test("every workflow quality caller establishes temporary evidence before checki
   for (const filename of callers) {
     const workflow = fs.readFileSync(path.join(root, ".github", "workflows", filename), "utf8");
     const bridge = workflow.indexOf(bridgeUse);
-    const check = workflow.indexOf("npm run check");
+    const check = workflow.indexOf(filename === 'ci.yml' ? 'npm run release:check' : 'npm run check');
     assert.ok(bridge >= 0 && check > bridge, `${filename} must use temporary evidence before npm run check`);
     assert.match(workflow, /fetch-depth: 0/, `${filename} must retain a baseline for unavailable-evidence checks`);
   }
@@ -50,7 +50,7 @@ test("no workflow can call the local source gate before the reusable bridge", ()
   for (const filename of fs.readdirSync(workflowDir).filter(name => name.endsWith(".yml"))) {
     const workflow = fs.readFileSync(path.join(workflowDir, filename), "utf8");
     const bridge = workflow.indexOf(bridgeUse);
-    for (const marker of ["npm run check", "node scripts/check-community-sources", "npm run community:check"]) {
+    for (const marker of ["npm run check", "npm run release:check", "node scripts/check-community-sources", "npm run community:check"]) {
       const position = workflow.indexOf(marker);
       if (position >= 0) assert.ok(bridge >= 0 && bridge < position,
         `${filename} must establish temporary evidence before ${marker}`);

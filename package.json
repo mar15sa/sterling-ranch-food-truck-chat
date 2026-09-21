@@ -4,6 +4,8 @@
   "description": "Source-aware resident tools for Sterling Ranch rules, food trucks, pool status, and nearby openings.",
   "main": "server.js",
   "scripts": {
+    "release:check": "node scripts/run-release-check.js",
+    "staging:lease": "node scripts/staging-lease.js",
     "start": "node server.js",
     "test": "node scripts/run-tests.js",
     "test:fast": "node scripts/build-rules-fact-catalog.js --check && node --check server.js && node --check scripts/check-deployment-health.js && node scripts/run-fast-tests.js",

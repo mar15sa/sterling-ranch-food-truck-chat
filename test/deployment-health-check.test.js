@@ -132,6 +132,36 @@ test("openings catalog validation requires entries, a valid total, and an update
   ]);
 });
 
+const boundedOptions = scope => ({ baseUrl: 'https://example.test', expectedRevision: 'expected', waitMs: 0, intervalMs: 1000, requestTimeoutMs: 1000, releaseScope: scope });
+
+test('documentation deployments require exact revision and readiness, without unrelated evidence renewal', async () => {
+  const stale = healthy(); stale.communitySources.stale = true;
+  assert.equal((await checkDeployment(boundedOptions('docs'), { fetchImpl: async () => response(stale) })).deploymentRevision, 'expected');
+  await assert.rejects(() => checkDeployment(boundedOptions('docs'), { fetchImpl: async () => response(healthy('older')) }), /revision older/);
+  stale.deploymentReady = false;
+  await assert.rejects(() => checkDeployment(boundedOptions('docs'), { fetchImpl: async () => response(stale) }), /deploymentReady/);
+});
+
+test('owner display deployments check assets and reject any publicly readable question API', async () => {
+  const stale = healthy(); stale.communitySources.stale = true;
+  let privateStatus = 401;
+  let assetAvailable = true;
+  const requests = [];
+  const fetchImpl = async url => {
+    requests.push(url);
+    if (url.endsWith('/api/health')) return response(stale);
+    if (url.endsWith('/api/community-questions')) return response({}, { ok: privateStatus === 200, status: privateStatus });
+    return { ok: assetAvailable, status: assetAvailable ? 200 : 404, text: async () => '<meta name="robots" content="noindex">' };
+  };
+  await checkDeployment(boundedOptions('owner-ui'), { fetchImpl });
+  assert.equal(requests.some(url => url.includes('/ask')), false);
+  privateStatus = 200;
+  await assert.rejects(() => checkDeployment(boundedOptions('owner-ui'), { fetchImpl }), /did not deny/);
+  privateStatus = 401; assetAvailable = false;
+  await assert.rejects(() => checkDeployment(boundedOptions('owner-ui'), { fetchImpl }), /asset unavailable/);
+  await assert.rejects(() => checkDeployment(boundedOptions('unknown'), { fetchImpl }), /Unknown/);
+});
+
 test("deployment health options come from explicit CI environment values", () => {
   assert.deepEqual(parseOptions([], {
     DEPLOYMENT_BASE_URL: "https://example.test/",
@@ -147,6 +177,7 @@ test("deployment health options come from explicit CI environment values", () =>
     intervalMs: 2000,
     requestTimeoutMs: 3000,
     openingsOnly: true,
+    releaseScope: "full",
   });
 });
 
@@ -157,10 +188,10 @@ test("CI keeps the complete gate before merge and uses deployment health after p
 
   assert.match(pullRequestJobs, /fast:[\s\S]*if: github\.event_name == 'pull_request'[\s\S]*npm run test:fast/);
   assert.match(pullRequestJobs, /quality:[\s\S]*if: github\.event_name == 'pull_request'[\s\S]*needs: fast/);
-  assert.match(pullRequestJobs, /revalidate-approved-community-evidence[\s\S]*npm run check/);
+  assert.match(pullRequestJobs, /revalidate-approved-community-evidence[\s\S]*npm run release:check/);
   assert.match(pullRequestJobs, /RULES_LLM_MODE: off/);
   assert.match(deploymentJob, /if: github\.event_name == 'push'/);
   assert.match(deploymentJob, /EXPECTED_DEPLOYMENT_REVISION: \$\{\{ github\.sha \}\}[\s\S]*npm run check:deployment/);
-  assert.match(deploymentJob, /check-openings-release-scope\.js[\s\S]*github\.event\.before[\s\S]*OPENINGS_ONLY_DEPLOYMENT/);
+  assert.match(deploymentJob, /check-release-scope\.js --mode push[\s\S]*github\.event\.before[\s\S]*DEPLOYMENT_RELEASE_SCOPE/);
   assert.doesNotMatch(deploymentJob, /npm run check(?:\s|$)/);
 });
