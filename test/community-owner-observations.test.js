@@ -72,6 +72,27 @@ test("Atlas WiFi paraphrases answer from the same reviewed observation", async (
   }
 });
 
+test("the production need-first flow accepts a verified connection instruction", async () => {
+  const question = "How do I connect to the guest network at Atlas?";
+  const result = await answerCommunityQuestion(question, {
+    isTest: true,
+    index,
+    communityId: "sterling-ranch",
+    communityProfile: profile,
+    planCommunitySearch: false,
+    synthesizeCommunityAnswer: false,
+    answerRulesQuestion: rulesBoundary,
+    rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    requestContractMode: "need-first-candidate",
+    needRouterBackend: "current-local",
+    now: Date.parse("2026-09-20T23:30:00.000Z"),
+  });
+  assert.equal(result.answerStatus, "verified");
+  assert.equal(result.completion.outcome, "complete");
+  assert.match(result.answer, /Atlas Guest/);
+  assert.match(result.answer, /GuestWiFi!/);
+});
+
 test("an expired onsite observation is withheld without making official-source health stale", async () => {
   const [observation] = buildOwnerObservationSources(observations);
   const now = Date.parse("2026-10-22T00:00:00.000Z");
