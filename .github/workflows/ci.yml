@@ -45,16 +45,27 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - name: Classify the release scope
+        id: release-scope
+        run: >-
+          node scripts/check-openings-release-scope.js
+          --base "${{ github.event.pull_request.base.sha }}"
+          --head "${{ github.event.pull_request.head.sha }}"
       - name: Revalidate due approved evidence into a temporary snapshot
+        if: steps.release-scope.outputs.openings_only != 'true'
         uses: ./.github/actions/revalidate-approved-community-evidence
       - name: Run the comprehensive quality gate against temporary evidence
+        if: steps.release-scope.outputs.openings_only != 'true'
         env:
           RULES_LLM_MODE: off
           RULES_ENABLE_LLM_REWRITE: "false"
         run: |
           npm run check
+      - name: Run the isolated openings release gate
+        if: steps.release-scope.outputs.openings_only == 'true'
+        run: npm run openings:release:check
       - name: Preserve evidence revalidation records
-        if: always()
+        if: always() && steps.release-scope.outputs.openings_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: approved-evidence-revalidation
