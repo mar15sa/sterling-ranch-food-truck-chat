@@ -1,0 +1,144 @@
+{
+  "checkedAt": "2026-09-21T18:15:05.942Z",
+  "residentQuestionsSubmitted": 0,
+  "routes": [
+    "/atlas/opened/app.js",
+    "/atlas/opened/assets/neighborhood.png",
+    "/atlas/opened/assets/places.png",
+    "/atlas/opened/assets/roof.png",
+    "/atlas/opened/index.html",
+    "/atlas/opened/style.css",
+    "/atlas/opened/visitor-notes.json"
+  ],
+  "staging": [
+    {
+      "route": "/atlas/opened/app.js",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/neighborhood.png",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/places.png",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/roof.png",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/index.html",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/style.css",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/visitor-notes.json",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 200,
+      "noindex": true
+    }
+  ],
+  "production": [
+    {
+      "route": "/atlas/opened/app.js",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/app.js",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/neighborhood.png",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/neighborhood.png",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/places.png",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/places.png",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/roof.png",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/assets/roof.png",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/index.html",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/index.html",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/style.css",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/style.css",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/visitor-notes.json",
+      "host": "sterlingranchsociety.com",
+      "status": 404,
+      "noindex": true
+    },
+    {
+      "route": "/atlas/opened/visitor-notes.json",
+      "host": "sterling-ranch-food-truck-chat-staging.up.railway.app",
+      "status": 404,
+      "noindex": true
+    }
+  ],
+  "passed": true
+}

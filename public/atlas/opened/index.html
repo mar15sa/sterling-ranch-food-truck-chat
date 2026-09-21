@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#f8f7f2">
+  <title>Sterling Ranch, opened up. · Staging preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css?v=20260921-1">
+  <script src="../atlas-core.js" defer></script>
+  <script src="./app.js?v=20260921-1" defer></script>
+</head>
+<body>
+  <a class="skip" href="#details">Skip to place details</a>
+  <header class="masthead">
+    <a class="wordmark" href="/">Sterling Ranch Society</a>
+    <div class="comparison"><span class="preview-dot">Staging preview</span><a href="/atlas" target="_blank" rel="noopener">Compare current Atlas <span aria-hidden="true">↗</span></a><a href="/atlas/concepts.html" target="_blank" rel="noopener">Earlier studies <span aria-hidden="true">↗</span></a></div>
+  </header>
+  <main>
+    <div class="page-heading">
+      <h1>Sterling Ranch, opened up.</h1>
+      <button class="search-launch" id="search-launch" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span>Find a place or activity</span><kbd>/</kbd></button>
+    </div>
+    <nav class="view-nav" aria-label="Atlas views">
+      <button type="button" data-view="explore" aria-pressed="true">Explore</button>
+      <button type="button" data-view="walks" aria-pressed="false">Walks</button>
+      <button type="button" data-view="future" aria-pressed="false">What’s coming</button>
+      <button type="button" id="browse-all">All places <span aria-hidden="true">↗</span></button>
+    </nav>
+    <p id="loading" class="loading" role="status">Opening the neighborhood…</p>
+    <div id="workspace" class="workspace" hidden>
+      <section class="visual-column" aria-label="Interactive neighborhood">
+        <div id="model-view">
+          <div class="scene-heading"><span>Providence / Sterling Center</span><button type="button" id="scene-toggle">Bring together <span aria-hidden="true">↙</span></button></div>
+          <div class="scene" id="scene" aria-label="Illustrative model of Sterling Center. Use the labeled buttons to explore its places.">
+            <img class="neighborhood-plate" src="./assets/neighborhood.png" alt="Architectural model of Sterling Center and its surrounding neighborhood, with a gathering lawn in the foreground." fetchpriority="high" draggable="false">
+            <div class="roof-layer" aria-hidden="true"><img src="./assets/roof.png" alt="" draggable="false"></div>
+            <svg class="connectors" viewBox="0 0 1000 667" preserveAspectRatio="none" aria-hidden="true"><path id="wire-cafe"/><path id="wire-patio"/><path id="wire-play"/></svg>
+            <div class="piece piece-cafe" aria-hidden="true"><div class="sprite sprite-cafe"></div></div>
+            <div class="piece piece-patio" aria-hidden="true"><div class="sprite sprite-patio"></div></div>
+            <div class="piece piece-play" aria-hidden="true"><div class="sprite sprite-play"></div></div>
+            <button class="scene-pin pin-center" data-place="sterling-center" type="button"><span class="pin-dot">+</span><span>Sterling Center</span></button>
+            <button class="scene-pin pin-cafe" data-place="ranch-social" type="button"><span class="pin-dot">01</span><span>Ranch Social</span></button>
+            <button class="scene-pin pin-patio" data-place="ranch-patio" type="button"><span class="pin-dot">02</span><span>Patio & fire pit</span></button>
+            <button class="scene-pin pin-play" data-place="ranch-playground" type="button"><span class="pin-dot">03</span><span>Log playground</span></button>
+            <button class="lawn-label" data-place="providence-park" type="button">The Lawn<br>at Providence <span aria-hidden="true">↗</span></button>
+            <span class="model-caption">Illustrative architecture & placement</span>
+          </div>
+          <div class="opening-controls">
+            <button type="button" id="assemble">Together</button>
+            <label class="slider-wrap"><span class="sr-only">Open Sterling Center</span><input id="opening" type="range" min="0" max="100" value="85" aria-valuetext="85 percent open"><span class="slider-end" aria-hidden="true"></span></label>
+            <button type="button" id="explode">Opened up</button>
+            <button type="button" class="reset-scene" id="reset-scene" aria-label="Reset Sterling Center view">↺</button>
+          </div>
+          <div class="scene-footnote"><span>Open a place. See what belongs together.</span><button type="button" id="show-location">See the geographic map <span aria-hidden="true">↗</span></button></div>
+        </div>
+        <div id="location-view" class="alternate-view" hidden>
+          <div class="scene-heading"><span id="location-heading">Around the neighborhood</span><button type="button" data-model-return>Back to the model <span aria-hidden="true">↗</span></button></div>
+          <div class="location-map" id="location-map"></div>
+          <div class="map-note" id="location-note"></div>
+        </div>
+        <div id="walks-view" class="alternate-view" hidden>
+          <div class="section-intro"><span class="eyebrow">A little time outside</span><h2>Take the long way home.</h2><p>Choose a walk, see the path, and find a place to stop along the way.</p></div>
+          <div id="walk-choices" class="walk-choices"></div>
+          <div class="trail-canvas" id="trail-canvas"></div>
+          <div class="trail-caption" id="trail-caption"></div>
+        </div>
+        <div id="future-view" class="alternate-view" hidden>
+          <div class="section-intro"><span class="eyebrow">The neighborhood taking shape</span><h2>Room for what’s next.</h2><p>Schools, gathering places and more room to play. Open a project for its status, source and planned features.</p></div>
+          <div id="future-list" class="future-list"></div>
+          <p class="small-note">Project information is a September 13 snapshot. Dates can change; the linked project pages carry updates.</p>
+        </div>
+      </section>
+      <aside id="details" class="details" aria-label="Place details" tabindex="-1"></aside>
+    </div>
+    <section class="discovery" aria-labelledby="discovery-title">
+      <div><span class="eyebrow">Places to know</span><h2 id="discovery-title">A few good starting points.</h2></div>
+      <div id="discovery-links" class="discovery-links"></div>
+    </section>
+  </main>
+  <footer><p>A new Atlas in progress. Sterling Center is the first opening model. The full directory, walking guides and project records are available to explore.</p><div><span>Model art is illustrative, not navigation.</span><a href="/atlas" target="_blank" rel="noopener">Keep the current Atlas beside this preview ↗</a></div></footer>
+  <dialog id="directory-dialog" aria-labelledby="directory-title">
+    <div class="dialog-heading"><h2 id="directory-title">Find your next stop.</h2><button id="close-directory" class="icon-button" type="button" aria-label="Close place finder">×</button></div>
+    <label for="find-place" class="sr-only">Search all places and amenities</label><input id="find-place" type="search" placeholder="Try pickleball, coffee, playground…" autocomplete="off">
+    <div id="category-choices" class="category-choices" aria-label="Filter places"></div>
+    <p id="result-count" class="result-count" role="status"></p><div id="directory-results" class="directory-results"></div>
+  </dialog>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  <noscript><p class="loading">This preview needs JavaScript to open places. <a href="https://sterlingranch.com/town-life/">Browse the official community directory.</a></p></noscript>
+</body>
+</html>

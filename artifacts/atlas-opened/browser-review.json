@@ -1,0 +1,41 @@
+{
+  "reviewedAt": "2026-09-21",
+  "environment": "local staging preview",
+  "viewportChecks": [
+    {
+      "width": 1440,
+      "height": 1050,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    }
+  ],
+  "checked": [
+    "Opening scene and roof alignment, assembled and open states",
+    "Keyboard range Home sets zero; visible open and close controls",
+    "Nested Ranch Social business and outdoor selections",
+    "Food-truck child included alongside daily schedule action",
+    "Full directory reports 100 listings grouped under 33 destinations",
+    "Pickleball and pickle ball searches find Burns courts",
+    "Empty search offers useful recovery text",
+    "Modal Escape closes and restores focus to All places",
+    "Phone hotspot moves focus to matching detail heading",
+    "Three walking guides, one-way return distances and nearby stops",
+    "CAB annotation corrections reused without changing geometry",
+    "Eleven future project groups, including three planned children under existing destinations",
+    "School without verified coordinates stays unpinned",
+    "Library grandchildren remain selectable",
+    "Geographic context uses catalog points and OSM geometry",
+    "Browser console errors: none"
+  ],
+  "limits": [
+    "Real touch device not tested",
+    "Reduced-motion rule reviewed in CSS; system preference not emulated",
+    "First dimensional model is Sterling Center only",
+    "Illustrative architecture and placement are not surveyed geography or floor plans"
+  ],
+  "residentQuestionsSubmitted": 0
+}
