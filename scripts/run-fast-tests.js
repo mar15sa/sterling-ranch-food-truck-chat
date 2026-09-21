@@ -3,6 +3,8 @@ const path = require("node:path");
 // This is an early warning layer, not the release gate. The complete test and
 // evaluation suite still runs in the required `quality` job before merge.
 const fastTestFiles = [
+  "release-scope.test.js",
+  "staging-lease.test.js",
   "automated-test-labeling.test.js",
   "community-ci-revalidation-workflow.test.js",
   "community-source-status.test.js",

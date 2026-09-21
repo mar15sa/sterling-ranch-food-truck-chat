@@ -16,6 +16,7 @@ function parseOptions(argv = process.argv.slice(2), env = process.env) {
     intervalMs: Math.max(1000, Number(argumentValue("interval-ms", argv) || env.DEPLOYMENT_INTERVAL_MS || DEFAULT_INTERVAL_MS)),
     requestTimeoutMs: Math.max(1000, Number(argumentValue("request-timeout-ms", argv) || env.DEPLOYMENT_REQUEST_TIMEOUT_MS || DEFAULT_REQUEST_TIMEOUT_MS)),
     openingsOnly: argv.includes("--openings-only") || String(env.OPENINGS_ONLY_DEPLOYMENT || "").toLowerCase() === "true",
+    releaseScope: argumentValue("scope", argv) || env.DEPLOYMENT_RELEASE_SCOPE || "full",
   };
 }
 
@@ -51,6 +52,8 @@ function sleep(ms) {
 async function checkDeployment(options, dependencies = {}) {
   if (!options.baseUrl) throw new Error("Provide DEPLOYMENT_BASE_URL or --base-url.");
   if (!options.expectedRevision) throw new Error("Provide EXPECTED_DEPLOYMENT_REVISION or --expected-revision.");
+  const scope = options.openingsOnly ? "openings" : (options.releaseScope || "full");
+  if (!["full", "openings", "docs", "owner-ui"].includes(scope)) throw new Error("Unknown deployment release scope.");
 
   const fetchImpl = dependencies.fetchImpl || global.fetch;
   const sleepImpl = dependencies.sleepImpl || sleep;
@@ -66,8 +69,8 @@ async function checkDeployment(options, dependencies = {}) {
       });
       const health = await response.json();
       if (response.ok && health.deploymentRevision === options.expectedRevision) {
-        const issues = options.openingsOnly ? baseHealthIssues(health) : healthIssues(health);
-        if (!issues.length && options.openingsOnly) {
+        const issues = scope === "full" ? healthIssues(health) : baseHealthIssues(health);
+        if (!issues.length && scope === "openings") {
           const openingsResponse = await fetchImpl(`${options.baseUrl}/api/openings`, {
             headers: { "user-agent": "Sterling-Ranch-Deployment-Health/1.0" },
             signal: AbortSignal.timeout(options.requestTimeoutMs),
@@ -75,6 +78,20 @@ async function checkDeployment(options, dependencies = {}) {
           const openings = await openingsResponse.json();
           if (!openingsResponse.ok) issues.push(`openings endpoint returned HTTP ${openingsResponse.status}`);
           else issues.push(...openingsIssues(openings));
+        }
+        if (!issues.length && scope === "owner-ui") {
+          const request = pathname => fetchImpl(`${options.baseUrl}${pathname}`, {
+            headers: { "user-agent": "Sterling-Ranch-Deployment-Health/1.0" },
+            signal: AbortSignal.timeout(options.requestTimeoutMs), redirect: "manual",
+          });
+          // No login, stored questions, writes, or model calls: check the public shell and unauthenticated boundary.
+          const privateResponse = await request("/api/community-questions");
+          if (![401, 403].includes(privateResponse.status)) issues.push("owner question API did not deny an unauthenticated request");
+          for (const pathname of ["/community-assistant/questions", "/community-questions.js", "/community-questions.css"]) {
+            const asset = await request(pathname);
+            if (!asset.ok) issues.push(`owner page asset unavailable: ${pathname}`);
+            if (pathname === "/community-assistant/questions" && !/noindex/.test(await asset.text())) issues.push("owner page is missing its noindex marker");
+          }
         }
         if (!issues.length) return health;
         lastObservation = `expected revision is still refreshing or unhealthy: ${issues.join("; ")}`;
@@ -97,8 +114,10 @@ async function checkDeployment(options, dependencies = {}) {
 async function main() {
   const options = parseOptions();
   const health = await checkDeployment(options);
-  const detail = options.openingsOnly
-    ? "ready with a valid openings catalog"
+  const scope = options.openingsOnly ? "openings" : options.releaseScope;
+  const detail = scope === "openings" ? "ready with a valid openings catalog"
+    : scope === "docs" ? "ready; documentation-only change"
+    : scope === "owner-ui" ? "ready; owner page available and private API protected"
     : "ready, current evidence, zero source failures";
   console.log(`Deployment health passed for ${health.deploymentRevision}: ${detail}.`);
 }
