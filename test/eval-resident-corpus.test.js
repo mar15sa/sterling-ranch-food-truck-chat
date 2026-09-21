@@ -17,9 +17,9 @@ function atlasHold(overrides = {}) {
   };
 }
 
-test("authored Atlas evidence boundaries are withheld from resident-quality scoring", () => {
+test("Atlas evidence boundaries remain scored after approved WiFi evidence is added", () => {
   for (const question of ["What is atlas coffee wifi?", "What is atlas wifi"]) {
-    assert.equal(isExpectedEvidenceBoundaryHold(question, atlasHold()), true, question);
+    assert.equal(isExpectedEvidenceBoundaryHold(question, atlasHold()), false, question);
   }
 });
 
