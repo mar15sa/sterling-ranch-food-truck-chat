@@ -79,9 +79,17 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Classify the deployed release scope
+        id: release-scope
+        run: >-
+          node scripts/check-openings-release-scope.js
+          --base "${{ github.event.before }}"
+          --head "${{ github.sha }}"
       - name: Select deployed environment
         shell: bash
         run: |
@@ -93,4 +101,5 @@ jobs:
       - name: Wait for and verify the exact deployment
         env:
           EXPECTED_DEPLOYMENT_REVISION: ${{ github.sha }}
+          OPENINGS_ONLY_DEPLOYMENT: ${{ steps.release-scope.outputs.openings_only }}
         run: npm run check:deployment
