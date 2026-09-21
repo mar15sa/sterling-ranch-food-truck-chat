@@ -4,6 +4,7 @@ const { fingerprint } = require("../lib/community-release");
 const { sourceReviewState } = require("../lib/community-source-answerability");
 const { actionIdentity, actionUrlIdentity, observeCanonicalSource, sourceHash, selectRevalidationTargetUrls } = require("../lib/community-approved-revalidation");
 const { chunkText, pageText } = require("../lib/community-ingest");
+const { faqRows } = require("../lib/community-faq-records");
 const { runBridge } = require("../scripts/check-approved-community-revalidation");
 
 const NOW = Date.parse("2026-09-08T12:00:00.000Z");
@@ -318,6 +319,30 @@ test("FAQ fingerprint ignores only its self link and keeps copied page actions m
     fetchImpl: async () => ({ ok: true, url: faqUrl, text: async () => html.replace('<a href="/contact">General Inquiries</a>', "") }),
   });
   assert.equal(missingSharedAction.actionMismatch, true);
+});
+
+test("scoped FAQ evidence revalidates exact legacy chunks and structured question rows", async () => {
+  const faqUrl = "https://alpha.gov/m/faq?cat=16";
+  const row = (id, title, answer) => `<li class="faq-question-item" id="question-${id}"><h3><button>${title}</button></h3><div class="accordion-text">${answer}</div></li>`;
+  const html = `<main>${row(1, "What is included?", `${"Stable introductory guidance. ".repeat(80)}End of first answer.`)}${row(2, "How do I register?", "Open the official portal, select Registration, and follow the instructions. You can choose text, email, or phone alerts.")}</main>`;
+  const pageChunks = chunkText(pageText(html));
+  const rows = faqRows(html, faqUrl);
+  assert.ok(pageChunks.length > 1);
+  assert.equal(rows.length, 2);
+  const sources = [
+    { id: "legacy-faq-chunk", sourceUrl: faqUrl, reviewStatus: "candidate", contentHash: sourceHash(pageChunks.at(-1)), actions: [],
+      facts: [{ reviewStatus: "approved" }] },
+    { id: "structured-faq-row", sourceUrl: faqUrl, reviewStatus: "candidate", contentHash: sourceHash(rows[1].text), actions: [],
+      facts: [{ reviewStatus: "approved" }] },
+  ];
+  const fetchImpl = async () => ({ ok: true, url: faqUrl, text: async () => html });
+  const proof = await observeCanonicalSource(faqUrl, sources, { fetchImpl });
+  assert.deepEqual(new Set(proof.observedHashes), new Set(sources.map((source) => source.contentHash)));
+
+  const changed = await observeCanonicalSource(faqUrl, sources, {
+    fetchImpl: async () => ({ ok: true, url: faqUrl, text: async () => html.replace("text, email, or phone", "postal mail") }),
+  });
+  assert.equal(changed.observedHashes.includes(sources[1].contentHash), false);
 });
 
 test("a transient PDF failure is retried and remains a visible failure when both attempts fail", async () => {
