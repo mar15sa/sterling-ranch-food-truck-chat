@@ -668,7 +668,7 @@ test("unrelated community-page actions are not attached to grounded rule answers
     ["Can we have chickens?", /Water-Sewer|Resident-Amenity|Submit-Your-Feedback/i],
     ["Are household pets allowed?", /Resident-Amenity|Submit-Your-Feedback/i],
     ["Are there rules where the electrical panels need to be placed?", /Resident-Amenity|Water-Sewer/i],
-    ["Can you park an RV on the street?", /Submit-Your-Feedback|Park-Shelters|Amenity-Rentals/i],
+    ["Can you park an RV on the street?", /Submit-Your-Feedback|Park-Shelters|Amenity-Rentals|Park-Pass-Reimbursement/i],
     ["Can I install a swimming pool in my backyard?", /QID=119|reserve-the-pool|Backyard-Utility-Sheds/i],
     ["Can I put up a political sign?", /constantcontact|wasteconnections|Bulk-Item|Submit-Your-Feedback/i],
     ["Does the community own the landscaping on the sidewalk?", /calendar\.aspx/i],
@@ -685,6 +685,42 @@ test("unrelated community-page actions are not attached to grounded rule answers
     });
     assert.doesNotMatch(JSON.stringify(answer.actions || []), forbidden, question);
   }
+});
+
+test("vehicle-parking rule questions cannot collide with a state-parks pass form", async () => {
+  for (const question of [
+    "Can you park an RV on the street?",
+    "Can my visitor leave a camper trailer on the roadway overnight?",
+    "Where may I keep my motorhome for three days?",
+  ]) {
+    const result = await answerCommunityQuestion(question, {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      communityProfile,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      isTest: true,
+    });
+    assert.match(result.sources?.[0]?.title || "", /^Sec\. 1-37\./i, question);
+    assert.doesNotMatch(result.answer, /Park Pass Car Registration Reimbursement Form/i, question);
+  }
+
+  const passQuestion = await answerCommunityQuestion(
+    "How do I request reimbursement for my Colorado state parks pass?",
+    {
+      index: communityIndex,
+      communityId: "sterling-ranch",
+      communityProfile,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+      planCommunitySearch: false,
+      synthesizeCommunityAnswer: false,
+      isTest: true,
+    },
+  );
+  assert.doesNotMatch(passQuestion.sources?.[0]?.title || "", /^Sec\. 1-37\./i);
 });
 
 test("waste storage rules are not replaced by pickup schedules or contacts", async () => {

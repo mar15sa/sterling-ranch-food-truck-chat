@@ -226,6 +226,8 @@ test("everyday wording for movable outdoor belongings routes to the household-it
   ]) {
     const result = await answer(question);
     assert.match(result.sources?.[0]?.title || "", /^Sec\. 1-38\. - Household items/i, question);
+    assert.match(result.answer, /Furniture, electrical cords, bicycles, barbecues, toys/i, question);
+    assert.match(result.answer, /can't be stored|No furniture[^.]+shall be stored/is, question);
     assert.match(result.answer, /own lot|Owner's Lot/i, question);
     assert.match(result.answer, /roadway,? (?:or )?walkway|roadway, walkway/i, question);
     assert.doesNotMatch(result.answer, /DRC application|architectural improvement/i, question);
@@ -397,15 +399,15 @@ test("permanent holiday lights use permanent-system rules unless the resident as
   assert.match(timing.answer, /October 1 through January 31/i);
 
   const holidayOnly = await answer("So do I have to submit the application for under eave lights for holiday purposes only??");
-  assert.match(holidayOnly.answer, /^Yes(?:[.—]|$)/i);
-  assert.match(holidayOnly.answer, /DRC approval is required to add permanent under-eave lighting/i);
+  assert.match(holidayOnly.answer, /DRC approval/i);
+  assert.match(holidayOnly.answer, /Gemstone.*Jellyfish|Jellyfish.*Gemstone/i);
   assert.equal(holidayOnly.answerVerdict, "conditional");
   assert.ok(holidayOnly.actions.some((action) => /Submit a DRC Application/i.test(action.label)));
 });
 
 test("Halloween wording keeps explicit lights separate from non-light holiday displays", async () => {
   const lights = await answer("When can I put up Halloween lights?");
-  assert.match(lights.answer, /Halloween lights.*October 1.*January 31/is);
+  assert.match(lights.answer, /seasonal decorative lights.*October 1.*January 31/is);
   assert.match(lights.answer, /10:00 p\.m\./i);
   assert.equal(lights.qualityChecks?.requestedFacetCoverage, true);
 

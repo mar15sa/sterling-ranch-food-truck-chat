@@ -142,7 +142,7 @@ test("a normal weekday closing question leads with the closing time instead of t
     needRouterBackend: "current-local",
   });
   assert.equal(answer.completion.outcome, "complete");
-  assert.match(answer.directAnswer, /^The pool’s published Wednesday schedule runs until 8:45 p\.m\./i);
+  assert.match(answer.directAnswer, /^The pool closes at 8:45 p\.m\./i);
   assert.match(answer.answer, /Memorial Day weekend through Labor Day/i);
   assert.doesNotMatch(answer.answer, /Tuesday\s*&\s*Thursday/i);
 });

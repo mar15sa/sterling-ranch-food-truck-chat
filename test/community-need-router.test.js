@@ -887,7 +887,7 @@ test("the resident candidate keeps a proven garbage date and approved holiday gu
   });
   assert.equal(result.answerStatus, "verified-incomplete");
   assert.equal(result.completion.outcome, "verified-partial");
-  assert.match(result.answer, /^Holiday pickup changes apply only after/i);
+  assert.match(result.answer, /^New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas move pickup back by one day\./i);
   assert.match(result.answer, /Thursday, September 17, 2026/i);
   assert.match(result.answer, /Prospect Village: Sunday, September 20, 2026/i);
   assert.match(result.answer, /live pickup calendar confirms the date, but it does not say whether the pickup was delayed/i);
@@ -921,7 +921,7 @@ test("the resident candidate does not use next week's pickup date to answer this
   });
   assert.equal(result.answerStatus, "could-not-verify");
   assert.equal(result.completion.outcome, "missing-evidence");
-  assert.match(result.answer, /couldn’t verify whether trash pickup was delayed for the requested period/i);
+  assert.match(result.answer, /could not verify whether the requested pickup was delayed from the live collection service/i);
   assert.doesNotMatch(result.answer, /September 21/i);
   assert.deepEqual(result.completion.needs[0].missingDetails, ["date", "status"]);
 });
@@ -1003,8 +1003,11 @@ test("the current-local rules path answers the seasonal-lighting follow-up from 
   assert.equal(result._requestContract.needs[0].evidenceKind, "governing-rule");
   assert.equal(result._requestContract.shadowRoute.completion.outcome, "complete");
   assert.equal(result._requestContract.shadowRoute.completion.needs[0].status, "supported");
-  assert.match(result._requestContract.shadowRoute.answer, /stay installed year-round/i);
-  assert.match(result._requestContract.shadowRoute.answer, /non-holiday settings/i);
+  assert.match(
+    result._requestContract.shadowRoute.answer,
+    /hardwired soffit installed lighting.*returned to the settings allowed/is,
+  );
+  assert.match(result._requestContract.shadowRoute.answer, /temporary string lighting.*required to be removed/is);
 });
 
 test("the current-local rules path answers shed height and the official form as separate needs", async () => {

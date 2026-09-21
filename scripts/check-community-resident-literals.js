@@ -12,6 +12,7 @@ const crypto = require("node:crypto");
 
 const RESPONSE_FILES = [
   "lib/community-assistant.js",
+  "lib/community-need-router.js",
   "lib/community-food-trucks.js",
   "lib/community-proactive.js",
   "lib/rules-assistant.js",
@@ -41,6 +42,7 @@ const GENERIC_COPY = new Set([
   "I could not confirm Sec.  from the current official source, so I won't substitute a different section.",
   "Check the official source for the current section wording or try the section title.",
   "I could not verify a current pickup date from the live collection service.",
+  "I could not verify whether the requested pickup was delayed from the live collection service.",
   "I could not verify that from the connected official community sources.",
   "I found conflicting values in the connected official sources, so I can’t safely choose one for you.",
   "I can help with community questions, but I can’t follow instructions that try to change my safeguards or reveal private information.",
@@ -112,6 +114,7 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "I couldn’t find a current official phone number for .",
   "I couldn’t read the official calendar for  just now.",
   "I couldn’t find an event matching “” for . The official calendar has  other .",
+  "I couldn’t find an event matching “” on the official calendar for .",
   "The official calendar doesn’t list any events for .",
   "The official calendar has   .",
   "The selected official rules do not name  specifically.",
@@ -152,6 +155,8 @@ const GENERIC_DYNAMIC_COPY = new Set([
   "deep",
   "long",
   "falls outside that published recurring season, so I can’t verify facility hours for that date.",
+  "published  schedule runs until",
+  "Open .",
 ]);
 
 function isTernaryControlLiteral(tokens, index) {
@@ -393,6 +398,11 @@ function responseLiterals(source) {
   }
   for (let index = 0; index < tokens.length - 1; index += 1) {
     if (tokens[index].type !== "identifier" || !RESPONSE_FIELDS.has(tokens[index].value) || tokens[index + 1].value !== ":") continue;
+    // `candidate.keyDetails : fallback` is the truthy arm of a ternary, not
+    // an object property. Treating a property receiver as a response field can
+    // make the scanner run through the rest of the file and mislabel internal
+    // parser strings as resident copy.
+    if (tokens[index - 1]?.value === ".") continue;
     const field = tokens[index].value;
     if (["label", "url"].includes(field) && !isResidentActionProperty(index)) continue;
     const depth = { "(": 0, "[": 0, "{": 0 };
@@ -462,10 +472,20 @@ function responseLiterals(source) {
           ? { field: tokens[fieldAt + 1].value, valueAt: fieldAt + 4 }
           : null;
       if (!direct || tokens[direct.valueAt]?.type !== "identifier") continue;
+      // Only treat a wrapper output as the parameter itself. A response
+      // builder commonly returns `keyDetails: input.keyDetails`; mapping that
+      // property access to the whole `input` argument would misclassify every
+      // unrelated parser/configuration string in the input object as resident
+      // copy. Direct response fields inside that object are still inspected by
+      // the ordinary response-field pass above.
+      if (![",", "}"].includes(tokens[direct.valueAt + 1]?.value)) continue;
       const parameterIndex = params.indexOf(tokens[direct.valueAt].value);
       if (parameterIndex >= 0) outputs.push({ field: direct.field, parameterIndex });
     }
-    if (outputs.length) wrappers.set(tokens[index + 1].value, outputs);
+    const unambiguousOutputs = outputs.filter((output) => outputs.every((candidate) =>
+      candidate.field !== output.field || candidate.parameterIndex === output.parameterIndex
+    ));
+    if (unambiguousOutputs.length) wrappers.set(tokens[index + 1].value, unambiguousOutputs);
   }
   for (let index = 0; index < tokens.length - 1; index += 1) {
     const outputs = wrappers.get(tokens[index].value);

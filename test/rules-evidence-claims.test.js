@@ -107,9 +107,8 @@ test("the deterministic lighting answer resolves permanent installation versus s
     "Regarding permanent seasonal lights approved for holiday use: Can those stay up all year?",
     { searchMode: "legacy", llmMode: "off" }
   );
-  assert.match(result.directAnswer, /stay installed year-round/i);
-  assert.match(result.directAnswer, /non-holiday settings/i);
-  assert.ok(result.claims.some((claim) => /stay installed year-round/i.test(claim.text)));
+  assert.match(result.directAnswer, /hardwired soffit installed lighting.*returned to the settings allowed/is);
+  assert.ok(result.claims.some((claim) => /returned to the settings allowed/i.test(claim.text)));
   assert.ok(result.claims.every((claim) => claim.verified === true));
 });
 

@@ -259,6 +259,45 @@ test("resident literal guard follows computed answer keys and returned response 
   assert.match(findings[0].value, /pool closes/);
 });
 
+test("resident literal guard does not mistake a ternary property access for a response field", () => {
+  const findings = inspectSource(`
+    return buildAnswerContract({
+      keyDetails: ready ? candidate.keyDetails : [],
+      answerMode: "internal-parser-mode",
+    });
+  `);
+  assert.deepEqual(findings, []);
+});
+
+test("resident literal guard does not treat a response object's metadata as every output field", () => {
+  const findings = inspectSource(`
+    function buildAnswerContract(input) {
+      return { directAnswer: input.directAnswer, keyDetails: input.keyDetails };
+    }
+    return buildAnswerContract({
+      directAnswer: "The pool closes at 9:00 pm.",
+      keyDetails: [],
+      answerMode: "internal-parser-mode",
+      requestedDetails: ["hours"],
+    });
+  `);
+  assert.deepEqual(findings.map((finding) => [finding.field, finding.value]), [
+    ["directAnswer", "The pool closes at 9:00 pm."],
+  ]);
+});
+
+test("resident literal guard does not mistake an answer-contract selector for a text wrapper", () => {
+  const findings = inspectSource(`
+    function chooseAnswer(primary, fallback) {
+      if (primary) return { answer: primary };
+      return { answer: fallback };
+    }
+    const internal = { answerMode: "internal-mode", requestedDetails: ["hours"] };
+    return chooseAnswer(internal, internal);
+  `);
+  assert.deepEqual(findings, []);
+});
+
 test("resident literal guard does not attribute a sibling function's metadata to an answer", () => {
   const findings = inspectSource(`
     function metadata() {
