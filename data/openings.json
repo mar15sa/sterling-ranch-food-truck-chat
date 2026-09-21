@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-19T12:35:00-06:00",
+  "updatedAt": "2026-09-21T08:20:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -2126,6 +2126,35 @@
         "lng": -104.997509,
         "precision": "address",
         "geocodedFrom": "700 W. Mineral Avenue, Littleton, CO 80120"
+      }
+    },
+    {
+      "id": "scheels-mineral-place-littleton",
+      "name": "SCHEELS",
+      "category": "Shopping",
+      "community": "Littleton",
+      "area": "Mineral Place",
+      "address": "700 W. Mineral Avenue, Littleton, CO 80120",
+      "status": "confirmed",
+      "openingWindow": "Planned for 2029",
+      "summary": "SCHEELS has confirmed a new 300,000-square-foot destination sporting-goods store at Mineral Place. Littleton City Council approved the project's incentive agreement, and the store is planned to open in 2029.",
+      "verifiedAt": "2026-09-21",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "SCHEELS official Littleton store announcement",
+          "url": "https://www.scheels.com/store/littleton/017"
+        },
+        {
+          "label": "City of Littleton council approval announcement",
+          "url": "https://www.littletonco.gov/News-Articles/2026-News/Littleton-City-Council-Approves-SCHEELS-Incentive"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.571834,
+        "lng": -104.997509,
+        "precision": "approximate",
+        "geocodedFrom": "Mineral Place, 700 W. Mineral Avenue, Littleton, CO 80120"
       }
     },
     {
