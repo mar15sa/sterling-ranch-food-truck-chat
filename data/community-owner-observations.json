@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-20T23:24:08.937Z",
+  "authorization": "The community owner supplied the onsite photo and directed the assistant to use the Atlas WiFi information on September 20, 2026.",
+  "observations": [
+    {
+      "id": "atlas-coffee-guest-wifi-20260920",
+      "title": "Atlas Coffee guest WiFi sign",
+      "sourceType": "services",
+      "evidencePageUrl": "https://sterlingranchsociety.com/community-observations/atlas-wifi.html",
+      "observedAt": "2026-09-20T23:24:08.937Z",
+      "reviewAfter": "2026-10-21T05:59:59.000Z",
+      "evidence": {
+        "kind": "owner-provided-onsite-photo",
+        "sha256": "08f3557855090f362733e5fa5c4bfe7badf17385ab95f3fff6c50e3e127abb85",
+        "note": "The posted sign reads WiFi: Atlas Guest and Password: GuestWiFi!. The full photo is retained privately and is not published because it contains unrelated background content."
+      },
+      "facts": [
+        {
+          "id": "atlas-coffee-guest-wifi-credentials",
+          "text": "Connect to the Atlas Coffee WiFi network “Atlas Guest” and use the password “GuestWiFi!”.",
+          "type": "information",
+          "facet": "information",
+          "scopeKey": "guest-wifi-credentials",
+          "subjectKey": "atlas coffee wifi",
+          "applicabilityTerms": ["atlas", "wifi", "wi-fi", "guest network", "password"]
+        }
+      ]
+    }
+  ]
+}

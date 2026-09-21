@@ -54,6 +54,7 @@ test("inventory backlog and expired approved evidence are separate release signa
     inventoryBacklog: 875,
     expiredApprovedSourceCount: 1,
     expiredApprovedFactCount: 1,
+    expiredOwnerObservationCount: 0,
   });
 });
 

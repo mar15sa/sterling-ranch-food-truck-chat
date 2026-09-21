@@ -458,7 +458,9 @@ function renderFoodTruckAnswer(container, presentation = {}) {
 /* ---------- Sources ---------- */
 function sourceMeta(source) {
   const details = [source.chapter, source.article].filter(Boolean);
-  if (source.isSupplemental) {
+  if (source.provenanceType === "owner-observation") {
+    details.unshift("Observed onsite · community-provided");
+  } else if (source.isSupplemental) {
     details.unshift(
       source.sourceLifecycle === "current"
         ? "Current supplemental policy"
@@ -616,7 +618,13 @@ function addAnswer(data, question) {
     answerLabel.textContent = "Rule says yes";
     answerLabel.dataset.state = "allowed";
   } else {
-    answerLabel.textContent = "From current official sources";
+    const usesOwnerObservation = sources.some((source) => source.provenanceType === "owner-observation");
+    const usesOfficialSource = sources.some((source) => source.isOfficialResource !== false);
+    answerLabel.textContent = usesOwnerObservation && !usesOfficialSource
+      ? "From current community-provided information"
+      : usesOwnerObservation
+        ? "From current approved sources"
+        : "From current official sources";
   }
 
   const shareButton = node.querySelector(".rules-share-button");

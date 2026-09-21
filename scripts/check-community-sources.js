@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { crawlCommunity } = require("../lib/community-ingest");
 const { validateCommunityProfile, validateSourceRecord } = require("../lib/community-contracts");
-const { isFreshnessTrackedSource } = require("../lib/community-source-manager");
+const { isFreshnessTrackedSource, isOwnerObservation } = require("../lib/community-source-identity");
 const { factApprovalIsExplicit, factIsAnswerable } = require("../lib/community-truth");
 const { quarantinedSourceIds } = require("../lib/community-evidence-quarantine");
 
@@ -17,6 +17,7 @@ const valueAfter = (flag, fallback) => {
 
 function freshnessSummary(index, now = Date.now()) {
   const withheldSourceIds = quarantinedSourceIds(index);
+  const sourcesById = new Map(index.sources.map((source) => [source.id, source]));
   return {
     inventoryBacklog: Number(index.inventory?.pendingCount || 0),
     // A temporary bridge snapshot may explicitly quarantine an unchanged URL
@@ -25,7 +26,10 @@ function freshnessSummary(index, now = Date.now()) {
     expiredApprovedSourceCount: index.sources.filter((source) => !withheldSourceIds.has(source.id) && isFreshnessTrackedSource(source)
       && source.staleAfter && new Date(source.staleAfter).getTime() < now).length,
     expiredApprovedFactCount: (index.factLedger || []).filter((fact) => !withheldSourceIds.has(fact.sourceId)
+      && (!sourcesById.has(fact.sourceId) || isFreshnessTrackedSource(sourcesById.get(fact.sourceId)))
       && factApprovalIsExplicit(fact) && !factIsAnswerable(fact, now)).length,
+    expiredOwnerObservationCount: index.sources.filter((source) => isOwnerObservation(source)
+      && source.staleAfter && new Date(source.staleAfter).getTime() < now).length,
   };
 }
 
@@ -55,7 +59,7 @@ function audit(index) {
   const failureRate = Number(index.failureCount || 0) / Math.max(1, Number(index.pageCount || index.sources.length));
   if (failureRate > 0.25) throw new Error(`Source failure rate is too high (${Math.round(failureRate * 100)}%).`);
   if (Number(index.failureCount || 0) > 0) throw new Error(`Community crawl reported ${Number(index.failureCount)} failure(s).`);
-  const { inventoryBacklog, expiredApprovedSourceCount, expiredApprovedFactCount } = freshnessSummary(index);
+  const { inventoryBacklog, expiredApprovedSourceCount, expiredApprovedFactCount, expiredOwnerObservationCount } = freshnessSummary(index);
   // A nonempty inventory backlog is a coverage signal, not proof that current
   // approved evidence is unsafe. Expired approved records are a release gate.
   if (expiredApprovedSourceCount || expiredApprovedFactCount) {
@@ -69,6 +73,7 @@ function audit(index) {
     inventoryBacklog,
     expiredApprovedSourceCount,
     expiredApprovedFactCount,
+    expiredOwnerObservationCount,
     approvedEvidenceCurrent: true,
   };
 }
