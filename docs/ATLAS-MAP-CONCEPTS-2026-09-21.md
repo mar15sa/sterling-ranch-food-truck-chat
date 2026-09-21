@@ -1,0 +1,19 @@
+# Separate Atlas map studies
+
+September 21, 2026. Marissa requested a new mockup page with multiple impressive map views, including an exploded option inspired by the earlier Astra/Ashe reference. She explicitly required that the current view remain unchanged. Authorization is for separate staging mockups, not replacement of the Atlas or production launch.
+
+The new page is `/atlas/concepts.html`. It loads its own CSS and script and reads the existing geography and catalog. It does not alter the Atlas page, styles, controllers, data, navigation or server routing. The existing staging-only Atlas path guard also protects the new page and its assets. The previous rejected decorative place illustrations are not restored.
+
+Three proposed views share one interactive comparison page:
+
+- **Exploded atlas:** four aligned planes for ground/streets, parks/outdoors, everyday places and future additions. A continuous separation slider and assemble/explode action transform the scene. Layer focus removes other layers' interactive markers. Source coordinates stay aligned; height is a visual separation, not measured elevation.
+- **Neighborhood guide:** a quiet, geographic overview with village names, numbered places, park shapes, streets and paths, designed for browsing the places and amenities inside them.
+- **Focus lens:** a dark geographic overview with a 3× area lens centered on a selected known location. Unlocated projects show an explicit location-needed state instead of using a guessed pin or presenting a different facility as the project.
+
+The shared details panel keeps the existing source descriptions, grouped amenities, parent links, access caveats and official source links. Future projects with no pin are generated from the inventory. Operating facts are not newly verified: all sample data retains its September 13 checked date and staging-review status. The map window, OSM snapshot, approximate areas, non-navigation paths and missing positions retain their limits. No coordinates, boundaries, building models, route connections or opening dates were invented.
+
+Reference review used [Human Atlas](https://github.com/ashemag/human-atlas), its [interaction source](https://github.com/ashemag/human-atlas/blob/main/app/page.tsx) and [explosion layout](https://github.com/ashemag/human-atlas/blob/main/app/explosion-layout.ts). The original tweet was not located; no tweet-specific behavior is asserted. Code and assets are original. The useful reference traits are continuous separation, restrained controls, category focus and linked detail panels.
+
+Local validation passed September 21: JavaScript syntax, all 16 existing Atlas tests, and actual HTTP checks for all three new routes (staging 200 with no-index; production 404 even with a spoofed staging Host header). Browser review at 1440 × 1050 and 390 × 844 checked all three concepts without horizontal overflow or console errors, assembled/exploded endpoints, future-only marker focus, all eight unlocated future root projects, School 51's no-location lens state, keyboard selection of McCormick, and Sterling Center → Ranch Social → Atlas Coffee. Reduced-motion CSS removes transitions; automatic scrolling respects reduced motion. A real touch-device session is not claimed. Static review caught and fixed interactive markers remaining on faded layers and an incomplete unlocated-project list.
+
+Exact staging verification and the documentation closeout follow below. This prototype does not change Community Assistant behavior, source approvals, resident records or production settings. Its flow diagrams are unaffected. The design reference receives a proposed-options entry; previous rejection of decorative place scenes stays intact.

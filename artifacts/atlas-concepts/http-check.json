@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-21T17:23:46.461Z",
+  "checks": [
+    {
+      "environment": "staging",
+      "checks": [
+        {
+          "route": "/atlas/concepts.html",
+          "status": 200
+        },
+        {
+          "route": "/atlas/concepts.css",
+          "status": 200
+        },
+        {
+          "route": "/atlas/concepts.js",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "environment": "production",
+      "checks": [
+        {
+          "route": "/atlas/concepts.html",
+          "status": 404
+        },
+        {
+          "route": "/atlas/concepts.css",
+          "status": 404
+        },
+        {
+          "route": "/atlas/concepts.js",
+          "status": 404
+        }
+      ]
+    }
+  ],
+  "residentQuestionsSubmitted": 0
+}
