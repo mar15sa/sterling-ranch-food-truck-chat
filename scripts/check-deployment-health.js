@@ -15,18 +15,32 @@ function parseOptions(argv = process.argv.slice(2), env = process.env) {
     waitMs: Math.max(0, Number(argumentValue("wait-ms", argv) || env.DEPLOYMENT_WAIT_MS || DEFAULT_WAIT_MS)),
     intervalMs: Math.max(1000, Number(argumentValue("interval-ms", argv) || env.DEPLOYMENT_INTERVAL_MS || DEFAULT_INTERVAL_MS)),
     requestTimeoutMs: Math.max(1000, Number(argumentValue("request-timeout-ms", argv) || env.DEPLOYMENT_REQUEST_TIMEOUT_MS || DEFAULT_REQUEST_TIMEOUT_MS)),
+    openingsOnly: argv.includes("--openings-only") || String(env.OPENINGS_ONLY_DEPLOYMENT || "").toLowerCase() === "true",
   };
 }
 
-function healthIssues(health = {}) {
+function baseHealthIssues(health = {}) {
   const issues = [];
   if (health.status !== "ok") issues.push(`status is ${health.status || "missing"}`);
   if (health.deploymentReady !== true) issues.push("deploymentReady is not true");
+  return issues;
+}
+
+function healthIssues(health = {}) {
+  const issues = baseHealthIssues(health);
   if (health.rules?.isStale) issues.push("rules evidence is stale");
   if (health.communitySources?.stale) issues.push("community evidence is stale");
   if ((health.communitySources?.failureCount || 0) > 0) issues.push(`${health.communitySources.failureCount} source failures`);
   if ((health.communitySources?.expiredApprovedSourceCount || 0) > 0) issues.push(`${health.communitySources.expiredApprovedSourceCount} expired approved sources`);
   if ((health.communitySources?.expiredApprovedFactCount || 0) > 0) issues.push(`${health.communitySources.expiredApprovedFactCount} expired approved facts`);
+  return issues;
+}
+
+function openingsIssues(openings = {}) {
+  const issues = [];
+  if (!Array.isArray(openings.items) || openings.items.length === 0) issues.push("openings catalog is empty or missing");
+  if (!Number.isInteger(openings.total) || openings.total < openings.items?.length) issues.push("openings total is invalid");
+  if (!openings.updatedAt) issues.push("openings updatedAt is missing");
   return issues;
 }
 
@@ -52,7 +66,16 @@ async function checkDeployment(options, dependencies = {}) {
       });
       const health = await response.json();
       if (response.ok && health.deploymentRevision === options.expectedRevision) {
-        const issues = healthIssues(health);
+        const issues = options.openingsOnly ? baseHealthIssues(health) : healthIssues(health);
+        if (!issues.length && options.openingsOnly) {
+          const openingsResponse = await fetchImpl(`${options.baseUrl}/api/openings`, {
+            headers: { "user-agent": "Sterling-Ranch-Deployment-Health/1.0" },
+            signal: AbortSignal.timeout(options.requestTimeoutMs),
+          });
+          const openings = await openingsResponse.json();
+          if (!openingsResponse.ok) issues.push(`openings endpoint returned HTTP ${openingsResponse.status}`);
+          else issues.push(...openingsIssues(openings));
+        }
         if (!issues.length) return health;
         lastObservation = `expected revision is still refreshing or unhealthy: ${issues.join("; ")}`;
       } else {
@@ -74,9 +97,12 @@ async function checkDeployment(options, dependencies = {}) {
 async function main() {
   const options = parseOptions();
   const health = await checkDeployment(options);
-  console.log(`Deployment health passed for ${health.deploymentRevision}: ready, current evidence, zero source failures.`);
+  const detail = options.openingsOnly
+    ? "ready with a valid openings catalog"
+    : "ready, current evidence, zero source failures";
+  console.log(`Deployment health passed for ${health.deploymentRevision}: ${detail}.`);
 }
 
 if (require.main === module) main().catch((error) => { console.error(error.message); process.exitCode = 1; });
 
-module.exports = { checkDeployment, healthIssues, parseOptions };
+module.exports = { baseHealthIssues, checkDeployment, healthIssues, openingsIssues, parseOptions };
