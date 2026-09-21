@@ -43,6 +43,7 @@
     "supplements:build-sections": "node scripts/build-rule-supplement-sections.js",
     "supplements:propose": "node scripts/propose-rule-supplements.js --from-baseline --lookahead 600",
     "openings:monitor": "node scripts/monitor-openings.js --write-state",
+    "openings:release:check": "node scripts/check-openings.js && node --check lib/openings.js && node --check public/openings.js && node --check server.js && node --test test/openings-release-scope.test.js test/environment-pages.test.js",
     "community:operations:report": "node scripts/report-community-source-operations.js"
   },
   "keywords": [
