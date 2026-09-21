@@ -160,7 +160,12 @@ test("the audited candidate preserves every richer public-example answer", async
       planCommunitySearch: false,
       rulesOptions: { searchMode: "legacy", llmMode: "off" },
     });
-    assert.equal(audited.answer, baseline.answer, example.question);
+    // A completed informational answer keeps the richer facts but no longer
+    // sends residents away just to reread the source.
+    const unnecessaryHandoff = "\n\nOpen the official source for the complete wording.";
+    const expectedAnswer = audited.completion?.outcome === "complete" && !audited.nextStep
+      ? baseline.answer.replace(unnecessaryHandoff, "") : baseline.answer;
+    assert.equal(audited.answer, expectedAnswer, example.question);
     assert.deepEqual(
       (audited.actions || []).map(({ label, url }) => ({ label, url })),
       (baseline.actions || []).map(({ label, url }) => ({ label, url })),

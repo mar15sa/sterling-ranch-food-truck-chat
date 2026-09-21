@@ -80,7 +80,49 @@ test("exception and prohibition protections survive a friendly rewrite", () => {
     ["You can use the room only if approval is granted.", "You can use the room. Approval is optional."],
     ["Vinyl fences are not allowed.", "Vinyl fences are allowed."],
     ["The review board decides whether deadlines can be extended.", "The review board will extend deadlines."],
+    ["You can put up displays. The review board decides whether deadlines can be extended.", "You can put up displays. The review board will extend deadlines."],
   ]) assert.ok(writingMeaningIssues(changed, original, [{ id: "rule", text: original }], "What are the rules?").length, changed);
+});
+
+test("a calendar date or clock time satisfies schedule wording without a canned keyword", async () => {
+  for (const directAnswer of ["You can turn on seasonal lights from October 1 through January 31.", "The room opens at 9 p.m.", "Pickup is Tuesday."]) {
+    const result = await synthesizeCommunityAnswer("When is it scheduled?", [{ id: "schedule", text: directAnswer }], {
+      apiKey: "fixture-key", model: "schedule-wording-fixture", routingPlan: { goal: "schedule" }, writingContract: { version: "v1" },
+      fetchImpl: async () => ({ ok: true, json: async () => ({ content: [{ type: "text", text: JSON.stringify({ directAnswer, keyDetails: [], nextStep: "" }) }] }) }),
+    });
+    assert.ok(result, directAnswer);
+  }
+});
+
+test("bound approved action links remain available to the writer in another community", async () => {
+  const question = "Where can I pay my water bill?";
+  const contract = buildResidentRequestContract(question);
+  const action = { label: "TownPay", url: "https://pay.example.org", actionType: "payment", approvalClaim: "town-payment", reviewStatus: "approved" };
+  const directAnswer = "Use TownPay to pay your water bill.";
+  const base = { answer: directAnswer, directAnswer, keyDetails: [], nextStep: "", answerStatus: "verified", actions: [action],
+    sources: [{ id: "billing", title: "Water bill payments", actions: [action] }],
+    claims: [{ text: directAnswer, verified: true, evidenceSourceIds: ["billing"] }], conflicts: [] };
+  const candidate = { ...base, completion: { outcome: "complete", needs: assessResidentNeeds(contract, base).needs } };
+  const diagnostics = [];
+  const result = await rewriteNeedFirstCandidate({ question, contract, candidate }, {
+    apiKey: "fixture-key", model: "bound-payment-fixture",
+    onDiagnostic: event => diagnostics.push(event),
+    fetchImpl: async (_, request) => {
+      assert.match(JSON.parse(request.body).messages[0].content, /https:\/\/pay.example.org/);
+      return { ok: true, json: async () => ({ content: [{ type: "text", text: JSON.stringify({ directAnswer: "Open TownPay to pay your water bill.", keyDetails: [], nextStep: "" }) }] }) };
+    },
+  });
+  assert.ok(result, JSON.stringify(diagnostics));
+  assert.deepEqual(result.actions, [action]);
+});
+
+test("coordinated placement and allowed action URLs preserve meaning while unrelated additions fail", () => {
+  const original = "Screens must be in the rear or side yard. Submit an application.";
+  const sources = [{ id: "screen", text: original, actions: [{ label: "Submit an application", url: "https://example.org/198/application" }] }];
+  const rewrite = "Screens must be in the rear yard or in the side yard. Submit an application at https://example.org/198/application.";
+  assert.deepEqual(writingMeaningIssues(rewrite, original, sources, "What are the screen rules?"), []);
+  assert.ok(writingMeaningIssues(rewrite.replace("rear yard", "front yard"), original, sources, "What are the screen rules?").length);
+  assert.ok(writingMeaningIssues(rewrite.replace("example.org", "unrelated.org"), original, sources, "What are the screen rules?").includes("unsupported-link"));
 });
 
 function writerFixture() {
