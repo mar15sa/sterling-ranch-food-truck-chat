@@ -5,6 +5,8 @@ const path = require("node:path");
 const observations = require("../data/community-owner-observations.json");
 const index = require("../data/community-index.json");
 const profile = require("../data/communities/sterling-ranch.json");
+const communityEvalCases = require("../scripts/community-eval-cases.json");
+const rulesEvalCases = require("../scripts/rules-eval-cases.json");
 const { answerCommunityQuestion } = require("../lib/community-assistant");
 const { scoreCommunityAnswer } = require("../lib/community-answer-quality");
 const { buildOwnerObservationSources } = require("../lib/community-owner-observations");
@@ -28,6 +30,15 @@ test("owner-provided onsite facts retain provenance, exact approval, and a finit
   assert.ok(Date.parse(source.staleAfter) > Date.parse(source.observedAt));
   assert.match(source.text, /Atlas Guest/);
   assert.match(source.text, /GuestWiFi!/);
+});
+
+test("Atlas expectations stay separate for the Community and Rules assistants", () => {
+  const communityCase = communityEvalCases.find((item) => item.question === "What is Atlas WiFi?");
+  const rulesCase = rulesEvalCases.find((item) => item.question === "What is Atlas WiFi?");
+  assert.deepEqual(communityCase.answerIncludesAll, ["Atlas Guest", "GuestWiFi!"]);
+  assert.equal(communityCase.shouldRefuse, undefined);
+  assert.equal(rulesCase.shouldRefuse, true);
+  assert.equal(rulesCase.expectedAnswerMode, "source-evidence-boundary");
 });
 
 test("Atlas WiFi paraphrases answer from the same reviewed observation", async () => {
