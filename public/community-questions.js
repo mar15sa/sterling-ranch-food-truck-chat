@@ -61,6 +61,7 @@ let searchTimer = null;
 let nextCursor = null;
 let items = [];
 const expandedQuestionIds = new Set();
+const ownerNoteDrafts = new Map();
 
 function showLogin(message = "") {
   staleSourceList.replaceChildren();
@@ -337,14 +338,40 @@ function createQuestionEntry(item) {
   ownerReviewNote.className = "owner-review-note";
   ownerReviewNote.textContent = "Your judgment teaches the future rating system. Automatic grades stay hidden until they agree with you.";
 
-  async function saveOwnerVerdict(verdict, buttons) {
-    buttons.forEach((button) => { button.disabled = true; });
+  const notesLabel = document.createElement("label");
+  notesLabel.className = "owner-notes-label";
+  const notesTitle = document.createElement("span");
+  notesTitle.textContent = "Notes (optional)";
+  const notesInput = document.createElement("textarea");
+  notesInput.className = "owner-notes-input";
+  notesInput.rows = 3;
+  notesInput.maxLength = 2000;
+  notesInput.placeholder = "What made this impressive, okay, or in need of work?";
+  notesInput.value = ownerNoteDrafts.has(item.id) ? ownerNoteDrafts.get(item.id) : (item.ownerNotes || "");
+  notesInput.addEventListener("input", () => ownerNoteDrafts.set(item.id, notesInput.value));
+  notesLabel.append(notesTitle, notesInput);
+
+  const notesFooter = document.createElement("div");
+  notesFooter.className = "owner-notes-footer";
+  const saveNotesButton = document.createElement("button");
+  saveNotesButton.type = "button";
+  saveNotesButton.className = "owner-notes-save";
+  saveNotesButton.textContent = "Save notes";
+  const reviewSaveStatus = document.createElement("span");
+  reviewSaveStatus.className = "owner-review-save-status";
+  reviewSaveStatus.setAttribute("aria-live", "polite");
+  notesFooter.append(saveNotesButton, reviewSaveStatus);
+
+  async function saveOwnerReview(review) {
+    const controls = [...ownerReviewActions.querySelectorAll("button, textarea")];
+    controls.forEach((control) => { control.disabled = true; });
     listError.textContent = "";
+    reviewSaveStatus.textContent = "Saving…";
     try {
       const response = await fetch("/api/community-questions/review", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ id: item.id, ownerVerdict: currentOwnerVerdict === verdict ? "" : verdict }),
+        body: JSON.stringify({ id: item.id, ...review }),
       });
       const data = await response.json();
       if (response.status === 401) {
@@ -358,22 +385,34 @@ function createQuestionEntry(item) {
         ? "Needs work"
         : activeFilter === "impressive"
           ? "Impressive"
-          : activeFilter === "acceptable" ? "Acceptable" : "";
-      items = expectedVerdict && data.ownerVerdict !== expectedVerdict
+          : ["okay", "acceptable"].includes(activeFilter) ? "Okay" : "";
+      const savedVerdict = Object.prototype.hasOwnProperty.call(data, "ownerVerdict")
+        ? data.ownerVerdict
+        : currentOwnerVerdict;
+      ownerNoteDrafts.delete(item.id);
+      items = expectedVerdict && savedVerdict !== expectedVerdict
         ? items.filter((current) => current.id !== item.id)
         : items.map((current) => current.id === item.id
-          ? { ...current, ownerVerdict: data.ownerVerdict, needsWork: data.needsWork }
+          ? {
+            ...current,
+            ...(Object.prototype.hasOwnProperty.call(data, "ownerVerdict") ? {
+              ownerVerdict: data.ownerVerdict,
+              needsWork: data.needsWork,
+            } : {}),
+            ...(Object.prototype.hasOwnProperty.call(data, "ownerNotes") ? { ownerNotes: data.ownerNotes } : {}),
+          }
           : current);
       renderItems();
     } catch (error) {
       listError.textContent = error.message || "Could not save your review.";
-      buttons.forEach((button) => { button.disabled = false; });
+      reviewSaveStatus.textContent = "Could not save";
+      controls.forEach((control) => { control.disabled = false; });
     }
   }
 
   const verdictOptions = [
-    ["Impressive", "This impressed me"],
-    ["Acceptable", "Good enough"],
+    ["Impressive", "Impressive"],
+    ["Okay", "Okay"],
     ["Needs work", "Needs work"],
   ];
   const buttons = verdictOptions.map(([verdict, label]) => {
@@ -382,11 +421,15 @@ function createQuestionEntry(item) {
     button.className = `owner-verdict-button ${statusClass(verdict)}${currentOwnerVerdict === verdict ? " marked" : ""}`;
     button.setAttribute("aria-pressed", String(currentOwnerVerdict === verdict));
     button.textContent = label;
-    button.addEventListener("click", () => saveOwnerVerdict(verdict, buttons));
+    button.addEventListener("click", () => saveOwnerReview({
+      ownerVerdict: currentOwnerVerdict === verdict ? "" : verdict,
+      ownerNotes: notesInput.value,
+    }));
     return button;
   });
+  saveNotesButton.addEventListener("click", () => saveOwnerReview({ ownerNotes: notesInput.value }));
   verdictButtons.append(...buttons);
-  ownerReviewActions.append(verdictButtons, ownerReviewNote);
+  ownerReviewActions.append(verdictButtons, notesLabel, notesFooter, ownerReviewNote);
   body.append(ownerReviewActions);
   details.append(summary, body);
   return details;
@@ -511,6 +554,7 @@ logoutButton.addEventListener("click", async () => {
   await fetch("/api/community-questions/logout", { method: "POST" }).catch(() => {});
   items = [];
   expandedQuestionIds.clear();
+  ownerNoteDrafts.clear();
   renderItems();
   showLogin("You have been signed out.");
 });
