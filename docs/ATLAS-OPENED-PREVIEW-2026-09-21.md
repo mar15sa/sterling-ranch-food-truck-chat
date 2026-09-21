@@ -21,6 +21,10 @@ Eight preview-only visitor-note entries were checked against operator pages on S
 
 ## Documentation and release state
 
-Implementation and local checks complete. Staging deployment and exact-revision verification pending at this commit. This is not a production release. No resident questions were submitted. No original map files, source approvals, Assistant flows or production settings changed.
+Verified on staging at **2026-09-21 18:18:39 UTC**, exact runtime revision **`b7ea41ba7379a55f2b5793db79211e4f7aa1e204`**. [Open the new preview](https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/opened/index.html). All seven new files matched the reviewed build and returned 404 on production. All 18 preexisting Atlas files match baseline `3f5c567` after text newline normalization; `/atlas` and `/atlas/concepts.html` remain accessible on staging and unavailable on production. See [release evidence](../artifacts/atlas-opened/release-check.json).
 
-Design documentation: [Notion design reference](https://www.notion.so/3dabf909186d81b99d91ddd39861536b). The approval, implementation and verified-staging states will be recorded separately after exact-revision verification. Assistant diagrams and the inventory page are unaffected because catalog/Assistant data remain unchanged.
+[Deployment check 35637345454](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/35637345454) passed. The push workflow runs deployment-smoke; fast and quality jobs are skipped. No full Assistant suite rerun is claimed for this isolated page. Deployed browser review confirmed the initial scene, comparison links, open/close interaction and food-truck details, with no errors. Viewport overrides were reset.
+
+This is not a production release. No resident questions were submitted. No original map files, source approvals, Assistant flows or production settings changed. Marissa's comparison review of the implementation is pending; her visual direction approval is distinct from approval of this build or any production launch.
+
+Design documentation: [Notion design reference](https://www.notion.so/3dabf909186d81b99d91ddd39861536b), fetched before editing, updated with approval, implementation, verification and limitations, and fetched again to confirm the new records and preservation of prior studies/rejection history. Assistant diagrams and the inventory page are unaffected because catalog/Assistant data remain unchanged.
