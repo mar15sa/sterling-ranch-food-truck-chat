@@ -10,7 +10,7 @@ The implementation is in [ci.yml](../.github/workflows/ci.yml), [check-deploymen
 
 ## Bounded releases and shared staging — September 21, 2026
 
-Status: implemented on the release-process repair branch; production verification is recorded in the associated release record when complete. The owner authorized these changes after the September 21 investigation found false source alarms, repeated full gates, and concurrent staging updates holding small fixes for hours.
+Status: released through [PR #173](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/173) and verified live at revision `74ff3b1` on September 21, 2026. Exact checks, revision and Notion readback are in the [release record](RELEASE-PROCESS-REPAIR-2026-09-21.md). The owner authorized these changes after the September 21 investigation found false source alarms, repeated full gates, and concurrent staging updates holding small fixes for hours.
 
 Start production fixes from current `origin/main` in an isolated worktree. A production pull request contains the requested fix and necessary dependencies only. Do not merge all of `staging` into production. Repair a shared release blocker in a small production-based change, then update dependent pull requests. Do not make a correct production fix absorb unrelated failures from experimental staging work.
 
