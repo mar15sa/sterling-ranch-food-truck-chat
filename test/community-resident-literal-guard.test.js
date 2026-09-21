@@ -139,6 +139,19 @@ test("resident literal guard reaches structuredHelpfulAnswer calls", () => {
   assert.equal(findings[1].field, "nextStep");
 });
 
+test("resident literal guard sees facts assigned inside a new source-derived answer composer", () => {
+  const findings = inspectSource(`
+    function holidayDisplayOverviewAnswer(sources) {
+      const directAnswer = "Holiday displays are allowed for exactly 45 days.";
+      const nextStep = "Remove every display by February 1.";
+      return structuredHelpfulAnswer(directAnswer, [], nextStep);
+    }
+  `);
+  assert.equal(findings.length, 2);
+  assert.ok(findings.some((finding) => /exactly 45 days/.test(finding.value)));
+  assert.ok(findings.some((finding) => /February 1/.test(finding.value)));
+});
+
 test("resident literal guard permits generic dynamic presentation but retains factual dynamic replies", () => {
   assert.deepEqual(inspectSource('return { label: `Open ${source.title}` };'), []);
   assert.deepEqual(inspectSource(`

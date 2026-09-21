@@ -242,9 +242,9 @@ test("natural park-pass amount wording preserves the missing price facet beside 
   assert.equal(contract.needs[0].routeRequest, "park pass reimbursement amount form vehicle registration receipt");
 });
 
-test("broad Halloween decorating keeps the unresolved decoration scope separate from the lighting date", () => {
+test("holiday-display timing is a governing duration while lighting uses calendar dates", () => {
   const broad = buildResidentRequestContract("When can I decorate for Halloween?");
-  assert.deepEqual(broad.needs[0].requestedDetails, ["date", "specification"]);
+  assert.deepEqual(broad.needs[0].requestedDetails, ["specification"]);
   assert.equal(broad.needs[0].evidenceKind, "governing-rule");
 
   const lights = buildResidentRequestContract("When can I put up Halloween lights?");

@@ -245,6 +245,46 @@ test("outdoor belongings do not swallow permanent projects, decorations, or ligh
   assert.match(lighting.sources?.[0]?.title || "", /Updated exterior lighting policy/i);
 });
 
+test("holiday displays use their governing rule while nearby decoration families stay separate", async () => {
+  for (const question of [
+    "When can I decorate for Halloween?",
+    "When can I put up Halloween decorations?",
+    "Halloween decor timeline",
+    "What are the holiday display rules?",
+    "How early can Christmas decorations go up?",
+    "When can Hallowen decoratons go up?",
+  ]) {
+    const result = await answer(question);
+    assert.equal(result.confidence?.canAnswer, true, question);
+    assert.match(result.confidence?.reason || "", /holiday-displays|holiday-display-rule/i, question);
+    assert.match(result.answer, /30 days prior to a holiday/i, question);
+    assert.match(result.answer, /removed within 30 days after the holiday/i, question);
+    assert.match(result.answer, /10:00 p\.m\..*8:00 a\.m\./is, question);
+    assert.match(result.sources?.[0]?.sourceUrl || "", /library\.municode\.com/i, question);
+    assert.doesNotMatch(result.answer, /October 1|January 31|12 inches/i, question);
+  }
+
+  const lights = await answer("When can I put up Halloween lights?");
+  assert.match(lights.confidence?.reason || "", /seasonal-lighting/i);
+  assert.match(lights.answer, /October 1.*January 31/is);
+
+  const yardArt = await answer("What size decorations can I place in my front yard?");
+  assert.match(yardArt.answer, /12 inches/i);
+  assert.doesNotMatch(yardArt.answer, /30 days prior/i);
+
+  const statue = await answer("Can I leave a garden statue up year-round?");
+  assert.match(statue.answer, /ornaments|rear yard|front yard/i);
+  assert.doesNotMatch(statue.answer, /30 days prior/i);
+
+  const sign = await answer("When can I put up political signs?");
+  assert.match(sign.answer, /election/i);
+  assert.doesNotMatch(sign.answer, /30 days prior/i);
+
+  const birthday = await answer("How early can I decorate for a birthday party?");
+  assert.notEqual(birthday.confidence?.reason, "current-holiday-display-rule");
+  assert.doesNotMatch(birthday.answer, /30 days prior/i);
+});
+
 test("yard-art questions retain a readable summary while using current source limits", async () => {
   for (const question of ["Yard art?", "What are the rules for yard art?", "Can I put ornaments in my front yard?", "What are the rules for garden statues?"]) {
     const result = await answer(question);
