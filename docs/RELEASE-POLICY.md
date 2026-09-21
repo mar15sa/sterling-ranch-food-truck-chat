@@ -18,6 +18,19 @@ The implementation is in [ci.yml](../.github/workflows/ci.yml), [check-deploymen
 | Push to main or staging | `deployment-smoke` runs `npm run check:deployment` for that push's exact revision and destination | The expected Railway version is ready and its checked source-health fields pass. No second full test suite runs in this workflow after merge. |
 | Scheduled monitoring | Existing live-source and real-model workflows | Ongoing checks under each workflow's scope, separate from ordinary CI. A historical passing run does not establish today's result. |
 
+## Isolated openings releases
+
+Openings catalog updates use a narrow release lane so a changed Community Assistant source cannot delay a verified local opening. The lane applies only when the complete pull-request diff contains one or both of these files and nothing else:
+
+- `data/openings.json`
+- `data/openings-sources.json`
+
+The required `quality` check classifies the full diff against the target branch. An openings-only change runs the catalog validation, openings server/browser syntax checks, environment-page regression check, and release-scope tests. Any additional file automatically sends the pull request through the complete Community Assistant evidence revalidation and quality suite. The shared protection name remains `quality`, so there is no unprotected path to `main`.
+
+The shared `staging` branch may contain unrelated work. After an openings commit is verified on staging, production promotion must start from current `origin/main`, apply only the verified openings commit, and confirm the resulting pull-request diff still contains only the two allowlisted files. Never merge the staging branch itself into production for an openings release. After the clean production pull request passes `quality`, merge it normally and verify the exact production revision through `deployment-smoke` and `/api/health`.
+
+This lane does not weaken Community Assistant source review, freshness, answer-quality, or owner-approval requirements. A change to application code, UI, workflow files, monitoring scripts, or any non-allowlisted data remains a normal full-quality release.
+
 The deployment checker reads `/api/health`; it does not ask resident questions or perform a complete browser/answer test. It checks revision, status, readiness, stale rules/community evidence, source failures, and expired approved sources/facts. It polls through older deployments and temporary refresh states for up to ten minutes by default, then fails if the expected healthy version has not appeared.
 
 Changes to Assistant behavior still need relevant question-family, source-authority, fallback, and hosted/staging evidence under the [engineering principles](COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md). Owner design approval and exact source approvals still apply. The morning change does not grant new release permission or remove a specifically required trial. Documentation-only changes may skip runtime journey testing; required repository checks still apply.
