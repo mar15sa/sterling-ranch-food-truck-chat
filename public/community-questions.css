@@ -174,7 +174,7 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .quality-label.not-rated { color: var(--muted); background: #efeee9; }
 .test-label { color: var(--muted); background: #efeee9; }
 .owner-verdict-label.impressive { color: var(--forest-deep); background: var(--forest-soft); }
-.owner-verdict-label.acceptable { color: var(--amber); background: var(--amber-soft); }
+.owner-verdict-label.okay, .owner-verdict-label.acceptable { color: var(--amber); background: var(--amber-soft); }
 .owner-verdict-label.needs-work { color: var(--clay); background: var(--clay-soft); }
 
 .question-detail { padding: 0 17px 17px 123px; }
@@ -182,15 +182,21 @@ button:disabled { cursor: wait; opacity: 0.65; }
 .question-detail p { margin: 0 0 14px; white-space: pre-wrap; }
 .detail-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 0.84rem; }
 .detail-meta a { color: var(--forest); font-weight: 700; }
-.owner-review-actions { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.owner-review-actions { display: flex; flex-direction: column; align-items: stretch; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
 .owner-verdict-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
 .owner-verdict-button { min-height: 40px; padding: 8px 12px; color: var(--forest-deep); background: var(--panel); }
 .owner-verdict-button.impressive { border-color: #8bb29a; }
-.owner-verdict-button.acceptable { border-color: #d9b46a; }
+.owner-verdict-button.okay, .owner-verdict-button.acceptable { border-color: #d9b46a; }
 .owner-verdict-button.needs-work { border-color: #c78e79; color: var(--clay); }
 .owner-verdict-button.impressive.marked { color: white; background: var(--forest); }
-.owner-verdict-button.acceptable.marked { color: white; background: var(--amber); }
+.owner-verdict-button.okay.marked, .owner-verdict-button.acceptable.marked { color: white; background: var(--amber); }
 .owner-verdict-button.needs-work.marked { color: white; background: var(--clay); }
+.owner-notes-label { display: grid; gap: 6px; color: var(--forest-deep); font-size: 0.84rem; font-weight: 700; }
+.owner-notes-input { width: 100%; min-height: 84px; resize: vertical; padding: 10px 11px; border: 1px solid #c9c7bd; border-radius: 8px; color: var(--ink); background: var(--panel); font: inherit; font-weight: 400; line-height: 1.45; }
+.owner-notes-input:focus { outline: 3px solid rgba(56, 99, 78, 0.16); border-color: var(--forest); }
+.owner-notes-footer { display: flex; align-items: center; gap: 10px; }
+.owner-notes-save { min-height: 38px; padding: 7px 12px; color: var(--forest-deep); background: var(--panel); }
+.owner-review-save-status { color: var(--muted); font-size: 0.82rem; }
 .owner-review-note { margin: 0 !important; color: var(--muted); font-size: 0.82rem; }
 
 .empty-state { padding: 48px 20px; border: 1px dashed #c9c7bd; border-radius: 10px; text-align: center; color: var(--muted); background: rgba(255, 254, 251, 0.55); }

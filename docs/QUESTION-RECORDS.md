@@ -16,7 +16,7 @@ Owner clarification, September 13: Marissa is a solopreneur, the sole operator, 
 
 | Location | What it holds | Access boundary and verification |
 | --- | --- | --- |
-| Private Notion question log | Sanitized question/answer text, time, source, verdict, test marker, quality and owner-review metadata | Marissa confirms sole human access. The database exists in the connected workspace. Connected integration permissions were not independently enumerated. |
+| Private Notion question log | Sanitized question/answer text, time, source, verdict, test marker, quality, owner rating and optional owner notes | Marissa confirms sole human access. The database exists in the connected workspace. Connected integration permissions were not independently enumerated. |
 | Website's private question-review page | Displays and updates review flags on those same Notion records | Marissa confirms sole human access. The server checks the configured owner password at login and a signed, expiring session for private requests. It is another view of the Notion log, not a second permanent question database. |
 | Optional question-log webhook | Receives the same sanitized entry if configured | Marissa confirms sole human access to project accounts. The code supports sending to Notion and a webhook independently; its live enabled state, destination, provider permissions, and retention were not verified. Do not assume a second archive exists. |
 | Resident's browser | At most three exchanges for follow-up context | Kept in that browser tab's session storage. Start over clears this working context. It does not delete saved Notion records. |
@@ -26,7 +26,7 @@ The durable question policy does not turn temporary browser context, caches, dia
 
 ## What is saved and what is filtered
 
-The current logger limits the saved question to 500 characters and the saved answer to 12,000 characters. It replaces email-like strings, phone patterns, and long numbers. This reduces some sensitive content but does not guarantee anonymity or a verbatim copy of the full exchange.
+The current logger limits the saved question to 500 characters and the saved answer to 12,000 characters. Optional owner notes are limited to 2,000 characters. Questions, answers, and owner notes replace email-like strings, phone patterns, and long numbers. This reduces some sensitive content but does not guarantee anonymity or a verbatim copy of the full exchange.
 
 The default private website view hides test records. Test markers and review filters affect visibility, not retention. An owner review change updates the existing Notion row. The inspected application offers list/review operations, without a dedicated question-record delete or bulk-export workflow. The owner's choice not to export/delete is a policy; it is not a claim that Notion or another provider lacks those capabilities.
 
