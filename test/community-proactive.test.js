@@ -100,6 +100,26 @@ test("approved water-usage monitoring instructions do not borrow payment facts",
   assert.doesNotMatch(JSON.stringify(answer.sources), /DocumentCenter\/View\/770\//i);
 });
 
+test("water-monitoring registration and alert wording stays with UtilityHawk", async () => {
+  for (const question of [
+    "How do I register for UtilityHawk and set water-use alerts?",
+    "Can I get daily water usage notifications?",
+    "water use alerts",
+    "How do I sign up for water consuption alerts?",
+  ]) {
+    const answer = await ask(question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.deepEqual(answer.sources.map((source) => source.id), ["approved-utilityhawk-water-monitoring-2026"], question);
+    assert.match(answer.answer, /UtilityHawk|Registration/i, question);
+    assert.match(answer.answer, /threshold|alert|notifi/i, question);
+    assert.match(JSON.stringify(answer.actions), /srcab\.utilityhawk\.us/i, question);
+    assert.doesNotMatch(answer.answer, /Subscribe to CAB alerts|Alert Center/i, question);
+  }
+
+  const communityAlerts = await ask("How do I subscribe to general CAB emergency alerts?");
+  assert.doesNotMatch(JSON.stringify(communityAlerts.sources), /approved-utilityhawk-water-monitoring-2026/i);
+});
+
 test("structured routing separates online water-usage access from billing and payment", async () => {
   const structuredAnswer = (question, plan) => answerCommunityQuestion(question, {
     index: communityIndex,
