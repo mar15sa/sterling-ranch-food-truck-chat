@@ -84,6 +84,13 @@ test("exception and prohibition protections survive a friendly rewrite", () => {
   ]) assert.ok(writingMeaningIssues(changed, original, [{ id: "rule", text: original }], "What are the rules?").length, changed);
 });
 
+test("measurement reference points cannot disappear behind unchanged numbers", () => {
+  const original = "The maximum height is 5 feet, measured from ground level.";
+  const sources = [{ id: "height", text: original }];
+  assert.ok(writingMeaningIssues("The maximum height is 5 feet.", original, sources, "How tall can it be?").includes("measurement-origin-dropped"));
+  assert.deepEqual(writingMeaningIssues("The maximum height is 5 feet, measured from the ground.", original, sources, "How tall can it be?"), []);
+});
+
 test("a calendar date or clock time satisfies schedule wording without a canned keyword", async () => {
   for (const directAnswer of ["You can turn on seasonal lights from October 1 through January 31.", "The room opens at 9 p.m.", "Pickup is Tuesday."]) {
     const result = await synthesizeCommunityAnswer("When is it scheduled?", [{ id: "schedule", text: directAnswer }], {
@@ -159,6 +166,29 @@ test("writer rejects copied fragments, extra facts and lost coverage", async () 
     { directAnswer: "Holiday displays are allowed 30 days before a holiday and deposits cost $99.", keyDetails: [], nextStep: "" },
     { directAnswer: "Holiday displays are allowed 30 days before a holiday and must be removed within 30 days after the holiday.", keyDetails: [], nextStep: "" },
   ]) assert.equal(await rewriteNeedFirstCandidate(writerFixture(), { synthesize: async () => draft }), null);
+});
+
+test("one bounded correction can recover an omitted fact without accepting a changed deadline", async () => {
+  let calls = 0;
+  const fixture = writerFixture();
+  const result = await rewriteNeedFirstCandidate(fixture, { synthesize: async (_, sources, options) => {
+    calls++;
+    if (calls === 1) return { directAnswer: fixture.candidate.directAnswer, keyDetails: [], nextStep: "" };
+    assert.ok(options.writingContract.validationFeedback.length);
+    return { directAnswer: fixture.candidate.directAnswer, keyDetails: fixture.candidate.keyDetails, nextStep: "" };
+  } });
+  assert.ok(result);
+  assert.equal(calls, 2);
+  calls = 0;
+  const rejected = await rewriteNeedFirstCandidate(fixture, { synthesize: async () => {
+    calls++;
+    return { directAnswer: fixture.candidate.directAnswer.replace("before", "after"), keyDetails: fixture.candidate.keyDetails, nextStep: "" };
+  } });
+  assert.equal(rejected, null);
+  assert.equal(calls, 2);
+  calls = 0;
+  assert.equal(await rewriteNeedFirstCandidate(fixture, { synthesize: async () => { calls++; return null; } }), null);
+  assert.equal(calls, 1);
 });
 
 test("incomplete and missing evidence never invokes the writer", async () => {
