@@ -1,0 +1,22 @@
+{
+  "reviewedAt": "2026-09-21",
+  "localViewports": [[1440,1050],[390,844]],
+  "horizontalOverflow": false,
+  "consoleErrors": [],
+  "deployedRevision": "3f5c5673551c6ef2901bccf3cf36b9265c834b32",
+  "deployedReview": "Three concept choices and four aligned planes present; assemble shows 0%, explode restores separation; no console errors. Left exploded option open for the owner.",
+  "verifiedInteractions": [
+    "Three concept buttons switch the map presentation and selected explanation",
+    "Assemble and explode update plane transforms and separation output",
+    "Collapsed view hides overlapping plane labels",
+    "Future focus leaves only three mapped future additions interactive",
+    "All eight future root projects with no coordinates appear in the directory section",
+    "School 51 in Focus lens shows location-needed text instead of another site's lens",
+    "Keyboard Enter on McCormick selects its details",
+    "Sterling Center > Ranch Social > Atlas Coffee preserves nested relationships",
+    "Phone views show no horizontal overflow"
+  ],
+  "limitations": ["Real touch-device testing not performed", "Source facts and coordinates reused from the dated September 13 staging snapshot", "Concepts do not constitute launch or replacement approval"],
+  "existingAtlasModified": false,
+  "residentQuestionsSubmitted": 0
+}

@@ -1,0 +1,104 @@
+{
+  "checkedAt": "2026-09-21T17:28:38.124Z",
+  "revision": "3f5c5673551c6ef2901bccf3cf36b9265c834b32",
+  "ready": true,
+  "checks": [
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/concepts.html",
+      "status": 200
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/concepts.html",
+      "status": 404
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/concepts.css",
+      "status": 200
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/concepts.css",
+      "status": 404
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas/concepts.js",
+      "status": 200
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas/concepts.js",
+      "status": 404
+    },
+    {
+      "url": "https://sterling-ranch-food-truck-chat-staging.up.railway.app/atlas",
+      "status": 200
+    },
+    {
+      "url": "https://sterlingranchsociety.com/atlas",
+      "status": 404
+    }
+  ],
+  "existingAtlasFilesUnchangedAgainst": "27745c31c3487ef1bfa03f4ae06fa9a09f1c60d4",
+  "unchanged": [
+    {
+      "file": "public/atlas/ATTRIBUTION.md",
+      "sha256": "a4fa7839a3ed29ece20a18d6b4ebd26a753eb69c34ef3d62fb236533a2d54186"
+    },
+    {
+      "file": "public/atlas/atlas-art.js",
+      "sha256": "9501e93b01248143eadf06a6649abf127355b6fa6ac54e6f72d68e79b1c17d12"
+    },
+    {
+      "file": "public/atlas/atlas-core.js",
+      "sha256": "8daa117904db5ac415d59ae2dd88099812141daf69dabb1f34542488a347a5ab"
+    },
+    {
+      "file": "public/atlas/atlas-experience.css",
+      "sha256": "34c1056ba65d3f58f2aa18c51966251476232a6a77015a71a152d703f7204771"
+    },
+    {
+      "file": "public/atlas/atlas-experience.js",
+      "sha256": "db4f77054a7cc609217106a774aebc46b3bb4ef4838a9b6cb55d7d791aaaeeab"
+    },
+    {
+      "file": "public/atlas/atlas-trails.css",
+      "sha256": "b9fc591408e777bdf153633c5a3107a722354a375356ad9a708fa09ab1b86134"
+    },
+    {
+      "file": "public/atlas/atlas-trails.js",
+      "sha256": "78e4e7bcd269a1a5aa59029acf1c14b907ada79dc31f8941ff749dafe982eb27"
+    },
+    {
+      "file": "public/atlas/atlas.css",
+      "sha256": "260ffe40901ecd5191c22b73e82fe0631093818727d11432b4110f5012a31ba2"
+    },
+    {
+      "file": "public/atlas/atlas.js",
+      "sha256": "720bb1cc1df559e55166eee21d5b7b7e4e3357e39eeba60cf4d77c305223fed3"
+    },
+    {
+      "file": "public/atlas/cab-trail-map.png",
+      "sha256": "4d1f9c8e760f3a85b9929062fa40b4fbbbc674730b463274d1114bdfd2d3c98f"
+    },
+    {
+      "file": "public/atlas/experience.json",
+      "sha256": "7072bf4a55e0aef3d79dc2d813d4c9b28e9f8297888da30ad4647ecc942a60ba"
+    },
+    {
+      "file": "public/atlas/geography.json",
+      "sha256": "d5e045eff73e79bd207160bf2dd2b3d955972496986f91406d6005d537617c1d"
+    },
+    {
+      "file": "public/atlas/index.html",
+      "sha256": "6f92e3ca1cb55a5d5da919de7f5e533f65f0f1b998b8c36675a6fbdde916393b"
+    },
+    {
+      "file": "public/atlas/places.json",
+      "sha256": "948f846b9cf70d4f50a26d82a830d3658a14a034f1d9fb9090ab4a8d8ff5edf6"
+    },
+    {
+      "file": "public/atlas/trails.json",
+      "sha256": "50334435c0f3ffd3e4e4863db457274b613351b6cb9544939a6c424406fb2dda"
+    }
+  ],
+  "productionLaunch": false,
+  "residentQuestionsSubmitted": 0
+}
