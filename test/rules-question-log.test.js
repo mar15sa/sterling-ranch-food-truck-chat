@@ -13,6 +13,7 @@ const {
   resetQuestionLogCachesForTest,
   resolveNotionDataSourceId,
   setQuestionNeedsWork,
+  setQuestionOwnerReview,
   setQuestionOwnerVerdict,
 } = require("../lib/rules-question-log");
 
@@ -79,6 +80,7 @@ test("log entry stores the displayed answer and test marker", () => {
   assert.equal(properties["Quality score"].number, entry.qualityScore);
   assert.equal(properties["Needs work"].checkbox, false);
   assert.equal(properties["Owner verdict"].select, null);
+  assert.deepEqual(properties["Owner notes"].rich_text, []);
   assert.equal(properties["Rating candidate"].select.name, "Not rated");
 });
 
@@ -250,6 +252,7 @@ test("question query hides tests by default and maps the stored answer", async (
               "Resident effort score": { number: 5 },
               "Needs work": { checkbox: true },
               "Owner verdict": { select: null },
+              "Owner notes": { rich_text: [{ plain_text: "The next step was missing." }] },
               "Rating candidate": { select: { name: "Good" } },
               "Rating candidate score": { number: 4 },
               "Rating candidate details": { rich_text: [] },
@@ -270,6 +273,7 @@ test("question query hides tests by default and maps the stored answer", async (
     assert.equal(result.items[0].residentEffort, "Resolved");
     assert.equal(result.items[0].needsWork, true);
     assert.equal(result.items[0].ownerVerdict, "Needs work");
+    assert.equal(result.items[0].ownerNotes, "The next step was missing.");
     assert.equal(result.items[0].ratingCandidate, "Good");
     const queryCall = calls.find((call) => call.url.endsWith("/query"));
     const body = JSON.parse(queryCall.options.body);
@@ -290,6 +294,16 @@ test("question query hides tests by default and maps the stored answer", async (
     const ownerVerdictBody = JSON.parse(ownerVerdictQuery.options.body);
     assert.ok(ownerVerdictBody.filter.and.some(
       (filter) => filter.property === "Owner verdict" && filter.select.equals === "Impressive"
+    ));
+    await queryQuestionLogs(
+      { range: "today", ownerReview: "okay", includeTests: true, now: new Date("2026-09-01T18:00:00Z") },
+      fetchImpl
+    );
+    const okayQuery = [...calls].reverse().find((call) => call.url.endsWith("/query"));
+    const okayBody = JSON.parse(okayQuery.options.body);
+    assert.ok(okayBody.filter.and.some((filter) =>
+      filter.or?.some((part) => part.property === "Owner verdict" && part.select.equals === "Okay")
+      && filter.or?.some((part) => part.property === "Owner verdict" && part.select.equals === "Acceptable")
     ));
   } finally {
     if (previousToken === undefined) delete process.env.RULES_QUESTION_NOTION_TOKEN;
@@ -356,6 +370,62 @@ test("owner can persist and undo a needs-work mark", async () => {
       () => setQuestionNeedsWork("not-a-page", true, fetchImpl),
       /valid question/i
     );
+  } finally {
+    if (previousToken === undefined) delete process.env.RULES_QUESTION_NOTION_TOKEN;
+    else process.env.RULES_QUESTION_NOTION_TOKEN = previousToken;
+    if (previousSource === undefined) delete process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID;
+    else process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID = previousSource;
+    resetQuestionLogCachesForTest();
+  }
+});
+
+test("owner can save an okay rating with optional calibration notes", async () => {
+  const previousToken = process.env.RULES_QUESTION_NOTION_TOKEN;
+  const previousSource = process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID;
+  process.env.RULES_QUESTION_NOTION_TOKEN = "test-token";
+  process.env.RULES_QUESTION_NOTION_DATA_SOURCE_ID = "question-source";
+  resetQuestionLogCachesForTest();
+  const pageId = "12345678-1234-4234-8234-123456789abc";
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    calls.push({ url, options });
+    if (url.endsWith("/data_sources/question-source")) {
+      return { ok: true, status: 200, json: async () => ({ properties: {
+        Answer: {}, "Review status": {}, Testing: {}, "Confidence reason": {},
+        "Answer verdict": {}, "Top source": {}, "Quality rating": {}, "Quality score": {},
+        "Quality issues": {}, "Resident effort": {}, "Resident effort score": {}, "Needs work": {},
+        "Owner verdict": {}, "Owner notes": {}, "Rating candidate": {}, "Rating candidate score": {},
+        "Rating candidate details": {},
+      } }) };
+    }
+    if (url.endsWith(`/pages/${pageId}`) && !options.method) {
+      return { ok: true, status: 200, json: async () => ({
+        parent: { type: "data_source_id", data_source_id: "question-source" },
+      }) };
+    }
+    return { ok: true, status: 200, json: async () => ({}) };
+  };
+  try {
+    assert.deepEqual(await setQuestionOwnerReview(pageId, {
+      ownerVerdict: "Okay",
+      ownerNotes: "Correct, but it could make the next step clearer.",
+    }, fetchImpl), {
+      id: pageId,
+      ownerVerdict: "Okay",
+      needsWork: false,
+      ownerNotes: "Correct, but it could make the next step clearer.",
+    });
+    const update = calls.find((call) => call.url.endsWith(`/pages/${pageId}`) && call.options.method === "PATCH");
+    assert.deepEqual(JSON.parse(update.options.body), {
+      properties: {
+        "Needs work": { checkbox: false },
+        "Owner verdict": { select: { name: "Okay" } },
+        "Owner notes": { rich_text: [{
+          type: "text",
+          text: { content: "Correct, but it could make the next step clearer." },
+        }] },
+      },
+    });
   } finally {
     if (previousToken === undefined) delete process.env.RULES_QUESTION_NOTION_TOKEN;
     else process.env.RULES_QUESTION_NOTION_TOKEN = previousToken;

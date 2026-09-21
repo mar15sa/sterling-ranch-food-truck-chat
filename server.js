@@ -29,7 +29,7 @@ const {
   logRulesQuestion,
   queryQuestionLogs,
   setQuestionNeedsWork,
-  setQuestionOwnerVerdict,
+  setQuestionOwnerReview,
 } = require("./lib/rules-question-log");
 const { questionLogOptions } = require("./lib/community-question-log-boundary");
 const {
@@ -4967,7 +4967,7 @@ async function handleCommunityQuestions(req, res, url) {
   const quality = allowedQuality.has(url.searchParams.get("quality"))
     ? url.searchParams.get("quality")
     : "all";
-  const ownerReview = ["needs-work", "impressive", "acceptable"].includes(url.searchParams.get("ownerReview"))
+  const ownerReview = ["needs-work", "impressive", "okay", "acceptable"].includes(url.searchParams.get("ownerReview"))
     ? url.searchParams.get("ownerReview")
     : "all";
   try {
@@ -4999,16 +4999,20 @@ async function handleCommunityQuestionReview(req, res) {
   const body = await readJsonBody(req);
   try {
     const hasVerdict = typeof body.ownerVerdict === "string";
-    if (!hasVerdict && typeof body.needsWork !== "boolean") {
+    const hasNotes = typeof body.ownerNotes === "string";
+    if (!hasVerdict && !hasNotes && typeof body.needsWork !== "boolean") {
       sendJson(res, 400, { error: "Choose your verdict for this answer." });
       return;
     }
-    const result = hasVerdict
-      ? await setQuestionOwnerVerdict(body.id, body.ownerVerdict)
+    const result = hasVerdict || hasNotes
+      ? await setQuestionOwnerReview(body.id, {
+        ...(hasVerdict ? { ownerVerdict: body.ownerVerdict } : {}),
+        ...(hasNotes ? { ownerNotes: body.ownerNotes } : {}),
+      })
       : await setQuestionNeedsWork(body.id, body.needsWork);
     sendJson(res, 200, result);
   } catch (error) {
-    if (/valid (?:question|owner verdict)/i.test(error.message || "")) {
+    if (/valid (?:question|owner verdict|owner note)|Choose a rating/i.test(error.message || "")) {
       sendJson(res, 400, { error: error.message });
       return;
     }

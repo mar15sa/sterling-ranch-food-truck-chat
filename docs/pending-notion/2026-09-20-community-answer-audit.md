@@ -86,6 +86,16 @@ Local verification passes 37/37 focused question-log, owner-session, owner-regre
 
 Pull request 162 merged as revision `adc51453d42990d95073a3aa5494d53f5c016ec3`, and the exact deployment smoke check passed. The private production question log now displays all three owner verdicts and retains legacy Needs work marks. The owner-facing automatic grade remains **Not rated** for new answers.
 
+## September 21 owner calibration wording and notes
+
+**Owner direction:** Use the three ratings **Impressive**, **Okay**, and **Needs work**, and allow an optional note explaining the reason for the rating.
+
+**Implemented locally:** The private question log now uses those exact three labels and adds a private notes field to every answer review. Selecting a rating saves the current note at the same time; notes can also be saved separately. Existing **Acceptable** judgments are preserved and displayed as **Okay**, and the Okay filter includes both the current and legacy stored values. Notes are redacted using the same contact-detail safeguards as logged answers and are limited to 2,000 characters. This changes only the private owner calibration workflow; resident answers and the unpublished automatic rating remain unchanged.
+
+**Cost:** No new model, database, subscription, or recurring service cost. The notes use the existing private Notion question log.
+
+**Current state:** Local implementation and focused verification are complete. Staging, production, and the live Notion owner guide are pending release verification. The Notion guide update remains recorded here because the Notion connector is unavailable in this task.
+
 The first post-release replay of an unseen resident failure uncovered a separate shared relevance defect. “Is there a massage therapist?” still selected the annual water-quality report because the phrase-matching gate treated the conversational filler word “there” as topic evidence; its substring comparison also allowed partial-word matches. The follow-up changes the shared relevance boundary to ignore common existential/search filler and require exact evidence tokens. The exact question now returns the safe current-official-answer boundary with no water-report source or text. This is a general retrieval correction for unknown services and professionals, not a massage-specific response.
 
 Local verification for the follow-up passes 246/246 combined Assistant, request-contract, need-router, navigation, owner-regression, rubric, question-log, generic-boundary, and reviewed-subject checks, plus the 32/32 fast gate.
