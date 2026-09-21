@@ -318,6 +318,15 @@
       "notes": "The project engineer's page tracks the planned retail mix, possible restaurants, and overall completion target."
     },
     {
+      "id": "scheels-littleton",
+      "name": "SCHEELS Littleton store page",
+      "community": "Littleton",
+      "kind": "business",
+      "url": "https://www.scheels.com/store/littleton/017",
+      "cadence": "daily",
+      "notes": "The retailer's official coming-soon page is the primary source for the Littleton store and future opening updates."
+    },
+    {
       "id": "mineral-place-portillos-lead",
       "name": "Mineral Place Portillo's pre-application lead",
       "community": "Littleton",
