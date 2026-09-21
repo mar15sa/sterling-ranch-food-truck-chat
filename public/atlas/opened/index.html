@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="./motion.css?v=20260921-9">
   <script src="../atlas-core.js" defer></script>
   <script src="./directory-core.js?v=20260921-4" defer></script>
-  <script src="./app.js?v=20260921-9" defer></script>
+  <link rel="stylesheet" href="./landmarks.css?v=20260921-10">
+  <script src="./landmark-core.js?v=20260921-10" defer></script>
+  <script src="./app.js?v=20260921-10" defer></script>
 </head>
 <body>
   <a class="skip" href="#details">Skip to place details</a>
@@ -29,7 +31,7 @@
     </div>
     <nav class="view-nav" aria-label="Atlas views">
       <button type="button" data-view="location" aria-pressed="true">Neighborhood</button>
-      <button type="button" data-view="explore" aria-pressed="false">Sterling Center</button>
+      <button type="button" data-view="explore" aria-pressed="false">Places up close</button>
       <button type="button" data-view="walks" aria-pressed="false">Walks</button>
       <button type="button" data-view="future" aria-pressed="false">What’s coming</button>
       <button type="button" id="browse-all">All places <span aria-hidden="true">↗</span></button>
@@ -37,6 +39,7 @@
     <p id="loading" class="loading" role="status">Opening the neighborhood…</p>
     <div id="workspace" class="workspace" hidden>
       <section class="visual-column" aria-label="Interactive neighborhood">
+        <nav id="model-chooser" class="model-chooser" aria-label="Places to explore up close" hidden></nav>
         <div id="model-view">
           <div class="scene-heading"><button type="button" data-view="location">← The neighborhood</button><button type="button" id="scene-toggle">Open Sterling Center <span aria-hidden="true">↗</span></button></div>
           <div class="scene reality-scene motion-scene closed" id="scene" aria-label="Open Sterling Center to lift its roof and reveal selectable businesses, clinics and community services. Directory groups are not physical room positions.">
@@ -60,6 +63,7 @@
           </div>
           <div class="scene-footnote"><a href="https://sterlingranchcab.com/275/Sterling-Center" target="_blank" rel="noopener">See the real building ↗</a><button type="button" id="show-location">Find it in the neighborhood <span aria-hidden="true">↗</span></button></div>
         </div>
+        <div id="landmark-view" hidden></div>
         <div id="location-view" class="alternate-view" hidden>
           <div class="neighborhood-heading"><div><span class="eyebrow">Your neighborhood, in miniature</span><h2>See how it all fits.</h2></div><button type="button" data-model-return>Open Sterling Center ↗</button></div>
           <div class="ranch-tools" aria-label="Neighborhood layers"><button type="button" data-ranch-filter="all" aria-pressed="true">Everything</button><button type="button" data-ranch-filter="outside" aria-pressed="false">Parks & outside</button><button type="button" data-ranch-filter="everyday" aria-pressed="false">Everyday places</button><button type="button" data-ranch-filter="future" aria-pressed="false">Coming next</button></div>
@@ -71,7 +75,8 @@
             <p class="ranch-loading" id="ranch-loading" role="status">Building the neighborhood…</p>
           </div>
           <div class="ranch-reveal"><button type="button" id="ranch-unfold" aria-pressed="false"><span>Unfold the neighborhood</span><span aria-hidden="true">↗</span></button><p id="ranch-status" role="status">Choose a place to reveal its amenities.</p></div>
-          <div class="map-note" id="location-note">Mapped streets, paths and footprints. Heights are illustrative; this window is not the full development boundary. <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></div>
+          <div class="map-note" id="location-note">Mapped streets, paths and footprints. Heights and planting are illustrative; this window is not the full development boundary. <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a></div>
+          <section class="model-shelf" aria-labelledby="model-shelf-title"><div class="model-shelf-heading"><h3 id="model-shelf-title">Get to know a place.</h3><span>Explore up close ↗</span></div><div id="model-thumbnails" class="model-thumbnails"></div></section>
         </div>
         <div id="walks-view" class="alternate-view" hidden>
           <div class="section-intro"><span class="eyebrow">A little time outside</span><h2>Take the long way home.</h2><p>Choose a walk, see the path, and find a place to stop along the way.</p></div>
@@ -92,7 +97,7 @@
       <div id="discovery-links" class="discovery-links"></div>
     </section>
   </main>
-  <footer><p>A new Atlas in progress. Sterling Center’s exterior is modeled from CAB’s reference photo. Its directory was checked against community and operator pages on September 21, 2026. The full neighborhood directory, walks and project records are also available.</p><div><span>The model is a visual guide; room positions and entrances are not mapped.</span><a href="/atlas" target="_blank" rel="noopener">Keep the current Atlas beside this preview ↗</a></div></footer>
+  <footer><p>A new Atlas in progress. Explore photo-informed miniatures of Sterling Center, the Overlook and Prospect’s playground, plus a study of Burns’ published court concept. Each has a place directory and official visit links.</p><div><span>Miniatures are visual interpretations. Room positions and entrances are not mapped.</span><a href="/atlas" target="_blank" rel="noopener">Keep the current Atlas beside this preview ↗</a></div></footer>
   <dialog id="directory-dialog" aria-labelledby="directory-title">
     <div class="dialog-heading"><h2 id="directory-title">Find your next stop.</h2><button id="close-directory" class="icon-button" type="button" aria-label="Close place finder">×</button></div>
     <label for="find-place" class="sr-only">Search all places and amenities</label><input id="find-place" type="search" placeholder="Try pickleball, coffee, playground…" autocomplete="off">

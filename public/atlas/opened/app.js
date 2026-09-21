@@ -4,12 +4,13 @@
   const C = window.AtlasCore;
   const $ = s => document.querySelector(s);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const state = {places:[],byId:new Map(),notes:{},centerGroups:[],geo:null,trails:null,mode:'location',selected:'sterling-center',route:'prospect-loop',category:'all',query:'',opening:0,ranch:null,ranchPromise:null,ranchFilter:'all',unfolded:false};
+  const state = {places:[],byId:new Map(),notes:{},centerGroups:[],models:[],modelId:null,geo:null,trails:null,mode:'location',selected:'sterling-center',route:'prospect-loop',category:'all',query:'',opening:0,ranch:null,ranchPromise:null,ranchFilter:'all',unfolded:false};
   const dialog = $('#directory-dialog');
   if(['127.0.0.1','localhost','[::1]'].includes(location.hostname)){$('.preview-dot').textContent='Local preview';document.title=document.title.replace('Staging preview','Local preview');}
   document.querySelectorAll('.view-nav button, #search-launch').forEach(b=>{b.disabled=true;});
   const aliases = {'living-dream':'Living the Dream','ranch-patio':'Patio & fire pit','ranch-playground':'Log playground','food-trucks':'Food trucks','uchealth':'UCHealth Medical Center','info-center':'Info Center','cab-office':'CAB Offices'};
   const sublabels = {'atlas-coffee':'Coffee','salta':'Wine & cocktails','living-dream':'Sterling Ranch taproom','agora':'Grab & go','ranch-patio':'Outside Ranch Social','ranch-playground':'Outside Ranch Social','food-trucks':'See the daily lineup'};
+  const amenityNames={'overlook-pool':'Pool','overlook-fitness':'Fitness room','overlook-great-hall':'Great Hall','overlook-north-pavilion':'North pavilion','overlook-south-pavilion':'South pavilion','overlook-splash':'Splash area','burns-courts':'Courts & reservations','prospect-playground':'Inclusive playground','prospect-shell':'Band shell','prospect-lawn':'Great lawn','prospect-basketball':'Basketball','prospect-volleyball':'Volleyball','prospect-soccer':'Soccer','prospect-walking':'Walking paths','prospect-pavilion':'Pavilion'};
   const iconPaths = {
     coffee:'M4 5h14v9a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z M18 7h2a3 3 0 0 1 0 6h-2 M3 22h18 M4 9h14',
     wine:'M8 3h8l2 7a6 6 0 0 1-12 0z M6 9h12 M12 16v8 M8 24h8',
@@ -109,15 +110,46 @@
   function setMode(mode) {
     state.mode=mode;
     $('#model-view').hidden=mode!=='explore';$('#walks-view').hidden=mode!=='walks';$('#future-view').hidden=mode!=='future';$('#location-view').hidden=mode!=='location';
-    document.querySelectorAll('.view-nav [data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===mode)));
+    $('#landmark-view').hidden=mode!=='landmark';$('#model-chooser').hidden=!['explore','landmark'].includes(mode);
+    document.querySelectorAll('.view-nav [data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===(mode==='landmark'?'explore':mode))));
+    renderModelChooser(mode==='landmark'?state.modelId:'sterling-center');
     if(mode==='location')ensureNeighborhood().then(r=>r?.resize());
+  }
+  function modelOptions(){
+    return [{id:'sterling-center',title:'Sterling Center',image:'./assets/sterling-center.png',subtitle:'Food, services & gathering'},...state.models];
+  }
+  function renderModelChooser(id){
+    $('#model-chooser').innerHTML=modelOptions().map(m=>'<button type="button" data-place="'+esc(m.id)+'" aria-pressed="'+(m.id===id)+'">'+esc(m.title)+'</button>').join('');
+  }
+  function renderModelShelf(){
+    $('#model-thumbnails').innerHTML=modelOptions().map(m=>'<button class="model-thumbnail" type="button" data-place="'+esc(m.id)+'"><img src="'+esc(m.image)+'" alt="" loading="lazy"><strong>'+esc(m.title)+'</strong><small>Look closer ↗</small></button>').join('');
+  }
+  function renderLandmark(rootId,id=rootId){
+    const model=state.models.find(m=>m.id===rootId);if(!model)return;
+    state.modelId=rootId;
+    const same=$('#landmark-view').dataset.model===rootId;
+    if(!same){
+      const features=model.features.map(pid=>state.byId.get(pid));
+      // New catalog amenities remain reachable even before this study has artwork for them.
+      features.push(...children(rootId).filter(p=>!p.future&&!model.features.includes(p.id)));
+      const future=children(rootId).filter(p=>p.future);
+      $('#landmark-view').dataset.model=rootId;
+      $('#landmark-view').innerHTML='<div class="landmark-top"><button type="button" data-model-location="'+esc(rootId)+'">← The neighborhood</button><span class="eyebrow">A closer look</span></div><div class="landmark-stage"><div class="landmark-title"><h2>'+esc(model.title)+'</h2><p>'+esc(model.subtitle)+'</p></div><div class="landmark-image-wrap"><img src="'+esc(model.image)+'" alt="'+esc(model.alt)+'" draggable="false"></div><p class="landmark-caption">'+esc(model.basis)+'</p></div><section class="landmark-amenities"><h3>Explore what’s here.</h3><p>'+(rootId==='prospect-park'?'The playground is shown above. Choose any park amenity for its details.':'Choose an amenity for access, visit details and official links.')+'</p><div class="amenity-chips"><button type="button" data-model-feature="'+esc(rootId)+'">Overview</button>'+features.map(p=>'<button type="button" data-model-feature="'+esc(p.id)+'">'+esc(amenityNames[p.id]||name(p))+'</button>').join('')+'</div>'+(future.length?'<div class="landmark-future">'+future.map(p=>'<button type="button" data-place="'+esc(p.id)+'">Coming later: '+esc(name(p))+' ↗</button>').join('')+'</div>':'')+'</section><div class="landmark-footnote">'+link(model.source)+'<button type="button" data-model-location="'+esc(rootId)+'">Find it in the neighborhood ↗</button></div>';
+      const img=$('#landmark-view img');img.addEventListener('error',()=>img.parentElement.classList.add('is-missing'));if(img.complete&&!img.naturalWidth)img.parentElement.classList.add('is-missing');
+    }
+    const point=model.focus[id]||[50,50,1],image=$('#landmark-view img');
+    image.style.setProperty('--focus-x',point[0]+'%');image.style.setProperty('--focus-y',point[1]+'%');image.style.setProperty('--model-zoom',point[2]);
+    document.querySelectorAll('[data-model-feature]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.modelFeature===id)));
   }
   function openPlace(id,focus=false) {
     const p=state.byId.get(id);if(!p)return;
     if(p.future){setMode('future');renderFuture();}
     else if(rootOf(p).id==='sterling-center'){setMode('explore');setOpening(id==='sterling-center'?0:100);}
+    else if(state.models.some(m=>m.id===rootOf(p).id)){renderLandmark(rootOf(p).id,id);setMode('landmark');}
     else {setMode('location');focusNeighborhood(p);}
-    renderDetail(id,focus);
+    const modelOverview=!p.parentId && ['explore','landmark'].includes(state.mode);
+    renderDetail(id,focus&&!modelOverview);
+    if(focus&&modelOverview){$('#model-chooser [aria-pressed="true"]')?.focus({preventScroll:true});if(innerWidth<=800)$('#model-chooser').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});}
     if(state.mode==='future')document.querySelectorAll('.future-card').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.place===id || b.dataset.place===p.parentId)));
   }
   function setOpening(value) {
@@ -155,7 +187,7 @@
   async function ensureNeighborhood() {
     if(state.ranch)return state.ranch;
     if(state.ranchPromise)return state.ranchPromise;
-    state.ranchPromise=import('./neighborhood-3d.js?v=20260921-9').then(async module=>{
+    state.ranchPromise=import('./neighborhood-3d.js?v=20260921-10').then(async module=>{
       const ranch=await module.createNeighborhood({host:$('#ranch-canvas'),labelLayer:$('#ranch-labels'),places:state.places,geo:state.geo,onSelect:id=>openPlace(id,true),onStatus:text=>{$('#ranch-status').textContent=text;}});
       state.ranch=ranch;$('#ranch-loading').hidden=true;ranch.setFilter(state.ranchFilter);ranch.setExploded(state.unfolded);ranch.resize();return ranch;
     }).catch(error=>{
@@ -201,6 +233,8 @@
   }
   document.addEventListener('click',e=>{
     if(e.target.closest('[data-open-directory]')){openDirectory();return;}
+    const modelLocation=e.target.closest('[data-model-location]');if(modelLocation){const p=state.byId.get(modelLocation.dataset.modelLocation);setMode('location');focusNeighborhood(p);renderDetail(p.id);return;}
+    const modelFeature=e.target.closest('[data-model-feature]');if(modelFeature){openPlace(modelFeature.dataset.modelFeature,true);return;}
     const filter=e.target.closest('[data-ranch-filter]');if(filter){setRanchFilter(filter.dataset.ranchFilter);return;}
     const centerGroup=e.target.closest('[data-center-group]');if(centerGroup){setMode('explore');setOpening(100);renderDetail('sterling-center',true,centerGroup.dataset.centerGroup);return;}
     const place=e.target.closest('[data-place]');if(place){const wasDialog=dialog.open;if(wasDialog)dialog.close();openPlace(place.dataset.place,true);return;}
@@ -229,9 +263,11 @@
   async function json(url){const r=await fetch(url);if(!r.ok)throw Error('Could not load '+url);return r.json();}
   async function start(){
     try{
-      const [catalog,geo,trails,notes,directory]=await Promise.all([json('../places.json'),json('../geography.json'),json('../trails.json'),json('./visitor-notes.json'),json('./sterling-center-directory.json?v=20260921-3')]);
+      const [catalog,geo,trails,notes,directory,landmarks]=await Promise.all([json('../places.json'),json('../geography.json'),json('../trails.json'),json('./visitor-notes.json'),json('./sterling-center-directory.json?v=20260921-3'),json('./landmark-models.json?v=20260921-10')]);
       C.validateTrails(trails);const merged=window.OpenedDirectory.merge(catalog,directory,notes);state.places=merged.places;state.byId=new Map(state.places.map(p=>[p.id,p]));state.geo=geo;state.trails=trails;state.notes=merged.notes;state.notesDate=notes.checkedAt;state.centerGroups=merged.groups;
-      renderCenterCards();renderNeighborhoodIntro();renderDiscovery();setOpening(0);$('#loading').hidden=true;$('#workspace').hidden=false;setMode('location');
+      window.OpenedLandmarks.validate(landmarks,state.places);state.models=landmarks.models;
+      for(const [id,note] of Object.entries(landmarks.notes))state.notes[id]={...note,checkedAt:landmarks.checkedAt};
+      renderModelShelf();renderCenterCards();renderNeighborhoodIntro();renderDiscovery();setOpening(0);$('#loading').hidden=true;$('#workspace').hidden=false;setMode('location');
       document.querySelectorAll('.view-nav button, #search-launch').forEach(b=>{b.disabled=false;});
       const id=new URLSearchParams(location.search).get('place');if(id && state.byId.has(id))openPlace(id);
     }catch(error){$('#loading').classList.add('error');$('#loading').innerHTML='The preview could not load its place information. Please reload the page. <a href="/atlas">Open the current Atlas</a>';console.error(error);}

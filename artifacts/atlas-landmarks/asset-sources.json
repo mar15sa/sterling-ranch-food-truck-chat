@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-09-21",
+  "generator": "Built-in imagegen",
+  "artIsSurvey": false,
+  "referencePhotosRepublished": false,
+  "assets": [
+    {
+      "output": "public/atlas/opened/assets/overlook-model.png",
+      "basis": "Photo-informed architectural miniature; generated geometry not a floor plan",
+      "references": [
+        "https://sterlingranchcab.com/258/The-Overlook-Clubhouse",
+        "https://sterlingranchcab.com/ImageRepository/Document?documentID=1743",
+        "https://sterlingranchcab.com/ImageRepository/Document?documentID=1744"
+      ],
+      "generation": "exec-2de46b1b-b970-465f-a59e-fad172d9cd7d.png"
+    },
+    {
+      "output": "public/atlas/opened/assets/burns-model.png",
+      "basis": "Eight-court concept-guided study; illustrative finishes and planting, not claimed as-built",
+      "references": [
+        "https://sterlingranchcab.com/ImageRepository/Document?documentId=2359",
+        "https://sterlingranchcab.com/418/Pickleball-Courts",
+        "https://sterlingranchcab.com/417/Parks-Updates"
+      ],
+      "generation": "exec-6a1270f7-5bd6-474e-9319-ce2b4829e21c.png"
+    },
+    {
+      "output": "public/atlas/opened/assets/prospect-model.png",
+      "basis": "Photo-informed playground vignette only; does not map the rest of Prospect Park",
+      "references": [
+        "https://sterlingranch.com/happenings/news/all-abilities-park/",
+        "https://sterlingranch.com/wp-content/uploads/2025/08/ProspectPark-RibbonCutting-July2025-27-1.jpg"
+      ],
+      "generation": "exec-483c6836-e586-4f80-bb44-99a19796e0f1.png"
+    }
+  ]
+}

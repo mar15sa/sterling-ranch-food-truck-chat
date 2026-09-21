@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-21T22:59:39.910Z",
+  "previewUrl": "http://127.0.0.1:4184/atlas/opened/index.html",
+  "publication": "local only; no shared staging or production publication",
+  "tests": {
+    "focused": 23,
+    "passed": 23,
+    "httpResources": 25,
+    "stagingSimulation": "200 with noindex",
+    "productionSimulation": "404, including spoofed staging Host",
+    "residentQuestionsSubmitted": 0
+  },
+  "browser": {
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 1050
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ],
+    "checks": [
+      "Overlook, Burns and Prospect images load and retain all 15 current amenities",
+      "Prospect playground selection and future-phase return",
+      "Overlook pool selection focuses details and links directly to CAB pool page",
+      "Phone destination selection opens the model first; amenity selection brings details into view",
+      "Four landmark portraits are readable in the neighborhood; camera turn and unfolding retain placement",
+      "Coming next shows only burns-next, prospect-next and willow-repair",
+      "Burns model opens with keyboard Enter; court detail opens",
+      "Sterling Center opening and Atlas Coffee selection after animation settles",
+      "No horizontal overflow at checked sizes",
+      "Obsolete PCFSoftShadowMap warning removed; no new runtime errors"
+    ],
+    "limitations": [
+      "Real touchscreen gestures and broad accessibility audit not performed",
+      "Visual studies are interpretations, not surveyed architecture or tree inventories"
+    ]
+  },
+  "comparison": "Original public/atlas files outside opened remain unchanged against 3f5c5673551c6ef2901bccf3cf36b9265c834b32"
+}

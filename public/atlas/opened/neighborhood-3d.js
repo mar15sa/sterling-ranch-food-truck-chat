@@ -6,6 +6,10 @@ const ROOT_IDS = new Set([
   'high-top','horsebrush','mccormick','pat-gallagher','pioneer','primrose',
 ]);
 const FUTURE_IDS = new Set(['burns-next','prospect-next','willow-repair']);
+const MODEL_LABELS = {
+  'sterling-center':'./assets/sterling-center.png','overlook':'./assets/overlook-model.png',
+  burns:'./assets/burns-model.png','prospect-park':'./assets/prospect-model.png',
+};
 const STRONG_LABELS = new Set(['sterling-center','overlook','burns','prospect-park','providence-park','prose','willow-creek']);
 const SHORT_NAMES = {
   'sterling-center':'Sterling Center','overlook':'The Overlook','providence-park':'The Lawn',
@@ -16,10 +20,11 @@ const SHORT_NAMES = {
   'burns-next':'Burns later phases','prospect-next':'Prospect later phases','willow-repair':'Bike repair station',
 };
 const COLORS = {
-  background:0xf4eddc, slabTop:0xe8dcc2, slabSide:0xbba789, road:0xf8f2e5,
-  roadMajor:0xfffbf1, building:0xd5c4a4, buildingSide:0xb39e7b, park:0x466f59,
-  pitch:0x789074, water:0x55a9aa, trail:0xc58b42, stream:0x67aeb0,
+  background:0xfbf8ef, slabTop:0xaeb28e, slabSide:0xc8b99e, road:0xf5edda,
+  roadMajor:0xfffbf2, building:0xeee3ce, buildingSide:0xb8a58a, park:0x365f49,
+  pitch:0x71866a, water:0x45a5a4, trail:0xb9784b, stream:0x5baeb0,
   amenity:0x277c78, service:0x8f6546, future:0xc18345, ink:0x213c35,
+  wood:0x866b50, stone:0xd8cbb7, tree:0x28523e, shrub:0x647a57,
 };
 
 function validPoint(p){ return Array.isArray(p) && p.length >= 2 && Number.isFinite(p[0]) && Number.isFinite(p[1]); }
@@ -61,11 +66,13 @@ function clipSegment(a,c,b){
 }
 
 function mergeGeometry(geometries){
-  const positions=[],normals=[];
+  const positions=[],normals=[],groups=[];let vertexOffset=0;
   for(const source of geometries){
     const g=source.index?source.toNonIndexed():source;
+    for(const group of g.groups)groups.push({start:vertexOffset+group.start,count:group.count,materialIndex:group.materialIndex});
     positions.push(...g.getAttribute('position').array);
     const normal=g.getAttribute('normal');if(normal)normals.push(...normal.array);
+    vertexOffset+=g.getAttribute('position').count;
     if(g!==source)g.dispose();source.dispose();
   }
   if(!positions.length)return null;
@@ -73,6 +80,7 @@ function mergeGeometry(geometries){
   merged.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
   if(normals.length===positions.length)merged.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));
   else merged.computeVertexNormals();
+  for(const group of groups)merged.addGroup(group.start,group.count,group.materialIndex);
   merged.computeBoundingSphere();
   return merged;
 }
@@ -95,6 +103,7 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
   renderer.setClearColor(COLORS.background,1);
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;
   renderer.outputColorSpace=THREE.SRGBColorSpace;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
   renderer.domElement.setAttribute('aria-label','Interactive three-dimensional model of Sterling Ranch');
   renderer.domElement.style.cssText='display:block;width:100%;height:100%;touch-action:none;cursor:grab;';
   host.appendChild(renderer.domElement);
@@ -125,14 +134,29 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
   sun.shadow.camera.near=15;sun.shadow.camera.far=260;sun.shadow.bias=-.00015;scene.add(sun);
 
   const material=(params)=>{const m=new THREE.MeshStandardMaterial(params);materials.push(m);return m;};
-  const slabMat=material({color:COLORS.slabTop,roughness:.9,metalness:0}),underside=material({color:COLORS.slabSide,roughness:1});
-  const sw=worldWidth+6,sd=worldDepth+6,sr=3.2,slabShape=new THREE.Shape();
-  slabShape.moveTo(-sw/2+sr,-sd/2);slabShape.lineTo(sw/2-sr,-sd/2);slabShape.quadraticCurveTo(sw/2,-sd/2,sw/2,-sd/2+sr);
-  slabShape.lineTo(sw/2,sd/2-sr);slabShape.quadraticCurveTo(sw/2,sd/2,sw/2-sr,sd/2);slabShape.lineTo(-sw/2+sr,sd/2);
-  slabShape.quadraticCurveTo(-sw/2,sd/2,-sw/2,sd/2-sr);slabShape.lineTo(-sw/2,-sd/2+sr);slabShape.quadraticCurveTo(-sw/2,-sd/2,-sw/2+sr,-sd/2);
-  const slabGeometry=new THREE.ExtrudeGeometry(slabShape,{depth:2.7,bevelEnabled:true,bevelSegments:2,bevelSize:.7,bevelThickness:.45,curveSegments:4});
-  slabGeometry.rotateX(Math.PI/2);slabGeometry.translate(0,.08,0);
+  function prairieTexture(){
+    const canvas=document.createElement('canvas');canvas.width=canvas.height=128;const ctx=canvas.getContext('2d'),image=ctx.createImageData(128,128);
+    let seed=17391;const random=()=>((seed=Math.imul(seed,1664525)+1013904223>>>0)/4294967296);
+    for(let i=0;i<image.data.length;i+=4){const value=218+Math.floor(random()*25);image.data[i]=value;image.data[i+1]=value+3;image.data[i+2]=value-2;image.data[i+3]=255;}
+    ctx.putImageData(image,0,0);ctx.globalAlpha=.13;ctx.strokeStyle='#66705b';ctx.lineWidth=.45;
+    for(let i=0;i<90;i++){const x=random()*128,y=random()*128;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+random()*5-2.5,y+random()*3-1.5);ctx.stroke();}
+    const texture=new THREE.CanvasTexture(canvas);texture.wrapS=texture.wrapT=THREE.RepeatWrapping;texture.repeat.set(11,10);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());resources.push(texture);return texture;
+  }
+  function roundedSlabGeometry(width,depth,thickness,radius,topY,bevel=.25){
+    const shape=new THREE.Shape();shape.moveTo(-width/2+radius,-depth/2);shape.lineTo(width/2-radius,-depth/2);shape.quadraticCurveTo(width/2,-depth/2,width/2,-depth/2+radius);
+    shape.lineTo(width/2,depth/2-radius);shape.quadraticCurveTo(width/2,depth/2,width/2-radius,depth/2);shape.lineTo(-width/2+radius,depth/2);
+    shape.quadraticCurveTo(-width/2,depth/2,-width/2,depth/2-radius);shape.lineTo(-width/2,-depth/2+radius);shape.quadraticCurveTo(-width/2,-depth/2,-width/2+radius,-depth/2);
+    const geometry=new THREE.ExtrudeGeometry(shape,{depth:thickness,bevelEnabled:true,bevelSegments:2,bevelSize:bevel,bevelThickness:bevel*.65,curveSegments:4});
+    geometry.rotateX(Math.PI/2);geometry.translate(0,topY,0);return geometry;
+  }
+  const sw=worldWidth+6,sd=worldDepth+6,sr=3.2;
+  const slabMat=material({color:COLORS.slabTop,map:prairieTexture(),roughness:.94,metalness:0}),underside=material({color:COLORS.slabSide,roughness:.98});
+  const slabGeometry=roundedSlabGeometry(sw,sd,1.35,sr,.08,.38);
   const slab=new THREE.Mesh(slabGeometry,[slabMat,underside]);resources.push(slab.geometry);slab.receiveShadow=true;slab.castShadow=true;scene.add(slab);
+  const woodGeometry=roundedSlabGeometry(sw+1.2,sd+1.2,1.05,sr+.3,-1.12,.3),woodLayer=new THREE.Mesh(woodGeometry,material({color:COLORS.wood,roughness:.82}));
+  resources.push(woodGeometry);woodLayer.castShadow=true;woodLayer.receiveShadow=true;scene.add(woodLayer);
+  const stoneGeometry=roundedSlabGeometry(sw+2.3,sd+2.3,.8,sr+.55,-2.05,.22),stoneLayer=new THREE.Mesh(stoneGeometry,material({color:COLORS.stone,roughness:1}));
+  resources.push(stoneGeometry);stoneLayer.castShadow=true;stoneLayer.receiveShadow=true;scene.add(stoneLayer);
 
   function polygonGeometry(coords,height,baseY=0){
     const clipped=clipPolygon(coords,bounds);if(clipped.length<3)return null;
@@ -153,7 +177,8 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
   const pitches=addPolygons('pitch',COLORS.pitch,.18,.47,{roughness:.9});if(pitches)contextMeshes.push(pitches);
   const water=addPolygons('water',COLORS.water,.14,.12,{roughness:.35});if(water)contextMeshes.push(water);
   const pools=addPolygons('pool',COLORS.water,.22,.5,{roughness:.24});if(pools)contextMeshes.push(pools);
-  const buildings=addPolygons('building',COLORS.building,1.65,.12,{cast:true,roughness:.82});if(buildings)contextMeshes.push(buildings);
+  const buildings=addPolygons('building',COLORS.building,1.38,.12,{cast:true,roughness:.86});if(buildings)contextMeshes.push(buildings);
+  const roofs=addPolygons('building',COLORS.buildingSide,.13,1.5,{cast:true,roughness:.78});if(roofs)contextMeshes.push(roofs);
 
   function addRibbons(kind,color,width,y,majorOnly=null){
     const positions=[];
@@ -174,6 +199,45 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
   }
   addRibbons('road',COLORS.road,.34,.08,false);addRibbons('road',COLORS.roadMajor,.72,.09,true);
   addRibbons('trail',COLORS.trail,.16,.54);addRibbons('stream',COLORS.stream,.20,.3);
+
+  function pointInPolygon(point,polygon){
+    let inside=false;for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
+      const a=polygon[i],b=polygon[j],crosses=(a[1]>point[1])!==(b[1]>point[1])&&point[0]<(b[0]-a[0])*(point[1]-a[1])/(b[1]-a[1])+a[0];if(crosses)inside=!inside;
+    }return inside;
+  }
+  function distanceToSegment(point,a,b){
+    const dx=b[0]-a[0],dz=b[1]-a[1],length=dx*dx+dz*dz;if(!length)return Math.hypot(point[0]-a[0],point[1]-a[1]);
+    const t=Math.max(0,Math.min(1,((point[0]-a[0])*dx+(point[1]-a[1])*dz)/length)),x=a[0]+t*dx,z=a[1]+t*dz;return Math.hypot(point[0]-x,point[1]-z);
+  }
+  function worldPolygon(feature){return clipPolygon(feature.coordinates||[],bounds).map(c=>{const p=project(c);return [p.x,p.z];});}
+  const plantingExclusions=geo.features.filter(f=>['building','pitch','water','pool'].includes(f.kind)).map(worldPolygon).filter(p=>p.length>2);
+  const pathExclusions=[];
+  for(const f of geo.features)if(f.kind==='road'||f.kind==='trail')for(let i=1;i<(f.coordinates||[]).length;i++){
+    const segment=clipSegment(f.coordinates[i-1],f.coordinates[i],bounds);if(!segment)continue;const a=project(segment[0]),b=project(segment[1]);pathExclusions.push({a:[a.x,a.z],b:[b.x,b.z],clearance:f.kind==='road'?(f.major?1.35:.82):.48});
+  }
+  const plantings=[];
+  for(const feature of geo.features.filter(f=>f.kind==='park')){
+    const polygon=worldPolygon(feature);if(polygon.length<3)continue;
+    const xs=polygon.map(p=>p[0]),zs=polygon.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minZ=Math.min(...zs),maxZ=Math.max(...zs);
+    let area=0;for(let i=0,j=polygon.length-1;i<polygon.length;j=i++)area+=polygon[j][0]*polygon[i][1]-polygon[i][0]*polygon[j][1];area=Math.abs(area/2);
+    const wanted=Math.min(16,Math.max(2,Math.floor(area/34)));let seed=(Number(feature.id)||7919)>>>0;
+    const random=()=>((seed=Math.imul(seed,1664525)+1013904223>>>0)/4294967296);
+    for(let attempt=0,added=0;attempt<wanted*35&&added<wanted&&plantings.length<92;attempt++){
+      const candidate=[minX+random()*(maxX-minX),minZ+random()*(maxZ-minZ)];
+      if(!pointInPolygon(candidate,polygon)||plantingExclusions.some(p=>pointInPolygon(candidate,p)))continue;
+      if(pathExclusions.some(s=>distanceToSegment(candidate,s.a,s.b)<s.clearance))continue;
+      if(plantings.some(p=>Math.hypot(candidate[0]-p.x,candidate[1]-p.z)<1.75))continue;
+      plantings.push({x:candidate[0],z:candidate[1],scale:.72+random()*.48,shrub:random()<.28,turn:random()*Math.PI*2});added++;
+    }
+  }
+  const trees=plantings.filter(p=>!p.shrub),shrubs=plantings.filter(p=>p.shrub),dummy=new THREE.Object3D();
+  function instancedPlant(geometry,matColor,items,transform){
+    if(!items.length){geometry.dispose();return null;}const mat=material({color:matColor,roughness:.96}),mesh=new THREE.InstancedMesh(geometry,mat,items.length);resources.push(geometry);
+    items.forEach((item,index)=>{transform(dummy,item);dummy.updateMatrix();mesh.setMatrixAt(index,dummy.matrix);});mesh.instanceMatrix.needsUpdate=true;mesh.castShadow=true;mesh.receiveShadow=true;scene.add(mesh);contextMeshes.push(mesh);return mesh;
+  }
+  instancedPlant(new THREE.CylinderGeometry(.11,.15,.9,6),0x725a42,trees,(o,p)=>{o.position.set(p.x,.45+.45*p.scale,p.z);o.rotation.set(0,p.turn,0);o.scale.setScalar(p.scale);});
+  instancedPlant(new THREE.IcosahedronGeometry(.66,1),COLORS.tree,trees,(o,p)=>{o.position.set(p.x,1.67*p.scale,p.z);o.rotation.set(0,p.turn,0);o.scale.set(p.scale,p.scale*1.16,p.scale);});
+  instancedPlant(new THREE.IcosahedronGeometry(.42,1),COLORS.shrub,shrubs,(o,p)=>{o.position.set(p.x,.62,p.z);o.rotation.set(0,p.turn,0);o.scale.set(p.scale*1.15,p.scale*.72,p.scale);});
 
   // Village names are orientation labels only; no boundary is implied.
   const villageGroup=new THREE.Group();scene.add(villageGroup);
@@ -205,12 +269,19 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
 
   function makeLabel(record){
     const button=document.createElement('button');button.type='button';button.className='ranch-label';button.dataset.place=record.id;
-    button.setAttribute('aria-label',`Open ${record.place.name}`);const text=document.createElement('span');text.setAttribute('aria-hidden','true');text.textContent=SHORT_NAMES[record.id]||record.place.name;button.appendChild(text);
+    const isModel=Object.hasOwn(MODEL_LABELS,record.id);button.classList.toggle('ranch-label--model',isModel);button.setAttribute('aria-label',`Open ${record.place.name}`);
+    if(isModel){const image=document.createElement('img');image.src=new URL(MODEL_LABELS[record.id],import.meta.url).href;image.alt='';image.decoding='async';image.draggable=false;image.setAttribute('aria-hidden','true');image.addEventListener('load',requestRender,{once:true});button.appendChild(image);}
+    const text=document.createElement('span');text.className='ranch-label-name';text.setAttribute('aria-hidden','true');text.textContent=SHORT_NAMES[record.id]||record.place.name;button.appendChild(text);
+    if(isModel){const connector=document.createElement('span');connector.className='ranch-label-connector';connector.setAttribute('aria-hidden','true');button.appendChild(connector);}
     if(record.isFuture){button.dataset.future='true';button.classList.add('is-future');}
     const click=(event)=>{event.stopPropagation();onSelect?.(record.id);};button.addEventListener('click',click);labelLayer.appendChild(button);
-    const lr={record,button,click,compact:false};labelRecords.push(lr);return lr;
+    const lr={record,button,click,isModel};labelRecords.push(lr);return lr;
   }
   markerRecords.forEach(makeLabel);
+  const compass=document.createElement('div');compass.className='ranch-compass';compass.setAttribute('role','img');compass.setAttribute('aria-label','Map orientation: north');
+  const compassNeedle=document.createElement('span');compassNeedle.className='ranch-compass-needle';compassNeedle.setAttribute('aria-hidden','true');
+  const compassNorth=document.createElement('span');compassNorth.className='ranch-compass-north';compassNorth.setAttribute('aria-hidden','true');compassNorth.textContent='N';
+  compass.append(compassNeedle,compassNorth);labelLayer.appendChild(compass);
 
   function categoryVisible(record){
     if(filter==='future')return record.isFuture;
@@ -228,6 +299,9 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
     const xs=corners.map(p=>p.x),ys=corners.map(p=>p.y),fitHeight=Math.max(Math.max(...ys)-Math.min(...ys),(Math.max(...xs)-Math.min(...xs))/aspect)*1.08;
     camera.left=-fitHeight*aspect/2;camera.right=fitHeight*aspect/2;camera.top=fitHeight/2;camera.bottom=-fitHeight/2;
     camera.zoom=zoomLevel;camera.updateProjectionMatrix();
+    const centerScreen=new THREE.Vector3(target.x,0,target.z).project(camera),northScreen=new THREE.Vector3(target.x,0,target.z-10).project(camera);
+    const northAngle=Math.atan2(northScreen.x-centerScreen.x,-(northScreen.y-centerScreen.y))*180/Math.PI,angle=`${northAngle.toFixed(2)}deg`;
+    compass.style.setProperty('--north-angle',angle);compassNeedle.style.transform=`rotate(${angle})`;
   }
   function requestRender(){if(destroyed||raf)return;raf=requestAnimationFrame(()=>{raf=0;render();});}
   function updateLabels(){
@@ -238,19 +312,29 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
       const p=r.node.position.clone();p.y+=2.1;p.project(camera);
       const x=(p.x*.5+.5)*width,y=(-p.y*.5+.5)*height;
       if(p.z>1||x<4||x>width-4||y<4||y>height-4){b.hidden=true;continue;}
-      const selected=r.id===selectedId,priority=selected?100:r.isFuture?70:STRONG_LABELS.has(r.id)?60:r.place.category==='parks'?35:25;
+      const selected=r.id===selectedId,priority=lr.isModel?(selected?130:120):selected?110:r.isFuture?70:STRONG_LABELS.has(r.id)?60:r.place.category==='parks'?35:25;
       candidates.push({lr,x,y,priority,selected});
     }
     candidates.sort((a,b)=>b.priority-a.priority);
-    const boxes=[];let named=0;
+    const boxes=[];let named=0;const layerRect=labelLayer.getBoundingClientRect();
+    const overlaps=(rect)=>boxes.some(box=>rect.left<box.right+6&&rect.right>box.left-6&&rect.top<box.bottom+6&&rect.bottom>box.top-6);
+    const overlapScore=(rect)=>boxes.reduce((sum,box)=>sum+Math.max(0,Math.min(rect.right,box.right)-Math.max(rect.left,box.left))*Math.max(0,Math.min(rect.bottom,box.bottom)-Math.max(rect.top,box.top)),0);
     for(const c of candidates){
-      const {button}=c.lr;button.hidden=false;button.style.left=`${c.x}px`;button.style.top=`${c.y}px`;
-      const overlaps=boxes.some(box=>Math.abs(box.x-c.x)<112&&Math.abs(box.y-c.y)<36);
-      const showName=c.selected || (!overlaps && named<9 && (c.priority>=60 || named<7));
+      const {button,isModel}=c.lr;button.hidden=false;button.style.left=`${c.x}px`;button.style.top=`${c.y}px`;button.classList.remove('is-dot');
+      let rect=button.getBoundingClientRect(),dx=0,dy=0;
+      if(isModel&&overlaps(rect)){
+        const w=Math.max(1,rect.width),h=Math.max(1,rect.height),offsets=[[w*.72,0],[-w*.72,0],[w*.48,-h*.78],[-w*.48,-h*.78],[0,-h*.92],[w*.5,h*.32],[-w*.5,h*.32]];
+        let best={rect,dx:0,dy:0,score:overlapScore(rect)+1};
+        for(const [ox,oy] of offsets){button.style.left=`${c.x+ox}px`;button.style.top=`${c.y+oy}px`;const test=button.getBoundingClientRect(),outside=test.left<layerRect.left+3||test.right>layerRect.right-3||test.top<layerRect.top+3||test.bottom>layerRect.bottom-3,score=overlapScore(test)+(outside?100000:0);if(score<best.score)best={rect:test,dx:ox,dy:oy,score};if(score===0)break;}
+        ({rect,dx,dy}=best);button.style.left=`${c.x+dx}px`;button.style.top=`${c.y+dy}px`;
+      }
+      const collides=overlaps(rect),showName=isModel||c.selected||(!collides&&named<9&&(c.priority>=60||named<7));
       button.classList.toggle('is-dot',!showName);button.classList.toggle('is-selected',c.selected);
-      button.classList.toggle('is-covered',!showName&&boxes.some(box=>Math.abs(box.x-c.x)<70&&c.y>box.y-36&&c.y<box.y+10));
+      button.classList.toggle('is-offset',isModel&&(Math.abs(dx)>1||Math.abs(dy)>1));button.style.setProperty('--anchor-offset-x',`${-dx}px`);button.style.setProperty('--anchor-offset-y',`${-dy}px`);
+      button.style.setProperty('--connector-length',`${Math.hypot(dx,dy)}px`);button.style.setProperty('--connector-angle',`${Math.atan2(-dy,-dx)*180/Math.PI}deg`);
+      button.classList.toggle('is-covered',!showName&&collides);
       button.setAttribute('aria-pressed',String(c.selected));
-      if(showName){named++;boxes.push({x:c.x,y:c.y});}
+      if(showName){named++;boxes.push(rect);}
     }
   }
   function render(){if(destroyed||!host.clientWidth||!host.clientHeight)return;updateCamera();renderer.render(scene,camera);updateLabels();}
@@ -320,6 +404,7 @@ export async function createNeighborhood({host,labelLayer,places,geo,onSelect,on
     renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointermove',pointerMove);
     renderer.domElement.removeEventListener('pointerup',finishPointer);renderer.domElement.removeEventListener('pointercancel',pointerCancel);renderer.domElement.removeEventListener('wheel',wheel);
     for(const lr of labelRecords){lr.button.removeEventListener('click',lr.click);lr.button.remove();}
+    compass.remove();
     for(const r of resources)r.dispose?.();for(const m of new Set(materials))m.dispose?.();renderer.dispose();renderer.domElement.remove();
   }
   return {setFilter,setExploded,focusPlace,reset,zoom,orbit,resize,destroy};
