@@ -14,7 +14,7 @@ Run `node artifacts/atlas-providence/start-preview.cjs`. The helper is loopback-
 ## What works
 
 - One coordinate-based neighborhood scene with 409 saved building footprints, 118 distinct mapped path features, streets, park polygons and the Overlook pool within the chosen crop.
-- Seven destinations and 38 nested listings: Sterling Center, The Overlook, The Lawn/Providence Park, Primrose, Pioneer, Pat Gallagher and McCormick.
+- Seven destinations with 38 listings in all, including their nested places: Sterling Center, The Overlook, The Lawn/Providence Park, Primrose, Pioneer, Pat Gallagher and McCormick.
 - Sterling Center and Overlook model footprints use the matched OSM source polygons. Opening them moves the camera into the scene, lifts the roof and reveals selectable directory groups. Parent and child listings stay attached to their actual destination, not a guessed room.
 - Search finds nested businesses/services/amenities, opens their parent model when available, and shows sourced visit information and operator actions.
 - Rotation, zoom, north-facing view and whole-area reset. Labels follow the source anchors and shift for legibility. Keyboard controls: left/right arrows, +/- and Home on the map.

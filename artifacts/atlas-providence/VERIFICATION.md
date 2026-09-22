@@ -57,7 +57,9 @@ The area is a crop of northern Providence, not full Sterling Ranch coverage. Hei
 
 ## Documentation closeout
 
-The design reference must receive the exact committed implementation revision and this local verification scope:
+The design reference was updated and fetched to confirm implementation revision b77bde867bb77f2484f55c108b7f1184b3fb6ef0, this local verification scope, remaining limits and preserved comparisons:
 https://www.notion.so/3dabf909186d81b99d91ddd39861536b
 
-Synchronization pending the runtime commit; record completion in a documentation-only closeout.
+Notion synchronization verified September 21, 2026. The feature branch was pushed only as a backup; neither shared staging nor production was deployed. This closeout changes documentation only.
+
+Authored-file whitespace checks passed. The unmodified upstream Three.js core retains one existing whitespace warning at its source line 49957; the vendor is preserved as supplied and licensed.
