@@ -39,7 +39,7 @@ The owner-display lane does not cover shared server or storage changes. The Sept
 
 ## Normal application and documentation changes
 
-The critical-capability safeguards add marked production-path questions after a full deployment and an hourly production monitor. The complete deterministic gate still runs once before merge. The additional deployed check requires the approved flow, active writer, current evidence, actual final writing/voice/coverage proof, safe actions, four live-service paths, and the private-log/test boundary. A healthy setting alone is insufficient. See [the safeguard review and operating limits](CRITICAL-CAPABILITY-SAFEGUARDS-2026-09-21.md); release verification is recorded there and in the owner guide. Temporary shutdowns remain degraded and require a bounded owner/reason/review/expiry record; do not redefine the operating expectation to suppress an incident.
+The critical-capability safeguards add marked production-path questions after a full deployment and a daily production monitor. The complete deterministic gate still runs once before merge. The additional deployed check requires the approved flow, active writer, current evidence, actual final writing/voice/coverage proof, safe actions, four live-service paths, and the private-log/test boundary. A healthy setting alone is insufficient. See [the safeguard review and operating limits](CRITICAL-CAPABILITY-SAFEGUARDS-2026-09-21.md); release verification is recorded there and in the owner guide. Temporary shutdowns remain degraded and require a bounded owner/reason/review/expiry record; do not redefine the operating expectation to suppress an incident.
 
 | Stage | What runs | What passing establishes |
 | --- | --- | --- |
