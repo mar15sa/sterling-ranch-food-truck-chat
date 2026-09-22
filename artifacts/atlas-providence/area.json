@@ -1,0 +1,19 @@
+{
+  "id": "providence-north",
+  "title": "Around Providence",
+  "bounds": {"west": -105.0410, "east": -105.0300, "south": 39.4995, "north": 39.5082},
+  "rootIds": ["sterling-center", "overlook", "providence-park", "primrose", "pioneer", "pat-gallagher", "mccormick"],
+  "landmarks": [
+    {"id":"sterling-center","label":"Sterling Center","subtitle":"Food, health & community","number":"01","buildingId":675524539,"height":10,"roofColor":"#69706b","wallColor":"#ab634a","canOpen":true},
+    {"id":"overlook","label":"The Overlook","subtitle":"Pool, fitness & gathering","number":"02","buildingId":1285399278,"poolId":854092124,"height":6.5,"roofColor":"#47554c","wallColor":"#eee5ce","canOpen":true},
+    {"id":"providence-park","label":"The Lawn","subtitle":"Providence Park","number":"03"},
+    {"id":"primrose","label":"Primrose School","subtitle":"Separate school destination","number":"04"},
+    {"id":"pioneer","label":"Pioneer Park","subtitle":"A neighborhood green","number":"05","parkId":914862901},
+    {"id":"pat-gallagher","label":"Pat Gallagher Park","subtitle":"A neighborhood green","number":"06","parkId":914862735},
+    {"id":"mccormick","label":"McCormick Park","subtitle":"Play, gather & explore","number":"07","parkId":1194153472}
+  ],
+  "routeIds": ["overlook-link", "providence-west"],
+  "futureIds": ["school51", "library"],
+  "geometry": {"source":"https://www.openstreetmap.org/copyright","date":"2026-09-13","license":"ODbL 1.0","note":"Horizontal shapes use the saved OpenStreetMap geometry. Heights, roof details, facade patterns and planting are illustrative. This is a mapped window, not the village boundary."},
+  "verification": {"date":"2026-09-21","state":"local-preview","scope":"Seven source-anchored destinations; Sterling Center and Overlook footprints match their catalog points. Primrose has no matched building footprint. No entrances, tenant floor plans or future footprints are inferred."}
+}
