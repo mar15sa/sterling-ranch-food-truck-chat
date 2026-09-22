@@ -1204,6 +1204,18 @@ test("a generic elaboration stays on the named service topic", async () => {
   assert.ok(result.sources.every((source) => !/water quality report/i.test(source.title || "")));
 });
 
+test("a bare service category asks a useful clarification instead of listing unrelated services", async () => {
+  for (const question of ["Services", "Community services", "Utilities"]) {
+    const result = await runNeedFirstShadow(buildResidentRequestContract(question), async () => {
+      throw new Error("an incomplete request must stop before retrieval");
+    });
+    assert.equal(result.completion.outcome, "ambiguous", question);
+    assert.equal(result.answer, "I need one more detail before I can check this accurately: which community service do you mean?", question);
+    assert.deepEqual(result.sources, [], question);
+    assert.deepEqual(result.actions, [], question);
+  }
+});
+
 test("a request for every village keeps the complete approved schedule", async () => {
   const result = await answerCommunityQuestion("What days are trash and recycling picked up in each village?", {
     isTest: true, requestContractMode: "need-first-candidate", needRouterBackend: "current-local",
