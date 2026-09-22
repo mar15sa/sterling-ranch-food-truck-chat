@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Sterling Ranch · A neighborhood in miniature</title>
+  <link rel="stylesheet" href="study.css">
+</head>
+<body>
+  <div class="study-banner"><span><i></i> A separate design study · local preview</span><a href="http://127.0.0.1:4185/atlas/opened/index.html" target="_blank" rel="noopener">Previous neighborhood ↗</a></div>
+  <header class="masthead">
+    <a class="brand" href="./" aria-label="Sterling Ranch Atlas home"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M4 31 14 13 23 28 30 17 40 31M5 36h34M12 8h20"/></svg><span>STERLING RANCH<small>THE NEIGHBORHOOD ATLAS</small></span></a>
+    <span class="edition">A place to know by heart.</span>
+    <a class="quiet-link" href="#compare">See both views <span>↓</span></a>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">A NEIGHBORHOOD IN MINIATURE</p><h1 id="page-title">Take a closer look.</h1><p>Find a favorite spot. Open it up. Discover what’s inside.</p></div>
+      <div class="view-switch" role="group" aria-label="Choose a view"><button id="neighborhood-toggle" class="active" type="button" aria-pressed="true">The neighborhood</button><button id="inside-toggle" type="button" aria-pressed="false">Inside Sterling Center <span>↗</span></button></div>
+    </section>
+
+    <section class="experience" aria-label="Interactive visual study">
+      <div id="neighborhood-panel">
+        <div class="landscape">
+          <img class="landscape-art" src="assets/neighborhood-study-v2.png" alt="A warm miniature landscape with Sterling Center and The Overlook in the northeast, the eight Burns Park courts in the center, and Prospect Park to the southwest. The illustration is schematic, not a navigation map." width="1536" height="1024" fetchpriority="high">
+          <div class="landscape-shade" aria-hidden="true"></div>
+          <aside class="place-note" aria-label="Selected destination">
+            <p class="eyebrow" id="note-kicker">01 / FOOD, HEALTH & COMMUNITY</p>
+            <h2 id="note-title">Sterling Center</h2>
+            <p class="note-description" id="note-description">Coffee, a market, health services and community help, all at one address.</p>
+            <div class="note-details" id="note-details"><span>8155 Piney River Avenue</span><span>Explore the places inside</span></div>
+            <button class="primary-action" id="open-selected" type="button">Open Sterling Center <span>↗</span></button>
+            <a class="primary-action" id="place-source" href="https://sterlingranch.com/town-life/sterling-center/" target="_blank" rel="noopener" hidden>Plan your visit <span>↗</span></a>
+          </aside>
+          <button type="button" class="landmark sterling selected" data-place="sterling-center" aria-pressed="true"><span class="marker-number">01</span><span><strong>Sterling Center</strong><small>Coffee · food · everyday stops</small></span><span class="marker-arrow">↗</span></button>
+          <button type="button" class="landmark overlook" data-place="overlook" aria-pressed="false"><span class="marker-number">02</span><span><strong>The Overlook</strong><small>Pool · fitness · gathering</small></span></button>
+          <button type="button" class="landmark burns" data-place="burns" aria-pressed="false"><span class="marker-number">03</span><span><strong>Burns Park</strong><small>Eight pickleball courts</small></span></button>
+          <button type="button" class="landmark prospect" data-place="prospect-park" aria-pressed="false"><span class="marker-number">04</span><span><strong>Prospect Park</strong><small>Playground · lawn · play</small></span></button>
+          <div class="map-caption"><span class="caption-dot"></span> Schematic artwork · four landmark study</div>
+        </div>
+        <nav class="destination-strip" aria-label="Explore the four landmarks">
+          <button type="button" class="destination selected" data-place="sterling-center" aria-pressed="true"><span>01</span><div><strong>A little of everything</strong><small>Sterling Center</small></div><b>↗</b></button>
+          <button type="button" class="destination" data-place="overlook" aria-pressed="false"><span>02</span><div><strong>Make a splash</strong><small>The Overlook</small></div><b>↗</b></button>
+          <button type="button" class="destination" data-place="burns" aria-pressed="false"><span>03</span><div><strong>Meet on the courts</strong><small>Burns Park</small></div><b>↗</b></button>
+          <button type="button" class="destination" data-place="prospect-park" aria-pressed="false"><span>04</span><div><strong>Room to play</strong><small>Prospect Park</small></div><b>↗</b></button>
+        </nav>
+      </div>
+
+      <div id="inside-panel" hidden>
+        <div class="inside-layout">
+          <div class="model-stage">
+            <div class="model-heading"><button type="button" id="back-to-map">← The neighborhood</button><p class="eyebrow">01 / STERLING CENTER</p><h2>A familiar place.<br>A little more to discover.</h2></div>
+            <div class="model-orbit" aria-hidden="true"></div>
+            <div class="building" id="building"><img class="building-shell" src="assets/sterling-shell.png" alt="Architectural illustration of Sterling Center with its brick, wood-toned and glass exterior." width="1536" height="1024"><img class="building-roof" src="assets/sterling-roof.png" alt="" width="1536" height="1024"><div class="reveal-card" aria-hidden="true"><span id="model-group">FOOD & GATHERING</span><strong id="model-summary">Coffee. A bite. Stay awhile.</strong></div></div>
+            <div class="model-bottom"><button class="context-map" id="context-map" type="button" aria-label="Return to the neighborhood overview"><img src="assets/neighborhood-study-v2.png" alt="" width="1536" height="1024"><span class="context-ring"></span><small>Back to the neighborhood ↗</small></button><div class="model-control"><button id="roof-toggle" type="button" aria-pressed="true">Close the model <span>↓</span></button><p>A directory reveal,<br>not an interior floor plan.</p></div></div>
+          </div>
+          <aside class="inside-directory" aria-label="Sterling Center directory">
+            <div class="directory-heading"><p class="eyebrow">ALL AT ONE ADDRESS</p><h2>What brings you here?</h2><p>8155 Piney River Avenue</p></div>
+            <div class="category-tabs" role="tablist" aria-label="Sterling Center groups"><button type="button" role="tab" id="tab-food" aria-selected="true" aria-controls="directory-content" data-group="food">Food & drink</button><button type="button" role="tab" id="tab-health" aria-selected="false" aria-controls="directory-content" data-group="health" tabindex="-1">Health</button><button type="button" role="tab" id="tab-community" aria-selected="false" aria-controls="directory-content" data-group="community" tabindex="-1">Community</button></div>
+            <div id="directory-content" role="tabpanel" aria-labelledby="tab-food" tabindex="0"></div>
+            <p class="directory-provenance">From the existing place catalog and official directories. Check each place’s website before visiting.</p>
+          </aside>
+        </div>
+      </div>
+      <div class="experience-footer"><span><i></i> One neighborhood. Places within places.</span><a href="#study-notes">About this illustration ↗</a></div>
+    </section>
+
+    <section class="comparison" id="compare" aria-labelledby="comparison-heading">
+      <div class="section-heading"><div><p class="eyebrow">THE TWO MOMENTS</p><h2 id="comparison-heading">The big picture. Then the details.</h2></div><p>A continuous landscape for exploring.<br>An opened landmark for finding what you need.</p></div>
+      <div class="comparison-grid">
+        <button type="button" class="comparison-card" id="compare-neighborhood"><div class="comparison-art"><img src="assets/neighborhood-study-v2.png" alt="The composed neighborhood illustration." width="1536" height="1024" loading="lazy"><span class="mini-label">Sterling Center ↗</span></div><div class="comparison-caption"><span><small>01 / EXPLORE</small><strong>The neighborhood, together</strong></span><b>↗</b></div></button>
+        <button type="button" class="comparison-card" id="compare-inside"><div class="comparison-art model-comparison"><img class="compare-shell" src="assets/sterling-shell.png" alt="Sterling Center with its roof lifted." width="1536" height="1024" loading="lazy"><img class="compare-roof" src="assets/sterling-roof.png" alt="" width="1536" height="1024" loading="lazy"><span class="mini-reveal">FOOD & DRINK <i>·</i> HEALTH <i>·</i> COMMUNITY</span></div><div class="comparison-caption"><span><small>02 / DISCOVER</small><strong>A place, opened up</strong></span><b>↗</b></div></button>
+      </div>
+    </section>
+
+    <section class="study-notes" id="study-notes"><div><p class="eyebrow">ABOUT THIS STUDY</p><h2>A visual direction.<br>Real places to start from.</h2></div><div><p>This is a separate design study of four landmarks. The names and Sterling Center groupings come from the existing directory. The generated landscape is schematic: roads, buildings, water and paths still need geographic validation. It is not a navigation map or a complete inventory.</p><p>The working Atlas and both earlier comparisons are unchanged. Trails, the rest of the directory and future development remain in the working comparison.</p><div class="reference-links"><a href="http://127.0.0.1:4185/atlas/opened/index.html" target="_blank" rel="noopener">Previous neighborhood ↗</a><a href="http://127.0.0.1:4184/atlas/opened/index.html" target="_blank" rel="noopener">Earlier detailed models ↗</a><a href="https://sterlingranch.com/town-life/sterling-center/" target="_blank" rel="noopener">Sterling Center source ↗</a></div></div></section>
+  </main>
+  <footer class="page-footer"><span>STERLING RANCH ATLAS</span><span>Design study · September 2026 · Not published</span></footer>
+  <div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+  <script src="study.js" type="module"></script>
+</body>
+</html>
