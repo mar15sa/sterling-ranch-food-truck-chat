@@ -25,4 +25,6 @@ Only this artifact folder changes. The application, inventory sources, routes, e
 
 Target: https://www.notion.so/3dabf909186d81b99d91ddd39861536b
 
-The feature revision and proposed/local status will be inserted into the existing Atlas section and fetched back after the implementation commit. Documentation is pending until that readback is recorded here.
+Implementation revision: `b8e1713ab9718f2b2e2ab153670a27436dd8034f`, pushed only to `codex/atlas-composition-study-20260921`.
+
+The existing Atlas design section was updated and fetched back on September 21, 2026. Readback verified the exact feature revision, proposed/local status, preserved comparisons, schematic-art limitations and verification links. Documentation is synchronized for this study. No approval, deployment or production-live state is claimed.
