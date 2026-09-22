@@ -22,6 +22,10 @@ function healthIssues(health = {}) {
   const issues = [];
   if (health.status !== "ok") issues.push(`status is ${health.status || "missing"}`);
   if (health.deploymentReady !== true) issues.push("deploymentReady is not true");
+  if (health.criticalCapabilities?.version !== 'critical-capabilities-v1') issues.push('critical capability report is missing');
+  else if (health.criticalCapabilities.status !== 'configured' || !Array.isArray(health.criticalCapabilities.issues) || health.criticalCapabilities.issues.length) {
+    issues.push(`critical capabilities degraded: ${(health.criticalCapabilities.issues || ['unknown']).join(', ')}`);
+  }
   if (health.rules?.isStale) issues.push("rules evidence is stale");
   if (health.communitySources?.stale) issues.push("community evidence is stale");
   if ((health.communitySources?.failureCount || 0) > 0) issues.push(`${health.communitySources.failureCount} source failures`);

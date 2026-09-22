@@ -50,6 +50,8 @@ const { getRulesLlmMetrics } = require("./lib/rules-llm");
 const { getRulesSearchMetrics } = require("./lib/rules-search");
 const { answerCommunityQuestion } = require("./lib/community-assistant");
 const { resolveCommunityAnswerFlow, residentWriterConfiguration } = require("./lib/community-answer-flow");
+const { criticalCapabilityStatus, createCapabilityTelemetry, operatingContract } = require('./lib/community-critical-capabilities');
+const capabilityTelemetry = createCapabilityTelemetry();
 const { resolveConversationQuestion } = require("./lib/community-conversation");
 const { communityAnswerMetrics, privacyFingerprint, recordCommunityAnswer } = require("./lib/community-observability");
 const { calendarConfiguration, upcomingCommunityEvents } = require("./lib/community-calendar-view");
@@ -4660,7 +4662,11 @@ async function handleRulesAsk(req, res, url) {
   // Staging is a non-resident deployment even when someone opens the ordinary
   // URL. The server owns this boundary so a missed browser test flag cannot
   // pollute the production owner log.
-  logRulesQuestion(question, answer, req, questionLogOptions(req, request.isTest));
+  const logOptions = questionLogOptions(req, request.isTest);
+  logRulesQuestion(question, answer, req, logOptions);
+  answer.testTraffic = { isTest: logOptions.isTest, boundary: logOptions.logBoundary };
+  capabilityTelemetry.record(answer, { isTest: logOptions.isTest,
+    profile: getCommunityProfile(), writerRequired: operatingContract(getCommunityProfile().communityId)?.writerRequired !== false });
   if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false && answer?.answerStatus !== "safety-rejected") {
     recordRulesLowConfidence({
       questionFingerprint: privacyFingerprint(question),
@@ -4737,6 +4743,12 @@ async function handleHealth(req, res) {
     rulesSearch: getRulesSearchMetrics(),
     optionalLlmRewrite: getRulesLlmMetrics(),
     residentWriter: residentWriterConfiguration(COMMUNITY_ANSWER_FLOW),
+    criticalCapabilities: criticalCapabilityStatus({
+      communityId: getCommunityProfile().communityId, flow: COMMUNITY_ANSWER_FLOW,
+      writer: residentWriterConfiguration(COMMUNITY_ANSWER_FLOW),
+      refresh: { rules: process.env.RULES_AUTO_REFRESH !== 'false', community: process.env.COMMUNITY_AUTO_REFRESH !== 'false' },
+      liveMonitoring: liveMonitor.status(), telemetry: capabilityTelemetry.snapshot(),
+    }),
     communitySearch: getCommunitySearchMetrics(),
     communityLlm: getCommunityLlmMetrics(),
     communityAnswers: communityAnswerMetrics(),

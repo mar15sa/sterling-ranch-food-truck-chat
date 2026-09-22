@@ -65,7 +65,13 @@ jobs:
   deployment-smoke:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+    concurrency:
+      group: ${{ github.ref_name == 'main' && 'production-critical-capability-monitor' || 'staging-critical-capability-monitor' }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -83,3 +89,27 @@ jobs:
         env:
           EXPECTED_DEPLOYMENT_REVISION: ${{ github.sha }}
         run: npm run check:deployment
+      - name: Verify required answer capabilities through the deployed path
+        if: steps.release-scope.outputs.scope == 'full'
+        env:
+          EXPECTED_DEPLOYMENT_REVISION: ${{ github.sha }}
+        run: node scripts/check-community-capabilities.js
+      - name: Record a production capability failure or recovery
+        if: always() && github.ref_name == 'main' && steps.release-scope.outputs.scope == 'full'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const { publishIncident } = require('./scripts/community-capability-alert');
+            let report;
+            try { report = JSON.parse(fs.readFileSync('artifacts/critical-capabilities.json', 'utf8')); }
+            catch { report = { result: 'failed', issues: ['release-capability-check-did-not-complete'] }; }
+            core.info(JSON.stringify(await publishIncident({ github, context, report })));
+      - name: Preserve capability verification
+        if: always() && steps.release-scope.outputs.scope == 'full'
+        uses: actions/upload-artifact@v4
+        with:
+          name: critical-capabilities
+          path: artifacts/critical-capabilities.json
+          if-no-files-found: warn
+          retention-days: 30
