@@ -192,7 +192,8 @@ test('incident alerts deduplicate unchanged failures and close only their own re
   } } };
   const context = { repo: { owner: 'fixture', repo: 'fixture' }, serverUrl: 'https://github.com', runId: 1 };
   const failure = { result: 'failed', issues: ['resident-writer-disabled'] };
-  assert.equal((await publishIncident({ github, context, report: failure })).action, 'opened');
+  assert.equal((await publishIncident({ github, context, report: failure, assignees: ['fixture-owner'] })).action, 'opened');
+  assert.deepEqual(items[0].assignees, ['fixture-owner']);
   assert.equal((await publishIncident({ github, context, report: failure })).action, 'unchanged');
   assert.equal(comments.length, 0);
   assert.equal((await publishIncident({ github, context, report: { result: 'passed' } })).action, 'recovered');

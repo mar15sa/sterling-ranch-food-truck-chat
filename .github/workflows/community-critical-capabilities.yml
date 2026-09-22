@@ -44,14 +44,14 @@ jobs:
             let report;
             try { report = JSON.parse(fs.readFileSync('artifacts/critical-capabilities.json', 'utf8')); }
             catch { report = { result: 'failed', issues: ['scheduled-capability-check-did-not-complete'] }; }
-            core.info(JSON.stringify(await publishIncident({ github, context, report })));
+            core.info(JSON.stringify(await publishIncident({ github, context, report, assignees: [context.repo.owner] })));
       - name: Verify notification creation and recovery when explicitly requested
         if: success() && inputs.notification_test
         uses: actions/github-script@v7
         with:
           script: |
             const { publishIncident } = require('./scripts/community-capability-alert');
-            const opened = await publishIncident({ github, context, notificationTest: true,
+            const opened = await publishIncident({ github, context, notificationTest: true, assignees: [context.repo.owner],
               report: { result: 'failed', issues: ['intentional-notification-test'] } });
             if (!opened.number) throw new Error('Notification test did not create or find its incident.');
             const recovered = await publishIncident({ github, context, notificationTest: true,

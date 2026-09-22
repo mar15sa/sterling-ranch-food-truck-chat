@@ -120,7 +120,7 @@ jobs:
             let report;
             try { report = JSON.parse(fs.readFileSync('artifacts/critical-capabilities.json', 'utf8')); }
             catch { report = { result: 'failed', issues: ['release-capability-check-did-not-complete'] }; }
-            core.info(JSON.stringify(await publishIncident({ github, context, report })));
+            core.info(JSON.stringify(await publishIncident({ github, context, report, assignees: [context.repo.owner] })));
       - name: Preserve capability verification
         if: always() && steps.release-scope.outputs.scope == 'full'
         uses: actions/upload-artifact@v4
