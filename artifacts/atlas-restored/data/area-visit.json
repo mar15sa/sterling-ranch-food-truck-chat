@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-09-21",
+  "reviewState": "preview-source-review",
+  "places": {
+    "overlook": {
+      "summary": "A clubhouse for swimming, fitness and getting together, with membership access for Sterling Ranch households.",
+      "access": null,
+      "highlights": [
+        "Bring your membership card and enter through the front entrance.",
+        "Guests must be accompanied by a resident. Check CAB’s current guest-pass rules before inviting friends.",
+        "Clubhouse hours and pool hours are different; use the pool page for the swimming season and schedule."
+      ],
+      "actions": [
+        {
+          "label": "Access, hours & guest rules",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        },
+        {
+          "label": "Facility rentals",
+          "url": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Overlook facility",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        }
+      ],
+      "note": "The CAB rental agreement excludes pool use from facility rentals. Entry guidance describes the published rule; no surveyed entrance point is plotted."
+    },
+    "providence-park": {
+      "summary": "The Lawn at Providence sits across from Sterling Center, with a pavilion, picnic tables and walking paths.",
+      "highlights": [
+        "A separate park stop near Sterling Center.",
+        "CAB lists walking, biking, picnics, classes and concerts here; check the calendar for a particular event."
+      ],
+      "actions": [
+        {
+          "label": "Park details",
+          "url": "https://sterlingranchcab.com/facilities/facility/details/Providence-Park-4"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Providence Park",
+          "url": "https://sterlingranchcab.com/facilities/facility/details/Providence-Park-4"
+        },
+        {
+          "label": "CAB community parks",
+          "url": "https://www.sterlingranchcab.com/335/Community-Parks"
+        }
+      ]
+    },
+    "prospect-park": {
+      "note": "CAB’s facility listing describes the park and its amenities. Its broader parks overview still contains older construction wording. A pool is not listed as an open amenity; check CAB’s facility page before a visit.",
+      "sources": [
+        {
+          "label": "CAB Prospect facility listing",
+          "url": "https://sterlingranchcab.com/facilities/facility/details/Prospect-Park-9"
+        },
+        {
+          "label": "CAB community parks overview",
+          "url": "https://sterlingranchcab.com/335/Community-Parks"
+        }
+      ]
+    }
+  },
+  "projects": [
+    {
+      "id": "school51",
+      "name": "Elementary School 51",
+      "status": "Under construction",
+      "summary": "A new elementary school at 8220 Piney River Avenue, with DCSD targeting August 2027 for opening.",
+      "details": [
+        "Enrollment is anticipated in November 2026.",
+        "Use DCSD’s project page for the latest name, boundary and enrollment updates."
+      ],
+      "url": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch",
+      "sourceLabel": "Douglas County School District",
+      "locationNote": "Address sourced; building footprint and map placement not yet verified."
+    },
+    {
+      "id": "library",
+      "name": "Sterling Ranch Library",
+      "status": "In development",
+      "summary": "DCL’s plan includes children’s space, an event hall, conference and study rooms, and outdoor gathering areas.",
+      "details": [
+        "DCL described summer 2026 groundbreaking and about a year of construction plus transition time.",
+        "A confirmed opening date is not published in the reviewed source."
+      ],
+      "url": "https://dcl.org/build/",
+      "sourceLabel": "Douglas County Libraries",
+      "locationNote": "The source describes the Titan Road / Taylor River Circle area; exact footprint not yet verified."
+    }
+  ],
+  "routeReview": {
+    "date": "2026-09-21",
+    "source": "https://www.sterlingranchcab.com/273/Trails",
+    "map": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+    "mapDate": "2025-10-13",
+    "note": "CAB’s existing-trail map supplies route lengths and a schematic trace. OSM paths are a separate layer; no exact route-to-OSM match, entrance, accessibility or closure status is inferred."
+  }
+}
