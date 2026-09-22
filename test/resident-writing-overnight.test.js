@@ -72,5 +72,6 @@ test("the real audited production path retains overnight light restrictions befo
     assert.match(result.answer, /10(?::00)? p\.m\./i, `${question}: ${result.answer}`);
     assert.match(result.answer, /turn(?:ed)? off/i, result.answer);
     assert.equal(result._requestContract.assessment.outcome, "complete", question);
+    assert.equal(result.confidence?.canAnswer, true, question);
   }
 });

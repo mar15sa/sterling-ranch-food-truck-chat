@@ -1,0 +1,7 @@
+# Final resident-writing contract check
+
+Browser verification of the released writer and overnight follow-up found a missing compatibility field: focused answers reported verified claims and complete need coverage, but omitted the confidence field consumed by the existing page. The page therefore displayed “Not confirmed” above a complete sourced answer. The repair belongs in the shared response contract, with no page layout, label wording or design change.
+
+Populate that field from the completed evidence assessment and verified claims whose source IDs exist in the response. Incomplete, conflicted, unsupported and empty answers cannot gain a positive confirmation. Writing continues to preserve this evidence-derived state. Also reject an introduced “should” when it weakens a selected requirement; source recommendations retain their existing wording. These are source-independent contract/meaning safeguards, with no new resident facts, approvals, links, provider or configuration.
+
+Tests cover a complete generic-rule answer, missing evidence, conflicts, an unsupported claim, an empty response, the actual audited overnight path with writing/fallback, and required-versus-recommended wording. Run focused checks and the complete applicable gate, then protected merge and exact staging/production test-mode verification. The final release evidence and owner-guide readback are recorded in the pull request. Earlier writing and overnight behavior remains published through #177 and #178 while this bounded follow-up is verified.
