@@ -10,6 +10,7 @@ function healthy(revision = "expected") {
     status: "ok",
     deploymentReady: true,
     deploymentRevision: revision,
+    criticalCapabilities: { version: 'critical-capabilities-v1', status: 'configured', issues: [] },
     rules: { isStale: false },
     communitySources: {
       stale: false,

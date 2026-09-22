@@ -1,0 +1,68 @@
+name: Production critical capability monitor
+
+on:
+  workflow_dispatch:
+    inputs:
+      notification_test:
+        description: Open and immediately resolve an explicitly labeled notification test after successful checks
+        type: boolean
+        default: false
+  schedule:
+    - cron: '41 * * * *'
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: production-critical-capability-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DEPLOYMENT_BASE_URL: ${{ vars.PRODUCTION_BASE_URL || 'https://sterlingranchsociety.com' }}
+      EXPECTED_DEPLOYMENT_REVISION: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Wait for current production and approved evidence
+        run: node scripts/check-deployment-health.js
+      - name: Check actual production behavior with marked synthetic questions
+        run: node scripts/check-community-capabilities.js
+      - name: Report only new or changed failures and recovery
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const { publishIncident } = require('./scripts/community-capability-alert');
+            let report;
+            try { report = JSON.parse(fs.readFileSync('artifacts/critical-capabilities.json', 'utf8')); }
+            catch { report = { result: 'failed', issues: ['scheduled-capability-check-did-not-complete'] }; }
+            core.info(JSON.stringify(await publishIncident({ github, context, report, assignees: [context.repo.owner] })));
+      - name: Verify notification creation and recovery when explicitly requested
+        if: success() && inputs.notification_test
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { publishIncident } = require('./scripts/community-capability-alert');
+            const opened = await publishIncident({ github, context, notificationTest: true, assignees: [context.repo.owner],
+              report: { result: 'failed', issues: ['intentional-notification-test'] } });
+            if (!opened.number) throw new Error('Notification test did not create or find its incident.');
+            const recovered = await publishIncident({ github, context, notificationTest: true,
+              report: { result: 'passed', issues: [] } });
+            if (recovered.action !== 'recovered') throw new Error('Notification recovery was not verified.');
+            core.info(`Notification test issue #${opened.number} opened and resolved.`);
+      - name: Preserve report for independent freshness checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-critical-capabilities
+          path: artifacts/critical-capabilities.json
+          if-no-files-found: warn
+          retention-days: 30
