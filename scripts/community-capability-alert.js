@@ -4,7 +4,7 @@ function safeIssues(report) {
   return [...new Set((report?.issues?.length ? report.issues : ['monitor-did-not-complete'])
     .map(value => String(value).replace(/[^a-zA-Z0-9:._ -]/g, '').slice(0, 140)))].sort().slice(0, 30);
 }
-async function publishIncident({ github, context, report, notificationTest = false }) {
+async function publishIncident({ github, context, report, notificationTest = false, assignees = [] }) {
   const repo = { owner: context.repo.owner, repo: context.repo.repo };
   const revision = report?.expectedRevision || context.sha;
   if (revision) {
@@ -36,7 +36,7 @@ async function publishIncident({ github, context, report, notificationTest = fal
     await github.rest.issues.createComment({ ...repo, issue_number: existing.number, body: `The failure changed. [Current check](${runUrl}).` });
     return { action: 'updated', number: existing.number };
   }
-  const created = await github.rest.issues.create({ ...repo, title, body });
+  const created = await github.rest.issues.create({ ...repo, title, body, assignees });
   return { action: 'opened', number: created.data.number };
 }
 module.exports = { publishIncident, safeIssues };
