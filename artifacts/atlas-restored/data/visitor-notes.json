@@ -1,0 +1,212 @@
+{
+  "checkedAt": "2026-09-21",
+  "places": {
+    "ranch-social": {
+      "summary": "A shared gathering place in Sterling Center with coffee, drinks, food, outdoor seating, a fire pit, and a log playground.",
+      "highlights": [
+        "Atlas Coffee, Salta, Living the Dream Brewing Company, and Agora Market are presented here.",
+        "The official page describes covered patio seating, an outdoor fire pit, and a log playground.",
+        "Food trucks and community events are listed through the Sterling Ranch event calendar."
+      ],
+      "actions": [
+        {
+          "label": "Explore Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        {
+          "label": "Check the event calendar",
+          "url": "https://sterlingranch.com/happenings/events/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "note": "Event details and availability can change; use the official calendar for a particular date."
+    },
+    "atlas-coffee": {
+      "summary": "Coffee, espresso and tea inside Ranch Social, with breakfast and lunch options.",
+      "highlights": [
+        "The open, airy space welcomes a coffee break or a little remote work.",
+        "Share a stop with the taproom, market, patio and log playground.",
+        "Salta serves wine and cocktails at the same Sterling Ranch location."
+      ],
+      "actions": [
+        {
+          "label": "Hours & Sterling Ranch location",
+          "url": "https://www.atlascoffees.com/locations"
+        },
+        {
+          "label": "Explore Atlas Coffee",
+          "url": "https://www.atlascoffees.com/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        },
+        {
+          "label": "Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "note": "Check the operator’s links for current offerings and visit details."
+    },
+    "salta": {
+      "summary": "Salta is a wine and cocktail lounge at Atlas Coffee’s Sterling Ranch location.",
+      "highlights": [
+        "Wine, cocktails, appetizers and flatbreads.",
+        "At the same Sterling Ranch location as Atlas Coffee."
+      ],
+      "actions": [
+        {
+          "label": "Salta menu & visit details",
+          "url": "https://www.atlascoffees.com/salta"
+        },
+        {
+          "label": "View Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Salta",
+          "url": "https://www.atlascoffees.com/salta"
+        },
+        {
+          "label": "Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "note": "Menus and service details can change; consult Salta’s official page before visiting."
+    },
+    "living-dream": {
+      "summary": "Living the Dream’s Sterling Ranch taproom is in Sterling Center beside Atlas Coffee.",
+      "highlights": [
+        "This is the Sterling Ranch satellite taproom.",
+        "Indoor and patio seating; dogs are allowed on the patio."
+      ],
+      "actions": [
+        {
+          "label": "Explore the Sterling Ranch taproom",
+          "url": "https://www.livingthedreambrewing.com/sterling-ranch.html"
+        },
+        {
+          "label": "See the current taplist",
+          "url": "https://www.livingthedreambrewing.com/on-tap.html"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Living the Dream Sterling Ranch",
+          "url": "https://www.livingthedreambrewing.com/sterling-ranch.html"
+        },
+        {
+          "label": "Living the Dream current taplist",
+          "url": "https://www.livingthedreambrewing.com/on-tap.html"
+        }
+      ],
+      "note": "The taplist and visit details are operator-managed; check the official links before making plans."
+    },
+    "agora": {
+      "summary": "Agora is Atlas Coffee’s specialty market at its Sterling Ranch store.",
+      "highlights": [
+        "Prepared meals, grocery staples and quick refreshments.",
+        "Specialty items, including local meat and dairy options."
+      ],
+      "actions": [
+        {
+          "label": "Explore Agora Market",
+          "url": "https://www.atlascoffees.com/agora"
+        },
+        {
+          "label": "View Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Agora",
+          "url": "https://www.atlascoffees.com/agora"
+        },
+        {
+          "label": "Atlas Coffee locations",
+          "url": "https://www.atlascoffees.com/locations"
+        }
+      ],
+      "note": "Product selection and prepared-food availability can change."
+    },
+    "ranch-patio": {
+      "summary": "Ranch Social’s outdoor gathering area includes covered patio seating and a fire pit.",
+      "highlights": [
+        "Covered seating overlooks the log playground.",
+        "An outdoor fire pit is part of the gathering space."
+      ],
+      "actions": [
+        {
+          "label": "Explore Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "note": "This preview does not establish reservation, event, weather, or access conditions."
+    },
+    "ranch-playground": {
+      "summary": "The Ranch Social log playground sits by the outdoor patio area.",
+      "highlights": [
+        "Sculptural log play structures beside Ranch Social.",
+        "The covered patio overlooks the play area."
+      ],
+      "actions": [
+        {
+          "label": "Explore Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "note": "This preview does not establish current play-area access, age guidance, or feature availability."
+    },
+    "food-trucks": {
+      "summary": "Food trucks rotate through Ranch Social as part of its evening food and event offerings.",
+      "highlights": [
+        "Ranch Social directs visitors to the day’s food truck through its event listings.",
+        "The official page describes a rotating range of food-truck cuisines.",
+        "The Sterling Ranch event calendar lists community happenings and event details."
+      ],
+      "actions": [
+        {
+          "label": "Check the event calendar",
+          "url": "https://sterlingranch.com/happenings/events/"
+        },
+        {
+          "label": "Explore Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Ranch Social",
+          "url": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        {
+          "label": "Sterling Ranch events",
+          "url": "https://sterlingranch.com/happenings/events/"
+        }
+      ],
+      "note": "Truck names, dates, and service details change; use the official calendar for the date you plan to visit."
+    }
+  }
+}
