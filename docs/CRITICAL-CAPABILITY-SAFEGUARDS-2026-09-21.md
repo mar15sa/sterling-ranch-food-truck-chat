@@ -1,6 +1,6 @@
 # Critical capability safeguards
 
-Status: implemented on the isolated safeguard branch; release verification pending. The owner requested automatic safeguards after the writer had been disabled without a visible product-health failure, and explicitly expanded the review to other critical components.
+Status: core safeguards released through [PR #180](https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/180), verified at production revision `132a28ec28d13bfe0e6e475d71796bd900211a01` on September 21, 2026 (September 22 UTC). The owner requested automatic safeguards after the writer had been disabled without a visible product-health failure, and explicitly expanded the review to other critical components. Notification recovery has a bounded follow-up described below; its final release verification is recorded in the follow-up pull request and owner guide.
 
 ## Review and cause
 
@@ -34,3 +34,9 @@ The first staging canary exposed an additional calendar defect: a legacy verifie
 Before release, test writer disabled, route downgrade, accepted text discarded, missing validation receipt, missing/detached proof, partial answer overclaim, poor voice, unsafe/unbound actions, expired exceptions, unavailable/hung/stopped connector monitors, repeated incident deduplication, recovery, and stale watchdog results. Run focused checks, one complete exact-candidate gate with unchanged evidence reused where valid, protected GitHub checks, reserved staging verification, exact production probes, and an explicit notification drill. All browser probes use the test page/banner and every API question includes isTest:true. Keep source approvals, freshness and the immutable resident-literal baseline intact.
 
 Update the owner guide's flow explanation, decisions and operations with the final exact revision, checks, monitoring cadence, alert channel/delivery limits and recovery instructions after verification. Proposed, implemented and verified-live states remain distinct.
+
+### Initial release and notification follow-up
+
+The [complete protected gate](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/35679459865) passed all 1,332 tests and the full precheck/check/postcheck command. Exact reserved staging passed all seven probes. [Production verification](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/35680413869) passed all seven too: all six eligible answers attempted writing, five accepted it, and the payment answer retained its verified fallback. Live Halloween wording and the repaired calendar path used accepted writing. The independent hourly Codex watchdog was enabled and read back.
+
+The [notification drill](https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/35680462964) passed the real-answer checks and created [test incident #181](https://github.com/mar15sa/sterling-ranch-food-truck-chat/issues/181), assigned to the owner, but immediate collection lookup did not recover that new issue. The follow-up passes the returned issue identity directly into recovery, fetches that exact issue, and verifies its bot author and incident marker before updating it. This avoids depending on immediate collection visibility. A deliberately stale collection regression and wrong-owner/wrong-marker negative controls pass. No resident answering, source approvals or routing changes are part of this follow-up. Do not describe the notification drill as verified until the corrected workflow passes and its incident is read back as resolved.

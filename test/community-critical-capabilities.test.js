@@ -206,3 +206,27 @@ test('an obsolete revision cannot clear a newer production incident', async () =
   const context = { repo: { owner: 'fixture', repo: 'fixture' }, sha: 'old' };
   assert.equal((await publishIncident({ github, context, report: { result: 'passed' } })).action, 'superseded-run-ignored');
 });
+
+test('immediate recovery uses the created issue identity even when the collection is stale', async () => {
+  let item, lookups = 0;
+  const github = { paginate: async () => [], rest: { issues: {
+    listForRepo() {}, create: async data => ({ data: (item = { ...data, number: 42, state: 'open', user: { login: 'github-actions[bot]' } }) }),
+    get: async ({ issue_number }) => { lookups++; assert.equal(issue_number, 42); return { data: item }; },
+    createComment: async () => {}, update: async data => ({ data: Object.assign(item, data) }),
+  } } };
+  const context = { repo: { owner: 'fixture', repo: 'fixture' }, serverUrl: 'https://github.com', runId: 1 };
+  const opened = await publishIncident({ github, context, notificationTest: true, report: { result: 'failed' } });
+  const recovered = await publishIncident({ github, context, notificationTest: true, incidentNumber: opened.number, report: { result: 'passed' } });
+  assert.equal(recovered.action, 'recovered'); assert.equal(lookups, 1); assert.equal(item.state, 'closed');
+});
+
+test('an explicit issue identity cannot close a human issue or another monitor record', async () => {
+  const context = { repo: { owner: 'fixture', repo: 'fixture' } };
+  for (const issue of [
+    { user: { login: 'fixture-owner' }, body: '<!-- community-critical-capability-incident:v1 -->' },
+    { user: { login: 'github-actions[bot]' }, body: 'Another monitor owns this issue.' },
+  ]) {
+    const github = { rest: { issues: { get: async () => ({ data: { ...issue, state: 'open' } }) } } };
+    await assert.rejects(publishIncident({ github, context, incidentNumber: 42, report: { result: 'passed' } }), /not this monitor/);
+  }
+});
