@@ -1,0 +1,532 @@
+{
+  "verdict": "visual-review-pass",
+  "reviewer": "GPT-6 Astra, coordinator and final visual reviewer; bounded independent Terra review documented separately",
+  "reviewerType": "visual-ai",
+  "reviewedAt": "2026-09-21",
+  "actualComparison": true,
+  "runtimeFingerprint": "7a6dea7a267aaba47ed5fa8e44751ca5d6ce9769a73f4745601373c75b6b61ad",
+  "baselineRegistryFingerprint": "843d02d38ecc36f709f85672d020257d70e83cb87d72ab9c2f307ae9bdae68fa",
+  "coverageChecks": {
+    "passed": true,
+    "scope": "full-saved-atlas-area",
+    "bounds": {
+      "west": -105.077,
+      "east": -105.02,
+      "south": 39.477,
+      "north": 39.518
+    },
+    "expectedCurrentRootIds": [
+      "ascent-pavilion",
+      "broadstone",
+      "burns",
+      "high-top",
+      "horsebrush",
+      "john-adams",
+      "mccormick",
+      "outcrop",
+      "overlook",
+      "pat-gallagher",
+      "peekaboo",
+      "pioneer",
+      "primrose",
+      "prose",
+      "prospect-park",
+      "providence-park",
+      "providence-regional",
+      "sterling-center",
+      "steve-bloom",
+      "trailrock",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "yard-27",
+      "zippity"
+    ],
+    "includedCurrentRootIds": [
+      "ascent-pavilion",
+      "broadstone",
+      "burns",
+      "high-top",
+      "horsebrush",
+      "john-adams",
+      "mccormick",
+      "outcrop",
+      "overlook",
+      "pat-gallagher",
+      "peekaboo",
+      "pioneer",
+      "primrose",
+      "prose",
+      "prospect-park",
+      "providence-park",
+      "providence-regional",
+      "sterling-center",
+      "steve-bloom",
+      "trailrock",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "yard-27",
+      "zippity"
+    ],
+    "expectedPlaceIds": [
+      "agora",
+      "ascent-pavilion",
+      "ascent-village-center",
+      "atlas-coffee",
+      "broadstone",
+      "broadstone-ev",
+      "broadstone-fitness",
+      "broadstone-lounge",
+      "broadstone-pool",
+      "broadstone-work",
+      "burns",
+      "burns-courts",
+      "burns-next",
+      "cab-office",
+      "cultural-trail",
+      "farmers-market",
+      "food-trucks",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "gathering-play",
+      "heritage",
+      "high-top",
+      "high-top-courts",
+      "horsebrush",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "info-center",
+      "john-adams",
+      "lake-family-dental",
+      "library",
+      "library-childrens",
+      "library-outdoors",
+      "library-return",
+      "library-rooms",
+      "living-dream",
+      "mccormick",
+      "mccormick-play",
+      "mccormick-shelter",
+      "medley",
+      "outcrop",
+      "overlook",
+      "overlook-fitness",
+      "overlook-great-hall",
+      "overlook-north-pavilion",
+      "overlook-pool",
+      "overlook-south-pavilion",
+      "overlook-splash",
+      "pat-gallagher",
+      "pat-shelter",
+      "peekaboo",
+      "peekaboo-play",
+      "physical-therapy",
+      "pioneer",
+      "pioneer-play",
+      "pioneer-shelter",
+      "primary-care",
+      "primrose",
+      "primrose-play",
+      "prose",
+      "prose-dog",
+      "prose-fitness",
+      "prose-pool",
+      "prose-work",
+      "prospect-basketball",
+      "prospect-lawn",
+      "prospect-next",
+      "prospect-park",
+      "prospect-pavilion",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-soccer",
+      "prospect-volleyball",
+      "prospect-walking",
+      "providence-park",
+      "providence-pavilion",
+      "providence-regional",
+      "ranch-patio",
+      "ranch-playground",
+      "ranch-social",
+      "rave",
+      "salta",
+      "school51",
+      "sterling-center",
+      "sterling-eyecare",
+      "sterling-gulch",
+      "steve-bloom",
+      "trailrock",
+      "trailrock-play",
+      "uchealth",
+      "urgent-care",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "willow-repair",
+      "yard-27",
+      "yard-cornhole",
+      "zebulon",
+      "zebulon-lifestyle",
+      "zippity",
+      "zippity-play",
+      "zippity-shelter"
+    ],
+    "includedPlaceIds": [
+      "agora",
+      "ascent-pavilion",
+      "ascent-village-center",
+      "atlas-coffee",
+      "broadstone",
+      "broadstone-ev",
+      "broadstone-fitness",
+      "broadstone-lounge",
+      "broadstone-pool",
+      "broadstone-work",
+      "burns",
+      "burns-courts",
+      "burns-next",
+      "cab-office",
+      "cultural-trail",
+      "farmers-market",
+      "food-trucks",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "gathering-play",
+      "heritage",
+      "high-top",
+      "high-top-courts",
+      "horsebrush",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "info-center",
+      "john-adams",
+      "lake-family-dental",
+      "library",
+      "library-childrens",
+      "library-outdoors",
+      "library-return",
+      "library-rooms",
+      "living-dream",
+      "mccormick",
+      "mccormick-play",
+      "mccormick-shelter",
+      "medley",
+      "outcrop",
+      "overlook",
+      "overlook-fitness",
+      "overlook-great-hall",
+      "overlook-north-pavilion",
+      "overlook-pool",
+      "overlook-south-pavilion",
+      "overlook-splash",
+      "pat-gallagher",
+      "pat-shelter",
+      "peekaboo",
+      "peekaboo-play",
+      "physical-therapy",
+      "pioneer",
+      "pioneer-play",
+      "pioneer-shelter",
+      "primary-care",
+      "primrose",
+      "primrose-play",
+      "prose",
+      "prose-dog",
+      "prose-fitness",
+      "prose-pool",
+      "prose-work",
+      "prospect-basketball",
+      "prospect-lawn",
+      "prospect-next",
+      "prospect-park",
+      "prospect-pavilion",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-soccer",
+      "prospect-volleyball",
+      "prospect-walking",
+      "providence-park",
+      "providence-pavilion",
+      "providence-regional",
+      "ranch-patio",
+      "ranch-playground",
+      "ranch-social",
+      "rave",
+      "salta",
+      "school51",
+      "sterling-center",
+      "sterling-eyecare",
+      "sterling-gulch",
+      "steve-bloom",
+      "trailrock",
+      "trailrock-play",
+      "uchealth",
+      "urgent-care",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "willow-repair",
+      "yard-27",
+      "yard-cornhole",
+      "zebulon",
+      "zebulon-lifestyle",
+      "zippity",
+      "zippity-play",
+      "zippity-shelter"
+    ],
+    "expectedRouteIds": [
+      "overlook-link",
+      "prospect-loop",
+      "providence-west"
+    ],
+    "includedRouteIds": [
+      "overlook-link",
+      "prospect-loop",
+      "providence-west"
+    ]
+  },
+  "functionalChecks": {
+    "passed": true,
+    "checks": [
+      "34 catalog, full-area geometry, discovery/access and visual-evidence-gate tests passed.",
+      "All 25 lens/area combinations exercised in browser; all 25 current root destinations remain in the full directory.",
+      "Phone native filter menus, filtered smaller markers and source-placement control verified; no horizontal overflow.",
+      "Atlas Coffee direct nested selection opens its visit details and scrolls/focuses the detail region on phone.",
+      "McCormick parent opens its two nested playground and shelter listings; pickleball search opens Burns court details.",
+      "All three CAB guide dialogs, Escape/return focus, and nearby Overlook model navigation exercised.",
+      "School search opens the upcoming school project; all 11 future groups retained without invented locations.",
+      "Unfold desktop and phone inspected with real content; detailed model opening/collapse retained.",
+      "No warning or error messages captured from the final QA browser tab."
+    ]
+  },
+  "hardFailures": [],
+  "states": [
+    {
+      "name": "neighborhood-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-neighborhood-desktop.png",
+        "sha256": "b079a43cad51448bb053956dbe433d8d0f637798cfc6c6e5ecf78f6648564429",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/candidate-neighborhood-desktop.png",
+        "sha256": "f18b73892ec97357ab6f181c90f7419492adac5630d5219f1fc3663f408de93e"
+      },
+      "baselineScores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 3,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      }
+    },
+    {
+      "name": "sterling-open-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-sterling-open-desktop.png",
+        "sha256": "3589b27cfbf92ceebfbf6a32c061b39a85d29cd7a357bcb218d9d2cbd21b2d8c",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/candidate-sterling-open-desktop.png",
+        "sha256": "db94eddd0926ddce1197121ff1298b5d048c7bcc8fcc1baeccb2b6d2bab7caa9"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      }
+    },
+    {
+      "name": "overlook-open-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-overlook-open-desktop.png",
+        "sha256": "21102156d65c1b8f4d775f83ed9b60f8329a681761d0f81b08c4750081d62e6b",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/candidate-overlook-open-desktop.png",
+        "sha256": "c18bf08b20ff989616ae25fbc9462a379fcddc2a4e04a9a7c565556de20d9159"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      }
+    },
+    {
+      "name": "neighborhood-mobile",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-neighborhood-mobile.png",
+        "sha256": "81bf03fa7fe64a0a299acaa97de7a16191fcaf44ffa872047dc92d09cea0382b",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/candidate-neighborhood-mobile.png",
+        "sha256": "517c960d12f19690d1f46b84e8f9c7e69bbbff58587bac798369d49a8e1d6c25"
+      },
+      "baselineScores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 3,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      }
+    },
+    {
+      "name": "sterling-open-mobile",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-sterling-open-mobile.png",
+        "sha256": "3724ddba30876136db67840f707a96e6f7118e4bb3808b220ae53c03bff93e44",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/candidate-sterling-open-mobile.png",
+        "sha256": "185913b5989b94642dce9f947f966c4dfed32414df57468138472867dce6b75f"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      }
+    }
+  ],
+  "discoveryChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "unfolded-desktop",
+        "candidate": {
+          "path": "eval/evidence/discovery-unfolded-desktop.png",
+          "sha256": "1e9c7af926c42eebacda7e218a0c1fc2aa8687c837028e0b1c1dbea67f040431"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Three separated information sheets preserve the painted base and open nested places, a nearby CAB guide and future plans."
+      },
+      {
+        "name": "unfolded-mobile",
+        "candidate": {
+          "path": "eval/evidence/discovery-unfolded-mobile.png",
+          "sha256": "f89c498c8ffb31abf45e3b02583e2efc9f3175673b1f57d15fe78c93530ae208"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Readable stacked sheets with working actions fit within the stage; no overflow. Artwork remains behind the sheets."
+      },
+      {
+        "name": "walking-guide",
+        "candidate": {
+          "path": "eval/evidence/discovery-walking-guide.png",
+          "sha256": "0d88b7761a80c93dbbda37cdc2696bc0888dae7ab3657b5c8863328b81e361bd"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Actual CAB source-image trace, mileage, start and route steps, official source and nearby destination action inspected."
+      },
+      {
+        "name": "future-layer",
+        "candidate": {
+          "path": "eval/evidence/discovery-future-layer.png",
+          "sha256": "ac8eb0f3f7184c6019fcf13f1c1da48b7a5093eca5bd43ccc4b04daf1d5a59e1"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Grouped project cards include school and library with status and sources; unconfirmed sites do not acquire invented pins."
+      }
+    ]
+  },
+  "reviewNotes": "See eval/DISCOVERY-VISUAL-REVIEW.md and eval/RUBRIC.md. The owner selected the 4188 base, not this new iteration. Earlier restoration review and baseline evidence remain preserved. Review does not authorize staging deployment or production launch. Final normalization changes only CRLF to LF in README and CSS; rendering is unchanged."
+}
