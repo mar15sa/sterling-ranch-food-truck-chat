@@ -323,8 +323,9 @@
       "community": "Littleton",
       "kind": "business",
       "url": "https://www.scheels.com/store/littleton/017",
-      "cadence": "daily",
-      "notes": "The retailer's official coming-soon page is the primary source for the Littleton store and future opening updates."
+      "cadence": "weekly",
+      "monitorMode": "manual",
+      "notes": "The retailer's official coming-soon page is the primary source for the Littleton store and future opening updates. SCHEELS blocks the automated scanner with HTTP 403, so review this page manually instead of treating that block as a source failure."
     },
     {
       "id": "mineral-place-portillos-lead",
