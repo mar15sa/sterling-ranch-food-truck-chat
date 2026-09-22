@@ -49,6 +49,50 @@ test('composition caches expire and a later provider outage cannot hide behind a
   assert.equal(await synthesizeCommunityAnswer('Can courtyard lamps stay on all night?', [source], options), null);
   assert.equal(calls, 2); assert.equal(diagnostics.at(-1).providerStatus, 503);
 });
+
+test('a legacy verified calendar label cannot override the final audit or silently skip writing', async () => {
+  const checkedAt = '2026-09-21T18:00:00.000Z', evidenceId = 'sterling-ranch:official-calendar:calendar';
+  const options = { isTest: true, requestContractMode: 'need-audited-candidate', needRouterBackend: 'current-local',
+    planCommunitySearch: false, synthesizeCommunityAnswer: false,
+    index: require('../data/community-index.json'), communityId: 'sterling-ranch',
+    communityProfile: require('../data/communities/sterling-ranch.json'), now: new Date(checkedAt),
+    getCommunityEvents: async request => ({
+      events: [{ id: 'fixture', title: 'Courtyard Class', date: '2026-09-22', time: '09:00',
+        location: 'Great Hall', url: 'https://sterlingranchcab.com/event/fixture', startDate: '2026-09-22T09:00:00' }],
+      range: request.dateRange, sourceUrl: 'https://sterlingranchcab.com/calendar', checkedAt,
+      diagnostics: { sourceOutcome: 'ok', parserHealthy: true, appliedFilters: [] },
+      evidenceEnvelope: { communityId: 'sterling-ranch', connectorFamily: 'civicplus-calendar', degradation: { state: 'healthy' },
+        coverage: { requested: ['event-date', 'date'], covered: ['event-date', 'date'] },
+        evidence: [{ evidenceId, communityId: 'sterling-ranch', checkedAt, staleAfter: '2099-01-01T00:00:00Z', controllingSourceRole: 'operational' }],
+        claims: [{ id: 'event-fixture', facet: 'event-date', text: 'Courtyard Class: 2026-09-22T09:00:00', controllingEvidenceId: evidenceId, controllingSourceRole: 'operational' }],
+      },
+    }),
+  };
+  let attempts = 0;
+  const result = await answerCommunityQuestion('What events are going on tomorrow?', { ...options,
+    rewriteNeedFirstAnswer: async () => { attempts++; return null; } });
+  assert.equal(result._requestContract.candidate.baselineAssessment.outcome, 'missing-evidence');
+  assert.equal(result._requestContract.assessment.outcome, 'complete');
+  assert.equal(result._requestContract.candidate.baselinePreserved, false);
+  assert.equal(attempts, 1); assert.equal(result.confidence.canAnswer, true);
+  assert.deepEqual(answerCapabilityIssues(result), []);
+  for (const healthy of [true, false]) {
+    const empty = await answerCommunityQuestion('What events are going on tomorrow?', { ...options,
+      getCommunityEvents: async request => {
+        const response = await options.getCommunityEvents(request);
+        response.events = []; response.evidenceEnvelope.claims = [];
+        response.diagnostics.parserHealthy = healthy;
+        if (!healthy) {
+          response.evidenceEnvelope.degradation = { state: 'unavailable' };
+          response.evidenceEnvelope.coverage.covered = [];
+        }
+        return response;
+      }, rewriteNeedFirstAnswer: async () => null,
+    });
+    assert.equal(empty._requestContract.assessment.outcome === 'complete', healthy);
+    assert.equal(empty.confidence.canAnswer, healthy);
+  }
+});
 test('independent watchdog treats disabled, overdue, stuck, failed and evidence-free monitoring as unhealthy', () => {
   const now = Date.parse('2026-09-21T12:00:00Z');
   const valid = { workflow: { state: 'active' }, runs: [{ status: 'completed', conclusion: 'success', created_at: '2026-09-21T11:45:00Z' }],
