@@ -275,6 +275,32 @@ test("official information-page requests stay on the service resource without co
   }
 });
 
+test("move-in WiFi setup routes to approved internet activation evidence", async () => {
+  for (const question of [
+    "How do we set up WiFi when moving in",
+    "How do I setup wi-fi in my new home?",
+    "Where can a resident activate internet service?",
+    "How do we get connected after closing? We need home internet.",
+  ]) {
+    const answer = await answerCommunityQuestion(question, {
+      isTest: true,
+      requestContractMode: "need-first-candidate", needRouterBackend: "current-local", needFirstResidentRelease: true,
+      interpretationMode: "structured", now: new Date("2026-09-20T18:00:00Z"), index: communityIndex,
+      communityProfile, communityId: "sterling-ranch", synthesizeCommunityAnswer: false,
+      planCommunitySearch: false,
+      answerRulesQuestion,
+      rulesOptions: { searchMode: "legacy", llmMode: "off" },
+    });
+    assert.equal(answer.answerMode, "need-first-candidate", question);
+    assert.equal(answer.answerStatus, "verified", question);
+    assert.match(answer.answer, /Internet Activation Guide/i, question);
+    assert.ok(answer.sources.some((source) => /Internet Service/i.test(source.title)), question);
+    assert.ok(answer.actions.some((action) => /Internet Activation Guide/i.test(action.label)
+      && /lumiere\.technology/i.test(action.url)), question);
+    assert.doesNotMatch(answer.answer, /date|schedule|Atlas Guest|GuestWiFi/i, question);
+  }
+});
+
 test("legacy production routing still sends pickup delays to the live waste boundary", async () => {
   let calls = 0;
   const answer = await answerCommunityQuestion("Is garbage pick up delayed this week", {

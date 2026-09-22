@@ -171,8 +171,14 @@ test("treats concrete resident topic fragments and embedded questions as complet
 });
 
 test("generic or subjectless requests still ask for clarification", () => {
-  for (const question of ["Please help", "What about that?", "How much does it cost?", "Can I?"]) {
+  for (const question of ["Please help", "What about that?", "How much does it cost?", "Can I?", "Services", "service", "Community services", "Utilities"]) {
     assert.equal(buildResidentRequestContract(question).complete, false, question);
+  }
+});
+
+test("named services remain complete even though a bare service category is not", () => {
+  for (const question of ["Internet service", "trash services", "water utility", "utility bill", "WiFi setup when moving in"]) {
+    assert.equal(buildResidentRequestContract(question).complete, true, question);
   }
 });
 
