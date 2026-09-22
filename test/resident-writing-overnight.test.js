@@ -6,6 +6,7 @@ const { buildResidentRequestContract, assessResidentNeeds } = require("../lib/co
 const { runNeedFirstShadow } = require("../lib/community-need-router");
 const { answerCoverageIssues } = require("../lib/rules-intent");
 const { writingMeaningIssues } = require("../lib/resident-writing-contract");
+const { synthesizeCommunityAnswer } = require("../lib/community-llm");
 
 function fixture(time) {
   const details = ["Courtyard lamps are allowed from November 2 through February 4.",
@@ -34,6 +35,21 @@ test("clock cutoffs satisfy overnight duration and plain imperative permission w
   const issues = answerCoverageIssues("Can courtyard lamps stay on all night?", answer.keyDetails[1], answer.sources);
   assert.ok(!issues.includes("requested-duration-missing"), JSON.stringify(issues));
   assert.ok(!issues.includes("direct-permission-answer-missing"), JSON.stringify(issues));
+});
+
+test("the actual composition validator accepts ordinary permission wording with an unchanged clock cutoff", async () => {
+  const original = fixture("9:30 p.m.");
+  for (const directAnswer of ["No. You need to turn off courtyard lamps by 9:30 p.m.", "Turn off courtyard lamps by 9:30 p.m."]) {
+    const diagnostics = [];
+    const result = await synthesizeCommunityAnswer("Can I leave courtyard lamps on all night?", original.sources, {
+      apiKey: "fixture-key", model: directAnswer,
+      routingPlan: { goal: "permission", requestedDetails: ["permission"] },
+      writingContract: { version: "overnight-test" }, onDiagnostic: item => diagnostics.push(item),
+      fetchImpl: async () => ({ ok: true, json: async () => ({ content: [{ type: "text", text: JSON.stringify({ directAnswer, keyDetails: [], nextStep: "" }) }] }) }),
+    });
+    assert.ok(result, JSON.stringify(diagnostics));
+    assert.equal(result.directAnswer, directAnswer);
+  }
 });
 
 test("sentence-leading prepositions are not names but changed names and values remain rejected", () => {
