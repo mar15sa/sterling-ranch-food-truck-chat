@@ -2103,14 +2103,18 @@
       "area": "Mineral Place",
       "address": "700 W. Mineral Avenue, Littleton, CO 80120",
       "status": "under-construction",
-      "openingWindow": "Mineral Place completion listed for November 2026; Costco opening date not separately announced",
-      "summary": "A new Costco warehouse and 32-pump fuel station is approved and under construction as an anchor of Mineral Place. The project team lists November 2026 as the development's completion date.",
-      "verifiedAt": "2026-09-09",
+      "openingWindow": "Opening anticipated March 2027",
+      "summary": "A new Costco warehouse and 32-pump fuel station is under construction as an anchor of Mineral Place. A September 2026 City of Littleton agreement amendment says construction delays moved the anticipated public opening to March 2027.",
+      "verifiedAt": "2026-09-22",
       "confidence": "official",
       "sources": [
         {
           "label": "City of Littleton development record",
           "url": "https://data.littletongov.org/pal.php?project=SIP24-0001"
+        },
+        {
+          "label": "City of Littleton September 2026 Costco timeline amendment",
+          "url": "https://littletongov.legistar.com/LegislationDetail.aspx?FullText=1&GUID=12A8F226-C2AE-4E94-B79E-29EC82280B22&ID=8208226&Options=&Search="
         },
         {
           "label": "City of Littleton 2026 development roundup",
