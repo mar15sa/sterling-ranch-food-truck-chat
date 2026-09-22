@@ -54,6 +54,9 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
     getOpeningsSourceStatus: () => ({}), operationsSnapshot: () => ({}),
     getRulesSearchMetrics: () => ({}), getRulesLlmMetrics: () => ({}),
     residentWriterConfiguration: () => ({ enabled: false, configured: false, mode: "off", stage: "after-evidence-audit" }),
+    criticalCapabilityStatus: require('../lib/community-critical-capabilities').criticalCapabilityStatus,
+    capabilityTelemetry: require('../lib/community-critical-capabilities').createCapabilityTelemetry(),
+    getCommunityProfile: () => require('../data/communities/sterling-ranch.json'),
     getCommunitySearchMetrics: () => ({}), getCommunityLlmMetrics: () => ({}), communityAnswerMetrics: () => ({}),
     communitySourceStatus: (_, now, options) => { statusReads++; return communitySourceStatus(index, now, options); },
     liveMonitor: { status: () => ({}) }, buildCommunitySourceReadiness,
@@ -75,6 +78,8 @@ test("actual owner handler rejects missing/tampered sessions; public health neve
   const publicResult = {};
   await context.handleHealth({ method: "GET", headers: {} }, publicResult);
   assert.equal(publicResult.status, 200);
+  assert.equal(publicResult.body.criticalCapabilities.status, 'degraded');
+  assert.ok(publicResult.body.criticalCapabilities.issues.includes('resident-writer-disabled'));
   assert.equal(publicResult.body.communitySources.staleSourceCount, 1);
   for (const value of [overdue.id, overdue.sourceUrl, overdue.contentHash, overdue.checkedAt, overdue.staleAfter]) {
     assert.equal(JSON.stringify(publicResult.body).includes(value), false);
