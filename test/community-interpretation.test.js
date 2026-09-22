@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const {
   deterministicRequestedDetails,
   highConfidenceDateRange,
+  isInternetServiceSetupRequest,
   normalizeInterpretation,
   resolveInterpretationMode,
 } = require("../lib/community-interpretation");
@@ -68,6 +69,24 @@ test("relative week ranges are deterministic and bounded", () => {
 test("water-usage access detection preserves generic online utility portal actions", () => {
   assert.deepEqual(deterministicRequestedDetails("How can I monitor my water usage online?"), ["action"]);
   assert.deepEqual(deterministicRequestedDetails("Online access for my utility bill"), ["action"]);
+});
+
+test("move-in internet setup is an action, not a date or an unrelated WiFi topic", () => {
+  for (const question of [
+    "How do we set up WiFi when moving in",
+    "How do I setup wi-fi in my new home?",
+    "Where can a resident activate internet service?",
+    "How do we get connected after closing? We need home internet.",
+  ]) {
+    assert.equal(isInternetServiceSetupRequest(question), true, question);
+    assert.deepEqual(deterministicRequestedDetails(question), ["action"], question);
+  }
+  for (const question of [
+    "What is the WiFi password at Atlas Coffee?",
+    "The hotel WiFi is slow",
+    "When is trash pickup after moving in?",
+    "How do I monitor my water usage online?",
+  ]) assert.equal(isInternetServiceSetupRequest(question), false, question);
 });
 
 function calendarHtml(events = []) {

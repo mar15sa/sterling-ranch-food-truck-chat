@@ -56,6 +56,23 @@ test("resident literal guard permits the reviewed official-resource navigation f
   `), []);
 });
 
+test("resident literal guard permits the reviewed generic service clarification", () => {
+  assert.deepEqual(inspectSource(`
+    buildAnswerContract({ directAnswer: "I need one more detail before I can check this accurately: which community service do you mean?" });
+  `), []);
+});
+
+test("resident literal guard still sees fixed facts routed through a service-setup helper", () => {
+  const findings = inspectSource(`
+    function internetSetupAnswer(resource) {
+      const directAnswer = "Home WiFi activation always takes exactly two days.";
+      return buildAnswerContract({ directAnswer, sources: [resource] });
+    }
+  `);
+  assert.equal(findings.length, 1);
+  assert.match(findings[0].value, /exactly two days/);
+});
+
 test("resident literal guard keeps factual and community-specific fixed copy visible", () => {
   const findings = inspectSource(`
     return {

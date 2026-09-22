@@ -27,6 +27,7 @@ const DYNAMIC_PRESENTATION_FIELDS = new Set(["label", "url", "keyDetails"]);
 // These are source-independent interface sentences. Additions need review: a
 // resident fact belongs in a source claim/action projection instead.
 const GENERIC_COPY = new Set([
+  "I need one more detail before I can check this accurately: which community service do you mean?",
   "I couldn’t confirm the current value from an approved CAB source.",
   "The official community website is the best place to confirm this.",
   "I couldn’t find a current official answer for that.",
