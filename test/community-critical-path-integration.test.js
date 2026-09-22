@@ -99,12 +99,29 @@ test('independent watchdog treats disabled, overdue, stuck, failed and evidence-
     artifacts: [{ name: 'production-critical-capabilities', expired: false }], now };
   assert.deepEqual(monitorFreshnessIssues(valid), []);
   const oldSuccess = structuredClone(valid);
-  oldSuccess.runs[0].created_at = '2026-09-21T07:00:00Z';
+  oldSuccess.runs[0].created_at = '2026-09-20T07:00:00Z';
   oldSuccess.runs.unshift({ status: 'in_progress', created_at: '2026-09-21T11:59:00Z' });
   assert.ok(monitorFreshnessIssues(oldSuccess).includes('completed-capability-monitor-overdue'));
   for (const change of [v => { v.workflow.state = 'disabled_manually'; }, v => { v.runs = []; },
-    v => { v.runs[0].created_at = '2026-09-21T07:00:00Z'; }, v => { v.runs[0].status = 'in_progress'; v.runs[0].created_at = '2026-09-21T11:00:00Z'; },
-    v => { v.runs[0].conclusion = 'failure'; }, v => { v.artifacts = []; }]) {
+    v => { v.runs[0].created_at = '2026-09-20T07:00:00Z'; }, v => { v.runs[0].status = 'in_progress'; v.runs[0].created_at = '2026-09-21T11:00:00Z'; },
+    v => { v.runs[0].conclusion = 'failure'; }, v => { v.artifacts = []; }, v => { v.artifacts[0].expired = true; }]) {
     const sample = structuredClone(valid); change(sample); assert.ok(monitorFreshnessIssues(sample).length);
   }
+});
+
+test('daily watchdog allows the daily interval and scheduling grace without hiding a missed or stuck check', () => {
+  const now = Date.parse('2026-09-22T15:00:00Z');
+  const sample = age => ({ workflow: { state: 'active' }, now,
+    runs: [{ status: 'completed', conclusion: 'success', created_at: new Date(now - age).toISOString() }],
+    artifacts: [{ name: 'production-critical-capabilities', expired: false }] });
+  for (const hours of [4, 24, 25, 26]) {
+    assert.deepEqual(monitorFreshnessIssues(sample(hours * 3600000)), [], `${hours} hours is within the daily grace period`);
+  }
+  const missed = sample(26 * 3600000 + 1);
+  assert.deepEqual(monitorFreshnessIssues(missed), ['capability-monitor-overdue', 'completed-capability-monitor-overdue']);
+  missed.runs.unshift({ status: 'in_progress', created_at: new Date(now - 60000).toISOString() });
+  assert.deepEqual(monitorFreshnessIssues(missed), ['completed-capability-monitor-overdue']);
+  const stuck = sample(24 * 3600000);
+  stuck.runs.unshift({ status: 'in_progress', created_at: new Date(now - 21 * 60000).toISOString() });
+  assert.deepEqual(monitorFreshnessIssues(stuck), ['capability-monitor-stuck']);
 });

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const { execFileSync } = require('node:child_process');
 const WORKFLOW = 'community-critical-capabilities.yml';
+// One daily run, plus two hours for GitHub scheduling and completion delays.
+const MAX_RUN_AGE_MS = 26 * 3600000;
 function monitorFreshnessIssues({ workflow, runs, artifacts, now = Date.now() }) {
   const issues = [];
   if (workflow?.state !== 'active') issues.push('capability-monitor-disabled-or-missing');
@@ -8,10 +10,10 @@ function monitorFreshnessIssues({ workflow, runs, artifacts, now = Date.now() })
   const latest = ordered[0];
   if (!latest) return [...issues, 'capability-monitor-has-never-run'];
   const age = now - Date.parse(latest.created_at);
-  if (!Number.isFinite(age) || age > 3 * 3600000 || age < -60000) issues.push('capability-monitor-overdue');
+  if (!Number.isFinite(age) || age > MAX_RUN_AGE_MS || age < -60000) issues.push('capability-monitor-overdue');
   if (latest.status !== 'completed' && age > 20 * 60000) issues.push('capability-monitor-stuck');
   const completed = ordered.find(run => run.status === 'completed');
-  if (completed && now - Date.parse(completed.created_at) > 3 * 3600000) issues.push('completed-capability-monitor-overdue');
+  if (completed && now - Date.parse(completed.created_at) > MAX_RUN_AGE_MS) issues.push('completed-capability-monitor-overdue');
   if (!completed || completed.conclusion !== 'success') issues.push('latest-completed-capability-check-not-passing');
   if (completed?.conclusion === 'success' && !(artifacts || []).some(artifact => artifact.name === 'production-critical-capabilities' && artifact.expired !== true)) {
     issues.push('capability-monitor-evidence-missing');
