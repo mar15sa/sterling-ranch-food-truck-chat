@@ -54,7 +54,7 @@ jobs:
             const opened = await publishIncident({ github, context, notificationTest: true, assignees: [context.repo.owner],
               report: { result: 'failed', issues: ['intentional-notification-test'] } });
             if (!opened.number) throw new Error('Notification test did not create or find its incident.');
-            const recovered = await publishIncident({ github, context, notificationTest: true,
+            const recovered = await publishIncident({ github, context, notificationTest: true, incidentNumber: opened.number,
               report: { result: 'passed', issues: [] } });
             if (recovered.action !== 'recovered') throw new Error('Notification recovery was not verified.');
             core.info(`Notification test issue #${opened.number} opened and resolved.`);

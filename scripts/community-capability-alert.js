@@ -4,7 +4,7 @@ function safeIssues(report) {
   return [...new Set((report?.issues?.length ? report.issues : ['monitor-did-not-complete'])
     .map(value => String(value).replace(/[^a-zA-Z0-9:._ -]/g, '').slice(0, 140)))].sort().slice(0, 30);
 }
-async function publishIncident({ github, context, report, notificationTest = false, assignees = [] }) {
+async function publishIncident({ github, context, report, notificationTest = false, assignees = [], incidentNumber }) {
   const repo = { owner: context.repo.owner, repo: context.repo.repo };
   const revision = report?.expectedRevision || context.sha;
   if (revision) {
@@ -13,8 +13,18 @@ async function publishIncident({ github, context, report, notificationTest = fal
   }
   const marker = notificationTest ? MARKER.replace(':v1', ':notification-test-v1') : MARKER;
   const title = notificationTest ? 'Community Assistant safeguard notification test' : 'Community Assistant critical capability needs attention';
-  const issues = await github.paginate(github.rest.issues.listForRepo, { ...repo, state: 'open', per_page: 100 });
-  const existing = issues.find(issue => !issue.pull_request && issue.user?.login === 'github-actions[bot]' && issue.body?.includes(marker));
+  const ownedIncident = issue => !issue.pull_request && issue.user?.login === 'github-actions[bot]' && issue.body?.includes(marker);
+  let existing;
+  if (incidentNumber !== undefined) {
+    // A just-created issue need not appear in the collection response yet.
+    // Use its returned identity and verify ownership before any update.
+    const { data } = await github.rest.issues.get({ ...repo, issue_number: incidentNumber });
+    if (!ownedIncident(data)) throw new Error('The referenced issue is not this monitor\'s incident.');
+    if (data.state === 'open') existing = data;
+  } else {
+    const issues = await github.paginate(github.rest.issues.listForRepo, { ...repo, state: 'open', per_page: 100 });
+    existing = issues.find(ownedIncident);
+  }
   const runUrl = `${context.serverUrl}/${repo.owner}/${repo.repo}/actions/runs/${context.runId}`;
   if (report?.result === 'passed') {
     if (!existing) return { action: 'unchanged' };
