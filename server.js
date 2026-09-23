@@ -24,6 +24,7 @@ const {
   alertRulesRefreshFailed,
   recordRulesLowConfidence,
   recordRulesRateLimitBlocked,
+  shouldRecordRulesLowConfidence,
 } = require("./lib/rules-alerts");
 const {
   cleanQuestionForLog,
@@ -4667,7 +4668,7 @@ async function handleRulesAsk(req, res, url) {
   answer.testTraffic = { isTest: logOptions.isTest, boundary: logOptions.logBoundary };
   capabilityTelemetry.record(answer, { isTest: logOptions.isTest,
     profile: getCommunityProfile(), writerRequired: operatingContract(getCommunityProfile().communityId)?.writerRequired !== false });
-  if (answer?.confidence?.canAnswer === false && answer?.reviewNeeded !== false && answer?.answerStatus !== "safety-rejected") {
+  if (shouldRecordRulesLowConfidence(answer, logOptions)) {
     recordRulesLowConfidence({
       questionFingerprint: privacyFingerprint(question),
       questionLength: String(question || "").length,
