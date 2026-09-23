@@ -1,0 +1,275 @@
+{
+  "verifiedAt": "2026-09-22",
+  "models": [
+    {
+      "id": "sterling-center",
+      "asset": "sterling-center.png",
+      "referenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Official place information",
+      "scope": "Exterior illustration. The opening layers organize businesses, not actual rooms.",
+      "caption": "Exterior illustration. The opening layers organize businesses, not actual rooms.",
+      "alt": "Illustrated model of Sterling Center",
+      "provenance": "Preserved earlier model; unchanged in this expansion."
+    },
+    {
+      "id": "overlook",
+      "asset": "overlook-model.png",
+      "referenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Official place information",
+      "scope": "Clubhouse and pool illustration from the earlier comparison.",
+      "caption": "Clubhouse and pool illustration from the earlier comparison.",
+      "alt": "Illustrated model of The Overlook",
+      "provenance": "Preserved earlier model; unchanged in this expansion."
+    },
+    {
+      "id": "burns",
+      "asset": "burns-model.png",
+      "referenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Official place information",
+      "scope": "Pickleball courts detail from the earlier comparison.",
+      "caption": "Pickleball courts detail from the earlier comparison.",
+      "alt": "Illustrated model of Burns Regional Park",
+      "provenance": "Preserved earlier model; unchanged in this expansion."
+    },
+    {
+      "id": "prospect-park",
+      "asset": "prospect-model.png",
+      "referenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Official place information",
+      "scope": "Park illustration from the earlier comparison.",
+      "caption": "Park illustration from the earlier comparison.",
+      "alt": "Illustrated model of Prospect Park",
+      "provenance": "Preserved earlier model; unchanged in this expansion."
+    },
+    {
+      "id": "horsebrush",
+      "asset": "horsebrush-model.png",
+      "referenceImage": "assets/references/horsebrush.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/horseshoe_bend_park-1-1024x684.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Bocce courts, shelters and lawn, based on the official aerial photo.",
+      "caption": "Bocce courts, shelters and lawn, based on the official aerial photo.",
+      "alt": "Photo-based illustrated detail of Horsebrush Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "pioneer",
+      "asset": "pioneer-model.png",
+      "referenceImage": "assets/references/pioneer.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/pioneer_park-1-1024x692.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Playground and picnic shelter detail. The rest of the park is outside this view.",
+      "caption": "Playground and picnic shelter detail. The rest of the park is outside this view.",
+      "alt": "Photo-based illustrated detail of Pioneer Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "mccormick",
+      "asset": "mccormick-model.png",
+      "referenceImage": "assets/references/mccormick.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/mccormick_park_alt-e1772079754814-1024x718.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Close-up of the play tower. The photo does not show the whole playground.",
+      "caption": "Close-up of the play tower. The photo does not show the whole playground.",
+      "alt": "Photo-based illustrated detail of McCormick Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "pat-gallagher",
+      "asset": "pat-gallagher-model.png",
+      "referenceImage": "assets/references/pat-gallagher.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/pat_gallagher_park-1-1024x682.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Lawn, shelter and perimeter paths, based on the official aerial photo.",
+      "caption": "Lawn, shelter and perimeter paths, based on the official aerial photo.",
+      "alt": "Photo-based illustrated detail of Pat Gallagher Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "providence-park",
+      "asset": "providence-park-model.png",
+      "referenceImage": "assets/references/providence-park.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/providence_park-1-1024x684.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Lawn, dry swale and walking paths, based on the official aerial photo.",
+      "caption": "Lawn, dry swale and walking paths, based on the official aerial photo.",
+      "alt": "Photo-based illustrated detail of The Lawn at Providence",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "steve-bloom",
+      "asset": "steve-bloom-model.png",
+      "referenceImage": "assets/references/steve-bloom.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/steve_bloom_park-1-1024x684.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Oval walking loop, lawn and shelter, based on the official aerial photo.",
+      "caption": "Oval walking loop, lawn and shelter, based on the official aerial photo.",
+      "alt": "Photo-based illustrated detail of Steve Bloom Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "yard-27",
+      "asset": "yard-27-model.png",
+      "referenceImage": "assets/references/yard-27.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/04/animasriverpark-1024x766.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Cornhole lawn and picnic shelter detail, based on the official photo.",
+      "caption": "Cornhole lawn and picnic shelter detail, based on the official photo.",
+      "alt": "Photo-based illustrated detail of Yard 27",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "high-top",
+      "asset": "high-top-model.png",
+      "referenceImage": "assets/references/high-top.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/basketball_park-1024x683.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Basketball court detail. The sports field is outside the reference photo.",
+      "caption": "Basketball court detail. The sports field is outside the reference photo.",
+      "alt": "Photo-based illustrated detail of High Top Court",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "trailrock",
+      "asset": "trailrock-model.png",
+      "referenceImage": "assets/references/trailrock.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/rock_climbing_park-edit-713x1024.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Climbing boulders and stepped trail detail, based on the official photo.",
+      "caption": "Climbing boulders and stepped trail detail, based on the official photo.",
+      "alt": "Photo-based illustrated detail of Trailrock Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "ascent-pavilion",
+      "asset": "ascent-pavilion-model.png",
+      "referenceImage": "assets/references/ascent-pavilion.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/04/pavilionpark2-1024x659.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "The arched pavilion and lawn. Other park amenities are outside this view.",
+      "caption": "The arched pavilion and lawn. Other park amenities are outside this view.",
+      "alt": "Photo-based illustrated detail of Gathering Green",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "zippity",
+      "asset": "zippity-model.png",
+      "referenceImage": "assets/references/zippity.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/swan_river_park_edit-1024x683.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Play tower and picnic shelter detail. The zipline is outside the reference photo.",
+      "caption": "Play tower and picnic shelter detail. The zipline is outside the reference photo.",
+      "alt": "Photo-based illustrated detail of Zippity Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "peekaboo",
+      "asset": "peekaboo-model.png",
+      "referenceImage": "assets/references/peekaboo.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/02/vista_park-1-1024x683.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Green slides and picnic shelter, based on the official aerial photo.",
+      "caption": "Green slides and picnic shelter, based on the official aerial photo.",
+      "alt": "Photo-based illustrated detail of Peekaboo Park",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "willow-creek",
+      "asset": "willow-creek-model.png",
+      "referenceImage": "assets/references/willow-creek.jpg",
+      "referenceUrl": "https://sterlingranch.com/wp-content/uploads/2026/05/willowcreekpark-1024x747.jpg",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/",
+      "sourceLabel": "Sterling Ranch official photo",
+      "scope": "Trailhead shelters and path detail. The planned bike repair station is not shown.",
+      "caption": "Trailhead shelters and path detail. The planned bike repair station is not shown.",
+      "alt": "Photo-based illustrated detail of Willow Creek Trailhead",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "primrose",
+      "asset": "primrose-model.png",
+      "referenceImage": "assets/references/primrose.jpg",
+      "referenceUrl": "https://www.primroseschools.com/_next/image?url=https%3A%2F%2Fsettings.primroseschools.com%2Fwp-content%2Fuploads%2F2024%2F01%2Fprimrose-sterling-ranch-exterior-1-scaled.jpg&w=1080&q=75",
+      "sourcePage": "https://www.primroseschools.com/schools/sterling-ranch",
+      "sourceLabel": "Primrose Schools photo",
+      "scope": "Two-story school entrance. Rear classrooms and play areas are outside this view.",
+      "caption": "Two-story school entrance. Rear classrooms and play areas are outside this view.",
+      "alt": "Photo-based illustrated detail of Primrose School at Sterling Ranch",
+      "provenance": "Generated from the linked official photograph; simplified illustration, not a measured 3D scan.",
+      "verifiedAt": "2026-09-22"
+    },
+    {
+      "id": "prose",
+      "asset": "prose-model.png",
+      "referenceImage": "assets/references/prose.jpg",
+      "referenceUrl": "https://s7d9.scene7.com/is/image/greystarprod/22429BDG1?fit=constrain&fmt=avif&qlt=80&wid=2048",
+      "sourcePage": "https://www.greystar.com/prose-at-parkvale-littleton-co/p_22429",
+      "sourceLabel": "Greystar official photo",
+      "scope": "Residential exterior detail. The reference photo does not show the layout of the whole complex.",
+      "caption": "Residential exterior detail. The reference photo does not show the layout of the whole complex.",
+      "alt": "Photo-based illustrated exterior detail of Prose at Parkvale",
+      "provenance": "Generated from the linked operator photograph; facade vignette, not a measured whole-complex reconstruction.",
+      "verifiedAt": "2026-09-22"
+    }
+  ],
+  "pending": [
+    {
+      "id": "providence-regional",
+      "reason": "Official image is a broad Overlook context view; distinct park layout is not established.",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "outcrop",
+      "reason": "Official page still describes Coming summer 2026 and shows a design rendering; current built condition needs confirmation.",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "broadstone",
+      "reason": "Operator labels exterior gallery images as renderings. A completed-building photo/site plan is needed.",
+      "sourcePage": "https://www.greystar.com/broadstone-sterling-ranch-littleton-co/p_20592"
+    },
+    {
+      "id": "john-adams",
+      "reason": "Opening is documented, but the identified exterior reference is from construction. Finished facade reference needed.",
+      "sourcePage": "https://www.jaadougco.org/"
+    },
+    {
+      "id": "water-plant",
+      "reason": "No sufficiently clear official exterior and layout reference has been verified."
+    },
+    {
+      "id": "willow-corridor",
+      "reason": "Natural corridor has no verified model boundary. Retain the real trail guide instead of inventing terrain.",
+      "sourcePage": "https://sterlingranch.com/town-life/parks-rec/"
+    }
+  ]
+}
