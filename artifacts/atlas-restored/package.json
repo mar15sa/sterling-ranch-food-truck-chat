@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-isolation=none catalog.test.mjs geometry.test.mjs focus.test.mjs future-map.test.mjs discovery.test.mjs eval/check.test.mjs",
+    "check:visual": "node eval/check.mjs",
+    "test:visual-gate": "node eval/check.test.mjs",
+    "preview": "node server.mjs",
+    "preview:review": "node server.mjs --review"
+  }
+}
