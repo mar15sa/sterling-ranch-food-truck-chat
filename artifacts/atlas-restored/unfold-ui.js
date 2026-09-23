@@ -1,0 +1,82 @@
+import { descendants, futureGroups, matchesLens } from './discovery.mjs';
+
+import { inVillage } from './focus.mjs';
+
+
+
+const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+
+const shortName = place => place.name.replace('Regional Park', 'Park').replace('The Overlook Clubhouse', 'The Overlook').replace('The Lawn at Providence', 'The Lawn');
+
+const areaName = place => place.village || 'Around Sterling Ranch';
+
+
+
+/** `point` returns saved [x,y] pixels in the 1536 × 1024 landscape. */
+
+export function unfoldedScene({ places = [], trails = { routes: [] }, models = {}, routeSvg = () => '', roots = [], located = new Map(), point = () => undefined, village = 'all', lens = 'all', layer = 'places' } = {}) {
+
+  const currentRoots = (roots.length ? roots : places.filter(place => !place.future && !place.parentId))
+
+    .filter(place => !place.future && inVillage(place, village) && matchesLens(place, places, lens, trails));
+
+  const futures = futureGroups(places).filter(place => village === 'all' || inVillage(place, village));
+
+  const activeLayer = ['places', 'walks', 'future'].includes(layer) ? layer : 'places';
+
+  const mapped = currentRoots.filter(place => {
+
+    const xy = point(place.id);
+
+    return Array.isArray(xy) && xy.length >= 2 && (located?.has ? located.has(place.id) : true);
+
+  });
+
+  const directoryOnly = currentRoots.filter(place => !mapped.includes(place));
+
+  const representatives = [...mapped].sort((a, b) => descendants(b.id, places).length - descendants(a.id, places).length || a.name.localeCompare(b.name))
+
+    .filter((place, index, all) => all.findIndex(other => areaName(other) === areaName(place)) === index).slice(0, 4);
+
+  // A focused village earns a fuller exploded scene. The whole-ranch view remains
+
+  // deliberately bounded to one representative per area.
+
+  const spatialPlaces = (village === 'all' ? representatives : mapped).slice(0, 7);
+
+  // These are presentation slots, deliberately separate from saved map positions.
+
+  // The SVG leaders below make both ends explicit instead of implying a model sits
+
+  // exactly on its illustrated source point.
+
+  const slots = village === 'all'
+
+    ? [[16,31],[42,20],[70,31],[88,61]]
+
+    : [[15,33],[40,21],[69,30],[86,61],[20,74],[48,77],[76,78]];
+
+  const routes = (trails.routes || []).filter(route => village === 'all' || route.area === village);
+
+  const activeTitle = activeLayer === 'walks' ? 'Walking guides' : activeLayer === 'future' ? 'Future plans' : 'Places to know';
+
+  const pin = (place, index) => { const illustration = models[place.id], slot = slots[index], xy = point(place.id); return `<button class="unfold-pin" data-open="${esc(place.id)}" style="--card-x:${slot[0]}%;--card-y:${slot[1]}%;--origin-x:${xy[0]/15.36}%;--origin-y:${xy[1]/10.24}%;--arrival:${index*70}ms" aria-label="Open ${esc(place.name)}">${illustration ? `<img src="assets/${esc(illustration)}" alt="" aria-hidden="true">` : '<span class="unfold-pin-dot" aria-hidden="true"></span>'}<span class="unfold-pin-label"><strong>${esc(shortName(place))}</strong><small>${esc(areaName(place))} · open ↗</small></span></button>`; };
+
+  const leaders = spatialPlaces.map((place, index) => { const xy = point(place.id), slot = slots[index % slots.length]; return `<g><path d="M ${xy[0]} ${xy[1]} L ${slot[0] * 15.36} ${slot[1] * 10.24}"/><circle cx="${xy[0]}" cy="${xy[1]}" r="8"/></g>`; }).join('');
+
+  const placeList = currentRoots.map(place => `<button class="unfold-listing" data-open="${esc(place.id)}"><span><strong>${esc(shortName(place))}</strong><small>${esc(areaName(place))}${spatialPlaces.includes(place) ? ' · lifted above overview' : mapped.includes(place) ? ' · mapped in directory' : ' · directory only'}</small></span><b>↗</b></button>`).join('');
+
+  const walkItem = route => `<button class="unfold-guide" data-route="${esc(route.id)}">${routeSvg(route)}<span><strong>${esc(route.name)}</strong><small>${esc(route.area)} · ${esc(route.type)} · ${esc(route.miles)} mi · CAB guide ↗</small></span></button>`;
+
+  const walkList = routes.map(walkItem).join('');
+
+  const areaRepresentatives = routes.filter((route, index) => routes.findIndex(other => other.area === route.area) === index);
+  const previewRoutes = [...new Map([...areaRepresentatives, ...routes].map(route => [route.id,route])).values()].slice(0,3);
+  const walkPreview = previewRoutes.map(walkItem).join('');
+
+  const futureList = futures.map(place => `<button class="unfold-listing unfold-plan" data-open="${esc(place.id)}"><span><em>COMING SOON</em><strong>${esc(place.name)}</strong><small>${esc(areaName(place))} · details & official updates</small></span><b>↗</b></button>`).join('');
+
+  return `<div class="unfold-intro"><p class="eyebrow">THE RANCH, OPENED UP</p><h2>See the lay of the land.</h2><p>The original neighborhood view stays in sight. Lift a layer to choose a place, a CAB walk, or a plan.</p></div><div class="unfold-switcher" role="group" aria-label="Choose an unfolded layer">${[['places','Places'],['walks','Walks & paths'],['future','Coming soon']].map(([id, label]) => `<button data-unfold-layer="${id}" aria-pressed="${String(activeLayer === id)}">${label}</button>`).join('')}</div><section class="unfold-overview ${village === 'all' ? 'unfold-whole-ranch' : 'unfold-area-scene'}" aria-label="Spatial overview of the neighborhood"><div class="unfold-ground"><img src="assets/full-landscape.png" alt="Full-area illustrated overview of Sterling Ranch. Destination markers use saved approximate image positions."><span>${village === 'all' ? 'FULL NEIGHBORHOOD OVERVIEW' : esc(village.toUpperCase() + ' · LIFTED DESTINATIONS')}</span></div>${activeLayer === 'places' ? `<div class="unfold-pins" aria-label="Lifted destinations"><svg class="unfold-leaders" viewBox="0 0 1536 1024" preserveAspectRatio="none" aria-hidden="true">${leaders}</svg>${spatialPlaces.map(pin).join('') || '<p class="unfold-empty">No saved mapped destinations match this view. The directory below still has every matching place.</p>'}</div>` : ''}${activeLayer === 'walks' ? `<section class="unfold-floating unfold-walks" aria-label="Lifted walking guides"><p class="eyebrow">CAB WALKING GUIDES</p><h3>Find your next little wander.</h3><p>Choose a walking guide, with the official route map inside.</p><div>${walkPreview || '<p>No saved CAB guide for this area yet.</p>'}<p class="unfold-plan-count">${routes.length} guides · full list below</p></div></section>` : ''}${activeLayer === 'future' ? `<section class="unfold-floating unfold-future" aria-label="Lifted future plans"><p class="eyebrow">PLANS & PROGRESS</p><h3>What is taking shape.</h3><p>Plans are grouped by area. A plan without a confirmed location remains off the overview.</p><div>${futures.slice(0,2).map(place => `<button class="unfold-listing" data-open="${esc(place.id)}"><strong>${esc(place.name)}</strong><b>↗</b></button>`).join('') || '<p>No saved plans for this area yet.</p>'}<p class="unfold-plan-count">${futures.length} saved plans · full list below</p></div></section>` : ''}</section><section class="unfold-directory" aria-label="${esc(activeTitle)}"><div><p class="eyebrow">${esc(activeTitle)}</p><h3>${activeLayer === 'places' ? `${currentRoots.length} matching destinations` : activeLayer === 'walks' ? `${routes.length} sourced guides` : `${futures.length} saved plans`}</h3><p>${activeLayer === 'places' ? `${mapped.length} have saved approximate positions; ${spatialPlaces.length} are lifted here and ${directoryOnly.length} stay in the directory until a position is confirmed.` : activeLayer === 'walks' ? 'Start details and route highlights open from each CAB guide.' : 'Open a plan for its current saved update and official source.'}</p></div><div class="unfold-directory-list">${activeLayer === 'places' ? placeList : activeLayer === 'walks' ? walkList : futureList}</div></section><p class="unfold-footnote">Illustrated overview with saved approximate positions. It is for discovery, not navigation.</p>`;
+
+}
+
