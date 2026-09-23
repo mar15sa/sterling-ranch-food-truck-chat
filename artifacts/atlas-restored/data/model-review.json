@@ -1,0 +1,127 @@
+{
+  "reviewedAt": "2026-09-22",
+  "reviewer": "GPT-6 Astra coordinator/final reviewer; independent GPT-5.6 Terra image-pair review",
+  "models": [
+    {
+      "id": "horsebrush",
+      "modelSha256": "c3aa18755ddb19e264abe9c9e64d6e7bb651d23e25ee3886de5ae307f71cb801",
+      "referenceSha256": "2547eaa88e60277c91cc4c972848fe53e3e04eeb55f38beeade38f563cca25fb",
+      "verdict": "pass",
+      "observations": "Two parallel tan bocce lanes, paired dark shelters and curving lawn/site outline match aerial.",
+      "limitations": "Bocce courts, shelters and lawn, based on the official aerial photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "pioneer",
+      "modelSha256": "825e893339e38991fbc0f56bd5cc0dc07dbdc3c982f76d519ab3b30814e3faf9",
+      "referenceSha256": "eb54c558ff35cfccc7ccc636622e83793528aa05221558c95c80b521d2d8edd9",
+      "verdict": "pass",
+      "observations": "Roofed faux-wood towers, teal rails, twin slide, bowl spinner and adjacent lean-to shelter match photo.",
+      "limitations": "Playground and picnic shelter detail. The rest of the park is outside this view. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "mccormick",
+      "modelSha256": "f1efe8d4ab3b6bb9c17c8d1f25e5b884f6f2118977e7947b3f51f6ee9931a94c",
+      "referenceSha256": "99c24a5c215ea5b644f9505be2f7f1da5607a5c9b4366214e6b7be163b0cc532",
+      "verdict": "pass",
+      "observations": "Close-up preserves corrugated roof, dark posts, teal rails, faux-log side and restored Enter Here plaque.",
+      "limitations": "Close-up of the play tower. The photo does not show the whole playground. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "pat-gallagher",
+      "modelSha256": "794ba6ae6fea52b2b6c2e7b66e143961873f7f3d054ba27354888ab7867a23b9",
+      "referenceSha256": "9576c278041e88c8cb64754c86eec4739640898c9e2e9db219eb7c4ef411d812",
+      "verdict": "pass",
+      "observations": "Dominant rounded lawn, small edge shelter, perimeter walks and planting structure match aerial.",
+      "limitations": "Lawn, shelter and perimeter paths, based on the official aerial photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "providence-park",
+      "modelSha256": "573d414294fe93ce5e5bc52c4f13f098ea2e87bf246d28f4cf74f3254d6222c7",
+      "referenceSha256": "ea7c1aeea0f91271975048514c34d4a2828f066cec3ea4113ae5bc818487db1a",
+      "verdict": "pass",
+      "observations": "Long green strip, crescent lawn, dry rock swale and paired curving paths match aerial.",
+      "limitations": "Lawn, dry swale and walking paths, based on the official aerial photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "steve-bloom",
+      "modelSha256": "1eb57d0818fef73d0a3fedfa04a6f079fef4826d3fa76fde5f9b6c505989627e",
+      "referenceSha256": "b9c5ef2d56b24208c55eb867be55680ddeede85ea5a57a4e67d9f521aeff5b18",
+      "verdict": "pass",
+      "observations": "Oval walking ring, diagonal connector, two lawn lobes and small shelter match aerial.",
+      "limitations": "Oval walking loop, lawn and shelter, based on the official aerial photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "yard-27",
+      "modelSha256": "5cc0be2653ceb18073fe42b86b09792b78f06c933bf1e56caf3b32f172d6bf6f",
+      "referenceSha256": "19a189c3c4c6c693e12a988d436ce3551b2df6530ac3187aeb6761a6e468ca7a",
+      "verdict": "pass",
+      "observations": "Rectangular lawn, three opposing cornhole pairs and masonry/timber flat-roof shelter match photo.",
+      "limitations": "Cornhole lawn and picnic shelter detail, based on the official photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "high-top",
+      "modelSha256": "2f0865ca94c3ee3302450974f145e899f1fb99cb1efa4dfdf279c7ad58ce505c",
+      "referenceSha256": "40469163a786a9c87b445dfe36e81cf7334bbc5b5c5f7a1a1f594dd0e67b89f9",
+      "verdict": "pass",
+      "observations": "Blue court, white/red backboard, black curved support and pale picnic roof match visible court.",
+      "limitations": "Basketball court detail. The sports field is outside the reference photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "trailrock",
+      "modelSha256": "95b240c48716b83b8860d96600b5fcc3a8633666d01596e44b81b52d02bd2944",
+      "referenceSha256": "286e7e9428dd193bdd316a57b78a17c0d23ef98dacfc1b0ed2ba7b4cd927775c",
+      "verdict": "pass",
+      "observations": "Timber-edged gravel steps descend to artificial climbing boulders in circular woodchip pads with dark paths.",
+      "limitations": "Climbing boulders and stepped trail detail, based on the official photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "ascent-pavilion",
+      "modelSha256": "dc93f26078ce1be21ae70636ba38740d1cffdd92af11806e7575c222f83f911a",
+      "referenceSha256": "3e623cceb552375e9d83a475f2913ef8ca4f21e8849380698b90292d274f2386",
+      "verdict": "pass",
+      "observations": "Signature arched warm-wood canopy, tall gray ribbed supports and open platform match source.",
+      "limitations": "The arched pavilion and lawn. Other park amenities are outside this view. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "zippity",
+      "modelSha256": "86b4cda4c4e7e278adcce5c0d9eb547b36b948138acefff99bb671d4f17487ac",
+      "referenceSha256": "908dc53a6c889ef8eb1de2578adc2e5345104f77ada907c1a64dab51b4d0450c",
+      "verdict": "pass",
+      "observations": "Distinctive sloped shelter, tall dark tower and yellow tube slide match. No unpictured zipline fabricated.",
+      "limitations": "Play tower and picnic shelter detail. The zipline is outside the reference photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "peekaboo",
+      "modelSha256": "dd407cb052a0e3504a1d66c0b82de25c7f93e0d28415deb1cddce177acc8304e",
+      "referenceSha256": "e3f464c204eb2ffc031f395519e0b76e8d50ce33c87802db24c2947b8e11f1bb",
+      "verdict": "pass",
+      "observations": "Dark gabled picnic shelter and compact playset with green slides match aerial. Unverified pole, bench and stump seats removed in final revision.",
+      "limitations": "Green slides and picnic shelter, based on the official aerial photo. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "willow-creek",
+      "modelSha256": "c019bc677345d6e9ac075b3ed76a17f79f904ba5bf1a0390b84f8a1e93ab8b5e",
+      "referenceSha256": "fb89bf93e27864dc487ebdf17951ac1c3e7b14331b0cbaad360c3c546f57ec4d",
+      "verdict": "pass",
+      "observations": "Two unequal black slatted canopies, sign, paved pad and prairie paths match source. No future repair station added.",
+      "limitations": "Trailhead shelters and path detail. The planned bike repair station is not shown. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "primrose",
+      "modelSha256": "f7ee1c28465adcc092569151f19880291032eebcbf7cec484cbdfe89e7df84ae",
+      "referenceSha256": "4496482d5cf559441d447a13015d04eda37988de49ab642851d8eadbefbc2317",
+      "verdict": "pass",
+      "observations": "Two-story front facade, stepped pale panels, brick bays, glazed entrance and black awnings match photo.",
+      "limitations": "Two-story school entrance. Rear classrooms and play areas are outside this view. Lighting, planting density and the cutout edge are illustrative; dimensions and unseen areas are not surveyed."
+    },
+    {
+      "id": "prose",
+      "modelSha256": "18f3e3d3fb175655b5971e271bb89b93dadba503d0729c1dc3ea9cbad1a43524",
+      "referenceSha256": "5ad349fcabb697d932407eaf87b4aad26fe6726709d42a4e4e878a01992916a2",
+      "verdict": "pass",
+      "reviewer": "GPT-6 Astra source-image comparison",
+      "observations": "Three-story facade fragment preserves steep repeated gables, dark/pale/timber siding bays, projecting black balconies, narrow path and entrance canopy; right/top crop follows photo.",
+      "limitations": "Residential exterior detail. The reference photo does not show the layout of the whole complex. Lighting and planting simplified. No rear, pool, amenities or additional buildings inferred."
+    }
+  ]
+}

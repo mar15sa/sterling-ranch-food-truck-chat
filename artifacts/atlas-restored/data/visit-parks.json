@@ -1,0 +1,2232 @@
+{
+  "checkedAt": "2026-09-23",
+  "places": {
+    "burns-courts": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "CAB expressly allows resident and non-resident reservations and drop-in play; fees and lead times differ.",
+          "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        },
+        "reservation": {
+          "text": "Reservations are available through CourtReserve, up to two hours per day. Residents may reserve seven days ahead; non-residents three days ahead.",
+          "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
+          "kind": "available",
+          "supported": true,
+          "available": true
+        },
+        "hours": {
+          "text": "Weekdays 7 a.m.–dusk; weekends 8 a.m.–dusk. Open play and reservation windows are listed separately by CAB.",
+          "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        },
+        "arrival": {
+          "text": "Sterling Ranch Avenue and Middle Fork Street; CAB says free street parking is near the courts.",
+          "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "pickleball",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts"
+          },
+          {
+            "label": "drop-in play",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts"
+          },
+          {
+            "label": "reservations",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/418/Pickleball-Courts"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/418/Pickleball-Courts",
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check CourtReserve for same-day capacity, weather closure, and any tournament conflict."
+      ],
+      "actions": [
+        {
+          "label": "Reserve a court",
+          "url": "https://app.courtreserve.com/Online/Portal/Index/15838"
+        },
+        {
+          "label": "Court hours & rules",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        }
+      ]
+    },
+    "overlook": {
+      "visit": {
+        "access": {
+          "kind": "resident",
+          "text": "Sterling Ranch households use membership-card access. Confirm current guest arrangements and activity hours with CAB.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        },
+        "reservation": {
+          "text": "CAB's rental agreement lists resident and non-resident rates for named Overlook areas; a rental is only confirmed after CAB receives the signed documents and deposit.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "CAB's facility page lists Monday–Friday 5 a.m.–9 p.m. and Saturday 7 a.m.–9 p.m.; confirm the Sunday line and activity-specific access with CAB.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        },
+        "arrival": {
+          "text": "7853 Piney River Avenue, Sterling Ranch, CO 80125.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "facility rentals",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+          }
+        ],
+        "checkedAt": "2026-09-21",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "https://sterlingranchcab.com/271/Pool",
+          "data/area-visit.json"
+        ],
+        "freshCheckBlocked": true,
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "The CAB page does not establish whether a visitor may enter the clubhouse without a resident host or booking."
+      ]
+    },
+    "overlook-pool": {
+      "visit": {
+        "access": {
+          "kind": "resident",
+          "text": "Sterling Ranch households use membership-card access. Confirm current guest arrangements and activity hours with CAB.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        },
+        "reservation": {
+          "text": "Pool use is excluded from the cited facility rental agreement.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "Seasonal/current pool hours were not found on the CAB facility directory during this check.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities"
+        },
+        "arrival": {
+          "text": "Pool is listed with the Overlook facility at 7853 Piney River Avenue; verify the pool gate before relying on this as an entrance.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-21",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities",
+          "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "https://sterlingranchcab.com/271/Pool",
+          "data/area-visit.json"
+        ],
+        "freshCheckBlocked": true,
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "Current season, access credentials, guest policy, and pool hours remain unverified."
+      ]
+    },
+    "overlook-fitness": {
+      "visit": {
+        "access": {
+          "kind": "resident",
+          "text": "Sterling Ranch households use membership-card access. Confirm current guest arrangements and activity hours with CAB.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        },
+        "reservation": {
+          "text": "No fitness reservation rule was verified in this reconciliation.",
+          "sourceUrl": "https://www.sterlingranchcab.com/186/Fitness"
+        },
+        "hours": {
+          "text": "Confirm current fitness hours directly with CAB; the clubhouse facility hours should not be treated as fitness access hours.",
+          "sourceUrl": "https://www.sterlingranchcab.com/186/Fitness"
+        },
+        "arrival": {
+          "text": "Use the Overlook clubhouse address, 7853 Piney River Avenue, only as the facility address; entrance was not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "fitness",
+            "supported": true,
+            "sourceUrl": "https://www.sterlingranchcab.com/186/Fitness"
+          }
+        ],
+        "checkedAt": "2026-09-21",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/186/Fitness",
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "https://sterlingranchcab.com/271/Pool",
+          "data/area-visit.json"
+        ],
+        "freshCheckBlocked": true,
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "Access credentials, guest policy, and class schedule remain unverified."
+      ]
+    },
+    "overlook-great-hall": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "CAB's rental agreement has resident and non-resident rates for this named rental space.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "reservation": {
+          "text": "Reservation requires CAB review, signed agreement, and payment; the listed capacity is 100 (68 for the Great Hall without balcony).",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "Rental timing is confirmed by CAB; after-hours Overlook rentals may run until midnight when staff are available.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "arrival": {
+          "text": "At the Overlook, 7853 Piney River Avenue; entrance for a booked event was not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "private rentals",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "overlook-north-pavilion": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "CAB's rental agreement has resident and non-resident rates for the named pavilion.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "reservation": {
+          "text": "Reservable through CAB; listed capacity is 65. The agreement does not grant pool access.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "No separate pavilion hours were verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "arrival": {
+          "text": "At the Overlook, 7853 Piney River Avenue; exact pavilion entrance unverified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "private rentals",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "overlook-south-pavilion": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "CAB's rental agreement has resident and non-resident rates for the named pavilion.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "reservation": {
+          "text": "Reservable through CAB; listed capacity is 40. The agreement does not grant pool access.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "No separate pavilion hours were verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "arrival": {
+          "text": "At the Overlook, 7853 Piney River Avenue; exact pavilion entrance unverified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "private rentals",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "overlook-splash": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "No current CAB page verified seasonal splash-pad operation or access.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1455/New-Homeowners-Guide"
+        },
+        "reservation": {
+          "text": "No reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1455/New-Homeowners-Guide"
+        },
+        "hours": {
+          "text": "Seasonal hours not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1455/New-Homeowners-Guide"
+        },
+        "arrival": {
+          "text": "Use the Overlook facility address only; splash-pad entrance was not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/1455/New-Homeowners-Guide"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current seasonal operation and access policy need CAB confirmation."
+      ]
+    },
+    "cab-trail-network": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB's existing-parks-and-trails map depicts the listed network segments, but it does not state a public-access rule or identify each physical entrance.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352"
+        },
+        "reservation": {
+          "text": "No reservation requirement is stated on the map.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily; segment-specific closures are not stated.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Use only a separately listed trailhead or park as a starting point; no map point was promoted to a verified entrance.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "walking",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352"
+          },
+          {
+            "label": "biking",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2352",
+          "https://sterlingranchcab.com/335/Community-Parks"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The map supports displayed network segments, not a public right of entry, route condition, or accessible-route claim."
+      ]
+    },
+    "burns": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-park": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "providence-regional": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "horsebrush": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Horsebrush Lane / Merino Circle. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "mccormick": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Palmer Lake Avenue. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "pat-gallagher": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Eagle River Loop off Eagle River Street. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "pioneer": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Arapahoe Peak Street. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "providence-park": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Piney River Avenue / Eagle River Street, across Sterling Center. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "steve-bloom": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "yard-27": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Between Animas River Street and River Peak Circle. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "high-top": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Waterton Road / Snake River Street. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "trailrock": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Eagle River Street / Snake River Street. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "ascent-pavilion": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 7180 Watercress Drive, Sterling Ranch, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "zippity": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Swan River Street / Sterling Ranch Avenue. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "peekaboo": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "willow-creek": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: Mount Kataka Street / Mount Ouray Road. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "outcrop": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-playground": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-shell": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-lawn": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-basketball": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-Basketball-Court-12"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-Basketball-Court-12"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-Basketball-Court-12",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-Basketball-Court-12",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-volleyball": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-soccer": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-walking": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "prospect-pavilion": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 8158 Monte Vista Circle, Littleton, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "providence-pavilion": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "horsebrush-bocce": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "horsebrush-shelters": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "mccormick-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "pioneer-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "zippity-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "zippity-shelter": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "yard-cornhole": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "high-top-courts": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "trailrock-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "gathering-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 7180 Watercress Drive, Sterling Ranch, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "gathering-bocce": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 7180 Watercress Drive, Sterling Ranch, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "gathering-pavilion": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "Catalog address/location: 7180 Watercress Drive, Sterling Ranch, CO 80125. Entrance not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "peekaboo-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "pat-shelter": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "mccormick-shelter": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/1938",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "pioneer-shelter": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Official CAB listing does not state general public eligibility.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Parks and open spaces are open 5 a.m.–11 p.m. daily.",
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterlingranchcab.com/335/Community-Parks",
+          "https://sterlingranchcab.com/270/Parks-Trails"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    },
+    "willow-corridor": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Developer listing identifies this place; CAB access eligibility was not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No place-specific reservation rule was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No place-specific operating hours were verified; CAB’s community-wide park-hours rule has not been applied to this developer-only listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No entrance was verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/",
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current eligibility, closures, and exact entrance remain unverified."
+      ]
+    }
+  },
+  "parkRoster": {
+    "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks",
+    "checkedAt": "2026-09-23",
+    "result": "CAB's current page identifies existing Providence, Ascent, and Prospect parks and separately labels future parks. The records below inherit only the page's listing and description; they do not inherit a public-access claim.",
+    "placeIds": [
+      "burns",
+      "prospect-park",
+      "providence-regional",
+      "horsebrush",
+      "mccormick",
+      "pat-gallagher",
+      "pioneer",
+      "providence-park",
+      "steve-bloom",
+      "yard-27",
+      "high-top",
+      "trailrock",
+      "ascent-pavilion",
+      "zippity",
+      "peekaboo",
+      "willow-creek",
+      "outcrop",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-lawn",
+      "prospect-basketball",
+      "prospect-volleyball",
+      "prospect-soccer",
+      "prospect-walking",
+      "prospect-pavilion",
+      "providence-pavilion",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "mccormick-play",
+      "pioneer-play",
+      "zippity-play",
+      "zippity-shelter",
+      "yard-cornhole",
+      "high-top-courts",
+      "trailrock-play",
+      "gathering-play",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "peekaboo-play",
+      "pat-shelter",
+      "mccormick-shelter",
+      "pioneer-shelter",
+      "willow-corridor"
+    ],
+    "unknowns": [
+      "A CAB listing is not evidence that a park is open to the general public.",
+      "Confirm closures, exact entrance, restrooms, shade, accessible route, and reservable-area availability before a visit."
+    ],
+    "perIdReconciliation": [
+      {
+        "id": "burns",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-park",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "providence-regional",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "horsebrush",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "mccormick",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "pat-gallagher",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "pioneer",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "providence-park",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "steve-bloom",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "yard-27",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "high-top",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "trailrock",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "ascent-pavilion",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "zippity",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "peekaboo",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "willow-creek",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "outcrop",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-playground",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-shell",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-lawn",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-basketball",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-Basketball-Court-12",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-volleyball",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-soccer",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-walking",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "prospect-pavilion",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "providence-pavilion",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "horsebrush-bocce",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "horsebrush-shelters",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "mccormick-play",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "pioneer-play",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "zippity-play",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "zippity-shelter",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "yard-cornhole",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "high-top-courts",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "trailrock-play",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "gathering-play",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "gathering-bocce",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "gathering-pavilion",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Ascent-Village-Pavilion-Park-10",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "peekaboo-play",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "pat-shelter",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "mccormick-shelter",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranchcab.com/DocumentCenter/View/1938",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "pioneer-shelter",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://www.sterlingranchcab.com/335/Community-Parks",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      },
+      {
+        "id": "willow-corridor",
+        "checkedAt": "2026-09-23",
+        "evidenceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "result": "Per-place visit record created; source scope retained.",
+        "blocker": "Access eligibility or entrance not established."
+      }
+    ]
+  },
+  "trailAccess": {
+    "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+    "checkedAt": "2026-09-23",
+    "result": "Developer descriptions identify Willow Creek Trailhead, Providence Regional Park's trail network, and trail connections at Trailrock, Horsebrush, Pat Gallagher, and The Lawn. They do not verify legal access, surface condition, or an entrance.",
+    "listings": [
+      {
+        "id": "willow-access",
+        "placeId": "willow-creek",
+        "text": "Willow Creek Trailhead is described as leading into trails and wildlife corridors along Willow Creek."
+      },
+      {
+        "id": "regional-network",
+        "placeId": "providence-regional",
+        "text": "Providence Regional Park is described as open space east of the Overlook with a trail network."
+      },
+      {
+        "id": "trailrock-access",
+        "placeId": "trailrock",
+        "text": "Trailrock's inherited catalog description includes a trail with the park amenities."
+      },
+      {
+        "id": "horsebrush-access",
+        "placeId": "horsebrush",
+        "text": "CAB says Horseshoe Bend is accessible by walking or biking on the trail system."
+      },
+      {
+        "id": "pat-walk",
+        "placeId": "pat-gallagher",
+        "text": "Inherited catalog notes describe grass and walking paths; the developer page should be checked before route planning."
+      },
+      {
+        "id": "lawn-walk",
+        "placeId": "providence-park",
+        "text": "CAB describes walking and biking activity at Providence Park."
+      }
+    ],
+    "visitDefaults": {
+      "access": {
+        "kind": "unknown",
+        "text": "These sources describe trail connections, but do not establish public access or a verified trailhead entrance.",
+        "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+      },
+      "reservation": {
+        "text": "No trail reservation rule was verified.",
+        "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+      },
+      "hours": {
+        "text": "CAB states parks and open spaces are open 5 a.m.–11 p.m. daily; individual trail conditions remain unverified.",
+        "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+      },
+      "arrival": {
+        "text": "Do not use these descriptions as turn-by-turn directions; each entrance remains unverified.",
+        "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+        "verifiedEntrance": false,
+        "directionsUrl": null
+      },
+      "suitability": [
+        {
+          "label": "walking",
+          "supported": true,
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        },
+        {
+          "label": "biking",
+          "supported": true,
+          "sourceUrl": "https://sterlingranchcab.com/270/Parks-Trails"
+        }
+      ],
+      "checkedAt": "2026-09-23",
+      "sourceUrls": [
+        "https://sterlingranch.com/town-life/parks-rec/",
+        "https://sterlingranchcab.com/335/Community-Parks"
+      ]
+    }
+  }
+}

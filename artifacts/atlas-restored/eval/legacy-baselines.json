@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "baselines": [
+    {
+      "state": "neighborhood-desktop",
+      "path": "eval/evidence/baseline-neighborhood-desktop.png",
+      "sha256": "a3d1e36ab88bae93e4aff5c8e3fae983534ddf64f49262498fa02c3a40e554e8",
+      "sourceCommit": "b8e1713ab9718f2b2e2ab153670a27436dd8034f",
+      "source": "http://127.0.0.1:4186/",
+      "capturedVia": "Unchanged source files through loopback4188 baseline aliases",
+      "capturedAt": "2026-09-21",
+      "recordedBy": "GPT-6 Astra via CUA"
+    },
+    {
+      "state": "sterling-open-desktop",
+      "path": "eval/evidence/baseline-sterling-open-desktop.png",
+      "sha256": "899e64a2a915f6ad04a57835a9d3c02cafc3b632d02f45faba436c7e340e62f9",
+      "sourceCommit": "b8e1713ab9718f2b2e2ab153670a27436dd8034f",
+      "source": "http://127.0.0.1:4186/",
+      "capturedVia": "Unchanged source files through loopback4188 baseline aliases",
+      "capturedAt": "2026-09-21",
+      "recordedBy": "GPT-6 Astra via CUA"
+    },
+    {
+      "state": "overlook-open-desktop",
+      "path": "eval/evidence/baseline-overlook-open-desktop.png",
+      "sha256": "678af3c5b35b224634c68df5cb76a829ebc9a4dbfe99360851a48b191acb066d",
+      "sourceCommit": "45d3ed6650730e93c1e86762d7b9d2c7bfc4d4c9",
+      "source": "http://127.0.0.1:4184/atlas/opened/index.html",
+      "capturedVia": "Unchanged source files through loopback4188 baseline aliases",
+      "capturedAt": "2026-09-21",
+      "recordedBy": "GPT-6 Astra via CUA"
+    },
+    {
+      "state": "neighborhood-mobile",
+      "path": "eval/evidence/baseline-neighborhood-mobile.png",
+      "sha256": "305972d36d08f0748a1af012291eece9b4424e2c960d73e62882987ece773e3a",
+      "sourceCommit": "b8e1713ab9718f2b2e2ab153670a27436dd8034f",
+      "source": "http://127.0.0.1:4186/",
+      "capturedVia": "Unchanged source files through loopback4188 baseline aliases",
+      "capturedAt": "2026-09-21",
+      "recordedBy": "GPT-6 Astra via CUA"
+    },
+    {
+      "state": "sterling-open-mobile",
+      "path": "eval/evidence/baseline-sterling-open-mobile.png",
+      "sha256": "43045e3484c7d0c09d833c1a50e4cbe20867a76db9ded4b5e9270fd613748100",
+      "sourceCommit": "b8e1713ab9718f2b2e2ab153670a27436dd8034f",
+      "source": "http://127.0.0.1:4186/",
+      "capturedVia": "Unchanged source files through loopback4188 baseline aliases",
+      "capturedAt": "2026-09-21",
+      "recordedBy": "GPT-6 Astra via CUA"
+    }
+  ]
+}

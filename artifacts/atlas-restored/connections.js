@@ -1,0 +1,14 @@
+import { descendants, villages } from './discovery.mjs';
+import { accessBadges, escapeHtml as esc } from './visit-ui.js';
+import { outing } from './journeys.mjs';
+
+export function connectionScene({places,roots,trails,models,selected,village,focusKind,routeSvg}) {
+  if(village==='all'&&focusKind!=='place')return `<div class="connections-intro"><p class="eyebrow">EXPLORE CONNECTIONS</p><h2>Choose your part of the Ranch.</h2><p>Open a village to see its places, the amenities inside them and nearby walks.</p><div class="connection-villages">${villages.map(v=>`<button data-village="${esc(v.name)}">${esc(v.name)} <span>Explore this area ↗</span></button>`).join('')}</div></div>`;
+  const destination=focusKind==='place'?places.find(p=>p.id===selected):null;
+  const targets=destination?[destination]:roots.filter(p=>p.village===village);
+  const ids=new Set(targets.map(p=>p.id));
+  const walks=trails.routes.filter(r=>destination?r.nearbyPlaceIds?.includes(destination.id):r.area===village);
+  const familyIds=new Set(targets.flatMap(p=>[p.id,...descendants(p.id,places).map(c=>c.id)]));
+  const future=places.filter(p=>p.future&&(destination?familyIds.has(p.parentId):p.village===village));
+  return `<div class="connections-intro"><p class="eyebrow">EXPLORE CONNECTIONS</p><h2>${esc(destination?.name||village)}, opened up.</h2><p>Discover what’s inside and what you could explore nearby.</p></div><div class="connection-planes"><section class="connection-plane connection-amenities"><p class="eyebrow">01 / PLACES & WHAT’S INSIDE</p><div class="connection-cards">${targets.map(p=>`<article>${models[p.id]?`<img src="assets/${esc(models[p.id])}" alt="Illustrated ${esc(p.name)}">`:''}<button class="connection-title" data-open="${p.id}">${esc(p.name)} ↗</button>${accessBadges(p)}<div class="connection-children">${places.filter(c=>c.parentId===p.id&&!c.future).map(c=>`<button data-open="${c.id}">${esc(c.name)}${accessBadges(c)}</button>`).join('')||'<p>Open for visit information.</p>'}</div></article>`).join('')}</div><p class="connection-explainer">Dotted branches show what belongs to a place, not a walking path or room position.</p></section><section class="connection-plane connection-walks"><p class="eyebrow">02 / WALKS NEARBY</p><div class="connection-routes">${walks.map(r=>`<button data-route="${r.id}">${routeSvg(r)}<strong>${esc(r.name)}</strong><small>${outing(r).min}–${outing(r).max} min · return included · stops extra</small></button>`).join('')||'<p>No walking guide is linked to this place yet.</p>'}</div><p class="connection-explainer">Nearby suggestions. A connecting route or entrance has not been established.</p></section>${future.length?`<section class="connection-plane connection-future"><p class="eyebrow">03 / WHAT’S PLANNED HERE</p>${future.map(p=>`<button data-open="${p.id}">${esc(p.name)} <small>Planned · official update ↗</small></button>`).join('')}</section>`:''}</div>`;
+}

@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-23",
+  "preview": "http://127.0.0.1:4200/",
+  "reviewer": "GPT-6 Astra via CUA",
+  "desktopViewport": {"width":1440,"height":1050},
+  "phoneViewport": {"width":390,"height":844},
+  "phoneMapTop": 297,
+  "phoneHorizontalOverflow": false,
+  "principalPhoneControlMinimumHeight": 44,
+  "initialOverviewRouteCount": 8,
+  "filteredProspect30MinuteRouteCount": 2,
+  "filteredOverviewRouteCount": 8,
+  "savedWalk": {"area":"Prospect","minutes":30,"route":"prospect-loop","reloadRestored":true},
+  "futureVillageClicks": ["planned-paramount","planned-pinnacle"],
+  "futureVillageDeepLinkRestored": true,
+  "keyboard": {"searchArrowEnter":true,"emptyResults":true,"unsupportedSuitabilityExplanation":true,"routeEscapeAndFocusReturn":true,"nestedReturn":true},
+  "consoleErrorsObserved": [],
+  "accessibility": {
+    "reducedMotion": "Static CSS and interaction review: global transition/animation suppression and immediate scroll branches present. OS preference not changed through this browser.",
+    "enlargedText": "Phone reflow and no horizontal overflow checked. IAB Ctrl+plus did not change browser scaling; true 200% text enlargement is not claimed.",
+    "contrast": "Unknown-access badge measured 4.24:1 and darkened to #58614c on #faf8ef. Principal dark-green controls have white text. Not a full accessibility certification.",
+    "physicalTouch": "44px primary controls measured at phone viewport; physical-device touch/drag not tested."
+  },
+  "ownerApproval": false,
+  "productionDeployed": false
+}

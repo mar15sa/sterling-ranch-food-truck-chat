@@ -1,0 +1,2160 @@
+{
+  "checkedAt": "2026-09-23",
+  "places": {
+    "sterling-center": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "The developer presents Sterling Center as a visitor destination; its Info Studio is open daily 10 AM–5 PM.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "reservation": {
+          "text": "Individual providers use their own appointment or booking process.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "hours": {
+          "text": "Info Studio: daily 10 AM–5 PM. Tenant hours vary.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Littleton, CO 80125. No verified entrance point is recorded.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Start here for the Info Studio, health services, and Ranch Social.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/sterling-center/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Accessible entrances, parking and directions to individual tenants remain unconfirmed."
+      ]
+    },
+    "ranch-social": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "Ranch Social’s official tenant page publishes visitor hours.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "reservation": {
+          "text": "No general reservation rule is published on the reviewed page; check a particular business or event.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "hours": {
+          "text": "Sun 7 AM–9 PM; Mon–Fri 6 AM–9 PM; Sat 7 AM–9 PM.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "Inside Sterling Center at 8155 Piney River Avenue; no surveyed entrance is recorded.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Coffee, cocktails, beer, market provisions, outdoor seating, playground, and rotating food trucks.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/ranch-social/",
+          "https://sterlingranch.com/town-life/sterling-center/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the calendar for date-specific events and food trucks.",
+        "Reservation requirements for individual gathering spaces are unconfirmed."
+      ]
+    },
+    "info-center": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "The Info Studio welcomes visitors starting a home search.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "reservation": {
+          "text": "No appointment requirement is published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "hours": {
+          "text": "Daily 10 AM–5 PM.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Suite 110, Littleton, CO 80125.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Brochures, maps, and model-home orientation.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/sterling-center/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The welcome desk and CAB service counter may keep different hours."
+      ]
+    },
+    "atlas-coffee": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "Atlas lists its Sterling Ranch store at Ranch Social.",
+          "sourceUrl": "https://www.atlascoffees.com/locations"
+        },
+        "reservation": {
+          "text": "A current Sterling Ranch reservation rule is not published; coffee tastings are listed separately when scheduled.",
+          "sourceUrl": "https://www.atlascoffees.com/events"
+        },
+        "hours": {
+          "text": "Ranch Social publishes Mon–Fri 6 AM–9 PM, Sat–Sun 7 AM–9 PM for Atlas Coffee and Salta; confirm before a special trip.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, inside Ranch Social; no verified entrance point is recorded.",
+          "sourceUrl": "https://www.atlascoffees.com/locations",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Craft coffee, espresso drinks, tea, breakfast burritos, pastries, and paninis are described by the developer.",
+            "supported": true,
+            "sourceUrl": "https://www.atlascoffees.com/locations"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.atlascoffees.com/locations",
+          "https://www.atlascoffees.com/events",
+          "https://sterlingranch.com/town-life/ranch-social/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours, the current menu and same-day availability."
+      ],
+      "actions": [
+        {
+          "label": "Atlas Coffee and Salta details",
+          "url": "https://www.atlascoffees.com/"
+        }
+      ],
+      "visitNotes": [],
+      "facts": []
+    },
+    "salta": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "Salta is the cocktail and wine lounge at Atlas’s Sterling Ranch store.",
+          "sourceUrl": "https://www.atlascoffees.com/locations"
+        },
+        "reservation": {
+          "text": "No everyday reservation policy is published. Ticketed tasting events may have their own booking link.",
+          "sourceUrl": "https://www.atlascoffees.com/events"
+        },
+        "hours": {
+          "text": "Ranch Social publishes Mon–Fri 6 AM–9 PM, Sat–Sun 7 AM–9 PM for Atlas Coffee and Salta; confirm before visiting.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, inside Ranch Social; no verified entrance point is recorded.",
+          "sourceUrl": "https://www.atlascoffees.com/locations",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Wine, cocktails, flatbreads, light pairings, and shareable plates are described by the official pages.",
+            "supported": true,
+            "sourceUrl": "https://www.atlascoffees.com/locations"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.atlascoffees.com/locations",
+          "https://www.atlascoffees.com/events",
+          "https://sterlingranch.com/town-life/ranch-social/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours, the current menu and same-day availability."
+      ],
+      "actions": [
+        {
+          "label": "Atlas Coffee and Salta details",
+          "url": "https://www.atlascoffees.com/"
+        }
+      ],
+      "visitNotes": [],
+      "facts": []
+    },
+    "agora": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "Agora Market is listed within Atlas’s Sterling Ranch store.",
+          "sourceUrl": "https://www.atlascoffees.com/locations"
+        },
+        "reservation": {
+          "text": "No reservation requirement is published.",
+          "sourceUrl": "https://www.atlascoffees.com/locations"
+        },
+        "hours": {
+          "text": "Sun–Thu 9 AM–8 PM; Fri–Sat 8 AM–8 PM.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, inside Ranch Social; no verified entrance point is recorded.",
+          "sourceUrl": "https://www.atlascoffees.com/locations",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Snacks, drinks, groceries, and house-made frozen meals.",
+            "supported": true,
+            "sourceUrl": "https://www.atlascoffees.com/locations"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.atlascoffees.com/locations",
+          "https://sterlingranch.com/town-life/ranch-social/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours or temporary closures.",
+        "Same-day menus and availability may change; check the operator before visiting."
+      ]
+    },
+    "living-dream": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "The operator says the Sterling Center is open to the public; pets are allowed on the Sterling Ranch patio only.",
+          "sourceUrl": "https://www.livingthedreambrewing.com/sterling-ranch.html"
+        },
+        "reservation": {
+          "text": "No general reservation requirement is published.",
+          "sourceUrl": "https://www.livingthedreambrewing.com/sterling-ranch.html"
+        },
+        "hours": {
+          "text": "Mon–Thu 1–9 PM; Fri 1–10 PM; Sat 1–9 PM; Sun 1–8 PM.",
+          "sourceUrl": "https://www.livingthedreambrewing.com/sterling-ranch.html"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Littleton, CO 80125; the operator places it in Sterling Center next to Atlas Coffee.",
+          "sourceUrl": "https://www.livingthedreambrewing.com/sterling-ranch.html",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Beer taproom; current taplist and food-truck schedule are linked by the operator.",
+            "supported": true,
+            "sourceUrl": "https://www.livingthedreambrewing.com/sterling-ranch.html"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.livingthedreambrewing.com/sterling-ranch.html"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours or temporary closures.",
+        "Same-day menus and availability may change; check the operator before visiting."
+      ]
+    },
+    "food-trucks": {
+      "visit": {
+        "access": {
+          "kind": "public",
+          "text": "The developer describes daily food trucks at Ranch Social, but a specific truck and serving time change.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "reservation": {
+          "text": "No general reservation rule is published; use the event calendar for a particular listing.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "hours": {
+          "text": "Daily schedule varies; no standing food-truck hours are published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "Ranch Social at Sterling Center; exact truck position is not verified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Rotating dinner option; check the event calendar first.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/ranch-social/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the date-specific schedule and cancellation notice before a visit."
+      ]
+    },
+    "ranch-playground": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Ranch Social’s developer page describes a sculptural log playground, but does not separately state its public-access rule.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "reservation": {
+          "text": "No reservation rule is published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "hours": {
+          "text": "No separate playground hours are published; Ranch Social’s published hours are subject to change.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "At Ranch Social; no verified playground entrance is recorded.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Outdoor play beside Ranch Social seating.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/ranch-social/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "ranch-patio": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Ranch Social’s developer page describes a covered patio and outdoor firepit, but does not separately state their public-access rule.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "reservation": {
+          "text": "No reservation rule is published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "hours": {
+          "text": "No separate patio/firepit hours are published; Ranch Social’s published hours are subject to change.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+        },
+        "arrival": {
+          "text": "At Ranch Social; no verified patio entrance is recorded.",
+          "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Covered outdoor seating and firepit area.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/ranch-social/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/ranch-social/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "uchealth": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The reviewed center page confirms the services, but does not publish a single walk-in/access rule for the whole medical center.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "reservation": {
+          "text": "Appointment rules depend on the clinic; use the service page.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+        },
+        "hours": {
+          "text": "Service-specific hours apply; see the individual service listings.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Suite 100, Littleton, CO 80125.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Primary care, urgent care, and physical therapy are listed at this center.",
+            "supported": true,
+            "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/",
+          "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Choose the correct clinic, entrance, appointment link and clinic-specific hours."
+      ]
+    },
+    "primary-care": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Primary care is a clinical service; the operator’s reviewed page does not state general walk-in access.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+        },
+        "reservation": {
+          "text": "The clinic offers scheduling, same-day appointments, and advance check-in.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+        },
+        "hours": {
+          "text": "Mon–Fri 8 AM–5 PM; closed weekends.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Suite 100, Littleton, CO 80125.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Family primary care and behavioral-health services.",
+            "supported": true,
+            "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "urgent-care": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "A current standalone urgent-care access page was not successfully retrieved in this pass; do not rely on historical hours.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "reservation": {
+          "text": "Verify same-day availability and reservation policy with UCHealth before travel.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "hours": {
+          "text": "Current urgent-care hours were not reverified from a current service page.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "arrival": {
+          "text": "Sterling Ranch Medical Center, 8155 Piney River Avenue, Suite 100; no verified entrance point is recorded.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Urgent care is listed at the medical center.",
+            "supported": true,
+            "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+          }
+        ],
+        "checkedAt": "2026-09-13",
+        "sourceUrls": [
+          "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        ],
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "physical-therapy": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The center lists physical therapy, but a current service-specific access rule was not retrieved.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "reservation": {
+          "text": "Verify referral, scheduling, and insurance requirements directly with UCHealth.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "hours": {
+          "text": "Current physical-therapy hours were not reverified from a current service page.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        },
+        "arrival": {
+          "text": "Sterling Ranch Medical Center, 8155 Piney River Avenue, Suite 100; no verified entrance point is recorded.",
+          "sourceUrl": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Physical therapy is listed at the medical center.",
+            "supported": true,
+            "sourceUrl": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+          }
+        ],
+        "checkedAt": "2026-09-13",
+        "sourceUrls": [
+          "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/"
+        ],
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "lake-family-dental": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The dental practice describes patient visits; public drop-in access is not stated.",
+          "sourceUrl": "https://mylakefamilydental.com/patient-visit/"
+        },
+        "reservation": {
+          "text": "Schedule online or call/text the office; emergencies are seen during regular business hours.",
+          "sourceUrl": "https://mylakefamilydental.com/patient-visit/"
+        },
+        "hours": {
+          "text": "Current office hours are not published on the reviewed official page.",
+          "sourceUrl": "https://mylakefamilydental.com/patient-visit/"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Suite 220, Littleton, CO 80125.",
+          "sourceUrl": "https://mylakefamilydental.com/patient-visit/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Family dental care; bring insurance card and current-medication list for a first visit.",
+            "supported": true,
+            "sourceUrl": "https://mylakefamilydental.com/patient-visit/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://mylakefamilydental.com/patient-visit/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours or temporary closures.",
+        "Same-day menus and availability may change; check the operator before visiting."
+      ]
+    },
+    "sterling-eyecare": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The practice publishes appointment booking, not general walk-in access.",
+          "sourceUrl": "https://www.sterling-eyecare.com/"
+        },
+        "reservation": {
+          "text": "Book an appointment with the practice.",
+          "sourceUrl": "https://www.sterling-eyecare.com/"
+        },
+        "hours": {
+          "text": "Mon–Fri 8:30 AM–5 PM; closed Sat–Sun and 12–1 PM for lunch.",
+          "sourceUrl": "https://www.sterling-eyecare.com/patient-portal-page.html"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Suite 120, Littleton, CO 80125.",
+          "sourceUrl": "https://www.sterling-eyecare.com/patient-portal-page.html",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Eye exams, pediatric care, contact lenses, and eyewear.",
+            "supported": true,
+            "sourceUrl": "https://www.sterling-eyecare.com/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.sterling-eyecare.com/",
+          "https://www.sterling-eyecare.com/patient-portal-page.html"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours or temporary closures.",
+        "Same-day menus and availability may change; check the operator before visiting."
+      ]
+    },
+    "rave": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Sterling Center lists RAVE Spa & Clinic, but the operator’s current access details were not retrieved in this pass.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "reservation": {
+          "text": "Verify booking requirements directly with the provider.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "hours": {
+          "text": "Current hours were not reverified.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+        },
+        "arrival": {
+          "text": "Sterling Center; the existing catalog lists Suite 230, but a current operator page did not verify it here.",
+          "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Spa and clinic services are described by Sterling Center.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/sterling-center/"
+          }
+        ],
+        "checkedAt": "2026-09-13",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/sterling-center/"
+        ],
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "Check the operator for holiday hours or temporary closures.",
+        "Same-day menus and availability may change; check the operator before visiting."
+      ]
+    },
+    "primrose": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "This is an early-childhood school; enrollment or a scheduled tour is the appropriate path. General visitor access is not stated.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+        },
+        "reservation": {
+          "text": "Schedule a tour with the school.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+        },
+        "hours": {
+          "text": "Monday–Friday 6:30 AM–6 PM.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+        },
+        "arrival": {
+          "text": "The official page places the school on Piney River Avenue; a street address was not reverified in this pass.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Infant through transitional-kindergarten programs.",
+            "supported": true,
+            "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.primroseschools.com/schools/sterling-ranch"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Visitor entry and available programs should be confirmed with the school.",
+        "Tour/availability links, tuition inquiry and school calendar?"
+      ]
+    },
+    "primrose-play": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The school’s playgrounds and garden are program facilities; public or resident amenity access is not established.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+        },
+        "reservation": {
+          "text": "Ask the school when arranging a tour or enrollment.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+        },
+        "hours": {
+          "text": "School hours are Monday–Friday 6:30 AM–6 PM; playground availability is not published.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+        },
+        "arrival": {
+          "text": "Part of Primrose School; no verified playground entrance is recorded.",
+          "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "School-specific outdoor play; not a community park.",
+            "supported": true,
+            "sourceUrl": "https://www.primroseschools.com/schools/sterling-ranch"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.primroseschools.com/schools/sterling-ranch"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "school51": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The future neighborhood school is under construction; no visitor or amenity access is established.",
+          "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch"
+        },
+        "reservation": {
+          "text": "Enrollment is anticipated to open in November 2026. Final attendance boundaries are expected in 2026.",
+          "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch"
+        },
+        "hours": {
+          "text": "Not open. DCSD targets August 2027 for the 2027–28 school year.",
+          "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch"
+        },
+        "arrival": {
+          "text": "8220 Piney River Avenue, Littleton, CO 80125; construction-site entrance is not verified.",
+          "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Pre-K–5 neighborhood school planned for up to 750 students; eligibility follows final boundaries and grades served.",
+            "supported": true,
+            "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch"
+        ],
+        "verificationState": "verified"
+      },
+      "project": {
+        "status": "Under construction",
+        "summary": "DCSD is building Elementary School 51 at 8220 Piney River Avenue for an August 2027 opening.",
+        "details": [
+          "Enrollment is anticipated to open in November 2026.",
+          "Students within final attendance boundaries and the grades served will be eligible; final boundaries are expected in 2026.",
+          "The school is planned for up to 750 students."
+        ],
+        "url": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch",
+        "sourceLabel": "Douglas County School District",
+        "locationNote": "8220 Piney River Avenue, Littleton, CO 80125. Construction-site entrance is not verified."
+      },
+      "unknowns": [
+        "Final attendance boundaries and enrollment opening date still need confirmation."
+      ]
+    },
+    "john-adams": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The developer identifies John Adams Academy as an open K–8 public charter school; enrollment and visitor rules need confirmation with the school.",
+          "sourceUrl": "https://sterlingranch.com/whats-next/"
+        },
+        "reservation": {
+          "text": "Current enrollment and tour process were not reverified from the operator site.",
+          "sourceUrl": "https://www.jaadougco.org/"
+        },
+        "hours": {
+          "text": "Current school hours were not reverified.",
+          "sourceUrl": "https://www.jaadougco.org/"
+        },
+        "arrival": {
+          "text": "Existing catalog address: 7979 Butte Creek Street; not reverified in this pass.",
+          "sourceUrl": "https://www.jaadougco.org/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Public charter school; developer says it will add a grade yearly toward K–12.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/whats-next/"
+          }
+        ],
+        "checkedAt": "2026-09-13",
+        "sourceUrls": [
+          "https://sterlingranch.com/whats-next/",
+          "https://www.jaadougco.org/"
+        ],
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "Confirm current grades and grade expansion year by year.",
+        "Tour/enrollment links, before/after care, visitor entrance and campus recreation access?"
+      ]
+    },
+    "broadstone": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Broadstone is an apartment community. Its amenities are not established as public or Sterling Ranch resident amenities.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "reservation": {
+          "text": "Contact the leasing team or book a tour for availability.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "hours": {
+          "text": "Current leasing-office hours were not reverified.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "arrival": {
+          "text": "8425 Old Ski Run Circle; leasing/amenity entrance is not verified.",
+          "sourceUrl": "https://broadstonesr.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Apartment amenities require resident or leasing authorization.",
+            "supported": true,
+            "sourceUrl": "https://broadstonesr.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://broadstonesr.com/amenities/",
+          "https://broadstonesr.com/faqs/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Confirm the availability and access rules for the specific amenity with the operator.",
+        "Confirm the leasing entrance and guest rules with the apartment operator."
+      ]
+    },
+    "broadstone-pool": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask leasing staff or property management.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Broadstone; no verified entrance.",
+          "sourceUrl": "https://broadstonesr.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Pool and spa are apartment amenities.",
+            "supported": true,
+            "sourceUrl": "https://broadstonesr.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://broadstonesr.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "broadstone-fitness": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask leasing staff or property management.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Broadstone; no verified entrance.",
+          "sourceUrl": "https://broadstonesr.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Fitness and yoga space are apartment amenities.",
+            "supported": true,
+            "sourceUrl": "https://broadstonesr.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://broadstonesr.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "broadstone-work": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask leasing staff or property management.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Broadstone; no verified entrance.",
+          "sourceUrl": "https://broadstonesr.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Coworking and conference space are apartment amenities.",
+            "supported": true,
+            "sourceUrl": "https://broadstonesr.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://broadstonesr.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "broadstone-lounge": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask leasing staff or property management.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Broadstone; no verified entrance.",
+          "sourceUrl": "https://broadstonesr.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Clubhouse and rooftop lounge are apartment amenities.",
+            "supported": true,
+            "sourceUrl": "https://broadstonesr.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://broadstonesr.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "broadstone-ev": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public EV charging access is not established.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask leasing staff or property management.",
+          "sourceUrl": "https://broadstonesr.com/faqs/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://broadstonesr.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Broadstone; no verified charger location or entrance.",
+          "sourceUrl": "https://broadstonesr.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Do not treat as public charging.",
+            "supported": true,
+            "sourceUrl": "https://broadstonesr.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://broadstonesr.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    "prose": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Prose at Parkvale is an apartment community. Its amenities are not established as public or Sterling Ranch resident amenities.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "reservation": {
+          "text": "Contact the operator for leasing or a tour.",
+          "sourceUrl": "https://proseparkvale.com/neighborhood/"
+        },
+        "hours": {
+          "text": "Current leasing-office hours were not reverified.",
+          "sourceUrl": "https://proseparkvale.com/neighborhood/"
+        },
+        "arrival": {
+          "text": "8749 Waterton Road; leasing/amenity entrance is not verified.",
+          "sourceUrl": "https://proseparkvale.com/neighborhood/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Apartment amenities require resident or leasing authorization.",
+            "supported": true,
+            "sourceUrl": "https://proseparkvale.com/neighborhood/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://proseparkvale.com/neighborhood/",
+          "https://proseparkvale.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Confirm the availability and access rules for the specific amenity with the operator.",
+        "Confirm the leasing entrance and guest rules with the apartment operator."
+      ]
+    },
+    "prose-pool": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask the property operator.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Prose at Parkvale; no verified entrance.",
+          "sourceUrl": "https://proseparkvale.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Apartment pool.",
+            "supported": true,
+            "sourceUrl": "https://proseparkvale.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://proseparkvale.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "prose-fitness": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask the property operator.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Prose at Parkvale; no verified entrance.",
+          "sourceUrl": "https://proseparkvale.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Apartment fitness center.",
+            "supported": true,
+            "sourceUrl": "https://proseparkvale.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://proseparkvale.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "prose-dog": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask the property operator.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Prose at Parkvale; no verified entrance.",
+          "sourceUrl": "https://proseparkvale.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Apartment dog park.",
+            "supported": true,
+            "sourceUrl": "https://proseparkvale.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://proseparkvale.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "prose-work": {
+      "visit": {
+        "access": {
+          "kind": "apartment",
+          "text": "Apartment amenity; public access is not established.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "reservation": {
+          "text": "Ask the property operator.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "hours": {
+          "text": "Not published on the reviewed page.",
+          "sourceUrl": "https://proseparkvale.com/amenities/"
+        },
+        "arrival": {
+          "text": "Within Prose at Parkvale; no verified entrance.",
+          "sourceUrl": "https://proseparkvale.com/amenities/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Apartment work space and clubhouse.",
+            "supported": true,
+            "sourceUrl": "https://proseparkvale.com/amenities/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://proseparkvale.com/amenities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "library": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The library is under construction; no current public building access is established.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "reservation": {
+          "text": "No room-reservation process exists yet in the reviewed project page.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "hours": {
+          "text": "Not open. DCL projects completion in late 2027.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "arrival": {
+          "text": "Planned near W Titan Road and Taylor River Circle, bordered to the south by Piney River Avenue; no usable entrance is verified.",
+          "sourceUrl": "https://www.dcl.org/build/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned 18,000-square-foot public library with children’s spaces, event hall, conference rooms, study rooms, terrace, plaza, garden, parking, and book return.",
+            "supported": true,
+            "sourceUrl": "https://www.dcl.org/build/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.dcl.org/build/"
+        ],
+        "verificationState": "verified"
+      },
+      "project": {
+        "status": "In development",
+        "summary": "Douglas County Libraries broke ground August 26, 2026 and projects completion in late 2027.",
+        "details": [
+          "The planned 18,000-square-foot library includes interactive children’s spaces, an event hall, two conference rooms, five reservable study rooms, terrace, plaza, children’s garden, 84 parking spaces, and a drive-through book return.",
+          "Construction is expected to take about a year plus service-transition time; public opening hours and reservations are not yet published."
+        ],
+        "url": "https://www.dcl.org/build/",
+        "sourceLabel": "Douglas County Libraries",
+        "locationNote": "Near W Titan Road and Taylor River Circle, bordered to the south by Piney River Avenue. No entrance or building footprint is verified."
+      },
+      "unknowns": [
+        "The exact opening date and room-booking start are not confirmed."
+      ]
+    },
+    "library-outdoors": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Planned library area; no current access is established.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "reservation": {
+          "text": "Not yet published.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "hours": {
+          "text": "Not open; late 2027 projected completion for the library.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "arrival": {
+          "text": "Within planned library grounds; no entrance verified.",
+          "sourceUrl": "https://www.dcl.org/build/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned terrace, plaza, and children’s garden.",
+            "supported": true,
+            "sourceUrl": "https://www.dcl.org/build/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.dcl.org/build/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "library-rooms": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Planned library rooms; no current access is established.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "reservation": {
+          "text": "Five reservable study rooms and two conference rooms are planned, but reservation rules are not published.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "hours": {
+          "text": "Not open; late 2027 projected completion for the library.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "arrival": {
+          "text": "Within planned library building; no entrance verified.",
+          "sourceUrl": "https://www.dcl.org/build/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned event hall, conference rooms, and study rooms.",
+            "supported": true,
+            "sourceUrl": "https://www.dcl.org/build/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.dcl.org/build/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "library-childrens": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Planned library children’s area; no current access is established.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "reservation": {
+          "text": "Not yet published.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "hours": {
+          "text": "Not open; late 2027 projected completion for the library.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "arrival": {
+          "text": "Within planned library building; no entrance verified.",
+          "sourceUrl": "https://www.dcl.org/build/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Interactive children’s spaces are planned.",
+            "supported": true,
+            "sourceUrl": "https://www.dcl.org/build/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.dcl.org/build/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    "library-return": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Planned drive-through book return; no current access is established.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "reservation": {
+          "text": "Not applicable until opening.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "hours": {
+          "text": "Not open; late 2027 projected completion for the library.",
+          "sourceUrl": "https://www.dcl.org/build/"
+        },
+        "arrival": {
+          "text": "Within planned library site; no driveway entrance verified.",
+          "sourceUrl": "https://www.dcl.org/build/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned drive-through book return.",
+            "supported": true,
+            "sourceUrl": "https://www.dcl.org/build/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.dcl.org/build/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Confirm exact position, current operation and access before visiting."
+      ]
+    },
+    "zebulon": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The site is being graded and prepared for infrastructure; no recreation access is established.",
+          "sourceUrl": "https://www.douglasco.gov/zebulon/"
+        },
+        "reservation": {
+          "text": "No facility reservations are available; facilities remain proposed and may change.",
+          "sourceUrl": "https://www.douglasco.gov/zebulon/facilities/"
+        },
+        "hours": {
+          "text": "Not open. County says sports-facility construction is expected to begin in 2027.",
+          "sourceUrl": "https://www.douglasco.gov/zebulon/development/"
+        },
+        "arrival": {
+          "text": "No visitor entrance is verified; do not use construction-site access for a visit.",
+          "sourceUrl": "https://www.douglasco.gov/zebulon/development/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Proposed multi-use sports complex; amenities are planning concepts, not current offerings.",
+            "supported": true,
+            "sourceUrl": "https://www.douglasco.gov/zebulon/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.douglasco.gov/zebulon/",
+          "https://www.douglasco.gov/zebulon/development/",
+          "https://www.douglasco.gov/zebulon/facilities/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Final footprint and relation to adopted PD expansion?",
+        "Phase-specific approvals, construction starts and opening dates?"
+      ]
+    },
+    "zebulon-lifestyle": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Future shopping, dining, lodging, and entertainment are concepts; no tenants or public access are established.",
+          "sourceUrl": "https://sterlingranch.com/whats-next/"
+        },
+        "reservation": {
+          "text": "Not applicable; no individual businesses are announced.",
+          "sourceUrl": "https://sterlingranch.com/whats-next/"
+        },
+        "hours": {
+          "text": "Not open; no opening date is published.",
+          "sourceUrl": "https://sterlingranch.com/whats-next/"
+        },
+        "arrival": {
+          "text": "No visitor entrance is verified.",
+          "sourceUrl": "https://sterlingranch.com/whats-next/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future district concept only.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/whats-next/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranch.com/whats-next/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "ascent-village-center": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The catalog’s source is an illustrative map label; no current public destination is established.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352"
+        },
+        "reservation": {
+          "text": "Not applicable; no operating venue is identified.",
+          "sourceUrl": "https://sterlingranch.com/villages/"
+        },
+        "hours": {
+          "text": "Not open; no opening date is published.",
+          "sourceUrl": "https://sterlingranch.com/villages/"
+        },
+        "arrival": {
+          "text": "No visitor entrance is verified.",
+          "sourceUrl": "https://sterlingranch.com/villages/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Developer describes the future Waterton Place as a planned mixed-use destination; it does not establish current services.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/2352",
+          "https://sterlingranch.com/villages/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "Current project name, program, approved plan and timeline?",
+        "The older map location has not been freshly confirmed."
+      ]
+    },
+    "water-plant": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Water-treatment infrastructure is not presented as a visitor amenity.",
+          "sourceUrl": "https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf"
+        },
+        "reservation": {
+          "text": "No visitor process is published.",
+          "sourceUrl": "https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf"
+        },
+        "hours": {
+          "text": "No public hours are published.",
+          "sourceUrl": "https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf"
+        },
+        "arrival": {
+          "text": "No public entrance is verified.",
+          "sourceUrl": "https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Infrastructure listing, not a destination.",
+            "supported": true,
+            "sourceUrl": "https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://www.dominionwsd.org/files/ba98b4704/DWSD%2B%2B%2BAmended%2Band%2BRestate.pdf"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": [
+        "The mapped boundary and visitor access remain unconfirmed."
+      ]
+    },
+    "farmers-market": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "The catalog’s schedule source was not reverified in this pass; verify current event access with the organizer.",
+          "sourceUrl": "https://denverfarmersmarket.com/"
+        },
+        "reservation": {
+          "text": "No current reservation rule was reverified.",
+          "sourceUrl": "https://denverfarmersmarket.com/"
+        },
+        "hours": {
+          "text": "The existing 2026 schedule was not reverified for this visit record.",
+          "sourceUrl": "https://denverfarmersmarket.com/"
+        },
+        "arrival": {
+          "text": "Existing listing says Providence Park; exact event location and entrance require confirmation.",
+          "sourceUrl": "https://denverfarmersmarket.com/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Seasonal event; confirm before travel.",
+            "supported": true,
+            "sourceUrl": "https://denverfarmersmarket.com/"
+          }
+        ],
+        "checkedAt": "2026-09-13",
+        "sourceUrls": [
+          "https://denverfarmersmarket.com/"
+        ],
+        "verificationState": "retained",
+        "attemptedAt": "2026-09-23"
+      },
+      "unknowns": [
+        "Check the date-specific schedule and cancellation notice before a visit."
+      ]
+    },
+    "planned-heirloom": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Future planning area on CAB’s August 8, 2025 illustrative master plan; no access is established.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "reservation": {
+          "text": "Not applicable.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "hours": {
+          "text": "Not open; no opening date announced.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "arrival": {
+          "text": "North part of the illustrative plan; no boundaries or entrance verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future Heirloom Village planning area only.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "https://sterlingranch.com/faqs/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": []
+    },
+    "planned-paramount": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Future planning area on CAB’s August 8, 2025 illustrative master plan; no access is established.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "reservation": {
+          "text": "Not applicable.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "hours": {
+          "text": "Not open; no opening date announced.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "arrival": {
+          "text": "CAB labels this Paramount Center; no boundaries or entrance verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future Paramount Center planning area only; it is not renamed a village here.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "https://sterlingranch.com/faqs/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": []
+    },
+    "planned-heritage": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Future planning area on CAB’s August 8, 2025 illustrative master plan; no access is established.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "reservation": {
+          "text": "Not applicable.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "hours": {
+          "text": "Not open; no opening date announced.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "arrival": {
+          "text": "West of Providence on the illustrative plan; no boundaries or entrance verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future Heritage Village area, separate from Heritage Regional Park.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "https://sterlingranch.com/faqs/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": []
+    },
+    "planned-promontory": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Future planning area on CAB’s August 8, 2025 illustrative master plan; no access is established.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "reservation": {
+          "text": "Not applicable.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "hours": {
+          "text": "Not open; no opening date announced.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "arrival": {
+          "text": "Southwest part of the illustrative plan; no boundaries or entrance verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future Promontory Village planning area only.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "https://sterlingranch.com/faqs/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": []
+    },
+    "planned-pinnacle": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Future planning area on CAB’s August 8, 2025 illustrative master plan; no access is established.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "reservation": {
+          "text": "Not applicable.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "hours": {
+          "text": "Not open; no opening date announced.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+        },
+        "arrival": {
+          "text": "South/southeast part of the illustrative plan; no boundaries or entrance verified.",
+          "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future Pinnacle Village planning area only.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/DocumentCenter/View/416/Sterling-Ranch-Master-Graphic-PDF",
+          "https://sterlingranch.com/faqs/"
+        ],
+        "verificationState": "verified"
+      },
+      "unknowns": []
+    },
+    "heritage": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Heritage Regional Park is shown by the developer as early design; public access is not established.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "No current operating hours are published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No verified public entrance is recorded.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ]
+      },
+      "unknowns": [
+        "Confirm public entrance and current access.",
+        "Restrooms, shade, parking, play ages and accessible routes are not confirmed."
+      ]
+    },
+    "medley": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "Medley Park is described by the developer as a planned linear greenway with a 2026–2027 target; that is not an opening confirmation.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "hours": {
+          "text": "Planned; target 2026–2027, with no verified opening date.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+        },
+        "arrival": {
+          "text": "No verified public entrance is recorded.",
+          "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned linear greenway.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranch.com/town-life/parks-rec/"
+        ]
+      },
+      "unknowns": [
+        "Confirm public entrance and current access.",
+        "Restrooms, shade, parking, play ages and accessible routes are not confirmed."
+      ]
+    },
+    "sterling-gulch": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB describes a future wildlife corridor; access is not established.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Future corridor; no opening date is published.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "arrival": {
+          "text": "Ascent Village; corridor boundaries and entrance are not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned native-prairie wildlife corridor with a future grade-separated Waterton Road crossing.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/335/Community-Parks"
+        ]
+      },
+      "unknowns": [
+        "Current conditions at individual trail segments and crossings are unconfirmed.",
+        "Public trail segments and their exact routes remain unconfirmed."
+      ]
+    },
+    "cultural-trail": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB describes a future Cultural Trail in Ascent Village; access is not established.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "hours": {
+          "text": "Future trail; no opening date is published.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "arrival": {
+          "text": "Middle Fork Street open-space median; boundaries and entrance are not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned trail, art exhibits, seating/gathering nodes, and social opportunities.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/335/Community-Parks"
+        ]
+      },
+      "unknowns": [
+        "Its relationship to Medley Park has not been confirmed."
+      ]
+    },
+    "burns-next": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB says further Burns Regional Park amenities will arrive in phases over time; a phase opening date is not published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "hours": {
+          "text": "Later phases are not open; no phase-specific opening date is published.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        "arrival": {
+          "text": "Burns Regional Park; later-phase entrance is not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future park phases beyond the existing pickleball courts.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/335/Community-Parks"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/417/Parks-Updates",
+          "https://sterlingranchcab.com/335/Community-Parks"
+        ]
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "prospect-next": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB says Phase 2 construction was to begin in summer 2026, including the Beach Club pool; this does not establish an opening.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "hours": {
+          "text": "Future phase; no verified pool opening date is published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "arrival": {
+          "text": "Prospect Park; future-phase entrance is not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Future Phase 2, including planned Beach Club pool.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/417/Parks-Updates"
+        ]
+      },
+      "unknowns": [
+        "Actual construction progress and opening date are not yet confirmed."
+      ]
+    },
+    "willow-repair": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB says a bike repair station is coming soon at Trailhead Park; current availability is not established.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "reservation": {
+          "text": "No current reservation process is published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "hours": {
+          "text": "No operating hours are published for the planned station.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "arrival": {
+          "text": "Trailhead Park at Mount Kataka Street and Mount Ouray Road; exact station location is not verified.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "Planned bike repair station.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/417/Parks-Updates",
+          "https://sterlingranchcab.com/335/Community-Parks"
+        ]
+      },
+      "unknowns": [
+        "The exact location within the parent property has not been confirmed."
+      ]
+    },
+    "cab-office": {
+      "visit": {
+        "access": {
+          "kind": "unknown",
+          "text": "CAB publishes an Info Center office address and phone number, but does not state public walk-in hours on the reviewed page.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "reservation": {
+          "text": "No appointment or reservation process is published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "hours": {
+          "text": "No current operating hours are published.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+        },
+        "arrival": {
+          "text": "8155 Piney River Avenue, Suite 110, Sterling Ranch, CO 80125.",
+          "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates",
+          "verifiedEntrance": false,
+          "directionsUrl": null
+        },
+        "suitability": [
+          {
+            "label": "CAB contact and Sterling Ranch 311 issue-reporting resource.",
+            "supported": true,
+            "sourceUrl": "https://sterlingranchcab.com/417/Parks-Updates"
+          }
+        ],
+        "checkedAt": "2026-09-23",
+        "verificationState": "verified",
+        "sourceUrls": [
+          "https://sterlingranchcab.com/417/Parks-Updates"
+        ]
+      },
+      "unknowns": [
+        "Confirm whether CAB maintains a separately visitable public counter or uses the shared Info Center space.",
+        "Confirm CAB service hours before displaying them."
+      ]
+    }
+  }
+}
