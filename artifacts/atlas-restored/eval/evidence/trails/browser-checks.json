@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-23",
+  "source": "CUA actual page review",
+  "desktop": {
+    "width": 900,
+    "height": 1200,
+    "guides": 8,
+    "sections": 40,
+    "accessPoints": 6,
+    "mapWalkCards": 8,
+    "mapWalkPlaces": 14,
+    "unfoldPreview": 3,
+    "unfoldDirectory": 8,
+    "unfoldFits": true,
+    "horizontalOverflow": false
+  },
+  "phone": {
+    "width": 390,
+    "height": 1200,
+    "ascentGuides": 2,
+    "ascentSections": 18,
+    "ascentAccess": 1,
+    "sourceToggle": true,
+    "confirmedDiagonalMiles": 0.27,
+    "escapeReturnsFocus": true,
+    "horizontalOverflow": false
+  },
+  "errors": [],
+  "launchAuthorized": false
+}

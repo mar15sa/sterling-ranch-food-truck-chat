@@ -1,0 +1,17 @@
+/* Full inventory stays easy to scan while the illustrated map remains calm. */
+.destination-strip{grid-template-columns:repeat(auto-fit,minmax(142px,1fr));max-height:238px;overflow:auto}
+.destination-context{padding:9px 10px;gap:7px;min-height:62px}
+.destination-context>div{min-width:0;display:grid;grid-template-columns:34px 1fr;column-gap:7px;align-items:center}
+.destination-context img{grid-row:span 2;width:34px;height:34px;object-fit:cover;border-radius:4px;background:#e5ead8}
+.destination-context strong{font-size:10px;line-height:1.25;overflow-wrap:anywhere}
+.destination-context small{font-size:8px;margin-top:3px;line-height:1.3}
+.destination-context>div:not(:has(img)){grid-template-columns:1fr}
+.destination-context strong,.destination-context small{grid-column:2}
+.destination-context>div:not(:has(img)) strong,.destination-context>div:not(:has(img)) small{grid-column:1}
+.destination-empty{padding:14px;font-size:10px;color:#7a886a;margin:0}
+@media(max-width:720px){
+  .destination-strip{grid-template-columns:1fr 1fr;max-height:300px}
+  .destination-context{min-height:58px;padding:8px}
+  .destination-context>div{grid-template-columns:28px 1fr;gap:6px}
+  .destination-context img{width:28px;height:28px}
+}

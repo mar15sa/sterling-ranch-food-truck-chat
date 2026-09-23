@@ -1,0 +1,141 @@
+{
+  "models": [
+    {
+      "loaded": true,
+      "name": "Sterling Center",
+      "overflow": false,
+      "src": "assets/sterling-center.png",
+      "visibleRoof": "block"
+    },
+    {
+      "loaded": true,
+      "name": "The Overlook Clubhouse",
+      "overflow": false,
+      "src": "assets/overlook-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Burns Regional Park",
+      "overflow": false,
+      "src": "assets/burns-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Prospect Regional Park",
+      "overflow": false,
+      "src": "assets/prospect-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Horsebrush Park",
+      "overflow": false,
+      "src": "assets/horsebrush-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Pioneer Park",
+      "overflow": false,
+      "src": "assets/pioneer-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "McCormick Park",
+      "overflow": false,
+      "src": "assets/mccormick-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Pat Gallagher Park",
+      "overflow": false,
+      "src": "assets/pat-gallagher-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "The Lawn at Providence",
+      "overflow": false,
+      "src": "assets/providence-park-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Steve Bloom Park",
+      "overflow": false,
+      "src": "assets/steve-bloom-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Yard 27",
+      "overflow": false,
+      "src": "assets/yard-27-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "High Top Court",
+      "overflow": false,
+      "src": "assets/high-top-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Trailrock Park",
+      "overflow": false,
+      "src": "assets/trailrock-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Gathering Green",
+      "overflow": false,
+      "src": "assets/ascent-pavilion-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Zippity Park",
+      "overflow": false,
+      "src": "assets/zippity-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Peekaboo Park",
+      "overflow": false,
+      "src": "assets/peekaboo-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Willow Creek Trailhead",
+      "overflow": false,
+      "src": "assets/willow-creek-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Primrose School of Sterling Ranch",
+      "overflow": false,
+      "src": "assets/primrose-model.png",
+      "visibleRoof": "none"
+    },
+    {
+      "loaded": true,
+      "name": "Prose at Parkvale",
+      "overflow": false,
+      "src": "assets/prose-model.png",
+      "visibleRoof": "none"
+    }
+  ],
+  "photoComparisonDesktop": "Horsebrush illustration/photo and switch back checked; switching to Overlook resets photo state.",
+  "phone": "390x1200 Pioneer model and photo toggle; Sterling Center opening/closing; full-area overview and no overflow.",
+  "future": "Coming Soon still shows full-area future map, 11 groups and 16 planned entries; current directory and model panel hidden.",
+  "console": []
+}
