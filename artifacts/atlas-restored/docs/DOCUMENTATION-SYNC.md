@@ -21,3 +21,11 @@ Updated and fetched back the Notion [Design and experience reference](https://ww
 No Assistant flow, production source authority, resident behavior, or privacy setting changed, so the Assistant diagrams and operations pages need no corresponding update. No staging lease was needed because nothing was pushed to staging; no production merge or launch occurred.
 
 The final closeout only corrects the eval workflow's registry-fingerprint description and adds this record. It does not change the reviewed runtime, screenshots, scores or source data.
+
+## Coming Soon map correction — September 22, 2026
+
+Implementation: 14abf61, feature branch codex/atlas-future-map-20260922. Local normal preview on 4190 verified with review-status.json: passed true, reviewMode false, launchAuthorized false. Original list-only comparison on 4192 returned HTTP 200. Actual final browser Coming Soon view shows full map and 11 future groups; normal /review.html displays visual-review-pass.
+
+Affected Notion page: https://www.notion.so/3dabf909186d81b99d91ddd39861536b . Fetched before update, inserted a dated Coming Soon map correction under the existing Atlas section, and fetched afterward. Readback confirmed the new entry, 14abf61 source link, and preserved Village focus history. Status explicitly implemented/verified locally; owner review pending; not deployed. No documentation pending.
+
+47 focused checks and current browser evidence are recorded in eval/FUTURE-MAP-REVIEW.md. No production or shared staging changes. Normal startup and gate are unchanged except the additional required future-map desktop evidence state.
