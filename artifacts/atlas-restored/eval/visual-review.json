@@ -1,0 +1,1138 @@
+{
+  "verdict": "visual-review-pass",
+  "reviewer": "GPT-6 Astra: actual desktop/phone visual and resident-journey review; bounded Terra acceptance/source review",
+  "reviewerType": "visual-ai",
+  "reviewedAt": "2026-09-23T23:55:30.406Z",
+  "actualComparison": true,
+  "runtimeFingerprint": "c54ab1b41f1fb8b2355a9f5d22e88a4c6e7b56b19435bd17b24b18b22c03c3a2",
+  "baselineRegistryFingerprint": "843d02d38ecc36f709f85672d020257d70e83cb87d72ab9c2f307ae9bdae68fa",
+  "coverageChecks": {
+    "passed": true,
+    "scope": "full-saved-atlas-area",
+    "bounds": {
+      "west": -105.077,
+      "east": -105.02,
+      "south": 39.477,
+      "north": 39.518
+    },
+    "expectedCurrentRootIds": [
+      "ascent-pavilion",
+      "broadstone",
+      "burns",
+      "high-top",
+      "horsebrush",
+      "john-adams",
+      "mccormick",
+      "outcrop",
+      "overlook",
+      "pat-gallagher",
+      "peekaboo",
+      "pioneer",
+      "primrose",
+      "prose",
+      "prospect-park",
+      "providence-park",
+      "providence-regional",
+      "sterling-center",
+      "steve-bloom",
+      "trailrock",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "yard-27",
+      "zippity"
+    ],
+    "includedCurrentRootIds": [
+      "ascent-pavilion",
+      "broadstone",
+      "burns",
+      "high-top",
+      "horsebrush",
+      "john-adams",
+      "mccormick",
+      "outcrop",
+      "overlook",
+      "pat-gallagher",
+      "peekaboo",
+      "pioneer",
+      "primrose",
+      "prose",
+      "prospect-park",
+      "providence-park",
+      "providence-regional",
+      "sterling-center",
+      "steve-bloom",
+      "trailrock",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "yard-27",
+      "zippity"
+    ],
+    "expectedPlaceIds": [
+      "agora",
+      "ascent-pavilion",
+      "ascent-village-center",
+      "atlas-coffee",
+      "broadstone",
+      "broadstone-ev",
+      "broadstone-fitness",
+      "broadstone-lounge",
+      "broadstone-pool",
+      "broadstone-work",
+      "burns",
+      "burns-courts",
+      "burns-next",
+      "cab-office",
+      "cultural-trail",
+      "farmers-market",
+      "food-trucks",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "gathering-play",
+      "heritage",
+      "high-top",
+      "high-top-courts",
+      "horsebrush",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "info-center",
+      "john-adams",
+      "lake-family-dental",
+      "library",
+      "library-childrens",
+      "library-outdoors",
+      "library-return",
+      "library-rooms",
+      "living-dream",
+      "mccormick",
+      "mccormick-play",
+      "mccormick-shelter",
+      "medley",
+      "outcrop",
+      "overlook",
+      "overlook-fitness",
+      "overlook-great-hall",
+      "overlook-north-pavilion",
+      "overlook-pool",
+      "overlook-south-pavilion",
+      "overlook-splash",
+      "pat-gallagher",
+      "pat-shelter",
+      "peekaboo",
+      "peekaboo-play",
+      "physical-therapy",
+      "pioneer",
+      "pioneer-play",
+      "pioneer-shelter",
+      "primary-care",
+      "primrose",
+      "primrose-play",
+      "prose",
+      "prose-dog",
+      "prose-fitness",
+      "prose-pool",
+      "prose-work",
+      "prospect-basketball",
+      "prospect-lawn",
+      "prospect-next",
+      "prospect-park",
+      "prospect-pavilion",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-soccer",
+      "prospect-volleyball",
+      "prospect-walking",
+      "providence-park",
+      "providence-pavilion",
+      "providence-regional",
+      "ranch-patio",
+      "ranch-playground",
+      "ranch-social",
+      "rave",
+      "salta",
+      "school51",
+      "sterling-center",
+      "sterling-eyecare",
+      "sterling-gulch",
+      "steve-bloom",
+      "trailrock",
+      "trailrock-play",
+      "uchealth",
+      "urgent-care",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "willow-repair",
+      "yard-27",
+      "yard-cornhole",
+      "zebulon",
+      "zebulon-lifestyle",
+      "zippity",
+      "zippity-play",
+      "zippity-shelter"
+    ],
+    "includedPlaceIds": [
+      "agora",
+      "ascent-pavilion",
+      "ascent-village-center",
+      "atlas-coffee",
+      "broadstone",
+      "broadstone-ev",
+      "broadstone-fitness",
+      "broadstone-lounge",
+      "broadstone-pool",
+      "broadstone-work",
+      "burns",
+      "burns-courts",
+      "burns-next",
+      "cab-office",
+      "cultural-trail",
+      "farmers-market",
+      "food-trucks",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "gathering-play",
+      "heritage",
+      "high-top",
+      "high-top-courts",
+      "horsebrush",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "info-center",
+      "john-adams",
+      "lake-family-dental",
+      "library",
+      "library-childrens",
+      "library-outdoors",
+      "library-return",
+      "library-rooms",
+      "living-dream",
+      "mccormick",
+      "mccormick-play",
+      "mccormick-shelter",
+      "medley",
+      "outcrop",
+      "overlook",
+      "overlook-fitness",
+      "overlook-great-hall",
+      "overlook-north-pavilion",
+      "overlook-pool",
+      "overlook-south-pavilion",
+      "overlook-splash",
+      "pat-gallagher",
+      "pat-shelter",
+      "peekaboo",
+      "peekaboo-play",
+      "physical-therapy",
+      "pioneer",
+      "pioneer-play",
+      "pioneer-shelter",
+      "primary-care",
+      "primrose",
+      "primrose-play",
+      "prose",
+      "prose-dog",
+      "prose-fitness",
+      "prose-pool",
+      "prose-work",
+      "prospect-basketball",
+      "prospect-lawn",
+      "prospect-next",
+      "prospect-park",
+      "prospect-pavilion",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-soccer",
+      "prospect-volleyball",
+      "prospect-walking",
+      "providence-park",
+      "providence-pavilion",
+      "providence-regional",
+      "ranch-patio",
+      "ranch-playground",
+      "ranch-social",
+      "rave",
+      "salta",
+      "school51",
+      "sterling-center",
+      "sterling-eyecare",
+      "sterling-gulch",
+      "steve-bloom",
+      "trailrock",
+      "trailrock-play",
+      "uchealth",
+      "urgent-care",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "willow-repair",
+      "yard-27",
+      "yard-cornhole",
+      "zebulon",
+      "zebulon-lifestyle",
+      "zippity",
+      "zippity-play",
+      "zippity-shelter"
+    ],
+    "expectedRouteIds": [
+      "ascent-greenway",
+      "ascent-middle",
+      "overlook-link",
+      "prospect-loop",
+      "prospect-north",
+      "prospect-park-link",
+      "providence-west",
+      "titan-promenade"
+    ],
+    "includedRouteIds": [
+      "ascent-greenway",
+      "ascent-middle",
+      "overlook-link",
+      "prospect-loop",
+      "prospect-north",
+      "prospect-park-link",
+      "providence-west",
+      "titan-promenade"
+    ]
+  },
+  "functionalChecks": {
+    "passed": true,
+    "checks": [
+      "118 focused tests passed: source/data/inventory/geometry/navigation/visual gate/accessibility preferences",
+      "All eight resident journeys on desktop and 390x844 phone",
+      "Actual 200% text, reduced motion, return focus and measured principal touch controls",
+      "Official plan disclosure loads; all eight route paths present; full coverage and original art preserved"
+    ]
+  },
+  "hardFailures": [],
+  "states": [
+    {
+      "name": "neighborhood-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-neighborhood-desktop.png",
+        "sha256": "b079a43cad51448bb053956dbe433d8d0f637798cfc6c6e5ecf78f6648564429",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/complete-neighborhood-desktop.png",
+        "sha256": "43489164a5359cf9cd9cec364be8beced2f9847617e7824267a887130229eb83"
+      },
+      "baselineScores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 3,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual desktop/390px phone comparison with the pinned owner-selected base. Full landscape and detailed landmark artwork unchanged. Three-tab navigation and compact access information improve the visit flow. Scores and approved baselines unchanged. Earlier captures in this review predate only the darker unknown-access text and added connections-return control; final neighborhood and connections captures separately verify those refinements.",
+      "passed": true
+    },
+    {
+      "name": "sterling-open-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-sterling-open-desktop.png",
+        "sha256": "3589b27cfbf92ceebfbf6a32c061b39a85d29cd7a357bcb218d9d2cbd21b2d8c",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/complete-sterling-open-desktop.png",
+        "sha256": "873bbd79e06db2f02b90151bcd1363525db525f458585981c6abd7c4fbdb774e"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual desktop/390px phone comparison with the pinned owner-selected base. Full landscape and detailed landmark artwork unchanged. Three-tab navigation and compact access information improve the visit flow. Scores and approved baselines unchanged. Earlier captures in this review predate only the darker unknown-access text and added connections-return control; final neighborhood and connections captures separately verify those refinements.",
+      "passed": true
+    },
+    {
+      "name": "overlook-open-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-overlook-open-desktop.png",
+        "sha256": "21102156d65c1b8f4d775f83ed9b60f8329a681761d0f81b08c4750081d62e6b",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/complete-overlook-open-desktop.png",
+        "sha256": "f05e6d96e7bd6715eda5f4c4aea689968e9686dd3c3a12a7c2bc7b96ffa1b9eb"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual desktop/390px phone comparison with the pinned owner-selected base. Full landscape and detailed landmark artwork unchanged. Three-tab navigation and compact access information improve the visit flow. Scores and approved baselines unchanged. Earlier captures in this review predate only the darker unknown-access text and added connections-return control; final neighborhood and connections captures separately verify those refinements.",
+      "passed": true
+    },
+    {
+      "name": "neighborhood-mobile",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-neighborhood-mobile.png",
+        "sha256": "81bf03fa7fe64a0a299acaa97de7a16191fcaf44ffa872047dc92d09cea0382b",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/complete-neighborhood-mobile.png",
+        "sha256": "f59e032d3012f6da5477ce320c7753f6ec68bdd108c89680b2a5df010a5a3b86"
+      },
+      "baselineScores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 3,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual desktop/390px phone comparison with the pinned owner-selected base. Full landscape and detailed landmark artwork unchanged. Three-tab navigation and compact access information improve the visit flow. Scores and approved baselines unchanged. Earlier captures in this review predate only the darker unknown-access text and added connections-return control; final neighborhood and connections captures separately verify those refinements.",
+      "passed": true
+    },
+    {
+      "name": "sterling-open-mobile",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-sterling-open-mobile.png",
+        "sha256": "3724ddba30876136db67840f707a96e6f7118e4bb3808b220ae53c03bff93e44",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/complete-sterling-open-mobile.png",
+        "sha256": "8bd7548db9b1c69277806041dcf959018386abf787f76fb828a04dfb1cfedd7b"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual desktop/390px phone comparison with the pinned owner-selected base. Full landscape and detailed landmark artwork unchanged. Three-tab navigation and compact access information improve the visit flow. Scores and approved baselines unchanged. Earlier captures in this review predate only the darker unknown-access text and added connections-return control; final neighborhood and connections captures separately verify those refinements.",
+      "passed": true
+    }
+  ],
+  "discoveryChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "unfolded-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-desktop.png",
+          "sha256": "52bc4bfce5177e37149775a01a5201d0aa3a50dc843c7744d2354960a131be5b"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Actual lifted model and recursive amenity plane above retained full ground map. Solid associated source paths differ from dotted membership branches. No invented route connection."
+      },
+      {
+        "name": "unfolded-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-mobile.png",
+          "sha256": "b47f1ab1773dd4e9e5313e04c12d029bc3fc91dbce0862a41803ce6fbe9113a7"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "390px model/ground followed by actual nested amenities and return control. Same content in reduced motion."
+      },
+      {
+        "name": "walking-guide",
+        "candidate": {
+          "path": "eval/evidence/complete-walking-guide-desktop.png",
+          "sha256": "60f988798672f5b629c0548443574e3111160c88d80d94fb71e8959c13312dc6"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Complete highlighted source route, total return time, arrival and uncertainty; Escape restores originating route control."
+      },
+      {
+        "name": "future-layer",
+        "candidate": {
+          "path": "eval/evidence/complete-future-desktop.png",
+          "sha256": "f5484352721a8d6f9fe25b8794c16c2a6cdc0b1a7da1c67009afb02c889b212a"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Map-first future projects. School/library prominent; combined future-only directory includes projects and five future areas."
+      }
+    ]
+  },
+  "reviewNotes": "4200 blank planning view was rejected by the owner; its prior positive visual judgment is withdrawn. See eval/PLAN-REPAIR-REVIEW.md. Fresh actual wider-map screenshots at desktop, compact and phone widths plus measured marker bounds, nonoverlap and source-map visibility. All non-planning assets/behavior unchanged; their prior scoped evidence is reused. Approved baselines unchanged. Owner review pending, no launch.",
+  "focusChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "village-focus-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-village-focus-desktop.png",
+          "sha256": "cfca31ac7195e4f146588627cdc3ec481278d0da2acf434f12fe04dfee589ae9"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Prospect focuses with surrounding blur; place list and full-map reset retained."
+      },
+      {
+        "name": "place-focus-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-place-focus-desktop.png",
+          "sha256": "af91ef99733e79e83b02555d2e14bb4025efbb3cdf7d30424e6ca2286a14f8cf"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Burns focuses with surrounding blur and contextual card; original illustrated detail remains."
+      },
+      {
+        "name": "village-focus-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-village-focus-mobile.png",
+          "sha256": "d1a7a53b03cc94650a57595e541bb4d6e7654a36809fed5466236240d48bb62f"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Prospect focus on phone. Nested playground then Back to Prospect preserves village and focus."
+      },
+      {
+        "name": "future-only-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-future-phone.png",
+          "sha256": "294d411e92438aebf6c870ee3da7a045056e99843e87193ee93dae60c2d077ed"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Phone future view begins with map and shows future-only projects; active villages are orientation context only."
+      },
+      {
+        "name": "future-map-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-future-desktop.png",
+          "sha256": "f5484352721a8d6f9fe25b8794c16c2a6cdc0b1a7da1c67009afb02c889b212a"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Neighborhood project extent preserves full illustration and eleven project groups."
+      }
+    ]
+  },
+  "modelChecks": {
+    "passed": true,
+    "modelCount": 19,
+    "newModelCount": 15,
+    "pendingCount": 6,
+    "sourcePairReview": "data/model-review.json",
+    "browserEvidence": "eval/evidence/models/browser-checks.json",
+    "comparisonPage": "eval/model-references.html",
+    "notes": "Unchanged model assets and reviewed model/photo pairs; historical model counts retained. No new model is claimed in this pass."
+  },
+  "journeyChecks": {
+    "passed": true,
+    "evidence": "eval/evidence/resident/browser-checks.json",
+    "ownerApproval": false,
+    "productionDeployed": false,
+    "notes": "Actual coordinator browser QA. No resident usability study claimed."
+  },
+  "trailChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "walks-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-all-desktop.png",
+          "sha256": "a8a71f1e7450ee5c5c1419c9f951c7fd18f0eb9fc1865a1fff2b68fe659ae31d"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Actual all-eight-route overview before area selection. Full source window and aligned highlighted paths retained."
+      },
+      {
+        "name": "walks-overview-routes-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-all-desktop.png",
+          "sha256": "a8a71f1e7450ee5c5c1419c9f951c7fd18f0eb9fc1865a1fff2b68fe659ae31d"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "All eight route controls remain on full-area image. Filters mute nonmatching routes rather than crop geography."
+      },
+      {
+        "name": "unfold-walks-desktop",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-walks-desktop.png",
+          "sha256": "6cd1cbd6c8a489efe3c246ba535c7dffb4ab35035718244c4e71d80968998401"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Connection reveal contains illustrated, highlighted nearby walking guides and total outing times. Suggestions explicitly do not establish connecting paths."
+      },
+      {
+        "name": "walks-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-all-phone.png",
+          "sha256": "65a4a45173d0ae76d7953c5d0ef458bb0683a91b4dda057eec73a073c2338a65"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Actual all-eight-route overview before area selection. Full source window and aligned highlighted paths retained."
+      },
+      {
+        "name": "walks-overview-routes-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-all-phone.png",
+          "sha256": "65a4a45173d0ae76d7953c5d0ef458bb0683a91b4dda057eec73a073c2338a65"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "All eight route controls remain on full-area image. Filters mute nonmatching routes rather than crop geography."
+      },
+      {
+        "name": "unfold-walks-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-walks-mobile.png",
+          "sha256": "23639fe7a06e02d439bb66a17aa6710f9aa2a3f596cc788414909cb76435576a"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Connection reveal contains illustrated, highlighted nearby walking guides and total outing times. Suggestions explicitly do not establish connecting paths."
+      },
+      {
+        "name": "walking-guide-mobile",
+        "candidate": {
+          "path": "eval/evidence/complete-walk-guide-phone.png",
+          "sha256": "65a4a45173d0ae76d7953c5d0ef458bb0683a91b4dda057eec73a073c2338a65"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Phone guide shows highlighted complete route and total return time; arrival uncertainty is explicit."
+      }
+    ],
+    "browserEvidence": "eval/evidence/complete-browser-checks.json"
+  },
+  "villagePlanChecks": {
+    "passed": true,
+    "layouts": [
+      {
+        "name": "phone",
+        "directoryNames": 5,
+        "futureAreaLabels": 5,
+        "horizontalOverflow": false,
+        "image": {
+          "height": 543.5521240234375,
+          "loaded": true,
+          "src": "http://127.0.0.1:4202/assets/wider-ranch-landscape-v1.png",
+          "visible": true,
+          "width": 337.3333435058594,
+          "x": 18.666667938232425,
+          "y": -22.33333396911621
+        },
+        "namedCardsOnMap": 0,
+        "orientationVillages": 4,
+        "pins": [
+          {
+            "height": 44,
+            "width": 44,
+            "x": 155.20834350585938,
+            "y": 26.322917938232425
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 195.6875,
+            "y": 86.11458587646484
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 145.08334350585938,
+            "y": 151.34375
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 121.47917175292967,
+            "y": 330.7083435058594
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 188.9375,
+            "y": 379.6354370117187
+          }
+        ],
+        "sourceComparisonAvailable": true
+      },
+      {
+        "name": "desktop",
+        "directoryNames": 5,
+        "futureAreaLabels": 5,
+        "horizontalOverflow": false,
+        "image": {
+          "height": 1304.072998046875,
+          "loaded": true,
+          "src": "http://127.0.0.1:4202/assets/wider-ranch-landscape-v1.png",
+          "visible": true,
+          "width": 809.3125,
+          "x": 87.34375,
+          "y": 493.4583435058594
+        },
+        "namedCardsOnMap": 0,
+        "orientationVillages": 4,
+        "pins": [
+          {
+            "height": 44,
+            "width": 44,
+            "x": 445.71875,
+            "y": 640.9791870117188
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 542.8333740234375,
+            "y": 784.4271240234375
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 421.4375,
+            "y": 940.9166870117188
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 364.78125,
+            "y": 1371.260498046875
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 526.6458740234375,
+            "y": 1488.625
+          }
+        ],
+        "sourceComparisonAvailable": true
+      },
+      {
+        "name": "compact",
+        "directoryNames": 5,
+        "futureAreaLabels": 5,
+        "horizontalOverflow": false,
+        "image": {
+          "height": 783.4375,
+          "loaded": true,
+          "src": "http://127.0.0.1:4202/assets/wider-ranch-landscape-v1.png",
+          "visible": true,
+          "width": 486.2083435058594,
+          "x": 66.22917175292969,
+          "y": -886.9375
+        },
+        "namedCardsOnMap": 0,
+        "orientationVillages": 4,
+        "pins": [
+          {
+            "height": 44,
+            "width": 44,
+            "x": 272.7395935058594,
+            "y": -807.09375
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 331.0833435058594,
+            "y": -720.9166870117188
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 258.15625,
+            "y": -626.90625
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 224.125,
+            "y": -368.375
+          },
+          {
+            "height": 44,
+            "width": 44,
+            "x": 321.3645935058594,
+            "y": -297.8645935058594
+          }
+        ],
+        "sourceComparisonAvailable": true
+      }
+    ],
+    "states": [
+      {
+        "name": "village-plan-desktop",
+        "notes": "New approximate miniature landscape, entire CAB planning arrangement, five compact named future pins, four current villages for orientation, original source under disclosure. No blank overlapping cards, invented future streets or buildings. Actual village-plan-desktop reviewed.",
+        "candidate": {
+          "path": "eval/evidence/complete-village-plan-desktop.png",
+          "sha256": "24ad49349d6507fc823f43ff398a148b820f9cbf758ee7745d35e170c4a30a46"
+        },
+        "actualJudgment": true,
+        "passed": true
+      },
+      {
+        "name": "village-plan-mobile",
+        "notes": "New approximate miniature landscape, entire CAB planning arrangement, five compact named future pins, four current villages for orientation, original source under disclosure. No blank overlapping cards, invented future streets or buildings. Actual village-plan-mobile reviewed.",
+        "candidate": {
+          "path": "eval/evidence/complete-village-plan-mobile.png",
+          "sha256": "f6e3514bb28b1eabb01c126466dfec56b484a25b10a765f100ce82ef6ee83b16"
+        },
+        "actualJudgment": true,
+        "passed": true
+      },
+      {
+        "name": "village-plan-selected",
+        "notes": "New approximate miniature landscape, entire CAB planning arrangement, five compact named future pins, four current villages for orientation, original source under disclosure. No blank overlapping cards, invented future streets or buildings. Actual village-plan-selected reviewed.",
+        "candidate": {
+          "path": "eval/evidence/complete-village-plan-selected.png",
+          "sha256": "32ecb91339a3d59bcb9c6771d5056bb0b8b89714c114325a22ef823fd89c2eda"
+        },
+        "actualJudgment": true,
+        "passed": true
+      }
+    ]
+  },
+  "residentChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "pool-access",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Search exposes resident/apartment/unconfirmed restrictions before opening.",
+        "candidate": {
+          "path": "eval/evidence/complete-pool-desktop.png",
+          "sha256": "2f94f9545ea70b54b772faabf94f50e6ca57a3531fb17e80acb226a0226a2f11"
+        }
+      },
+      {
+        "name": "pickleball-booking",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Hours, access/booking, equipment information, explicit parking uncertainty and CourtReserve action visible.",
+        "candidate": {
+          "path": "eval/evidence/complete-pickleball-desktop.png",
+          "sha256": "434051cc9ce5bc429c44714e542c70af867f5947dc6fb8b947bb477bbbc1d0da"
+        }
+      },
+      {
+        "name": "return-time-walk",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Total-return upper-bound filtering; all eight complete paths remain, nonmatches dim; guide groups start/finish/arrival/return.",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-desktop.png",
+          "sha256": "370384c463bee912a985ca38aef5bc6af2189719579ebe7f4d7b71ebffffdbb7"
+        }
+      },
+      {
+        "name": "coffee-and-play",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Recursive Sterling Center / Ranch Social / Atlas Coffee and play amenities; association never promises a connecting path.",
+        "candidate": {
+          "path": "eval/evidence/complete-coffee-desktop.png",
+          "sha256": "36e7894020098715130d6c7516c3444b1aded34969b119e20975c8a6a8bc2fcc"
+        }
+      },
+      {
+        "name": "school-update",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Construction status, recorded opening/enrollment targets, source and checked date visible.",
+        "candidate": {
+          "path": "eval/evidence/complete-school-desktop.png",
+          "sha256": "650a1e66e1dc923f208dead37f5ec9d8c28ceed3bb38a32060929eb1fb07fad1"
+        }
+      },
+      {
+        "name": "future-villages",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "All five future areas named; active villages orientation only; full illustrative planning extent and original source comparison.",
+        "candidate": {
+          "path": "eval/evidence/complete-village-plan-desktop.png",
+          "sha256": "24ad49349d6507fc823f43ff398a148b820f9cbf758ee7745d35e170c4a30a46"
+        }
+      },
+      {
+        "name": "nested-return",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Atlas Coffee returns to the same unfolded map and exact opener, retaining context.",
+        "candidate": {
+          "path": "eval/evidence/complete-nested-return-desktop.png",
+          "sha256": "67013b698d5bc9ff15a520de7eda9a2d1c6d64a537db42a85cf44a2a4ca3cfa4"
+        }
+      },
+      {
+        "name": "connections",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Lifted real model and actual nested amenities, associated walks/future additions over retained ground map; paths distinct from membership diagram.",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-desktop.png",
+          "sha256": "52bc4bfce5177e37149775a01a5201d0aa3a50dc843c7744d2354960a131be5b"
+        }
+      }
+    ]
+  },
+  "completePlanChecks": {
+    "passed": true,
+    "desktop": [
+      {
+        "name": "pool-access",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Search exposes resident/apartment/unconfirmed restrictions before opening.",
+        "candidate": {
+          "path": "eval/evidence/complete-pool-desktop.png",
+          "sha256": "2f94f9545ea70b54b772faabf94f50e6ca57a3531fb17e80acb226a0226a2f11"
+        }
+      },
+      {
+        "name": "pickleball-booking",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Hours, access/booking, equipment information, explicit parking uncertainty and CourtReserve action visible.",
+        "candidate": {
+          "path": "eval/evidence/complete-pickleball-desktop.png",
+          "sha256": "434051cc9ce5bc429c44714e542c70af867f5947dc6fb8b947bb477bbbc1d0da"
+        }
+      },
+      {
+        "name": "return-time-walk",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Total-return upper-bound filtering; all eight complete paths remain, nonmatches dim; guide groups start/finish/arrival/return.",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-desktop.png",
+          "sha256": "370384c463bee912a985ca38aef5bc6af2189719579ebe7f4d7b71ebffffdbb7"
+        }
+      },
+      {
+        "name": "coffee-and-play",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Recursive Sterling Center / Ranch Social / Atlas Coffee and play amenities; association never promises a connecting path.",
+        "candidate": {
+          "path": "eval/evidence/complete-coffee-desktop.png",
+          "sha256": "36e7894020098715130d6c7516c3444b1aded34969b119e20975c8a6a8bc2fcc"
+        }
+      },
+      {
+        "name": "school-update",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Construction status, recorded opening/enrollment targets, source and checked date visible.",
+        "candidate": {
+          "path": "eval/evidence/complete-school-desktop.png",
+          "sha256": "650a1e66e1dc923f208dead37f5ec9d8c28ceed3bb38a32060929eb1fb07fad1"
+        }
+      },
+      {
+        "name": "future-villages",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "All five future areas named; active villages orientation only; full illustrative planning extent and original source comparison.",
+        "candidate": {
+          "path": "eval/evidence/complete-village-plan-desktop.png",
+          "sha256": "24ad49349d6507fc823f43ff398a148b820f9cbf758ee7745d35e170c4a30a46"
+        }
+      },
+      {
+        "name": "nested-return",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Atlas Coffee returns to the same unfolded map and exact opener, retaining context.",
+        "candidate": {
+          "path": "eval/evidence/complete-nested-return-desktop.png",
+          "sha256": "67013b698d5bc9ff15a520de7eda9a2d1c6d64a537db42a85cf44a2a4ca3cfa4"
+        }
+      },
+      {
+        "name": "connections",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Lifted real model and actual nested amenities, associated walks/future additions over retained ground map; paths distinct from membership diagram.",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-desktop.png",
+          "sha256": "52bc4bfce5177e37149775a01a5201d0aa3a50dc843c7744d2354960a131be5b"
+        }
+      }
+    ],
+    "phone": [
+      {
+        "name": "pool-access",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Search exposes resident/apartment/unconfirmed restrictions before opening.",
+        "candidate": {
+          "path": "eval/evidence/complete-pool-phone.png",
+          "sha256": "7430b6be932487862079d31ae84f6f71e170120041007652c8c3b787fff3c695"
+        }
+      },
+      {
+        "name": "pickleball-booking",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Hours, access/booking, equipment information, explicit parking uncertainty and CourtReserve action visible.",
+        "candidate": {
+          "path": "eval/evidence/complete-pickleball-phone.png",
+          "sha256": "a127c2e6fa4216bf9255fe128e3fee7e119cf8426daab0d5406be12f2486db56"
+        }
+      },
+      {
+        "name": "return-time-walk",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Total-return upper-bound filtering; all eight complete paths remain, nonmatches dim; guide groups start/finish/arrival/return.",
+        "candidate": {
+          "path": "eval/evidence/complete-walks-phone.png",
+          "sha256": "cb859647b6c4de11d5ae1d2a73b32341c38d2b0bbf94bbe5f24e31fd99efca66"
+        }
+      },
+      {
+        "name": "coffee-and-play",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Recursive Sterling Center / Ranch Social / Atlas Coffee and play amenities; association never promises a connecting path.",
+        "candidate": {
+          "path": "eval/evidence/complete-coffee-phone.png",
+          "sha256": "93e1f50f1be12f0aa311d576ae4669d5bce624a135621ed5fd983871ae0a5531"
+        }
+      },
+      {
+        "name": "school-update",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Construction status, recorded opening/enrollment targets, source and checked date visible.",
+        "candidate": {
+          "path": "eval/evidence/complete-school-phone.png",
+          "sha256": "17bde4d22e6fb2b570b95c46e11402086e2265f3336b640f29c57005e99442f1"
+        }
+      },
+      {
+        "name": "future-villages",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "All five future areas named; active villages orientation only; full illustrative planning extent and original source comparison.",
+        "candidate": {
+          "path": "eval/evidence/complete-village-plan-mobile.png",
+          "sha256": "f6e3514bb28b1eabb01c126466dfec56b484a25b10a765f100ce82ef6ee83b16"
+        }
+      },
+      {
+        "name": "nested-return",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Atlas Coffee returns to the same unfolded map and exact opener, retaining context.",
+        "candidate": {
+          "path": "eval/evidence/complete-nested-return-phone.png",
+          "sha256": "2ded19cf0fb82272432eee134cb91b244e063ea3070fb4a6eca09ea945bbbb79"
+        }
+      },
+      {
+        "name": "connections",
+        "passed": true,
+        "actualJudgment": true,
+        "notes": "Lifted real model and actual nested amenities, associated walks/future additions over retained ground map; paths distinct from membership diagram.",
+        "candidate": {
+          "path": "eval/evidence/complete-connections-mobile.png",
+          "sha256": "b47f1ab1773dd4e9e5313e04c12d029bc3fc91dbce0862a41803ce6fbe9113a7"
+        }
+      }
+    ],
+    "browserEvidence": {
+      "path": "eval/evidence/complete-browser-checks.json",
+      "sha256": "cb3109993584a669393ad2dc27f201d751471fcac5c3e08951ce208f16ac3d1f"
+    }
+  }
+}

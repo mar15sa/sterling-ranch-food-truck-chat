@@ -1,0 +1,41 @@
+✔ planning layout rejects missing geography, cropped source aspect and overlapping targets (5.5966ms)
+✔ resident journey evidence cannot be replaced by a screenshot-only pass (161.6633ms)
+✔ valid documented review passes (77.7253ms)
+✔ missing evidence fails (86.4961ms)
+✔ changed candidate evidence fails as stale (61.1194ms)
+✔ valid discovery evidence passes when the discovery interface is present (74.9633ms)
+✔ missing discovery evidence fails when the discovery interface is present (92.7151ms)
+✔ changed discovery proof hash fails (99.4606ms)
+✔ valid focus evidence passes when the focus interface is present (82.9513ms)
+✔ missing focus evidence fails when the focus interface is present (40.8926ms)
+✔ changed focus proof hash fails (53.3456ms)
+✔ changed runtime fails as stale (24.9702ms)
+✔ low score fails (59.1107ms)
+✔ hard failure fails (76.5582ms)
+✔ known bad low-poly scorecard fails (49.8243ms)
+✔ missing actual judgment fails (85.7803ms)
+✔ unset actual comparison fails (71.7107ms)
+✔ changed pinned baseline registry fails (59.1073ms)
+✔ narrowed seven-place crop fails coverage (91.2913ms)
+✔ narrowed layout roots fails coverage (45.936ms)
+✔ unlocated roots must retain null coordinates and pixels (56.0642ms)
+✔ walk visuals require desktop and mobile review evidence (52.4041ms)
+✔ complete recorded walking visual evidence passes (102.4078ms)
+✔ changed walking screenshot evidence is rejected (65.2342ms)
+✔ village-only evidence cannot pass the full-overview route review (94.6345ms)
+✔ future village UI cannot reuse project-only screenshot evidence (132.0706ms)
+✔ wider view has the complete official plan as its always-visible geographic base (1.9687ms)
+✔ geographic pins are compact numbers with readable names in a separate list (0.7997ms)
+✔ the CAB plan contributes exactly its five future named areas (1.0038ms)
+✔ Paramount keeps the CAB map’s Center distinction (0.5227ms)
+✔ future-area dates remain unknown and every entry retains CAB provenance (0.2312ms)
+✔ future-area entries are searchable (0.5718ms)
+✔ future village and project selections round-trip through navigation (1.1217ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2154.8032

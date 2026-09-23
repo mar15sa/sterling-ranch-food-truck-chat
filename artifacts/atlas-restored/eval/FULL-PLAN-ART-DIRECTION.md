@@ -1,0 +1,14 @@
+# Wider landscape provenance
+
+Final asset: assets/wider-ranch-landscape-v1.png (989×1591).
+
+References: unchanged CAB August 8, 2025 master graphic (assets/village-master-plan.jpg), for complete north–south general arrangement, and the approved miniature neighborhood screenshot for visual style. Existing future-area pin coordinates and the complete planning extent are retained. Original plan remains directly accessible.
+
+Imagegen first misread planning-zone colors as water: rejected. A second pass removed water but introduced future paths: rejected. Final cleanup removed those paths and left future land undeveloped. Warm dry Colorado grass and miniature trees match the Atlas palette. Current village clusters give approximate orientation. Labels/pins are live HTML, not painted text.
+
+This is explicitly approximate illustration, not surveyed boundaries, future roads, building positions, entrances or construction phasing. No approved existing landscape or landmark image was changed.
+
+Original prompt:
+
+Create a beautiful premium miniature landscape MAP illustration for Sterling Ranch. Reference 1 is the official CAB master plan: preserve its ENTIRE north-south geographic arrangement and framing, same portrait 1296:2088 aspect ratio, north up. Reference 2 is a screenshot of the owner-approved miniature neighborhood: match the LANDSCAPE visual style only, not its UI. Warm sunlit golden Colorado grasses, subtle dimensional terrain, clustered lush sage/olive trees, delicate believable miniature detail, soft cream atmosphere, elegant realistic architectural model photography. The full official plan footprint must fit with generous breathing space. Existing developed neighborhood clusters correspond to Providence east-central, Ascent southeast-central, Parkvale west-central, Prospect southwest. Future Heirloom north, Paramount north-central, Heritage northwest-central, Promontory southwest below Parkvale, Pinnacle southernmost must be OPEN undeveloped meadow/tree landscape, NO invented buildings or street layouts there. Retain geographic arrangement of natural open-space corridors from the official map, surrounding relief and vegetation, but do not draw proposed future streets or parcel boundaries. Do NOT paint any labels, names, numbers, pins, boundary lines, UI, legend, text, cards, or symbols; these will be accurate HTML overlays. This is an approximate illustrative planning overview, not a survey. Avoid huge empty flat rectangle; rich tactile grass and subtle natural relief across the ranch, beautifully cohesive with the approved miniature. Camera near overhead shallow axonometric, enough overhead for geographic reading, not extreme tilted diorama. Source map orientation and relative area positions matter more than decorative invention. Full northern and southern extents visible; no cropping. Final output is just the standalone full landscape artwork.
+

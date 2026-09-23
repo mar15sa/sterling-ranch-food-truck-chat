@@ -1,0 +1,462 @@
+{
+  "phoneInitialMapTop": 315,
+  "layouts": [
+    {
+      "name": "phone",
+      "directoryNames": 5,
+      "futureAreaLabels": 5,
+      "horizontalOverflow": false,
+      "image": {
+        "height": 543.5521240234375,
+        "loaded": true,
+        "src": "http://127.0.0.1:4202/assets/wider-ranch-landscape-v1.png",
+        "visible": true,
+        "width": 337.3333435058594,
+        "x": 18.666667938232425,
+        "y": -22.33333396911621
+      },
+      "namedCardsOnMap": 0,
+      "orientationVillages": 4,
+      "pins": [
+        {
+          "height": 44,
+          "width": 44,
+          "x": 155.20834350585938,
+          "y": 26.322917938232425
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 195.6875,
+          "y": 86.11458587646484
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 145.08334350585938,
+          "y": 151.34375
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 121.47917175292967,
+          "y": 330.7083435058594
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 188.9375,
+          "y": 379.6354370117187
+        }
+      ],
+      "sourceComparisonAvailable": true
+    },
+    {
+      "name": "desktop",
+      "directoryNames": 5,
+      "futureAreaLabels": 5,
+      "horizontalOverflow": false,
+      "image": {
+        "height": 1304.072998046875,
+        "loaded": true,
+        "src": "http://127.0.0.1:4202/assets/wider-ranch-landscape-v1.png",
+        "visible": true,
+        "width": 809.3125,
+        "x": 87.34375,
+        "y": 493.4583435058594
+      },
+      "namedCardsOnMap": 0,
+      "orientationVillages": 4,
+      "pins": [
+        {
+          "height": 44,
+          "width": 44,
+          "x": 445.71875,
+          "y": 640.9791870117188
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 542.8333740234375,
+          "y": 784.4271240234375
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 421.4375,
+          "y": 940.9166870117188
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 364.78125,
+          "y": 1371.260498046875
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 526.6458740234375,
+          "y": 1488.625
+        }
+      ],
+      "sourceComparisonAvailable": true
+    },
+    {
+      "name": "compact",
+      "directoryNames": 5,
+      "futureAreaLabels": 5,
+      "horizontalOverflow": false,
+      "image": {
+        "height": 783.4375,
+        "loaded": true,
+        "src": "http://127.0.0.1:4202/assets/wider-ranch-landscape-v1.png",
+        "visible": true,
+        "width": 486.2083435058594,
+        "x": 66.22917175292969,
+        "y": -886.9375
+      },
+      "namedCardsOnMap": 0,
+      "orientationVillages": 4,
+      "pins": [
+        {
+          "height": 44,
+          "width": 44,
+          "x": 272.7395935058594,
+          "y": -807.09375
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 331.0833435058594,
+          "y": -720.9166870117188
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 258.15625,
+          "y": -626.90625
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 224.125,
+          "y": -368.375
+        },
+        {
+          "height": 44,
+          "width": 44,
+          "x": 321.3645935058594,
+          "y": -297.8645935058594
+        }
+      ],
+      "sourceComparisonAvailable": true
+    }
+  ],
+  "sourceComparisonOpened": {
+    "loaded": true,
+    "open": true
+  },
+  "desktopWalk": {
+    "all": 8,
+    "focus": "prospect-loop",
+    "muted": 4,
+    "selected": "prospect-loop"
+  },
+  "desktopNestedReturn": {
+    "focused": "atlas-coffee",
+    "unfold": true,
+    "view": "neighborhood"
+  },
+  "futureReturn": {
+    "focus": "prospect-next",
+    "unfold": true,
+    "view": "neighborhood",
+    "village": "Prospect"
+  },
+  "phoneNestedReturn": {
+    "focused": "atlas-coffee",
+    "unfold": true,
+    "view": "neighborhood"
+  },
+  "phoneWalkMapTop": 244,
+  "unsupportedSearch": "Suitability has not been confirmed for these routes. Check the guide’s access notes before choosing.\n\nBrowse walking guides ↗",
+  "emptySearch": "No match across the Atlas. Try a place, amenity or village name.\n\nBrowse walking guides ↗",
+  "emptyWalks": "No confirmed guide fits these filters. Try All walks or another village.",
+  "largeTextPhone": {
+    "base": "29",
+    "intro": "static",
+    "motion": "true",
+    "overflow": false,
+    "size": "58px"
+  },
+  "largeTextDesktop": {
+    "animation": "none",
+    "base": "40",
+    "overflow": false,
+    "size": "80px",
+    "transition": "0s"
+  },
+  "wholeRanchPrompt": "EXPLORE CONNECTIONS\n\nStart with a village.\n\nUncover the places within it, the things inside them, and nearby walks.\n\nProvidence\nExplore this area ↗\nAscent\nExplore this area ↗\nProspect\nExplore this area ↗\nParkvale\nExplore this area ↗",
+  "contrastSamples": [
+    {
+      "background": "rgb(250, 248, 239)",
+      "color": "rgb(88, 97, 76)",
+      "selector": ".visit-access-badge"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "color": "rgb(82, 97, 76)",
+      "selector": ".connection-explainer"
+    },
+    {
+      "background": "rgb(52, 83, 61)",
+      "color": "rgb(255, 255, 255)",
+      "selector": ".view-nav [aria-pressed=\"true\"]"
+    }
+  ],
+  "desktopTargets": [
+    {
+      "height": 44,
+      "text": "Neighborhood",
+      "width": 113.3125
+    },
+    {
+      "height": 44,
+      "text": "Walks & paths",
+      "width": 112.65625
+    },
+    {
+      "height": 44,
+      "text": "What’s coming",
+      "width": 115.9375
+    },
+    {
+      "height": 44,
+      "text": "← Back to the map",
+      "width": 175
+    },
+    {
+      "height": 53.33333587646485,
+      "text": "Prospect Regional Park ↗",
+      "width": 239.3541717529297
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect all-abilities playgroundAccess uncon",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect event shellAccess unconfirmed↗",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect play lawn / turf areaAccess unconfir",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect Park Basketball CourtAccess unconfir",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect volleyball areaAccess unconfirmed↗",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect soccer areaAccess unconfirmed↗",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect walking trackAccess unconfirmed↗",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Prospect pavilion / picnic areaAccess unconfi",
+      "width": 521.65625
+    },
+    {
+      "height": 53.33333587646485,
+      "text": "Broadstone Sterling Ranch ↗",
+      "width": 271.3020935058594
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Broadstone pool and spaApartment amenity↗",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Broadstone fitness / yogaApartment amenity↗",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Broadstone coworking / conference spaceApartm",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Broadstone clubhouse / rooftop loungeApartmen",
+      "width": 521.65625
+    },
+    {
+      "height": 64.66667175292969,
+      "text": "Broadstone EV chargingApartment amenity↗",
+      "width": 521.65625
+    },
+    {
+      "height": 53.33333587646485,
+      "text": "Willow Creek Trailhead ↗",
+      "width": 244.25
+    }
+  ],
+  "phoneTargets": [
+    {
+      "height": 44,
+      "text": "Coffee",
+      "width": 57.5
+    },
+    {
+      "height": 44,
+      "text": "Playgrounds",
+      "width": 85.32292175292969
+    },
+    {
+      "height": 44,
+      "text": "Pickleball",
+      "width": 70.66667175292969
+    },
+    {
+      "height": 44,
+      "text": "Pools",
+      "width": 50.41666793823242
+    },
+    {
+      "height": 44,
+      "text": "Short walks",
+      "width": 81.25
+    },
+    {
+      "height": 44,
+      "text": "Neighborhood",
+      "width": 118.21875
+    },
+    {
+      "height": 44,
+      "text": "Walks & paths",
+      "width": 118.22917175292967
+    },
+    {
+      "height": 44,
+      "text": "What’s coming",
+      "width": 118.21875
+    },
+    {
+      "height": 44,
+      "text": "1",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "2",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "3",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "4",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "5",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "6",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "7",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "8",
+      "width": 44
+    },
+    {
+      "height": 44,
+      "text": "All walking guides",
+      "width": 110.41667175292967
+    },
+    {
+      "height": 44,
+      "text": "Providence",
+      "width": 78.26042175292969
+    },
+    {
+      "height": 44,
+      "text": "Ascent",
+      "width": 57.33333587646485
+    },
+    {
+      "height": 44,
+      "text": "Prospect",
+      "width": 67.20833587646484
+    },
+    {
+      "height": 44,
+      "text": "All walks",
+      "width": 63.85416793823242
+    },
+    {
+      "height": 44,
+      "text": "Up to 15 minutes",
+      "width": 106.02083587646484
+    },
+    {
+      "height": 44,
+      "text": "Up to 30 minutes",
+      "width": 109.89583587646484
+    },
+    {
+      "height": 44,
+      "text": "← Back to the map",
+      "width": 88.54167175292969
+    },
+    {
+      "height": 44,
+      "text": "Reserve a court↗",
+      "width": 309.3333435058594
+    },
+    {
+      "height": 44,
+      "text": "Court hours & rules↗",
+      "width": 309.3333435058594
+    }
+  ],
+  "phoneWalkCloseFocus": "prospect-loop",
+  "reducedMotionPhone": {
+    "animation": "none",
+    "preference": "true",
+    "transition": "0s"
+  },
+  "phoneNeighborhoodMapTop": 297,
+  "allRoutes": {
+    "count": 8,
+    "muted": 0
+  }
+}

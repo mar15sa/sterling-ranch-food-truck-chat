@@ -1,0 +1,46 @@
+/* The real ground map stays under a raised destination and its membership tree. */
+.connection-ground-caption{display:none}
+.map-stage.unfolded{display:block;position:relative;min-height:0;background:radial-gradient(ellipse at 22% 32%,#e0e6d2,transparent 65%),#f1f0e6;overflow:clip}
+.map-stage.unfolded #unfold-sheets{position:relative;padding:24px 32px;margin:0;background:transparent;z-index:2;pointer-events:none}
+#unfold-sheets button,#unfold-sheets a{pointer-events:auto}
+.map-stage.unfolded #landscape{position:absolute;left:1.5%;top:395px;width:51%;height:auto;aspect-ratio:3/2;min-height:0;transform:perspective(1000px) rotateX(27deg) rotateZ(-8deg);transform-origin:center;opacity:.95;filter:none;border:1px solid #eef2df;border-radius:14px;box-shadow:0 9px 0 #c8cfb8,0 25px 35px -15px #3f523555;pointer-events:none;z-index:1;animation:ground-open .7s both}
+.unfolded #map-plane{inset:0;transform:none!important}
+.unfolded #map-labels,.unfolded #village-labels,.unfolded .map-topnote,.unfolded .map-controls,.unfolded .source-toggle,.unfolded .focus-caption,.unfolded .focus-ring,.unfolded .focus-haze,.unfolded .compass,.unfolded .map-key,.unfolded .map-actions{display:none!important}
+.unfolded #landscape:after{display:none}
+.connections-route-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.connections-route-overlay polyline{fill:none;stroke:#185b4b;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 2px #fff9e7)}
+.connections-intro{position:relative;z-index:2}.connections-intro p{margin:7px 0 16px}.connections-return{margin-bottom:12px}
+.connection-composition{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start;min-height:580px}
+.connection-lift{position:sticky;top:80px;height:430px;pointer-events:none;padding-top:8px}
+.connection-model-deck{position:relative;width:87%;margin:auto;min-height:245px;animation:model-lift .85s cubic-bezier(.2,.7,.2,1) both}
+.connection-model-deck:before{content:'';position:absolute;inset:35% 5% -12px;background:#fcfaeeb5;border:1px solid #fffdf3;box-shadow:0 5px 0 #dce1ce,0 20px 25px -18px #344f3580;transform:perspective(800px) rotateX(40deg) rotateZ(-8deg);border-radius:24px}
+.connection-model-deck img{position:relative;display:block;width:100%;height:250px;object-fit:contain;filter:drop-shadow(0 20px 10px #2b44253a)}
+.connection-deck-label{position:relative;display:block;text-align:center;font:22px var(--serif);color:#354d39}
+.connection-tethers{display:flex;justify-content:space-around;width:57%;margin:auto;height:92px;transform:rotate(-8deg)}
+.connection-tethers i{height:100%;border-left:2px dashed #6e81619c;animation:tethers-in .9s both}
+.connection-ground-caption{position:absolute;top:480px;left:8%;font-size:10px;letter-spacing:.1em;color:#405438;max-width:90%}.connection-ground-caption small{display:block;margin-top:8px;font-size:11px;letter-spacing:0;line-height:1.5}
+.connection-membership{position:relative;background:#fffdf2ed;border:1px solid white;box-shadow:0 7px 0 #dde1cd,0 24px 25px -23px #31462f70;border-radius:14px;padding:24px;animation:membership-lift .8s .06s both}
+.connection-membership:before{content:'';position:absolute;top:130px;left:-44px;width:43px;border-top:2px dotted #728268}
+.connection-membership>.eyebrow{font-size:11px}.connection-family+.connection-family{margin-top:20px;padding-top:15px;border-top:1px solid #dce2ce}
+.connection-title{display:block;font-size:25px;min-height:44px}.connection-children{border-left:2px dotted #8f9e7d;margin:14px 0 0 8px;padding-left:14px}
+.connection-member{position:relative}.connection-member:before{content:'';position:absolute;width:14px;top:23px;left:-14px;border-top:2px dotted #8f9e7d}
+.connection-member>button{position:relative;width:100%;display:block;padding:12px 20px 12px 8px;min-height:44px}.connection-member>button>strong{display:block;font-weight:500;font-size:14px;line-height:1.5}.connection-member>button>span:last-child{position:absolute;right:1px;top:14px}
+.connection-member .connection-member{border-left:2px dotted #a4af96;margin-left:12px;padding-left:12px}.connection-member .visit-badges{margin:5px 0 0}.connection-member .visit-badge{font-size:10px}
+.connection-bottom{display:grid;grid-template-columns:1fr;gap:22px;margin:32px 0 0;position:relative}
+.connection-bottom:has(.connection-future){grid-template-columns:1.4fr 1fr}
+.connection-bottom>section{margin:0;padding:24px;border-radius:14px;border:1px solid white;box-shadow:0 6px 0 #d9dfcb;animation:membership-lift .8s .14s both}
+.connection-routes{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.connection-routes>button{position:relative;padding:14px 12px 14px 40px;min-height:64px;border:1px solid #cdd9c2}.connection-routes strong{font:20px/1.1 var(--serif)}.connection-routes small{font-size:11px;line-height:1.5}.connection-route-icon{position:absolute;top:15px;left:12px;font-size:23px;color:#185b4b}
+.connection-explainer{font-size:12px;margin-top:8px}.connection-future{background:#f5efdf}.connection-future>button{width:100%;border-top:1px solid #d5d5c0}
+.map-stage.unfolded:has(.connection-villages) #landscape{position:relative;left:auto;top:auto;width:70%;margin:350px auto 30px}
+.map-stage.unfolded:has(.connection-villages) #unfold-sheets{position:absolute;top:0;left:0;right:0}.connection-villages{gap:10px}.connection-villages button{font-size:24px}
+@keyframes ground-open{from{transform:none;opacity:1}to{transform:perspective(1000px) rotateX(27deg) rotateZ(-8deg)}}
+@keyframes model-lift{from{transform:translateY(170px) scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes membership-lift{from{transform:translate(-35px,90px);opacity:0}to{transform:none;opacity:1}}
+@keyframes tethers-in{from{opacity:0;height:0}to{opacity:1;height:100%}}
+@media(max-width:900px) and (min-width:721px){.connection-composition{gap:25px}.map-stage.unfolded #unfold-sheets{padding:20px}.connection-membership{padding:18px}.connection-membership:before{width:24px;left:-25px}.connection-model-deck img{height:200px}}
+@media(max-width:720px){
+ .map-stage.unfolded #unfold-sheets{padding:18px 14px}.connections-intro h2{font-size:30px}.connection-composition{display:block;min-height:0}.connection-lift{position:relative;top:auto;height:410px;width:100%;padding-top:0}.connection-model-deck{width:80%;min-height:160px}.connection-model-deck img{height:170px}.connection-deck-label{font-size:21px}.connection-tethers{height:62px}.connection-ground-caption{top:365px;left:0;font-size:9px}.connection-ground-caption small{font-size:10px;margin-top:5px}
+ .map-stage.unfolded #landscape{top:405px;left:6%;width:88%;border-radius:10px}.connection-membership{padding:18px;margin-top:15px}.connection-membership:before{display:none}.connection-title{font-size:25px}.connection-member>button>strong{font-size:14px}.connection-bottom,.connection-bottom:has(.connection-future){grid-template-columns:1fr;margin-top:23px}.connection-bottom>section{padding:18px}.connection-routes{grid-template-columns:1fr}.connection-villages{grid-template-columns:1fr 1fr}
+ .map-stage.unfolded:has(.connection-villages) #landscape{width:90%;margin:410px auto 30px}.connection-villages button{padding:14px;font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){.map-stage.unfolded #landscape,.connection-model-deck,.connection-membership,.connection-tethers i,.connection-bottom>section{animation:none!important;transition:none!important}}

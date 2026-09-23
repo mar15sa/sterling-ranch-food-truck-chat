@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-22",
+  "preview": "http://127.0.0.1:4194/",
+  "checks": [
+    "65 automated tests passed: full catalog, whole-area bounds, original artwork hashes, model/photo review hashes, navigation round trips, true parent/child hotspots, future-only filtering, Unfold filters and unique presentation slots, safe visit-card content, and stale visual-review rejection.",
+    "Browser keyboard search: ArrowDown and Enter opened Burns Park Pickleball Courts with address, parking guidance and official booking link.",
+    "Browser Back/Forward restored the selected detail; refreshing a shared place retained its Ascent return context and unfolded map. Copy link copied the current URL.",
+    "Numbered features on Pioneer, Horsebrush, Burns, Zippity and Gathering Green open their own child details. Official-photo mode hides illustration annotations.",
+    "Visit details and illustration shortcuts work on phone. The Walks skip link targets visible walks-panel; the walking guide closes with Escape and returns focus to its trigger.",
+    "The all-area destination strip contains 25 roots; Ascent filters to seven, including two directory-only entries. Coming Soon retains 11 groups /16 records on a full-area map and hides current-place panels.",
+    "Actual desktop 900x1200 and phone 390x1200 screenshots were compared to preserved owner-selected artwork. No horizontal overflow in checked phone views; no captured console errors or warnings."
+  ],
+  "limitations": [
+    "Local Chromium desktop and phone viewport simulation, not physical-device or screen-reader certification.",
+    "Eight feature buttons on five models; remaining model features are reached through their nested directory.",
+    "Unfold uses the saved approximate anchors, with four representatives for Whole Ranch and at most seven lifted callouts per village; all matching records remain listed.",
+    "Visit details and reference models have explicit source gaps; this is not a live source monitoring system or owner launch approval."
+  ]
+}

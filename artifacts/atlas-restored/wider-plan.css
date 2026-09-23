@@ -1,0 +1,25 @@
+/* Versioned wider landscape: original source remains directly comparable. */
+.plan-area-name{background:#fffbedde;padding:4px 8px;border-radius:4px;box-shadow:0 2px 8px #34492a18}
+#village-planning{background:#f2f0e4;gap:36px;grid-template-columns:minmax(0,1.4fr) minmax(290px,.7fr);padding:24px}
+.village-planning-map{padding:0;background:#e9e7d5;border:0;box-shadow:none;overflow:hidden;border-radius:18px}
+.plan-map-caption{padding:14px 18px 0;position:relative;z-index:3}.plan-north{font-size:15px;letter-spacing:.08em}
+.village-plan-sheet{max-width:none;background:transparent;box-shadow:none;margin-top:-10px}
+.village-plan-sheet>.village-plan-geography{aspect-ratio:988/1592;width:100%;height:auto;border-radius:18px}
+.plan-area-name{position:absolute;transform:translate(-50%,0);margin-top:30px;white-space:nowrap;font:clamp(16px,1.7vw,24px)/1.05 var(--serif);color:#233c2b;text-shadow:0 1px 4px #fffbe8,0 0 12px #fffbe8,0 0 3px white;z-index:2;pointer-events:none}
+.plan-current-village{position:absolute;transform:translate(-50%,-50%);font:clamp(15px,1.6vw,22px)/1.05 var(--serif);color:#243d2d;text-align:center;padding:5px 7px;background:#fffbefdc;border-radius:3px;box-shadow:0 3px 15px #2a3f2926;pointer-events:none;z-index:2}
+.plan-current-village small{display:block;font:9px/1.5 var(--sans,Arial);letter-spacing:.04em;margin-top:3px}
+.village-plan-pin{background:#fff8db;color:#3d4a2d;box-shadow:0 0 0 1px #756635,0 3px 8px #273b2855;width:44px;height:44px;min-height:44px}
+.village-plan-pin:before{content:'';position:absolute;inset:-8px;border:1px solid #faf3d9b8;border-radius:50%;pointer-events:none}
+.plan-spotlight{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .45s;background:radial-gradient(ellipse 24% 15% at var(--plan-x) var(--plan-y),transparent 40%,#26392342 100%);border-radius:18px}
+.is-selected .plan-spotlight{opacity:1}
+.plan-source-caption{padding:12px 14px;background:#f1f0e4;margin:0;font-size:11px}
+.plan-official-comparison{background:#f7f5e9;padding:0 16px 12px;font-size:12px;color:#354f3c}
+.plan-official-comparison summary{min-height:44px;cursor:pointer;display:flex;align-items:center;gap:10px}.plan-official-comparison summary:before{content:'＋'}.plan-official-comparison[open] summary:before{content:'−'}.plan-official-comparison img{display:block;max-width:100%;height:auto}.plan-official-comparison a{display:block;padding:16px 0;color:inherit}
+.village-plan-content{padding-top:22px}.village-plan-content h3{font-size:clamp(36px,3.5vw,48px);line-height:1.03}.village-plan-content>p{font-size:14px}.planned-village-list{margin:24px 0}.planned-village-list button{background:#fffbee99;box-shadow:none;border-radius:0;border:0;border-bottom:1px solid #cbd1bd;padding:14px 8px;min-height:70px}.planned-village-list strong{font-size:24px}.planned-village-list button[aria-pressed=true]{background:#e5ead7;border-left:3px solid #57714a}
+.plan-neighborhood-link{margin-top:20px;padding:14px 16px;min-height:44px;width:100%;background:#34503c;color:#fff9e9;border-radius:7px;text-align:left;font-size:13px}
+@media(max-width:900px){#village-planning{grid-template-columns:minmax(0,1fr) minmax(245px,.8fr);gap:20px;padding:16px}.plan-area-name{font-size:17px}}
+@media(max-width:720px){#village-planning{grid-template-columns:1fr;padding:0 8px 14px;gap:12px}.village-planning-map{border-radius:12px}.plan-map-caption{font-size:9px;padding:10px 12px 0;min-height:25px}.plan-north{font-size:12px}.village-plan-sheet{margin-top:0;max-width:none}.plan-area-name{font-size:16px;margin-top:27px}.plan-current-village{font-size:16px;padding:4px}.plan-current-village small{font-size:8px}.plan-source-caption{font-size:10px}.village-plan-content{padding:5px 5px 0}.village-plan-content h3{font-size:35px}.planned-village-list{grid-template-columns:1fr 1fr;margin:15px 0}.planned-village-list strong{font-size:20px}.planned-village-list button{min-height:75px;padding:10px 7px}.village-plan-content>p{font-size:13px}.plan-neighborhood-link{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.plan-spotlight{transition:none}}
+@media(max-width:720px){.plan-map-caption{min-height:17px;padding-top:4px}.village-planning-map{margin-top:-2px}}
+.plan-area-name{margin-top:0;transform:translate(calc(-100% - 32px),-50%)}
+.plan-area-name[data-area-name="planned-heritage"],.plan-area-name[data-area-name="planned-promontory"]{transform:translate(32px,-50%)}

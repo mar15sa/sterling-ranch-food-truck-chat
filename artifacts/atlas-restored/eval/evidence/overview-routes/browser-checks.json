@@ -1,0 +1,65 @@
+{
+  "reviewedAt": "2026-09-23",
+  "desktop": [
+    900,
+    1200
+  ],
+  "mobile": [
+    390,
+    1200
+  ],
+  "initialMapRouteCount": 8,
+  "initialMapPathCount": 9,
+  "desktopMarkerResults": [
+    {
+      "id": "prospect-loop",
+      "title": "A lap around Prospect",
+      "open": true
+    },
+    {
+      "id": "providence-west",
+      "title": "Providence’s west greenway",
+      "open": true
+    },
+    {
+      "id": "overlook-link",
+      "title": "Titan Road to the Overlook",
+      "open": true
+    },
+    {
+      "id": "titan-promenade",
+      "title": "Along Titan Road",
+      "open": true
+    },
+    {
+      "id": "prospect-north",
+      "title": "Prospect’s northern greenway",
+      "open": true
+    },
+    {
+      "id": "prospect-park-link",
+      "title": "Prospect Park’s eastward link",
+      "open": true
+    },
+    {
+      "id": "ascent-middle",
+      "title": "Through central Ascent",
+      "open": true
+    },
+    {
+      "id": "ascent-greenway",
+      "title": "Ascent’s winding greenway",
+      "open": true
+    }
+  ],
+  "directLineClickTitle": "Along Titan Road",
+  "enterTitle": "Through central Ascent",
+  "spaceTitle": "A lap around Prospect",
+  "escapeRestoresRouteFocus": true,
+  "mobileMarkerTitle": "Ascent’s winding greenway",
+  "ascentFilter": {
+    "mapRoutes": 8,
+    "listCards": 2
+  },
+  "mobileHorizontalOverflow": false
+}

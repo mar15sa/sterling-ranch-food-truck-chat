@@ -1,0 +1,42 @@
+[
+  {
+    "area": "Ascent",
+    "case": "phone area selection",
+    "focused": true,
+    "overflow": false,
+    "projects": 4
+  },
+  {
+    "case": "no current search results",
+    "result": "No matching future project. Try “school”, “library” or a village name."
+  },
+  {
+    "case": "return neighborhood",
+    "directory": 25,
+    "futureHidden": true,
+    "mapVisible": true
+  },
+  {
+    "case": "phone filter entry",
+    "currentVisible": 0,
+    "mapVisible": true
+  },
+  {
+    "case": "nested future search",
+    "childExpanded": true,
+    "currentVisible": 0,
+    "focusId": "project-detail-library-return",
+    "mapVisible": true
+  },
+  {
+    "case": "unlocated eastern project",
+    "focused": false,
+    "note": "Exact site not plotted. Full Ranch view shown.",
+    "shown": "Zebulon Regional Sports Complex"
+  },
+  {
+    "case": "desktop map filter entry",
+    "currentVisible": 0,
+    "mapVisible": true
+  }
+]

@@ -1,0 +1,133 @@
+✔ full saved catalog retains every record, including future and unlocated places (17.2159ms)
+✔ area inventory covers all 25 current roots and every documented CAB walk (1.6469ms)
+✔ nested amenities preserve their parent relationships throughout the full catalog (0.394ms)
+✔ pickleball and Prospect remain represented and searchable (0.9448ms)
+✔ discovery exposes restorable history state and the complete contextual destination strip (0.6043ms)
+✔ Sterling Center discovers nested coffee and playground amenities (2.3078ms)
+✔ future amenities do not appear in currently open Prospect features (0.545ms)
+✔ play discovery excludes private apartment amenities and schools (0.9032ms)
+✔ all lens includes the complete saved current-root inventory (0.4049ms)
+✔ all documented walking-route links remain connected to their places (0.6967ms)
+✔ future groups retain all saved future records without promoting them to current amenities (0.4972ms)
+✔ unlocated current roots stay discoverable without fabricated coordinates (0.2758ms)
+✔ the owner-selected full-area artwork and detailed models remain unchanged (27.8375ms)
+✔ valid documented review passes (154.3592ms)
+✔ missing evidence fails (125.7941ms)
+✔ changed candidate evidence fails as stale (111.9729ms)
+✔ valid discovery evidence passes when the discovery interface is present (140.4561ms)
+✔ missing discovery evidence fails when the discovery interface is present (127.8626ms)
+✔ changed discovery proof hash fails (131.6825ms)
+✔ valid focus evidence passes when the focus interface is present (137.2085ms)
+✔ missing focus evidence fails when the focus interface is present (90.1187ms)
+✔ changed focus proof hash fails (103.6206ms)
+✔ changed runtime fails as stale (46.7924ms)
+✔ low score fails (119.7792ms)
+✔ hard failure fails (140.567ms)
+✔ known bad low-poly scorecard fails (114.2798ms)
+✔ missing actual judgment fails (132.828ms)
+✔ unset actual comparison fails (152.5525ms)
+✔ changed pinned baseline registry fails (102.3585ms)
+✔ narrowed seven-place crop fails coverage (142.0746ms)
+✔ narrowed layout roots fails coverage (103.201ms)
+✔ unlocated roots must retain null coordinates and pixels (83.772ms)
+✔ walk visuals require desktop and mobile review evidence (97.9599ms)
+✔ complete recorded walking visual evidence passes (108.2003ms)
+✔ changed walking screenshot evidence is rejected (225.4032ms)
+✔ village-only evidence cannot pass the full-overview route review (269.7608ms)
+✔ future village UI cannot reuse project-only screenshot evidence (306.2373ms)
+✔ Prospect focus stays inside the illustration at the lower-left edge (1.2391ms)
+✔ unlocated or malformed points do not produce a camera (0.366ms)
+✔ village camera fits its spread and uses a phone-sized viewport (0.6391ms)
+✔ future-only mode retains only strictly future places, including nested children (0.5562ms)
+✔ village matching accepts its exact, area, and wider-community labels only (0.412ms)
+✔ future areas retain all 16 saved plans under 11 project roots (1.6234ms)
+✔ future grouping accepts only the boolean true flag (0.8229ms)
+✔ future children resolve to their planned library, while phases retain their existing parent mapping (0.9089ms)
+✔ future focus uses an existing parent location instead of a phase coordinate (1.1724ms)
+✔ future focus falls back to the village area and leaves unlocated eastern plans unpinned (1.4415ms)
+✔ projection is reversible and remains inside the 1536 by 1024 plate (1.3559ms)
+✔ the full saved geography bounds and every current parent source record are retained (2.4798ms)
+✔ north stays up in the rendered plate (0.5792ms)
+✔ full-area anchors fit and include Burns, Prospect, Willow Creek, and Broadstone (0.991ms)
+✔ Sterling Center and Overlook footprints exactly match saved source geometry (2.3532ms)
+✔ road grounding includes actual shared source junctions (1.3104ms)
+✔ every illustrated hotspot opens a real current child of that destination (8.5209ms)
+✔ unseen or future features never become illustration hotspots (2.15ms)
+✔ place-model registry covers current parent places with evidence-backed models or a pending reason (369.9997ms)
+✔ model UI excludes unknown and future entries, escapes supplied text, and hides legacy comparisons (2.1217ms)
+✔ place and amenity sharing retains area, photo and selected detail (3.7267ms)
+✔ returning map and future states remain distinct from opening a model (1.5662ms)
+✔ untrusted URL parameters cannot create malformed navigation state (0.7191ms)
+✔ shared places retain the originating area and unfolded layer (2.2893ms)
+✔ the CAB plan contributes exactly its five future named areas (0.975ms)
+✔ Paramount keeps the CAB map’s Center distinction (0.8691ms)
+✔ future-area dates remain unknown and every entry retains CAB provenance (0.6451ms)
+✔ future-area entries are searchable (1.6151ms)
+✔ future village and project selections round-trip through navigation (1.1114ms)
+✔ walk inventory retains originals and adds source-backed options in all three mapped villages (1.9897ms)
+✔ the complete recorded mileage-label inventory preserves distinct repeated labels and verified mileage (1.5234ms)
+✔ every route is highlighted in source context rather than detached from repeated landscape art (12.9777ms)
+✔ route frames keep every source point and endpoint inside the visible map (2.0193ms)
+✔ loop shares its start/return marker while one-way routes label both ends (2.081ms)
+✔ section locator highlights its recorded label without inventing a trail alignment (4.4293ms)
+✔ future park projects are absent from current trail access cards (0.9033ms)
+✔ all sourced walking access points remain discoverable in the map walking filter (0.6302ms)
+✖ initial full neighborhood overview draws every guide as a directly selectable route (21.7105ms)
+✔ overview graphic registration preserves complete route shapes and on-image markers (1.6854ms)
+✔ artboard bounds contain complete guide frames without clipping routes (1.5929ms)
+✔ places overview covers every matching root and keeps unlocated entries unpinned (6.6072ms)
+✔ area and lens filters bound the places directory (1.1946ms)
+✔ a crowded area uses unique slots for its bounded lifted scene while listing every root (2.9988ms)
+✔ future records do not leak into the places layer and retain their own layer (1.6515ms)
+✔ unfold output escapes saved text in labels and route content (1.8872ms)
+✔ expanded walks stay complete in the directory and bounded above the landscape (1.9557ms)
+✔ visit card escapes place content and only renders web actions (3.6073ms)
+✔ child card labels inherited address as its parent location and provides an open control (0.9301ms)
+✔ unknown access stays unconfirmed and future status uses its own badge (1.0898ms)
+✔ apartment access badge includes its source without claiming public access (0.617ms)
+✔ unverified arrival directions never call the property address an entrance (1.349ms)
+✔ source date is linked to sources and does not imply verification (1.424ms)
+✔ legacy access and facts remain visible without inferring public access (1.1066ms)
+✔ safeUrl rejects non-web protocols (0.5679ms)
+ℹ tests 91
+ℹ suites 0
+ℹ pass 90
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4236.2827
+
+✖ failing tests:
+
+test at trail-network.test.mjs:40:1
+✖ initial full neighborhood overview draws every guide as a directly selectable route (21.7105ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   'ascent-greenway',
+  -   'ascent-middle',
+  -   'overlook-link',
+  -   'prospect-loop',
+  -   'prospect-north',
+  -   'prospect-park-link',
+  -   'providence-west',
+  -   'titan-promenade'
+  - ]
+
+      at TestContext.<anonymous> (file:///C:/Users/mar15/Documents/Codex/2026-05-14/my-community-does-daily-food-trucks/artifacts/atlas-resident-journeys-worktree/artifacts/atlas-restored/trail-network.test.mjs:44:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
