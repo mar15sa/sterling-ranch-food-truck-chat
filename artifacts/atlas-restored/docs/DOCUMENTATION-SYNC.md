@@ -29,3 +29,13 @@ Implementation: 14abf61, feature branch codex/atlas-future-map-20260922. Local n
 Affected Notion page: https://www.notion.so/3dabf909186d81b99d91ddd39861536b . Fetched before update, inserted a dated Coming Soon map correction under the existing Atlas section, and fetched afterward. Readback confirmed the new entry, 14abf61 source link, and preserved Village focus history. Status explicitly implemented/verified locally; owner review pending; not deployed. No documentation pending.
 
 47 focused checks and current browser evidence are recorded in eval/FUTURE-MAP-REVIEW.md. No production or shared staging changes. Normal startup and gate are unchanged except the additional required future-map desktop evidence state.
+
+## Photo-based place expansion - September 22, 2026
+
+Implementation: `3aacb07`, feature branch `codex/atlas-place-models-20260922`. Fifteen new models bring the total to 19; all have explicit reference scope and an official-photo toggle. Six destinations remain pending stronger references and retain their directory entries. Full area, catalog, trails and previous model assets are unchanged.
+
+The Notion Design and experience reference at https://www.notion.so/3dabf909186d81b99d91ddd39861536b was fetched before editing. A dated entry was inserted into the existing Atlas section, then fetched back to verify the new expansion entry, implementation link, prior Coming Soon entry and earlier village-focus history. Status is implemented and verified locally; owner review pending; not deployed. No documentation is pending.
+
+Normal local preview on 4193 verified `ok: true`, `reviewMode: false`, `launchAuthorized: false`; the browser review page showed `visual-review-pass`. Previous 4190 comparison was preserved. Forty-nine tests passed, with all 19 browser model selections and actual desktop/mobile evidence. Source-pair hashes require fresh review for later model or reference replacements. See `eval/MODEL-REVIEW.md` for scope and limitations. Independent final integration review found no actionable issues.
+
+No staging/production deployment, source approval, Assistant behavior change, resident question, privacy change or paid hosting occurred. No other owner-guide section or operating diagram required an update. This documentation-only closeout does not change the reviewed runtime.
