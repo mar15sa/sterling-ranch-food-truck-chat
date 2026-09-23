@@ -1,0 +1,40 @@
+✔ a 1.04-mile one-way guide includes the return trip and cannot match 30 minutes (5.2482ms)
+✔ a time filter mutes nonmatching walks but keeps all eight routes in the overview (4.3975ms)
+✔ global search returns places, walks, and future plans regardless of the active view (1.4448ms)
+✔ unsupported suitability never becomes a synthetic search tag (0.5699ms)
+✔ access badges identify eligibility without treating missing evidence as public access (0.8363ms)
+✔ older and current links both round-trip to their safe navigation state (2.0472ms)
+✔ connections show amenity child links separately from route lines and make no geographic promise (1.4463ms)
+✔ all saved future records retain their exact names (0.523ms)
+✔ every catalog listing and future village is individually reconciled (1.4694ms)
+✔ pool search badges distinguish resident access, private apartment amenities and future plans (1.2018ms)
+✔ retained source information never claims a new verification (2.9396ms)
+✔ fresh library update replaces outdated target and preserves source location orientation (0.4325ms)
+✔ walk inventory retains originals and adds source-backed options in all three mapped villages (0.8088ms)
+✔ the complete recorded mileage-label inventory preserves distinct repeated labels and verified mileage (0.5372ms)
+✔ every route is highlighted in source context rather than detached from repeated landscape art (5.3575ms)
+✔ route frames keep every source point and endpoint inside the visible map (0.9991ms)
+✔ loop shares its start/return marker while one-way routes label both ends (0.9222ms)
+✔ section locator highlights its recorded label without inventing a trail alignment (2.7587ms)
+✔ future park projects are absent from current trail access cards (0.2774ms)
+✔ all sourced walking access points remain discoverable in the map walking filter (0.3858ms)
+✔ initial full neighborhood overview draws every guide as a directly selectable route (3.6992ms)
+✔ overview graphic registration preserves complete route shapes and on-image markers (0.6163ms)
+✔ artboard bounds contain complete guide frames without clipping routes (0.7142ms)
+✔ visit card escapes place content and only renders web actions (0.9038ms)
+✔ child card labels inherited address as its parent location and provides an open control (0.3759ms)
+✔ unknown access stays unconfirmed and future status uses its own badge (0.3401ms)
+✔ compact apartment badge has no prose or anchor, while the detailed card keeps evidence (0.5572ms)
+✔ reservation badge requires supported required or available metadata (0.2744ms)
+✔ unverified arrival directions never call the property address an entrance (0.4361ms)
+✔ checked and retained information are visible near hours without calling them a source date (0.6885ms)
+✔ legacy access and facts remain visible without inferring public access (0.4043ms)
+✔ safeUrl rejects non-web protocols (0.1578ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 596.9951

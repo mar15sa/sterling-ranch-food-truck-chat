@@ -1,0 +1,604 @@
+{
+  "verdict": "visual-review-pass",
+  "reviewer": "GPT-6 Astra coordinator and final reviewer; independent GPT-5.6 Terra source-pair review",
+  "reviewerType": "visual-ai",
+  "reviewedAt": "2026-09-22",
+  "actualComparison": true,
+  "runtimeFingerprint": "fb5a1993a5065a09b23c5106cb0f566395797948c0ba3695beaa7aa4e75c8d2a",
+  "baselineRegistryFingerprint": "843d02d38ecc36f709f85672d020257d70e83cb87d72ab9c2f307ae9bdae68fa",
+  "coverageChecks": {
+    "passed": true,
+    "scope": "full-saved-atlas-area",
+    "bounds": {
+      "west": -105.077,
+      "east": -105.02,
+      "south": 39.477,
+      "north": 39.518
+    },
+    "expectedCurrentRootIds": [
+      "ascent-pavilion",
+      "broadstone",
+      "burns",
+      "high-top",
+      "horsebrush",
+      "john-adams",
+      "mccormick",
+      "outcrop",
+      "overlook",
+      "pat-gallagher",
+      "peekaboo",
+      "pioneer",
+      "primrose",
+      "prose",
+      "prospect-park",
+      "providence-park",
+      "providence-regional",
+      "sterling-center",
+      "steve-bloom",
+      "trailrock",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "yard-27",
+      "zippity"
+    ],
+    "includedCurrentRootIds": [
+      "ascent-pavilion",
+      "broadstone",
+      "burns",
+      "high-top",
+      "horsebrush",
+      "john-adams",
+      "mccormick",
+      "outcrop",
+      "overlook",
+      "pat-gallagher",
+      "peekaboo",
+      "pioneer",
+      "primrose",
+      "prose",
+      "prospect-park",
+      "providence-park",
+      "providence-regional",
+      "sterling-center",
+      "steve-bloom",
+      "trailrock",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "yard-27",
+      "zippity"
+    ],
+    "expectedPlaceIds": [
+      "agora",
+      "ascent-pavilion",
+      "ascent-village-center",
+      "atlas-coffee",
+      "broadstone",
+      "broadstone-ev",
+      "broadstone-fitness",
+      "broadstone-lounge",
+      "broadstone-pool",
+      "broadstone-work",
+      "burns",
+      "burns-courts",
+      "burns-next",
+      "cab-office",
+      "cultural-trail",
+      "farmers-market",
+      "food-trucks",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "gathering-play",
+      "heritage",
+      "high-top",
+      "high-top-courts",
+      "horsebrush",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "info-center",
+      "john-adams",
+      "lake-family-dental",
+      "library",
+      "library-childrens",
+      "library-outdoors",
+      "library-return",
+      "library-rooms",
+      "living-dream",
+      "mccormick",
+      "mccormick-play",
+      "mccormick-shelter",
+      "medley",
+      "outcrop",
+      "overlook",
+      "overlook-fitness",
+      "overlook-great-hall",
+      "overlook-north-pavilion",
+      "overlook-pool",
+      "overlook-south-pavilion",
+      "overlook-splash",
+      "pat-gallagher",
+      "pat-shelter",
+      "peekaboo",
+      "peekaboo-play",
+      "physical-therapy",
+      "pioneer",
+      "pioneer-play",
+      "pioneer-shelter",
+      "primary-care",
+      "primrose",
+      "primrose-play",
+      "prose",
+      "prose-dog",
+      "prose-fitness",
+      "prose-pool",
+      "prose-work",
+      "prospect-basketball",
+      "prospect-lawn",
+      "prospect-next",
+      "prospect-park",
+      "prospect-pavilion",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-soccer",
+      "prospect-volleyball",
+      "prospect-walking",
+      "providence-park",
+      "providence-pavilion",
+      "providence-regional",
+      "ranch-patio",
+      "ranch-playground",
+      "ranch-social",
+      "rave",
+      "salta",
+      "school51",
+      "sterling-center",
+      "sterling-eyecare",
+      "sterling-gulch",
+      "steve-bloom",
+      "trailrock",
+      "trailrock-play",
+      "uchealth",
+      "urgent-care",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "willow-repair",
+      "yard-27",
+      "yard-cornhole",
+      "zebulon",
+      "zebulon-lifestyle",
+      "zippity",
+      "zippity-play",
+      "zippity-shelter"
+    ],
+    "includedPlaceIds": [
+      "agora",
+      "ascent-pavilion",
+      "ascent-village-center",
+      "atlas-coffee",
+      "broadstone",
+      "broadstone-ev",
+      "broadstone-fitness",
+      "broadstone-lounge",
+      "broadstone-pool",
+      "broadstone-work",
+      "burns",
+      "burns-courts",
+      "burns-next",
+      "cab-office",
+      "cultural-trail",
+      "farmers-market",
+      "food-trucks",
+      "gathering-bocce",
+      "gathering-pavilion",
+      "gathering-play",
+      "heritage",
+      "high-top",
+      "high-top-courts",
+      "horsebrush",
+      "horsebrush-bocce",
+      "horsebrush-shelters",
+      "info-center",
+      "john-adams",
+      "lake-family-dental",
+      "library",
+      "library-childrens",
+      "library-outdoors",
+      "library-return",
+      "library-rooms",
+      "living-dream",
+      "mccormick",
+      "mccormick-play",
+      "mccormick-shelter",
+      "medley",
+      "outcrop",
+      "overlook",
+      "overlook-fitness",
+      "overlook-great-hall",
+      "overlook-north-pavilion",
+      "overlook-pool",
+      "overlook-south-pavilion",
+      "overlook-splash",
+      "pat-gallagher",
+      "pat-shelter",
+      "peekaboo",
+      "peekaboo-play",
+      "physical-therapy",
+      "pioneer",
+      "pioneer-play",
+      "pioneer-shelter",
+      "primary-care",
+      "primrose",
+      "primrose-play",
+      "prose",
+      "prose-dog",
+      "prose-fitness",
+      "prose-pool",
+      "prose-work",
+      "prospect-basketball",
+      "prospect-lawn",
+      "prospect-next",
+      "prospect-park",
+      "prospect-pavilion",
+      "prospect-playground",
+      "prospect-shell",
+      "prospect-soccer",
+      "prospect-volleyball",
+      "prospect-walking",
+      "providence-park",
+      "providence-pavilion",
+      "providence-regional",
+      "ranch-patio",
+      "ranch-playground",
+      "ranch-social",
+      "rave",
+      "salta",
+      "school51",
+      "sterling-center",
+      "sterling-eyecare",
+      "sterling-gulch",
+      "steve-bloom",
+      "trailrock",
+      "trailrock-play",
+      "uchealth",
+      "urgent-care",
+      "water-plant",
+      "willow-corridor",
+      "willow-creek",
+      "willow-repair",
+      "yard-27",
+      "yard-cornhole",
+      "zebulon",
+      "zebulon-lifestyle",
+      "zippity",
+      "zippity-play",
+      "zippity-shelter"
+    ],
+    "expectedRouteIds": [
+      "overlook-link",
+      "prospect-loop",
+      "providence-west"
+    ],
+    "includedRouteIds": [
+      "overlook-link",
+      "prospect-loop",
+      "providence-west"
+    ]
+  },
+  "functionalChecks": {
+    "passed": true,
+    "checks": [
+      "49 tests passed, including all prior coverage/focus/future checks and model registry/source review guards.",
+      "All 19 models selected through the browser chooser: images loaded, intended source set, no horizontal overflow at desktop width.",
+      "Official photo/illustration toggle works; changing destination resets it; button focus is restored after rendering.",
+      "900 x 1200 desktop and 390 x 1200 phone checks cover new models, source photos, existing Sterling roof open/close, full neighborhood and Coming Soon.",
+      "Coming Soon keeps the full-area map, 11 future groups and 16 future records, with current models and directory hidden.",
+      "All 15 new model/reference image pairs visually inspected; exact reviewed image hashes are required by tests.",
+      "No captured browser console errors or warnings. Existing walking, Unfold and focus evidence reused only for unchanged code paths."
+    ]
+  },
+  "hardFailures": [],
+  "states": [
+    {
+      "name": "neighborhood-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-neighborhood-desktop.png",
+        "sha256": "b079a43cad51448bb053956dbe433d8d0f637798cfc6c6e5ecf78f6648564429",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/models/neighborhood-desktop.png",
+        "sha256": "232f12f19b85f6d4534bd37e599ed4a3e92f23749006e9ab9105670ef2a44fb7"
+      },
+      "baselineScores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 3,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual new capture compared with pinned owner-selected base: full-area painting, village labels, southwest Prospect, source positions and all destinations retained."
+    },
+    {
+      "name": "sterling-open-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-sterling-open-desktop.png",
+        "sha256": "3589b27cfbf92ceebfbf6a32c061b39a85d29cd7a357bcb218d9d2cbd21b2d8c",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/models/sterling-open-desktop.png",
+        "sha256": "19d52d13cc120dccb9319a5a08c82fb5e9cb6ff5d675bc791f06119b230fa7ca"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual settled new capture compared with pinned owner-selected base: original model asset, lighting and amenity groups retained; chooser sits above the model in normal flow. Sterling Center roof opening retained; no false roof opening on other models."
+    },
+    {
+      "name": "overlook-open-desktop",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-overlook-open-desktop.png",
+        "sha256": "21102156d65c1b8f4d775f83ed9b60f8329a681761d0f81b08c4750081d62e6b",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/models/overlook-open-desktop.png",
+        "sha256": "e289fc2f146b7c74c57dcc489935bcda027277f4bddc585aa7d4d630eb6c5bd3"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual settled new capture compared with pinned owner-selected base: original model asset, lighting and amenity groups retained; chooser sits above the model in normal flow. Sterling Center roof opening retained; no false roof opening on other models."
+    },
+    {
+      "name": "neighborhood-mobile",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-neighborhood-mobile.png",
+        "sha256": "81bf03fa7fe64a0a299acaa97de7a16191fcaf44ffa872047dc92d09cea0382b",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/models/neighborhood-mobile.png",
+        "sha256": "cdda0e8dc5a29896ed45c65d198926c2ff88d37dfdc0bfae6f580ae285f63a5c"
+      },
+      "baselineScores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 3,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 4,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual new capture compared with pinned owner-selected base: full-area painting, village labels, southwest Prospect, source positions and all destinations retained."
+    },
+    {
+      "name": "sterling-open-mobile",
+      "actualJudgment": true,
+      "baseline": {
+        "path": "eval/evidence/approved-base-sterling-open-mobile.png",
+        "sha256": "3724ddba30876136db67840f707a96e6f7118e4bb3808b220ae53c03bff93e44",
+        "provenance": {
+          "source": "http://127.0.0.1:4188/",
+          "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51",
+          "capturedAt": "2026-09-21",
+          "recordedBy": "GPT-6 Astra via CUA; preserved capture from owner-selected base"
+        }
+      },
+      "candidate": {
+        "path": "eval/evidence/models/sterling-open-mobile.png",
+        "sha256": "4946cf5f5f2dd489888dc459ec5e471ae5a5917e2276d922fb171672deff4ddf"
+      },
+      "baselineScores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "scores": {
+        "architecture": 5,
+        "landscape": 5,
+        "lighting": 5,
+        "composition": 4,
+        "readability": 4,
+        "usefulness": 4,
+        "geographicIntegrity": 4
+      },
+      "notes": "Actual settled new capture compared with pinned owner-selected base: original model asset, lighting and amenity groups retained; chooser sits above the model in normal flow. Sterling Center roof opening retained; no false roof opening on other models."
+    }
+  ],
+  "discoveryChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "unfolded-desktop",
+        "candidate": {
+          "path": "eval/evidence/focus/unfolded-desktop.png",
+          "sha256": "c81d1e87283e68a21a448429f6c5d73304e20894b6e74133f9302927c9ba37f2"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Separate planes with four detailed landmark models, original CAB guides and future links over retained terrain; no overlapping headings. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "unfolded-mobile",
+        "candidate": {
+          "path": "eval/evidence/focus/unfolded-mobile.png",
+          "sha256": "1139fff187aefeac050bd6016db3c0f74ad0dafbd85900d47a3194d5af8e61e3"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Readable stacked models, walking guides and future cards continue vertically without horizontal overflow or sheet collisions. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "walking-guide",
+        "candidate": {
+          "path": "eval/evidence/focus/walking-guide.png",
+          "sha256": "d9a80bda68ddb05033b10cf862edbf879f3c62d5b984bc76c3809d75a28c6030"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "CAB Prospect guide opens from a focused park and from the walking plane; Escape restores focus to its triggering action. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "future-layer",
+        "candidate": {
+          "path": "eval/evidence/models/future-desktop.png",
+          "sha256": "0880626f338e39be3b2f49f118c660470cb99760be9045d07c64f5e232d32b74"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "New browser capture reviewed: Coming Soon retains the full-area illustration, future-only area guides and project details; 11 groups and 16 records remain available, with current models and directory hidden."
+      }
+    ]
+  },
+  "reviewNotes": "See eval/MODEL-REVIEW.md. Five actual new core captures compared with the pinned owner-selected base. New model/photo browser captures and all 15 source pairs inspected. Unchanged discovery/focus evidence is explicitly reused. This visual-AI pass is not owner design approval or launch authorization.",
+  "focusChecks": {
+    "passed": true,
+    "states": [
+      {
+        "name": "village-focus-desktop",
+        "candidate": {
+          "path": "eval/evidence/focus/village-focus-desktop.png",
+          "sha256": "19ea2c2de2065aaefae45c14370e51ddc9c75781b14822eaf581facc0d561b1f"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Prospect focus retains the southwest area, moves toward the village and blurs surrounding artwork. All four village camera states exercised. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "place-focus-desktop",
+        "candidate": {
+          "path": "eval/evidence/focus/place-focus-desktop.png",
+          "sha256": "01350496d24845367dd4caf35f5594fbf743d75063c43e48debf1c4edb521e89"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Prospect Park stays crisp, selected marker remains legible; source switching retains the same selected place; full reset restores all 18 mapped roots. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "village-focus-mobile",
+        "candidate": {
+          "path": "eval/evidence/focus/village-focus-mobile.png",
+          "sha256": "01871ce634a696dbd0579c169c576988e4e8f3fac8adec8466a4b2560b7ee758"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Ascent focuses without image stretching, blank edges or horizontal overflow. Area list sits below the map; duplicate matching cards removed. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "future-only-mobile",
+        "candidate": {
+          "path": "eval/evidence/future-map/mobile.png",
+          "sha256": "6375395d100669236c1d586300cd3a26406fde9b4db3f522b1a276b9b099cfb8"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "Actual phone review: full-area future map visible, five separated readable area labels including southwest Prospect, 11 future project groups, zero visible current markers/cards, no horizontal overflow. Evidence reused from the preceding reviewed preview for this unchanged behavior; not recaptured in this model-expansion pass."
+      },
+      {
+        "name": "future-map-desktop",
+        "candidate": {
+          "path": "eval/evidence/models/future-desktop.png",
+          "sha256": "0880626f338e39be3b2f49f118c660470cb99760be9045d07c64f5e232d32b74"
+        },
+        "actualJudgment": true,
+        "passed": true,
+        "notes": "New browser capture reviewed: Coming Soon retains the full-area illustration, future-only area guides and project details; 11 groups and 16 records remain available, with current models and directory hidden."
+      }
+    ]
+  },
+  "evidenceReuse": {
+    "source": "eval/previous-focus-review.json",
+    "reason": "Unchanged detailed models, Unfold, walking guide and neighborhood focus code reuse the prior September 21 screenshots and judgments. Artwork/model/style assets remain hash-pinned. Two neighborhood overview states and all affected Coming Soon states were newly captured and reviewed September 22."
+  },
+  "modelChecks": {
+    "passed": true,
+    "modelCount": 19,
+    "newModelCount": 15,
+    "pendingCount": 6,
+    "sourcePairReview": "data/model-review.json",
+    "browserEvidence": "eval/evidence/models/browser-checks.json",
+    "comparisonPage": "eval/model-references.html",
+    "notes": "Photo-based dimensional raster illustrations; several are expressly limited to the photographed structure or facade, not full-site reconstructions."
+  }
+}

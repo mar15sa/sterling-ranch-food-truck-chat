@@ -1,0 +1,125 @@
+{
+  "checkedAt": "2026-09-21",
+  "sources": [
+    { "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" },
+    { "label": "Sterling Ranch CAB: Sterling Center", "url": "https://sterlingranchcab.com/275/Sterling-Center" },
+    { "label": "Ranch Social", "url": "https://sterlingranch.com/town-life/ranch-social/" },
+    { "label": "UCHealth Sterling Ranch Medical Center", "url": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/" },
+    { "label": "UCHealth Primary Care – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch" },
+    { "label": "UCHealth Urgent Care – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-urgent-care-sterling-ranch/" },
+    { "label": "UCHealth Physical Therapy and Rehabilitation Clinic – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-physical-therapy-and-rehabilitation-clinic-sterling-ranch/" },
+    { "label": "Lake Family Dental", "url": "https://mylakefamilydental.com/" },
+    { "label": "Sterling Eyecare", "url": "https://www.sterling-eyecare.com/" },
+    { "label": "RAVE Clinics", "url": "https://raveclinics.com/" }
+  ],
+  "groups": [
+    { "id": "food-gathering", "label": "Food & gathering", "placeIds": ["ranch-social"] },
+    { "id": "health-wellness", "label": "Health & wellness", "placeIds": ["uchealth", "lake-family-dental", "sterling-eyecare", "rave"] },
+    { "id": "community-help", "label": "Community help", "placeIds": ["info-center", "cab-office"] }
+  ],
+  "updates": [
+    {
+      "id": "sterling-center",
+      "summary": "Sterling Center brings together Ranch Social for food and gathering, health services, and community help in one easy-to-find destination. Choose a place below for its visit details.",
+      "highlights": ["Ranch Social is the shared food-and-gathering space; the other listings are separate destinations in the building.", "Primrose School is a separate school building at 8159 Piney River Avenue."],
+      "actions": [{ "label": "Explore Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }, { "label": "View CAB's Sterling Center page", "url": "https://sterlingranchcab.com/275/Sterling-Center" }],
+      "sources": [{ "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }, { "label": "Sterling Ranch CAB: Sterling Center", "url": "https://sterlingranchcab.com/275/Sterling-Center" }]
+    },
+    {
+      "id": "ranch-social",
+      "summary": "Ranch Social is Sterling Center's shared gathering place, with coffee, drinks, food, outdoor seating, a fire pit, and a log playground.",
+      "highlights": ["Atlas Coffee, Salta Wine & Cocktail Bar, Living the Dream Brewing Company, and Agora Market are located here.", "Food trucks and community events are listed through Sterling Ranch's event calendar."],
+      "actions": [{ "label": "Explore Ranch Social", "url": "https://sterlingranch.com/town-life/ranch-social/" }, { "label": "Check the event calendar", "url": "https://sterlingranch.com/happenings/events/" }],
+      "sources": [{ "label": "Ranch Social", "url": "https://sterlingranch.com/town-life/ranch-social/" }, { "label": "Sterling Ranch CAB: Sterling Center", "url": "https://sterlingranchcab.com/275/Sterling-Center" }]
+    },
+    {
+      "id": "uchealth",
+      "summary": "UCHealth Sterling Ranch Medical Center is at 8155 Piney River Avenue, Suite 100. It lists primary care, urgent care, and physical therapy clinics.",
+      "highlights": ["The operator's location page is the best place to choose a clinic and check current visit details.", "Urgent care is listed as open seven days a week; check UCHealth before making a special trip."],
+      "actions": [{ "label": "View UCHealth Sterling Ranch Medical Center", "url": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/" }],
+      "sources": [{ "label": "UCHealth Sterling Ranch Medical Center", "url": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/" }, { "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }],
+      "suite": "100"
+    },
+    {
+      "id": "primary-care",
+      "summary": "UCHealth Primary Care – Sterling Ranch is listed as a clinic within UCHealth Sterling Ranch Medical Center.",
+      "highlights": ["Use UCHealth's clinic page for current provider, appointment, and contact details.", "The medical center is at 8155 Piney River Avenue; use the clinic page for suite or arrival details."],
+      "actions": [{ "label": "Visit UCHealth Primary Care – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch" }],
+      "sources": [{ "label": "UCHealth Sterling Ranch Medical Center", "url": "https://www.uchealth.org/locations/uchealth-sterling-ranch-medical-center/" }, { "label": "UCHealth Primary Care – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-primary-care-clinic-sterling-ranch" }]
+    },
+    {
+      "id": "urgent-care",
+      "summary": "UCHealth Urgent Care – Sterling Ranch is at 8155 Piney River Avenue, Suite 100.",
+      "highlights": ["The clinic page lists its phone number as 303-265-3370 and has a link to reserve a spot.", "UCHealth says hours can vary for holidays, weather, and patient volume, so check its current listing before you go."],
+      "actions": [{ "label": "View UCHealth Urgent Care – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-urgent-care-sterling-ranch/" }],
+      "sources": [{ "label": "UCHealth Urgent Care – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-urgent-care-sterling-ranch/" }],
+      "suite": "100"
+    },
+    {
+      "id": "physical-therapy",
+      "summary": "UCHealth Physical Therapy and Rehabilitation Clinic – Sterling Ranch is at 8155 Piney River Avenue, Suite 100.",
+      "highlights": ["The clinic page lists its phone number as 303-265-3380.", "Use UCHealth's clinic page for the current weekday hours and appointment details."],
+      "actions": [{ "label": "View UCHealth Physical Therapy – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-physical-therapy-and-rehabilitation-clinic-sterling-ranch/" }],
+      "sources": [{ "label": "UCHealth Physical Therapy and Rehabilitation Clinic – Sterling Ranch", "url": "https://www.uchealth.org/locations/uchealth-physical-therapy-and-rehabilitation-clinic-sterling-ranch/" }],
+      "suite": "100"
+    },
+    {
+      "id": "lake-family-dental",
+      "summary": "Lake Family Dental is at 8155 Piney River Avenue, Suite 220, in the Sterling Center building.",
+      "highlights": ["The practice's official page includes its contact information and online appointment link.", "Lake Family Dental is also listed in Sterling Center's current business directory."],
+      "actions": [{ "label": "Visit Lake Family Dental", "url": "https://mylakefamilydental.com/" }],
+      "sources": [{ "label": "Lake Family Dental", "url": "https://mylakefamilydental.com/" }, { "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }],
+      "suite": "220"
+    },
+    {
+      "id": "sterling-eyecare",
+      "summary": "Sterling Eyecare is at 8155 Piney River Avenue, Suite 120.",
+      "highlights": ["Its official page includes appointments, contact information, and current office hours.", "The operator lists a midday lunch closure."],
+      "actions": [{ "label": "Visit Sterling Eyecare", "url": "https://www.sterling-eyecare.com/" }],
+      "sources": [{ "label": "Sterling Eyecare", "url": "https://www.sterling-eyecare.com/" }, { "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }],
+      "suite": "120"
+    },
+    {
+      "id": "rave",
+      "summary": "RAVE Clinics is at 8155 Piney River Avenue, Suite 230.",
+      "highlights": ["Use RAVE's official site to explore services or request an appointment.", "RAVE is listed in Sterling Center's current business directory."],
+      "actions": [{ "label": "Visit RAVE Clinics", "url": "https://raveclinics.com/" }],
+      "sources": [{ "label": "RAVE Clinics", "url": "https://raveclinics.com/" }, { "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }],
+      "suite": "230"
+    },
+    {
+      "id": "info-center",
+      "summary": "The Sterling Ranch Info Center is at 8155 Piney River Avenue, Suite 110. Stop in for community and home-search information.",
+      "highlights": ["The developer's page lists the Info Center as open daily from 10 AM to 5 PM.", "The Info Center and CAB share the same published on-site address."],
+      "actions": [{ "label": "Visit the Sterling Center page", "url": "https://sterlingranch.com/town-life/sterling-center/" }],
+      "sources": [{ "label": "Sterling Ranch: Sterling Center", "url": "https://sterlingranch.com/town-life/sterling-center/" }, { "label": "Sterling Ranch CAB: Sterling Center", "url": "https://sterlingranchcab.com/275/Sterling-Center" }],
+      "suite": "110"
+    },
+    {
+      "id": "cab-office",
+      "summary": "CAB lists an office contact with the Info Center at Sterling Center. Call before visiting for CAB help.",
+      "highlights": ["For CAB help, call the published CAB and Info Center number before visiting: 720-661-9694.", "The CAB page has links for common resident services, including reporting an issue, design review, billing, and amenity rentals."],
+      "actions": [{ "label": "Contact Sterling Ranch CAB", "url": "https://sterlingranchcab.com/275/Sterling-Center" }],
+      "sources": [{ "label": "Sterling Ranch CAB: Sterling Center", "url": "https://sterlingranchcab.com/275/Sterling-Center" }]
+    }
+  ],
+  "additions": [
+    {
+      "id": "cab-office", "name": "Sterling Ranch CAB Offices", "category": "services", "kind": "place", "parentId": "sterling-center", "parentName": "Sterling Center", "village": "Providence", "status": "listed", "future": false,
+      "description": "Community Authority Board office contact listed with the Info Center at Sterling Center.",
+      "tags": ["Community services"], "aliases": ["Sterling Ranch Community Authority Board"],
+      "sources": [{ "label": "Sterling Ranch CAB: Sterling Center", "url": "https://sterlingranchcab.com/275/Sterling-Center" }],
+      "checkedAt": "2026-09-21", "reviewAfterDays": 7, "reviewState": "staging-review",
+      "facts": [{ "text": "CAB lists Info Center and CAB Offices at Sterling Center and gives the on-site Info Center address as 8155 Piney River Avenue, Suite 110.", "url": "https://sterlingranchcab.com/275/Sterling-Center" }],
+      "access": null,
+      "visitNotes": ["For CAB help, call 720-661-9694 before visiting. CAB publishes this number with its Sterling Center and Info Center contact."],
+      "unknowns": ["Confirm whether CAB maintains a separately visitable public counter or uses the shared Info Center space.", "Confirm CAB service hours before displaying them."],
+      "address": null, "coordinates": [-105.037492, 39.506824], "locationPrecision": "parent-area", "locationGroup": "sterling-center", "groupName": "Sterling Center", "locationSource": "https://sterlingranchcab.com/275/Sterling-Center",
+      "action": { "label": "Contact Sterling Ranch CAB", "url": "https://sterlingranchcab.com/275/Sterling-Center" }
+    }
+  ],
+  "excludedOrUnresolved": [
+    { "name": "Primrose School of Sterling Ranch", "reason": "Already exists as the separate 8159 Piney River Avenue school record, rather than a Sterling Center tenant at 8155.", "sources": ["https://sterlingranchcab.com/275/Sterling-Center"] },
+    { "name": "Ent / Siemens", "reason": "Neither current official Sterling Center directory lists Ent or Siemens as a resident-facing Sterling Center tenant. No listing is added without current official evidence of a visitable service location; mailing-only entities are not treated as tenants.", "sources": ["https://sterlingranch.com/town-life/sterling-center/", "https://sterlingranchcab.com/275/Sterling-Center"] }
+  ]
+}

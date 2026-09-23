@@ -1,0 +1,143 @@
+[
+  {
+    "directoryNames": 5,
+    "horizontalOverflow": false,
+    "image": {
+      "height": 886.1041870117188,
+      "loaded": true,
+      "src": "http://127.0.0.1:4201/assets/village-master-plan.jpg",
+      "visible": true,
+      "width": 550,
+      "x": 208.92709350585935,
+      "y": 128.7916717529297
+    },
+    "namedCardsOnMap": 0,
+    "pins": [
+      {
+        "height": 44,
+        "width": 44,
+        "x": 445.4270935058594,
+        "y": 221.9791717529297
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 511.4270935058594,
+        "y": 319.44793701171875
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 428.9270935058594,
+        "y": 425.78125
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 390.4270935058594,
+        "y": 718.1979370117188
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 500.4270935058594,
+        "y": 797.9479370117188
+      }
+    ],
+    "name": "desktop"
+  },
+  {
+    "directoryNames": 5,
+    "horizontalOverflow": false,
+    "image": {
+      "height": 617.1354370117188,
+      "loaded": true,
+      "src": "http://127.0.0.1:4201/assets/village-master-plan.jpg",
+      "visible": true,
+      "width": 383.0520935058594,
+      "x": 74.25,
+      "y": 349.72918701171875
+    },
+    "namedCardsOnMap": 0,
+    "pins": [
+      {
+        "height": 44,
+        "width": 44,
+        "x": 232.28125,
+        "y": 407.9479370117187
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 278.25,
+        "y": 475.8333435058594
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 220.7916717529297,
+        "y": 549.8958740234375
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 193.9791717529297,
+        "y": 753.5521240234375
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 270.5833435058594,
+        "y": 809.09375
+      }
+    ],
+    "name": "compact"
+  },
+  {
+    "directoryNames": 5,
+    "horizontalOverflow": false,
+    "image": {
+      "height": 505.8854370117187,
+      "loaded": true,
+      "src": "http://127.0.0.1:4201/assets/village-master-plan.jpg",
+      "visible": true,
+      "width": 314,
+      "x": 30.33333396911621,
+      "y": 101
+    },
+    "namedCardsOnMap": 0,
+    "pins": [
+      {
+        "height": 44,
+        "width": 44,
+        "x": 155.90625,
+        "y": 144.7604217529297
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 193.58334350585935,
+        "y": 200.40625
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 146.48959350585938,
+        "y": 261.1145935058594
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 124.51042175292967,
+        "y": 428.0520935058594
+      },
+      {
+        "height": 44,
+        "width": 44,
+        "x": 187.3125,
+        "y": 473.5833435058594
+      }
+    ],
+    "name": "phone"
+  }
+]
