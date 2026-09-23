@@ -1,0 +1,9 @@
+# Discovery review scope · September 21, 2026
+
+The owner's direction is to preserve the current 4188 base while improving the agreed weaknesses. Pinning its existing actual screenshots reflects that direction; it does not silently rewrite the old comparisons. The legacy registry and restoration review are retained. The recorded scores compare against this chosen base, not an imagined final product.
+
+Required visual observations: the same painting covers the complete saved window, with southwest Prospect still readable; selected-place cards do not cover essential labels; the four landmark models keep their detail; new symbols are recognizable; phone controls and content fit. The new Unfold state must contain actionable listings, a real CAB route and project links, not only moving decorations. Future sites without coordinates must not gain invented pins. The separate route drawing must be visibly sourced and remain distinct from decorative paths.
+
+Required functional journeys: nested Atlas Coffee and playground from Sterling Center; McCormick amenities together; pickleball search and visit information; all three route dialogs and nearby-place navigation; school search into the future project; each village/lens combination including empty results; source-placement toggle; open/collapse model and return; keyboard focus into the selected content; Escape from route dialog; 390-pixel phone layout without page overflow. Reduced-motion code must suppress view transitions and smooth scroll.
+
+The automated gate verifies this record and its evidence, not subjective beauty. Owner review of new interactions and explicit launch approval remain separate. Wider touch-device testing, complete source refresh, actual development boundaries and more trail guides remain outside this local iteration.
