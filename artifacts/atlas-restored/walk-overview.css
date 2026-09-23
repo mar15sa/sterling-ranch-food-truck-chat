@@ -1,0 +1,29 @@
+/* A self-contained, walk-only neighborhood orientation view. */
+.walk-overview{margin:0 0 28px;border:1px solid #d7dfca;border-radius:12px;overflow:hidden;background:#fffdf5;color:#294334}
+.walk-overview__heading{display:flex;justify-content:space-between;gap:24px;align-items:end;padding:24px 26px 20px}
+.walk-overview__eyebrow{margin:0 0 7px;color:#58704f;font-size:10px;font-weight:700;letter-spacing:.14em}
+.walk-overview h2{margin:0;font:clamp(27px,3vw,40px)/1.03 var(--serif,Georgia,serif);font-weight:400;letter-spacing:-.025em}
+.walk-overview__legend{display:flex;gap:8px;align-items:flex-start;max-width:320px;margin:0;color:#566953;font-size:12px;line-height:1.45}
+.walk-overview__legend span{flex:0 0 auto;width:9px;height:9px;margin-top:4px;border-radius:50%;background:#b45a28}
+.walk-overview__scene{position:relative;aspect-ratio:3/2;overflow:hidden;background:#d9dfcc;isolation:isolate}
+.walk-overview__scene>img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;transition:transform .55s ease}
+.walk-overview.is-focused-providence .walk-overview__scene>img{transform:scale(1.08) translate(-4%,5%)}
+.walk-overview.is-focused-ascent .walk-overview__scene>img{transform:scale(1.08) translate(-2%,-4%)}
+.walk-overview.is-focused-prospect .walk-overview__scene>img{transform:scale(1.08) translate(5%,-7%)}
+.walk-overview__area-buttons{position:absolute;inset:0;z-index:1}
+.walk-overview__area{position:absolute;left:var(--walk-area-x);top:var(--walk-area-y);transform:translate(-50%,-50%);min-width:104px;padding:8px 10px 7px;border:1px solid #fffdeb;border-radius:7px;background:#254735e8;color:#fffdf4;text-align:left;box-shadow:0 4px 13px #14271966;font:inherit;line-height:1.1;transition:transform .2s ease,background .2s ease}
+.walk-overview__area span,.walk-overview__area small{display:block}.walk-overview__area span{font-size:12px;font-weight:700}.walk-overview__area small{margin-top:3px;color:#e2edcc;font-size:10px}
+.walk-overview__area:hover,.walk-overview__area:focus-visible,.walk-overview__area.is-active{background:#b45a28;transform:translate(-50%,-50%) scale(1.06)}
+.walk-overview__area:focus-visible,.walk-overview__filters button:focus-visible{outline:3px solid #173d37;outline-offset:3px}
+.walk-overview__note{position:absolute;z-index:1;right:13px;bottom:12px;max-width:285px;margin:0;padding:6px 8px;border-radius:5px;background:#fffdf4db;color:#466043;font-size:10px;line-height:1.35}
+.walk-overview__filters{display:flex;flex-wrap:wrap;gap:8px;padding:15px 22px;background:#f5f5e9}
+.walk-overview__filters button{min-height:37px;padding:7px 12px;border:1px solid #c8d6bd;border-radius:20px;background:#fffdf4;color:#35533e;font:inherit;font-size:12px}
+.walk-overview__filters button span{margin-left:4px;color:#60765b;font-size:10px}.walk-overview__filters button[aria-pressed=true]{border-color:#35573f;background:#35573f;color:#fffdf4}.walk-overview__filters button[aria-pressed=true] span{color:#e6eed9}
+@media (max-width:720px){.walk-overview{margin-bottom:21px;border-radius:9px}.walk-overview__heading{display:block;padding:18px 17px 15px}.walk-overview h2{font-size:28px}.walk-overview__legend{max-width:390px;margin-top:10px;font-size:11px}.walk-overview__area{min-width:82px;padding:6px 7px 5px}.walk-overview__area span{font-size:10px}.walk-overview__area small{font-size:8px}.walk-overview__note{right:8px;bottom:8px;max-width:195px;padding:4px 6px;font-size:8px}.walk-overview__filters{gap:6px;padding:11px 13px}.walk-overview__filters button{min-height:36px;padding:6px 10px;font-size:11px}}
+@media (prefers-reduced-motion:reduce){.walk-overview__scene>img,.walk-overview__area{transition:none}}
+
+.walk-overview__area-buttons{transition:transform .55s ease}
+.walk-overview.is-focused-providence .walk-overview__area-buttons{transform:scale(1.08) translate(-4%,5%)}
+.walk-overview.is-focused-ascent .walk-overview__area-buttons{transform:scale(1.08) translate(-2%,-4%)}
+.walk-overview.is-focused-prospect .walk-overview__area-buttons{transform:scale(1.08) translate(5%,-7%)}
+@media(prefers-reduced-motion:reduce){.walk-overview__area-buttons{transition:none}}

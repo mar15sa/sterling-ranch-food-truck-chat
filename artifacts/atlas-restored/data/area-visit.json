@@ -1,0 +1,175 @@
+{
+  "checkedAt": "2026-09-21",
+  "reviewState": "preview-source-review",
+  "places": {
+    "overlook": {
+      "summary": "A clubhouse for swimming, fitness and getting together, with membership access for Sterling Ranch households.",
+      "access": null,
+      "highlights": [
+        "Bring your membership card and enter through the front entrance.",
+        "Guests must be accompanied by a resident. Check CAB’s current guest-pass rules before inviting friends.",
+        "Clubhouse hours and pool hours are different; use the pool page for the swimming season and schedule."
+      ],
+      "actions": [
+        {
+          "label": "Access, hours & guest rules",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        },
+        {
+          "label": "Facility rentals",
+          "url": "https://sterlingranchcab.com/DocumentCenter/View/1938"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Overlook facility",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/Overlook-Clubhouse-1"
+        }
+      ],
+      "note": "The CAB rental agreement excludes pool use from facility rentals. Entry guidance describes the published rule; no surveyed entrance point is plotted."
+    },
+    "providence-park": {
+      "summary": "The Lawn at Providence sits across from Sterling Center, with a pavilion, picnic tables and walking paths.",
+      "highlights": [
+        "A separate park stop near Sterling Center.",
+        "CAB lists walking, biking, picnics, classes and concerts here; check the calendar for a particular event."
+      ],
+      "actions": [
+        {
+          "label": "Park details",
+          "url": "https://sterlingranchcab.com/facilities/facility/details/Providence-Park-4"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB Providence Park",
+          "url": "https://sterlingranchcab.com/facilities/facility/details/Providence-Park-4"
+        },
+        {
+          "label": "CAB community parks",
+          "url": "https://www.sterlingranchcab.com/335/Community-Parks"
+        }
+      ]
+    },
+    "prospect-park": {
+      "note": "CAB’s facility listing describes the park and its amenities. Its broader parks overview still contains older construction wording. A pool is not listed as an open amenity; check CAB’s facility page before a visit.",
+      "sources": [
+        {
+          "label": "CAB Prospect facility listing",
+          "url": "https://sterlingranchcab.com/facilities/facility/details/Prospect-Park-9"
+        },
+        {
+          "label": "CAB community parks overview",
+          "url": "https://sterlingranchcab.com/335/Community-Parks"
+        }
+      ]
+    },
+    "pioneer": {
+      "access": "CAB lists general park hours of 5 a.m. to 11 p.m. Check CAB for current park rules and any closures.",
+      "highlights": [
+        "A large grassy area, playground structure and sun shelter are listed by the official park directories.",
+        "The park is among residences on Arapahoe Peak Street."
+      ],
+      "unknowns": [
+        "A numbered entrance, parking, restrooms, play age range and accessible route are not specified in the reviewed park listings."
+      ],
+      "actions": [
+        {
+          "label": "Park details & current guidance",
+          "url": "https://sterlingranchcab.com/335/Community-Parks"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB community parks",
+          "url": "https://sterlingranchcab.com/335/Community-Parks"
+        },
+        {
+          "label": "CAB parks and trails guidelines",
+          "url": "https://www.sterlingranchcab.com/270/Parks-Trails"
+        },
+        {
+          "label": "Developer park directory",
+          "url": "https://sterlingranch.com/town-life/parks-rec/"
+        }
+      ],
+      "note": "Official park pages checked September 22, 2026. General CAB park hours are not a guarantee against temporary closures."
+    },
+    "burns": {
+      "address": "Pickleball courts: 9020 Middle Fork Street, Sterling Ranch, CO 80125",
+      "access": "CAB offers pickleball reservations for residents and nonresidents. Check the booking portal for availability and applicable fees.",
+      "highlights": [
+        "The eight pickleball courts are near Sterling Ranch Avenue and Middle Fork Street.",
+        "CAB lists free street parking near the courts. Bring paddles and balls and wear court or tennis shoes."
+      ],
+      "unknowns": [
+        "Restrooms, accessible routes and the wider park entrance are not specified in the reviewed court sources."
+      ],
+      "actions": [
+        {
+          "label": "Court hours & access rules",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        }
+      ],
+      "sources": [
+        {
+          "label": "CAB pickleball facility",
+          "url": "https://sterlingranchcab.com/Facilities/Facility/Details/Pickleball-Courts-at-Burns-Park-11"
+        }
+      ],
+      "note": "These visit details describe the pickleball courts; they do not establish facilities across the wider park."
+    },
+    "burns-courts": {
+      "actions": [
+        {
+          "label": "Check courts & reserve",
+          "url": "https://app.courtreserve.com/Online/Portal/Index/15838"
+        },
+        {
+          "label": "Court hours & access rules",
+          "url": "https://sterlingranchcab.com/418/Pickleball-Courts"
+        }
+      ],
+      "unknowns": [
+        "Check same-day availability and weather closures in the official booking portal.",
+        "Restrooms and an accessible entrance are not specified in the reviewed court listing."
+      ],
+      "note": "Official CAB pages checked September 22, 2026. The portal and written guidelines describe closing time differently; use the portal for current bookable times and CAB for access rules."
+    }
+  },
+  "projects": [
+    {
+      "id": "school51",
+      "name": "Elementary School 51",
+      "status": "Under construction",
+      "summary": "A new elementary school at 8220 Piney River Avenue, with DCSD targeting August 2027 for opening.",
+      "details": [
+        "Enrollment is anticipated in November 2026.",
+        "Use DCSD’s project page for the latest name, boundary and enrollment updates."
+      ],
+      "url": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch",
+      "sourceLabel": "Douglas County School District",
+      "locationNote": "Address sourced; building footprint and map placement not yet verified."
+    },
+    {
+      "id": "library",
+      "name": "Sterling Ranch Library",
+      "status": "In development",
+      "summary": "DCL’s plan includes children’s space, an event hall, conference and study rooms, and outdoor gathering areas.",
+      "details": [
+        "DCL described summer 2026 groundbreaking and about a year of construction plus transition time.",
+        "A confirmed opening date is not published in the reviewed source."
+      ],
+      "url": "https://dcl.org/build/",
+      "sourceLabel": "Douglas County Libraries",
+      "locationNote": "The source describes the Titan Road / Taylor River Circle area; exact footprint not yet verified."
+    }
+  ],
+  "routeReview": {
+    "date": "2026-09-21",
+    "source": "https://www.sterlingranchcab.com/273/Trails",
+    "map": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+    "mapDate": "2025-10-13",
+    "note": "CAB’s existing-trail map supplies route lengths and a schematic trace. OSM paths are a separate layer; no exact route-to-OSM match, entrance, accessibility or closure status is inferred."
+  }
+}
