@@ -1,0 +1,27 @@
+/* Walk-specific artwork. It does not alter the shared atlas map or source toggle. */
+#walks-panel .walk-atlas-hero{margin:-45px -45px 34px;overflow:hidden;border-bottom:1px solid #dbe3cd;background:#f4f0e3}
+.walk-atlas-hero .walk-art{position:relative;min-height:330px;overflow:hidden;background:#d7dfc9;color:#fffdf3;isolation:isolate}
+.walk-atlas-hero .walk-art>img{display:block;width:100%;height:100%;min-height:330px;object-fit:cover;object-position:center 48%;filter:saturate(.88) contrast(.96)}
+.walk-atlas-hero .walk-art-wash{position:absolute;inset:0;background:linear-gradient(90deg,#1e382ed9 0%,#294737ab 37%,#24403010 76%),linear-gradient(0deg,#172c2299,transparent 55%);z-index:1}
+.walk-atlas-copy{position:absolute;z-index:2;left:clamp(22px,5vw,68px);bottom:clamp(25px,5vw,57px);max-width:440px;text-shadow:0 1px 10px #18322588}
+.walk-atlas-copy .eyebrow{margin:0 0 10px;color:#e6eed7;font-size:9px;letter-spacing:.16em}
+.walk-atlas-copy h2{margin:0 0 11px;font:clamp(35px,4.6vw,62px)/.98 var(--serif);font-weight:400;letter-spacing:-.028em}
+.walk-atlas-copy p:last-child{max-width:330px;margin:0;font-size:12px;line-height:1.6;color:#f5f1df}
+.walk-art-note{position:absolute;z-index:2;right:clamp(18px,4vw,45px);bottom:18px;margin:0;padding:7px 10px;border:1px solid #fffdf366;border-radius:20px;background:#1731259e;color:#f5f0df;font-size:10px;letter-spacing:.025em}
+.walk-area-filters{display:flex;gap:7px;flex-wrap:wrap;padding:15px clamp(22px,4vw,45px);background:#fffdf4}
+.walk-area-filters button{min-height:33px;padding:7px 13px;border:1px solid #ccd8bd;border-radius:20px;background:#f5f5e9;color:#466043;font-size:11px}
+.walk-area-filters button[aria-pressed=true]{border-color:#385c45;background:#385c45;color:#fffdf5}
+.walk-area-filters button:disabled{opacity:.46;cursor:default}
+#walks-panel .route-sketch{aspect-ratio:3/2;height:auto;margin:0 0 21px;overflow:hidden;border:1px solid #dce4ce;border-radius:8px;background:#d8e0c7;box-shadow:0 12px 22px -18px #253a2d99}
+#walks-panel .route-sketch image{filter:saturate(.88) contrast(.97)}
+#walks-panel .route-shape rect{fill:#fffdf4e8;stroke:#e0e6d4;stroke-width:1}
+#walks-panel .route-shape text{fill:#4b664d;font:20px Arial,sans-serif;letter-spacing:.04em}
+#walks-panel .route-shape polyline{fill:none;stroke:#345f51;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+#walks-panel .walk-card{display:flex;flex-direction:column;background:#f8f7ed}
+#walks-panel .walk-card .primary{margin-top:auto}
+#route-dialog .route-sketch{width:100%;aspect-ratio:3/2;height:auto;margin:0 0 20px;border:1px solid #dde4ce;border-radius:8px;background:#d8e0c7}
+#route-dialog .route-sketch image{filter:saturate(.88) contrast(.97)}
+#route-dialog .route-shape rect{fill:#fffdf4e8;stroke:#e0e6d4;stroke-width:1}
+#route-dialog .route-shape text{fill:#4b664d;font:20px Arial,sans-serif;letter-spacing:.04em}
+#route-dialog .route-shape polyline{fill:none;stroke:#345f51;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+@media(max-width:720px){#walks-panel .walk-atlas-hero{margin:-29px -21px 25px}.walk-atlas-hero .walk-art,.walk-atlas-hero .walk-art>img{min-height:300px}.walk-atlas-copy{right:22px;bottom:49px}.walk-atlas-copy h2{font-size:39px}.walk-atlas-copy p:last-child{font-size:12px}.walk-art-note{right:17px;bottom:15px;font-size:9px}.walk-area-filters{padding:12px 17px;gap:6px}.walk-area-filters button{font-size:12px;padding:7px 11px}}

@@ -1,0 +1,1544 @@
+{
+  "version": 1,
+  "checkedAt": "2026-09-23",
+  "reviewState": "staging-review",
+  "coordinateSpace": "source-image-pixels",
+  "image": "/atlas/cab-trail-map.png",
+  "imageSize": [
+    1242,
+    2000
+  ],
+  "source": {
+    "label": "CAB parks and trails map",
+    "url": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+    "mapDate": "2025-10-13",
+    "listingUrl": "https://www.sterlingranchcab.com/273/Trails"
+  },
+  "overview": [
+    26,
+    510,
+    1190,
+    980
+  ],
+  "distanceNote": "Approximate mileage printed on CAB’s October 2025 map. Walking times estimate 2–3 mph without stops.",
+  "mapNote": "Guide names are descriptive, not official trail names. CAB’s source map supplies the route alignment and approximate distance; the neighborhood painting supplies area context. Check the official trail page for updates and closures.",
+  "routes": [
+    {
+      "id": "prospect-loop",
+      "name": "A lap around Prospect",
+      "area": "Prospect",
+      "type": "Loop",
+      "miles": 0.38,
+      "distanceParts": [
+        0.38
+      ],
+      "color": "#9b5d44",
+      "description": "A short park loop to pair with the playground or a little time on the lawn.",
+      "start": "The loop inside Prospect Park, off Monte Vista Circle",
+      "finish": "Return to your starting point in the park",
+      "steps": [
+        "Find the loop around the central park lawn, marked 0.38 mi on the trail map.",
+        "Follow the same loop back to where you started. The paths leaving the park are separate routes."
+      ],
+      "nearbyPlaceIds": [
+        "prospect-park"
+      ],
+      "viewBox": [
+        60,
+        1325,
+        185,
+        135
+      ],
+      "paths": [
+        [
+          [
+            125,
+            1378
+          ],
+          [
+            140,
+            1379
+          ],
+          [
+            145,
+            1390
+          ],
+          [
+            151,
+            1402
+          ],
+          [
+            147,
+            1417
+          ],
+          [
+            141,
+            1426
+          ],
+          [
+            128,
+            1431
+          ],
+          [
+            114,
+            1428
+          ],
+          [
+            105,
+            1419
+          ],
+          [
+            104,
+            1404
+          ],
+          [
+            109,
+            1390
+          ],
+          [
+            117,
+            1380
+          ],
+          [
+            125,
+            1378
+          ]
+        ]
+      ],
+      "startPoint": [
+        125,
+        1378
+      ],
+      "endPoint": [
+        125,
+        1378
+      ],
+      "sourceScope": "The existing-trail loop and its 0.38-mi label come from the CAB map. Its old park-construction label is superseded by CAB’s current Prospect Park facility listing; it is not used as current park status.",
+      "geometryMethod": "Manual visual trace of the labelled inner loop in the official map image; schematic display only."
+    },
+    {
+      "id": "providence-west",
+      "name": "Providence’s west greenway",
+      "area": "Providence",
+      "type": "One way",
+      "miles": 1.04,
+      "distanceParts": [
+        0.69,
+        0.35
+      ],
+      "color": "#397565",
+      "description": "Follow the greenway around the western edge of Providence, from Titan Road down to the Xcel corridor.",
+      "start": "Titan Road’s trail junction on the western edge of Providence",
+      "finish": "The Xcel electrical-easement trail junction",
+      "steps": [
+        "Start where the dashed trail leaves Titan Road and heads south along the western edge of Providence.",
+        "Follow the 0.69-mi section around the neighborhood’s west side to the greenway bend.",
+        "Continue on the adjoining 0.35-mi section to the Xcel corridor junction. Turn back for an approximately 2.08-mi out-and-back."
+      ],
+      "nearbyPlaceIds": [
+        "sterling-center",
+        "pioneer",
+        "mccormick"
+      ],
+      "viewBox": [
+        630,
+        480,
+        390,
+        455
+      ],
+      "paths": [
+        [
+          [
+            864,
+            542
+          ],
+          [
+            862,
+            568
+          ],
+          [
+            863,
+            598
+          ],
+          [
+            861,
+            623
+          ],
+          [
+            851,
+            651
+          ],
+          [
+            843,
+            683
+          ],
+          [
+            826,
+            707
+          ],
+          [
+            802,
+            724
+          ],
+          [
+            773,
+            737
+          ],
+          [
+            747,
+            744
+          ],
+          [
+            714,
+            741
+          ]
+        ],
+        [
+          [
+            714,
+            741
+          ],
+          [
+            709,
+            760
+          ],
+          [
+            709,
+            781
+          ],
+          [
+            714,
+            801
+          ],
+          [
+            714,
+            822
+          ],
+          [
+            707,
+            839
+          ],
+          [
+            710,
+            852
+          ],
+          [
+            720,
+            864
+          ],
+          [
+            715,
+            876
+          ],
+          [
+            720,
+            884
+          ]
+        ]
+      ],
+      "startPoint": [
+        864,
+        542
+      ],
+      "endPoint": [
+        720,
+        884
+      ],
+      "sourceScope": "Two adjoining Existing Trail sections labelled 0.69 mi and 0.35 mi on CAB’s map. Total is their sum. Nearby parks are separate destinations, not promised entrances on this walk.",
+      "geometryMethod": "Manual visual trace of two labelled adjoining alignments in the official map image; schematic display only."
+    },
+    {
+      "id": "overlook-link",
+      "name": "Titan Road to the Overlook",
+      "area": "Providence",
+      "type": "One way",
+      "miles": 0.37,
+      "distanceParts": [
+        0.37
+      ],
+      "color": "#4f7391",
+      "description": "The eastern Providence trail link beside the open space, ending at the Overlook trail junction.",
+      "start": "Titan Road’s eastern Providence trail junction",
+      "finish": "The trail junction beside the Overlook Clubhouse",
+      "steps": [
+        "Find the trail turning south from Titan Road beside the eastern open space.",
+        "Follow the curved section marked 0.37 mi to the junction beside the Overlook. The clubhouse and pool have their own access rules.",
+        "Retrace the same section for an approximately 0.74-mi out-and-back."
+      ],
+      "nearbyPlaceIds": [
+        "overlook"
+      ],
+      "viewBox": [
+        960,
+        495,
+        230,
+        250
+      ],
+      "paths": [
+        [
+          [
+            1068,
+            543
+          ],
+          [
+            1063,
+            561
+          ],
+          [
+            1062,
+            578
+          ],
+          [
+            1068,
+            595
+          ],
+          [
+            1070,
+            610
+          ],
+          [
+            1064,
+            628
+          ],
+          [
+            1058,
+            648
+          ],
+          [
+            1058,
+            663
+          ],
+          [
+            1063,
+            675
+          ],
+          [
+            1057,
+            688
+          ]
+        ]
+      ],
+      "startPoint": [
+        1068,
+        543
+      ],
+      "endPoint": [
+        1057,
+        688
+      ],
+      "sourceScope": "The eastern curved Existing Trail section is labelled 0.37 mi on CAB’s map. Its endpoint is the trail junction, not a verified clubhouse entrance.",
+      "geometryMethod": "Manual visual trace of the labelled eastern alignment in the official map image; schematic display only."
+    },
+    {
+      "id": "titan-promenade",
+      "name": "Along Titan Road",
+      "area": "Providence",
+      "type": "One way",
+      "miles": 0.51,
+      "distanceParts": [
+        0.51
+      ],
+      "color": "#4e7154",
+      "description": "A north-edge link across Providence, near Sterling Center and The Lawn.",
+      "start": "Western Providence trail junction at Titan Road",
+      "finish": "Eastern Providence junction near the diagonal greenway",
+      "steps": [
+        "Start at the first junction shown in the official route map below.",
+        "Follow the dashed existing-trail section labelled 0.51 mi. The descriptive guide name is ours; the alignment and mileage come from CAB.",
+        "Return along the same section if you want an out-and-back. Check current access and closures before setting out."
+      ],
+      "nearbyPlaceIds": [
+        "sterling-center",
+        "providence-park"
+      ],
+      "viewBox": [
+        836,
+        514,
+        259,
+        100
+      ],
+      "paths": [
+        [
+          [
+            864,
+            542
+          ],
+          [
+            910,
+            542
+          ],
+          [
+            948,
+            547
+          ],
+          [
+            987,
+            542
+          ],
+          [
+            1030,
+            542
+          ],
+          [
+            1067,
+            542
+          ]
+        ]
+      ],
+      "startPoint": [
+        864,
+        542
+      ],
+      "endPoint": [
+        1067,
+        542
+      ],
+      "sourceScope": "One existing-trail section marked 0.51 mi on the CAB October 2025 map. Junctions are map references, not verified entrances.",
+      "geometryMethod": "Manual visual trace of the single labelled dashed segment on the original CAB map; schematic, not GPS geometry."
+    },
+    {
+      "id": "prospect-north",
+      "name": "Prospect’s northern greenway",
+      "area": "Prospect",
+      "type": "One way",
+      "miles": 0.53,
+      "distanceParts": [
+        0.53
+      ],
+      "color": "#4e7154",
+      "description": "Follow the curving northern greenway around Prospect. This is a single section, not a complete loop.",
+      "start": "Northwest trail junction inside Prospect",
+      "finish": "Northeast junction beside the neighborhood",
+      "steps": [
+        "Start at the first junction shown in the official route map below.",
+        "Follow the dashed existing-trail section labelled 0.53 mi. The descriptive guide name is ours; the alignment and mileage come from CAB.",
+        "Return along the same section if you want an out-and-back. Check current access and closures before setting out."
+      ],
+      "nearbyPlaceIds": [
+        "prospect-park"
+      ],
+      "viewBox": [
+        64,
+        1186,
+        224,
+        127
+      ],
+      "paths": [
+        [
+          [
+            92,
+            1225
+          ],
+          [
+            105,
+            1217
+          ],
+          [
+            129,
+            1214
+          ],
+          [
+            151,
+            1220
+          ],
+          [
+            168,
+            1235
+          ],
+          [
+            181,
+            1247
+          ],
+          [
+            206,
+            1252
+          ],
+          [
+            230,
+            1257
+          ],
+          [
+            249,
+            1269
+          ],
+          [
+            260,
+            1285
+          ]
+        ]
+      ],
+      "startPoint": [
+        92,
+        1225
+      ],
+      "endPoint": [
+        260,
+        1285
+      ],
+      "sourceScope": "One existing-trail section marked 0.53 mi on the CAB October 2025 map. Junctions are map references, not verified entrances.",
+      "geometryMethod": "Manual visual trace of the single labelled dashed segment on the original CAB map; schematic, not GPS geometry."
+    },
+    {
+      "id": "prospect-park-link",
+      "name": "Prospect Park’s eastward link",
+      "area": "Prospect",
+      "type": "One way",
+      "miles": 0.31,
+      "distanceParts": [
+        0.31
+      ],
+      "color": "#4e7154",
+      "description": "Extend your time at Prospect Park along the straight connector toward the neighborhood’s eastern side.",
+      "start": "Eastern side of the Prospect Park inner loop",
+      "finish": "Eastern neighborhood trail junction",
+      "steps": [
+        "Start at the first junction shown in the official route map below.",
+        "Follow the dashed existing-trail section labelled 0.31 mi. The descriptive guide name is ours; the alignment and mileage come from CAB.",
+        "Return along the same section if you want an out-and-back. Check current access and closures before setting out."
+      ],
+      "nearbyPlaceIds": [
+        "prospect-park"
+      ],
+      "viewBox": [
+        120,
+        1349,
+        190,
+        100
+      ],
+      "paths": [
+        [
+          [
+            148,
+            1396
+          ],
+          [
+            174,
+            1391
+          ],
+          [
+            203,
+            1386
+          ],
+          [
+            235,
+            1381
+          ],
+          [
+            282,
+            1377
+          ]
+        ]
+      ],
+      "startPoint": [
+        148,
+        1396
+      ],
+      "endPoint": [
+        282,
+        1377
+      ],
+      "sourceScope": "One existing-trail section marked 0.31 mi on the CAB October 2025 map. Junctions are map references, not verified entrances.",
+      "geometryMethod": "Manual visual trace of the single labelled dashed segment on the original CAB map; schematic, not GPS geometry."
+    },
+    {
+      "id": "ascent-middle",
+      "name": "Through central Ascent",
+      "area": "Ascent",
+      "type": "One way",
+      "miles": 0.5,
+      "distanceParts": [
+        0.5
+      ],
+      "color": "#4e7154",
+      "description": "A north–south section through Ascent, adding a walking option beyond Providence and Prospect.",
+      "start": "Northern junction of the central Ascent trail",
+      "finish": "Southern junction beside the short eastward connector",
+      "steps": [
+        "Start at the first junction shown in the official route map below.",
+        "Follow the dashed existing-trail section labelled 0.50 mi. The descriptive guide name is ours; the alignment and mileage come from CAB.",
+        "Return along the same section if you want an out-and-back. Check current access and closures before setting out."
+      ],
+      "nearbyPlaceIds": [
+        "high-top"
+      ],
+      "viewBox": [
+        741,
+        1035,
+        100,
+        253
+      ],
+      "paths": [
+        [
+          [
+            777,
+            1082
+          ],
+          [
+            778,
+            1110
+          ],
+          [
+            778,
+            1150
+          ],
+          [
+            778,
+            1191
+          ],
+          [
+            777,
+            1234
+          ],
+          [
+            782,
+            1260
+          ]
+        ]
+      ],
+      "startPoint": [
+        777,
+        1082
+      ],
+      "endPoint": [
+        782,
+        1260
+      ],
+      "sourceScope": "One existing-trail section marked 0.50 mi on the CAB October 2025 map. Junctions are map references, not verified entrances.",
+      "geometryMethod": "Manual visual trace of the single labelled dashed segment on the original CAB map; schematic, not GPS geometry."
+    },
+    {
+      "id": "ascent-greenway",
+      "name": "Ascent’s winding greenway",
+      "area": "Ascent",
+      "type": "One way",
+      "miles": 0.55,
+      "distanceParts": [
+        0.55
+      ],
+      "color": "#4e7154",
+      "description": "Follow the bends through Ascent’s central open-space corridor. The guide ends at the mapped junction.",
+      "start": "Sterling Ranch Avenue trail junction",
+      "finish": "Southern junction on the winding greenway",
+      "steps": [
+        "Start at the first junction shown in the official route map below.",
+        "Follow the dashed existing-trail section labelled 0.55 mi. The descriptive guide name is ours; the alignment and mileage come from CAB.",
+        "Return along the same section if you want an out-and-back. Check current access and closures before setting out."
+      ],
+      "nearbyPlaceIds": [
+        "ascent-pavilion",
+        "high-top"
+      ],
+      "viewBox": [
+        782,
+        979,
+        117,
+        226
+      ],
+      "paths": [
+        [
+          [
+            823,
+            1007
+          ],
+          [
+            823,
+            1025
+          ],
+          [
+            812,
+            1050
+          ],
+          [
+            810,
+            1077
+          ],
+          [
+            817,
+            1098
+          ],
+          [
+            835,
+            1115
+          ],
+          [
+            841,
+            1135
+          ],
+          [
+            862,
+            1155
+          ],
+          [
+            871,
+            1177
+          ]
+        ]
+      ],
+      "startPoint": [
+        823,
+        1007
+      ],
+      "endPoint": [
+        871,
+        1177
+      ],
+      "sourceScope": "One existing-trail section marked 0.55 mi on the CAB October 2025 map. Junctions are map references, not verified entrances.",
+      "geometryMethod": "Manual visual trace of the single labelled dashed segment on the original CAB map; schematic, not GPS geometry."
+    }
+  ],
+  "annotationUpdates": [
+    {
+      "box": [
+        648,
+        581,
+        127,
+        31
+      ],
+      "lines": [
+        "ELEMENTARY SCHOOL 51",
+        "TARGET AUGUST 2027"
+      ],
+      "sourceUrl": "https://funding.dcsdk12.org/2024-bond/school-construction/elementary-school-in-sterling-ranch",
+      "placeId": "school51"
+    },
+    {
+      "box": [
+        295,
+        1355,
+        128,
+        29
+      ],
+      "lines": [
+        "PROSPECT PARK",
+        "Listed by CAB"
+      ],
+      "sourceUrl": "https://sterlingranchcab.com/Facilities/Facility/Details/Prospect-Park-9",
+      "placeId": "prospect-park"
+    }
+  ],
+  "segments": [
+    {
+      "id": "cab-segment-01",
+      "area": "Providence",
+      "name": "Titan Road, western-to-eastern junction",
+      "miles": 0.51,
+      "labelPoint": [
+        975,
+        541
+      ],
+      "viewBox": [
+        860,
+        451,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-02",
+      "area": "Providence",
+      "name": "Titan Road toward Moore Road",
+      "miles": 0.2,
+      "labelPoint": [
+        1115,
+        529
+      ],
+      "viewBox": [
+        1000,
+        439,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-03",
+      "area": "Providence",
+      "name": "Northern open-space branch",
+      "miles": 0.18,
+      "labelPoint": [
+        1120,
+        550
+      ],
+      "viewBox": [
+        1005,
+        460,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-04",
+      "area": "Providence",
+      "name": "Northern diagonal greenway",
+      "miles": 0.31,
+      "labelPoint": [
+        1001,
+        589
+      ],
+      "viewBox": [
+        886,
+        499,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-05",
+      "area": "Providence",
+      "name": "Titan Road–Overlook link",
+      "miles": 0.37,
+      "labelPoint": [
+        1061,
+        627
+      ],
+      "viewBox": [
+        946,
+        537,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-06",
+      "area": "Providence",
+      "name": "Blue River Avenue connector",
+      "miles": 0.28,
+      "labelPoint": [
+        1016,
+        648
+      ],
+      "viewBox": [
+        901,
+        558,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-07",
+      "area": "Providence",
+      "name": "Western greenway, upper section",
+      "miles": 0.69,
+      "labelPoint": [
+        834,
+        666
+      ],
+      "viewBox": [
+        719,
+        576,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-08",
+      "area": "Providence",
+      "name": "Central diagonal greenway",
+      "miles": 0.48,
+      "labelPoint": [
+        938,
+        714
+      ],
+      "viewBox": [
+        823,
+        624,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-09",
+      "area": "Providence",
+      "name": "Western greenway, lower section",
+      "miles": 0.35,
+      "labelPoint": [
+        707,
+        805
+      ],
+      "viewBox": [
+        592,
+        715,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-10",
+      "area": "Providence",
+      "name": "Interior southwest connector",
+      "miles": 0.52,
+      "labelPoint": [
+        795,
+        791
+      ],
+      "viewBox": [
+        680,
+        701,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-11",
+      "area": "Providence",
+      "name": "Southeastern open-space branch",
+      "miles": 0.59,
+      "labelPoint": [
+        969,
+        781
+      ],
+      "viewBox": [
+        854,
+        691,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-12",
+      "area": "Providence",
+      "name": "Eastern bend below the Overlook",
+      "miles": 0.26,
+      "labelPoint": [
+        1066,
+        765
+      ],
+      "viewBox": [
+        951,
+        675,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-13",
+      "area": "Providence",
+      "name": "Short link toward the easement",
+      "miles": 0.16,
+      "labelPoint": [
+        837,
+        851
+      ],
+      "viewBox": [
+        722,
+        761,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-14",
+      "area": "Providence",
+      "name": "Parallel easement connector",
+      "miles": 0.15,
+      "labelPoint": [
+        859,
+        850
+      ],
+      "viewBox": [
+        744,
+        760,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-15",
+      "area": "Ascent",
+      "name": "Easement connector, western section",
+      "miles": 0.19,
+      "labelPoint": [
+        766,
+        889
+      ],
+      "viewBox": [
+        651,
+        799,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-16",
+      "area": "Ascent",
+      "name": "Easement connector, short central section",
+      "miles": 0.07,
+      "labelPoint": [
+        817,
+        889
+      ],
+      "viewBox": [
+        702,
+        799,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-17",
+      "area": "Ascent",
+      "name": "Easement connector toward Horsebrush",
+      "miles": 0.45,
+      "labelPoint": [
+        970,
+        889
+      ],
+      "viewBox": [
+        855,
+        799,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-18",
+      "area": "Ascent",
+      "name": "Easement connector, eastern section",
+      "miles": 0.23,
+      "labelPoint": [
+        1120,
+        889
+      ],
+      "viewBox": [
+        1005,
+        799,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-19",
+      "area": "Ascent",
+      "name": "West side below the easement",
+      "miles": 0.2,
+      "labelPoint": [
+        733,
+        940
+      ],
+      "viewBox": [
+        618,
+        850,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-20",
+      "area": "Ascent",
+      "name": "Diagonal link north of Sterling Ranch Avenue",
+      "miles": 0.27,
+      "labelPoint": [
+        778,
+        963
+      ],
+      "viewBox": [
+        663,
+        873,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23",
+      "note": "Printed 0.27 mi label verified with an enlarged source-image crop on 2026-09-23."
+    },
+    {
+      "id": "cab-segment-21",
+      "area": "Ascent",
+      "name": "Short upper diagonal link",
+      "miles": 0.11,
+      "labelPoint": [
+        821,
+        920
+      ],
+      "viewBox": [
+        706,
+        830,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-22",
+      "area": "Ascent",
+      "name": "Upper central branch",
+      "miles": 0.17,
+      "labelPoint": [
+        826,
+        970
+      ],
+      "viewBox": [
+        711,
+        880,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-23",
+      "area": "Ascent",
+      "name": "Short diagonal at Sterling Ranch Avenue",
+      "miles": 0.1,
+      "labelPoint": [
+        757,
+        1005
+      ],
+      "viewBox": [
+        642,
+        915,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-24",
+      "area": "Ascent",
+      "name": "Sterling Ranch Avenue cross-link",
+      "miles": 0.11,
+      "labelPoint": [
+        793,
+        1007
+      ],
+      "viewBox": [
+        678,
+        917,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-25",
+      "area": "Ascent",
+      "name": "West side beside the courts",
+      "miles": 0.15,
+      "labelPoint": [
+        720,
+        1004
+      ],
+      "viewBox": [
+        605,
+        914,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-26",
+      "area": "Ascent",
+      "name": "Connector south of Sterling Ranch Avenue",
+      "miles": 0.11,
+      "labelPoint": [
+        778,
+        1043
+      ],
+      "viewBox": [
+        663,
+        953,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-27",
+      "area": "Ascent",
+      "name": "Short curved western link",
+      "miles": 0.15,
+      "labelPoint": [
+        764,
+        1066
+      ],
+      "viewBox": [
+        649,
+        976,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-28",
+      "area": "Ascent",
+      "name": "Winding central greenway",
+      "miles": 0.55,
+      "labelPoint": [
+        822,
+        1098
+      ],
+      "viewBox": [
+        707,
+        1008,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-29",
+      "area": "Ascent",
+      "name": "Central north–south section",
+      "miles": 0.5,
+      "labelPoint": [
+        787,
+        1164
+      ],
+      "viewBox": [
+        672,
+        1074,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-30",
+      "area": "Ascent",
+      "name": "Southern cross-link",
+      "miles": 0.14,
+      "labelPoint": [
+        817,
+        1225
+      ],
+      "viewBox": [
+        702,
+        1135,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-31",
+      "area": "Ascent",
+      "name": "Southern curved connector",
+      "miles": 0.16,
+      "labelPoint": [
+        813,
+        1280
+      ],
+      "viewBox": [
+        698,
+        1190,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-32",
+      "area": "Ascent",
+      "name": "Eastern neighborhood connector",
+      "miles": 0.19,
+      "labelPoint": [
+        1014,
+        1179
+      ],
+      "viewBox": [
+        899,
+        1089,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-33",
+      "area": "Prospect",
+      "name": "Northwest approach",
+      "miles": 0.14,
+      "labelPoint": [
+        70,
+        1216
+      ],
+      "viewBox": [
+        -45,
+        1126,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-34",
+      "area": "Prospect",
+      "name": "Northern greenway",
+      "miles": 0.53,
+      "labelPoint": [
+        184,
+        1230
+      ],
+      "viewBox": [
+        69,
+        1140,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-35",
+      "area": "Prospect",
+      "name": "Upper interior diagonal",
+      "miles": 0.45,
+      "labelPoint": [
+        200,
+        1304
+      ],
+      "viewBox": [
+        85,
+        1214,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-36",
+      "area": "Prospect",
+      "name": "Lower interior diagonal",
+      "miles": 0.55,
+      "labelPoint": [
+        200,
+        1327
+      ],
+      "viewBox": [
+        85,
+        1237,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-37",
+      "area": "Prospect",
+      "name": "Park inner loop",
+      "miles": 0.38,
+      "labelPoint": [
+        125,
+        1404
+      ],
+      "viewBox": [
+        10,
+        1314,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-38",
+      "area": "Prospect",
+      "name": "Park eastward link",
+      "miles": 0.31,
+      "labelPoint": [
+        205,
+        1388
+      ],
+      "viewBox": [
+        90,
+        1298,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-39",
+      "area": "Prospect",
+      "name": "Southern neighborhood edge",
+      "miles": 0.76,
+      "labelPoint": [
+        191,
+        1458
+      ],
+      "viewBox": [
+        76,
+        1368,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    },
+    {
+      "id": "cab-segment-40",
+      "area": "Prospect",
+      "name": "Western neighborhood edge",
+      "miles": 0.53,
+      "labelPoint": [
+        41,
+        1338
+      ],
+      "viewBox": [
+        -74,
+        1248,
+        230,
+        180
+      ],
+      "status": "shown-existing-on-source-map",
+      "sourceUrl": "https://sterlingranchcab.com/DocumentCenter/View/2352",
+      "checkedAt": "2026-09-23"
+    }
+  ],
+  "accessPoints": [
+    {
+      "id": "willow-access",
+      "placeId": "willow-creek",
+      "name": "Willow Creek Trailhead",
+      "area": "Prospect",
+      "description": "A meeting point for trails along Willow Creek and its wildlife corridor. The bike repair station is a future addition.",
+      "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "regional-network",
+      "placeId": "providence-regional",
+      "name": "Providence Regional Park trails",
+      "area": "Providence",
+      "description": "The official parks directory describes a meandering trail network in the open space east of the Overlook.",
+      "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "trailrock-access",
+      "placeId": "trailrock",
+      "name": "Trailrock Park trail",
+      "area": "Ascent",
+      "description": "A trail is listed alongside the climbing structures, playground and picnic area.",
+      "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "horsebrush-access",
+      "placeId": "horsebrush",
+      "name": "Horsebrush trail connection",
+      "area": "Providence",
+      "description": "The official parks directory describes access through the trail system to bocce and barbecue facilities.",
+      "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "pat-walk",
+      "placeId": "pat-gallagher",
+      "name": "Pat Gallagher Park greenspace",
+      "area": "Providence",
+      "description": "A neighborhood option for a walk with your dog around the park’s greenspace.",
+      "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+    },
+    {
+      "id": "lawn-walk",
+      "placeId": "providence-park",
+      "name": "The Lawn at Providence",
+      "area": "Providence",
+      "description": "An official destination for walking, biking and picnics across from Ranch Social.",
+      "sourceUrl": "https://sterlingranch.com/town-life/parks-rec/"
+    }
+  ],
+  "regionalConnections": [
+    {
+      "name": "Toward Chatfield State Park",
+      "direction": "North",
+      "note": "CAB’s map shows a northward connection. Check the park’s current entry and trail information before planning a through-route."
+    },
+    {
+      "name": "Toward Roxborough State Park",
+      "direction": "South",
+      "note": "CAB’s map shows a southward connection from the Prospect side. This is not a confirmed door-to-door route or park entrance."
+    }
+  ]
+}

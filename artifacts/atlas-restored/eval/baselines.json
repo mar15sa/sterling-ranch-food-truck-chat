@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "approval": {
+    "date": "2026-09-21",
+    "ownerDirection": "I really like the current version as a base but agreed on your points. Please proceed",
+    "scope": "Preserve the 4188 full-area artwork as the base while improving discovery. This does not approve launch.",
+    "previousRegistry": "eval/legacy-baselines.json"
+  },
+  "baselines": [
+    {
+      "state": "neighborhood-desktop",
+      "path": "eval/evidence/approved-base-neighborhood-desktop.png",
+      "sha256": "b079a43cad51448bb053956dbe433d8d0f637798cfc6c6e5ecf78f6648564429",
+      "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51"
+    },
+    {
+      "state": "sterling-open-desktop",
+      "path": "eval/evidence/approved-base-sterling-open-desktop.png",
+      "sha256": "3589b27cfbf92ceebfbf6a32c061b39a85d29cd7a357bcb218d9d2cbd21b2d8c",
+      "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51"
+    },
+    {
+      "state": "overlook-open-desktop",
+      "path": "eval/evidence/approved-base-overlook-open-desktop.png",
+      "sha256": "21102156d65c1b8f4d775f83ed9b60f8329a681761d0f81b08c4750081d62e6b",
+      "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51"
+    },
+    {
+      "state": "neighborhood-mobile",
+      "path": "eval/evidence/approved-base-neighborhood-mobile.png",
+      "sha256": "81bf03fa7fe64a0a299acaa97de7a16191fcaf44ffa872047dc92d09cea0382b",
+      "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51"
+    },
+    {
+      "state": "sterling-open-mobile",
+      "path": "eval/evidence/approved-base-sterling-open-mobile.png",
+      "sha256": "3724ddba30876136db67840f707a96e6f7118e4bb3808b220ae53c03bff93e44",
+      "sourceCommit": "57377cee3e025cdb7005033ed05c15e79bcd6f51"
+    }
+  ]
+}
