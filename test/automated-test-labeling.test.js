@@ -19,3 +19,13 @@ test("community soak labels its questions and follow-up as tests", () => {
   const markers = script.match(/isTest: true/g) || [];
   assert.equal(markers.length, 3);
 });
+
+test("owner review alerts use the resolved test boundary", () => {
+  const server = fs.readFileSync(path.join(__dirname, "..", "server.js"), "utf8");
+  assert.match(server, /const logOptions = questionLogOptions\(req, request\.isTest\)/);
+  assert.match(server, /shouldRecordRulesLowConfidence\(answer, logOptions\)/);
+  assert.doesNotMatch(
+    server,
+    /if \(answer\?\.confidence\?\.canAnswer === false && answer\?\.reviewNeeded !== false/
+  );
+});
