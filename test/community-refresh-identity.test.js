@@ -82,12 +82,13 @@ test('freshness follows official URL and content, never a reused title ID', () =
 });
 
 test('freshness requires one unique canonical URL and exact hash match', () => {
-  const source={id:'trusted',sourceUrl:'https://EXAMPLE.gov/fees/?b=2&a=1#old',contentHash:'same',checkedAt:'old',staleAfter:'old-stale',text:'approved',actions:[]};
-  const refreshed={...source,id:'new-id',sourceUrl:'https://example.gov/fees?a=1&b=2',checkedAt:'new',staleAfter:'new-stale'};
-  assert.equal(reconcileCommunityIndex({sources:[source]},{sources:[refreshed]}).index.sources[0].checkedAt,'new');
+  const source={id:'trusted',sourceUrl:'https://EXAMPLE.gov/fees/?b=2&a=1#old',contentHash:'same',checkedAt:'2026-09-01',staleAfter:'2026-09-02',text:'approved',actions:[]};
+  const refreshed={...source,id:'new-id',sourceUrl:'https://example.gov/fees?a=1&b=2',checkedAt:'2026-09-03',staleAfter:'2026-09-04'};
+  assert.equal(reconcileCommunityIndex({sources:[source]},{sources:[refreshed]}).index.sources[0].checkedAt,refreshed.checkedAt);
   const ambiguous=reconcileCommunityIndex({sources:[source]},{sources:[refreshed,{...refreshed,id:'second'}]}).index.sources[0];
-  assert.equal(ambiguous.checkedAt,'old');
-  assert.equal(ambiguous.staleAfter,'old-stale');
+  assert.equal(ambiguous.checkedAt,source.checkedAt);
+  assert.equal(ambiguous.staleAfter,source.staleAfter);
+  assert.equal(reconcileCommunityIndex({sources:[source]},{sources:[{...refreshed,checkedAt:'invalid'}]}).index.sources[0].checkedAt,source.checkedAt);
 });
 
 test('crawl never mutates the reviewed snapshot when retained duplicate IDs are disambiguated', async () => {
