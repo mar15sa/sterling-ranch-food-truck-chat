@@ -998,11 +998,13 @@ test("unfinished resident statements retain targeted clarification instead of br
 });
 
 test("background refreshes update unchanged evidence but quarantine changed or new sources", () => {
-  const trusted = { communityId: "alpha", generatedAt: "2026-08-25T00:00:00.000Z", failureCount: 0, failures: [], sources: [source()] };
+  const trusted = { communityId: "alpha", generatedAt: "2026-08-25T00:00:00.000Z", failureCount: 0, failures: [], sources: [source({ checkedAt: "2026-08-25T00:00:00.000Z" })] };
   const unchanged = { ...trusted, generatedAt: "2026-08-26T00:00:00.000Z", sources: [source({ checkedAt: "2026-08-26T00:00:00.000Z" })] };
   const safe = reconcileCommunityIndex(trusted, unchanged);
   assert.equal(safe.pendingReview, null);
   assert.equal(safe.index.sources[0].checkedAt, "2026-08-26T00:00:00.000Z");
+  const late = reconcileCommunityIndex(safe.index, trusted);
+  assert.equal(late.index.sources[0].checkedAt, safe.index.sources[0].checkedAt, "late older observations cannot undo renewal");
 
   const changed = {
     ...unchanged,
