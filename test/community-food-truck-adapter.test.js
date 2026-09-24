@@ -108,6 +108,14 @@ test("the live calendar accepts CivicPlus-style date separators and rejects a re
   const now = new Date("2026-12-31T18:00:00Z");
   const result = await getCommunityFoodTruckSchedule({ dateRange: { start: "2027-01-01", end: "2027-01-01" } }, { profile: sterling, now, fetchImpl: async () => new Response("<tr><td>1/1/2027</td><td>New Year Kitchen</td></tr>") });
   assert.deepEqual(result.trucks.map((truck) => truck.name), ["New Year Kitchen"]);
+  for (const separator of ["&ndash;", "&mdash;", "&#8211;", "&#x2014;"]) {
+    const encoded = await getCommunityFoodTruckSchedule({ dateRange: { start: "2027-01-01", end: "2027-01-01" } }, {
+      profile: sterling,
+      now,
+      fetchImpl: async () => new Response(`<p>1/1/2027 ${separator} New Year Kitchen</p>`),
+    });
+    assert.deepEqual(encoded.trucks.map((truck) => truck.name), ["New Year Kitchen"], separator);
+  }
   await assert.rejects(() => getCommunityFoodTruckSchedule({ dateRange: { start: "2027-01-01", end: "2027-01-01" } }, { profile: sterling, now, fetchImpl: async () => new Response("1/1/2026 - Last Year's Kitchen") }), /parsed reliably/i);
 });
 
