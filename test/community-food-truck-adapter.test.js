@@ -3,6 +3,8 @@ const assert = require("node:assert/strict");
 const sterling = require("../data/communities/sterling-ranch.json");
 const { foodTruckAnswer } = require("../lib/community-food-trucks");
 const { getCommunityFoodTruckSchedule } = require("../lib/community-food-truck-live");
+const { answerCommunityQuestion } = require("../lib/community-assistant");
+const { answerCapabilityIssues } = require("../lib/community-critical-capabilities");
 
 function secondCommunityProfile() {
   const connector = structuredClone(sterling.connectors.find((item) => item.type === "food-truck-schedule"));
@@ -15,6 +17,59 @@ function secondCommunityProfile() {
   connector.adapter.foodTruck = { fullAnswerPath: "/market-trucks", calendarDatePolicy: { kind: "rolling", pastDays: 14, futureDays: 370 }, vendorSources: [{ id: "riverton-bites", aliases: ["Riverton Bites"], menuUrls: ["https://menus.riverton.example/bites"] }] };
   return profile;
 }
+
+test("calendar rows decode named, decimal and hexadecimal punctuation without mixing adjacent dates", async () => {
+  for (const separator of ["&ndash;", "&mdash;", "&#8211;", "&#x2014;", "–", "-"]) {
+    const result = await getCommunityFoodTruckSchedule({ dateRange: { start: "2026-09-24" } }, {
+      profile: sterling, now: new Date("2026-09-24T18:00:00Z"),
+      fetchImpl: async () => new Response(`<p>9/23 ${separator} Yesterday Kitchen</p><p>9/24 ${separator}&nbsp;Chef&rsquo;s &amp; Friends</p><p>9/25 ${separator} Tomorrow Kitchen</p>`),
+    });
+    assert.deepEqual(result.trucks.map(truck => truck.name), ["Chef’s & Friends"], separator);
+  }
+});
+
+test("a redirected or timed-out calendar cannot supply live schedule evidence", async () => {
+  const request = { dateRange: { start: "2026-09-24" } };
+  const options = { profile: sterling, now: new Date("2026-09-24T18:00:00Z") };
+  await assert.rejects(getCommunityFoodTruckSchedule(request, { ...options, fetchImpl: async () => ({
+    ok: true, url: "https://unrelated.example/calendar", text: async () => "9/24 - Wrong Kitchen",
+  }) }), /unverified destination/);
+  // Model a real fetch observing its abort signal, including a stalled body.
+  const keepAlive = setTimeout(() => {}, 1000);
+  try {
+    await assert.rejects(getCommunityFoodTruckSchedule(request, { ...options, timeoutMs: 5,
+      fetchImpl: async (url, { signal }) => ({ ok: true, text: () => new Promise((resolve, reject) => {
+        signal.addEventListener("abort", () => reject(signal.reason), { once: true });
+      }) }),
+    }), { name: "TimeoutError" });
+  } finally { clearTimeout(keepAlive); }
+});
+
+test("an unavailable calendar keeps only its community's official handoff and cannot become a verified schedule", async () => {
+  const other = secondCommunityProfile();
+  other.connectors[0].adapter.labels.calendarAction = "View Riverton food-truck schedule";
+  for (const profile of [sterling, other]) {
+    const answer = await answerCommunityQuestion("What food trucks are coming today?", {
+      communityProfile: profile, communityId: profile.communityId,
+      index: { communityId: profile.communityId, sources: [], factLedger: [] },
+      interpretationMode: "off", requestContractMode: "need-audited-candidate",
+      needRouterBackend: "current-local",
+      needFirstResidentRelease: true, residentWriterEnabled: false,
+      planCommunitySearch: false, synthesizeCommunityAnswer: false,
+      getFoodTruckAnswer: async () => { throw new Error("Calendar unavailable"); },
+    });
+    assert.notEqual(answer._requestContract.assessment.outcome, "complete");
+    assert.equal(answer.confidence.canAnswer, false);
+    assert.equal(answer.claims.length, 0);
+    assert.equal(answer.actions.length, 1);
+    assert.equal(answer.actions[0].url, profile.connectors.find(c => c.adapter?.foodTruck).baseUrl);
+    assert.ok(answer.sources.some(source => source.sourceUrl === answer.actions[0].url));
+    assert.ok(!answerCapabilityIssues(answer, { profile }).includes("action-source-binding-missing"));
+    const tampered = structuredClone(answer);
+    tampered.actions[0].url = "https://unrelated.example/calendar";
+    assert.ok(answerCapabilityIssues(tampered, { profile }).includes("action-source-binding-missing"));
+  }
+});
 
 test("a second community changes food-truck schedule, labels, actions, and evidence only through its profile", () => {
   const profile = secondCommunityProfile();
