@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-23T08:01:00-06:00",
+  "updatedAt": "2026-09-24T11:44:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -3686,6 +3686,35 @@
         "lng": -104.866766,
         "precision": "address",
         "geocodedFrom": "401 Prairie Hawk Drive, Castle Rock, CO 80109"
+      }
+    },
+    {
+      "id": "thrive-workplace-castle-rock",
+      "name": "Thrive Workplace",
+      "category": "Everyday services",
+      "community": "Castle Rock",
+      "area": "Downtown Castle Rock · The View",
+      "address": "610 Jerry Street, Suite 200, Castle Rock, CO 80104",
+      "status": "open",
+      "openingWindow": "Open now; grand opening October 1, 2026",
+      "summary": "Thrive's newest coworking location is open for tours, day passes, memberships, private offices, and meeting-room bookings, with its official grand-opening celebration scheduled for October 1.",
+      "verifiedAt": "2026-09-24",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Thrive Workplace Castle Rock location",
+          "url": "https://www.thriveworkplace.com/castle-rock/"
+        },
+        {
+          "label": "Castle Rock Chamber grand-opening announcement",
+          "url": "https://business.castlerock.org/events/details/ribbon-cutting-and-grand-opening-at-thrive-workplace-3-5pm-7051"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.375567,
+        "lng": -104.860979,
+        "precision": "address",
+        "geocodedFrom": "610 Jerry Street, Suite 200, Castle Rock, CO 80104"
       }
     },
     {
