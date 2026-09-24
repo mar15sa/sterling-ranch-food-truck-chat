@@ -2,6 +2,15 @@
   "version": 1,
   "sources": [
     {
+      "id": "thrive-workplace-castle-rock",
+      "name": "Thrive Workplace Castle Rock",
+      "community": "Castle Rock",
+      "kind": "business",
+      "url": "https://www.thriveworkplace.com/castle-rock/",
+      "cadence": "daily",
+      "notes": "Official location page for operating status, memberships, day passes, bookings, and grand-opening updates."
+    },
+    {
       "id": "good-girl-cafe-bookstore",
       "name": "Good Girl Cafe & Bookstore",
       "community": "Englewood",
