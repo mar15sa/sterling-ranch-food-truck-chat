@@ -1,0 +1,23 @@
+import {plannedVillages,villagePlanSource,plannedVillage} from './planned-villages.mjs';
+const current=[['Providence',78,43],['Ascent',77,59],['Parkvale',40,56],['Prospect',18,68]];
+export function villagePlanMarkup(){return `<section id="village-planning" aria-label="Future villages map">
+<div class="village-planning-map"><div class="plan-map-caption"><span>THE WHOLE RANCH</span><span class="plan-north" aria-label="North is up">N ↑</span></div>
+<div class="village-plan-sheet"><img class="village-plan-geography" src="assets/wider-ranch-landscape-v1.png" width="988" height="1592" alt="Approximate illustrated wider Ranch, from open northern Heirloom area to southern Pinnacle, with current village clusters for orientation">
+<div class="plan-spotlight" aria-hidden="true"></div>
+${plannedVillages.map((v,i)=>`<button class="village-plan-pin" data-planned-village="${v.id}" aria-label="Explore ${v.name}" aria-pressed="false" title="${v.name}" style="left:${v.x}%;top:${v.y}%"><span>${i+1}</span></button><span class="plan-area-name" data-area-name="${v.id}" aria-hidden="true" style="left:${v.x}%;top:${v.y}%">${v.name}</span>`).join('')}
+${current.map(([name,x,y])=>`<span class="plan-current-village" style="left:${x}%;top:${y}%">${name}<small>Current village</small></span>`).join('')}</div>
+<p class="plan-source-caption">Illustrated planning overview · approximate arrangement<br>Areas, planting and buildings are illustrative; no future streets or boundaries are plotted.</p>
+<details class="plan-official-comparison"><summary>Compare with official plan</summary><img src="assets/village-master-plan.jpg" width="1296" height="2088" alt="Original complete CAB illustrative master plan dated August 8, 2025"><a href="${villagePlanSource.url}" target="_blank" rel="noopener">Open CAB’s original document ↗</a></details></div>
+<div class="village-plan-content"><p class="eyebrow">FIVE AREAS / ONE WIDER RANCH</p><h3>A little further<br>into the future.</h3><p>The neighborhoods you know, and the open land around them. Five names to follow as the Ranch takes shape.</p>
+<div class="planned-village-list" aria-label="Choose a future area">${plannedVillages.map((v,i)=>`<button data-planned-village="${v.id}" aria-pressed="false"><span>${i+1}</span><strong>${v.name}</strong><small>Long-range plan</small></button>`).join('')}</div>
+<div id="village-plan-detail" tabindex="-1" aria-live="polite"><p class="eyebrow">LOOKING AHEAD</p><h4>Room for the next chapter.</h4><p>Choose a numbered area to see its place in the official plan. Opening dates have not been announced.</p></div>
+<button class="plan-neighborhood-link" data-future-mode="projects">Back to neighborhood projects ↗</button>
+<details class="village-source-notes"><summary>About this illustration & sources</summary><p>The general arrangement follows CAB’s August 8, 2025 illustrative master plan. This landscape is an approximate interpretation, not a survey, construction rendering or navigation map. Trees, terrain and current buildings are illustrative. Future areas remain open landscape; no future roads, buildings or boundaries are asserted.</p><p>Providence, Ascent, Prospect and Parkvale are current villages shown for orientation. Paramount is labeled “Center” on the official plan. Plans and names may change.</p><a href="${villagePlanSource.url}" target="_blank" rel="noopener">Official CAB master plan ↗</a><a href="https://sterlingranch.com/villages/" target="_blank" rel="noopener">Current village updates ↗</a><small>Saved source check: September 23, 2026</small></details></div></section>`;}
+export function renderVillagePlan(panel,id){
+ const v=plannedVillage(id),sheet=panel.querySelector('.village-plan-sheet');
+ panel.querySelectorAll('[data-planned-village]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.plannedVillage===id)));
+ sheet.classList.toggle('is-selected',!!v);
+ sheet.style.setProperty('--plan-x',(v?.x||50)+'%');sheet.style.setProperty('--plan-y',(v?.y||50)+'%');
+ panel.querySelector('#village-plan-detail').innerHTML=v?`<p class="eyebrow">LONG-RANGE PLAN</p><h4>${v.name}</h4><p>${v.location}</p><dl><dt>Opening</dt><dd>Not announced</dd><dt>What’s confirmed</dt><dd>Name and general location on the CAB planning map.</dd></dl>${v.note?`<p>${v.note}</p>`:''}<p>Specific amenities and construction phases have not been confirmed here.</p><a href="${v.source.url}" target="_blank" rel="noopener">See the source plan ↗</a><button class="village-return" data-village-map>← Back to this area on the map</button>`:'<p class="eyebrow">LOOKING AHEAD</p><h4>Room for the next chapter.</h4><p>Choose a numbered area to see its place in the official plan. Opening dates have not been announced.</p>';
+}
+

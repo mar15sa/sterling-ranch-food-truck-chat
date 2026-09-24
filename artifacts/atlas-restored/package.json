@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-isolation=none catalog.test.mjs geometry.test.mjs focus.test.mjs future-map.test.mjs planned-villages.test.mjs discovery.test.mjs models.test.mjs visit.test.mjs navigation.test.mjs hotspots.test.mjs unfold.test.mjs trail-network.test.mjs discovery-context.test.mjs journeys.test.mjs resident-data.test.mjs display.test.mjs complete-plan.test.mjs eval/check.test.mjs eval/landing-gate.test.mjs",
+    "check:visual": "node eval/check.mjs",
+    "test:visual-gate": "node eval/check.test.mjs eval/landing-gate.test.mjs",
+    "preview": "node server.mjs",
+    "preview:review": "node server.mjs --review"
+  }
+}

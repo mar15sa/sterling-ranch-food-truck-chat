@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {landingMeasurementIssues} from './landing-gate.mjs';
+const rect=(x,y,w,h)=>({left:x,top:y,right:x+w,bottom:y+h,width:w,height:h});
+function valid(){const state={viewport:{width:1280,height:720},map:rect(0,200,600,400),neutral:true,selected:0,overflow:false,labels:[0,1,2,3].map(i=>({text:'Village '+i+' 4 places',rect:rect(i*120,250,100,50)}))};const chooser={map:rect(0,500,600,400),choices:[0,1,2,3].map(i=>({rect:rect(i*120,300,100,50),unobscured:true}))};return {largeTextPhone:{title:'48px',titleBase:'24',overflow:false},desktop:structuredClone(state),phone:structuredClone(state),chooserDesktop:structuredClone(chooser),chooserPhone:structuredClone(chooser),reset:{neutral:true,selected:0},chooserSelection:{village:'Prospect',unfolded:true}}}
+test('landing gate accepts full map, neutral entry and unobscured village choices',()=>assert.deepEqual(landingMeasurementIssues(valid()),[]));
+test('landing gate rejects a below-fold map, selected default and hidden villages',()=>{const m=valid();m.desktop.map.bottom=800;m.phone.selected=1;m.phone.labels.pop();assert.equal(landingMeasurementIssues(m).length,3)});
+test('landing gate rejects overlapping labels and the obscured whole-Ranch prompt',()=>{const m=valid();m.phone.labels[1].rect=m.phone.labels[0].rect;m.chooserPhone.choices[0].unobscured=false;assert.equal(landingMeasurementIssues(m).length,2)});
+

@@ -1,0 +1,65 @@
+body[data-view=neighborhood] header{padding-top:10px;padding-bottom:10px}
+body[data-view=neighborhood] header>p{display:none}
+body[data-view=neighborhood] .intro{padding:12px 0;gap:6px 25px}
+body[data-view=neighborhood] .intro h1{font-size:32px;line-height:1.12;margin:0 0 6px}
+body[data-view=neighborhood] .intro .eyebrow{display:none}
+body[data-view=neighborhood] .intro>div>p:last-child{font-size:12px;margin:0}
+body[data-view=neighborhood] .view-nav{margin-bottom:8px}
+#neighborhood-panel.landing .discovery-toolbar{display:none}
+.map-stage.landing{display:grid;grid-template-columns:minmax(0,1fr) 250px;max-width:min(100%,calc((100svh - 305px)*1.5 + 250px));margin:auto;background:#f0f0e4}
+.map-stage.landing #landscape{width:100%;height:auto;min-height:0;aspect-ratio:3/2;border-radius:0;overflow:hidden}
+.map-stage.landing #map-plane{inset:0;aspect-ratio:3/2}
+.map-stage.landing .map-topnote,.map-stage.landing .map-key,.map-stage.landing .map-controls,.map-stage.landing .source-toggle,.map-stage.landing .map-actions,.map-stage.landing #map-labels{display:none!important}
+.map-stage.landing #village-labels{display:block!important;visibility:visible}
+.map-stage.landing .village-label{display:block!important;background:#fffdf0ed;border:1px solid #fff8dc;color:#2e4937;text-shadow:none;border-radius:10px;padding:10px 13px;font:22px/1.1 var(--serif);letter-spacing:0;min-height:52px;max-width:175px;box-shadow:0 5px 14px #213c3230;transform:translate(-50%,-50%);opacity:1}
+.map-stage.landing .village-label small{display:block;font:11px/1.4 var(--sans,Arial);color:#4d624e;margin-top:5px;text-transform:none;letter-spacing:0}
+.map-stage.landing .village-label:hover{background:#fffdf0;box-shadow:0 5px 20px #213c3250}
+.map-stage.landing .village-label[data-village=Providence]{left:76%!important;top:32%!important}
+.map-stage.landing .village-label[data-village=Ascent]{left:77%!important;top:72%!important}
+.map-stage.landing .village-label[data-village=Parkvale]{left:39%!important;top:56%!important}
+.map-stage.landing .village-label[data-village=Prospect]{left:23%!important;top:84%!important}
+.map-stage.landing #place-note{position:static;inset:auto;width:auto;max-height:none;margin:0;padding:25px 21px;background:#f8f6ec;border:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;justify-content:center;overflow:visible}
+.landing-welcome h2{font:32px/1.1 var(--serif);margin:9px 0 16px;letter-spacing:-.02em}
+.landing-welcome p{font-size:13px;line-height:1.7;color:#4b604e}
+.landing-welcome .eyebrow{font-size:9px;letter-spacing:.14em}
+.landing-inventory{border-top:1px solid #d4dcc9;padding-top:16px;margin-top:16px;display:grid;gap:8px;font-size:12px;color:#415740}
+.landing-inventory strong{font:24px var(--serif);margin-right:6px}
+.landing-welcome a{font-size:12px;min-height:44px;display:flex;align-items:center;margin-top:14px;text-decoration:underline}
+@media(max-width:720px){
+ body[data-view=neighborhood] .intro{padding:5px 0 8px;display:block}
+ body[data-view=neighborhood] .intro>div:first-child{display:block;padding:5px 3px}
+ body[data-view=neighborhood] .intro h1{font:24px/1.15 var(--serif);margin:0}
+ body[data-view=neighborhood] .intro>div>p:last-child{display:none}
+ body[data-view=neighborhood] .search-area{margin-top:8px}
+ body[data-view=neighborhood] .view-nav{margin-bottom:5px}
+ .map-stage.landing{display:block;max-width:none}
+ .map-stage.landing .village-label{font-size:15px;padding:7px 8px;min-height:46px;width:94px;max-width:none;border-radius:8px}
+ .map-stage.landing .village-label small{font-size:10px;margin-top:3px}
+ .map-stage.landing #place-note{padding:18px}
+ .landing-welcome h2{font-size:27px;margin:5px 0 10px}
+ .landing-welcome p{margin:0;font-size:13px}
+ .landing-welcome .eyebrow{display:none}
+ .landing-inventory{display:flex;gap:14px;margin-top:13px;padding-top:13px;flex-wrap:wrap;font-size:11px}
+ .landing-inventory strong{font-size:21px}
+ .landing-welcome a{margin-top:6px}
+}
+.map-stage.unfolded:has(.connection-villages){display:flex;flex-direction:column;overflow:visible}
+.map-stage.unfolded:has(.connection-villages) #unfold-sheets{position:relative;inset:auto;order:0;pointer-events:auto;background:#f4f3e7}
+.map-stage.unfolded:has(.connection-villages) #landscape{position:relative;inset:auto;order:1;display:block;width:min(70%,720px);height:auto;aspect-ratio:3/2;min-height:0;margin:35px auto 50px;transform:none;animation:none;pointer-events:none}
+.connection-villages{position:relative;z-index:3}
+.connection-villages button{min-height:80px}
+@media(max-width:720px){
+ .map-stage.unfolded:has(.connection-villages) #landscape{width:88%;margin:18px auto 30px}
+ .map-stage.unfolded:has(.connection-villages) #unfold-sheets{padding:18px}
+ .connection-villages{grid-template-columns:1fr 1fr}
+ .connection-villages button{font-size:22px}
+}
+html[data-atlas-large-text=true] .map-stage.landing{max-width:100%;grid-template-columns:1fr}
+
+
+@media(max-width:720px){body[data-view=neighborhood]:not(.atlas-landing) .intro>div:first-child{display:none}#landscape,#unfold-sheets{scroll-margin-top:125px}}
+
+@media(min-width:721px){#experience:has(.map-stage.landing){max-width:min(100%,calc((100svh - 305px)*1.5 + 250px));margin-inline:auto}}
+
+html[data-atlas-large-text=true] #experience:has(.map-stage.landing){max-width:100%}
+html[data-atlas-large-text=true] .view-nav{display:flex;overflow-x:auto}html[data-atlas-large-text=true] .view-nav button{flex:0 0 auto;min-width:max-content;white-space:nowrap}

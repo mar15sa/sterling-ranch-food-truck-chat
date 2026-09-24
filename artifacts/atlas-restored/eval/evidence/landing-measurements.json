@@ -1,0 +1,328 @@
+{
+  "desktop": {
+    "labels": [
+      {
+        "font": "22px",
+        "rect": {
+          "bottom": 432.4427185058594,
+          "height": 64.53125,
+          "left": 609.2083740234375,
+          "right": 728.4583740234375,
+          "top": 367.9114685058594,
+          "width": 119.25,
+          "x": 609.2083740234375,
+          "y": 367.9114685058594
+        },
+        "text": "Providence\n10 places ↗"
+      },
+      {
+        "font": "22px",
+        "rect": {
+          "bottom": 598.078125,
+          "height": 64.53125,
+          "left": 633.2552490234375,
+          "right": 716.8281707763672,
+          "top": 533.546875,
+          "width": 83.57292175292969,
+          "x": 633.2552490234375,
+          "y": 533.546875
+        },
+        "text": "Ascent\n7 places ↗"
+      },
+      {
+        "font": "22px",
+        "rect": {
+          "bottom": 647.7760620117188,
+          "height": 64.53125,
+          "left": 290.15106201171875,
+          "right": 389.0781478881836,
+          "top": 583.2448120117188,
+          "width": 98.92708587646484,
+          "x": 290.15106201171875,
+          "y": 583.2448120117188
+        },
+        "text": "Prospect\n4 places ↗"
+      },
+      {
+        "font": "22px",
+        "rect": {
+          "bottom": 531.828125,
+          "height": 64.53125,
+          "left": 390.7552185058594,
+          "right": 487.2448043823242,
+          "top": 467.296875,
+          "width": 96.48958587646484,
+          "x": 390.7552185058594,
+          "y": 467.296875
+        },
+        "text": "Parkvale\n3 places ↗"
+      }
+    ],
+    "map": {
+      "bottom": 681.7708740234375,
+      "height": 414.1041870117187,
+      "left": 196.75,
+      "right": 817.9166870117188,
+      "top": 267.66668701171875,
+      "width": 621.1666870117188,
+      "x": 196.75,
+      "y": 267.66668701171875
+    },
+    "neutral": true,
+    "overflow": false,
+    "selected": 0,
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "phone": {
+    "labels": [
+      {
+        "font": "15px",
+        "rect": {
+          "bottom": 373.7187728881836,
+          "height": 48.83333587646485,
+          "left": 232.1979217529297,
+          "right": 326.1979217529297,
+          "top": 324.88543701171875,
+          "width": 94,
+          "x": 232.1979217529297,
+          "y": 324.88543701171875
+        },
+        "text": "Providence\n10 places ↗"
+      },
+      {
+        "font": "15px",
+        "rect": {
+          "bottom": 467.9375228881836,
+          "height": 48.83333587646485,
+          "left": 235.7291717529297,
+          "right": 329.7291717529297,
+          "top": 419.1041870117187,
+          "width": 94,
+          "x": 235.7291717529297,
+          "y": 419.1041870117187
+        },
+        "text": "Ascent\n7 places ↗"
+      },
+      {
+        "font": "15px",
+        "rect": {
+          "bottom": 496.1979293823242,
+          "height": 48.83333587646485,
+          "left": 44.92708587646485,
+          "right": 138.92708587646484,
+          "top": 447.3645935058594,
+          "width": 94,
+          "x": 44.92708587646485,
+          "y": 447.3645935058594
+        },
+        "text": "Prospect\n4 places ↗"
+      },
+      {
+        "font": "15px",
+        "rect": {
+          "bottom": 425.2500228881836,
+          "height": 48.83333587646485,
+          "left": 101.45833587646484,
+          "right": 195.45833587646484,
+          "top": 376.4166870117187,
+          "width": 94,
+          "x": 101.45833587646484,
+          "y": 376.4166870117187
+        },
+        "text": "Parkvale\n3 places ↗"
+      }
+    ],
+    "map": {
+      "bottom": 509.4791870117187,
+      "height": 235.55209350585935,
+      "left": 10.666666984558104,
+      "right": 364.0000104904175,
+      "top": 273.9270935058594,
+      "width": 353.3333435058594,
+      "x": 10.666666984558104,
+      "y": 273.9270935058594
+    },
+    "neutral": true,
+    "overflow": false,
+    "selected": 0,
+    "viewport": {
+      "height": 844,
+      "width": 390
+    }
+  },
+  "chooserPhone": {
+    "choices": [
+      {
+        "rect": {
+          "bottom": 602.0416717529297,
+          "height": 84.66667175292969,
+          "left": 28.666667938232425,
+          "right": 182.3333396911621,
+          "top": 517.375,
+          "width": 153.6666717529297,
+          "x": 28.666667938232425,
+          "y": 517.375
+        },
+        "text": "Providence\nExplore this area ↗",
+        "unobscured": true
+      },
+      {
+        "rect": {
+          "bottom": 602.0416717529297,
+          "height": 84.66667175292969,
+          "left": 192.33334350585935,
+          "right": 346.00001525878906,
+          "top": 517.375,
+          "width": 153.6666717529297,
+          "x": 192.33334350585935,
+          "y": 517.375
+        },
+        "text": "Ascent\nExplore this area ↗",
+        "unobscured": true
+      },
+      {
+        "rect": {
+          "bottom": 696.7083587646484,
+          "height": 84.66667175292969,
+          "left": 28.666667938232425,
+          "right": 182.3333396911621,
+          "top": 612.0416870117188,
+          "width": 153.6666717529297,
+          "x": 28.666667938232425,
+          "y": 612.0416870117188
+        },
+        "text": "Prospect\nExplore this area ↗",
+        "unobscured": true
+      },
+      {
+        "rect": {
+          "bottom": 696.7083587646484,
+          "height": 84.66667175292969,
+          "left": 192.33334350585935,
+          "right": 346.00001525878906,
+          "top": 612.0416870117188,
+          "width": 153.6666717529297,
+          "x": 192.33334350585935,
+          "y": 612.0416870117188
+        },
+        "text": "Parkvale\nExplore this area ↗",
+        "unobscured": true
+      }
+    ],
+    "map": {
+      "bottom": 939.9896240234376,
+      "height": 207.28125,
+      "left": 31.86458396911621,
+      "right": 342.7916774749756,
+      "top": 732.7083740234375,
+      "width": 310.9270935058594,
+      "x": 31.86458396911621,
+      "y": 732.7083740234375
+    }
+  },
+  "chooserSelection": {
+    "heading": "Prospect, layer by layer.",
+    "unfolded": true,
+    "village": "Prospect"
+  },
+  "reset": {
+    "neutral": true,
+    "query": "",
+    "selected": 0
+  },
+  "chooserDesktop": {
+    "choices": [
+      {
+        "rect": {
+          "bottom": 661.5520858764648,
+          "height": 103.33333587646484,
+          "left": 88.30208587646484,
+          "right": 352.8125228881836,
+          "top": 558.21875,
+          "width": 264.51043701171875,
+          "x": 88.30208587646484,
+          "y": 558.21875
+        },
+        "text": "Providence\nExplore this area ↗",
+        "unobscured": true
+      },
+      {
+        "rect": {
+          "bottom": 661.5520858764648,
+          "height": 103.33333587646484,
+          "left": 362.8125,
+          "right": 627.3333435058594,
+          "top": 558.21875,
+          "width": 264.5208435058594,
+          "x": 362.8125,
+          "y": 558.21875
+        },
+        "text": "Ascent\nExplore this area ↗",
+        "unobscured": true
+      },
+      {
+        "rect": {
+          "bottom": 661.5520858764648,
+          "height": 103.33333587646484,
+          "left": 637.3333740234375,
+          "right": 901.8438110351562,
+          "top": 558.21875,
+          "width": 264.51043701171875,
+          "x": 637.3333740234375,
+          "y": 558.21875
+        },
+        "text": "Prospect\nExplore this area ↗",
+        "unobscured": true
+      },
+      {
+        "rect": {
+          "bottom": 661.5520858764648,
+          "height": 103.33333587646484,
+          "left": 911.84375,
+          "right": 1176.3645935058594,
+          "top": 558.21875,
+          "width": 264.5208435058594,
+          "x": 911.84375,
+          "y": 558.21875
+        },
+        "text": "Parkvale\nExplore this area ↗",
+        "unobscured": true
+      }
+    ],
+    "map": {
+      "bottom": 1200.5521240234375,
+      "height": 480,
+      "left": 272.3333435058594,
+      "right": 992.3333435058594,
+      "top": 720.5521240234375,
+      "width": 720,
+      "x": 272.3333435058594,
+      "y": 720.5521240234375
+    }
+  },
+  "largeTextPhone": {
+    "base": "27",
+    "overflow": false,
+    "text": "54px",
+    "title": "48px",
+    "titleBase": "24"
+  },
+  "nestedReturn": {
+    "focus": "place",
+    "focused": "atlas-coffee",
+    "unfolded": true
+  },
+  "poolSearch": "PLACES & AMENITIES\nOverlook Outdoor Pool\nThe Overlook Clubhouse\nRESIDENT ACCESS\nBroadstone pool and spa\nBroadstone Sterling Ranch\nAPARTMENT AMENITY\nProse pool\nProse at Parkvale\nAPARTMENT AMENITY\nOverlook splash pad\nThe Overlook Clubhouse\nACCESS UNCONFIRMED\nFUTURE PLANS\nProspect Park: later phases / Beach Club\nProspect Regional Park\nLong-range plan",
+  "deepLink": {
+    "modelLoaded": true,
+    "title": "The Overlook Clubhouse",
+    "view": "place"
+  },
+  "routes": {
+    "muted": 0,
+    "total": 8
+  }
+}

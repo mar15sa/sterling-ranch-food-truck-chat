@@ -1,0 +1,229 @@
+{
+  "id": "full-saved-atlas-area",
+  "title": "Sterling Ranch",
+  "bounds": {
+    "west": -105.077,
+    "east": -105.02,
+    "south": 39.477,
+    "north": 39.518
+  },
+  "rootIds": [
+    "sterling-center",
+    "overlook",
+    "burns",
+    "prospect-park",
+    "broadstone",
+    "ascent-pavilion",
+    "high-top",
+    "horsebrush",
+    "john-adams",
+    "water-plant",
+    "mccormick",
+    "outcrop",
+    "pat-gallagher",
+    "peekaboo",
+    "pioneer",
+    "primrose",
+    "prose",
+    "providence-regional",
+    "steve-bloom",
+    "providence-park",
+    "trailrock",
+    "willow-creek",
+    "willow-corridor",
+    "yard-27",
+    "zippity"
+  ],
+  "landmarks": [
+    {
+      "id": "sterling-center",
+      "label": "Sterling Center",
+      "subtitle": "Providence",
+      "number": "01",
+      "hero": true
+    },
+    {
+      "id": "overlook",
+      "label": "The Overlook",
+      "subtitle": "Providence",
+      "number": "02",
+      "hero": true
+    },
+    {
+      "id": "burns",
+      "label": "Burns Park",
+      "subtitle": "Between villages",
+      "number": "03",
+      "hero": true
+    },
+    {
+      "id": "prospect-park",
+      "label": "Prospect Park",
+      "subtitle": "Prospect",
+      "number": "04",
+      "hero": true
+    },
+    {
+      "id": "broadstone",
+      "label": "Broadstone Sterling Ranch",
+      "subtitle": "Prospect",
+      "number": "05",
+      "hero": false
+    },
+    {
+      "id": "ascent-pavilion",
+      "label": "Gathering Green",
+      "subtitle": "Ascent",
+      "number": "06",
+      "hero": false
+    },
+    {
+      "id": "high-top",
+      "label": "High Top Court",
+      "subtitle": "Ascent",
+      "number": "07",
+      "hero": false
+    },
+    {
+      "id": "horsebrush",
+      "label": "Horsebrush Park",
+      "subtitle": "Providence",
+      "number": "08",
+      "hero": false
+    },
+    {
+      "id": "john-adams",
+      "label": "John Adams Academy",
+      "subtitle": "Ascent",
+      "number": "09",
+      "hero": false
+    },
+    {
+      "id": "water-plant",
+      "label": "Larry D. Moore Water Treatment Plant",
+      "subtitle": "Parkvale area",
+      "number": "10",
+      "hero": false
+    },
+    {
+      "id": "mccormick",
+      "label": "McCormick Park",
+      "subtitle": "Providence",
+      "number": "11",
+      "hero": false
+    },
+    {
+      "id": "outcrop",
+      "label": "Outcrop Park",
+      "subtitle": "Parkvale",
+      "number": "12",
+      "hero": false
+    },
+    {
+      "id": "pat-gallagher",
+      "label": "Pat Gallagher Park",
+      "subtitle": "Providence",
+      "number": "13",
+      "hero": false
+    },
+    {
+      "id": "peekaboo",
+      "label": "Peekaboo Park",
+      "subtitle": "Ascent",
+      "number": "14",
+      "hero": false
+    },
+    {
+      "id": "pioneer",
+      "label": "Pioneer Park",
+      "subtitle": "Providence",
+      "number": "15",
+      "hero": false
+    },
+    {
+      "id": "primrose",
+      "label": "Primrose School",
+      "subtitle": "Providence",
+      "number": "16",
+      "hero": false
+    },
+    {
+      "id": "prose",
+      "label": "Prose at Parkvale",
+      "subtitle": "Parkvale",
+      "number": "17",
+      "hero": false
+    },
+    {
+      "id": "providence-regional",
+      "label": "Providence Regional Park",
+      "subtitle": "Providence",
+      "number": "18",
+      "hero": false
+    },
+    {
+      "id": "steve-bloom",
+      "label": "Steve Bloom Park",
+      "subtitle": "Providence",
+      "number": "19",
+      "hero": false
+    },
+    {
+      "id": "providence-park",
+      "label": "The Lawn",
+      "subtitle": "Providence",
+      "number": "20",
+      "hero": false
+    },
+    {
+      "id": "trailrock",
+      "label": "Trailrock Park",
+      "subtitle": "Ascent",
+      "number": "21",
+      "hero": false
+    },
+    {
+      "id": "willow-creek",
+      "label": "Willow Creek Trailhead",
+      "subtitle": "Prospect",
+      "number": "22",
+      "hero": false
+    },
+    {
+      "id": "willow-corridor",
+      "label": "Willow Creek Wildlife Corridor",
+      "subtitle": "Prospect / wider community",
+      "number": "23",
+      "hero": false
+    },
+    {
+      "id": "yard-27",
+      "label": "Yard 27",
+      "subtitle": "Ascent",
+      "number": "24",
+      "hero": false
+    },
+    {
+      "id": "zippity",
+      "label": "Zippity Park",
+      "subtitle": "Ascent",
+      "number": "25",
+      "hero": false
+    }
+  ],
+  "routeIds": [
+    "prospect-loop",
+    "providence-west",
+    "overlook-link",
+    "titan-promenade",
+    "prospect-north",
+    "prospect-park-link",
+    "ascent-middle",
+    "ascent-greenway"
+  ],
+  "geometry": {
+    "date": "2026-09-13",
+    "source": "https://www.openstreetmap.org/copyright",
+    "note": "Full saved Atlas map window, not a surveyed development boundary. Source positions retained; rendered landscape is illustrative."
+  }
+}

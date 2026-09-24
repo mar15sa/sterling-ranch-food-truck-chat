@@ -1,0 +1,28 @@
+{
+  "reviewedAt": "2026-09-23",
+  "reviewer": "GPT-6 Astra",
+  "desktop": [
+    900,
+    1200
+  ],
+  "mobile": [
+    390,
+    1200
+  ],
+  "actualBrowserChecks": {
+    "fullNeighborhoodAtTop": true,
+    "walkingOnlyContent": true,
+    "ascentFilteredGuideCount": 2,
+    "ascentFilteredAccessCount": 1,
+    "generalDirectoryHiddenOnWalks": true,
+    "generalDirectoryRestoredOnNeighborhood": true,
+    "officialComparisonOpened": true,
+    "mobileHorizontalOverflow": false,
+    "consoleErrors": []
+  },
+  "limitations": [
+    "Generated village scenery is approximate; no surveyed geometry or current-access certification.",
+    "Forty mileage-label sections retain source-map locators rather than invented whole routes.",
+    "Original CAB paths remain unchanged; Prospect connector has an editorial illustration trace."
+  ]
+}

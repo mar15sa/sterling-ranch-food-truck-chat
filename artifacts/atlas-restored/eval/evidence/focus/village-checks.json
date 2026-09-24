@@ -1,0 +1,30 @@
+[
+  {
+    "card": "Providence",
+    "kind": "village",
+    "name": "Providence",
+    "overflow": false,
+    "zoom": "1.8987598965517314"
+  },
+  {
+    "card": "Ascent",
+    "kind": "village",
+    "name": "Ascent",
+    "overflow": false,
+    "zoom": "2.0120300968979863"
+  },
+  {
+    "card": "Prospect",
+    "kind": "village",
+    "name": "Prospect",
+    "overflow": false,
+    "zoom": "2.55"
+  },
+  {
+    "card": "Parkvale",
+    "kind": "village",
+    "name": "Parkvale",
+    "overflow": false,
+    "zoom": "2.55"
+  }
+]

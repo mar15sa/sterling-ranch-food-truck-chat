@@ -1,0 +1,134 @@
+/* Loaded after the Atlas styles. display.js adds the data attributes and
+   remembers each element's original computed size so repeated toggles never
+   compound the enlargement. */
+html[data-atlas-large-text="true"] .intro{position:static!important}
+html[data-atlas-large-text="true"] .view-nav button{white-space:normal;min-width:0}
+html[data-atlas-large-text="true"] .map-stage.unfolded #landscape{position:relative;inset:auto;width:90%;margin:20px auto;transform:none!important;animation:none!important}
+html[data-atlas-large-text="true"] .connection-tethers{display:none}
+html[data-atlas-large-text="true"] .connection-model-deck{margin-bottom:25px}
+html[data-atlas-large-text="true"] .connection-bottom{grid-template-columns:1fr!important}
+/* display.js saves the original computed size in this custom property. */
+html[data-atlas-large-text="true"] .atlas-display-text {
+  font-size: calc(var(--atlas-display-size) * 2) !important;
+}
+
+html[data-atlas-large-text="true"] .intro,
+html[data-atlas-large-text="true"] .place-note,
+html[data-atlas-large-text="true"] .more-to-explore,
+html[data-atlas-large-text="true"] .experience-footer {
+  display: block;
+}
+
+html[data-atlas-large-text="true"] .place-note > * + *,
+html[data-atlas-large-text="true"] .more-to-explore > * + *,
+html[data-atlas-large-text="true"] .experience-footer > * + * {
+  margin-top: 1rem;
+}
+
+html[data-atlas-large-text="true"] .destination-strip,
+html[data-atlas-large-text="true"] .all-places,
+html[data-atlas-large-text="true"] .walk-list,
+html[data-atlas-large-text="true"] .project-list,
+html[data-atlas-large-text="true"] .connection-composition,
+html[data-atlas-large-text="true"] #village-planning,
+html[data-atlas-large-text="true"] .planned-village-list,
+html[data-atlas-large-text="true"] #all-future-plans,
+html[data-atlas-large-text="true"] .inside-layout {
+  grid-template-columns: 1fr;
+}
+
+html[data-atlas-large-text="true"] .search-area,
+html[data-atlas-large-text="true"] .search-results {
+  width: 100%;
+  max-width: 100%;
+}
+
+html[data-atlas-large-text="true"] .landscape,
+html[data-atlas-large-text="true"] .route-map,
+html[data-atlas-large-text="true"] .route-sketch,
+html[data-atlas-large-text="true"] .village-plan-sheet,
+html[data-atlas-large-text="true"] .walk-overview__scene,
+html[data-atlas-large-text="true"] .building,
+html[data-atlas-large-text="true"] .model-hotspots {
+  font-size: initial;
+}
+
+html[data-atlas-large-text="true"] .view-nav {
+  flex-wrap: wrap;
+}
+
+html[data-atlas-large-text="true"] .connection-lift,
+html[data-atlas-large-text="true"] .village-plan-content,
+html[data-atlas-large-text="true"] .journey-bar {
+  position: static;
+}
+
+html[data-atlas-large-text="true"] .connection-lift {
+  height: auto;
+  min-height: 0;
+}
+
+html[data-atlas-large-text="true"] .place-note,
+html[data-atlas-large-text="true"] .destination-strip,
+html[data-atlas-large-text="true"] .map-stage.unfolded,
+html[data-atlas-large-text="true"] .map-stage.unfolded #unfold-sheets {
+  max-height: none;
+  overflow: visible;
+}
+
+/* The compact map-card version of these panels is useful at the normal
+   size, but it would crop a 200% paragraph. Let the reading panel flow below
+   the art instead. */
+html[data-atlas-large-text="true"] .map-stage .place-note {
+  inset: auto;
+  max-height: none;
+  max-width: none;
+  min-width: 0;
+  overflow: visible;
+  position: relative;
+  width: auto;
+}
+
+html[data-atlas-large-text="true"] .directory {
+  max-height: none;
+  overflow: visible;
+}
+
+html[data-atlas-reduce-motion="true"] *,
+html[data-atlas-reduce-motion="true"] *::before,
+html[data-atlas-reduce-motion="true"] *::after {
+  animation: none !important;
+  scroll-behavior: auto !important;
+  transition: none !important;
+}
+
+.display-preferences {
+  border-top: 1px solid var(--line, #dedfd0);
+  color: var(--muted, #77816b);
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 1rem 0 1.6rem;
+}
+
+.display-preferences summary {
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  min-height: 44px;
+  align-items: center;
+}
+
+.display-preferences__body { max-width: 36rem; }
+.display-preferences__body > p { line-height: 1.55; margin: 0.35rem 0 0.65rem; }
+.display-preferences__choice {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  min-height: 44px;
+  width: fit-content;
+}
+.display-preferences__choice input { accent-color: var(--green, #34533d); height: 1.25rem; width: 1.25rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+}
