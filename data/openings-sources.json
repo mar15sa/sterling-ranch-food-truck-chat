@@ -2,6 +2,15 @@
   "version": 1,
   "sources": [
     {
+      "id": "equity-title-castle-rock",
+      "name": "Equity Title of Colorado Castle Rock",
+      "community": "Castle Rock",
+      "kind": "business",
+      "url": "https://www.equitycol.com/",
+      "cadence": "daily",
+      "notes": "Official office directory for the Castle Rock title and escrow location and future operating updates."
+    },
+    {
       "id": "thrive-workplace-castle-rock",
       "name": "Thrive Workplace Castle Rock",
       "community": "Castle Rock",

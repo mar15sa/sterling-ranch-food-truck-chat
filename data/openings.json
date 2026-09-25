@@ -1,7 +1,7 @@
 {
   "version": 1,
   "scope": "Douglas County plus nearby openings within 20 miles of ZIP 80125",
-  "updatedAt": "2026-09-24T11:44:00-06:00",
+  "updatedAt": "2026-09-25T12:32:00-06:00",
   "communities": [
     {
       "name": "Castle Pines"
@@ -3708,6 +3708,35 @@
         {
           "label": "Castle Rock Chamber grand-opening announcement",
           "url": "https://business.castlerock.org/events/details/ribbon-cutting-and-grand-opening-at-thrive-workplace-3-5pm-7051"
+        }
+      ],
+      "coordinates": {
+        "lat": 39.375567,
+        "lng": -104.860979,
+        "precision": "address",
+        "geocodedFrom": "610 Jerry Street, Suite 200, Castle Rock, CO 80104"
+      }
+    },
+    {
+      "id": "equity-title-castle-rock",
+      "name": "Equity Title of Colorado",
+      "category": "Everyday services",
+      "community": "Castle Rock",
+      "area": "Downtown Castle Rock · The View",
+      "address": "610 Jerry Street, Suite 200, Castle Rock, CO 80104",
+      "status": "open",
+      "openingWindow": "Open now; grand opening October 7, 2026",
+      "summary": "Equity Title's Castle Rock office is open for title and escrow services at The View, with its official Chamber ribbon cutting and grand-opening celebration scheduled for October 7.",
+      "verifiedAt": "2026-09-25",
+      "confidence": "business-confirmed",
+      "sources": [
+        {
+          "label": "Equity Title official locations",
+          "url": "https://www.equitycol.com/"
+        },
+        {
+          "label": "Castle Rock Chamber grand-opening announcement",
+          "url": "https://business.castlerock.org/events/details/ribbon-cutting-and-grand-opening-at-equity-title-of-colorado-7055"
         }
       ],
       "coordinates": {
