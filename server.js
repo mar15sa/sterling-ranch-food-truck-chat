@@ -1129,22 +1129,22 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Woodhill BBQ - Brisket Sandwich",
+        name: "Brisket Sandwich",
         description: "Smoked brisket sandwich from Woodhill's sandwich menu.",
         price: "$14.79",
       },
       {
-        name: "Woodhill BBQ - Pulled Pork Sandwich",
+        name: "Pulled Pork Sandwich",
         description: "Pulled pork sandwich; cole slaw can be added on top.",
         price: "$12.99",
       },
       {
-        name: "Woodhill BBQ - One Meat + One Side Plate",
+        name: "One Meat + One Side Plate",
         description: "Choice of brisket, pork, sausage, chicken, or ribs with one side.",
         price: "$16.49",
       },
       {
-        name: "Woodhill BBQ - Smoked Mac n Meat",
+        name: "Smoked Mac n Meat",
         description: "Smoked mac and cheese bowl topped with brisket, pork, sausage, or chicken.",
         price: "$15.99",
       },
@@ -1164,22 +1164,22 @@ const KNOWN_TRUCK_LINKS = {
     ],
     items: [
       {
-        name: "Woodhill BBQ - Brisket Sandwich",
+        name: "Brisket Sandwich",
         description: "Smoked brisket sandwich from Woodhill's sandwich menu.",
         price: "$14.79",
       },
       {
-        name: "Woodhill BBQ - Pulled Pork Sandwich",
+        name: "Pulled Pork Sandwich",
         description: "Pulled pork sandwich; cole slaw can be added on top.",
         price: "$12.99",
       },
       {
-        name: "Woodhill BBQ - One Meat + One Side Plate",
+        name: "One Meat + One Side Plate",
         description: "Choice of brisket, pork, sausage, chicken, or ribs with one side.",
         price: "$16.49",
       },
       {
-        name: "Woodhill BBQ - Smoked Mac n Meat",
+        name: "Smoked Mac n Meat",
         description: "Smoked mac and cheese bowl topped with brisket, pork, sausage, or chicken.",
         price: "$15.99",
       },
@@ -1860,6 +1860,61 @@ const KNOWN_TRUCK_LINKS = {
       { name: "Spicy Bird", description: "Crispy chicken sandwich with gochujang butter and house pickles.", price: "$11.50" },
     ],
   },
+  "husk": {
+    facebook: {
+      title: "The Husk - Facebook",
+      url: "https://www.facebook.com/people/The-Husk/61574376360693/",
+    },
+    menu: [
+      {
+        title: "The Husk ordering menu - Uber Eats",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+    ],
+    items: [
+      {
+        name: "La Mera Mera Tamale Bowl",
+        description:
+          "Traditional pork tamale with red chili sauce served over cilantro-lime rice with beans and toppings.",
+        price: "",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+      {
+        name: "El Mile High Tamale Bowl",
+        description:
+          "Chicken tamale with fire-roasted green chile sauce and asadero cheese over cilantro-lime rice with beans and toppings.",
+        price: "",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+      {
+        name: "Loaded Tamales",
+        description: "Choice of tamale loaded with toppings.",
+        price: "$8.95",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+      {
+        name: "Street Tacos",
+        description:
+          "Corn tortilla with choice of protein, diced onion, cilantro, lime, and homemade salsa.",
+        price: "$4.00",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+      {
+        name: "Flautas",
+        description:
+          "Four crispy flautas with shredded beef brisket or chicken, lettuce, cotija, Mexican cream, pickled red onions, and salsa.",
+        price: "$15.95",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+      {
+        name: "Mexican Street Corn",
+        description:
+          "Sweet corn with butter, mayo, cotija cheese, lime, and choice of seasoning.",
+        price: "$9.50",
+        url: "https://www.ubereats.com/store/the-husk/VcsLNVWLV12GkyCbaB8yaA",
+      },
+    ],
+  },
   "isan thai": {
     facebook: {
       title: "Isan Thai Food Truck - Facebook",
@@ -2212,6 +2267,7 @@ const KNOWN_TRUCK_LINKS = {
     ],
   },
   "magic kebob": {
+    preferKnownItems: true,
     official: {
       title: "Magic Kebob",
       url: "https://www.magickebob.com/",
@@ -2219,6 +2275,43 @@ const KNOWN_TRUCK_LINKS = {
     menu: [
       {
         title: "Magic Kebob menu",
+        url: "https://www.magickebob.com/menus",
+      },
+    ],
+    items: [
+      {
+        name: "Shish Kebob with Medium Fries",
+        description:
+          "Seasoned beef skewer with tortillas, tomato, bell pepper, onion, shirazi salad, and optional serrano pepper.",
+        price: "$21.99",
+        url: "https://www.magickebob.com/menus",
+      },
+      {
+        name: "Chicken Kebob with Medium Fries",
+        description:
+          "Saffron and lemon marinated chicken skewer with tortillas, tomato, shirazi salad, and optional serrano pepper.",
+        price: "$18.99",
+        url: "https://www.magickebob.com/menus",
+      },
+      {
+        name: "Beef Kebob with Medium Fries",
+        description:
+          "Fresh ground beef kebob served with tortillas, tomato, shirazi salad, and optional serrano pepper.",
+        price: "$18.99",
+        url: "https://www.magickebob.com/menus",
+      },
+      {
+        name: "Combo with Medium Fries",
+        description:
+          "One beef kebob skewer and one chicken kebob skewer with tortillas, tomato, shirazi salad, and optional serrano pepper.",
+        price: "$23.99",
+        url: "https://www.magickebob.com/menus",
+      },
+      {
+        name: "Falafel Sandwich with Small Fries",
+        description:
+          "Falafel, tomato, cucumber, yogurt, garlic, cabbage, and ranch on pita bread with optional serrano pepper.",
+        price: "$15.99",
         url: "https://www.magickebob.com/menus",
       },
     ],
