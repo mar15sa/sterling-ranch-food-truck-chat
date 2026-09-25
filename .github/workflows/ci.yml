@@ -105,6 +105,12 @@ jobs:
           EXPECTED_DEPLOYMENT_REVISION: ${{ github.sha }}
           DEPLOYMENT_RELEASE_SCOPE: ${{ steps.release-scope.outputs.scope }}
         run: npm run check:deployment
+      - name: Verify the live food-truck lookup
+        if: steps.release-scope.outputs.scope == 'food-trucks'
+        env:
+          SITE_URL: ${{ env.DEPLOYMENT_BASE_URL }}
+          FAIL_ON_UNREACHABLE_SITE: "true"
+        run: npm run check:live
       - name: Verify required answer capabilities through the deployed path
         if: steps.release-scope.outputs.scope == 'full'
         env:

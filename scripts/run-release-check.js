@@ -8,7 +8,7 @@ const focusedTests = [
 ];
 
 function releaseCommands(scope, npmCli) {
-  if (!['full', 'docs', 'openings', 'owner-ui'].includes(scope)) throw new Error(`Unknown release scope: ${scope}`);
+  if (!['full', 'docs', 'openings', 'food-trucks', 'owner-ui'].includes(scope)) throw new Error(`Unknown release scope: ${scope}`);
   if (scope === 'full') {
     if (!npmCli) throw new Error('Run through npm run release:check so the installed npm CLI is known.');
     return [{ label: 'Complete existing quality gate (precheck, check, postcheck)', args: [npmCli, 'run', 'check'] }];
@@ -18,6 +18,12 @@ function releaseCommands(scope, npmCli) {
     { label: 'Openings catalog', args: ['scripts/check-openings.js'] },
     ...['server.js', 'lib/openings.js', 'public/openings.js'].map(file => ({ label: `Syntax: ${file}`, args: ['--check', file] })),
     { label: 'Openings and environment boundaries', args: ['-e', "require('./test/openings-release-scope.test');require('./test/environment-pages.test')"] },
+  );
+  if (scope === 'food-trucks') commands.push(
+    { label: 'Food-truck catalog', args: ['scripts/check-food-truck-data.js'] },
+    ...['server.js', 'lib/food-truck-links.js', 'scripts/check-food-truck-data.js', 'scripts/check-live-menus.js'].map(file => ({ label: `Syntax: ${file}`, args: ['--check', file] })),
+    { label: 'Food-truck menu quality fixtures', args: ['scripts/check-live-menus.js', '--fixtures-only'] },
+    { label: 'Food-truck and release boundaries', args: ['-e', "require('./test/food-truck-release-scope.test');require('./test/food-truck-service.test');require('./test/community-food-truck-adapter.test')"] },
   );
   if (scope === 'owner-ui') commands.push(
     { label: 'Owner page syntax', args: ['--check', 'public/community-questions.js'] },

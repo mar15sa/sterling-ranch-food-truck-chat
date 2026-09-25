@@ -57,7 +57,7 @@ async function checkDeployment(options, dependencies = {}) {
   if (!options.baseUrl) throw new Error("Provide DEPLOYMENT_BASE_URL or --base-url.");
   if (!options.expectedRevision) throw new Error("Provide EXPECTED_DEPLOYMENT_REVISION or --expected-revision.");
   const scope = options.openingsOnly ? "openings" : (options.releaseScope || "full");
-  if (!["full", "openings", "docs", "owner-ui"].includes(scope)) throw new Error("Unknown deployment release scope.");
+  if (!["full", "openings", "food-trucks", "docs", "owner-ui"].includes(scope)) throw new Error("Unknown deployment release scope.");
 
   const fetchImpl = dependencies.fetchImpl || global.fetch;
   const sleepImpl = dependencies.sleepImpl || sleep;
@@ -120,6 +120,7 @@ async function main() {
   const health = await checkDeployment(options);
   const scope = options.openingsOnly ? "openings" : options.releaseScope;
   const detail = scope === "openings" ? "ready with a valid openings catalog"
+    : scope === "food-trucks" ? "ready for live food-truck verification"
     : scope === "docs" ? "ready; documentation-only change"
     : scope === "owner-ui" ? "ready; owner page available and private API protected"
     : "ready, current evidence, zero source failures";

@@ -2,6 +2,7 @@ const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 
 const OPENINGS = new Set(['data/openings.json', 'data/openings-sources.json']);
+const FOOD_TRUCKS = new Set(['data/food-truck-links.json']);
 const OWNER_UI = new Set([
   'public/community-questions.html', 'public/community-questions.css', 'public/community-questions.js',
   'test/community-question-page.test.js',
@@ -19,6 +20,7 @@ function classifyChangedFiles(files) {
   let scope = 'full';
   if (changedFiles.length && runtimeFiles.length === 0) scope = 'docs';
   else if (runtimeFiles.length && runtimeFiles.every(file => OPENINGS.has(file))) scope = 'openings';
+  else if (runtimeFiles.length && runtimeFiles.every(file => FOOD_TRUCKS.has(file))) scope = 'food-trucks';
   else if (runtimeFiles.some(file => file.startsWith('public/')) && runtimeFiles.every(file => OWNER_UI.has(file))) scope = 'owner-ui';
   return { scope, changedFiles, requiresEvidence: scope === 'full' };
 }

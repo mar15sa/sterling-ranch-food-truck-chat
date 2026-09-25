@@ -143,6 +143,12 @@ test('documentation deployments require exact revision and readiness, without un
   await assert.rejects(() => checkDeployment(boundedOptions('docs'), { fetchImpl: async () => response(stale) }), /deploymentReady/);
 });
 
+test('food-truck deployments require exact revision and readiness before the separate live lookup check', async () => {
+  const stale = healthy(); stale.communitySources.stale = true;
+  assert.equal((await checkDeployment(boundedOptions('food-trucks'), { fetchImpl: async () => response(stale) })).deploymentRevision, 'expected');
+  await assert.rejects(() => checkDeployment(boundedOptions('food-trucks'), { fetchImpl: async () => response(healthy('older')) }), /revision older/);
+});
+
 test('owner display deployments check assets and reject any publicly readable question API', async () => {
   const stale = healthy(); stale.communitySources.stale = true;
   let privateStatus = 401;
@@ -194,5 +200,6 @@ test("CI keeps the complete gate before merge and uses deployment health after p
   assert.match(deploymentJob, /if: github\.event_name == 'push'/);
   assert.match(deploymentJob, /EXPECTED_DEPLOYMENT_REVISION: \$\{\{ github\.sha \}\}[\s\S]*npm run check:deployment/);
   assert.match(deploymentJob, /check-release-scope\.js --mode push[\s\S]*github\.event\.before[\s\S]*DEPLOYMENT_RELEASE_SCOPE/);
+  assert.match(deploymentJob, /scope == 'food-trucks'[\s\S]*SITE_URL:[\s\S]*FAIL_ON_UNREACHABLE_SITE:[\s\S]*npm run check:live/);
   assert.doesNotMatch(deploymentJob, /npm run check(?:\s|$)/);
 });

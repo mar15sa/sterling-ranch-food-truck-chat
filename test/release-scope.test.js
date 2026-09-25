@@ -7,6 +7,7 @@ test('documentation and bounded owner display changes do not depend on unrelated
   assert.equal(classifyChangedFiles(['docs/pending-notion/release.md', 'README.md']).scope, 'docs');
   assert.equal(classifyChangedFiles(['public/community-questions.js', 'test/community-question-page.test.js', 'docs/RELEASE-POLICY.md']).scope, 'owner-ui');
   assert.equal(classifyChangedFiles(['data/openings.json', 'docs/pending-notion/opening.md']).scope, 'openings');
+  assert.equal(classifyChangedFiles(['data/food-truck-links.json', 'docs/pending-notion/trucks.md']).scope, 'food-trucks');
 });
 
 test('shared server, storage, security, source, workflow and mixed changes retain the full gate', () => {
@@ -14,6 +15,7 @@ test('shared server, storage, security, source, workflow and mixed changes retai
     assert.equal(classifyChangedFiles(['public/community-questions.css', file]).scope, 'full', file);
   }
   assert.equal(classifyChangedFiles(['data/openings.json', 'public/community-questions.js']).scope, 'full');
+  assert.equal(classifyChangedFiles(['data/food-truck-links.json', 'data/openings.json']).scope, 'full');
   assert.equal(classifyChangedFiles(['test/community-question-page.test.js']).scope, 'full');
   assert.equal(classifyChangedFiles([]).scope, 'full');
 });
