@@ -1,7 +1,7 @@
 # Pending Notion update: isolated food-truck release lane
 
 - Target page: Owner operations and privacy, https://www.notion.so/3dabf909186d81028da2d4e84f033e77
-- Status: implemented locally; not yet merged or verified live
+- Status: implemented, merged, and verified live; Notion synchronization pending
 - Date: September 25, 2026
 - Reason pending: Notion isn't available in this task. Fetch the page before editing and preserve unrelated owner content.
 
@@ -13,9 +13,14 @@ Each correction still starts from current production in an isolated worktree and
 
 After merge, the deployment check waits for Railway to serve the exact merged revision and report readiness. It then runs the live food-truck health check against that environment. The correction is live only after both checks pass.
 
+## Verified release
+
+- PR: https://github.com/mar15sa/sterling-ranch-food-truck-chat/pull/197
+- Production revision: `937e1ac55b60d7a774614c129b8f793b9cdae757`
+- Deployment verification: https://github.com/mar15sa/sterling-ranch-food-truck-chat/actions/runs/36211648794
+- Manual production check: `npm run check:live` passed for 8 days on September 25, 2026.
+
 ## Verification still required
 
-- Full protected check and merge revision for the release-lane infrastructure.
-- Exact production revision and passing deployment smoke run.
 - First catalog-only pull request classified as `food-trucks` with a passing protected check and live deployment check.
 - Fetch the Notion page before editing, add the verified revision and run links, then fetch it again to confirm the update.
