@@ -779,7 +779,7 @@
     {
       "sourceUrl": "https://sterlingranchcab.com/m/newsflash",
       "title": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
-      "disposition": "answer-evidence",
+      "disposition": "safe-link",
       "reason": "Approve the current official CAB News Flash page only for browsing and subscription navigation. Do not ingest newsletter contents, current-event claims, or posting dates as event dates.",
       "versionFingerprint": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
       "indexed": true,
@@ -799,7 +799,8 @@
         "completeness": "Approval is action-only. It retains the browsing and subscription links and approves zero facts from newsletter listings or issue content.",
         "retrievedUrl": "https://sterlingranchcab.com/m/newsflash",
         "replacementUrl": ""
-      }
+      },
+      "categoryId": "facilities-live-services"
     }
   ]
 }

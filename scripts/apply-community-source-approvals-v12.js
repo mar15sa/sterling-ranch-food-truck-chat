@@ -14,7 +14,7 @@ function reviewRecord(decision, decidedAt) {
     sourceUrl: version.canonicalUrl,
     ...(decision.categoryId ? { categoryId: decision.categoryId } : {}),
     title: decision.title,
-    disposition: "answer-evidence",
+    disposition: decision.facts.length ? "answer-evidence" : "safe-link",
     reason: decision.scope,
     versionFingerprint: version.contentHash,
     indexed: true,
@@ -37,7 +37,11 @@ function updateDispositionFile(file, packageData) {
   }));
   value.records = (value.records || []).map((record) => {
     const replacement = replacements.get(sourceUrlIdentity(record.sourceUrl));
-    return replacement ? { ...record, ...replacement } : record;
+    if (!replacement) return record;
+    const categoryFields = Array.isArray(record.categoryIds) && replacement.categoryId
+      ? { scopeStatus: "in-scope", categoryIds: [...new Set([...record.categoryIds, replacement.categoryId])] }
+      : {};
+    return { ...record, ...replacement, ...categoryFields };
   });
   for (const replacement of replacements.values()) {
     if (!value.records.some((record) => sourceUrlIdentity(record.sourceUrl) === sourceUrlIdentity(replacement.sourceUrl))) {
