@@ -26,6 +26,8 @@ const v10Path = path.join(root, 'data', 'community-source-approvals-v10.json');
 const v10Decisions = fs.existsSync(v10Path) ? JSON.parse(fs.readFileSync(v10Path, 'utf8')) : { decisions: [] };
 const v11Path = path.join(root, 'data', 'community-source-approvals-v11.json');
 const v11Decisions = fs.existsSync(v11Path) ? JSON.parse(fs.readFileSync(v11Path, 'utf8')) : { decisions: [] };
+const v12Path = path.join(root, 'data', 'community-source-approvals-v12.json');
+const v12Decisions = fs.existsSync(v12Path) ? JSON.parse(fs.readFileSync(v12Path, 'utf8')) : { decisions: [] };
 const outputPath = path.join(root, "data", "canonical-source-ledger.json");
 
 function buildLedger() {
@@ -124,10 +126,19 @@ function buildLedger() {
     }
   }
 
-  ledger.decisionApplications = [];
-  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || []), ...(v7Decisions.decisions || []), ...(v8Decisions.decisions || []), ...(v10Decisions.decisions || []), ...(v9Decisions.decisions || []), ...(v11Decisions.decisions || [])]) {
+  for (const decision of v12Decisions.decisions || []) {
     for (const version of decision.versions || []) {
-      const packageData = (v11Decisions.decisions || []).includes(decision)
+      upsertObservation(ledger, { ...version, title: decision.title,
+        checkedAt: decision.checkedAt,
+      }, { origin: 'community-source-approvals-v12', communityId: v12Decisions.communityId });
+    }
+  }
+
+  ledger.decisionApplications = [];
+  for (const decision of [...(scopedDecisions.decisions || []), ...(v5Decisions.decisions || []), ...(v6Decisions.decisions || []), ...(v7Decisions.decisions || []), ...(v8Decisions.decisions || []), ...(v10Decisions.decisions || []), ...(v9Decisions.decisions || []), ...(v11Decisions.decisions || []), ...(v12Decisions.decisions || [])]) {
+    for (const version of decision.versions || []) {
+      const packageData = (v12Decisions.decisions || []).includes(decision)
+        ? v12Decisions : (v11Decisions.decisions || []).includes(decision)
         ? v11Decisions : (v9Decisions.decisions || []).includes(decision) ? v9Decisions
         : (v10Decisions.decisions || []).includes(decision) ? v10Decisions
         : (v8Decisions.decisions || []).includes(decision) ? v8Decisions

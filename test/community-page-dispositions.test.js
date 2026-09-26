@@ -14,12 +14,12 @@ function fixtureFor(url) {
 }
 
 test('the CAB page audit retains every exact version disposition', () => {
-  assert.equal(decisions.records.length, 89);
-  assert.equal(new Set(decisions.records.map(record => record.sourceUrl)).size, 89);
+  assert.equal(decisions.records.length, 90);
+  assert.equal(new Set(decisions.records.map(record => record.sourceUrl)).size, 90);
   assert.ok(decisions.records.every(record => record.categoryId && record.disposition && record.reason && record.versionFingerprint));
   assert.deepEqual(Object.fromEntries([...new Set(decisions.records.map(record => record.disposition))].map(disposition => [disposition, decisions.records.filter(record => record.disposition === disposition).length])), {
     'answer-evidence': 11,
-    'safe-link': 30,
+    'safe-link': 31,
     'review-required': 27,
     'live-feed': 1,
     excluded: 20,

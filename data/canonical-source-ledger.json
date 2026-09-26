@@ -6583,6 +6583,79 @@
       "packetRefs": [
         "community-source-approvals-v11"
       ]
+    },
+    {
+      "key": "https://sterlingranchcab.com/m/newsflash#sha256:6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+      "canonicalUrl": "https://sterlingranchcab.com/m/newsflash",
+      "contentHash": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+      "hashScheme": "page-text-v1",
+      "title": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+      "disposition": "pending-review",
+      "dispositionReason": "",
+      "authorityRole": "",
+      "communityIds": [
+        "sterling-ranch"
+      ],
+      "observations": [
+        {
+          "observedAt": "2026-09-26T01:21:46.443Z",
+          "httpStatus": null,
+          "finalUrl": "https://sterlingranchcab.com/m/newsflash",
+          "contentFingerprint": "",
+          "rawResponseSha256": "",
+          "origin": "community-source-approvals-v12",
+          "communityIds": [
+            "sterling-ranch"
+          ]
+        }
+      ],
+      "approvals": [
+        {
+          "status": "approved",
+          "communityId": "sterling-ranch",
+          "decisionId": "owner-source-approval-20260925-cab-news",
+          "scope": "Approve the current official CAB News Flash page only for browsing and subscription navigation. Do not ingest newsletter contents, current-event claims, or posting dates as event dates.",
+          "scopeKind": "scoped-claims",
+          "approvedClaims": [
+            "owner-source-approval-20260925-cab-news-action-1",
+            "owner-source-approval-20260925-cab-news-action-2"
+          ],
+          "withheldClaims": [
+            "newsletter-contents",
+            "current-events",
+            "news-posting-date-as-event-date"
+          ],
+          "controllingSources": [],
+          "approvedActions": [
+            {
+              "evidence": {
+                "label": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+                "url": "https://sterlingranchcab.com/m/newsflash",
+                "context": "News Flash The Roundup: Sterling Ranch News weekly updates Ranch Life | Weekly updates"
+              },
+              "display": {
+                "label": "Read current CAB news",
+                "actionType": "information"
+              }
+            },
+            {
+              "evidence": {
+                "label": "Notify Me",
+                "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
+                "context": "Notify Me"
+              },
+              "display": {
+                "label": "Subscribe to CAB news",
+                "actionType": "registration"
+              }
+            }
+          ],
+          "decidedAt": "2026-09-26T01:23:56.198Z"
+        }
+      ],
+      "packetRefs": [
+        "community-source-approvals-v12"
+      ]
     }
   ],
   "decisionApplications": [
@@ -7100,6 +7173,11 @@
       "decisionId": "owner-source-approval-20260916-fb12d4cd6a4c",
       "communityId": "sterling-ranch",
       "key": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62#sha256:e9335d5b2ae7d849f615870e7139657b945ae862bb8ff6a9f1f4e6058bf22824"
+    },
+    {
+      "decisionId": "owner-source-approval-20260925-cab-news",
+      "communityId": "sterling-ranch",
+      "key": "https://sterlingranchcab.com/m/newsflash#sha256:6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5"
     }
   ],
   "deferred": [
@@ -7127,17 +7205,17 @@
     "backfillLimit": "The historical queue rows do not carry a complete canonical URL plus content hash pair, so they cannot be converted into ledger versions without a source-level export."
   },
   "summary": {
-    "uniqueVersions": 100,
+    "uniqueVersions": 101,
     "byDisposition": {
       "approved-evidence": 5,
-      "pending-review": 95,
+      "pending-review": 96,
       "duplicate-exact-version": 0,
       "excluded-with-reason": 0,
       "unavailable-recheck-required": 0,
       "retirement-pending": 0
     },
     "approvedEvidence": 5,
-    "scopedApprovals": 108,
-    "pendingReview": 95
+    "scopedApprovals": 109,
+    "pendingReview": 96
   }
 }

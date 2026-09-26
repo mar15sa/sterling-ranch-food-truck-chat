@@ -13,9 +13,9 @@ test('readiness reports the reconciled full-site audit and keeps unapproved sour
   });
   assert.deepEqual(result.totals, {
     audited: 1631,
-    inScopeUrls: 463,
+    inScopeUrls: 464,
     primarySources: 197,
-    outOfScope: 1168,
+    outOfScope: 1167,
     answerEvidence: 43,
     safeLink: 67,
     liveFeed: 1,
