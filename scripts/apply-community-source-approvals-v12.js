@@ -48,6 +48,10 @@ function updateDispositionFile(file, packageData) {
       value.records.push(replacement);
     }
   }
+  if (value.totals) {
+    value.totals.inScope = value.records.filter((record) => record.scopeStatus === "in-scope").length;
+    value.totals.outOfScope = value.records.length - value.totals.inScope;
+  }
   write(file, value);
 }
 
