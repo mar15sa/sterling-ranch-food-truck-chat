@@ -775,6 +775,31 @@
         "retrievedUrl": "https://sterlingranchcab.com/FormCenter/Parks-Passes-9/Park-Pass-Reimbursement-Form-62",
         "replacementUrl": ""
       }
+    },
+    {
+      "sourceUrl": "https://sterlingranchcab.com/m/newsflash",
+      "title": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+      "disposition": "answer-evidence",
+      "reason": "Approve the current official CAB News Flash page only for browsing and subscription navigation. Do not ingest newsletter contents, current-event claims, or posting dates as event dates.",
+      "versionFingerprint": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+      "indexed": true,
+      "approvedRole": "owner-approved-scoped-evidence",
+      "reviewedAt": "2026-09-26T01:23:56.198Z",
+      "reviewedContentHash": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+      "approvedClaimCount": 0,
+      "approvedActionCount": 2,
+      "approvedClaims": [],
+      "withheldClaims": [
+        "newsletter-contents",
+        "current-events",
+        "news-posting-date-as-event-date"
+      ],
+      "verification": {
+        "currentness": "The live official CAB News Flash page and both navigation actions were fetched and checked on September 25, 2026.",
+        "completeness": "Approval is action-only. It retains the browsing and subscription links and approves zero facts from newsletter listings or issue content.",
+        "retrievedUrl": "https://sterlingranchcab.com/m/newsflash",
+        "replacementUrl": ""
+      }
     }
   ]
 }

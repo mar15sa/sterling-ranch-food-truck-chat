@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "communityId": "sterling-ranch",
+  "decidedAt": "2026-09-26T01:23:56.198Z",
+  "decisionId": "owner-source-approval-20260925",
+  "authorization": "The owner approved the current CAB News Flash source version on September 25, 2026. Approval retains the two existing navigation actions and approves no newsletter facts.",
+  "decisions": [
+    {
+      "decisionId": "owner-source-approval-20260925-cab-news",
+      "scopeKind": "scoped-claims",
+      "scope": "Approve the current official CAB News Flash page only for browsing and subscription navigation. Do not ingest newsletter contents, current-event claims, or posting dates as event dates.",
+      "approvedClaims": [
+        "owner-source-approval-20260925-cab-news-action-1",
+        "owner-source-approval-20260925-cab-news-action-2"
+      ],
+      "withheldClaims": [
+        "newsletter-contents",
+        "current-events",
+        "news-posting-date-as-event-date"
+      ],
+      "approvedActions": [
+        {
+          "evidence": {
+            "label": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+            "url": "https://sterlingranchcab.com/m/newsflash",
+            "context": "News Flash The Roundup: Sterling Ranch News weekly updates Ranch Life | Weekly updates"
+          },
+          "display": {
+            "label": "Read current CAB news",
+            "actionType": "information"
+          }
+        },
+        {
+          "evidence": {
+            "label": "Notify Me",
+            "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
+            "context": "Notify Me"
+          },
+          "display": {
+            "label": "Subscribe to CAB news",
+            "actionType": "registration"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "canonicalUrl": "https://sterlingranchcab.com/m/newsflash",
+          "contentHash": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+          "hashScheme": "page-text-v1"
+        }
+      ],
+      "title": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+      "sourceType": "facilities",
+      "authorityClass": "official-page",
+      "checkedAt": "2026-09-26T01:21:46.443Z",
+      "documentFingerprint": "",
+      "facts": [],
+      "actions": [
+        {
+          "id": "owner-source-approval-20260925-cab-news-action-1",
+          "label": "Read current CAB news",
+          "url": "https://sterlingranchcab.com/m/newsflash",
+          "actionType": "information",
+          "evidence": {
+            "label": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+            "url": "https://sterlingranchcab.com/m/newsflash",
+            "context": "News Flash The Roundup: Sterling Ranch News weekly updates Ranch Life | Weekly updates"
+          },
+          "verification": "identity-matched live official source self-link"
+        },
+        {
+          "id": "owner-source-approval-20260925-cab-news-action-2",
+          "label": "Subscribe to CAB news",
+          "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
+          "actionType": "registration",
+          "evidence": {
+            "label": "Notify Me",
+            "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
+            "context": "Notify Me"
+          }
+        }
+      ],
+      "verification": {
+        "currentness": "The live official CAB News Flash page and both navigation actions were fetched and checked on September 25, 2026.",
+        "completeness": "Approval is action-only. It retains the browsing and subscription links and approves zero facts from newsletter listings or issue content.",
+        "retrievedUrl": "https://sterlingranchcab.com/m/newsflash",
+        "replacementUrl": ""
+      }
+    }
+  ]
+}

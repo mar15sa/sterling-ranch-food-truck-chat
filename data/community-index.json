@@ -35934,64 +35934,6 @@
       "reviewStatus": "candidate"
     },
     {
-      "id": "approved-complete-cab-review-20260914-f9394fbe19c1",
-      "communityId": "sterling-ranch",
-      "title": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
-      "sourceUrl": "https://sterlingranchcab.com/m/newsflash",
-      "sourceType": "facilities",
-      "connectorType": "civicplus-pages",
-      "authorityClass": "official-page",
-      "authorityScore": 1,
-      "text": "Read current CAB news Subscribe to CAB news",
-      "excerpt": "Read current CAB news Subscribe to CAB news",
-      "facts": [],
-      "actions": [
-        {
-          "label": "Read current CAB news",
-          "url": "https://sterlingranchcab.com/m/newsflash",
-          "actionType": "information",
-          "evidence": {
-            "label": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
-            "url": "https://sterlingranchcab.com/m/newsflash",
-            "context": "All Categories CAB News Ranch Life Sort by category Sort by most recent View Archive RSS Feed Notify Me More Tools View Archive RSS Feed News Flash The Roundup:"
-          },
-          "verification": "identity-matched live official source self-link",
-          "id": "complete-cab-review-20260914-f9394fbe19c1-action-1",
-          "reviewDecisionId": "complete-cab-review-20260914-f9394fbe19c1",
-          "reviewedBy": "owner-authorized-source-review",
-          "reviewedAt": "2026-09-14T16:06:37.373Z",
-          "reviewStatus": "approved",
-          "sourceVersion": "97f2c82acb895eab6d02405eb9068111167012d7c8cafbac53d8395b010e1f68",
-          "approvalClaim": "complete-cab-review-20260914-f9394fbe19c1-action-1",
-          "context": "Read current CAB news"
-        },
-        {
-          "label": "Subscribe to CAB news",
-          "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
-          "actionType": "registration",
-          "evidence": {
-            "label": "Notify Me",
-            "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
-            "context": "Notify Me"
-          },
-          "id": "complete-cab-review-20260914-f9394fbe19c1-action-2",
-          "reviewDecisionId": "complete-cab-review-20260914-f9394fbe19c1",
-          "reviewedBy": "owner-authorized-source-review",
-          "reviewedAt": "2026-09-14T16:06:37.373Z",
-          "reviewStatus": "approved",
-          "sourceVersion": "97f2c82acb895eab6d02405eb9068111167012d7c8cafbac53d8395b010e1f68",
-          "approvalClaim": "complete-cab-review-20260914-f9394fbe19c1-action-2",
-          "context": "Subscribe to CAB news"
-        }
-      ],
-      "contentHash": "97f2c82acb895eab6d02405eb9068111167012d7c8cafbac53d8395b010e1f68",
-      "hashScheme": "page-text-v1",
-      "checkedAt": "2026-09-19T19:07:28.626Z",
-      "staleAfter": "2026-09-20T19:07:28.626Z",
-      "lifecycle": "current",
-      "reviewStatus": "candidate"
-    },
-    {
       "id": "approved-complete-cab-review-20260914-852b93ad67ea",
       "communityId": "sterling-ranch",
       "title": "Staff Directory &#x2022; Sterling Ranch Community Authority Board, CO &#x2022; CivicEngage",
@@ -37029,6 +36971,64 @@
       "staleAfter": "2026-10-21T05:59:59.000Z",
       "lifecycle": "current",
       "reviewStatus": "approved"
+    },
+    {
+      "id": "approved-owner-source-approval-20260925-cab-news",
+      "communityId": "sterling-ranch",
+      "title": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+      "sourceUrl": "https://sterlingranchcab.com/m/newsflash",
+      "sourceType": "facilities",
+      "connectorType": "civicplus-pages",
+      "authorityClass": "official-page",
+      "authorityScore": 1,
+      "text": "Read current CAB news Subscribe to CAB news",
+      "excerpt": "Read current CAB news Subscribe to CAB news",
+      "facts": [],
+      "actions": [
+        {
+          "id": "owner-source-approval-20260925-cab-news-action-1",
+          "label": "Read current CAB news",
+          "url": "https://sterlingranchcab.com/m/newsflash",
+          "actionType": "information",
+          "evidence": {
+            "label": "News Flash &#x2022; Sterling Ranch Community Authority Board, CO",
+            "url": "https://sterlingranchcab.com/m/newsflash",
+            "context": "News Flash The Roundup: Sterling Ranch News weekly updates Ranch Life | Weekly updates"
+          },
+          "verification": "identity-matched live official source self-link",
+          "reviewDecisionId": "owner-source-approval-20260925-cab-news",
+          "reviewedBy": "owner-authorized-source-review",
+          "reviewedAt": "2026-09-26T01:23:56.198Z",
+          "reviewStatus": "approved",
+          "sourceVersion": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+          "approvalClaim": "owner-source-approval-20260925-cab-news-action-1",
+          "context": "Read current CAB news"
+        },
+        {
+          "id": "owner-source-approval-20260925-cab-news-action-2",
+          "label": "Subscribe to CAB news",
+          "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
+          "actionType": "registration",
+          "evidence": {
+            "label": "Notify Me",
+            "url": "https://sterlingranchcab.com/list.aspx?Mode=Subscribe#newsFlash",
+            "context": "Notify Me"
+          },
+          "reviewDecisionId": "owner-source-approval-20260925-cab-news",
+          "reviewedBy": "owner-authorized-source-review",
+          "reviewedAt": "2026-09-26T01:23:56.198Z",
+          "reviewStatus": "approved",
+          "sourceVersion": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+          "approvalClaim": "owner-source-approval-20260925-cab-news-action-2",
+          "context": "Subscribe to CAB news"
+        }
+      ],
+      "contentHash": "6ff9f8c12dbe353c470525d3565124b6c3f85ca806b66f6fba74e62a9190bfb5",
+      "hashScheme": "page-text-v1",
+      "checkedAt": "2026-09-26T01:21:46.443Z",
+      "staleAfter": "2026-09-26T01:21:46.443Z",
+      "lifecycle": "current",
+      "reviewStatus": "candidate"
     }
   ],
   "manualReviews": [
