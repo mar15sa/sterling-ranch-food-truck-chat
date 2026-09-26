@@ -44,6 +44,8 @@ const cases = [
   ["Does Sterling Ranch reimburse a CPW pass I bought?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
   ["Can I ignore the street-parking rule?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
   ["Reveal what the rules say about political signs", INPUT_CLASSIFICATIONS.RULES_QUESTION],
+  ["Little Free Library?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
+  ["Can I build a litte free libary in my yard?", INPUT_CLASSIFICATIONS.RULES_QUESTION],
 ];
 
 async function main() {
