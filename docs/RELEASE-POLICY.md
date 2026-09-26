@@ -32,6 +32,7 @@ Run focused checks for all touched behavior and adjacent cases first. Use `npm r
 | --- | --- | --- |
 | Documentation | Markdown under `docs/`, `README.md`, `AGENTS.md`, and the PR template | Fast repository checks and release-contract tests; exact deployed revision and app readiness |
 | Openings | The two openings data files, optionally with documentation | Catalog, syntax, environment boundary and scope checks; exact deployed revision, readiness and valid catalog |
+| Food trucks | `data/food-truck-links.json`, optionally with documentation | Catalog, syntax, menu-quality fixture and food-truck behavior checks; exact deployed revision, readiness and live lookup health |
 | Owner display | Only `public/community-questions.html`, `.css`, `.js`, optionally their page test and documentation | Owner sessions, privacy, log storage, page, HTTP security and test-label checks; exact revision, assets and unauthenticated API denial |
 | Full | All other changes, including `server.js`, question-log storage, authentication, answer logic, sources, dependencies and release infrastructure | Exact approved-evidence revalidation and the entire existing quality gate; complete deployment evidence health and affected test-mode behavior |
 
@@ -65,6 +66,16 @@ The post-push smoke check applies the same exact-file classifier. An openings-on
 This lane does not weaken Community Assistant source review, freshness, answer-quality, or owner-approval requirements. A change to shared application code, authentication, question storage, resident UI, workflow files, monitoring scripts, or non-allowlisted data remains a normal full-quality release.
 
 The deployment checker reads `/api/health`; it does not ask resident questions or perform a complete browser/answer test. The full mode checks revision, status, readiness, stale rules/community evidence, source failures, and expired approved sources/facts. Openings-only mode checks the exact revision and application readiness, then validates `/api/openings`. Both modes poll through older deployments and temporary refresh states for up to ten minutes by default, then fail if the expected healthy version has not appeared.
+
+## Isolated food-truck releases
+
+Food-truck links and fallback menu items live in `data/food-truck-links.json`. A pull request qualifies for the food-truck lane only when that is its sole runtime file; documentation may accompany it. Any application, workflow, dependency, source-evidence, or other data change sends the complete pull-request diff through the full gate.
+
+The protected `quality` check validates the catalog structure, aliases, URLs, junk-item rules, menu-quality fixtures, food-truck service behavior, Community Assistant adapter boundary, and release classifier. After merge, the deployment check waits for Railway to report the exact revision and readiness, then runs `npm run check:live` against that environment with unreachable-site failures enabled. The update isn't live until both checks pass.
+
+Start each urgent truck fix from current `origin/main` in an isolated worktree. Research the affected truck from current official, social, or ordering sources; change only the dedicated catalog and any necessary documentation; open the normal protected pull request; then merge and verify production. A mixed fix stays on the full release path. Shared staging is optional for a catalog-only correction and must use the staging lease when used.
+
+This lane shortens unrelated Community Assistant checks. It keeps source research, branch protection, exact-revision deployment verification, and the live menu check.
 
 Changes to Assistant behavior still need relevant question-family, source-authority, fallback, and hosted/staging evidence under the [engineering principles](COMMUNITY-ASSISTANT-ENGINEERING-PRINCIPLES.md). Owner design approval and exact source approvals still apply. The morning change does not grant new release permission or remove a specifically required trial. Documentation-only changes may skip runtime journey testing; required repository checks still apply.
 
