@@ -4,7 +4,7 @@ const {
   upcomingCommunityEvents,
   calendarConfiguration,
 } = require("../lib/community-calendar-view");
-const { clearCommunityEventsCache } = require("../lib/community-events");
+const { clearCommunityEventsCache, getCommunityEvents } = require("../lib/community-events");
 const sterling = require("../data/communities/sterling-ranch.json");
 const castle = require("../data/communities/castle-rock.json");
 const now = new Date("2026-09-29T18:00:00Z");
@@ -52,13 +52,13 @@ test("calendar projection uses both profiles and crosses calendar months", async
     calendarConfiguration(sterling).action.url,
   );
 });
-test("calendar removes duplicate identities and caps the broader list at seven", async () => {
+test("calendar removes duplicate identities without truncating the week", async () => {
   clearCommunityEventsCache();
-  const entries = Array.from({ length: 8 }, (_, index) =>
+  const entries = Array.from({ length: 18 }, (_, index) =>
     html(
       index + 10,
       `Fixture ${index}`,
-      `2026-10-${String(index + 1).padStart(2, "0")}`,
+      `2026-10-${String((index % 7) + 1).padStart(2, "0")}`,
     ),
   ).join("");
   const result = await upcomingCommunityEvents(castle, {
@@ -66,8 +66,8 @@ test("calendar removes duplicate identities and caps the broader list at seven",
     fetchImpl: async () =>
       response(entries + html(99, "Fixture 0", "2026-10-01")),
   });
-  assert.equal(result.events.length, 7);
-  assert.equal(new Set(result.events.map((event) => event.title)).size, 7);
+  assert.equal(result.events.length, 18);
+  assert.equal(new Set(result.events.map((event) => event.title)).size, 18);
 });
 test("empty and unavailable calendar responses retain the configured fallback", async () => {
   for (const failing of [false, true]) {
@@ -139,4 +139,25 @@ test("missing connector uses the profile website; unapproved hosts are rejected"
     () => calendarConfiguration(unsafe),
     /allowed official HTTPS host/,
   );
+});
+
+test("busy days stay complete on fresh and cached calendar reads while Assistant answers stay bounded", async () => {
+  clearCommunityEventsCache();
+  const entries = Array.from({ length: 12 }, (_, i) => html(i + 100, 'Busy day ' + i, '2026-09-29')).join('');
+  let calls = 0;
+  const options = { now, fetchImpl: async () => { calls++; return response(entries); } };
+  const request = { dateRange: { start: '2026-09-29', end: '2026-09-29' } };
+  const adapter = calendarConfiguration(castle).adapter;
+  const answer = await getCommunityEvents(request, { ...options, profile: castle, adapter });
+  assert.equal(answer.events.length, 8);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const calendar = await upcomingCommunityEvents(castle, options);
+    assert.equal(calendar.events.length, 12);
+    assert.equal(calendar.evidence[0].claims.length, 12);
+    assert.equal(calendar.status, 'ready');
+  }
+  assert.equal(calls, 7);
+  const cachedAnswer = await getCommunityEvents(request, { ...options, profile: castle, adapter });
+  assert.equal(cachedAnswer.events.length, 8);
+  assert.equal(cachedAnswer.evidenceEnvelope.claims.length, 8);
 });
