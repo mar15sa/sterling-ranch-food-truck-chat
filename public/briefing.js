@@ -96,24 +96,17 @@
     read("/api/community/events").then((data) => {
       events.replaceChildren();
       const entries = (data.events || []).filter(e => /^\d{4}-\d{2}-\d{2}$/.test(e.date || "")).sort((a,b) => a.date.localeCompare(b.date) || String(a.time || "").localeCompare(String(b.time || "")));
-      const started = entries.filter(e => e.date === dateKey && /^\d{2}:\d{2}$/.test(e.time || "") && e.time < timeKey);
-      const upcoming = entries.filter(e => e.date >= dateKey && !started.includes(e));
-      appendEvents(upcoming.slice(0, fullCalendar ? 14 : 3), events, fullCalendar);
+      // A start time does not establish that an event has ended. Keep today's
+      // listings visible for the whole community-local day.
+      const upcoming = entries.filter(e => e.date >= dateKey);
+      appendEvents(fullCalendar ? upcoming : upcoming.slice(0, 3), events, fullCalendar);
       if (!upcoming.length) notice("No upcoming events are listed for the next seven days.", data.action);
-      if (fullCalendar && started.length) {
-        const earlier = document.createElement("details");
-        earlier.className = "calendar-earlier";
-        const summary = document.createElement("summary");
-        summary.textContent = "Started earlier today (" + started.length + ")";
-        earlier.append(summary);
-        appendEvents(started, earlier, false);
-        events.append(earlier);
-      }
       if (data.status === "partial" && fullCalendar)
         notice("We confirmed the events below, but one day could not be checked. The official calendar has the complete list.", data.action);
       const next = document.querySelector("#briefing-next-event");
-      if (next && upcoming[0]) {
-        const event = upcoming[0];
+      const nextEvent = upcoming.find(event => event.date > dateKey || !/^\d{2}:\d{2}$/.test(event.time || "") || event.time >= timeKey);
+      if (next && nextEvent) {
+        const event = nextEvent;
         next.href = event.url;
         const label = document.createElement("span");
         label.textContent = "Next on the calendar";
